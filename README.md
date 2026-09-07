@@ -38,7 +38,7 @@ nextflow run 1KFG/delta-gain -r <tag> -profile genome_classify \
 
 ## Website
 
-Published at [dg.fungalgenomes.org](https://dg.fungalgenomes.org) via
+Published at [dgf.fungalgenomes.org](https://dgf.fungalgenomes.org) via
 GitHub Pages (`main`/`/docs`). `docs/index.md` is a placeholder landing page
 deployed to confirm Pages/DNS/CNAME connectivity before any real report
 content exists — see the design doc for the reporting plan.

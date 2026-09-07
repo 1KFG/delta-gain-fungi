@@ -5,6 +5,13 @@
 # primary data on /bigdata, distributed via GitHub Releases or Zenodo).
 results/
 work/
+lib/uniprot_fungi/
+.nextflow/
+.nextflow.log*
+logs/nextflow/*.html
+logs/nextflow/*.txt
+logs/slurm/*.out
+logs/slurm/*.err
 
 # Quarto local render cache/scratch (reports/ is the source, docs/ is the
 # published output committed to git — this is neither). reports/.gitignore
