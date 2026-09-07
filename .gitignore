@@ -1,0 +1,13 @@
+# Pipeline run output: large, reproducible from DeltaGain + upstream sources,
+# not meant to live in git history. Same reasoning as DeltaGain's own
+# .gitignore — see that repo's README for the full tiered-storage rationale
+# (code in git / small rendered report artifacts in git via docs/ / large
+# primary data on /bigdata, distributed via GitHub Releases or Zenodo).
+results/
+work/
+
+# Quarto local render cache/scratch (reports/ is the source, docs/ is the
+# published output committed to git — this is neither). reports/.gitignore
+# (auto-created by Quarto) already covers reports/.quarto/ specifically; this
+# catches the project-root case too.
+/.quarto/
