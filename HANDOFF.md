@@ -60,10 +60,36 @@ for the pilot. This section replaces them where they disagree.
 - Job 30452834 (second submission). The first, 30451574, was cancelled after
   26 min because of the zstd symlink bug above. `-resume` reuses the cached
   manifest and combine steps.
-- Resources for `MMSEQS_LINCLUST_BFD` (32 cpu / 256 GB / 24 h) and
-  `DIAMOND_CLUSTER` (32 cpu / 128 GB / 48 h) are guesses. Nothing is measured
-  at 21M proteins. Read `sacct` MaxRSS and Elapsed after they finish, then
-  size the full run from that.
+- **Measured so far (2026-10-24, job 30452834):**
+  - Raw proteins: 20,373,920 from 2000 genomes (10.2k per genome; the
+    estimate was 21M). After linclust (95% id / 90% cov): 10,615,362
+    representatives, which is 52.1% of raw. The pilot kept 62.4%
+    (666,654 / 1,067,931), so the ratio changed with scale or sample.
+  - `MMSEQS_LINCLUST_BFD`: 5 min 34 s, MaxRSS 25.6 GB. The request was
+    32 cpu / 256 GB / 24 h, which is about 10x too much memory. For the full
+    set (about 10x the proteins), 32 cpu / 64-128 GB is a reasonable next
+    request. That is an extrapolation, not a measurement.
+  - `COMBINE_BFD_PROTEINS`: 8 min 23 s, MaxRSS 107 MB (single-threaded
+    python, gzip input).
+  - `COMPRESS_ZSTD`: 8 cpu; the 20M-protein combined FASTA took 68 s. All
+    published `.zst` files pass `zstd -t`. Sizes: combined FASTA 5.46 GB,
+    representatives 2.81 GB, clusters 158 MB, provenance 28 MB.
+  - `SPLIT_FASTA`: 177 chunks of 60,000. First 3 `DIAMOND_SEARCH_UNIPROT`
+    tasks finished in 860 s on average (max 1,029 s), well under the 1-1.5 h
+    target. `DIAMOND_NOVELTY_SCREEN` (the larger `nr_cluster` database) had
+    not finished any task when this was written. If it also finishes in
+    under about 45 min, raise the chunk size again for the full run.
+- **`DIAMOND_CLUSTER` lost-task problem (2026-10-24):** Nextflow marked
+  `DIAMOND_CLUSTER` as failed ("terminated for an unknown reason") after the
+  20-minute `exitReadTimeout`, while SLURM job 30452869 was still running on
+  hz02. Nextflow started a retry (30454465) that waits in the queue
+  (`AssocGrpCpuLimit`: the 170+ pending DIAMOND chunk jobs fill the account
+  CPU limit). This is the same exit-status problem as in the pilot, now at
+  about 180 concurrent jobs plus 500+ other jobs from the BFD run. The branch
+  is comparison-only, so the novelty bins do not depend on it. Two copies may
+  run and write to different work dirs. Not fixed. Options: raise
+  `exitReadTimeout`, or lower concurrent chunk jobs with `queueSize`.
+- `DIAMOND_CLUSTER` resources (32 cpu / 128 GB / 48 h) are still a guess.
 - The accumulation-curve branch is skipped. The four `bfd_duckdb_*` /
   `genome_classification_tsv` / `bfd_version_tag` params are unset on
   purpose, until the final tables exist.
