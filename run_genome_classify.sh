@@ -29,7 +29,14 @@ mkdir -p logs/slurm logs/nextflow
 
 source /etc/profile.d/modules.sh 2>/dev/null || true
 module load nextflow
-module load singularity 2>/dev/null || module load apptainer 2>/dev/null || true
+# apptainer FIRST, not singularity: profile_genome_classify.config sets
+# apptainer.enabled=true / singularity.enabled=false, and the two modules
+# provide different binaries (`apptainer` vs `singularity`) -- module load
+# singularity succeeding does NOT put `apptainer` on PATH, so the original
+# `singularity || apptainer` fallback order silently short-circuited and
+# left every task failing with "env: 'apptainer': No such file or
+# directory" (hit for real 2026-09-08, job 28199425).
+module load apptainer 2>/dev/null || module load singularity 2>/dev/null || true
 
 # Container cache — same convention as Fungi_BFD/nextflow. Set one of these
 # before submitting if not already exported in your environment.

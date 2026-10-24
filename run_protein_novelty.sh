@@ -45,7 +45,11 @@ mkdir -p logs/slurm logs/nextflow lib/uniprot_fungi
 
 source /etc/profile.d/modules.sh 2>/dev/null || true
 module load nextflow
-module load singularity 2>/dev/null || module load apptainer 2>/dev/null || true
+# apptainer FIRST, not singularity -- see run_genome_classify.sh's identical
+# comment for why (profile configs set apptainer.enabled=true, and loading
+# the singularity module does not put `apptainer` on PATH; hit for real
+# 2026-09-08).
+module load apptainer 2>/dev/null || module load singularity 2>/dev/null || true
 
 export NXF_SINGULARITY_CACHEDIR="${NXF_SINGULARITY_CACHEDIR:-/bigdata/stajichlab/shared/singularity_cache}"
 
