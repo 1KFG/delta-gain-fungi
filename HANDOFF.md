@@ -89,6 +89,19 @@ for the pilot. This section replaces them where they disagree.
   is comparison-only, so the novelty bins do not depend on it. Two copies may
   run and write to different work dirs. Not fixed. Options: raise
   `exitReadTimeout`, or lower concurrent chunk jobs with `queueSize`.
+- **Cause of the lost tasks and duplicate jobs (found 2026-10-24):**
+  the chunk jobs were submitted to `epyc` but were moved to other
+  partitions (`stajichlab`, `preempt`, `highclock`). Nextflow polled only
+  the submit partition, lost sight of the moved jobs, and resubmitted them.
+  Result: 106 retries ("terminated for an unknown reason") and 104 extra
+  chunk jobs (458 submitted for 354 needed). Some retries duplicate work
+  that already finished. Fix: `executor.queueGlobalStatus = true` in
+  `DeltaGain/nextflow.config` (same setting as `Fungi_BFD/nextflow`). It
+  applies from the next launch, not to the run in progress.
+- 257 pending DIAMOND jobs were put on hold with `scontrol hold` at the
+  user's request (running jobs left alone, head job 30452834 still alive).
+  Release with `scontrol release <jobid>`. I did not verify that Nextflow
+  tolerates a long hold.
 - `DIAMOND_CLUSTER` resources (32 cpu / 128 GB / 48 h) are still a guess.
 - The accumulation-curve branch is skipped. The four `bfd_duckdb_*` /
   `genome_classification_tsv` / `bfd_version_tag` params are unset on
