@@ -138,6 +138,23 @@ transposon-derived genes and contaminant sequence.
    reports page, the DIAMOND `--reps`+`--out` bug report) are still open. The
    bug-report repro script is in session scratch and may be gone.
 
+### DIAMOND cluster vs MMseqs2 linclust (2000 genomes, measured 2026-10-24)
+
+The orphan `DIAMOND_CLUSTER` job 30452869 finished (exit 0, 47 min 58 s, MaxRSS 21 GB).
+Job 30476464 compressed its table and ran `compare_clusterings.py`.
+
+| metric | mmseqs_linclust | diamond_cluster |
+|---|---|---|
+| members | 20,373,920 | 20,373,920 |
+| clusters | 10,615,362 | 12,947,923 |
+| singletons | 8,473,455 | 11,478,069 |
+| max size | 1477 | 1464 |
+
+- Adjusted Rand Index: 0.7291 (pilot: 0.7155). Both tables hold the same members.
+- DIAMOND cluster gives more, smaller clusters. I did not test why. The two tools use different identity and coverage definitions.
+- Files: `results/protein_novelty_n2000/bfd_proteins_diamond_clusters.tsv.zst` (87 MB, passes `zstd -t`, 20,373,920 lines) and `bfd_clustering_comparison.tsv`.
+- The compare job used 12.5 GB peak memory (64 GB requested) and took 4 min 26 s.
+
 ## Where things actually stand (2026-09-08 pilot record)
 
 **Stage 1 (genome classification, `DeltaGain/genome_classify.nf`):** code
