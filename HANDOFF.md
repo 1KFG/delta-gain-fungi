@@ -1,6 +1,100 @@
-# DeltaGain_Fungi — Handoff / Status (2026-10-24)
+# DeltaGain_Fungi — Handoff / Status (2026-11-04)
 
-## Update 2026-10-24: 2000-genome protein screen (read this first)
+## Update 2026-11-04: full-set run, pangenome scripts, run-state (read this first)
+
+This section replaces the 10-24 section below where they disagree.
+
+**Deadline:** the cluster shutdown reservation starts **2026-11-10 08:00** (all
+nodes, `20261110-Shutdown`). Jobs whose time limit overlaps it stay pending
+("ReqNodeNotAvail, Reserved for maintenance"). Head jobs are submitted with
+`-t` of 5 days or less so they end before it. Nextflow `-resume` keeps finished
+work, so anything unfinished resumes after the shutdown.
+
+**State of the input data:** BFD annotation is finished per the user. The
+`Fungi_BFD_runs/input/pep/` count was still 23,448 files with none modified
+after 2026-10-24 14:08 when checked on 11-04. The user is building the final
+merge/parquet tables in `Fungi_BFD_runs/tables/` (still the 2026-09-10
+snapshot when last looked at). The accumulation/pangenome analysis needs the
+new `asm_stats`, `busco_genome`, the Stage 1 classification and
+`bfd_version_tag`; those params are still unset.
+
+**Runs (as of 2026-11-04 ~17:00; check `squeue`/`sacct`, these were just submitted)**
+- **2000-genome run, relaunch:** job 31677214, `-resume`, outdir
+  `results/protein_novelty_n2000`, launched from `DeltaGain_Fungi/`. The earlier
+  head (31662005) ended FAILED after 7h09m because `COMPARE_CLUSTERINGS` was
+  OOM-killed (exit 137, 8 GB request; the standalone run peaked at 12.5 GB).
+  Memory is now 32 GB in `conf/profile_protein_novelty.config`. With
+  `errorStrategy 'finish'` that one failure stopped new submissions, so
+  `bfd_novelty_bins.tsv` did not exist yet. Not verified: how many
+  DIAMOND chunks had finished (268 exit files were seen in work/, which includes
+  both search types and older runs).
+- **Full-set run (all annotated genomes, `--n_test 0`):** launched from
+  `runs/full/` (its own launchDir, because two Nextflow heads cannot share one
+  `.nextflow` cache) with `-c full.config`, outdir `results/protein_novelty_full`,
+  DIAMOND cluster branch off. Job 31676864 failed twice over:
+  1. `COMBINE_BFD_PROTEINS` was sent to the `short` partition (2 h cap) with an
+     8 h limit, so sbatch refused it. Fixed in `runs/full/full.config`
+     (queue `batch`); same for `SPLIT_FASTA` and `BIN_NOVELTY_HITS`.
+  2. `FETCH_UNIPROT_FUNGI (reviewed)`, the REST smoke test, got HTTP 429 from
+     UniProt and failed. New switch `--run_uniprot_smoke_test false`.
+  Job 31676864's head was left alive to finish `COMBINE_BFD_PROTEINS`
+  (job 31676885). Relaunch is job 31677215 with `--dependency=afterany:31676864`
+  and `-t 4-12:00:00`, `-resume`.
+- **Sizing in `runs/full/full.config` is extrapolated, not measured:**
+  linclust 400 GB (25.6 GB MaxRSS at 20M proteins, scaled about 11.7x linearly;
+  the 10-24 note of 64-128 GB does not follow from that measurement),
+  `COMBINE_BFD_PROTEINS` 8 h (8m23s at 20M), `SPLIT_FASTA` 6 h / 8 GB and
+  `BIN_NOVELTY_HITS` 12 h / 64 GB (both guesses).
+- **Capacity:** the account CPU cap (`AssocGrpCpuLimit`) was already full of the
+  2000-genome chunk jobs on 11-04. The two runs compete for it. The user chose
+  to let both run (no holds).
+
+**Code changes (DeltaGain, committed locally on HPCC, not pushed)**
+- `26cd0e1`: `bin/species_pangenome.py`, `bin/compare_species_pangenomes.py`,
+  their tests, and `params.run_diamond_cluster` (default true).
+- `55f9b9d`: `params.run_uniprot_smoke_test` (default true).
+- DeltaGain_Fungi `75b6e41`: `compare_clusterings` memory, `runs/full/full.config`,
+  `.venv-pangenome/` in `.gitignore`.
+
+**Species pangenome analysis (new, tested on synthetic data only)**
+Question from the user: build a consolidated pangenome per species, then
+compare pangenomes across species.
+- `bin/species_pangenome.py`: per species with at least `--min-genomes` genomes
+  (grouped by `samples.csv` SPECIES): pangenome size, core / soft-core (>=95%) /
+  shell / cloud (<15%) counts, singleton clusters, rarefied size at a common N,
+  and the power-law alpha of the new-cluster rate (reuses `lib_accumulation`;
+  alpha < 1 is the existing convention for an open pangenome). A species whose
+  genomes add no new clusters has too few points for a fit and gets a blank
+  alpha.
+- `bin/compare_species_pangenomes.py`: pairwise shared clusters and Jaccard
+  with same-genus / same-family flags, plus per-taxon summaries. Clusters in more
+  than `--max-species-per-cluster` (100) species are left out of pair counts and
+  tallied in `species_broad_clusters.tsv`.
+- Input is `incidence_matrix.parquet` from `BUILD_CLUSTER_INCIDENCE_MATRIX`, which
+  only runs once the four accumulation params above are set. Neither script has
+  run on real data.
+- **Open choices:** clustering identity (currently 95% id / 90% cov linclust; a
+  looser per-species cutoff would need another clustering and was not launched);
+  whether to drop Stage 1 `redundant_strain` genomes first (needs a full-scale
+  classification; only the 100-genome pilot exists); `--min-genomes` and
+  `--rarefy-n` defaults (5 and 5) are placeholders. A random 2000-genome sample
+  leaves most species with too few genomes, so use the full run.
+- Python env for these scripts: `uv` env at `.venv-pangenome/` (Python 3.12,
+  numpy, pyarrow, pandas, duckdb, pytest). Run with
+  `PYTHONPATH=DeltaGain/bin .venv-pangenome/bin/python ...`.
+
+**Next steps**
+1. Check both relaunched heads start and the full run's `COMBINE_BFD_PROTEINS`
+   is reused from cache. Read real MaxRSS/elapsed from `sacct` for linclust
+   and the combine step before trusting the extrapolated sizing.
+2. When the 2000-genome run ends: compute strong/weak/no-hit fractions and
+   compare with the pilot (71.0 / 22.6 / 6.5%).
+3. Before 11-10 08:00: note which full-run tasks are done. After the shutdown,
+   resume the full run from `runs/full/` with the same command.
+4. After the user's tables are built: set the four accumulation params, run
+   `species_pangenome.py` then `compare_species_pangenomes.py` on the full run.
+
+## Earlier update 2026-10-24: 2000-genome protein screen
 
 The sections below are the 2026-09-08 pilot record. They are still correct
 for the pilot. This section replaces them where they disagree.
