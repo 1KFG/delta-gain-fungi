@@ -61,6 +61,30 @@ new `asm_stats`, `busco_genome`, the Stage 1 classification and
   appears in exactly one chunk per target, so the script could stream chunk by
   chunk. Also note it keeps the lowest-E-value hit and classifies only that,
   so a high-coverage hit with a slightly worse E-value can be masked.
+- **2000-genome result (done 2026-11-04 21:00, job 31703284):**
+  `results/protein_novelty_n2000/bfd_novelty_bins.tsv`, 10,615,362 queries (equals
+  the linclust representative count). Overall: strong 80.0%, weak 15.7%,
+  no_hit 4.31% (457,750). Pilot (100 genomes) was 71.0 / 22.6 / 6.5%. Per
+  genome, no-hit representatives fell from ~430 (pilot) to ~229. The samples
+  differ (pilot = first rows, this = seeded random), thresholds are still
+  placeholders, and no-hit proteins are candidates only (no repeat or
+  contamination filter yet). UniProt-fungi alone rescues only 3,896 proteins
+  (0.04%) that `nr_cluster` fungi missed. The masking issue (lowest-E-value row
+  only) can move strong<->weak but not no_hit.
+- **Full run measured:** `MMSEQS_LINCLUST_BFD` took 1h25m with MaxRSS 224 GB
+  (the 400 GB request was right; the 64-128 GB guess in the 10-24 note was not).
+  1,307 chunks of 60,000, so ~78M representatives, which makes 2,614 DIAMOND
+  searches. First 7 finished: UniProt median 21 min, nr_cluster 35 min (n=1).
+  At ~30 min and ~23 concurrent, roughly 2.4 days; Nextflow `queueSize` keeps
+  ~500 submitted at a time.
+- **Streaming binning (new, off by default):** `bin/bin_novelty_hits_stream.py`
+  + `BIN_NOVELTY_HITS_STREAM`, selected with `--bin_streaming true`. Memory is
+  bounded by chunk size. With `--classify best-evalue` (default) it reproduces
+  the original script exactly (tested); `--classify best-class` classifies every
+  row and keeps the best class, which changes results and is not the default.
+  The running full-run head was launched before this existed, so it will use
+  the original `BIN_NOVELTY_HITS` (160 GB on epyc, enough for ~78M queries by the
+  0.5-0.7 GB per 1M estimate). To use streaming, resume with `--bin_streaming true`.
 - **Sizing in `runs/full/full.config` is extrapolated, not measured:**
   linclust 400 GB (25.6 GB MaxRSS at 20M proteins, scaled about 11.7x linearly;
   the 10-24 note of 64-128 GB does not follow from that measurement),
