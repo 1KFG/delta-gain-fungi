@@ -1,4 +1,32 @@
-# DeltaGain_Fungi — Handoff / Status (2026-11-04)
+# DeltaGain_Fungi — Handoff / Status (2026-11-05)
+
+## Update 2026-11-05: strategy change — baseline funnel replaces the universal search (read this first)
+
+Full plan, definitions, workflow diagram and measures of success:
+`DeltaGain/docs/DELTA_GAIN_PLAN.md`. This section replaces the 11-04 section where they disagree.
+
+- **Full DIAMOND run stopped** (about 15 % of 2,614 searches done). It searched every representative against all of
+  NCBI nr clustered (`nr_cluster_seq.dmnd`, `--taxonlist 4751`, so the full 195 GB index is still scanned), which
+  measures "not yet public", not delta gain. Both `work/` directories were deleted; raw hits were kept zstd-compressed
+  in `results/protein_novelty_n2000/raw_hits/` (177 nr + 177 UniProt) and
+  `results/protein_novelty_full/raw_hits_partial/nr_cluster/` (196 finished chunks). Full linclust output is kept in
+  `results/protein_novelty_full/`.
+- **New design:** baseline = NCBI proteins of genomes with prior annotation; query = BFD proteins of genomes with none.
+  Nested MMseqs2 linclust tiers (95/70/50 %) on baseline + query together; novelty counted per protein. Scripts:
+  `DeltaGain/bin/{classify_genomes_by_prior_annotation,build_funnel_input,delta_funnel_summary}.py`,
+  `DeltaGain/launch/delta_funnel.sbatch`. Smoke test passed (40 + 40 genomes, 2m13s). Full run not launched yet.
+- **Prior-annotation table** `prior_annotation_status.tsv` (27,401 NCBI assemblies): 5,511 baseline_ok, 158 annotated
+  without protein file, 1,228 annotated never downloaded (1,184 are same-strain duplicates dropped by NCBI_fungi's
+  dedup), 18,145 no prior annotation (the new set), 2,359 not downloaded. A gap download (`scripts/fetch_gap.sh`, 202
+  accessions) was running; 8 accessions have annotation info but no protein file. Refresh the table after it finishes.
+- **Re-bin of the 2000-genome hits** (`scripts/dg_rebin.py`): the old rule is reproduced (37 of 10.6M differ);
+  best-class moves 39 % of "weak" to strong (strong 78.0 -> 84.9 %, no-hit unchanged at 4.35 %). Genomes with prior NCBI
+  annotation have 47.5 % of queries with a 99-100 % top hit vs 12.6 % for unannotated genomes: self-hit inflation.
+- **Hardware:** never run compute on `abu_dhabi` nodes (all of `batch`; c02/c21 in `short`/`preempt`/`stajichlab`). No
+  AVX2, so MMseqs2/DuckDB die with "Illegal instruction". Use `-p epyc,intel` with
+  `--constraint="ryzen|broadwell|cascade|sapphire"`.
+- **Next:** finish the gap download and refresh the status table -> launch the funnel -> fill the measured counts in the
+  plan -> write the survivor-search stage -> Pfam family walk. Open questions are listed in section 13 of the plan.
 
 ## Update 2026-11-04: full-set run, pangenome scripts, run-state (read this first)
 
