@@ -53,9 +53,14 @@ new `asm_stats`, `busco_genome`, the Stage 1 classification and
   measurement). Relaunched as job 31703284 (`-resume`).
 - **Full run, relaunch:** job 31703285, dependent on head 31677215 ending.
   `MMSEQS_LINCLUST_BFD` (31690831) was still running under 31677215. Full-run
-  `BIN_NOVELTY_HITS` is set to 64 GB in `full.config`, but with ~126M
-  representatives that is likely too low if the script holds all hits in
-  memory; check `bin/bin_novelty_hits.py` before the search phase finishes.
+  `BIN_NOVELTY_HITS` raised to 160 GB on `epyc`. `bin_novelty_hits.py` holds
+  every query's best hit in per-target dicts plus a list of all query ids;
+  measured 495 MB per 1M queries (2 targets, shared id strings; real figure
+  probably ~700 MB), so ~60-90 GB at ~126M representatives (the representative
+  count is itself extrapolated). If this ever needs to be smaller, each query
+  appears in exactly one chunk per target, so the script could stream chunk by
+  chunk. Also note it keeps the lowest-E-value hit and classifies only that,
+  so a high-coverage hit with a slightly worse E-value can be masked.
 - **Sizing in `runs/full/full.config` is extrapolated, not measured:**
   linclust 400 GB (25.6 GB MaxRSS at 20M proteins, scaled about 11.7x linearly;
   the 10-24 note of 64-128 GB does not follow from that measurement),
