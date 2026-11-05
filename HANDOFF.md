@@ -40,6 +40,22 @@ new `asm_stats`, `busco_genome`, the Stage 1 classification and
   Job 31676864's head was left alive to finish `COMBINE_BFD_PROTEINS`
   (job 31676885). Relaunch is job 31677215 with `--dependency=afterany:31676864`
   and `-t 4-12:00:00`, `-resume`.
+- **Correction (2026-11-04 evening):** `--run_uniprot_smoke_test false` and
+  `--run_diamond_cluster false` did NOT work in the relaunches above. Nextflow
+  26.04.6 passes `--flag false` as the string 'false' (truthy), so the REST
+  smoke test failed again (429) and `DIAMOND_CLUSTER` started on the full set.
+  I cancelled that DIAMOND_CLUSTER job (31690829). Fixed in DeltaGain commit
+  "Parse boolean switches explicitly" (`flagOn()`). Not yet confirmed that a
+  relaunch honours it.
+- **2000-genome run, third launch:** the second head (31677214) got through all
+  DIAMOND chunks, then `BIN_NOVELTY_HITS` was OOM-killed (137, 4 GB, 10.6M
+  reps). Memory raised to 32 GB (a guess above the failure point, not a
+  measurement). Relaunched as job 31703284 (`-resume`).
+- **Full run, relaunch:** job 31703285, dependent on head 31677215 ending.
+  `MMSEQS_LINCLUST_BFD` (31690831) was still running under 31677215. Full-run
+  `BIN_NOVELTY_HITS` is set to 64 GB in `full.config`, but with ~126M
+  representatives that is likely too low if the script holds all hits in
+  memory; check `bin/bin_novelty_hits.py` before the search phase finishes.
 - **Sizing in `runs/full/full.config` is extrapolated, not measured:**
   linclust 400 GB (25.6 GB MaxRSS at 20M proteins, scaled about 11.7x linearly;
   the 10-24 note of 64-128 GB does not follow from that measurement),
