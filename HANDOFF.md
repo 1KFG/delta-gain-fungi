@@ -101,31 +101,43 @@ new `asm_stats`, `busco_genome`, the Stage 1 classification and
 - DeltaGain_Fungi `75b6e41`: `compare_clusterings` memory, `runs/full/full.config`,
   `.venv-pangenome/` in `.gitignore`.
 
-**Species pangenome analysis (new, tested on synthetic data only)**
+**Species pangenome analysis (tested on synthetic data only; reviewed by Fable 2026-11-04)**
 Question from the user: build a consolidated pangenome per species, then
-compare pangenomes across species.
-- `bin/species_pangenome.py`: per species with at least `--min-genomes` genomes
-  (grouped by `samples.csv` SPECIES): pangenome size, core / soft-core (>=95%) /
-  shell / cloud (<15%) counts, singleton clusters, rarefied size at a common N,
-  and the power-law alpha of the new-cluster rate (reuses `lib_accumulation`;
-  alpha < 1 is the existing convention for an open pangenome). A species whose
-  genomes add no new clusters has too few points for a fit and gets a blank
-  alpha.
-- `bin/compare_species_pangenomes.py`: pairwise shared clusters and Jaccard
-  with same-genus / same-family flags, plus per-taxon summaries. Clusters in more
-  than `--max-species-per-cluster` (100) species are left out of pair counts and
-  tallied in `species_broad_clusters.tsv`.
+compare pangenomes across species. Both scripts were rewritten after a review
+(commit message in DeltaGain has the full list).
+- `bin/species_pangenome.py`: per species (grouped by `samples.csv` SPECIES) with
+  at least `--min-genomes` (default 10): pangenome size; core / soft-core
+  (>= ceil(0.95n), blank when n < 20) / shell / cloud (<= max(1, floor(0.15n)),
+  singletons always cloud); `rarefied_pan_size` (+sd) and `rarefied_core` at
+  `--rarefy-n` (default 10); alpha of the new-cluster rate fitted on the
+  permutation-mean curve for N = 2..n, with `alpha_n_points` and `alpha_r2`.
+  alpha < 1 = open. A species that adds nothing after genome 1 is "closed"
+  (`no_new_after_first`), fewer than 3 usable points is "unresolved". Placeholder
+  names ("sp.", "cf.", "aff.", "uncultured", "unclassified") are skipped. Alpha is
+  not comparable across very different n; use the rarefied columns.
+- `bin/compare_species_pangenomes.py`: exact pairwise shared clusters and Jaccard
+  (sparse products), plus `*_narrow` versions excluding clusters in more than
+  `--max-species-per-cluster` (100) species; same-genus / same-family flags;
+  per-taxon open/closed/unresolved counts and medians. It fails if its genome
+  counts disagree with the species table (pass the same `--exclude-asmids` to
+  both steps). Lineage conflicts go to `lineage_conflicts.tsv`.
+- Scale test (synthetic): 3,000 genomes, 13.2M pairs, 50 species: 12 s / 1 GB for
+  the species step with 4 processes, 4 s / 1 GB for the comparison. Extrapolated
+  (not measured) to ~230M pairs: minutes, ~15-20 GB.
 - Input is `incidence_matrix.parquet` from `BUILD_CLUSTER_INCIDENCE_MATRIX`, which
   only runs once the four accumulation params above are set. Neither script has
   run on real data.
-- **Open choices:** clustering identity (currently 95% id / 90% cov linclust; a
-  looser per-species cutoff would need another clustering and was not launched);
-  whether to drop Stage 1 `redundant_strain` genomes first (needs a full-scale
-  classification; only the 100-genome pilot exists); `--min-genomes` and
-  `--rarefy-n` defaults (5 and 5) are placeholders. A random 2000-genome sample
-  leaves most species with too few genomes, so use the full run.
-- Python env for these scripts: `uv` env at `.venv-pangenome/` (Python 3.12,
-  numpy, pyarrow, pandas, duckdb, pytest). Run with
+- **Still open:** clustering identity (95/90 linclust; a looser per-species cutoff
+  needs another clustering and was not launched); whether to drop Stage 1
+  `redundant_strain` genomes first (needs a full-scale classification; only the
+  100-genome pilot exists); the `--min-genomes` / `--rarefy-n` defaults are
+  placeholders; taxon labels are keyed by name only (homonyms merge); an
+  alpha uncertainty estimate (bootstrap over genomes) is not implemented; a
+  random 2000-genome sample leaves most species with too few genomes, so use the
+  full run. Cross-species sharing at 95% identity mostly reflects HGT,
+  contamination or recent splits, so deep pairs will be near 0.
+- Python env: `uv` env at `.venv-pangenome/` (Python 3.12, numpy, pyarrow, pandas,
+  duckdb, scipy, pytest). Run with
   `PYTHONPATH=DeltaGain/bin .venv-pangenome/bin/python ...`.
 
 **Next steps**
