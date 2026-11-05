@@ -18,3 +18,6 @@ logs/slurm/*.err
 # (auto-created by Quarto) already covers reports/.quarto/ specifically; this
 # catches the project-root case too.
 /.quarto/
+
+# uv env for species pangenome scripts
+.venv-pangenome/
