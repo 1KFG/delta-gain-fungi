@@ -22,6 +22,7 @@ for r in recs:
     status=('baseline_ok' if ann and hasp else 'annotated_NOT_downloaded' if ann and not f else 'annotated_folder_missing_protein' if ann else 'no_prior_annotation_present' if f else 'no_prior_annotation_not_downloaded')
     c[status]+=1
     rows.append([a,f or '',ai.get('provider',''),ai.get('release_date',''),pc if pc is not None else '',int(hasp),status,(r.get('assembly_info') or {}).get('release_date','') ,(r.get('source_database') or '')])
+rows=[[c.strip() if isinstance(c,str) else c for c in r] for r in rows]
 with open(out+'prior_annotation_status.tsv','w',newline='') as fh:
     w=csv.writer(fh,delimiter='\t'); w.writerow(['accession','folder','annotation_provider','annotation_release','protein_coding','protein_file_ok','status','assembly_release','source_database']); w.writerows(rows)
 with open(out+'prior_annotation_gap_accessions.txt','w') as fh:
