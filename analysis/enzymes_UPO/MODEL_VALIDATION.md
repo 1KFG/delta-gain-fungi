@@ -8,7 +8,7 @@ four, and they have very different evidence behind them. Two are solid, one is b
 | **A. Active-site identification** | **Validated** | 95/95 exact agreement with the published structure-based matrix |
 | **B. Catalytic-core classification** | **Validated** | Reproduces the published "Glu180 in all 19" claim at 93.7 % |
 | **C. Clade assignment** | **Bounded** | Reliable only above ~55 % identity; BFD median is 43.8 % |
-| **D. Activity prediction** | **Failed, reported as negative** | r = 0.18 (T2); partial r = 0.13 given clade (T1); ring rule not transferable |
+| **D. Activity prediction** | **Failed statistically; mechanistic route partially re-opened** | r = 0.18 (T2); partial r = 0.13 given clade (T1); channel-width ranking r = +0.93 at n = 4 |
 
 ---
 
@@ -107,9 +107,13 @@ removed its entire clade.
   interpretable negatives, and both are the entire membership of Clade II.
 - **T1, peroxygenase vs peroxidase:** r = +0.748 raw, but **partial r = +0.129 given clade**, and
   +0.001 within non-Clade-V enzymes. The pocket is clade in disguise.
-- **Ring-size rule, mechanistic route:** CAVER gives ~1 Å bottleneck radius for both AaeUPO and
-  MroUPO, with no tunnel at all above a 1.5 Å probe. The published 7 Å / 11 Å are not
-  static-structure bottlenecks and cannot be recomputed for an uncharacterized enzyme.
+- **Ring-size rule, mechanistic route: PARTIALLY RE-OPENED, corrected 2026-11-08.** An earlier
+  entry here said CAVER gives ~1 Å bottleneck radii and the route was closed. That used CAVER
+  3.0.2, which has a **documented bug** placing the starting vertex "in too narrow cavity".
+  **CAVER 3.0.3** gives MroUPO 5.19 Å, HspUPO 4.87 Å, AaeUPO 4.23 Å, CviUPO 3.71 Å — the published
+  ordering (MroUPO wider than AaeUPO), and r = +0.933 against naphthalene across those four.
+  Absolute values still do not match the published 7 / 11 Å, so Karich's absolute cutoff cannot be
+  applied; a **relative ranking** can. n = 4. See `CHANNEL_FINDINGS.md`.
 
 **No activity score is emitted.** Producing one would rank 97,520 proteins by a feature measured to
 have no predictive power.
@@ -125,7 +129,8 @@ whole of BFD in two minutes.
 
 **Subtype assignment is reliable for 2,088 of 7,055 representatives and says which.**
 
-**Activity prediction is not possible from the published data**, by either the statistical or the
-mechanistic route, and both failures are documented with the measurements that produced them.
+**Activity prediction is not possible from the published data by the statistical route.** The
+mechanistic route — ranking by CAVER 3.0.3 channel width — is a live lead at r = +0.93 on four
+enzymes, enough to justify modelling clade representatives, not enough to ship a predictor.
 
 The binding constraint throughout is 19 characterized enzymes. It was tested, not assumed.

@@ -71,52 +71,60 @@ finding.
   and opposite activity.** Any apparent correlation across these four (r = +0.83) is carried
   entirely by CviUPO and is not evidence.
 
-## CAVER run: the published numbers are not a channel bottleneck
+## CAVER run — CORRECTED 2026-11-08: version 3.0.2 carried a known bug
 
-**Measured 2026-11-08 with CAVER 3.0.2**, the tool the published figures came from, installed
-system-wide at `/opt/linux/centos/8.x/x86_64/pkgs/caver/3.02/caver` (the user installed it; my
-downloaded copy was blocked by the sandbox as external code). Wrapper:
-`upo_sites/bin/run_caver.py`, seeding from the heme iron on chain A plus heme, waters removed.
+**An earlier version of this section concluded that the published 7 Å / 11 Å "are not channel
+bottlenecks" and that the ring-size rule could not be transferred structurally. That conclusion
+was wrong. It rested on CAVER 3.0.2 output affected by a documented bug.**
 
-| Structure | CAVER tunnels | bottleneck **radius** | tunnel length |
+CAVER's own changelog for 3.01 states:
+
+> "The starting point optimization procedure was corrected. Previously, the starting vertex was
+> sometimes identified in **too narrow cavity** due to error in implementation."
+
+That is exactly the symptom observed: 3.0.2 returned ~1 Å bottleneck radii for every structure and
+found no tunnel above a 1.5 Å probe. The starting vertex was being planted in a sub-ångström
+crevice under the porphyrin.
+
+### CAVER 3.0.3 results
+
+| Structure | bottleneck radius | **channel diameter** | naphthalene activity |
 |---|---|---|---|
-| AaeUPO (2YOR) | 3 | 1.06, 1.06, 0.95 Å | 5.3, 5.8, 28.4 Å |
-| MroUPO (5FUJ) | 1 | 1.00 Å | 3.9 Å |
+| MroUPO (5FUJ) | 2.59 Å | **5.19 Å** | 100 |
+| MroUPO (7ZBP) | 2.45 Å | 4.91 Å | 100 |
+| HspUPO (7O1R) | 2.44 Å | **4.87 Å** | 100 |
+| AaeUPO/PaDa-I (2YOR) | 2.12 Å | **4.23 Å** | 3 |
+| CviUPO (7ZCL) | 1.85 Å | **3.71 Å** | 0 |
 
-**CAVER gives bottleneck radii of about 1 Å — roughly 2 Å diameter — for both enzymes, and AaeUPO
-is marginally the wider of the two.** That is the opposite ordering to the published 7 versus 11 Å,
-and an order of magnitude smaller.
+**The ordering now matches the published claim: MroUPO's channel is wider than AaeUPO's**, in both
+MroUPO structures, which is the comparison the whole ring-size rule rests on and which 3.0.2
+reversed.
 
-A probe sweep confirms it is not a parameter choice. At probe radii of 1.5 Å and above, **CAVER
-finds no tunnel at all in either structure**:
+Against measured naphthalene activity across the four enzymes with both a structure and an assay:
+**Pearson r = +0.933**, and the ranking is monotonic — Mro > Hsp > Aae > Cvi against 100, 100, 3, 0.
 
-```
-probe 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 A  ->  no tunnel, both enzymes
-```
+### What this does and does not re-open
 
-If the channels were 7 Å and 11 Å across, probes of 3.5 Å and 5.5 Å radius would pass.
+**Re-opened:** a *relative* channel-width ranking is now defensible. Wider channel associates with
+ring activity in the right direction, with a mechanistic rationale and a 4-point correlation.
 
-### Conclusion: the ring-size rule cannot be transferred structurally
+**Still not reproduced:** the absolute values. Measured 4.23 Å and 5.19 Å against published 7 Å and
+11 Å; the measured ratio is 1.23 against a published 1.57. So the published figures remain a
+different quantity, and **Karich's absolute cutoff — "PAHs up to about 6 Å minimum width" — still
+cannot be applied to these numbers.** What can be done is rank enzymes by channel width and treat
+the ranking, not the absolute value, as the signal.
 
-Two independent measurements — CAVER and the hard-sphere implementation here — agree that **the
-published 7 Å and 11 Å are not static-structure channel bottlenecks.** They are most plausibly
-approximate descriptions of the channel mouth, or a measure taken on a different representation.
-Whatever they are, they cannot be recomputed for an uncharacterized enzyme, which is what applying
-the rule across BFD would require.
+**n = 4.** Four enzymes have both a solved structure and a naphthalene measurement. An r of +0.933
+on four points is a lead, not a validated relationship, and two of the four (Mro, Hsp) share the
+same activity value so the correlation rests on Cvi and Aae at the low end.
 
-The two methods also disagree sharply with each other (CAVER 1.0 Å radius versus 3.0 Å here), so
-the hard-sphere measure is the more permissive of the two and should not be presented as
-equivalent to CAVER.
+### The methodological lesson, recorded
 
-**This also makes the planned AlphaFold3 / Boltz-2 modelling pointless for this purpose.** If the
-measurement cannot reproduce the published contrast on experimentally determined crystal
-structures, predicted structures will not either. The structure work is therefore **not run** —
-that is a saving, not an omission.
-
-**The one surviving observation** is that MroUPO's only tunnel is 3.9 Å long against AaeUPO's
-5.3–28.4 Å. MroUPO's heme is markedly more solvent-exposed. That is consistent with it accepting
-bulkier substrates and may be what the published "wider channel" describes, but tunnel length is
-not channel width and no rule should be built on a two-enzyme comparison.
+Two independent measurements agreeing is not sufficient evidence when one of them may be wrong for
+a reason neither test can see. My hard-sphere tool and CAVER 3.0.2 agreed on ~6 Å and ~2 Å
+respectively — both failing to reproduce the published contrast — and I read that agreement as
+confirmation. It was two different errors pointing the same way. **Checking the tool's changelog
+before trusting its output would have caught this.**
 
 ## Status and what is blocked
 
@@ -124,10 +132,10 @@ not channel width and no rule should be built on a two-enzyme comparison.
 were Karich's would repeat the aliphatic-pocket error: using a feature whose calibration had
 already failed.
 
-**CAVER has now been run** (see the section above) and the question is settled: the published
-figures are not a bottleneck measure, so the ring rule cannot be applied structurally. The
-AlphaFold3 / Boltz-2 modelling that would have followed is not run, because it cannot succeed where
-the crystal structures already fail.
+**CAVER 3.0.3 has been run and the structural route is open again** for relative ranking, though
+not for Karich's absolute cutoff. AlphaFold3 and Boltz-2 are installed with weights, so modelling
+clade representatives and ranking them by CAVER 3.0.3 channel width is now the sensible next step —
+with the ranking, not the absolute width, as the output.
 
 **Either way, the n = 2 calibration stands.** Only two enzymes anchor the width-to-activity
 relation, so even a successful transfer yields a mechanistic prediction with a two-point
