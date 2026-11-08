@@ -138,6 +138,29 @@ def bottleneck(xyz, rad, fe, grid=0.4, pad=8.0, rmax=12.0, tol=0.02,
                             lab[:, :, 0].ravel(), lab[:, :, -1].ravel()])
         return bool(np.any(b == start))
 
+    # Tunnel PROFILE: along the corridor connected to the seed at the bottleneck threshold,
+    # report the widest clearance at each distance shell from the iron. CAVER reports a radius
+    # profile per tunnel, so a wide chamber behind a narrow neck shows up there but is invisible
+    # to a single global bottleneck number. This is the check for whether a published "width"
+    # could be a chamber rather than the neck.
+    def profile(r, nbins=14, dmax=28.0):
+        mask = clearance >= max(r - 1e-6, 1e-6)
+        lab, _ = ndimage.label(mask)
+        comp = lab[tuple(fi)]
+        if comp == 0:
+            return []
+        sel = lab == comp
+        idx = np.argwhere(sel)
+        d = np.linalg.norm((idx - fi) * grid, axis=1)
+        cl = clearance[sel]
+        out = []
+        edges = np.linspace(0, dmax, nbins + 1)
+        for k in range(nbins):
+            m = (d >= edges[k]) & (d < edges[k + 1])
+            if m.any():
+                out.append((0.5 * (edges[k] + edges[k + 1]), float(cl[m].max())))
+        return out
+
     if verbose:
         print(f"    seed clearance {seed_clear:.2f} A at {fi}, "
               f"max clearance in box {clearance.max():.2f} A", file=sys.stderr)
@@ -150,6 +173,10 @@ def bottleneck(xyz, rad, fe, grid=0.4, pad=8.0, rmax=12.0, tol=0.02,
             lo_r = mid
         else:
             hi_r = mid
+    if verbose:
+        pr = profile(lo_r)
+        print("    profile (distance from Fe -> widest diameter in corridor):", file=sys.stderr)
+        print("      " + "  ".join(f"{d:.0f}A:{2*c:.1f}" for d, c in pr), file=sys.stderr)
     return lo_r
 
 
