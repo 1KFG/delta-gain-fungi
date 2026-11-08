@@ -242,7 +242,10 @@ close match in a thin database", not "novel"**. That caveat is written into the 
    answer at BFD divergence; 92.6 % agreement with nearest neighbour where both commit. Found and
    removed 13 `NEG_` controls that align to 1 of 183 columns. Clades II and III are monophyletic at
    100 % support, Clade I at 53 %, and the Clade IV/V relationship is **unresolved** (20-28 %
-   support). See `PLACEMENT_FINDINGS.md`. Re-validation at matched identity is still not done.
+   support). See `PLACEMENT_FINDINGS.md`. **Re-validation at matched identity is now DONE** (job 31868181):
+   precision is 100 % above 70 % identity, 88 % at 55-70 %, and collapses to **38 % at 45-55 %**.
+   BFD representatives sit at median 43.8 % identity to the nearest reference. **The defensible
+   output is the 2,088 representatives above the 55 % reliability threshold**, not all 7,055.
 9. G1 steps 2-5. **Step 2 (dereplication) done**: the 34,561 catalytic-core proteins reduce to
    7,055 representatives at 90 % identity and 2,805 at 70 %. **Step 3 (clade distribution) done**,
    see `G1_FINDINGS.md`. **Step 4 (novelty) running**: DIAMOND of the 7,055 representatives
@@ -285,6 +288,8 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Confirmed** | Unfiltered Clade I counts are an upper bound; filtered count is 5,101 |
 | Clade IV is the tightest group but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a member is the top experimental recommendation |
 | Clade IV's position relative to Clade V is unresolved (20-28 % bootstrap) | **Confirmed 2026-11-08** | Do not call it a distinct clade; the GROUP is confirmed, its rank is not |
+| Clade calls below 55 % identity to a reference are unreliable (38-50 % precision) | **Confirmed 2026-11-08** | Only the 2,088 representatives above 55 % identity are defensible. The caller does NOT decline at low identity - it commits and is wrong - so placement weight alone is not sufficient evidence |
+| 3 of 5 clades have 1-2 reference enzymes | **Confirmed** | 71 of 114 matched-identity test cases were impossible because removing close relatives removed the whole clade. Reference-set expansion is the only fix |
 | Rooted MRCA tests are invalid on unrooted RAxML trees | **Confirmed 2026-11-08** | Caused a spurious "Clade III is polyphyletic" result; monophyly must be tested with bipartitions |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
 | Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |

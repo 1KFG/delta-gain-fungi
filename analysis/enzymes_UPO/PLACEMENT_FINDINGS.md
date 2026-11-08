@@ -110,3 +110,68 @@ Three of the five clades rest on one or two reference enzymes (IV: 1, II: 2, III
 5 and only 53 % support. **Every unresolved question here traces to 19 characterized enzymes.**
 Expanding the reference set (Zamocky 2022 / RedoxiBase) would do more for clade annotation than any
 further method work on our side.
+
+---
+
+## Matched-identity validation: the caller is reliable above ~55 % identity, and BFD mostly is not
+
+**Measured 2026-11-08**, closing the `PLAN.md` §3.1 item 3 that had been outstanding. Job 31868181,
+22 minutes. Raw results: `data/placement/matched_identity_validation.tsv`.
+
+Ordinary leave-one-out gave 18/19, but only tested the 52.7–96.2 % identity regime. This test
+removes, for each labelled reference, **every other reference above an identity ceiling**, rebuilds
+the tree, and places it — forcing the caller to work at BFD-like divergence. Accuracy is reported
+against identity to the **nearest surviving reference**, which is directly comparable to a BFD
+query.
+
+| Identity to nearest surviving reference | n | correct | declined | **wrong** | precision when it commits |
+|---|---|---|---|---|---|
+| 70–100 % | 14 | 13 | 1 | 0 | **100 %** |
+| 55–70 % | 18 | 15 | 1 | 2 | **88 %** |
+| 45–55 % | 9 | 3 | 1 | **5** | **38 %** |
+| 35–45 % | 2 | 1 | 0 | **1** | 50 % |
+
+**Precision collapses below about 55 % identity.** At 45–55 % it is 38 %, barely above the 20 %
+expected from guessing among five clades.
+
+**And the caller does not protect itself by declining.** Only 3 of 43 scorable cases were declined.
+Below 55 % it commits and is wrong rather than abstaining. That is the opposite of the behaviour
+the confidence tiers were meant to provide, and it means **a placement weight above 0.5 is not
+sufficient evidence at low identity**.
+
+**71 of 114 test cases were impossible** — removing a reference's close relatives removed every
+other member of its clade, because three of the five clades have only one or two references. That
+is not a flaw in the test; it is the central limitation of the project stated quantitatively.
+
+### What this means for the BFD results
+
+Identity to the nearest reference across the 7,055 representatives: **median 43.8 %**.
+
+| | representatives |
+|---|---|
+| ≥ 70 % identity | 823 (11.7 %) |
+| **≥ 55 % identity (the reliable zone)** | **2,505 (35.5 %)** |
+| ≥ 45 % | 3,365 (47.7 %) |
+
+Of the 3,052 representatives placement assigns, **2,088 (68.4 %) sit above the 55 % threshold** and
+can be trusted at 88–100 % precision. The remaining **964 assigned calls sit below it and should be
+treated as unreliable**, with expected precision of 38–50 %.
+
+**So the defensible output is 2,088 reliably-assigned representatives, not 7,055 and not 3,052.**
+
+Reliable-zone calls by clade: I 679, IV 602, III 383, V 381, II 43.
+
+### One piece of good news for Finding 3
+
+**602 of the 652 Clade IV representatives fall in the reliable zone.** The Clade IV group is one of
+the few parts of this dataset where clade assignment is actually trustworthy, because its members
+sit at high identity to MphUPO. Its *rank* remains unresolved (20–28 % bootstrap), but *membership*
+is well supported. The experimental recommendation stands on the firmer of the two claims.
+
+### The honest headline
+
+**A reliable identification model for fungal UPO subtypes does not currently exist, and cannot be
+built from 19 reference enzymes.** What exists is a caller that is reliable above 55 % identity,
+knows where that boundary is, and can therefore say which 2,088 of 97,520 proteins it is entitled
+to an opinion about. Expanding the reference set is the only route to more, and no further method
+work on our side substitutes for it.
