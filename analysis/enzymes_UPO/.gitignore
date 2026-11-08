@@ -60,3 +60,11 @@ tools/caver_dl/
 
 # Downloaded reference PDB structures and CAVER output.
 data/structures/
+
+# Boltz-2 inputs and output: MSAs (19 MB) and predicted structures, all regenerable from
+# upo_sites/bin/build_boltz_inputs.py plus upo_sites/slurm/boltz_19.sh. The YAML inputs are
+# regenerable too and reference absolute MSA paths, so they are not committed either.
+data/boltz/
+
+# CAVER writes this into the working directory; it is run output, not source.
+whole_clustering.csv
