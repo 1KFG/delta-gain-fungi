@@ -140,3 +140,77 @@ with the ranking, not the absolute width, as the output.
 **Either way, the n = 2 calibration stands.** Only two enzymes anchor the width-to-activity
 relation, so even a successful transfer yields a mechanistic prediction with a two-point
 calibration, not a validated classifier.
+
+---
+
+## The n = 4 lead does not survive the fifth structure
+
+**Measured 2026-11-08, immediately after the correction above.** Rather than leave r = +0.933 on
+four points as the standing result, I searched the PDB for more structures of enzymes that also
+have naphthalene measurements. One exists: **9IZ8 = TteUPO** (*Thielavia terrestris*), one of the
+19, measured naphthalene 0.
+
+| Enzyme | channel diameter (CAVER 3.0.3) | naphthalene |
+|---|---|---|
+| **TteUPO (9IZ8)** | **5.40 Å — the widest measured** | **0** |
+| MroUPO (5FUJ) | 5.19 Å | 100 |
+| HspUPO (7O1R) | 4.87 Å | 100 |
+| AaeUPO (2YOR) | 4.23 Å | 3 |
+| CviUPO (7ZCL) | 3.71 Å | 0 |
+
+| Set | r |
+|---|---|
+| All five structures | **+0.452** |
+| Excluding TteUPO (the original four) | +0.933 |
+
+**TteUPO has the widest channel of any enzyme measured and no naphthalene activity at all.** It is
+a direct counterexample, and adding it halves the correlation.
+
+### Is excluding TteUPO defensible?
+
+Partly, and the argument was made **before** this measurement, not after it. `G1_FINDINGS.md`
+Finding 5 and `CALIBRATION_MATRIX.md` §4.1 both record that **TteUPO and AbrUPO-II are at or near
+zero on all five assays** (ABTS, NBD, 2,6-DMP, naphthalene, 4-NA), and that an enzyme flat across
+every assay is most simply poorly expressed protein rather than one selectively unable to oxidise
+naphthalene. On that basis TteUPO's zero carries no information about substrate specificity.
+
+But the honest position is that **this is still a post-hoc exclusion that rescues the correlation**,
+and it reduces an already tiny sample to four. The pre-registered reasoning helps; it does not make
+n = 4 into evidence.
+
+### Where this leaves the channel-width route
+
+**Not established, and weaker than it looked an hour ago.** The correct summary is:
+
+- CAVER 3.0.3 reproduces the published *ordering* for AaeUPO versus MroUPO, which 3.0.2 reversed.
+- Among enzymes whose activity measurement is interpretable, wider channel tracks naphthalene
+  activity (r = +0.93, n = 4).
+- The single enzyme whose measurement is **not** interpretable is also the widest channel and a
+  zero, so the relationship cannot be tested on it either way.
+- **Five structures, of which one must be set aside on independent grounds, is not a basis for
+  scoring 97,520 proteins.**
+
+Also measured, for completeness, though neither enzyme is among the 19 and so neither has
+naphthalene data: **MweUPO (8RNJ) 5.21 Å** and **PabUPO-II (9HE6) 4.63 Å**.
+
+### Consequence for the modelling plan
+
+Modelling clade representatives and ranking them by channel width would produce a ranking whose
+only calibration is four enzymes, one of them contested. **I am not running it on that basis.**
+What would change this is more enzymes with both a structure and a ring-substrate measurement —
+the same reference-set limit that bounds every other part of this project.
+
+### Tooling note, corrected
+
+I reported that the Boltz-2 environment was broken with a numpy/numba conflict. **That was my
+error.** The environment's own numpy is 1.26.4, compatible with its numba 0.61.0. The 2.5.2 that
+triggered the ImportError came from the user site directory
+(`~/.local/lib/python3.12/site-packages/numpy`), which Python prepends ahead of an environment's
+own packages. `PYTHONNOUSERSITE=1` makes Boltz-2 run normally.
+
+Worth knowing beyond this project: that user-site numpy will shadow **any** module-provided Python
+environment on this account, and the resulting error message blames the environment rather than the
+shadowing.
+
+So Boltz-2 is available. The decision not to model clade representatives is about the evidence —
+four calibration enzymes, one contested — not about tooling.
