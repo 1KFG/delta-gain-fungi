@@ -1,4 +1,101 @@
-# DeltaGain_Fungi — Handoff / Status (2026-11-07)
+# DeltaGain_Fungi — Handoff / Status (2026-11-08)
+
+## Update 2026-11-08: enzymes_UPO brought under version control, reviewed, and a coordination warning
+
+Session: https://claude.ai/code/session_01DDHWqZxJoeYpu2sDQS3BGF (laptop, `novelty-enzymes-50`).
+Concurrent session doing the compute: https://claude.ai/code/session_01CoSBcRoaY8ycLQsGMS4hbp (on
+`skylark`, not addressable by message from the laptop).
+
+### Why this update exists
+
+On 2026-11-07 the UPO project was rewritten on the HPCC — new framing, two measured negative
+results, a new tool — and **none of it was in git**. About eleven hours of documents and code sat
+untracked on shared storage. It is now committed.
+
+### What was committed
+
+| Commit | Contents |
+|---|---|
+| `c090229` | The 2026-11-07 HPCC work: `DESIGN.md`, rewritten `PLAN.md` (+ `PLAN.superseded.md`), `CALIBRATION_MATRIX.md`, `POCKET_TRANSFER.md`, `RESULT_T2_negative.md`, `SUBSTRATE_CALIBRATION.md`, `G1_BFD_SUMMARY.md`, `upo_sites/`, `upo_reg/`, small evidence data. 37 files |
+| `4dcd560` | `REVIEW_PLAN_superseded.md` — an independent review of the original plan that had existed only on the laptop and had never been seen by the work that followed |
+| `7d1e89a` | `SYNTHESIS_REVIEW.md` — all plans and reviews assessed against the full BFD run |
+| this one | `COORDINATION.md` and this handoff section |
+
+A scoped `analysis/enzymes_UPO/.gitignore` keeps out `data/bfd_full/` (~85 MB, regenerable),
+`logs/`, the 9.3 MB publisher supplement and its figures, and the `.lineage.tsv` cache. The two
+tables transcribed **by hand** from the supplement figures are committed, since they cannot be
+recovered without redoing that work.
+
+### Where the science stands
+
+The project ran two activity gates and **both came back negative**:
+
+- **T2** (aromatic ring hydroxylation, the original target): the "aliphatic pocket" does not
+  predict it. Pearson r = **+0.176** across the 19-enzyme calibration panel.
+- **T1** (peroxygenase-vs-peroxidase propensity, the thing it pivoted *to*): raw r = +0.748, but
+  **partial r = +0.129 given clade**, and +0.001 within the ten non-Clade-V enzymes. Clade carries
+  the signal; the pocket is nearly collinear with it and adds almost nothing.
+
+The response was to narrow the claim rather than rescue the model. The deliverable is now a
+**clade annotator with site evidence**, and the refusal to emit a per-protein activity score is
+written into the tool's own output header with a measured reason. That is the right call and it is
+the most valuable thing in the directory.
+
+Full BFD run completed: **97,520 PF01328 proteins across 15,137 genomes** (8,314 genomes carry
+none). Max copy number 144, in *Sphaerobolus stellatus*.
+
+### The numbers to be careful with
+
+- **Only 8.05 % of clade calls fall inside the caller's validated identity range.** The backbone is
+  19 sequences; BFD proteins sit at 25–42 % identity to anything characterized. Everything else is
+  labelled extrapolation, correctly.
+- **The real working denominator is ~11,200** (catalytic-core AND validated-range), or **~6,700**
+  excluding provisional Clade IV — not 97,520 and not 34,561.
+- **Clade IV supplies 38.8 % of all validated-range calls** (4,968 of 12,818) at a mean identity of
+  62.1 %, ~20 points above every other clade — and it is the one clade that *cannot* be validated,
+  having a single characterized member. Not yet explained. Check before any candidate list is drawn
+  from it.
+- **Clade I (33,424 proteins, 34 % of all calls) carries the universal Glu180 at only 16.8 %**,
+  while all five characterized Clade I enzymes have it. `G1_BFD_SUMMARY.md` §6 reads this as the
+  low-identity Clade I bin absorbing proteins that are not UPOs. That caveat needs to travel with
+  the lineage table in §4, where it currently does not.
+
+### Open items, highest value first
+
+1. **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
+   curated sequences would raise the clade backbone from 19, which is the only cheap route out of
+   the extrapolation problem, and would supply the missing outgroup and the prior-art baseline in
+   the same action. Highest-value unexploited item in the project.
+2. **`DESIGN.md` is stale.** Its §10 still says "pivot to T1" and calls the S8 digitization "the
+   gate on whether T1 is viable". That gate was run and T1 failed. `PLAN.md` is correct;
+   `DESIGN.md`, the longest document and the one framed as the intent document, is not.
+3. **Clade IV check** (above), before dereplication picks representatives.
+4. **Gene-model QC was dropped in the rescope** while exposure grew from ~800 genomes to 15,137 of
+   self-generated models. BFD's `gene_transcripts` already carries `is_partial`,
+   `has_start_codon`, `has_stop_codon`; joining them is one query and would let the
+   catalytic-machinery numbers be reported QC-clean versus flagged. Until then "65 % lack the full
+   catalytic set" is not safely a biological statement.
+5. **Thresholds are uncalibrated.** The 30 % identity floor and `--min-margin` are explicitly
+   labelled heuristics. Low-identity Clade I proteins lacking Glu180 are a ready-made decoy set for
+   calibrating them.
+
+### Coordination warning — two sessions are in this directory
+
+The `skylark` session is running compute right now and cannot be messaged from the laptop;
+`COORDINATION.md` in `analysis/enzymes_UPO/` is the channel, and the user is relaying.
+
+As of 2026-11-08 10:10 PT it had jobs **31865316** (`upo_nr`, DIAMOND vs nr, running 34 min) and
+**31865695** (`upo_prom`, promoter extraction) in flight, and had added `G1_FINDINGS.md`,
+`derep.sh`, `diamond_nr.sh` and five `upo_reg/bin/` scripts since commit `c090229`.
+
+**Flag for the user:** `PLAN.md` §2 lists **D6 as "the one blocking decision"** — G3 regulation
+scope, all-BFD versus RNA-seq-followable clades — and §4 says the two options "are different
+projects, not different settings". Job 31865695 is processing **7,055 target genes in 3,274
+genomes**, i.e. the broad option. D6 appears to have been settled by starting rather than by
+decision. If that is intended, `PLAN.md` should stop listing it as open.
+
+Note also that `G1_FINDINGS.md` (skylark) and `SYNTHESIS_REVIEW.md` (laptop) were written
+independently and overlap. They do not contradict each other, but they should probably be merged.
 
 ## Update 2026-11-07: enzyme-discovery side projects (read this first for `analysis/`)
 
