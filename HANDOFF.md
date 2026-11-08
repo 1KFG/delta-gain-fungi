@@ -1,4 +1,86 @@
-# DeltaGain_Fungi — Handoff / Status (2026-11-05)
+# DeltaGain_Fungi — Handoff / Status (2026-11-07)
+
+## Update 2026-11-07: enzyme-discovery side projects (read this first for `analysis/`)
+
+This section covers only `analysis/`. It does not change the delta-gain funnel status below.
+
+Two side projects started from `analysis/novelty_enzymes/BACKGROUND.md`, a report written by an agent.
+Treat BACKGROUND.md claims as unverified; at least one is wrong (see "Corrections" below).
+Committed in `1d32ec5` and `d133436`, pushed to `main`.
+
+### Project 1 — FunBGCeX repeat (`analysis/novelty_enzymes/`)
+
+Plan: `FUNBGCEX_PLAN.md`. Nothing has run.
+
+Claim to test: BFD annotation of genomes NCBI left unannotated finds biosynthetic gene clusters that the
+published 1,990-genome FunBGCeX run could not see, because that tool needs GenBank input with translations.
+
+Measured facts that make this feasible:
+- Funannotate already wrote `genome_annotation/<out>/predict_results/<out>.gbk.gz` for **23,450 genomes**,
+  with `/translation` present (checked in one genome only). No format conversion is needed.
+- **antiSMASH has not run for BFD.** The modules `BFD/ANTISMASH` and `BFD/MERGE_ANTISMASH` exist, but there
+  is no output under `results/function/` and no table. The paper's headline contrast is FunBGCeX vs antiSMASH
+  (1,050 vs 325 Pyr4 clusters), so this comparator must be decided.
+- NCBI baseline genomes in `1KFG/2026/NCBI_fungi/source/NCBI_ASM/<acc>/` have `.fna`, `.gff` and `.faa` but
+  **no `.gbff`**, so the NCBI-vs-BFD comparison needs a conversion step or a separate download.
+
+Next step: Phase 0 of the plan — install FunBGCeX, fetch Zenodo 10.5281/zenodo.8126803, and run ~20 genomes
+that appear both in the paper's Supplementary Data 4 and in BFD, once per annotation source. That measures
+our gene-model error rate in cluster context before any large run.
+
+### Project 2 — UPOs (`analysis/enzymes_UPO/`)
+
+Plan: `PLAN.md` (user decisions are at the top), with `CENSUS.md`, `REFERENCES.md` and `sql/`.
+Tool: `upo_id/` (built and tested; see `METHOD.md` and `README.md`).
+
+Census (measured, `sql/census.sql`, `sql/novel_lineages.sql`):
+- Join key is `samples.ASMID = prior_annotation_status.folder`. 24 of 23,680 genomes do not match; all 24 are
+  Dikarya, so no early-diverging genome is lost.
+- 827 early-diverging genomes (Microsporidia excluded); 813 have proteins; 10.17 M proteins.
+- BFD Pfam at the gathering threshold finds **807 PF01328 proteins** there; 309 are in BFD-only genomes.
+- Of the 23,451 genomes with BFD gene models: 17,864 had no prior annotation, 5,553 were NCBI-annotated.
+- Newly sampled Dikarya: 6 classes, 22 orders and 107 families have **no** NCBI-annotated genome.
+  Lecanoromycetes (lichens) is the largest new sample at **340 BFD-only genomes** vs 137 NCBI-annotated.
+
+**The first real result, and it is negative for the original framing.** Running `upo_id` on the 807 proteins
+gives 665 CPO-like Family I, 133 that fail the motif checks, 6 low-confidence UPO Family II and 3 UPO
+Family I. **All 9 UPO calls sit in NCBI-annotated genomes. None is in a BFD-only genome.** So for the three
+phyla in the original request, BFD adds no new UPO. The 6 Family II calls are Mucoromycota
+(*Jimgerdemannia*, *Endogone*), about 300 aa, and lack the full long-type signature.
+
+Next step: run `upo_id` on the newly sampled Dikarya lineages, starting with the 340 BFD-only
+Lecanoromycetes genomes. That is a short job and it is the cheapest test of whether the project still has a
+novelty claim. Not checked: whether lichen assemblies carry photobiont or bacterial contigs, which would
+affect gene calls.
+
+### Corrections to BACKGROUND.md
+
+- "113 putative UPOs from more than 800 genomes" is a mis-citation. 113 is the number of seed sequences in
+  Faiza et al. 2019 (BMC Evol Biol 19:76).
+- The EHD/EGD motif conflict is settled. Five crystal structures show EHD is the Mg site in short UPOs
+  (MroUPO, HspUPO, CviUPO), so EHD does not exclude a UPO.
+- PF01328 alone is not a UPO call. It covers 97,520 proteins across BFD.
+- UPObase (`upobase.bioinformaticsreview.com`) does not resolve. The user decided to build our own reference
+  set rather than ask the authors.
+
+### Open work
+
+1. **Tree placement** replaces HMM score competition in `upo_id` (user decision 7). Not implemented.
+2. **Residue-probing literature** (Allozymes case study; PMC12117455 and its references) to define which
+   positions to score. Not started.
+3. **CglUPO and CciUPO accessions** are unverified (noted for a later lookup).
+4. **No plan or tool has had an independent review.** Three attempts were stopped by model safeguards
+   (Fable 5.1 twice, Opus 5.5 once), all with `[bio]`. Request IDs: `req_011CgpSgRiZJzvitHNnm88ev`,
+   `req_011CgpTutXr2zigZNSVDRXhs`, `req_011CgpUDDkhzHdk3rJ1ypPUL`. A later attempt to start the
+   residue-literature agent was also stopped. Run reviews from a fresh session, or report the false positives.
+
+### Conventions used here
+
+- `upo_id` needs `module load hmmer/3.4` (plus `mafft/7.505` for `build`) and `/usr/bin/python3.12`.
+  The default `python3` on HPCC is 3.9 and will not work.
+- Files that no tool reads at runtime are zstd -19. HMM files stay plain because `hmmsearch` and `hmmalign`
+  cannot read compressed input. `.gitignore` carries an exception so the generic `results/` rule does not
+  drop `upo_id/results/`.
 
 ## Update 2026-11-05: strategy change — baseline funnel replaces the universal search (read this first)
 
