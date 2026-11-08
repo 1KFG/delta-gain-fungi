@@ -1,0 +1,35 @@
+#  Figure S2 of Barros-Reguera et al. 2025, DOI 10.1186/s13068-025-02675-w (PMC12306115).
+#  Supplementary Material 1 (13068_2025_2675_MOESM1_ESM.docx), downloaded 2026-11-07 from
+#  https://static-content.springer.com/esm/art%3A10.1186%2Fs13068-025-02675-w/MediaObjects/13068_2025_2675_MOESM1_ESM.docx
+#  Transcribed by eye from the figure image (word/media/image2.jpeg). NOT machine-extracted.
+#  This file records the FIGURE AS PUBLISHED. It is deliberately not reconciled with our own
+#  alignment of the 19 sequences; the 15 discrepancies are tabulated in CALIBRATION_MATRIX.md 3.1.
+#  Verify before any load-bearing use. Caption, verbatim:
+#    "Structure-based sequence alignment for active site residues retrieved from 3DM. Residues were
+#     selected based on the catalytic center of HspUPO. Residue numbering corresponds to HspUPO ...
+#     the structural location of each residue for clade V is described, with labels corresponding
+#     the aliphatic pocket (AP), the entrance (E), the catalytic pocket (CP), and the acid-base pair:
+#     Glu180 for all UPOs, and His110 in short UPOs and Arg173 in long UPOs (Clade I)."
+#  '-' = no residue at that column. Lowercase 'y' is as printed in the figure.
+#  LOCATION row is the paper's own assignment, defined for Clade V.
+enzyme	clade	type	p73	p77	p80	p81	p84	p108	p110	p172	p173	p175	p176	p179	p180	p183	p187	p223	p228	p232	similarity_pct_vs_Hsp
+LOCATION	-	-	AP	AP	E	AP	E	CP	Base	E	-	E	CP	CP	Acid	AP	AP	AP/E	AP	AP	-
+CabUPO-III	I	Long	F	A	S	A	L	F	G	V	R	L	T	G	E	F	L	S	-	V	35.3
+CmaUPO-I	I	Long	L	G	L	A	A	F	G	F	R	S	T	G	E	F	N	G	-	V	35.3
+GmaUPO-II	I	Long	M	L	F	V	A	F	G	P	R	F	T	A	E	F	F	R	-	I	35.3
+PaDa-I	I	Long	F	A	F	A	A	F	G	F	R	F	T	G	E	F	L	R	-	V	29.4
+LspUPO-II	I	Long	M	T	I	I	G	F	G	A	R	V	A	A	E	F	F	T	-	I	35.3
+CviUPO	II	Short	L	L	T	I	L	F	H	Q	Q	A	T	G	E	K	T	I	M	V	41.2
+PanUPO	II	Short	L	L	T	V	L	F	H	T	H	I	T	G	E	K	T	L	L	V	52.9
+MorUPO	III	Short	I	I	L	A	V	I	H	T	T	N	I	A	E	F	V	I	V	L	35.3
+MroUPO	III	Short	V	I	L	A	I	I	H	T	T	K	I	S	E	F	V	I	V	L	41.2
+MphUPO	IV	Short	F	L	I	M	Q	L	H	T	T	A	F	G	E	A	V	V	I	Q	47.1
+AbrUPO-I	V	Short	L	L	I	L	A	L	H	I	G	A	F	G	E	A	I	T	L	T	88.2
+AbrUPO-II	V	Short	I	L	Y	L	E	L	H	L	G	A	F	G	E	A	V	T	L	L	70.6
+AluUPO	V	Short	I	L	F	L	E	L	H	L	G	S	F	G	E	A	V	I	L	L	70.6
+AtuUPO	V	Short	I	L	y	L	E	L	H	L	G	S	F	G	E	A	V	I	L	L	70.6
+AacUPO	V	Short	I	L	Y	L	E	L	H	L	G	A	F	G	E	A	I	V	L	M	76.5
+TteUPO	V	Short	V	L	L	L	F	L	H	I	G	A	F	G	E	A	A	I	L	T	88.2
+HspUPO	V	Short	I	L	L	L	F	L	H	L	G	A	F	G	E	A	I	F	L	S	100.0
+RneUPO	V	Short	L	F	F	L	A	F	H	V	G	D	F	A	E	A	I	I	L	F	47.1
+DspUPO-I	V	Short	I	L	F	L	F	L	H	L	G	S	F	G	E	A	I	M	L	M	76.5

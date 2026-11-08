@@ -1,0 +1,24 @@
+#  Residues at the Figure-S2 positions, read from OUR MAFFT L-INS-i alignment of the 19
+#  calibration sequences (backbone.afa), HspUPO numbering. Compare with the published
+#  figure transcription in ../calib_dl/active_site_S2.tsv. Generated 2026-11-07.
+enzyme	header	p73	p77	p80	p81	p84	p108	p110	p172	p173	p175	p176	p179	p180	p183	p187	p223	p228	p232
+LOCATION	-	AP	AP	E	AP	E	CP	Base	E	-	E	CP	CP	Acid	AP	AP	AP/E	AP	AP
+AacUPO	AacUPO|cladeV|Short|A0A1L9X7H3	I	L	Y	L	E	L	H	L	G	A	F	G	E	A	I	V	L	M
+AbrUPO-I	AbrUPO-I|cladeV|Short|A0A1L9U8A9	L	L	I	L	A	L	H	I	G	A	F	G	E	A	I	T	L	T
+AbrUPO-II	AbrUPO-II|cladeV|Short|A0A1L9UNI9	I	L	Y	L	E	L	H	L	G	A	F	G	E	A	V	I	L	L
+AluUPO	AluUPO|cladeV|Short|A0A7R7WEQ5	I	L	Y	L	E	L	H	L	G	S	F	G	E	A	V	I	L	L
+CabUPO-III	CabUPO-III|cladeI|Long|A0A4Q2DAL3	F	A	S	A	L	F	G	V	R	L	T	G	E	F	L	S	V	I
+CmaUPO-I	CmaUPO-I|cladeI|Long|A0A5C3KVD0	L	G	L	A	A	F	G	F	R	S	T	G	E	F	N	G	V	F
+CviUPO	CviUPO|cladeII|Short|UPI002016A77D	L	L	T	I	L	F	H	Q	Q	I	T	G	E	K	T	L	M	V
+GmaUPO-II	GmaUPO-II|cladeI|Long|A0A067SWH8	M	L	F	V	A	F	G	P	R	F	T	A	E	F	F	R	I	A
+MorUPO	MorUPO|cladeIII|Short|A0A9P7RSA8	I	I	L	A	V	I	H	T	T	F	I	A	E	F	V	I	V	L
+MroUPO	MroUPO|cladeIII|Short|UPI002016A75C	V	I	L	A	I	I	H	L	T	T	I	S	E	F	V	I	L	I
+PanUPO	PanUPO|cladeII|Short|B2B6C6	L	L	T	V	L	F	H	T	H	I	T	G	E	K	T	L	L	V
+RneUPO	RneUPO|cladeV|Short|A0A1W2TUZ6	L	F	F	L	A	F	H	V	G	D	F	A	E	A	I	I	L	F
+TteUPO	TteUPO|cladeV|Short|G2R8M6	V	L	L	L	F	L	H	I	G	A	F	G	E	A	A	I	L	T
+AtuUPO	AtuUPO|cladeV|Short|GAQ45152.1	I	L	F	L	E	L	H	L	G	S	F	G	E	A	V	I	L	L
+DspUPO-I	DspUPO-I|cladeV|Short|OTB17553.1	I	L	F	L	F	L	H	L	G	S	F	G	E	A	I	M	L	M
+HspUPO	HspUPO|cladeV|Short|OTA57433.1	I	L	L	L	F	L	H	L	G	A	F	G	E	A	I	F	L	S
+LspUPO-II	LspUPO-II|cladeI|Long|KXN91485.1	M	T	I	I	G	F	G	A	R	V	A	A	E	F	F	T	I	L
+MphUPO	MphUPO|cladeIV|Short|EKG15041.1	F	L	I	M	Q	L	H	T	T	A	F	G	E	A	V	V	I	Q
+PaDa-I_parent_AaeUPO	PaDa-I_parent_AaeUPO|cladeI|Long|uniprot:B9W4V6	F	A	F	A	A	F	G	F	R	F	T	G	E	F	L	R	V	I
