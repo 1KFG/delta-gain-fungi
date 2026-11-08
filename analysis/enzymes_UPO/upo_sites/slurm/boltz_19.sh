@@ -27,6 +27,14 @@ BOLTZ=/opt/linux/rocky/8.x/x86_64/pkgs/boltz/2.2.1/env/bin/boltz
 OUT=$PROJ/data/boltz/out
 export BOLTZ_CACHE=/srv/projects/db/boltz
 export PYTHONNOUSERSITE=1
+
+# torch in this env is 2.11.0+cu130 and its JIT loads CUDA 13 nvrtc builtins BY FILENAME.
+# The library ships inside the env but is not on the loader path, so every prediction died with
+# "nvrtc: error: failed to open libnvrtc-builtins.so.13.0" while boltz still exited 0 - the first
+# run produced 19 output directories and zero structures.
+NV=$(dirname "$BOLTZ")/../lib/python3.12/site-packages/nvidia
+export LD_LIBRARY_PATH="$NV/cu13/lib:$NV/cuda_nvrtc/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+[ -f "$NV/cu13/lib/libnvrtc-builtins.so.13.0" ] || { echo "nvrtc builtins missing"; exit 1; }
 mkdir -p "$OUT"
 
 mapfile -t ALL < <(ls "$PROJ"/data/boltz/yaml/*.yaml | sort)
@@ -36,6 +44,7 @@ START=$(( (TASK-1) * PER ))
 if [ "$START" -ge "${#ALL[@]}" ]; then echo "task $TASK: nothing to do"; exit 0; fi
 MINE=( "${ALL[@]:$START:$PER}" )
 echo "task $TASK: ${#MINE[@]} structures"
+FAIL=0
 
 for y in "${MINE[@]}"; do
   b=$(basename "$y" .yaml)
@@ -43,7 +52,9 @@ for y in "${MINE[@]}"; do
   echo "=== $b $(date +%T) ==="
   $BOLTZ predict "$y" --out_dir "$OUT" --cache "$BOLTZ_CACHE" \
       --accelerator gpu --devices 1 --output_format pdb \
-      --diffusion_samples 1 --override || echo "FAILED $b"
+      --diffusion_samples 1 --override || { echo "FAILED $b"; FAIL=1; }
   echo "=== $b done $(date +%T) ==="
 done
-echo "task $TASK complete"
+n=$(find "$OUT" -name '*.pdb' 2>/dev/null | wc -l)
+echo "task $TASK complete; PDB files now present: $n"
+[ "$FAIL" = "0" ] || exit 1

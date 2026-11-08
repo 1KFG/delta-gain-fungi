@@ -17,7 +17,7 @@ import argparse, csv, os, shutil, subprocess, sys, tempfile
 
 SOLVENT_HET = {"HOH", "WAT", "DOD", "SO4", "PO4", "GOL", "EDO", "PEG", "MPD",
                "CL", "NA", "K", "ACT", "DMS", "TRS", "FMT", "NO3", "CA", "MN"}
-HEME = {"HEM", "HEC", "HEB"}
+HEME = {"HEM", "HEC", "HEB", "LIG"}   # LIG: Boltz-2 names the ligand chain this way
 
 
 def clean_pdb(src, dst, chain="A"):
@@ -31,9 +31,13 @@ def clean_pdb(src, dst, chain="A"):
             if line[16] not in (" ", "A"):
                 continue
             resn = line[17:20].strip()
-            if line[21] != chain:
-                continue
-            if rec == "HETATM" and (resn in SOLVENT_HET or resn not in HEME):
+            is_het = rec == "HETATM"
+            # Protein comes from the requested chain; the cofactor is kept from ANY chain,
+            # because Boltz-2 writes it as a separate chain (B) from the protein (A).
+            if is_het:
+                if resn in SOLVENT_HET or resn not in HEME:
+                    continue
+            elif line[21] != chain:
                 continue
             el = (line[76:78].strip() or line[12:16].strip()[:1]).upper()
             if el in ("H", "D"):

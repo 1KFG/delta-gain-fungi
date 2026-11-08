@@ -214,3 +214,49 @@ shadowing.
 
 So Boltz-2 is available. The decision not to model clade representatives is about the evidence —
 four calibration enzymes, one contested — not about tooling.
+
+---
+
+## Boltz-2 validation: predicted structures fail the channel measurement
+
+**Measured 2026-11-08.** All 19 calibration enzymes modelled with Boltz-2 (heme as an explicit
+ligand, MSAs built from 2,000 real BFD PF01328 homologs). The 5 with crystal structures were
+modelled **deliberately**, as the test of whether predicted structures can be measured this way at
+all. Inputs: `upo_sites/bin/build_boltz_inputs.py`; job: `upo_sites/slurm/boltz_19.sh`.
+
+| Enzyme | predicted | experimental | error | Boltz confidence |
+|---|---|---|---|---|
+| HspUPO | 4.86 Å | 4.87 Å | **−0.01** | 0.926 |
+| MroUPO | 5.07 Å | 5.19 Å | **−0.12** | 0.964 |
+| AaeUPO | 4.05 Å | 4.23 Å | **−0.18** | 0.941 |
+| CviUPO | 2.36 Å | 3.71 Å | **−1.35** | **0.968** |
+| TteUPO | 2.49 Å | 5.40 Å | **−2.91** | 0.873 |
+
+**Three of five land within 0.2 Å. Two are badly wrong.** Overall r = **+0.332**, mean absolute
+error 0.91 Å, worst 2.91 Å.
+
+### Why this kills the n = 19 plan rather than bruising it
+
+**TteUPO is measured as the widest channel of any enzyme (5.40 Å) and predicted as the narrowest
+(2.49 Å).** The prediction is not noisy, it is backwards — on the single enzyme that matters most,
+since TteUPO is the counterexample that collapsed the width-activity correlation in the first
+place.
+
+**Model confidence does not flag the failures.** CviUPO has the **highest** confidence of all five
+(0.968) and the second-worst error. All five score 0.87–0.97. So there is no confidence threshold
+that separates the usable models from the unusable ones — which means the other 14 predictions
+cannot be triaged, only discarded.
+
+### Conclusion
+
+**The other 14 predicted structures are not used.** Channel width can be measured from a crystal
+structure and not from a predicted one, at least at the accuracy this question needs, and no
+available score tells you which predictions to trust.
+
+The channel-width route therefore stays at **n = 5 experimental structures** (n = 4 once TteUPO is
+set aside on independent grounds), which is what it was before. **This is the same reference-set
+ceiling that bounds every other part of this project**, reached by a third independent road: not
+enough characterized enzymes, and here not enough solved structures either.
+
+What would move it: more crystal structures of UPOs that also have ring-substrate measurements.
+Nothing computational substitutes.

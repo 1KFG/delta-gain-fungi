@@ -53,7 +53,7 @@ SOLVENT_HET = {"HOH", "WAT", "DOD", "SO4", "PO4", "GOL", "EDO", "PEG", "MPD",
                "CL", "NA", "K", "ACT", "DMS", "TRS", "FMT", "NO3", "CA", "MN"}
 
 
-def parse_pdb(path, chain=None, keep_het=("HEM", "HEC", "HEB")):
+def parse_pdb(path, chain=None, keep_het=("HEM", "HEC", "HEB", "LIG")):
     """Return (coords, radii, fe_coord). Waters and buffer heteroatoms are dropped."""
     xyz, rad, fe = [], [], None
     with open(path) as fh:
@@ -66,11 +66,12 @@ def parse_pdb(path, chain=None, keep_het=("HEM", "HEC", "HEB")):
                 continue
             resn = line[17:20].strip()
             ch = line[21]
-            if chain and ch != chain:
-                continue
             if rec == "HETATM":
+                # cofactor kept from any chain (Boltz-2 puts it on its own chain)
                 if resn in SOLVENT_HET or resn not in keep_het:
                     continue
+            elif chain and ch != chain:
+                continue
             el = (line[76:78].strip() or line[12:16].strip()[:1]).upper()
             if el == "H" or el == "D":
                 continue
