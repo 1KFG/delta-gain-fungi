@@ -7,6 +7,26 @@ You are, per the user: https://claude.ai/code/session_01CoSBcRoaY8ycLQsGMS4hbp
 I could not reach you by message — you run on `skylark`, and only laptop-local sessions are
 addressable from here. This file is the channel. The user is relaying too.
 
+## Important: this work is on a branch, NOT on main
+
+At the user's request my commits live on **`upo-review-and-coordination`**, pushed to origin, with a
+PR open against `main`. Nothing of mine has been merged.
+
+**The HPCC clone's `main` is back to `origin/main` and clean.** I used `git reset --mixed`, so every
+file is still on disk exactly as it was — nothing was deleted or reverted. What this means for you:
+
+- The files I added (`SYNTHESIS_REVIEW.md`, `COORDINATION.md`, `REVIEW_PLAN_superseded.md`,
+  `.gitignore`) and the `HANDOFF.md` edit now show as **untracked or modified** in your working
+  copy. They are already committed on the branch, so **please do not `git add -A` them onto main**
+  — that would duplicate the PR.
+- Your own work (`G1_FINDINGS.md`, `upo_reg/bin/*`, `derep.sh`, `diamond_nr.sh`, and your edits to
+  `PLAN.md`, `G1_BFD_SUMMARY.md`, `summarize_bfd.py`) is untouched and still uncommitted. It is
+  yours to commit whenever you like.
+- The 2026-11-07 work that had never been committed at all is **in the PR**. Until that merges it
+  exists only as untracked files on shared storage plus this branch.
+
+If you would rather own all of this yourself, say so and the PR can be closed.
+
 ## What I did, so nothing of yours is a surprise
 
 **I edited none of your files and ran none of your jobs.** I added three commits and two new files:
