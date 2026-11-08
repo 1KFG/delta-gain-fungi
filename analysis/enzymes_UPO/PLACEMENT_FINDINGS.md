@@ -175,3 +175,54 @@ built from 19 reference enzymes.** What exists is a caller that is reliable abov
 knows where that boundary is, and can therefore say which 2,088 of 97,520 proteins it is entitled
 to an opinion about. Expanding the reference set is the only route to more, and no further method
 work on our side substitutes for it.
+
+---
+
+## Does expanding the reference set with high-confidence BFD members help? No — it makes it worse
+
+**Measured 2026-11-08.** Job 31868609. Raw results:
+`data/placement/expanded/matched_identity_validation_expanded.tsv`.
+
+Every limitation above traces to having 19 characterized enzymes. The cheap shortcut is to promote
+confident BFD members to references. This tests whether that works, so the project does not rest on
+an assumption either way.
+
+**Construction.** 60 extended references drawn from the ≥70 % identity zone where matched-identity
+validation measured 100 % precision, with placement weight ≥0.9, clustered at 60 % identity for
+diversity and capped at 25 per clade. Reference set goes from 93 to 153, labelled from 19 to 79
+(Clade I 30, IV 19, V 16, III 11, II 3).
+
+**Test.** Queries are the **original 19 characterized enzymes only**. Extended references are
+removed by the same identity ceiling as everything else, so an extended reference cannot leak the
+answer for the enzyme it was derived from.
+
+| Identity to nearest surviving reference | original (19 refs) | expanded (79 labelled) |
+|---|---|---|
+| 70–100 % | **100 %** (13 correct, 0 wrong) | **58 %** (11 correct, **8 wrong**) |
+| 55–70 % | 88 % | 88 % |
+| 45–55 % | 38 % | **29 %** |
+| 35–45 % | 50 % (n=2) | 75 % (n=5) |
+| **overall precision when committing** | **80 %** (32 correct, 8 wrong) | **66 %** (31 correct, **16 wrong**) |
+
+**Expansion doubles the error rate, and the damage is worst exactly where the original set was
+perfect.** At ≥70 % identity the caller went from flawless to 58 %.
+
+### The mechanism, which is the useful part
+
+The expanded run has more cases in the high-identity bin (19 versus 14) precisely **because the
+extended references supply close neighbours**. Those new close neighbours carry **inferred** clade
+labels, not measured ones. So a query that previously had to reach a genuine characterized enzyme
+now finds a nearer BFD sequence instead — and inherits whatever that sequence's label got wrong.
+Errors propagate into the tree topology as well as the labels.
+
+This is the circularity risk made quantitative. It was flagged before the run; it is now measured.
+
+### What this settles
+
+**Semi-supervised reference expansion is not a substitute for characterized enzymes — it is worse
+than doing nothing.** The 19-enzyme ceiling is real and cannot be worked around computationally.
+Only genuinely characterized sequences (Zamocky 2022 / RedoxiBase, or new biochemistry) will move
+clade annotation forward.
+
+The production caller therefore keeps the **original 93-reference, 19-labelled** set. The expanded
+set is retained only as the evidence for this negative result and must not be used for calling.

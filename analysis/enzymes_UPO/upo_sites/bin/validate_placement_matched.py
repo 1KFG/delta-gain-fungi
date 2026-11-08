@@ -28,6 +28,10 @@ ap.add_argument("--labels", required=True)
 ap.add_argument("--thresholds", default="95,70,55,45,40,35")
 ap.add_argument("--out", required=True)
 ap.add_argument("--threads", type=int, default=8)
+ap.add_argument("--query-list", default=None,
+                help="file of tip names to use as QUERIES. Everything else stays in the reference "
+                     "set. Used to test whether an EXPANDED reference set recovers the ORIGINAL "
+                     "characterized enzymes at low identity.")
 a = ap.parse_args()
 
 
@@ -74,7 +78,14 @@ thresholds = [float(t) for t in a.thresholds.split(",")]
 rows = []
 work = tempfile.mkdtemp(prefix="matched.")
 
+qlist = None
+if a.query_list:
+    qlist = {l.strip() for l in open(a.query_list) if l.strip()}
+    print(f"restricting queries to {len(qlist)} tips", file=sys.stderr)
+
 for q in sorted(lab):
+    if qlist is not None and q not in qlist:
+        continue
     tc = lab[q]
     for T in thresholds:
         keep = [n for n in names if n != q and ID[(q, n)] <= T]

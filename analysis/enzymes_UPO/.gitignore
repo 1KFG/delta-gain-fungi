@@ -49,6 +49,8 @@ data/placement/*
 !data/placement/reftree_bootstrap.support
 !data/placement/placement_clades.tsv
 !data/placement/matched_identity_validation.tsv
+!data/placement/expanded/matched_identity_validation_expanded.tsv
+!data/placement/expanded/ext_labels.tsv
 
 # CAVER 3.0.2: downloaded third-party Java distribution (33 MB zip plus extracted tree).
 # Fetched from https://www.caver.cz/fil/download/caver30/302/caver_3.0.2.zip

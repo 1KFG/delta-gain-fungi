@@ -289,6 +289,7 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Clade IV is the tightest group but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a member is the top experimental recommendation |
 | Clade IV's position relative to Clade V is unresolved (20-28 % bootstrap) | **Confirmed 2026-11-08** | Do not call it a distinct clade; the GROUP is confirmed, its rank is not |
 | Clade calls below 55 % identity to a reference are unreliable (38-50 % precision) | **Confirmed 2026-11-08** | Only the 2,088 representatives above 55 % identity are defensible. The caller does NOT decline at low identity - it commits and is wrong - so placement weight alone is not sufficient evidence |
+| Semi-supervised reference expansion DEGRADES the caller (80 % -> 66 % precision) | **Confirmed 2026-11-08** | Do not promote inferred-label BFD members to references. Production caller keeps the original 93-reference set |
 | 3 of 5 clades have 1-2 reference enzymes | **Confirmed** | 71 of 114 matched-identity test cases were impossible because removing close relatives removed the whole clade. Reference-set expansion is the only fix |
 | Rooted MRCA tests are invalid on unrooted RAxML trees | **Confirmed 2026-11-08** | Caused a spurious "Clade III is polyphyletic" result; monophyly must be tested with bipartitions |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
