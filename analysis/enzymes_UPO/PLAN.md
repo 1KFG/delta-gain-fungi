@@ -241,8 +241,13 @@ close match in a thin database", not "novel"**. That caveat is written into the 
    see `G1_FINDINGS.md`. **Step 4 (novelty) running**: DIAMOND of the 7,055 representatives
    against `nr` (523 GB, Jan 2026). Step 5 depends on step 4.
 10. G2 write-up of the T2 negative; structure comparison on clade representatives.
-11. ~~G3 Phase A once D6 is settled~~ - **D6 settled 2026-11-08, Phase A running.** Promoters
-    extracted (job 31865695); STREME within-lineage contrasts running (job 31865884).
+11. ~~G3 Phase A~~ - **COMPLETE 2026-11-08.** See `G3_FINDINGS.md` and `G3_MOTIF_REPLICATION.md`.
+    17 within-lineage clade contrasts plus two pooled controls. **Clade IV is the only clade whose
+    motifs replicate across independent lineages and survive both controls**, carrying a
+    `TACGCGTA`/`TCGTACTCG` element and a **CCAAT box** that names to the CCAAT-binding complex
+    twice over (HAP3 q=0.023 in the Clade IV run, HAP5 q=0.046 in the pooled run). Clades I, II
+    and III are negative; Clade V is most likely a base-composition artifact. Phase B (RNA-seq) is
+    deferred at the user's direction.
 
 ### 4.1 Possible future refinement, not adopted
 
@@ -267,6 +272,8 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Figure S8 values are printed data labels | Not a risk | These are the authors' own numbers |
 | Novelty-vs-nr inherits a deposition confound | **Confirmed** | Search nucleotide/WGS too |
 | Lichen and Glomeromycota contamination | **Untested** | Contig-level checks before reporting |
+| STREME `--nmotifs N` reports N motifs regardless of significance | **Confirmed 2026-11-08** | 136 reported across 17 contrasts, only 57 pass the held-out test. Replication analysis filters on test p-value in BOTH lineages |
+| Dinucleotide shuffle does not control for repeats | **Confirmed 2026-11-08** | Shuffle control returned poly-A and other low-complexity tracts absent from the real-background run. Genome-matched real promoters are the primary control |
 | Only 35.4 % of fungal PF01328 carries the UPO catalytic core | **Confirmed 2026-11-08** | All downstream work uses the 34,561 catalytic-core set, not the raw 97,520 |
 | Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Confirmed** | Unfiltered Clade I counts are an upper bound; filtered count is 5,101 |
 | Clade IV is the best-supported clade but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a Clade IV enzyme is the top experimental recommendation |
