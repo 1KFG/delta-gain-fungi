@@ -49,6 +49,8 @@ data/placement/*
 !data/placement/reftree_bootstrap.support
 !data/placement/placement_clades.tsv
 !data/placement/matched_identity_validation.tsv
+!data/placement/expanded/
+data/placement/expanded/*
 !data/placement/expanded/matched_identity_validation_expanded.tsv
 !data/placement/expanded/ext_labels.tsv
 
