@@ -1,0 +1,16 @@
+[workspace]
+name = "upo_id"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.12.*"
+biopython = ">=1.80"
+pyarrow = "*"
+zstd = "*"
+hmmer = "3.4.*"
+mafft = "7.505.*"
+
+[tasks]
+classify = "python upo_id/upo_id.py classify"
+build = "python upo_id/upo_id.py build"

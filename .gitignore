@@ -21,3 +21,7 @@ logs/slurm/*.err
 
 # uv env for species pangenome scripts
 .venv-pangenome/
+
+# Exception: the UPO tool's small, committed outputs (zstd/parquet, ~105 KB).
+# The generic `results/` rule above targets Nextflow run output, not this.
+!analysis/enzymes_UPO/upo_id/results/

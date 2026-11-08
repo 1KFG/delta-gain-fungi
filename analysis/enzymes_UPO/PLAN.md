@@ -19,6 +19,22 @@ These replace the matching open questions in section 9.
 5. **Expression and assay:** expected to be arranged within about one year, once candidates exist. So the plan
    must end in a ranked candidate list fit for heterologous expression, not only a catalogue.
 
+### Decisions on the upo_id tool (user, 2026-11-07, second round)
+
+6. **UPO Family I vs CPO-like:** treat both as Family I for now. The split rests on 8 characterized enzymes
+   against 16 uncharacterized CPOs, which is too few.
+7. **Classification method:** replace HMM score competition with phylogenetic placement on a reference tree.
+8. **UPObase data:** do not ask the authors. Build our own best reference set and method.
+9. **CglUPO and CciUPO accessions:** still unverified. Look up later (future task).
+10. **Residue probing:** use Allozymes' case study
+    (https://www.allozymes.com/case-studies/engineering-specificity-into-unspecific-peroxygenases-upos),
+    PMC12117455 (https://pmc.ncbi.nlm.nih.gov/articles/PMC12117455/) and their references to define the
+    key residue positions to score (see `RESIDUES.md`, in progress).
+
+First result of the tool (2026-11-07, `upo_id/results/early807_*`): of 807 early-diverging PF01328 proteins,
+9 are called UPO (3 Family I, 6 low-confidence Family II). All 9 are in NCBI-annotated genomes. None is in a
+BFD-only genome. The newly sampled Dikarya lineages are not tested yet.
+
 ### Newly sampled Dikarya lineages (measured 2026-11-07, `sql/novel_lineages.sql`)
 
 Counts use genomes with BFD gene models (23,451). Status from `prior_annotation_status.tsv`: 17,864

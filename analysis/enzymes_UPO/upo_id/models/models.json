@@ -1,0 +1,27 @@
+{
+ "version": "0.1.0",
+ "anchor": "AaeUPO",
+ "excluded": [],
+ "n_aligned": 79,
+ "train_counts": {
+  "FamII": 47,
+  "FamI_UPO": 8,
+  "CPO": 16
+ },
+ "characterized": [
+  "AaeUPO",
+  "CraUPO",
+  "LfuCPO",
+  "MroUPO",
+  "MweUPO",
+  "TteUPO",
+  "DcaUPO",
+  "HspUPO",
+  "PabUPO-II",
+  "CviUPO",
+  "UPO1_Codo",
+  "DchUPO",
+  "DspUPO"
+ ],
+ "n_seeds": 38
+}

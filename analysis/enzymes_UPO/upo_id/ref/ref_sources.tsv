@@ -1,0 +1,93 @@
+name	accession	db	role	expected_class	expected_basis	source_doc
+AaeUPO	B9W4V6	uniprot	characterized	FamII	Kinner2021 text: AaeUPO is the Family II model	REFERENCES.md s6
+CraUPO	B9W4V8	uniprot	characterized	unknown	UniProt record 261 aa; type not stated in sources read	REFERENCES.md s6
+LfuCPO	P04963	uniprot	characterized	FamI_CPO	Kinner2021 text: LfuCPO assigned to short-type Family I; UPObase: Pog superfamily	REFERENCES.md s6
+MroUPO	5FUJ	pdb	characterized	FamI	Kinner2021 text: MroUPO is Family I; UPObase: Pog superfamily	REFERENCES.md s6
+MweUPO	A0ABF7PQ10	uniprot	characterized	FamI	Kinner2021 text: MweUPO is Family I	REFERENCES.md s6
+TteUPO	G2R8M6	uniprot	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+DcaUPO	A0AAN0NP18	uniprot	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+HspUPO	7O1R	pdb	characterized	unknown	type not stated in sources read	REFERENCES.md s6; UniProt A0A1Y2TH07 returned no sequence 2026-11-07, PDB 7O1R used
+PabUPO-II	A0A4V1Q376	uniprot	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+CviUPO	7ZCL	pdb	characterized	FamI	PDB 7ZCL citation title: "Two Short Unspecific Peroxygenases"	RCSB 7ZCL
+UPO1_Codo	P0DYC0	uniprot	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+DchUPO	9TM7	pdb	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+DspUPO	9WA6	pdb	characterized	unknown	type not stated in sources read	REFERENCES.md s6
+Seed_Exidia_glandulosa	KZV89105	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3 (listed as PzperKZV89105)	Faiza2019a Table 3
+Seed_Agaricus_bisporus_burnettii	EKM83318	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Pseudozyma_hubeiensis	GAC96564	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Hebeloma_cylindrosporum	KIM43689	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Sistotremastrum_niveocremeum	KZS95533	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Jaapia_argillacea	KDQ50980	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Piloderma_croceum	KIM85662	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Fibulorhizoctonia_sp	KZP09816	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Trichosporon_asahii_cbs2479	EJT50684	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Ustilago_maydis	KIS69141	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Ustilago_hordei	CCF52713	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Sphaerobolus_stellatus	KIJ40725	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Coprinopsis_cinerea	EAU83038	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Trichosporon_asahii_cbs8904	EKC98656	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Galerina_marginata	KDR72025	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Cutaneotrichosporon_oleaginosus	KLT38585	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Hypholoma_sublaterium	KJA15764	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Sporisorium_reilianum	CBQ73518	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Kalmanozyma_brasiliensis	EST07231	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Glarea_lozoyensis	EPE26857	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Aureobasidium_melanogenum	KEQ59606	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Mixia_osmundae	GAA97831	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Laccaria_amethystina	KIK06072	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Zymoseptoria_tritici	Mycgr3P74298	ensembl	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3 (Ensembl Fungi peptide ID)	Faiza2019a Table 3
+Seed_Paraphaeosphaeria_sporulosa	OAG12657	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Neonectria_ditissima	KPM41744	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Phialocephala_scopiformis	KUJ12795	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Tilletia_walkeri	OAJ19358	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Aureobasidium_namibiae	KEQ68786	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Moesziomyces_antarcticus	GAK67998	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Acidomyces_richmondensis	KXL42501	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Tilletia_controversa	OAJ12013	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Phialocephala_subalpina	CZR67509	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Sphaerulina_musiva	EMF09816	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+Seed_Sistotremastrum_suecicum	KZT41007	ncbi	upobase_seed_UPO	UPO_seed	Faiza2019a Table 3	Faiza2019a Table 3
+CPO_Leptoxyphium_fumago	AJA36817.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Agaricus_bisporus	CAC03461.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Cercospora_beticola	PIA98791.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Penicillium_occitanis	PCH09521.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Pochonia_chlamydosporia	XP_018142884.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Phellinus_noxius	PAV18212.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Penicillium_expansum	XP_016595326.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Thermothelomyces_thermophila	XP_003665551.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Absidia_repens	ORZ25142.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4 (Mucoromycota)	Faiza2019a Table S4
+CPO_Pseudomassariella_vexata	ORY68353.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Clohesyomyces_aquaticus	ORY10253.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Umbilicaria_pustulata	SLM34475.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Phlebia_centrifuga	OKY69140.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Choanephora_cucurbitarum	OBZ83367.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4 (Mucoromycota)	Faiza2019a Table S4
+CPO_Metarhizium_rileyi	OAA35065.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Cordyceps_brongniartii	KZZ98265.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Microdochium_bolleyi	KXJ90382.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Hypsizygus_marmoreus	KYQ35932.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Fusarium_langsethiae	KPA36434.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Termitomyces_sp_J132	KNZ75620.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Penicillium_camemberti	CRL30429.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Fusarium_fujikuroi	KLP12891.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Agaricus_bisporus_H97	EKV44292.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Metarhizium_robertsii	XP_007824162.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Metarhizium_guizhouense	KID83635.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Metarhizium_album	KHN96148.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Rhizoctonia_solani_123E	KEP51126.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Rhizoctonia_solani_AG3	EUC56929.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4; text: placed among UPOs	Faiza2019a Table S4
+CPO_Macrophomina_phaseolina	EKG18233.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Metarhizium_acridum	EFY92992.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+CPO_Metarhizium_anisopliae	KFG79878.1	ncbi	upobase_outgroup_CPO	CPO_or_Pog	Faiza2019a Table S4	Faiza2019a Table S4
+NEG_P450cam_Ppu	P00183	uniprot	negative_P450	negative	heme-thiolate P450, not PF01328	this work
+NEG_P450BM3_Bme	P14779	uniprot	negative_P450	negative	heme-thiolate P450 with peroxygenase-mode literature	this work
+NEG_CYP51_Calb	P10613	uniprot	negative_P450	negative	fungal P450	this work
+NEG_CYP51A_Afum	Q4WNT5	uniprot	negative_P450	negative	fungal P450	this work
+NEG_CYP505_Fox	Q9Y8G7	uniprot	negative_P450	negative	fungal P450-reductase fusion	this work
+NEG_CCP_Scer	P00431	uniprot	negative_peroxidase	negative	class I peroxidase (heme-His)	this work
+NEG_HRP_C1A	P00433	uniprot	negative_peroxidase	negative	class III peroxidase	this work
+NEG_LiP_Pchr	P06181	uniprot	negative_peroxidase	negative	class II fungal peroxidase	this work
+NEG_MnP_Pchr	Q02567	uniprot	negative_peroxidase	negative	class II fungal peroxidase	this work
+NEG_ARP_Aram	P28313	uniprot	negative_peroxidase	negative	class II fungal peroxidase	this work
+NEG_KatG_Ecol	P13029	uniprot	negative_peroxidase	negative	catalase-peroxidase	this work
+NEG_DyP_Badu	Q8WZK8	uniprot	negative_peroxidase	negative	dye-decolorizing peroxidase	this work
+NEG_VCPO_Cina	P49053	uniprot	negative_other	negative	vanadium chloroperoxidase (name confusion control)	this work

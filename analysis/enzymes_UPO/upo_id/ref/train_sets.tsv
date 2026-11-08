@@ -1,0 +1,93 @@
+name	train_set	basis
+AaeUPO	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CraUPO	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+LfuCPO	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+MroUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+MweUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+TteUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+DcaUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+HspUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+PabUPO-II	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CviUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+UPO1_Codo	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+DchUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+DspUPO	FamI_UPO	characterized; metal site EHD and short (measured); short-UPO clade (FastTree)
+Seed_Exidia_glandulosa	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Agaricus_bisporus_burnettii	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Pseudozyma_hubeiensis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Hebeloma_cylindrosporum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Sistotremastrum_niveocremeum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Jaapia_argillacea	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Piloderma_croceum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Fibulorhizoctonia_sp	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Trichosporon_asahii_cbs2479	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Ustilago_maydis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Ustilago_hordei	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Sphaerobolus_stellatus	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Coprinopsis_cinerea	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Trichosporon_asahii_cbs8904	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Galerina_marginata	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Cutaneotrichosporon_oleaginosus	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Hypholoma_sublaterium	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Sporisorium_reilianum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Kalmanozyma_brasiliensis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Glarea_lozoyensis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Aureobasidium_melanogenum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Mixia_osmundae	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Laccaria_amethystina	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Zymoseptoria_tritici	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Paraphaeosphaeria_sporulosa	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Neonectria_ditissima	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Phialocephala_scopiformis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Tilletia_walkeri	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Aureobasidium_namibiae	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Moesziomyces_antarcticus	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Acidomyces_richmondensis	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Tilletia_controversa	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Phialocephala_subalpina	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Sphaerulina_musiva	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+Seed_Sistotremastrum_suecicum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Leptoxyphium_fumago	holdout	near-duplicate of LfuCPO P04963
+CPO_Agaricus_bisporus	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Cercospora_beticola	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Penicillium_occitanis	holdout	unstable placement; metal-site EFD
+CPO_Pochonia_chlamydosporia	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Phellinus_noxius	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Penicillium_expansum	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Thermothelomyces_thermophila	holdout	unstable placement between short-UPO and CPO clades (FastTree)
+CPO_Absidia_repens	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Pseudomassariella_vexata	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Clohesyomyces_aquaticus	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Umbilicaria_pustulata	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Phlebia_centrifuga	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Choanephora_cucurbitarum	holdout	PF01328 split in two domains; acid-base region not aligned
+CPO_Metarhizium_rileyi	holdout	N-terminal truncation: no PCP region
+CPO_Cordyceps_brongniartii	holdout	N-terminal truncation: no PCP region
+CPO_Microdochium_bolleyi	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Hypsizygus_marmoreus	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Fusarium_langsethiae	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Termitomyces_sp_J132	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Penicillium_camemberti	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Fusarium_fujikuroi	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Agaricus_bisporus_H97	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Metarhizium_robertsii	holdout	placed in short-UPO clade, not characterized
+CPO_Metarhizium_guizhouense	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Metarhizium_album	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Rhizoctonia_solani_123E	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Rhizoctonia_solani_AG3	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Macrophomina_phaseolina	FamII	metal site E[GAT]D, C-terminal Cys pair aligned to AaeUPO C278/C319 or long; long clade (FastTree)
+CPO_Metarhizium_acridum	CPO	metal site EHD; CPO clade with LfuCPO (FastTree)
+CPO_Metarhizium_anisopliae	holdout	placed in short-UPO clade, not characterized
+NEG_P450cam_Ppu	negative	negative control
+NEG_P450BM3_Bme	negative	negative control
+NEG_CYP51_Calb	negative	negative control
+NEG_CYP51A_Afum	negative	negative control
+NEG_CYP505_Fox	negative	negative control
+NEG_CCP_Scer	negative	negative control
+NEG_HRP_C1A	negative	negative control
+NEG_LiP_Pchr	negative	negative control
+NEG_MnP_Pchr	negative	negative control
+NEG_ARP_Aram	negative	negative control
+NEG_KatG_Ecol	negative	negative control
+NEG_DyP_Badu	negative	negative control
+NEG_VCPO_Cina	negative	negative control
