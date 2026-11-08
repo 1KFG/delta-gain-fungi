@@ -49,3 +49,10 @@ data/placement/*
 !data/placement/reftree_bootstrap.support
 !data/placement/placement_clades.tsv
 !data/placement/matched_identity_validation.tsv
+
+# CAVER 3.0.2: downloaded third-party Java distribution (33 MB zip plus extracted tree).
+# Fetched from https://www.caver.cz/fil/download/caver30/302/caver_3.0.2.zip
+tools/caver_dl/
+
+# Downloaded reference PDB structures and CAVER output.
+data/structures/
