@@ -1,0 +1,26 @@
+# enzymes_UPO — what stays out of git.
+#
+# Same tiered rule as the repo root .gitignore: code and small evidence in
+# git, large or regenerable data on /bigdata. The specifics here:
+
+# Whole-BFD scoring run: ~85 MB and growing, regenerable from
+# upo_sites/slurm/run_bfd.sh plus the BFD seqdb. Chunked inputs and outputs.
+data/bfd_full/
+
+# SLURM .out/.err for the chunked runs.
+logs/
+
+# Publisher supplement (9.3 MB) and its extracted figures (23 MB). Both are
+# downloadable from the URL recorded in CALIBRATION_MATRIX.md section 1.
+# The two tables transcribed BY HAND from those figures are NOT ignored --
+# active_site_S2.tsv and t1_peroxygenase_S8.tsv are committed, because they
+# are not recoverable without redoing the transcription.
+data/calib_dl/supp1.docx
+data/calib_dl/figs/
+
+__pycache__/
+*.pyc
+scratch_x/
+
+# 2 MB LOCUSTAG->taxonomy lookup, regenerated from BFD samples.parquet.
+.lineage.tsv

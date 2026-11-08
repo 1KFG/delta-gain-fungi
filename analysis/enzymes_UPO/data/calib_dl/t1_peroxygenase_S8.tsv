@@ -1,0 +1,41 @@
+#  Target T1: peroxygenase conversion fraction on 4-propylguaiacol, per enzyme, at three pH values.
+#  Source: Figure S8 of Barros-Reguera et al. 2025, DOI 10.1186/s13068-025-02675-w (PMC12306115).
+#  Supplementary Material 1, word/media/image8.png. Read 2026-11-07.
+#
+#  These are PRINTED DATA LABELS on the figure, not bar heights measured by eye. Where a stacked bar
+#  carries no green label the peroxygenase fraction is recorded as 0; the figure prints a label for every
+#  non-zero green segment, so 0 means "no labelled peroxygenase product", not "missing".
+#
+#  Caption, verbatim (abridged): "Fractions of peroxygenase conversion and non-converted substrate in
+#  reactions with ascorbic acid for 19 different UPOs at three different pH values... The peroxygenase
+#  activity (green) represents the sum of all detected monomeric products. The undetected product (red)
+#  represents the fraction of the consumed substrate that was not accounted for by the quantified
+#  peroxygenase products. This fraction may correspond to peroxidase-derived products that were not
+#  scavenged by ascorbic acid (e.g., dimers observed in reactions with MorUPO, MroUPO, AtuUPO and HspUPO)
+#  or to compounds that remained undetectable by GC-MS."
+#
+#  CAVEAT: "undetected product" is NOT a clean peroxidase measurement. It pools genuine peroxidase-derived
+#  product with anything GC-MS could not see. Treat the green column as the T1 signal; do not treat the
+#  red column as a peroxidase rate.
+#
+#  Figure label -> full name mapping follows Table S1. PaDaI in the figure = PaDa-I.
+enzyme	clade	perox_pH3.5	perox_pH5.5	perox_pH8.0
+CabUPO-III	I	0	0	0
+CmaUPO-I	I	0	0	3
+GmaUPO-II	I	51	53	44
+PaDa-I	I	2	0	3
+LspUPO-II	I	0	0	0
+CviUPO	II	0	0	0
+PanUPO	II	0	0	0
+MorUPO	III	3	0	2
+MroUPO	III	2	0	1
+MphUPO	IV	0	3	5
+AbrUPO-I	V	50	51	61
+AbrUPO-II	V	23	40	20
+AluUPO	V	63	58	82
+AtuUPO	V	58	59	70
+AacUPO	V	19	37	20
+TteUPO	V	24	26	50
+HspUPO	V	21	62	49
+RneUPO	V	33	33	9
+DspUPO-I	V	48	49	42

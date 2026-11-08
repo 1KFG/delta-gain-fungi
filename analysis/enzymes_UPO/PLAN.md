@@ -1,272 +1,227 @@
-# Project sketch: UPOs from early-diverging fungi (Mucoromycota, Glomeromycota, Chytridiomycota)
+# UPO project plan
 
-Status: plan sketch, 2026-11-07. Nothing launched. Census numbers are measured (CENSUS.md). Reference checks are in
-REFERENCES.md. Every compute figure in section 7 is an **estimate**.
+**Rewritten 2026-11-07.** Supersedes the earlier sketch, kept verbatim as `PLAN.superseded.md`.
+That sketch was written before the substrate-calibration work and before either activity gate was
+run. Its user decisions 1-10 are still honoured except where measurement has overtaken them; the
+mapping is in section 2.
 
-## Decisions (user, 2026-11-07)
+Companion documents, all in this directory:
 
-These replace the matching open questions in section 9.
+| File | What it holds |
+|---|---|
+| `DESIGN.md` | Intent, goals, constraints, decisions D1-D6, workstream definitions |
+| `CALIBRATION_MATRIX.md` | The 2025 calibration set: retrieval, validation, both gate results |
+| `POCKET_TRANSFER.md` | Pilot: does the aliphatic pocket transfer across fungi |
+| `SUBSTRATE_CALIBRATION.md` | Literature survey on UPO substrate range |
+| `CENSUS.md`, `REFERENCES.md` | Measured BFD counts; reference-set checks |
+| `RESULT_T2_negative.md` | The G2 negative result, written up standalone |
+| `upo_sites/` | The software built from all of the above |
 
-1. **Classification:** use the Kinner et al. 2021 Family I (short) / Family II (long) scheme
-   ([PMC8293615](https://pmc.ncbi.nlm.nih.gov/articles/PMC8293615/)) for now. The EHD/EGD label conflict stays
-   open and must be settled against structures.
-2. **Scope of classes:** inclusive first. Report every class (UPO Family I, Family II, CPO-like, Pog, and
-   "PF01328 but fails motif checks"). Decide later which classes are deliverables.
-3. **Target lineages:** keep the early-diverging core, and add the newly sampled Dikarya lineages, for example
-   lichens and Antarctic rock fungi. See "Newly sampled Dikarya lineages" below.
-4. **Reference method:** UPObase is offline. Build our own standalone UPO identification tool that replicates
-   the UPObase paper's method. Work is in `upo_id/` (in progress).
-5. **Expression and assay:** expected to be arranged within about one year, once candidates exist. So the plan
-   must end in a ranked candidate list fit for heterologous expression, not only a catalogue.
+---
 
-### Decisions on the upo_id tool (user, 2026-11-07, second round)
+## 1. Where the project actually stands
 
-6. **UPO Family I vs CPO-like:** treat both as Family I for now. The split rests on 8 characterized enzymes
-   against 16 uncharacterized CPOs, which is too few.
-7. **Classification method:** replace HMM score competition with phylogenetic placement on a reference tree.
-8. **UPObase data:** do not ask the authors. Build our own best reference set and method.
-9. **CglUPO and CciUPO accessions:** still unverified. Look up later (future task).
-10. **Residue probing:** use Allozymes' case study
-    (https://www.allozymes.com/case-studies/engineering-specificity-into-unspecific-peroxygenases-upos),
-    PMC12117455 (https://pmc.ncbi.nlm.nih.gov/articles/PMC12117455/) and their references to define the
-    key residue positions to score (see `RESIDUES.md`, in progress).
+Three load-bearing questions have been answered with measurements. Two came back negative. This
+plan is built on those answers rather than around them.
 
-First result of the tool (2026-11-07, `upo_id/results/early807_*`): of 807 early-diverging PF01328 proteins,
-9 are called UPO (3 Family I, 6 low-confidence Family II). All 9 are in NCBI-annotated genomes. None is in a
-BFD-only genome. The newly sampled Dikarya lineages are not tested yet.
+**Q1. Can the published active-site positions be found in divergent fungal proteins? Yes.**
+`hmmalign` against PF01328 places five of the eight aliphatic-pocket positions, and at those five
+it reproduces the paper's structure-based matrix for all 19 calibration enzymes at **95/95 =
+100 %**. Across 87 phylogenetically spread BFD proteins the pocket columns align at 94.7 %,
+against a catalytic-site ceiling of 95.7 %.
 
-### Newly sampled Dikarya lineages (measured 2026-11-07, `sql/novel_lineages.sql`)
+**Q2. Does the aliphatic pocket predict aromatic ring hydroxylation (target T2)? No.**
+Pearson r = **+0.176** against naphthalene activity across all 19 calibration enzymes. Only two of
+the four measured negatives are interpretable, and those two - CviUPO and PanUPO - are the complete
+membership of Clade II, so label and clade are perfectly confounded. **T2 is not modellable on the
+available data and will be reported as a negative result.**
 
-Counts use genomes with BFD gene models (23,451). Status from `prior_annotation_status.tsv`: 17,864
-no prior annotation, 5,553 NCBI-annotated, 24 no match, 10 annotated without a protein file.
+**Q3. Does it predict peroxygenase-versus-peroxidase propensity (target T1)? Partly, but not
+usefully.** Raw correlation is r = +0.748. But "is Clade V" alone gives r = +0.835, and the
+**partial correlation of pocket with T1 given clade is only r = +0.129**. Within the ten
+non-Clade-V enzymes it is +0.001. The pocket cannot distinguish GmaUPO-II (Clade I, pocket 3/5,
+T1 = 53) from CabUPO-III (Clade I, pocket 3/5, T1 = 0).
 
-- Lineages with **no NCBI-annotated genome at all**:
-  - Classes: 6 (4 Ascomycota, 2 Basidiomycota), 14 genomes in total. Examples: Sporopachydermiomycetes (4),
-    Peribolosporomycetes (4), Alloascoideomycetes (3), Laboulbeniomycetes (1).
-  - Orders: Ascomycota 19 orders / 54 genomes; Basidiomycota 3 / 9.
-  - Families: Ascomycota 71 families / 170 genomes; Basidiomycota 36 / 111.
-- Lichen classes (NCBI-annotated / BFD only): Lecanoromycetes 137 / 340; Arthoniomycetes 5 / 8;
-  Lichinomycetes 4 / 6; Candelariomycetes 4 / 0; Coniocybomycetes 2 / 0.
-- Antarctic rock fungi: *Antarctomyces pellizariae* is BFD only. *Cryomyces* has 4 NCBI-annotated genomes and
-  1 BFD only. *Friedmanniomyces* genomes are all NCBI-annotated.
+**The conclusion that drives this plan: clade carries the measured signal, not the pocket.** With
+n = 19 across 5 clades, "this residue matters" and "this clade behaves this way" cannot be
+separated. The product is therefore a reliable **clade annotator with transparent site evidence**,
+not an activity predictor.
 
-So, measured by genome count, Lecanoromycetes is the largest new Dikarya sample: 340 genomes have only BFD
-annotation. No PF01328 counts exist yet for these lineages. Not checked: whether lichen genome assemblies
-include photobiont or bacterial contigs, which would affect gene calls.
+### 1.1 What is deliberately not being built
 
-## 0. Question and claim
+A per-protein activity score. It would be easy to emit across 97,520 proteins and would rank every
+fungal UPO by features measured at r = 0.18 (T2) or partial r = 0.13 (T1). That output would be
+worse than no output. This is a standing constraint, enforced in the tool's own header and in its
+output file header.
 
-Question: which heme-thiolate peroxygenase (UPO) genes exist in early-diverging fungal genomes, and how many come
-from genomes that only BFD has annotated?
+This does change the old plan's decision 5, which ended in "a ranked candidate list fit for
+heterologous expression". A ranking is still produced, but it ranks **clade membership and
+site completeness**, and it is labelled as such. It is not a predicted-activity ranking, because
+nothing in the data supports one.
 
-Deliverable: a curated, phylum-stratified set of UPO candidates from Mucoromycota, Glomeromycota and
-Chytridiomycota (plus related early-diverging phyla), with catalytic-motif status, gene-model QC, a phylogeny
-against Dikarya UPOs, a candidate shortlist, and reusable HMMs.
+---
 
-Novelty claim, stated narrowly: candidates from genomes with no NCBI annotation (BFD_only) are new protein
-sequences. Candidates from NCBI-annotated genomes are "new as UPO calls" at most, and only if the NCBI protein
-was not already classified. The plan reports these two groups separately.
+## 2. Decisions in force
 
-## 1. What the data already show (measured, CENSUS.md)
-
-- 827 early-diverging genomes (Microsporidia excluded); 813 have proteins; 10.17 M proteins.
-- BFD Pfam (`hmmsearch --cut_ga`) already finds **807 PF01328 proteins** in early-diverging genomes;
-  **309** of them are in BFD_only genomes.
-- Core three phyla (genomes NCBI / BFD_only; PF01328 proteins NCBI / BFD_only):
-  - Mucoromycota: 145 / 148 genomes; 193 / 177 proteins; median 1 per genome; 49 BFD_only species absent from the
-    NCBI-annotated set.
-  - Glomeromycota: 43 / 17 genomes; 92 / 32 proteins; 6 new species.
-  - Chytridiomycota: 81 / 8 genomes; 184 / 4 proteins; 3 new species.
-- **Chytridiomycota is mostly NCBI-annotated already** (81 of 89). The BFD_only novelty in this phylum is small
-  (4 proteins). For Chytridiomycota the value is a curated UPO call set, not new sequences.
-- Zero PF01328 proteins at the gathering threshold in Mortierellomycota (100 genomes), Kickxellomycota (190),
-  Blastocladiomycota (14), Neocallimastigomycota (26), Entomophthoromycota (12), Microsporidia (163).
-- Hit shape differs by phylum: Mucoromycota hits are 250–350 aa with almost no signal peptide (1–3 %);
-  Glomeromycota hits are mostly <250 aa with no SP; Chytridiomycota, Basidiobolomycota and Zoopagomycota hits have
-  SP in ~50–56 %.
-- A crude substring scan finds `PCP` + `EHD` in most hits and `EGD` in almost none (10 of 807). Interpretation is
-  blocked by the label conflict in REFERENCES.md section 3.
-
-What this means: the search itself is not the hard part. The hard part is the **UPO-vs-CPO-vs-Pog call**, because
-PF01328 covers all of them (97,520 proteins BFD-wide, against 123 sequences in UPObase's UPO subfamilies I–V).
-
-## 2. Target set
-
-| Tier | Phyla | Reason |
+| ID | Decision | Status |
 |---|---|---|
-| Core (user request) | Mucoromycota, Glomeromycota, Chytridiomycota | Named in the request. Have PF01328 hits. |
-| Extended | Zoopagomycota, Basidiobolomycota, Monoblepharomycota, Aphelidiomycota, Calcarisporiellomycota | Have PF01328 hits (30, 86, 4, 3, 2 proteins). Basidiobolomycota is mostly BFD_only (16 of 18 genomes, 77 of 86 proteins). |
-| Negative / sensitivity check | Mortierellomycota, Kickxellomycota, Blastocladiomycota, Neocallimastigomycota, Entomophthoromycota | 0 PF01328 hits at GA. Run the sensitive second pass on them. A true absence is a result. A hit found only by the second pass is a divergent-member candidate. |
-| Excluded | Microsporidia | 0 hits; reduced obligate-intracellular genomes; not expected to carry UPOs (assumption, no data beyond the 0 hits). |
-| Positive control | Ascomycota, Basidiomycota | Characterized UPOs come from here. See section 3.4. |
+| D1 | Eurotiales sourcing for the *Pichia* construct | **Moot.** It rested on the pocket score, which no longer predicts anything of interest |
+| D3 | Novelty measured per protein and per clade | Mine; both, since per-protein is a by-product |
+| D4 | **Clades I-V** (2025 scheme) define a subtype; Kinner I/II kept as a separate column | User, 2026-11-07 |
+| D5 | AlphaFold3 acceptable (all non-commercial); Boltz-2 also to be tried | User, 2026-11-07 |
+| D6 | G3 scope: all-BFD versus RNA-seq-followable clades | **OPEN - the one blocking decision** |
+| G2 | T1 pivot, and report the T2 negative | User, 2026-11-07 |
 
-Taxonomy: BFD `samples.PHYLUM` already splits Mortierellomycota, Glomeromycota, Kickxellomycota etc. from
-Mucoromycota (NCBI current usage). The plan uses `samples.PHYLUM` as is. Decision for the user: report under the
-older "zygomycete" umbrella as well, or not.
+Carried forward unchanged from the superseded sketch: decision 2 (report every class inclusively),
+decision 3 (keep early-diverging lineages and add newly sampled Dikarya), decision 4 (build our own
+tool; UPObase is offline), decision 7 (**replace HMM score competition with phylogenetic
+placement** - now the top correctness item in section 3.1), decision 8 (do not contact UPObase
+authors). Decision 1 is superseded by D4: Kinner Family I/II becomes a secondary column, not the
+primary partition. Decision 6 (merge CPO-like into Family I) now applies only to that secondary
+column.
 
-Data paths (BFD layout, `Fungi_BFD_wt_csvlist/docs/BFD_Introduction.md`):
-- Proteins: `Fungi_BFD_runs/seqdb/proteins/<sha1(LOCUSTAG)[0:2]>/<LOCUSTAG>.proteins.fa.gz` (bgzip + faidx);
-  CDS in `seqdb/cds/`. `seqdb/genomes.tsv` maps LOCUSTAG to folder. Protein IDs are `<LOCUSTAG>_NNNNNN-T1`.
-- Tables: `Fungi_BFD_runs/tables/` — `samples`, `pfam`, `signalp.signal_peptide` (positives only), `tmhmm`,
-  `gene_transcripts` (`is_partial`, `has_start_codon`, `has_stop_codon`), `gene_introns`, `gene_exons`,
-  `busco_genome`, `asm_stats`, `swissprot`.
-- Prior annotation: `DeltaGain_Fungi/prior_annotation_status.tsv`, join `samples.ASMID = folder` (24 of 23,680
-  unmatched; none early-diverging).
-- Note: the BFD intro doc calls the Pfam table "hmmscan domtblout"; the PFAM module runs `hmmsearch --cut_ga`.
-  Same output format; the GA threshold is what matters here.
+Installed and verified 2026-11-07: `alphafold/3.0.0`, `alphafold/3.0.2`, `boltz/2.2.1`,
+`boltzdesign1/0.4.1`, `hmmer/3.4`, `mafft/7.505`. **CAVER is not installed** and needs budgeted
+setup; it is a desktop GUI application, not a module load.
 
-## 3. Reference set
+---
 
-### 3.1 UPObase
-- Offline from HPCC on 2026-11-07 (DNS failure). Not obtainable now.
-- Fallbacks, in order: (a) email the UPObase authors (Faiza, Wang; Database 2019) for the FASTA;
-  (b) Wayback Machine copy of the per-entry FASTA pages (not checked, API rate-limited);
-  (c) rebuild an equivalent set: phmmer/jackhmmer from the characterized enzymes against UniProt fungi, then apply
-  the UPObase motif strings (REFERENCES.md section 2). Option (c) is reproducible and does not depend on a dead site.
+## 3. The software: `upo_sites`
 
-### 3.2 Profiles
-- PF01328 (Pfam, GA cutoff) — broad family net. Already run in BFD.
-- PROSITE PS51405 (heme haloperoxidase profile) — the profile Kinner Fig. 1 used. Run with `pfscan`/`ps_scan`
-  as a second family net. Not yet run.
-- Custom HMMs (built in this project): long-type UPO, short-type UPO, CPO, and one per early-diverging clade that
-  forms in the tree (section 6). Build from MAFFT L-INS-i alignments with `hmmbuild`.
+```
+upo_sites/bin/upo_sites.py            annotate + assign clade, proteome scale
+upo_sites/bin/validate_clade_loo.py   leave-one-out validation of the clade caller
+```
 
-### 3.3 Characterized enzymes
-13 with verified UniProt or PDB records (REFERENCES.md section 6): AaeUPO B9W4V6, CraUPO B9W4V8, LfuCPO P04963,
-MroUPO (PDB 5FUJ/7ZBP; UniProt A0A023H437 is a 67-aa fragment), MweUPO A0ABF7PQ10, TteUPO G2R8M6, DcaUPO
-A0AAN0NP18, HspUPO A0A1Y2TH07, PabUPO-II A0A4V1Q376, CviUPO (PDB 7ZCL), UPO1 P0DYC0, DchUPO (PDB 9TM7), DspUPO
-(PDB 9WA6). CglUPO, CciUPO, MthUPO, HinUPO accessions are **not verified**; get them from the expression papers.
+**Pipeline.** hmmsearch PF01328 at the gathering threshold, then chunked `hmmalign` of the hits
+together with the 19-enzyme calibration backbone, then read residues at fixed HspUPO positions,
+then assign clade by nearest neighbour over match-state columns with identity and margin reported.
 
-### 3.4 Positive control
-- Run the full search and calling pipeline on (a) the 13 references, which must all pass; (b) a fixed Dikarya
-  subset, for example one genome per order with BUSCO C >= 90 % (size not decided; estimate 300–600 genomes).
-- Compare per-genome counts with UPObase-era numbers only for the same species. **Do not use "113 from >800
-  genomes" as the target.** In the UPObase paper, 113 is the seed count (REFERENCES.md section 3.1).
-- For NCBI-annotated early-diverging genomes, also search the NCBI protein set (DeltaGain baseline) and compare
-  with the BFD calls. This measures what BFD re-annotation adds or loses for this family.
+**Why it scales.** The HspUPO-position to HMM-match-state map is computed once from the profile, so
+it is identical in every chunk and at any input size. Chunking is therefore safe and cost is
+linear. MAFFT L-INS-i, used in the original pilot, is quadratic and cannot run at BFD scale.
 
-## 4. Search
+**Measured properties.**
 
-1. **Pass 1 — family net (done).** Take PF01328 GA hits from `pfam.parquet` (807 early-diverging proteins).
-   Add PS51405 hits. Union.
-2. **Pass 2 — sensitive.** Targets: all 813 early-diverging proteomes, including the zero-hit phyla.
-   - `jackhmmer` (3 iterations, inclusion E 1e-3) seeded with one long-type, one short-type and one CPO reference,
-     against the early-diverging proteome set only.
-   - `hmmsearch` with the custom HMMs at E <= 1e-3, no GA.
-   - Optional: Foldseek against AlphaFold/ESMFold models of pass-2-only hits, with AaeUPO 2YOR, MroUPO 5FUJ and
-     LfuCPO 1CPO as structural queries. Use only for the few hundred hits pass 2 adds, not the whole proteome.
-3. **Genome-level rescue.** `miniprot` or `tblastn` of reference proteins against the genome assemblies of the
-   target phyla. This finds UPO loci with no gene model or with a broken one. Report rescued loci separately.
+- 21 sites requested, **18 scoreable**. Positions **223, 228 and 232 fall in insert columns** of
+  PF01328 and have no cross-sequence meaning. The tool detects and reports this itself, which
+  independently confirms the reliability finding in `CALIBRATION_MATRIX.md` section 3.1.
+- Pocket score is over the five reliable positions 73, 77, 81, 183, 187.
+- On the 87-protein BFD sample it reproduces the independently validated distribution exactly
+  (pocket score 0:3, 1:3, 2:9, 3:27, 4:33, 5:12).
+- **Leave-one-out clade accuracy: 18/19 = 94.7 %.** The single failure is MphUPO, the sole Clade IV
+  member; leave-one-out deletes its entire clade, so it cannot be called correctly by construction.
+  On clades with two or more members the result is 18/18.
 
-Decision for the user: HHblits/HMM-HMM search adds little here if jackhmmer converges; skip unless pass 2 finds
-very few divergent hits. (Opinion, no data.)
+### 3.1 The honest limitation, and what it forces
 
-## 5. Calling and scoring each hit
+**The validation does not cover the regime the tool runs in.** Correct leave-one-out calls span
+52.7-96.2 % identity to the nearest reference. BFD proteins sit at roughly 25-35 % identity to
+anything characterized. Nearest-neighbour assignment is validated at high identity and
+**extrapolated** at BFD identity.
 
-Order matters: QC first, then motif call, then ranking.
+Margin does not rescue this. Correct calls had margins from 9.9 upward; the single wrong call had a
+margin of 17.7. **Margin does not separate right from wrong in this set**, so the current
+`--min-margin` default is a heuristic, not a calibrated threshold, and is labelled as such. On the
+87-protein sample only 40 % of calls cleared the confidence flag.
 
-| Step | Rule | Data source |
+This forces three things, in priority order:
+
+1. **An identity floor below which the tool returns `unassigned` instead of a forced call.**
+   A non-answer is better than a confident-looking wrong one.
+2. **Replace nearest neighbour with phylogenetic placement** (`epa-ng` or `pplacer`) against a
+   fixed reference tree of the 19 plus the wider `upo_id` reference set. This is what the
+   superseded plan's decision 7 already called for, and it is now the single biggest correctness
+   improvement available. Placement gives a likelihood-weighted assignment and a real uncertainty;
+   nearest-neighbour identity gives neither.
+3. **Re-validate by leave-one-out at matched identity**, subsampling references toward ~30 %
+   identity rather than testing only the easy high-identity case.
+
+---
+
+## 4. Workstreams
+
+### G1 - diversity, subtype annotation, novelty *(primary deliverable)*
+
+1. Run `upo_sites` across all PF01328 proteins in BFD. **Measured 2026-11-07: 97,520 distinct
+   proteins across 15,137 genomes** — not 23,451, which is the number of genomes with gene models;
+   only 15,137 of them carry a PF01328 at all.
+   **Tool built and tested at n = 87; scale-up is the next action.**
+2. Dereplicate, then assign Clades I-V with the placement method of section 3.1, carrying Kinner
+   Family I/II as a separate column per D4.
+3. Describe clade distribution across the fungal tree. The Agaricomycete copy-number conflict is
+   **resolved**: the maximum is **144 distinct PF01328 proteins** in one genome (*Sphaerobolus
+   stellatus*, Agaricomycetes), followed by *Mycena* species at 66-106. The 147 figure counted
+   `pfam.parquet` rows, which double-counts proteins carrying two PF01328 domains. Any copy-number
+   query must use `count(distinct protein_id)`.
+4. Novelty per protein and per clade (D3) by DIAMOND against protein **and** nucleotide/WGS
+   databases. Protein-only inherits a deposition confound: absence from nr can mean "not deposited"
+   rather than "novel".
+5. Report lineages holding clade assignments not represented among characterized enzymes. These are
+   the genuinely novel subtypes and the honest answer to the original goal 1.
+
+**Known contamination risk, untested:** lichen and Glomeromycota genomes. Contig-level checks
+before any lineage claim is reported.
+
+### G2 - activity *(scope reduced by measurement)*
+
+1. **Write up the T2 negative.** The aliphatic pocket does not transfer to aromatic ring substrates,
+   measured at n = 19 against a widely cited structural feature. This is a publishable result.
+2. **T1 as a clade-level prior only**, with observed in-sample ranges: Clade V 33-82, Clade I 0-53
+   and bimodal, Clades II-IV 0-5. Always labelled n = 19, in-sample.
+3. **Still worth extracting** from the 2025 supplement: Figures S6/S7 (full product heatmaps at two
+   pH values) and S1 (the 19x19 identity matrix, stored as EMF so possibly text-extractable).
+   These refine T1; they do not change the clade conclusion.
+4. **Structure work (D5), clade representatives only.** Run AlphaFold3 and Boltz-2 on the same set
+   and compare on channel geometry at the heme-contacting residues. Disagreement between them is
+   the available estimate of how far channel geometry can be trusted. Neither is benchmarked here
+   for cavity measurement. Measure GPU cost on the pilot set before any scale-up. Needs CAVER or a
+   substitute installed.
+5. **Do not build a per-protein activity score.** See section 1.1.
+
+### G3 - regulation *(blocked on D6)*
+
+Phase A, sequence only: extract promoters for clade-assigned UPO genes, find enriched motifs against
+a matched background, test whether motif content tracks clade. Phase B: *Penicillium* and
+*Aspergillus* RNA-seq to test whether predicted regulation matches observed expression.
+
+**D6 decides the scale.** All-BFD is ~97,000 promoters across ~23,000 genomes. Restricting to clades
+where RNA-seq follow-up is possible is a few hundred. These are different projects, not different
+settings.
+
+---
+
+## 5. Order of work
+
+1. ~~Retrieve the calibration matrix~~ - **done**, `CALIBRATION_MATRIX.md`.
+2. ~~Build the Clade I-V backbone~~ - **done**, `data/clade_backbone/raw.fa`, all 19 recovered.
+3. ~~Validate alignment against the published matrix~~ - **done**, 95.5 % overall, 100 % at the five
+   pocket positions.
+4. ~~Re-measure alignability under a method that scales~~ - **done**, `POCKET_TRANSFER.md` section 7.
+5. ~~Run the T1 gate~~ - **done**, `CALIBRATION_MATRIX.md` section 8. T1 is clade, not pocket.
+6. **Add the identity floor and `unassigned` state to `upo_sites`.**  <- next
+7. **Scale `upo_sites` to full BFD.** **Measured 2026-11-07: 5,000 sequences annotate in 11 s
+   wall, 124 MB peak RSS** (SLURM job 31846982). All 97,520 proteins therefore take roughly
+   3 minutes in a single job, so the planned array is unnecessary and would be pure scheduling
+   overhead. One job, 8 cores, 24 GB. The real cost in this workstream is the **sequence
+   extraction** from 15,137 gzipped per-genome files, not the annotation.
+8. Phylogenetic placement to replace nearest neighbour; re-validate at matched identity.
+9. G1 steps 2-5.
+10. G2 write-up of the T2 negative; structure comparison on clade representatives.
+11. G3 Phase A once D6 is settled.
+
+## 6. Risks
+
+| Risk | Status | Handling |
 |---|---|---|
-| Gene model QC | Flag `is_partial`, missing start/stop, length < 180 aa, PF01328 HMM coverage < 80 %, internal stop, fused models (> 600 aa or second unrelated Pfam domain) | `gene_transcripts`, `gene_proteins.length`, `pfam` |
-| Genome QC | Flag genomes with BUSCO C < 80 % and contig N50 < 20 kb | `busco_genome`, `asm_stats` |
-| Heme ligand | Cys in the PCP motif present at the aligned position of AaeUPO/MroUPO/LfuCPO proximal Cys | MAFFT alignment to references (not substring search) |
-| Acid-base | Glu at the aligned position of the catalytic Glu (AaeUPO numbering; confirm the residue from the 2YOR / 5FUJ structure papers before coding) | alignment |
-| Type | EGD-type vs EHD-type motif region, with the label conflict resolved on structures first (REFERENCES.md §3.3) | alignment + references |
-| Short / long | Length, C-terminal Cys pair (long type), and tree placement | alignment, tree |
-| Class call | UPO-long, UPO-short, CPO-like, Pog/unclassified. A hit without the proximal Cys is "not UPO" | combined |
-| Secretion | SignalP 6 positive, TMHMM helices, GPI | `signalp`, `tmhmm`, `predgpi` |
-| Distance | Max % identity to any of the 13 references (DIAMOND or global alignment); nearest reference name | computed |
-| Novelty | BFD_only vs NCBI genome; for NCBI genomes, whether the NCBI protein exists and how it was annotated | `prior_annotation_status.tsv`, NCBI protein set |
-
-All counts reported per phylum and per annotation group. Never pooled across phyla.
-
-## 6. Gene-model artifact controls
-
-- **Glomeromycota.** Genomes are large (median 109–140 Mb) and fragmented (median N50 16–34 kb). Hits are short
-  (median 225–233 aa). Check whether short length is biology or truncation: compare to the HMM coverage, start/stop
-  flags, and to the same locus in the other strain of the same species where one exists (25 + 9 species, 60 genomes,
-  so many species have more than one genome).
-- **Mucoromycota.** Many species have whole-genome duplications (assumption from literature, not checked here).
-  Report paralog pairs; do not count them as independent discoveries.
-- **Contamination.** A UPO in a Glomeromycota or Chytridiomycota assembly can come from a co-cultured or
-  contaminating ascomycete. For each candidate: neighbor genes on the same contig must have best hits in the same
-  phylum; flag contigs carrying only the candidate. Check GC and codon usage against the genome (`codon_freq`).
-- **RNA-seq support.** `Fungi_BFD_runs/species_with_real_rnaseq.txt` lists 52 species BFD-wide. Not checked how many
-  are early-diverging. Use RNA-seq evidence where it exists; mark the rest "no expression evidence".
-- **Intron structure.** Compare intron positions of candidates with references and with each other (`gene_introns`).
-  Shared intron positions support real gene models.
-- **Per-phylum artifact rate.** Report the fraction of hits flagged at each QC step, per phylum.
-
-## 7. Compute sizing (all estimates)
-
-| Step | Size | Estimate |
-|---|---|---|
-| Pass 1 extraction (done) | 20 GB parquet scan | measured: ~1 min per duckdb scan; 3 min for two extractions |
-| Sequence extraction from seqdb | 807 proteins, 398 genomes | measured: < 1 min with `samtools faidx` |
-| jackhmmer, 3 seeds x 3 iter vs 10.17 M proteins | ~4 GB FASTA | estimate: 1–3 h on 16 CPUs; one SLURM job |
-| hmmsearch, ~6 custom HMMs vs 10.17 M proteins | same | estimate: < 1 h on 16 CPUs |
-| PS51405 scan | 10.17 M proteins | estimate: 1–3 h; can be limited to pass-1/pass-2 hits instead |
-| miniprot rescue, 13 refs vs ~827 genomes (~40 GB of sequence, estimate) | – | estimate: 2–4 h as ~10 batched jobs of ~80 genomes |
-| Structure prediction | shortlist only, 50–200 proteins | estimate: hours on one GPU, or use AFDB/ESM Atlas where present |
-| Dikarya positive control | 300–600 genomes | estimate: < 2 h hmmsearch; reuse `pfam.parquet` for PF01328 |
-| Trees | 1–3k sequences, IQ-TREE | estimate: hours, one job |
-
-HPCC rules: `-p epyc,intel --constraint="ryzen|broadwell|cascade|sapphire"` (no abu_dhabi; no AVX2 there);
-work in `$SCRATCH`, copy results to `/bigdata`; compress tabular output with `zstd`; no `BASH_SOURCE` in SLURM
-scripts. Batch to ~1–1.5 h per job; this whole project fits in fewer than 20 jobs (estimate).
-
-## 8. Deliverables
-
-1. Census table (done, CENSUS.md) — genomes, species and PF01328 hits per phylum, split NCBI vs BFD_only.
-2. Candidate table (one row per protein): phylum, genome, annotation group, length, motif status, class call,
-   SP/TM, QC flags, nearest reference and identity, tier.
-3. Phylogeny: early-diverging hits + references + a Dikarya sample + CPO/Pog outgroup sequences. Show where the
-   early-diverging clades sit relative to long-type and short-type UPOs.
-4. Tiers:
-   - Tier 1: QC-clean, Cys + Glu present, UPO class call, BFD_only genome, has SP (expression-friendly).
-   - Tier 2: as Tier 1 but NCBI genome, or no SP.
-   - Tier 3: motif-complete but gene model flagged, or Pog/unclassified.
-   - Rejected: no proximal Cys, or artifact.
-5. HMMs: custom profiles per class and per early-diverging clade, with the seed alignments, deposited
-   (Zenodo, estimate of what is useful; decision for the user).
-6. A short note on absence: phyla with zero hits after the sensitive pass.
-
-## 9. Open questions for the user
-
-1. **Classification scheme.** Use Kinner Family I/II (long/short) or UPObase UPO I–V vs Pog? They give very
-   different numbers. The EHD/EGD label conflict needs a decision based on structures.
-2. **Is a CPO-like or Pog hit a deliverable?** Most early-diverging hits carry EHD. If only "true UPO" counts, the
-   final set could be small. Decide before running.
-3. **Chytridiomycota scope.** 81 of 89 genomes already have NCBI annotation, and BFD_only adds 4 proteins. Is a
-   curated call set for this phylum enough, or should the novelty claim rest on Mucoromycota, Glomeromycota and
-   Basidiobolomycota?
-4. **UPObase replacement.** Ask the authors for the data, or rebuild from UniProt with their motif rules?
-5. **Expression capacity.** Is there an expression/assay partner? This decides whether Tier 1 needs SP and
-   long-type architecture, or only sequence quality.
-6. Include the extended phyla (Basidiobolomycota has 77 BFD_only hits) in the headline set?
-7. Size of the Dikarya positive-control subset.
-
-## 10. Claims not verified
-
-- "113 putative UPOs from >800 genomes in 35 species" (Kinner 2021 citing Faiza 2019a). The UPObase paper uses 113
-  as its seed count. Faiza 2019a not read.
-- Zámocký et al. 2025 statement that Mucoromycota, Glomeromycota and Chytridiomycota are under-investigated
-  (repository unreachable). Kinner 2021 does not say this.
-- UniProt/GenBank accessions for CglUPO, CciUPO, MthUPO, MfeUPO, MhiUPO, HinUPO, CveUPO.
-- The exact residue number of the acid-base Glu in AaeUPO. InterPro confirms a Glu acid-base and Cys ligand in the
-  family, but I did not read the structure paper.
-- Whether UPObase still exists at another address.
-- That `signalp.signal_peptide.parquet` holds positives only is from the BFD intro doc; I did not test it.
-- BACKGROUND.md statements on expression yields (mg/L, ~10 % purification recovery) — not checked; not used here.
-- Whole-genome duplication in Mucoromycota as a paralog source — assumption from literature, not measured.
-- How many of the 52 RNA-seq species are early-diverging — not measured.
-
-## Files
-
-- `CENSUS.md` — measured counts.
-- `REFERENCES.md` — source checks, reference accessions, conflicts.
-- `sql/` — duckdb queries used (`${SCRATCHPAD}` was a session scratch dir; replace with a local path).
-- `data/early_pf01328_hits.parquet` — 807 early-diverging PF01328 proteins with phylum, annotation group, length,
-  SP flag, HMM coordinates.
-- `data/early_pf01328_hits.fa.zst` — their sequences (from seqdb).
-- `data/motifs.tsv` — crude PCP/EHD/EGD substring flags (first pass only).
+| Clade caller extrapolates beyond its validated identity range | **Confirmed** | Identity floor; phylogenetic placement; re-validate at matched identity |
+| Margin does not separate correct from incorrect calls | **Confirmed**, n = 19 | Threshold labelled heuristic, not calibrated |
+| Clade IV has one member, so it cannot be validated or reliably called | **Confirmed** | Report Clade IV calls as provisional, always |
+| PaDa-I activity data attached to the wild-type AaeUPO sequence | **Confirmed** | Kept distinct in the backbone and documented |
+| Figure S4 values read off bar charts by eye | **Confirmed** | Used only for the T2 negative, which does not depend on precision |
+| Figure S8 values are printed data labels | Not a risk | These are the authors' own numbers |
+| Novelty-vs-nr inherits a deposition confound | **Confirmed** | Search nucleotide/WGS too |
+| Lichen and Glomeromycota contamination | **Untested** | Contig-level checks before reporting |
+| CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
+| Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |
+| 5 UniProt accessions from Table S1 return HTTP 200 with an empty body | **Confirmed** | Scripts must check body length, not status code; NCBI accessions are the reliable route |
