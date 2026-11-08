@@ -30,8 +30,8 @@ Without that filter the analysis would have reported "8 motifs everywhere" and b
 
 | Clade | lineages tested | lineage pairs | **replicated motifs** |
 |---|---|---|---|
-| **IV** | 4 | 6 | **5** |
-| **V** | 6 | 15 | **4** |
+| **IV** | 4 | 6 | **5** — survives both controls |
+| **V** | 6 | 15 | **4**, but see the control comparison below — **likely a composition artifact** |
 | III | 3 | 3 | 0 |
 | I | 2 | 1 | 0 |
 | II | 2 | 1 | 0 |
@@ -63,6 +63,49 @@ peroxygenase family is mechanistically coherent** rather than arbitrary.
 Clade V replicates 4 motifs over 15 lineage pairs — a much lower rate than Clade IV's 5 over 6.
 Its replicated motifs are GC-rich (`AGCCGAGGCTY`, `WGCCGAGGMTCWCGG`, `CACAGCCTC`) and none matched
 JASPAR.
+
+## The two controls disagree, and the disagreement is the useful part
+
+The pooled runs finished after the within-lineage analysis. Both report 10 significant motifs, but
+they are **almost entirely different motifs**, and that is diagnostic.
+
+| vs order-2 shuffle | vs genome-matched real background |
+|---|---|
+| `AAAAAAAAAAAAAAG` | `DATACGCGTATH` |
+| `ATCATCATCATC` | `CCAATRRGARG` |
+| `CTACCTACCTACY` | `WACGAGTACGAR` |
+| `CCCYYCYYCYCCT` | `GTATAWAAGVYS` |
+| `GCCGAGGCAS` | `AACGGCGCCGACYTT` |
+| `CTCGTWCTCGTWCT` | `GATCTRCA` |
+
+**The shuffle control is dominated by low-complexity and repeat tracts** — poly-A, `ATCATC`,
+`CTACCTAC`, pyrimidine runs. A dinucleotide shuffle preserves dinucleotide frequency but destroys
+repeats, so any repeat looks enriched against it. **None of these appear against the real
+background.** This is why the genome-matched background was made the primary control, and it is
+the reason the user's choice of two controls was worth the extra compute.
+
+### This independently supports Clade IV
+
+Both Clade IV motif families appear in the pooled run **against the real background**:
+
+- `2-DATACGCGTATH` (p = 5.4e-07) and `5-WACGAGTACGAR` (p = 2.8e-05) — Family 1
+- `3-CCAATRRGARG` (p = 1.5e-05) — Family 2, the CCAAT box
+
+And the CCAAT motif names to the CCAAT-binding complex a **second** time, from a different run and
+a different control: Tomtom matches `3-CCAATRRGARG` to **JASPAR MA0316.2 = HAP5**, q = 0.046.
+HAP5 and HAP3 are different subunits of the same Hap2/3/4/5 complex. Two independent analyses
+landing on two subunits of one complex is more convincing than either alone.
+
+### And it weakens Clade V
+
+Clade V's replicated motifs were GC-rich (`AGCCGAGGCTY`, `WGCCGAGGMTCWCGG`, `CACAGCCTC`). The
+pooled shuffle run finds `3-GCCGAGGCAS` — the same element — **but the pooled real-background run
+does not find it at all.**
+
+**So the Clade V result is most likely a base-composition artifact rather than a regulatory
+signal.** GC-rich promoter content differs between UPO genes and shuffled sequence without implying
+a shared binding site. The Clade V row in the table above should be read as weak-to-negative, not
+as a positive finding. Clade IV is the only clade whose motifs survive both controls.
 
 ## What this does NOT establish
 
