@@ -174,6 +174,41 @@ lichen UPOs are biologically more unusual.
 Until it is, the defensible statement is: *18 % of dereplicated fungal UPOs have no close protein
 relative in `nr`, and that figure is substantially driven by which genomes have been deposited.*
 
+### Finding 5b: the confound is now quantified, and it explains the result
+
+**Measured 2026-11-08**, closing the item `PLAN.md` left open as "a nucleotide/WGS comparison is
+still required".
+
+Every one of the 23,680 BFD genomes carries a public NCBI assembly accession. The meaningful split
+is therefore not public-versus-private but **GCF (RefSeq, where NCBI has annotated the genome and
+its proteins are in `nr`) versus GCA-only (assembly public, proteins possibly never deposited)**.
+
+| Assembly source | representatives | novel (< 70 %) |
+|---|---|---|
+| **GCF** (RefSeq-annotated) | 300 | **2.0 %** |
+| **GCA-only** | 6,755 | **18.7 %** |
+
+**A 16.7-point difference, z = 7.4.**
+
+**This is close to a complete explanation of the apparent novelty.** When the source genome's
+proteins have been deposited, essentially nothing looks novel (2 %). When they have not, 18.7 %
+does. The 18 % headline figure is a statement about annotation deposition, not about fungal
+biology.
+
+It also disposes of the lineage ordering in the table above: Eurotiomycetes looked least novel and
+lichens most, and that is what deposition rate predicts.
+
+**What this does and does not replace.** It answers the question the nucleotide comparison was
+meant to answer — separating novelty from deposition — and answers it more directly, because the
+genomes themselves are all public, so a tblastn against WGS would by construction find nearly every
+sequence and return a near-zero novelty rate. A literal tblastn-versus-`nt`/WGS run has **not**
+been done. Nothing in this project should quote a biological novelty rate for fungal UPOs; the
+defensible statement is that **no dereplicated fungal UPO in BFD lacks a public relative, and
+apparent novelty tracks whether the source genome has deposited protein annotation.**
+
+The residual 2 % in GCF genomes is most plausibly annotation disagreement — funannotate calling a
+gene model NCBI did not — rather than novelty.
+
 ### Finding 5a: novelty does not track clade
 
 | Clade | novel (< 70 %) | n |
@@ -194,3 +229,40 @@ its high internal identity: its members have close relatives, those relatives ar
 uncharacterized Clade IV proteins. **Clade IV is under-characterized, not under-sequenced.** That
 strengthens rather than weakens the case for characterizing one — the sequences are already public
 and available; what is missing is biochemistry.
+
+---
+
+## Finding 6: lichen and Glomeromycota contamination — checked, no evidence found
+
+**Measured 2026-11-08**, closing the `PLAN.md` item "contig-level checks before any lineage claim
+is reported". 2,444 UPO genes across 547 genomes in the lineages where symbiont or host
+contamination is the standing worry.
+
+The classic contamination signature is a gene sitting alone on a short, gene-poor contig. Tested by
+comparing, within each genome, how many protein-coding genes share a UPO's contig against how many
+share a **randomly chosen gene's** contig (a gene-weighted baseline, so fragmented assemblies are
+compared against their own fragmentation, not against a global expectation).
+
+| Lineage | UPO genes | genes on UPO contig | genes on random-gene contig | ratio |
+|---|---|---|---|---|
+| Lecanoromycetes (lichens) | 2,176 | 11.0 | 9.0 | **1.22** |
+| Arthoniomycetes (lichens) | 132 | 21.0 | 15.0 | **1.40** |
+| Glomeromycota | 124 | 13.5 | 5.5 | **2.45** |
+| Coniocybomycetes | 5 | 36.0 | 25.0 | 1.44 |
+| Lichinomycetes | 2 | 47.0 | 33.0 | 1.42 |
+| Candelariomycetes | 5 | 40.0 | 107.0 | 0.37 |
+
+**In every lineage with a meaningful sample, UPO genes sit on contigs that are *more* gene-rich
+than the typical contig in the same genome**, not less. Glomeromycota UPOs are on contigs carrying
+2.45 times as many genes as a random Glomeromycota gene's contig. There is no sign of UPOs being
+stranded on short foreign contigs.
+
+Candelariomycetes is below 1, but n = 5 and that is a single genome's worth of genes; no weight
+should be put on it.
+
+**What this test does and does not cover.** It detects the common signature — a gene isolated on a
+short contig. It does **not** detect contamination carried on a large, well-assembled contig from
+another organism, which would need taxonomic assignment of the neighbouring genes. So the honest
+statement is: **the standard contig-level contamination signature is absent, and the lineage
+counts in Findings 3 and 5 can be reported, with taxonomic verification of neighbours still
+available as a stronger check if a specific lineage claim becomes load-bearing.**
