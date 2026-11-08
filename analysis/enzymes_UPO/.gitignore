@@ -48,3 +48,4 @@ data/placement/*
 !data/placement/reftree.raxml.bestTree
 !data/placement/reftree_bootstrap.support
 !data/placement/placement_clades.tsv
+!data/placement/matched_identity_validation.tsv
