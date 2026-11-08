@@ -39,3 +39,11 @@ data/bfd_full/
 # Scratch test output from upo_sites development.
 upo_sites/test/
 .tmp/
+
+# Phylogenetic placement: EPA output and intermediates. The reference alignment,
+# reference tree, labels and the derived per-query clade table ARE committed.
+data/placement/*
+!data/placement/ref_aln.filtered.fa
+!data/placement/ref_labels.tsv
+!data/placement/reftree.raxml.bestTree
+!data/placement/placement_clades.tsv
