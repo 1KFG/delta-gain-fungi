@@ -71,23 +71,63 @@ finding.
   and opposite activity.** Any apparent correlation across these four (r = +0.83) is carried
   entirely by CviUPO and is not evidence.
 
+## CAVER run: the published numbers are not a channel bottleneck
+
+**Measured 2026-11-08 with CAVER 3.0.2**, the tool the published figures came from, installed
+system-wide at `/opt/linux/centos/8.x/x86_64/pkgs/caver/3.02/caver` (the user installed it; my
+downloaded copy was blocked by the sandbox as external code). Wrapper:
+`upo_sites/bin/run_caver.py`, seeding from the heme iron on chain A plus heme, waters removed.
+
+| Structure | CAVER tunnels | bottleneck **radius** | tunnel length |
+|---|---|---|---|
+| AaeUPO (2YOR) | 3 | 1.06, 1.06, 0.95 Å | 5.3, 5.8, 28.4 Å |
+| MroUPO (5FUJ) | 1 | 1.00 Å | 3.9 Å |
+
+**CAVER gives bottleneck radii of about 1 Å — roughly 2 Å diameter — for both enzymes, and AaeUPO
+is marginally the wider of the two.** That is the opposite ordering to the published 7 versus 11 Å,
+and an order of magnitude smaller.
+
+A probe sweep confirms it is not a parameter choice. At probe radii of 1.5 Å and above, **CAVER
+finds no tunnel at all in either structure**:
+
+```
+probe 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 A  ->  no tunnel, both enzymes
+```
+
+If the channels were 7 Å and 11 Å across, probes of 3.5 Å and 5.5 Å radius would pass.
+
+### Conclusion: the ring-size rule cannot be transferred structurally
+
+Two independent measurements — CAVER and the hard-sphere implementation here — agree that **the
+published 7 Å and 11 Å are not static-structure channel bottlenecks.** They are most plausibly
+approximate descriptions of the channel mouth, or a measure taken on a different representation.
+Whatever they are, they cannot be recomputed for an uncharacterized enzyme, which is what applying
+the rule across BFD would require.
+
+The two methods also disagree sharply with each other (CAVER 1.0 Å radius versus 3.0 Å here), so
+the hard-sphere measure is the more permissive of the two and should not be presented as
+equivalent to CAVER.
+
+**This also makes the planned AlphaFold3 / Boltz-2 modelling pointless for this purpose.** If the
+measurement cannot reproduce the published contrast on experimentally determined crystal
+structures, predicted structures will not either. The structure work is therefore **not run** —
+that is a saving, not an omission.
+
+**The one surviving observation** is that MroUPO's only tunnel is 3.9 Å long against AaeUPO's
+5.3–28.4 Å. MroUPO's heme is markedly more solvent-exposed. That is consistent with it accepting
+bulkier substrates and may be what the published "wider channel" describes, but tunnel length is
+not channel width and no rule should be built on a two-enzyme comparison.
+
 ## Status and what is blocked
 
 **The rule is not transferred.** Producing ring-size categories from these numbers as though they
 were Karich's would repeat the aliphatic-pocket error: using a feature whose calibration had
 already failed.
 
-**CAVER 3.0.2 is now downloaded and installed** under `tools/caver_dl/` — no registration was
-needed, the earlier 404 was a wrong URL path — with a wrapper at `upo_sites/bin/run_caver.py` that
-cleans the structure, seeds from the heme iron and parses the tunnel bottleneck. **It has not been
-run**: executing the downloaded jar was denied by the sandbox as external code and needs the user's
-permission.
-
-The decisive test is one command. If CAVER returns ~7 Å and ~11 Å for these two structures, the
-rule transfers and channel width can be measured across clade representatives with AlphaFold3 and
-Boltz-2 (both installed with weights). If CAVER also returns ~6 Å and ~6 Å, then the published
-figures are not a bottleneck measure, and the ring rule cannot be applied structurally by anyone —
-which is worth knowing before further work is built on it.
+**CAVER has now been run** (see the section above) and the question is settled: the published
+figures are not a bottleneck measure, so the ring rule cannot be applied structurally. The
+AlphaFold3 / Boltz-2 modelling that would have followed is not run, because it cannot succeed where
+the crystal structures already fail.
 
 **Either way, the n = 2 calibration stands.** Only two enzymes anchor the width-to-activity
 relation, so even a successful transfer yields a mechanistic prediction with a two-point
