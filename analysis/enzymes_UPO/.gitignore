@@ -24,3 +24,18 @@ scratch_x/
 
 # 2 MB LOCUSTAG->taxonomy lookup, regenerated from BFD samples.parquet.
 .lineage.tsv
+
+# G3 regulatory analysis: promoter sequences, STREME output and the downloaded
+# motif database. 133 MB, all regenerable from upo_reg/bin/promoters.sh and
+# run_streme_contrasts.sh plus the BFD genome_annotation scaffolds. The JASPAR
+# file is a straight download (URL in PLAN.md section 4.2).
+# The small derived tables ARE committed -- see the negations below.
+data/g3/*
+!data/g3/rep_clade_lineage.tsv
+
+# Novelty search: DIAMOND-vs-nr hits and the dereplicated FASTAs.
+data/bfd_full/
+
+# Scratch test output from upo_sites development.
+upo_sites/test/
+.tmp/

@@ -62,7 +62,11 @@ def lineage_of(pid):
     grp = cl if ph in ("Ascomycota", "Basidiomycota") and cl not in ("", "?") else ph
     return ph, cl, (grp or "?"), lt
 
-VALID = {"validated_range", "validated_low_margin"}
+# One definition of "validated", used everywhere. The +provisional_cladeIV suffix must not
+# change whether a call counts as validated-range; it is reported as a separate marker instead.
+# (Before 2026-11-08 section 2 used exact matching and section 6 used startswith, so Clade IV
+# appeared as 0 in one table and 4,565 in the other.)
+def is_validated(conf): return conf.startswith("validated")
 out = []
 W = out.append
 W("# G1: fungal PF01328 diversity across BFD\n")
@@ -77,19 +81,30 @@ W("| tier | n | % |")
 W("|---|---|---|")
 for k, v in conf.most_common():
     W(f"| `{k}` | {v} | {100*v/len(rows):.1f} |")
-n_valid = sum(v for k, v in conf.items() if k in VALID)
+n_valid = sum(v for k, v in conf.items() if is_validated(k))
+n_valid_IV = sum(1 for r in rows
+                 if r["clade"] == "IV" and is_validated(r["clade_confidence"]))
 W(f"\n**Only {n_valid} of {len(rows)} ({100*n_valid/len(rows):.2f} %) clade calls fall inside the "
   f"validated identity range.** Everything else is a hypothesis.\n")
+W(f"**Of those {n_valid}, {n_valid_IV} ({100*n_valid_IV/max(n_valid,1):.1f} %) are Clade IV**, which "
+  f"has one characterized member and therefore cannot be validated by leave-one-out at all. "
+  f"Excluding Clade IV leaves **{n_valid - n_valid_IV}** calls "
+  f"({100*(n_valid-n_valid_IV)/len(rows):.2f} % of all proteins) that are both inside the validated "
+  f"range and anchored on a clade with more than one reference.\n")
 
 W("## 2. Clade counts\n")
 cl_all = Counter(r["clade"] for r in rows)
-cl_val = Counter(r["clade"] for r in rows if r["clade_confidence"] in VALID)
+cl_val = Counter(r["clade"] for r in rows if is_validated(r["clade_confidence"]))
+W("**Clade IV carries a single characterized member (MphUPO), so its `within validated range` "
+  "count means 'high identity to one uncharacterized protein'. It is marked provisional "
+  "everywhere below and must not be pooled with the other clades' validated counts.**\n")
 W("| clade | all calls | within validated range | in-sample T1 (n=19) |")
 W("|---|---|---|---|")
 T1 = {"I": "0-53, bimodal", "II": "0", "III": "0-3", "IV": "0-5", "V": "33-82",
       "unassigned": "n/a"}
 for c, v in cl_all.most_common():
-    W(f"| {c} | {v} | {cl_val.get(c,0)} | {T1.get(c,'?')} |")
+    mark = " **(provisional, 1 ref)**" if c == "IV" else ""
+    W(f"| {c}{mark} | {v} | {cl_val.get(c,0)} | {T1.get(c,'?')} |")
 
 W("\n## 3. Pocket score (0-5) by clade -- all calls\n")
 byc = defaultdict(list)
@@ -122,7 +137,51 @@ base = Counter(r.get("p110_Base_EHD", "-") for r in rows)
 W(f"- Residue at position 110 (His in short UPOs, Gly in long): "
   + ", ".join(f"{k}={v}" for k, v in base.most_common(6)))
 
-W("\n## 6. Copy number per genome\n")
+W("\n## 6. The catalytic-core filter -- which of these are plausibly UPOs at all\n")
+W("PF01328 is a broad heme-thiolate peroxidase family. The 2025 paper states that **Glu180 is "
+  "present in all 19** characterized UPOs, so it is a usable test of whether a PF01328 protein "
+  "has UPO-like catalytic machinery.\n")
+def tier(r):
+    if r["clade"] == "unassigned": return "unassigned"
+    return "validated" if r["clade_confidence"].startswith("validated") else "extrapolated"
+t180 = defaultdict(Counter); tn = Counter()
+for r in rows:
+    t = tier(r); t180[t][r.get("p180_Acid", "-")] += 1; tn[t] += 1
+W("| confidence tier | n | Glu180 |")
+W("|---|---|---|")
+for t in ("validated", "extrapolated", "unassigned"):
+    if tn[t]:
+        W(f"| {t} | {tn[t]} | {100*t180[t]['E']/tn[t]:.1f} % |")
+c180 = defaultdict(Counter); cn = Counter()
+for r in rows:
+    c180[r["clade"]][r.get("p180_Acid", "-")] += 1; cn[r["clade"]] += 1
+W("\n| clade | n | Glu180 |")
+W("|---|---|---|")
+for c in sorted(cn, key=lambda k: -cn[k]):
+    W(f"| {c} | {cn[c]} | {100*c180[c]['E']/cn[c]:.1f} % |")
+W("\n**Validated-range calls carry Glu180 at 93.7 %, matching the published claim. Clade I calls "
+  "carry it at 16.8 %.** The same alignment gives all five characterized Clade I enzymes a Glu "
+  "at 180, so this is not an alignment artifact for long UPOs. The most likely reading is that "
+  "the low-identity Clade I bin is absorbing PF01328 proteins that are **not UPOs**, because the "
+  "long characterized enzymes are the nearest available match for divergent sequences. Treat "
+  "unfiltered Clade I counts as an upper bound.\n")
+core = [r for r in rows
+        if r.get("p39_Cys_proximal") == "C" and r.get("p109_E_of_EHD") == "E"
+        and r.get("p111_D_of_EHD") == "D" and r.get("p180_Acid") == "E"]
+W(f"### Catalytic core set\n")
+W(f"Requiring Cys39 + Glu109 + Asp111 + Glu180: **{len(core)}/{len(rows)} "
+  f"({100*len(core)/len(rows):.1f} %)** proteins.\n")
+cc = Counter(r["clade"] for r in core)
+ccv = Counter(r["clade"] for r in core if is_validated(r["clade_confidence"]))
+W("| clade | catalytic core | of which validated-range |")
+W("|---|---|---|")
+for c, v in cc.most_common():
+    mark = " **(provisional, 1 ref)**" if c == "IV" else ""
+    W(f"| {c}{mark} | {v} | {ccv.get(c,0)} |")
+W("\n**This is the defensible UPO set for downstream work**, and it is the one to carry into "
+  "novelty and regulatory analysis, not the raw 97,520.\n")
+
+W("\n## 7. Copy number per genome\n")
 per = Counter(r["protein_id"].split("_")[0] for r in rows)
 top = per.most_common(10)
 W(f"- genomes with at least one PF01328: **{len(per)}**")

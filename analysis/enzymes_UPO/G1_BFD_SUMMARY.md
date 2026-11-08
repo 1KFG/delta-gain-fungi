@@ -18,9 +18,13 @@ Clade calls below 52.7 % identity to the nearest characterized enzyme are **extr
 | `validated_low_margin` | 21 | 0.0 |
 | `validated_low_margin+provisional_cladeIV` | 8 | 0.0 |
 
-**Only 7850 of 97520 (8.05 %) clade calls fall inside the validated identity range.** Everything else is a hypothesis.
+**Only 12818 of 97520 (13.14 %) clade calls fall inside the validated identity range.** Everything else is a hypothesis.
+
+**Of those 12818, 4968 (38.8 %) are Clade IV**, which has one characterized member and therefore cannot be validated by leave-one-out at all. Excluding Clade IV leaves **7850** calls (8.05 % of all proteins) that are both inside the validated range and anchored on a clade with more than one reference.
 
 ## 2. Clade counts
+
+**Clade IV carries a single characterized member (MphUPO), so its `within validated range` count means 'high identity to one uncharacterized protein'. It is marked provisional everywhere below and must not be pooled with the other clades' validated counts.**
 
 | clade | all calls | within validated range | in-sample T1 (n=19) |
 |---|---|---|---|
@@ -28,7 +32,7 @@ Clade calls below 52.7 % identity to the nearest characterized enzyme are **extr
 | V | 24847 | 2637 | 33-82 |
 | unassigned | 19060 | 0 | n/a |
 | III | 10154 | 1079 | 0-3 |
-| IV | 6922 | 0 | 0-5 |
+| IV **(provisional, 1 ref)** | 6922 | 4968 | 0-5 |
 | II | 3113 | 403 | 0 |
 
 ## 3. Pocket score (0-5) by clade -- all calls
@@ -97,7 +101,44 @@ Clade calls below 52.7 % identity to the nearest characterized enzyme are **extr
 - Proximal Cys39 present: **89121/97520 (91.4 %)**
 - Residue at position 110 (His in short UPOs, Gly in long): H=48866, G=16519, A=9533, S=8584, V=4230, -=2512
 
-## 6. Copy number per genome
+## 6. The catalytic-core filter -- which of these are plausibly UPOs at all
+
+PF01328 is a broad heme-thiolate peroxidase family. The 2025 paper states that **Glu180 is present in all 19** characterized UPOs, so it is a usable test of whether a PF01328 protein has UPO-like catalytic machinery.
+
+| confidence tier | n | Glu180 |
+|---|---|---|
+| validated | 12818 | 93.7 % |
+| extrapolated | 65642 | 39.3 % |
+| unassigned | 19060 | 21.8 % |
+
+| clade | n | Glu180 |
+|---|---|---|
+| I | 33424 | 16.8 % |
+| V | 24847 | 69.5 % |
+| unassigned | 19060 | 21.8 % |
+| III | 10154 | 55.0 % |
+| IV | 6922 | 95.7 % |
+| II | 3113 | 88.1 % |
+
+**Validated-range calls carry Glu180 at 93.7 %, matching the published claim. Clade I calls carry it at 16.8 %.** The same alignment gives all five characterized Clade I enzymes a Glu at 180, so this is not an alignment artifact for long UPOs. The most likely reading is that the low-identity Clade I bin is absorbing PF01328 proteins that are **not UPOs**, because the long characterized enzymes are the nearest available match for divergent sequences. Treat unfiltered Clade I counts as an upper bound.
+
+### Catalytic core set
+
+Requiring Cys39 + Glu109 + Asp111 + Glu180: **34561/97520 (35.4 %)** proteins.
+
+| clade | catalytic core | of which validated-range |
+|---|---|---|
+| V | 15596 | 1951 |
+| IV **(provisional, 1 ref)** | 6002 | 4565 |
+| I | 5101 | 3418 |
+| III | 4540 | 909 |
+| II | 2419 | 399 |
+| unassigned | 903 | 0 |
+
+**This is the defensible UPO set for downstream work**, and it is the one to carry into novelty and regulatory analysis, not the raw 97,520.
+
+
+## 7. Copy number per genome
 
 - genomes with at least one PF01328: **15137**
 - maximum copies in one genome: **144**

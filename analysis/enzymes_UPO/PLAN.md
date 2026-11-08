@@ -15,6 +15,8 @@ Companion documents, all in this directory:
 | `SUBSTRATE_CALIBRATION.md` | Literature survey on UPO substrate range |
 | `CENSUS.md`, `REFERENCES.md` | Measured BFD counts; reference-set checks |
 | `RESULT_T2_negative.md` | The G2 negative result, written up standalone |
+| `G1_BFD_SUMMARY.md` | Auto-generated full-BFD tables |
+| `G1_FINDINGS.md` | G1 interpretation, including the Clade IV result |
 | `upo_sites/` | The software built from all of the above |
 
 ---
@@ -69,7 +71,7 @@ nothing in the data supports one.
 | D3 | Novelty measured per protein and per clade | Mine; both, since per-protein is a by-product |
 | D4 | **Clades I-V** (2025 scheme) define a subtype; Kinner I/II kept as a separate column | User, 2026-11-07 |
 | D5 | AlphaFold3 acceptable (all non-commercial); Boltz-2 also to be tried | User, 2026-11-07 |
-| D6 | G3 scope: all-BFD versus RNA-seq-followable clades | **OPEN - the one blocking decision** |
+| D6 | **G3 scope: all-BFD core, clade-stratified** | **RESOLVED (user, 2026-11-08)** - see section 4.2 for the full parameter set |
 | G2 | T1 pivot, and report the T2 negative | User, 2026-11-07 |
 
 Carried forward unchanged from the superseded sketch: decision 2 (report every class inclusively),
@@ -179,15 +181,34 @@ before any lineage claim is reported.
    substitute installed.
 5. **Do not build a per-protein activity score.** See section 1.1.
 
-### G3 - regulation *(blocked on D6)*
+### G3 - regulation *(D6 resolved; running)*
 
 Phase A, sequence only: extract promoters for clade-assigned UPO genes, find enriched motifs against
 a matched background, test whether motif content tracks clade. Phase B: *Penicillium* and
 *Aspergillus* RNA-seq to test whether predicted regulation matches observed expression.
 
-**D6 decides the scale.** All-BFD is ~97,000 promoters across ~23,000 genomes. Restricting to clades
-where RNA-seq follow-up is possible is a few hundred. These are different projects, not different
-settings.
+### 4.2 D6 and the G3 parameter set, decided by the user 2026-11-08
+
+Decided in an interview covering six branches. Every value below is the user's choice, not a
+default. Correction made during that interview: the Eurotiales-only option is **3,584** core UPOs
+(*Aspergillus* 3,255, *Penicillium* 329) in 1,855 genomes, not "a few hundred" as earlier stated.
+
+| Parameter | Decision |
+|---|---|
+| **Scope (D6)** | **All-BFD catalytic core, clade-stratified** - 34,561 UPOs in 12,393 genomes |
+| Unit of independence | One promoter per 90 % protein cluster: **7,055 units**, so *Fusarium*'s 5,103 near-identical copies cannot manufacture significance |
+| Promoter window | 1,000 bp upstream of CDS start, own strand, truncated at contig edge and neighbouring gene; **300 bp minimum**, short ones dropped not padded (measured median available gap 1,412 bp) |
+| Background | Two controls: 5 genome-matched **and length-matched** non-UPO promoters per genome, plus an order-2 shuffle |
+| Primary test | **Within-lineage clade contrasts**, not pooled - a motif counts only if it replicates in a second independent lineage |
+| Known-TF naming | JASPAR 2024 CORE fungi (178 motifs). The user accepted this knowing it is thin |
+
+**Phase B (RNA-seq) is deferred** at the user's direction ("we will add rnaseq later").
+
+Measured outcome of extraction: **6,760 target and 15,659 background promoters**, zero unreadable
+genomes, 260 targets dropped for having under 300 bp of usable promoter.
+
+Because JASPAR's fungal set is 178 motifs and heavily *Saccharomyces*, **an unnamed motif means "no
+close match in a thin database", not "novel"**. That caveat is written into the analysis script.
 
 ---
 
@@ -199,16 +220,40 @@ settings.
    pocket positions.
 4. ~~Re-measure alignability under a method that scales~~ - **done**, `POCKET_TRANSFER.md` section 7.
 5. ~~Run the T1 gate~~ - **done**, `CALIBRATION_MATRIX.md` section 8. T1 is clade, not pocket.
-6. **Add the identity floor and `unassigned` state to `upo_sites`.**  <- next
-7. **Scale `upo_sites` to full BFD.** **Measured 2026-11-07: 5,000 sequences annotate in 11 s
+6. ~~Add the identity floor and `unassigned` state to `upo_sites`~~ - **done.** Three
+   evidence-derived tiers: `validated_range` (>= 52.7 % identity), `extrapolated`, and
+   `below_identity_floor` (< 30 %, reported `unassigned`). Clade IV calls always carry
+   `+provisional_cladeIV`.
+7. ~~**Scale `upo_sites` to full BFD**~~ - **done 2026-11-08. All 97,520 proteins annotated in
+   1 min 58 s, 188 MB peak RSS** (job 31865267). Sequence extraction via samtools faidx random
+   access recovered **97,520/97,520 with zero failures**; the first approach, streaming whole
+   gzipped proteomes, projected ~2 h and was abandoned. Results in `data/bfd_full/out/`,
+   merged table `data/bfd_full/upo_sites_bfd_all.tsv.zst`, report `G1_BFD_SUMMARY.md`,
+   interpretation `G1_FINDINGS.md`.
+   Earlier timing note: **5,000 sequences annotate in 11 s
    wall, 124 MB peak RSS** (SLURM job 31846982). All 97,520 proteins therefore take roughly
    3 minutes in a single job, so the planned array is unnecessary and would be pure scheduling
    overhead. One job, 8 cores, 24 GB. The real cost in this workstream is the **sequence
    extraction** from 15,137 gzipped per-genome files, not the annotation.
 8. Phylogenetic placement to replace nearest neighbour; re-validate at matched identity.
-9. G1 steps 2-5.
+9. G1 steps 2-5. **Step 2 (dereplication) done**: the 34,561 catalytic-core proteins reduce to
+   7,055 representatives at 90 % identity and 2,805 at 70 %. **Step 3 (clade distribution) done**,
+   see `G1_FINDINGS.md`. **Step 4 (novelty) running**: DIAMOND of the 7,055 representatives
+   against `nr` (523 GB, Jan 2026). Step 5 depends on step 4.
 10. G2 write-up of the T2 negative; structure comparison on clade representatives.
-11. G3 Phase A once D6 is settled.
+11. ~~G3 Phase A once D6 is settled~~ - **D6 settled 2026-11-08, Phase A running.** Promoters
+    extracted (job 31865695); STREME within-lineage contrasts running (job 31865884).
+
+### 4.1 Possible future refinement, not adopted
+
+The paralogoscope session (`Fungi_BFD_runs/analysis/paralogoscope`) builds per-genome paralog
+families with pairwise dS across an interim 7,384 genomes. Those families would be a better unit
+of statistical independence for G3 motif work than the 90 %-identity protein clusters used here,
+because UPO copy number per genome is extreme (up to 144). **Not adopted.** That session stated
+the families are not exported as a clean ortholog/paralog grouping and have not been tested for
+this use, and said to ask Jason before relying on them. Recorded here as an option, not a
+dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
+`nf_full/paralogoscope_full`.
 
 ## 6. Risks
 
@@ -222,6 +267,9 @@ settings.
 | Figure S8 values are printed data labels | Not a risk | These are the authors' own numbers |
 | Novelty-vs-nr inherits a deposition confound | **Confirmed** | Search nucleotide/WGS too |
 | Lichen and Glomeromycota contamination | **Untested** | Contig-level checks before reporting |
+| Only 35.4 % of fungal PF01328 carries the UPO catalytic core | **Confirmed 2026-11-08** | All downstream work uses the 34,561 catalytic-core set, not the raw 97,520 |
+| Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Confirmed** | Unfiltered Clade I counts are an upper bound; filtered count is 5,101 |
+| Clade IV is the best-supported clade but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a Clade IV enzyme is the top experimental recommendation |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
 | Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |
 | 5 UniProt accessions from Table S1 return HTTP 200 with an empty body | **Confirmed** | Scripts must check body length, not status code; NCBI accessions are the reliable route |

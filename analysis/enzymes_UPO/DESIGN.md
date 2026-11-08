@@ -506,13 +506,22 @@ confirmed. If they co-express with a biosynthetic cluster, that is a substrate h
    dataset.** Pocket-vs-naphthalene Pearson r = 0.18 across all 19 enzymes, and the only two interpretable
    negatives (CviUPO, PanUPO) are the complete membership of Clade II, so clade and label are perfectly
    confounded. Read `CALIBRATION_MATRIX.md` §5 before planning any G2 work.
-2. **G2 RESOLVED (user, 2026-11-07): pivot to target T1, and report the T2 negative.**
-   T2 (aromatic ring hydroxylation) is not modellable on the available calibration data — see
-   `CALIBRATION_MATRIX.md` §4–5. It is written up as a measured negative result, not worked around.
-   G2's modelling effort moves to **T1, peroxygenase-versus-peroxidase propensity**, which is the axis the
-   aliphatic pocket was actually defined on. Figure S8 of the 2025 supplement holds per-enzyme T1 data at
-   three pH values and still needs digitizing; that digitization is the gate on whether T1 is viable.
-   **D6 (G3 scope) is the one decision still open.**
+2. **G2: T1 pivot executed, and BOTH gates came back negative. UPDATED 2026-11-08.**
+   The user's 2026-11-07 decision was to pivot to T1 and report the T2 negative. That was done.
+   **The T1 gate has since been run and the outcome changes what gets built** — this section
+   previously said only "pivot to T1" and was stale.
+   - **T2 (aromatic ring hydroxylation): not modellable.** Pearson r = +0.176 across all 19
+     enzymes. Written up standalone in `RESULT_T2_negative.md`.
+   - **T1 (peroxygenase-vs-peroxidase): predictable, but not by the pocket.** Figure S8 was
+     digitized (`data/calib_dl/t1_peroxygenase_S8.tsv`; these are printed data labels, not bar
+     heights). Pocket vs T1 gives r = +0.748 raw — but "is Clade V" alone gives r = +0.835, and the
+     **partial correlation of pocket with T1 given clade is only +0.129**. Within the ten
+     non-Clade-V enzymes it is +0.001. See `CALIBRATION_MATRIX.md` §8.
+   - **Consequence: clade carries the measured signal, the aliphatic pocket does not.** No
+     per-protein activity score is built, for either target. The deliverable is a clade annotator
+     with transparent site evidence. See `PLAN.md` §1.1.
+   **D6 is RESOLVED (user, 2026-11-08): all-BFD core, clade-stratified. See `PLAN.md` §4.2 for the
+   full parameter set.** No decisions are currently blocking.
 3. Re-measure Tier 1 alignability under `hmmalign` on the existing 87-protein sample; write the
    AaeUPO↔HspUPO position map. Clean up the `upo_id` training set as bookkeeping.
 4. **Gate T2 on the full 19-enzyme set: does aromatic channel lining separate the naphthalene negatives?**
