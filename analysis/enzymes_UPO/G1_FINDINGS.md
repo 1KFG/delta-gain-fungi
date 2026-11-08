@@ -41,7 +41,14 @@ nearest available match for divergent PF01328 proteins that are **not UPOs**, so
 absorbs them. **Unfiltered Clade I counts (33,424) are an upper bound.** After the catalytic
 filter, Clade I falls to **5,101**.
 
-## Finding 3 — the headline: the best-supported fungal UPO clade is represented by one uncharacterized enzyme
+## Finding 3 — the tightest fungal UPO group is represented by one uncharacterized enzyme
+
+> **Revised 2026-11-08 after phylogenetic placement.** This section originally called Clade IV
+> "the best-supported clade". That overstated it. Clade IV is the best-*delimited* group by
+> sequence identity, but its status as a clade separate from Clade V is **unresolved**: MphUPO
+> falls within the Clade V radiation on nodes carrying only 20-28 % bootstrap support. The group
+> itself is confirmed — 652 of 789 representatives place onto MphUPO's branch. See
+> `PLACEMENT_FINDINGS.md`. Read "clade" below as "group".
 
 **Clade IV is unlike every other clade in this dataset.**
 
@@ -72,6 +79,10 @@ has to the original goal of finding measurable novelty in UPO subtype lineages, 
 concrete experimental recommendation: characterize a Clade IV enzyme.**
 
 ### Caveats on Finding 3, stated plainly
+
+- **Its position in the tree is unresolved.** Phylogenetic placement with 400 bootstraps shows
+  MphUPO falling inside the Clade V radiation, but on nodes with 20-28 % support. Neither "distinct
+  clade" nor "nested in Clade V" is supported. `PLACEMENT_FINDINGS.md` has the detail.
 
 - **Every Clade IV call is flagged `provisional_cladeIV` by the tool**, because leave-one-out
   cannot validate a clade with one member — removing MphUPO leaves no Clade IV reference at all.

@@ -46,4 +46,5 @@ data/placement/*
 !data/placement/ref_aln.filtered.fa
 !data/placement/ref_labels.tsv
 !data/placement/reftree.raxml.bestTree
+!data/placement/reftree_bootstrap.support
 !data/placement/placement_clades.tsv

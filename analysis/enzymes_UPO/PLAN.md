@@ -17,6 +17,8 @@ Companion documents, all in this directory:
 | `RESULT_T2_negative.md` | The G2 negative result, written up standalone |
 | `G1_BFD_SUMMARY.md` | Auto-generated full-BFD tables |
 | `G1_FINDINGS.md` | G1 interpretation, including the Clade IV result |
+| `PLACEMENT_FINDINGS.md` | Phylogenetic placement: the clade caller, and clade support |
+| `G3_FINDINGS.md`, `G3_MOTIF_REPLICATION.md` | G3 Phase A regulatory result |
 | `upo_sites/` | The software built from all of the above |
 
 ---
@@ -235,7 +237,12 @@ close match in a thin database", not "novel"**. That caveat is written into the 
    3 minutes in a single job, so the planned array is unnecessary and would be pure scheduling
    overhead. One job, 8 cores, 24 GB. The real cost in this workstream is the **sequence
    extraction** from 15,137 gzipped per-genome files, not the annotation.
-8. Phylogenetic placement to replace nearest neighbour; re-validate at matched identity.
+8. ~~Phylogenetic placement to replace nearest neighbour~~ - **DONE 2026-11-08.** EPA onto a
+   93-reference, 400-bootstrap tree. Unassigned rate rises from 19.5 % to 57 %, which is the honest
+   answer at BFD divergence; 92.6 % agreement with nearest neighbour where both commit. Found and
+   removed 13 `NEG_` controls that align to 1 of 183 columns. Clades II and III are monophyletic at
+   100 % support, Clade I at 53 %, and the Clade IV/V relationship is **unresolved** (20-28 %
+   support). See `PLACEMENT_FINDINGS.md`. Re-validation at matched identity is still not done.
 9. G1 steps 2-5. **Step 2 (dereplication) done**: the 34,561 catalytic-core proteins reduce to
    7,055 representatives at 90 % identity and 2,805 at 70 %. **Step 3 (clade distribution) done**,
    see `G1_FINDINGS.md`. **Step 4 (novelty) running**: DIAMOND of the 7,055 representatives
@@ -276,7 +283,9 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Dinucleotide shuffle does not control for repeats | **Confirmed 2026-11-08** | Shuffle control returned poly-A and other low-complexity tracts absent from the real-background run. Genome-matched real promoters are the primary control |
 | Only 35.4 % of fungal PF01328 carries the UPO catalytic core | **Confirmed 2026-11-08** | All downstream work uses the 34,561 catalytic-core set, not the raw 97,520 |
 | Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Confirmed** | Unfiltered Clade I counts are an upper bound; filtered count is 5,101 |
-| Clade IV is the best-supported clade but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a Clade IV enzyme is the top experimental recommendation |
+| Clade IV is the tightest group but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a member is the top experimental recommendation |
+| Clade IV's position relative to Clade V is unresolved (20-28 % bootstrap) | **Confirmed 2026-11-08** | Do not call it a distinct clade; the GROUP is confirmed, its rank is not |
+| Rooted MRCA tests are invalid on unrooted RAxML trees | **Confirmed 2026-11-08** | Caused a spurious "Clade III is polyphyletic" result; monophyly must be tested with bipartitions |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
 | Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |
 | 5 UniProt accessions from Table S1 return HTTP 200 with an empty body | **Confirmed** | Scripts must check body length, not status code; NCBI accessions are the reliable route |
