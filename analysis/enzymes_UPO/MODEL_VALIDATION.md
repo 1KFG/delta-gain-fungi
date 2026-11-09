@@ -163,3 +163,37 @@ mechanistic route — ranking by CAVER 3.0.3 channel width — is a live lead at
 enzymes, enough to justify modelling clade representatives, not enough to ship a predictor.
 
 The binding constraint throughout is 19 characterized enzymes. It was tested, not assumed.
+
+---
+
+## E. Why the model stays bounded: the external validation set does not exist
+
+Every validation in this document reuses the same 19 characterized enzymes. The only way to
+move the model from "bounded" to "reliable" is to test it on enzymes from a different
+publication. That was attempted on 2026-11-08 and it failed for a specific, documented reason.
+
+Two independent UPO panels with measured activity exist in the recent literature:
+
+| source | enzymes | sequences disclosed |
+|---|---|---|
+| Anisole oxyfunctionalisation, [10.1016/j.bbrep.2025.102088](https://doi.org/10.1016/j.bbrep.2025.102088) | 30 | **No.** Identified only as "UPO 13", "UPO 14", variants "M1-M6". |
+| O-dealkylation screen, [10.1021/acscatal.5c06385](https://doi.org/10.1021/acscatal.5c06385) | 44 | **One.** UPO23 only, and the paper states UPO23 is AtuUPO, already one of our 19. |
+
+Both panels were purchased from Aminoverse B.V. The enzymes are sold; the sequences are not
+published. Without a sequence there are no pocket residues, so there is nothing to score.
+
+**This is the binding constraint, and it is not computational.** It is not solved by a better
+model, a bigger reference set, a better tree, or predicted structures - all four were tried and
+each returned a measured negative (sections A-D, `CHANNEL_FINDINGS.md`). It is solved only by
+sequences attached to activity measurements.
+
+Two routes that would actually work:
+
+1. Obtain sequences for a commercial panel under agreement, then score blind before unblinding.
+   This is the cheapest real test and needs no new wet work.
+2. Assay a set of the 5,115 shortlisted proteins in house. The shortlist is built to make this
+   choosable: 1,378 species, 1,246 proteins outside clade V, 29 in early-diverging phyla.
+
+Until one of those happens, the honest status is: **site identification is validated; subtype
+assignment and the T1 score are bounded, and the bounds are measured and published in the file
+headers.** Calling it reliable would be inflation.
