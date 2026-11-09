@@ -23,10 +23,11 @@ from collections import Counter
 
 
 class Node:
-    __slots__ = ("name", "length", "children", "parent", "label")
+    __slots__ = ("name", "length", "children", "parent", "label", "edge")
 
     def __init__(self, name="", length=0.0):
         self.name, self.length, self.children, self.parent, self.label = name, length, [], None, ""
+        self.edge = None  # jplace edge number, from "{n}" after the branch length
 
     def leaves(self):
         if not self.children:
@@ -38,7 +39,8 @@ class Node:
 
 
 def parse_newick(s: str) -> Node:
-    """Parse Newick; a name after ")" is the internal node's label (support)."""
+    """Parse Newick; a name after ")" is the internal node's label (support). jplace edge
+    numbers ("{n}" after a branch length) are kept on the node below the edge."""
     tokens = re.findall(r"\(|\)|,|:[^,();]+|[^,():;]+", s.strip().rstrip(";"))
     root = cur = Node()
     stack = []
@@ -57,7 +59,10 @@ def parse_newick(s: str) -> Node:
         elif t == ")":
             cur = stack.pop()
         elif t.startswith(":"):
-            cur.length = float(t[1:])
+            m = re.match(r":([^{]+)(?:\{(\d+)\})?", t)
+            cur.length = float(m.group(1))
+            if m.group(2) is not None:
+                cur.edge = int(m.group(2))
         elif cur.children:
             cur.label = t
         else:
