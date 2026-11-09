@@ -1,13 +1,13 @@
 #!/bin/bash
 # Fetch the 174 Zamocky 2022 reference sequences (step 1 of the reference-set expansion).
-# Network-bound and light: one core, a few minutes. Run from a clone of the repo:
+# Network-bound and light: one core; ~15-30 min, paced by the Wayback Machine (3 s between requests). Run from a clone of the repo:
 #   sbatch analysis/enzymes_UPO/refset/slurm/fetch_refset.sh
 # Output: analysis/enzymes_UPO/data/refset_zamocky2022/fetched/{zamocky2022_refs.faa,fetch_manifest.tsv}
 #SBATCH -p epyc,intel
 #SBATCH --constraint="ryzen|broadwell|cascade|sapphire"
 #SBATCH -c 1
 #SBATCH --mem=2G
-#SBATCH -t 1:00:00
+#SBATCH -t 2:00:00
 #SBATCH -J upo_refset_fetch
 #SBATCH -o logs/refset_fetch_%j.out
 #SBATCH -e logs/refset_fetch_%j.err

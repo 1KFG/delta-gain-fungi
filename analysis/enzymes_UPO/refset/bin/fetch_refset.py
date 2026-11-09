@@ -1,36 +1,40 @@
 #!/usr/bin/env python3
 """Fetch the Zamocky et al. 2022 reference sequences listed in tableS1_resolved.tsv.
 
-Each row of the resolved table names a `route` that says where its sequence comes from:
+Sources, by the row's `route`:
 
-  uniprot_direct, uniprot_xref, inferred_unique_PF01328_len_match
-        UniProt REST, by accession. A `resolved_id` holding two accessions separated by ';'
-        (one PeroxiBase ID mapped to two UniProt entries) fetches both and keeps the first;
-        the manifest says whether the two sequences were identical.
-  ncbi_efetch
-        NCBI E-utilities efetch, protein FASTA.
+  uniprot_direct, inferred_unique_PF01328_len_match
+        UniProtKB by accession. Entries since deleted from UniProtKB (many were, as "not part of
+        a reference proteome") are taken from UniParc, which keeps every sequence ever issued.
+  uniprot_xref
+        A PeroxiBase ID that UniProt cross-references. UniProtKB first; if its length disagrees
+        with Table S1, the archived PeroxiBase sequence is tried, since PeroxiBase was Zamocky's
+        primary source and the UniProt entry can be a different gene model.
   wayback_view_perox
-        PeroxiBase is offline. The Wayback Machine keeps its entry pages
-        (peroxibase.toulouse.inra.fr/display_perox/view_perox/<id>); the protein is in the
-        page's hidden form field name="Sequence". The PeroxiBase class and orthogroup on the
-        same page are recorded too.
-  pdb ...
-        RCSB FASTA for the entry, the chain named in `resolved_id` (e.g. 5FUJ_A).
+        PeroxiBase ID with no UniProt link. PeroxiBase is offline, so the sequence comes from the
+        Wayback Machine: first the archived FASTA endpoint (tools/get_fasta/<id>/PEP), then the
+        archived entry page (display_perox/view_perox/<id>, hidden field name="Sequence"), on both
+        the old (peroxibase.toulouse.inra.fr) and new (redoxibase.toulouse.inrae.fr) domains.
+        The capture closest to 2022-04-07, Zamocky's stated access date, is used.
+  ncbi_efetch   NCBI protein efetch.
+  pdb ...       RCSB FASTA, the chain named in resolved_id (e.g. 5FUJ_A).
+
+Table S1's length is the arbiter: when a row has more than one possible source, the first whose
+length matches Table S1 wins; if none matches, the first non-empty one is kept and flagged.
 
 Outputs, in --out:
-  zamocky2022_refs.faa      one record per fetched row, ID = Table S1 abbreviation
-  fetch_manifest.tsv        one row per Table S1 row: status, source URL, fetched vs. Table S1
-                            length, sha1 of the sequence, PeroxiBase class/orthogroup, notes
+  zamocky2022_refs.faa   one record per fetched row, ID = Table S1 abbreviation
+  fetch_manifest.tsv     one row per Table S1 row (nothing is dropped): status, source, URL,
+                         fetched vs. Table S1 length, sha1, PeroxiBase entry/class/orthogroup, notes
 
-Nothing is silently dropped: a row that cannot be fetched gets status=missing in the manifest.
-Exit status is 0 unless --strict is given and a row is missing or a length disagrees.
-
-Requires only the Python 3.9+ standard library (on the UCR HPCC use /usr/bin/python3.12).
+Exit status is 0 unless --strict is given and a row is missing or disagrees in length.
+Python 3.9+ standard library only (on the UCR HPCC use /usr/bin/python3.12).
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import datetime as dt
 import hashlib
 import html
 import json
@@ -42,26 +46,40 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-USER_AGENT = "delta-gain-fungi-refset/0.1 (research; python-urllib)"
-UNIPROT_FASTA = "https://rest.uniprot.org/uniprotkb/accessions?{q}"
+USER_AGENT = "delta-gain-fungi-refset/0.2 (research; python-urllib)"
+UNIPROT_BATCH = "https://rest.uniprot.org/uniprotkb/accessions?{q}"
+UNIPROT_ENTRY = "https://rest.uniprot.org/uniprotkb/{acc}.json"
+UNIPARC_FASTA = "https://rest.uniprot.org/uniparc/{upi}.fasta"
 NCBI_EFETCH = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?{q}"
-WAYBACK_AVAIL = "https://archive.org/wayback/available?{q}"
+WAYBACK_CDX = "https://web.archive.org/cdx/search/cdx?{q}"
 WAYBACK_RAW = "https://web.archive.org/web/{ts}id_/{url}"
-PEROXIBASE_PAGE = "peroxibase.toulouse.inra.fr/display_perox/view_perox/{id}"
 RCSB_FASTA = "https://www.rcsb.org/fasta/entry/{entry}"
 
+PB_HOSTS = ("peroxibase.toulouse.inra.fr", "redoxibase.toulouse.inrae.fr")
+PB_TARGET = dt.datetime(2022, 4, 7)        # Zamocky 2022, Methods 2.1: "accessed on 7 April 2022"
+PB_TRIES_PER_PATH = 3                      # captures tried per URL before moving on
+SLOW_HOSTS = {"web.archive.org": 3.0}      # seconds between requests; CDX throttles hard
+
 AA = re.compile(r"[^A-Z]")
-MANIFEST_COLS = ["abbrev", "given_id", "route", "resolved_id", "status", "source_url",
+MANIFEST_COLS = ["abbrev", "given_id", "route", "resolved_id", "status", "source", "source_url",
                  "fetched_len", "table_len", "len_match", "sha1", "pb_entry", "pb_class",
                  "pb_orthogroup", "note"]
 
 
 # ----------------------------------------------------------------------------- network
 
-class Fetcher:
-    """HTTP GET with retries, a polite delay per host, and an optional on-disk cache."""
+class NotFound(Exception):
+    pass
 
-    def __init__(self, cache: Path | None = None, delay: float = 1.0, retries: int = 4,
+
+class Fetcher:
+    """HTTP GET with a per-host delay, retries with backoff (429/5xx/network), and a cache.
+
+    404 raises NotFound immediately. Only successful responses are cached, so a rerun
+    retries exactly what failed.
+    """
+
+    def __init__(self, cache: Path | None = None, delay: float = 1.0, retries: int = 6,
                  timeout: float = 60.0):
         self.cache, self.delay, self.retries, self.timeout = cache, delay, retries, timeout
         self._last: dict[str, float] = {}
@@ -75,9 +93,10 @@ class Fetcher:
             if key.exists():
                 return key.read_text()
         host = urllib.parse.urlsplit(url).netloc
+        delay = SLOW_HOSTS.get(host, self.delay)
         err: Exception | None = None
         for attempt in range(self.retries):
-            wait = self.delay - (time.monotonic() - self._last.get(host, 0.0))
+            wait = delay - (time.monotonic() - self._last.get(host, 0.0))
             if wait > 0:
                 time.sleep(wait)
             self._last[host] = time.monotonic()
@@ -85,16 +104,18 @@ class Fetcher:
                 req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
                 with urllib.request.urlopen(req, timeout=self.timeout) as r:
                     text = r.read().decode("utf-8", "replace")
-                if key:
+                if key and text.strip():         # an empty body may be throttling: never cache it
                     key.write_text(text)
                 return text
             except urllib.error.HTTPError as e:
-                if e.code in (400, 404):
+                if e.code == 404:
+                    raise NotFound(url) from e
+                if e.code not in (429, 500, 502, 503, 504):
                     raise
                 err = e
             except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
                 err = e
-            time.sleep(2 ** attempt * 2)
+            time.sleep(min(120, 5 * 2 ** attempt))
         raise RuntimeError(f"GET failed after {self.retries} tries: {url}: {err}")
 
 
@@ -122,18 +143,35 @@ def uniprot_accession(header: str) -> str:
 
 
 def parse_peroxibase_page(page: str) -> dict:
-    """Extract protein sequence, entry name, class and orthogroup from a PeroxiBase entry page."""
+    """PeroxiBase entry page: protein from the hidden Sequence field, plus entry/class/orthogroup.
+
+    Some entry pages do not inline the sequence (only a FASTA link); seq is then ''.
+    """
     m = re.search(r'name="Sequence"\s+value="([^"]*)"', page)
-    seq = AA.sub("", html.unescape(m.group(1)).upper()) if m else ""
     entry = re.search(r"Entry information\s*:\s*([^\s<]+)", page)
     cls = re.search(r"/search/search_type/Class/([^\"]+)\"", page)
     og = re.search(r"view_orthogroup/([A-Za-z0-9_]+)", page)
     return {
-        "seq": seq,
+        "seq": AA.sub("", html.unescape(m.group(1)).upper()) if m else "",
         "pb_entry": entry.group(1) if entry else "",
         "pb_class": urllib.parse.unquote(cls.group(1)) if cls else "",
         "pb_orthogroup": og.group(1) if og else "",
     }
+
+
+PB_FASTA = re.compile(r">(\d+)\|([^|\n]*)\|[^|\n]*\|[^|\n]*\|([^|\n]*)\|[^\n]*\n([A-Z*\s]+)")
+
+
+def parse_peroxibase_fasta(page: str) -> dict:
+    """PeroxiBase tools/get_fasta/<id>/PEP page: the FASTA sits in a textarea.
+
+    Header: >12616|SbreHalPrx01| [Suillus_brevipes]|Basidiomycota|Haloperoxidase_(haem)|complete|
+    """
+    m = PB_FASTA.search(html.unescape(page))
+    if not m:
+        return {"seq": ""}
+    return {"seq": AA.sub("", m.group(4)), "pb_entry": m.group(2).strip(),
+            "pb_class": m.group(3).replace("_", " ").strip(), "pb_orthogroup": ""}
 
 
 def pick_pdb_chain(fasta_text: str, chain: str) -> str:
@@ -141,120 +179,197 @@ def pick_pdb_chain(fasta_text: str, chain: str) -> str:
     for header, seq in parse_fasta(fasta_text):
         f = header.split("|")
         if len(f) > 1:
-            chains = re.findall(r"\b([A-Za-z0-9]+)(?:\[auth [^\]]+\])?", f[1].replace("Chains", "").replace("Chain", ""))
-            if chain in chains:
+            names = re.findall(r"\b([A-Za-z0-9]+)(?:\[auth [^\]]+\])?",
+                               f[1].replace("Chains", "").replace("Chain", ""))
+            if chain in names:
                 return seq
     return ""
 
 
-# ----------------------------------------------------------------------------- routes
-
-def fetch_uniprot(fetcher: Fetcher, accessions: list[str]) -> dict[str, str]:
-    seqs: dict[str, str] = {}
-    for i in range(0, len(accessions), 200):
-        chunk = accessions[i:i + 200]
-        q = urllib.parse.urlencode({"accessions": ",".join(chunk), "format": "fasta"})
-        for h, s in parse_fasta(fetcher.get(UNIPROT_FASTA.format(q=q))):
-            seqs[uniprot_accession(h)] = s
-    return seqs
+def closest_first(captures: list[tuple[str, str]], target: dt.datetime = PB_TARGET):
+    """Sort Wayback (timestamp, original) pairs by distance from target."""
+    def dist(c):
+        try:
+            return abs((dt.datetime.strptime(c[0][:14], "%Y%m%d%H%M%S") - target).total_seconds())
+        except ValueError:
+            return float("inf")
+    return sorted(captures, key=dist)
 
 
-def fetch_ncbi(fetcher: Fetcher, accessions: list[str]) -> dict[str, str]:
-    q = urllib.parse.urlencode({"db": "protein", "id": ",".join(accessions),
-                                "rettype": "fasta", "retmode": "text", "tool": "fetch_refset"})
-    seqs: dict[str, str] = {}
-    for h, s in parse_fasta(fetcher.get(NCBI_EFETCH.format(q=q))):
-        acc = h.split()[0]
-        seqs[acc] = s
-        seqs[acc.split(".")[0]] = s
-    return seqs
+# ----------------------------------------------------------------------------- sources
 
+class Sources:
+    """Each method returns (seq, info) where info has 'source', 'url' and optional extras."""
 
-def fetch_wayback(fetcher: Fetcher, pb_id: str) -> tuple[dict, str]:
-    page_url = PEROXIBASE_PAGE.format(id=pb_id)
-    avail = json.loads(fetcher.get(WAYBACK_AVAIL.format(q=urllib.parse.urlencode({"url": page_url}))))
-    snap = avail.get("archived_snapshots", {}).get("closest") or {}
-    if not snap.get("available") or str(snap.get("status")) != "200":
-        return {"seq": ""}, ""
-    # snap["url"] is http://web.archive.org/web/<ts>/<orig>; rebuild it as the raw (id_) capture,
-    # which serves the page as archived, without the Wayback toolbar rewriting.
-    orig = re.sub(r"^https?://web\.archive\.org/web/\d+/", "", snap["url"])
-    raw = WAYBACK_RAW.format(ts=snap["timestamp"], url=orig)
-    return parse_peroxibase_page(fetcher.get(raw)), raw
+    def __init__(self, fetcher: Fetcher, log=sys.stderr):
+        self.f, self.log = fetcher, log
+        self.up: dict[str, str] = {}
+        self.nc: dict[str, str] = {}
+
+    # --- UniProt
+    def preload_uniprot(self, accs: list[str]) -> None:
+        for i in range(0, len(accs), 200):
+            q = urllib.parse.urlencode({"accessions": ",".join(accs[i:i + 200]), "format": "fasta"})
+            for h, s in parse_fasta(self.f.get(UNIPROT_BATCH.format(q=q))):
+                self.up[uniprot_accession(h)] = s
+        print(f"uniprotkb: {len(self.up)} of {len(accs)} accessions active", file=self.log)
+
+    def uniprot(self, acc: str):
+        if acc in self.up:
+            return self.up[acc], {"source": "uniprotkb", "url": f"https://rest.uniprot.org/uniprotkb/{acc}"}
+        entry = json.loads(self.f.get(UNIPROT_ENTRY.format(acc=acc)))
+        upi = entry.get("extraAttributes", {}).get("uniParcId", "")
+        why = entry.get("inactiveReason", {})
+        reason = why.get("inactiveReasonType", "?")
+        if why.get("deletedReason"):
+            reason += f": {why['deletedReason']}"
+        if why.get("mergeDemergeTo"):
+            reason += f" -> {','.join(why['mergeDemergeTo'])}"
+        if not upi:
+            return "", {"source": "uniprotkb", "note": f"{acc} inactive ({reason}), no UniParc ID"}
+        recs = parse_fasta(self.f.get(UNIPARC_FASTA.format(upi=upi)))
+        seq = recs[0][1] if recs else ""
+        return seq, {"source": "uniparc", "url": f"https://rest.uniprot.org/uniparc/{upi}",
+                     "note": f"{acc} inactive in UniProtKB ({reason}); sequence from UniParc {upi}"}
+
+    # --- NCBI
+    def preload_ncbi(self, accs: list[str]) -> None:
+        if not accs:
+            return
+        q = urllib.parse.urlencode({"db": "protein", "id": ",".join(accs), "rettype": "fasta",
+                                    "retmode": "text", "tool": "fetch_refset"})
+        for h, s in parse_fasta(self.f.get(NCBI_EFETCH.format(q=q))):
+            acc = h.split()[0]
+            self.nc[acc] = self.nc[acc.split(".")[0]] = s
+        print(f"ncbi: {len(accs)} requested", file=self.log)
+
+    def ncbi(self, acc: str):
+        seq = self.nc.get(acc, self.nc.get(acc.split(".")[0], ""))
+        return seq, {"source": "ncbi", "url": f"https://www.ncbi.nlm.nih.gov/protein/{acc}"}
+
+    # --- PeroxiBase via the Wayback Machine
+    def _captures(self, host_path: str) -> list[tuple[str, str]]:
+        q = urllib.parse.urlencode({"url": host_path, "output": "json",
+                                    "fl": "timestamp,original", "filter": "statuscode:200"})
+        text = self.f.get(WAYBACK_CDX.format(q=q)).strip()
+        rows = json.loads(text) if text else []
+        return [(r[0], r[1]) for r in rows[1:]]          # rows[0] is the header
+
+    def peroxibase(self, pb_id: str):
+        notes = []
+        for path, parse in ((f"tools/get_fasta/{pb_id}/PEP", parse_peroxibase_fasta),
+                            (f"display_perox/view_perox/{pb_id}", parse_peroxibase_page)):
+            caps = []
+            for host in PB_HOSTS:
+                caps += self._captures(f"{host}/{path}")
+            for ts, orig in closest_first(caps)[:PB_TRIES_PER_PATH]:
+                url = WAYBACK_RAW.format(ts=ts, url=orig)
+                info = parse(self.f.get(url))
+                if info["seq"]:
+                    info.update(source="peroxibase_wayback", url=url)
+                    return info.pop("seq"), info
+            notes.append(f"{path}: {len(caps)} captures, no sequence")
+        return "", {"source": "peroxibase_wayback", "note": "; ".join(notes)}
+
+    # --- RCSB
+    def pdb(self, entry_chain: str):
+        entry, _, chain = entry_chain.partition("_")
+        url = RCSB_FASTA.format(entry=entry)
+        return pick_pdb_chain(self.f.get(url), chain or "A"), {
+            "source": "rcsb", "url": url, "note": "structure chain; duplicate of a backbone enzyme"}
 
 
 # ----------------------------------------------------------------------------- main logic
+
+UNIPROT_ROUTES = ("uniprot_direct", "uniprot_xref", "inferred_unique_PF01328_len_match")
+
+
+def candidates(r: dict, src: Sources):
+    """Ordered zero-arg callables, each returning (seq, info)."""
+    route, rid = r["route"], r["resolved_id"]
+    accs = [a for a in rid.split(";") if a]
+    if route in ("uniprot_direct", "inferred_unique_PF01328_len_match"):
+        return [lambda: src.uniprot(accs[0])]
+    if route == "uniprot_xref":
+        return [lambda: src.uniprot(accs[0]), lambda: src.peroxibase(r["given_id"])]
+    if route == "wayback_view_perox":
+        return [lambda: src.peroxibase(rid.removeprefix("peroxibase:"))]
+    if route == "ncbi_efetch":
+        return [lambda: src.ncbi(rid)]
+    if route.startswith("pdb"):
+        return [lambda: src.pdb(rid)]
+    return []
+
+
+def resolve_row(r: dict, src: Sources) -> dict:
+    m = {c: "" for c in MANIFEST_COLS}
+    m.update({k: r.get(k, "") for k in ("abbrev", "given_id", "route", "resolved_id")})
+    m["table_len"] = r.get("length_aa", "")
+    want = int(m["table_len"]) if m["table_len"].isdigit() else None
+    notes, tried, chosen = [], [], None
+    cands = candidates(r, src)
+    if not cands:
+        notes.append(f"unknown route {r['route']!r}")
+    for get in cands:
+        try:
+            seq, info = get()
+        except Exception as e:                    # recorded, never fatal
+            seq, info = "", {"note": f"error: {e}"}
+        if info.get("note"):
+            notes.append(info["note"])
+        if seq:
+            tried.append((seq, info))
+            if want is None or len(seq) == want:
+                chosen = (seq, info)
+                break
+    if chosen is None and tried:
+        chosen = tried[0]
+    if len(tried) > 1:
+        notes.append("lengths by source: " + ", ".join(f"{i['source']}={len(s)}" for s, i in tried)
+                     + f"; kept {chosen[1]['source']}")
+
+    accs = [a for a in r["resolved_id"].split(";") if a]
+    if r["route"] in UNIPROT_ROUTES and len(accs) > 1:
+        same = len({src.up.get(a, "") for a in accs}) == 1
+        notes.append(f"{len(accs)} UniProt entries for this PeroxiBase ID; first used; "
+                     f"sequences {'identical' if same else 'DIFFER'}")
+    if r["route"].startswith("inferred"):
+        notes.append("ID inferred (unique PF01328 entry at this length in this organism)")
+
+    if chosen:
+        seq, info = chosen
+        m.update(status="ok", source=info.get("source", ""), source_url=info.get("url", ""),
+                 fetched_len=str(len(seq)), sha1=hashlib.sha1(seq.encode()).hexdigest(),
+                 len_match="na" if want is None else ("yes" if len(seq) == want else "no"))
+        for k in ("pb_entry", "pb_class", "pb_orthogroup"):
+            m[k] = info.get(k, "")
+        m["_seq"] = seq
+    else:
+        m["status"] = "missing"
+    m["note"] = "; ".join(dict.fromkeys(notes))
+    return m
+
 
 def read_table(path: Path) -> list[dict]:
     with path.open(newline="") as fh:
         return list(csv.DictReader(fh, delimiter="\t"))
 
 
-def run(rows: list[dict], fetcher: Fetcher, log=sys.stderr) -> tuple[list[tuple[str, str]], list[dict]]:
+def run(rows: list[dict], fetcher: Fetcher, log=sys.stderr):
     """Fetch every row. Returns (fasta_records, manifest_rows)."""
-    up_rows = [r for r in rows if r["route"] in
-               ("uniprot_direct", "uniprot_xref", "inferred_unique_PF01328_len_match")]
-    up_accs = sorted({a for r in up_rows for a in r["resolved_id"].split(";") if a})
-    ncbi_rows = [r for r in rows if r["route"] == "ncbi_efetch"]
-
-    up = fetch_uniprot(fetcher, up_accs) if up_accs else {}
-    print(f"uniprot: {len(up)} of {len(up_accs)} accessions returned", file=log)
-    nc = fetch_ncbi(fetcher, [r["resolved_id"] for r in ncbi_rows]) if ncbi_rows else {}
-    print(f"ncbi: {len(ncbi_rows)} requested", file=log)
-
+    src = Sources(fetcher, log)
+    src.preload_uniprot(sorted({a for r in rows if r["route"] in UNIPROT_ROUTES
+                                for a in r["resolved_id"].split(";") if a}))
+    src.preload_ncbi([r["resolved_id"] for r in rows if r["route"] == "ncbi_efetch"])
     records, manifest = [], []
-    for r in rows:
-        m = {c: "" for c in MANIFEST_COLS}
-        m.update({k: r.get(k, "") for k in ("abbrev", "given_id", "route", "resolved_id")})
-        m["table_len"] = r.get("length_aa", "")
-        notes, seq, url = [], "", ""
-        route = r["route"]
-        try:
-            if route in ("uniprot_direct", "uniprot_xref", "inferred_unique_PF01328_len_match"):
-                accs = [a for a in r["resolved_id"].split(";") if a]
-                seq = up.get(accs[0], "")
-                url = "https://rest.uniprot.org/uniprotkb/" + accs[0]
-                if len(accs) > 1:
-                    same = len({up.get(a, "") for a in accs}) == 1
-                    notes.append(f"{len(accs)} UniProt entries for this PeroxiBase ID; kept {accs[0]}; "
-                                 f"sequences {'identical' if same else 'DIFFER'}")
-                if route.startswith("inferred"):
-                    notes.append("ID inferred (unique PF01328 entry at this length in this organism)")
-            elif route == "ncbi_efetch":
-                acc = r["resolved_id"]
-                seq = nc.get(acc, nc.get(acc.split(".")[0], ""))
-                url = "https://www.ncbi.nlm.nih.gov/protein/" + acc
-            elif route == "wayback_view_perox":
-                pb_id = r["resolved_id"].removeprefix("peroxibase:")
-                info, url = fetch_wayback(fetcher, pb_id)
-                seq = info["seq"]
-                for k in ("pb_entry", "pb_class", "pb_orthogroup"):
-                    m[k] = info.get(k, "")
-                if not url:
-                    notes.append("no Wayback capture")
-            elif route.startswith("pdb"):
-                entry, _, chain = r["resolved_id"].partition("_")
-                url = RCSB_FASTA.format(entry=entry)
-                seq = pick_pdb_chain(fetcher.get(url), chain or "A")
-                notes.append("structure chain; duplicate of a backbone enzyme (see route)")
-            else:
-                notes.append(f"unknown route {route!r}")
-        except Exception as e:  # recorded, never fatal: one bad row must not lose the rest
-            notes.append(f"error: {e}")
-        m["source_url"] = url
+    for i, r in enumerate(rows, 1):
+        m = resolve_row(r, src)
+        seq = m.pop("_seq", "")
         if seq:
-            m["status"] = "ok"
-            m["fetched_len"] = str(len(seq))
-            m["sha1"] = hashlib.sha1(seq.encode()).hexdigest()
-            try:
-                m["len_match"] = "yes" if int(m["table_len"]) == len(seq) else "no"
-            except ValueError:
-                m["len_match"] = "na"
             records.append((r["abbrev"], seq))
-        else:
-            m["status"] = "missing"
-        m["note"] = "; ".join(notes)
         manifest.append(m)
+        print(f"[{i}/{len(rows)}] {m['abbrev']} {m['status']} {m['source']} "
+              f"{m['fetched_len']}/{m['table_len']}", file=log, flush=True)
     return records, manifest
 
 
@@ -276,21 +391,24 @@ def main(argv=None) -> int:
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     ap.add_argument("--table", required=True, type=Path, help="tableS1_resolved.tsv")
     ap.add_argument("--out", required=True, type=Path, help="output directory")
-    ap.add_argument("--cache", type=Path, help="cache raw HTTP responses here (reruns skip the network)")
-    ap.add_argument("--delay", type=float, default=1.0, help="minimum seconds between requests to one host")
+    ap.add_argument("--cache", type=Path, help="cache successful HTTP responses here")
+    ap.add_argument("--delay", type=float, default=1.0,
+                    help="seconds between requests to one host (web.archive.org always >= 3)")
     ap.add_argument("--strict", action="store_true",
                     help="exit 1 if any row is missing or disagrees with the Table S1 length")
     a = ap.parse_args(argv)
 
-    rows = read_table(a.table)
-    records, manifest = run(rows, Fetcher(cache=a.cache, delay=a.delay))
+    records, manifest = run(read_table(a.table), Fetcher(cache=a.cache, delay=a.delay))
     write_outputs(a.out, records, manifest)
 
-    n_ok = sum(m["status"] == "ok" for m in manifest)
-    bad_len = [m["abbrev"] for m in manifest if m["len_match"] == "no"]
     missing = [m["abbrev"] for m in manifest if m["status"] == "missing"]
-    print(f"fetched {n_ok}/{len(manifest)}; missing {len(missing)} {missing}; "
-          f"length differs from Table S1: {len(bad_len)} {bad_len}", file=sys.stderr)
+    bad_len = [m["abbrev"] for m in manifest if m["len_match"] == "no"]
+    by_src: dict[str, int] = {}
+    for m in manifest:
+        if m["status"] == "ok":
+            by_src[m["source"]] = by_src.get(m["source"], 0) + 1
+    print(f"fetched {len(records)}/{len(manifest)} by source {by_src}; missing {len(missing)} "
+          f"{missing}; length differs from Table S1: {len(bad_len)} {bad_len}", file=sys.stderr)
     return 1 if a.strict and (missing or bad_len) else 0
 
 
