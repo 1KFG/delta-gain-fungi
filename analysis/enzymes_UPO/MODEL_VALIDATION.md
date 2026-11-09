@@ -311,3 +311,42 @@ recorded rather than dropped.
 **With this, every computational route to an out-of-clade model is closed by measurement.** The
 out-of-clade AUC of 0.556 still rests on ONE active enzyme outside clade V, and no AUC on one
 positive case is evidence. Only measurement on new enzymes can settle it.
+
+
+---
+
+## I. The n = 1 ceiling is a property of the data, not of the activity threshold
+
+A reasonable objection to every section above: the 10 % "active" cut is a choice, and a different
+cut might supply more out-of-clade positives. It does not. The out-of-clade activity distribution
+has a gap.
+
+Non-clade-V enzymes, by 4-PG peroxygenase conversion:
+
+| enzyme | clade | activity |
+|---|---|---|
+| GmaUPO-II | I | **49.3** |
+| MphUPO | IV | 2.7 |
+| PaDa-I | I | 1.7 |
+| MorUPO | III | 1.7 |
+| MroUPO | III | 1.0 |
+| CmaUPO-I | I | 1.0 |
+| PanUPO, LspUPO-II, CviUPO, CabUPO-III | II, I, II, I | 0.0 |
+
+| threshold | out-of-clade actives | total actives |
+|---|---|---|
+| > 2 % | 2 | 11 |
+| > 5 % | 1 | 10 |
+| > 10 % (used) | 1 | 10 |
+| > 15 % | 1 | 10 |
+| > 20 % | 1 | 10 |
+| > 25 % | 1 | 9 |
+
+**No threshold between 3 % and 49 % changes the count from one.** The single value that adds a
+second is > 2 %, which promotes MphUPO at 2.7 % — indistinguishable from the 0-1.7 % inactives
+and label noise rather than signal.
+
+So the out-of-clade sample size of ONE is a property of the published data. It is not an artifact
+of where the line was drawn, and it cannot be moved by reanalysis. Validating out-of-clade
+detection requires out-of-clade positives; all published 4-propylguaiacol data contains exactly
+one. **This is the binding constraint on the whole model question, and it is arithmetic.**
