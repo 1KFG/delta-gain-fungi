@@ -35,11 +35,27 @@ its whole clade.
 
 ## What is open right now
 
+Nothing. Every job in the standing goal has finished.
+
 | Job | State |
 |---|---|
-| Full-BFD phylogenetic placement (31868164) | running, 8/20 chunks |
-| Boltz-2 modelling of all 19 (31870133) | running |
-| Final merged per-protein table | waiting on placement; `upo_sites/bin/merge_final.py` ready |
+| Full-BFD phylogenetic placement (31868164) | DONE, 20/20 chunks, 97,520 queries |
+| Boltz-2 modelling of all 19 (31870133) | DONE, and it FAILED validation; the 14 models are discarded |
+| Final merged per-protein table | DONE: `data/bfd_full/upo_sites_bfd_final.tsv.zst`, `FINAL_TABLE_REPORT.md` |
+
+### The deliverable
+
+`data/bfd_full/upo_sites_bfd_final.tsv.zst` — one row per PF01328 protein in BFD,
+97,520 rows. Filter on `clade_trust`.
+
+| tier | n | % |
+|---|---|---|
+| `unassigned` (placement declined) | 76,913 | 78.9 |
+| `extrapolated` | 10,152 | 10.4 |
+| `reliable` | 10,455 | 10.7 |
+
+Site residues and `catalytic_core` are validated for every row. The clade call is
+bounded, which is why the tier column exists. No activity score is emitted.
 
 **The Boltz-2 run has a built-in kill switch.** 5 of the 19 have crystal structures. If predicted
 channel widths do not reproduce the experimental ones (AaeUPO 4.23, MroUPO 5.19, HspUPO 4.87,
