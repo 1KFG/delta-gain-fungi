@@ -97,6 +97,24 @@ is not evidence. **This is what the Boltz-2 run is for: n = 19 instead of 5.**
 D4 Clades I–V (user) · D5 AF3 and Boltz-2 both acceptable (user) · D6 all-BFD core, clade-stratified
 (user) · G2 T1 pivot + report T2 negative (user) · Phase B RNA-seq: run on public SRA data (user) — **complete, negative**.
 
+## The cheapest experiment that would settle the model question
+
+Six characterized UPOs already exist as expressed, purified enzymes in other laboratories and
+have **no published 4-propylguaiacol number**. Pre-registered predictions, recorded before any
+measurement (`EXTERNAL_VALIDATION.md`):
+
+- **active** (> 10 % conversion): DchUPO (`LLLAI`, 4/5), DcaUPO (`LLLCI`, 3/5)
+- **inactive** (< 10 %): CraUPO (0/5), MweUPO (0/5), PabUPO-II (0/5), UPO1_Codo (1/5)
+
+Six existing enzymes on one substrate is far smaller than the 96-well panel and attacks the
+exact weakness. A failure on DcaUPO or DchUPO is the informative outcome: it would confirm the
+rule overcalls outside clade V, which is what the 0.556 out-of-clade AUC warns about.
+
+Why no computational route remains: a second panel on this substrate does not exist; an external
+set built from other papers' labels is invalid, because PaDa-I (the AaeUPO variant, the field's
+benchmark peroxygenase) converts 4-PG at 1.7 % and T1 correctly calls it inactive; and
+applicability distance failed as a confidence measure (p = 0.88).
+
 ## The one thing that would change everything
 
 **19 characterized enzymes.** Every limit above traces to it, and it was tested rather than
