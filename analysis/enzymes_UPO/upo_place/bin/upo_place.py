@@ -94,6 +94,15 @@ def prune(root: Node, leaf: str) -> Node:
             only.length += p.length
             only.parent = g
             g.children[g.children.index(p)] = only
+    elif p.parent is None and len(p.children) == 2:
+        # the trifurcating root lost a child: unroot again (epa-ng wants an unrooted tree)
+        c = next(x for x in p.children if x.children)
+        o = next(x for x in p.children if x is not c)
+        o.length += c.length
+        o.parent = c
+        c.children.append(o)
+        c.parent, c.length = None, 0.0
+        return c
     return root
 
 

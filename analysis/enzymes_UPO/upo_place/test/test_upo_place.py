@@ -64,6 +64,11 @@ class T(unittest.TestCase):
         self.assertEqual(sorted(l.name for l in parse_newick(nw).leaves()), ["B", "C", "D", "E"])
         self.assertIn("B:2", nw)                                   # 1 + 1 merged
 
+    def test_prune_root_child_stays_unrooted(self):
+        root = up.prune(parse_newick("((A:1,B:1)90:1,(C:1,D:1)80:2,E:1);"), "E")
+        self.assertEqual(len(root.children), 3)
+        self.assertEqual(sorted(l.name for l in root.leaves()), ["A", "B", "C", "D"])
+
     def test_loo_summary(self):
         out = os.path.join(self.d, "a.tsv")
         up.write_rows(out, [{"query": "A", "our_clade": "Clade X", "fig1_clade": "Big"},
