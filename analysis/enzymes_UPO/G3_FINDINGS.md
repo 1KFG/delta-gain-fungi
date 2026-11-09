@@ -121,10 +121,33 @@ as a positive finding. Clade IV is the only clade whose motifs survive both cont
 4. **Everything about Clade IV inherits Clade IV's provisional status.** It has one characterized
    member (MphUPO), so "Clade IV" here means "proteins at high identity to one uncharacterized
    enzyme". See `G1_FINDINGS.md` Finding 3.
-5. **Shared ancestry is not fully excluded.** Clade IV proteins sit at 66.5 % median identity, so
-   some promoter similarity could be descent rather than convergent regulation. Cross-lineage
-   replication argues against this — Sordariomycetes and Dothideomycetes are different classes, and
-   promoters diverge fast — but no explicit test of promoter-level phylogenetic signal was run.
+5. **Shared ancestry is NOT excluded. It is now tested, and it is partly supported.**
+   *Updated 2026-11-08; the earlier text said no explicit test had been run.*
+   `upo_reg/bin/promoter_phylo_control.py` scans the 760 clade IV promoters with the actual
+   STREME CCAAT PWM (`3-CCAATRAGAG`) under FIMO, then permutes carrier labels 10,000 times
+   against the protein identity matrix.
+
+   | quantity | value |
+   |---|---|
+   | carriers | 259 of 760 (34.1 %) |
+   | mean pairwise identity, carriers | 57.49 % |
+   | mean pairwise identity, all clade IV | 54.36 % |
+   | difference | **+3.13 points** |
+   | null mean (10,000 permutations) | −0.012 points (sd 0.914) |
+   | one-sided p | **0.0005**, z = +3.44 |
+
+   Carriers are more closely related to each other than a random subset of the same size.
+   Within clade IV, which genes carry the motif tracks the phylogeny. **So the enrichment is
+   at least partly confounded with ancestry and must not be read as convergent regulation.**
+
+   This does not erase the cross-lineage replication: the motif still recurs in Sordariomycetes,
+   Dothideomycetes and Eurotiomycetes, which are different classes. Both can hold if the motif is
+   ancestral in part of clade IV and retained. The effect is also modest, 3 points on a 54 %
+   baseline. But the direction is the one descent predicts, and it is significant.
+
+   A methodological note worth keeping: a bare `CCAAT` 5-mer appears in 93.6 % of these promoters
+   by chance and cannot discriminate anything. An earlier run of this control using the 5-mer gave
+   a near-meaningless 711-vs-49 split. The test is only informative with the PWM.
 6. **No expression data.** Phase B (RNA-seq) is deferred at the user's direction. Nothing here
    shows these motifs are used, only that they are enriched.
 
