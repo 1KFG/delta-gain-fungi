@@ -5,8 +5,8 @@
 # position only), so that row is a label of convenience, not an independent match.
 # paper_mean_length: the average length the paper's text states for that clade (aa).
 clade	anchors	paper_mean_length	evidence
-root	Z__RdelHTP__Mucoro,Z__MucambHTP__Mucoro,Z__RstolHTP1__Mucoro		text: basal clade of Mucor and Rhizopus; RdelHTP modelled as its representative
-Mucoromycetous basal	Z__RdelHTP__Mucoro,Z__MucambHTP__Mucoro,Z__RstolHTP1__Mucoro	301	text: Mucor and Rhizopus genes; RdelHTP
+root	Z__AglauHTP__Mucoro,Z__CcucHTP__Mucoro,Z__MucambHTP__Mucoro,Z__MuclusHTP__Mucoro,Z__MuccirHTP__Mucoro,Z__PpaHTP__Mucoro,Z__RdelHTP__Mucoro,Z__RstolHTP1__Mucoro,Z__RmicroHTP1__Mucoro,Z__RmicroHTP2__Mucoro		text: basal clade of Mucor and Rhizopus (RdelHTP its modelled representative); anchors are every Mucorales sequence in Table S1 (Rhizophagus excluded: Glomeromycotina, mislabelled in Table S1)
+Mucoromycetous basal	Z__AglauHTP__Mucoro,Z__CcucHTP__Mucoro,Z__MucambHTP__Mucoro,Z__MuclusHTP__Mucoro,Z__MuccirHTP__Mucoro,Z__PpaHTP__Mucoro,Z__RdelHTP__Mucoro,Z__RstolHTP1__Mucoro,Z__RmicroHTP1__Mucoro,Z__RmicroHTP2__Mucoro	301	text: Mucor and Rhizopus genes; RdelHTP
 Basidiomycetous 1st	Z__MlarHTP1__Basidio,Z__UhHTP1__Basidio	316	text: mostly Pucciniomycetes (Melampsora) and Ustilaginomycetes; Ustilago paralog chosen from tree (Ustilago also has Family II paralogs)
 Glomeromycetous (Fig 1 "Mucoromycetous small")	Z__GrosHTP1__Glomero,Z__RirrHTP1__Mucoro	230	text: glomeromycetous HTP clade; Gigaspora, Rhizophagus (Table S1 mislabels Rhizophagus as Mucoromycotina)
 Ascomycetous 1st	Z__AfumHTP1__Asco,Z__NhaeHTP__Asco	265	tree: text names no member
