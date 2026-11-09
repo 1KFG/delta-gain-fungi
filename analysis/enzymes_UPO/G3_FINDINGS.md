@@ -148,13 +148,19 @@ as a positive finding. Clade IV is the only clade whose motifs survive both cont
    A methodological note worth keeping: a bare `CCAAT` 5-mer appears in 93.6 % of these promoters
    by chance and cannot discriminate anything. An earlier run of this control using the 5-mer gave
    a near-meaningless 711-vs-49 split. The test is only informative with the PWM.
-6. **No expression data.** Phase B (RNA-seq) is deferred at the user's direction. Nothing here
-   shows these motifs are used, only that they are enriched.
+6. **Expression data now exist, and they do not support the regulatory reading.** Phase B is
+   done: 15 public RNA-seq libraries of *Alternaria alternata* Z7, the exact strain in BFD
+   (`F40104A9`), under H2O2, NaCl, FeSO4 and CuSO4. Median mapping 59.3 %, all 15 runs pass QC.
+   No treatment shifts the 12 UPOs as a class (p 0.14-0.79), and the UPOs are LESS correlated
+   with the CCAAT-binding complex (mean rho +0.011) than with 300 random genes (+0.097). The
+   enrichment is real as a sequence observation. It must not be called evidence of shared
+   regulation. Full result and limits: `G3_PHASE_B_RESULTS.md`.
 
 ## What would make this solid
 
-- **Phase B**: test whether Clade IV UPOs are co-regulated with known CCAAT-complex targets in
-  *Aspergillus* / *Penicillium* RNA-seq, and whether they respond to oxidative stress or iron.
-- A promoter-phylogeny control for point 5.
+- ~~**Phase B**~~ and ~~a promoter-phylogeny control for point 5~~: both done. Both came back
+  against the regulatory reading. What would now help is a condition where a fungal UPO is known
+  to be induced, which none of the four treatments here turned out to be, plus a species with
+  more than one clade IV gene so the clade-specific question can be tested rather than observed.
 - A wider fungal TF motif database than JASPAR CORE fungi, which would also let Family 1 be named
   or confidently called unknown.

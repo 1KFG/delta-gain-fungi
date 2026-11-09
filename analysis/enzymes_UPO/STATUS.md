@@ -86,7 +86,7 @@ is not evidence. **This is what the Boltz-2 run is for: n = 19 instead of 5.**
 ## Decisions in force
 
 D4 Clades I–V (user) · D5 AF3 and Boltz-2 both acceptable (user) · D6 all-BFD core, clade-stratified
-(user) · G2 T1 pivot + report T2 negative (user) · Phase B RNA-seq **deferred** (user).
+(user) · G2 T1 pivot + report T2 negative (user) · Phase B RNA-seq: run on public SRA data (user) — **complete, negative**.
 
 ## The one thing that would change everything
 

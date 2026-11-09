@@ -6,15 +6,16 @@ CCAAT-binding complex?
 Design and pre-registered interpretation rules are in G3_PHASE_B_DESIGN.md, committed before
 this ran. Read that first. The short version of the limits:
 
-  - The reference genome Y9 has 13 PF01328 proteins and exactly ONE clade IV by placement, so the
-    clade-IV-specific question is an observation on 1 gene, never a test. No p-value is reported
-    for clade IV as a clade.
-  - Reads are strain Z7, transcripts are strain Y9. Mapping rate is the QC and is reported first.
+  - The reference genome Z7 (BFD F40104A9) has 12 PF01328 proteins and exactly ONE clade IV by
+    placement, so the clade-IV-specific question is an observation on 1 gene, never a test. No
+    p-value is reported for clade IV as a clade.
+  - Reads and transcripts are both strain Z7, so there is no cross-strain penalty. Mapping rate
+    is still the QC and is reported first.
   - NaCl and CuSO4 are specificity controls. A response shared with them is generic.
 
 TESTS
 -----
-1. CLASS LEVEL (powered). Are the 13 UPO genes shifted in log2 fold change relative to all other
+1. CLASS LEVEL (powered). Are the 12 UPO genes shifted in log2 fold change relative to all other
    genes, under each treatment? Mann-Whitney U, two-sided, against the genome-wide distribution.
 2. CLADE IV (descriptive only). The single clade IV gene's fold change, shown beside the other 12.
 3. CO-REGULATION. Spearman correlation of each UPO's expression profile with the CCAAT-complex
@@ -52,7 +53,7 @@ for line in open(a.manifest):
 
 # ---- mapping-rate QC ----
 say("# G3 Phase B results\n")
-say("## Mapping-rate QC (strain Z7 reads against strain Y9 transcripts)\n")
+say("## Mapping-rate QC (strain Z7 reads against the strain-matched Z7 transcripts)\n")
 say("| run | condition | % mapped |")
 say("|---|---|---|")
 rates, keep = {}, []
