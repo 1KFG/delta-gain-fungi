@@ -85,5 +85,26 @@ class T(unittest.TestCase):
         self.assertEqual(rows["E"]["fig1_ok"], "yes")
 
 
+    def test_compare_bfd(self):
+        import compare_bfd as cb
+        placed = os.path.join(self.d, "chunk_0001.tsv")
+        up.write_rows(placed, [
+            {"query": "p1", "our_clade": "Clade I", "fig1_clade": "Fam II", "flags": ""},
+            {"query": "p2", "our_clade": "unassigned", "fig1_clade": "Basidio 1st", "flags": ""}])
+        old = os.path.join(self.d, "old.tsv")
+        open(old, "w").write(
+            "# comment\nsample\tprotein_id\tclade\tclade_confidence\tp180_Acid\tPHYLUM\n"
+            "c\tp1 x\tI\tvalidated_range\tE\tBasidiomycota\n"
+            "c\tp2\tI\textrapolated_low_margin\tN\tBasidiomycota\n"
+            "c\tp3\tV\textrapolated\tE\tAscomycota\n")
+        merged = os.path.join(self.d, "m.tsv")
+        stats, mp, mo = cb.compare(cb.read_placed([placed]), old, merged)
+        self.assertEqual((mp, mo), (1, 0))                       # p3 not placed: counted
+        self.assertEqual(stats["old_vs_new"][("Clade I / extrapolated", "unassigned")], 1)
+        self.assertEqual(stats["oldI_fig1"][("Basidio 1st", "notE")], 1)
+        rows = list(csv.DictReader(open(merged), delimiter="\t"))
+        self.assertEqual(rows[0]["place_our_clade"], "Clade I")
+
+
 if __name__ == "__main__":
     unittest.main()
