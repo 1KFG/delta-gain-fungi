@@ -13,8 +13,17 @@
 | **G2 T1** | Predictable, but by **clade, not pocket**: partial r = **+0.129** given clade | `CALIBRATION_MATRIX.md` §8 |
 | **G3 Phase A** | **Clade IV is the only clade whose motifs replicate across independent lineages and survive both controls**, including a **CCAAT box** naming to the CCAAT-binding complex twice (HAP3, HAP5) | `G3_FINDINGS.md` |
 | **Site identification** | **Validated**: 95/95 agreement with the published structure-based matrix; catalytic positions rank 6/12/15 of 186 match states by conservation | `MODEL_VALIDATION.md` §A |
+| **G3 Phase B** | **Negative, and interpretable.** 15 Z7 RNA-seq libraries, median mapping 59.3 %. No treatment shifts the 12 UPOs as a class (p 0.14-0.79). UPOs correlate LESS with the CCAAT complex (+0.011) than with random genes (+0.097) | `G3_PHASE_B_RESULTS.md` |
+| **Software** | `upo_scan.py`: one command, any proteome -> sites + score + applicability domain. Regression-tested 87/87 against the full BFD pipeline | `upo_sites/README.md` |
 
 ## What is bounded, with the bound measured
+
+**The identification model is NOT reliable for finding active enzymes, and this has not been
+relabelled.** Out-of-clade AUC is 0.556 on n = 1 active. A per-protein confidence measure was
+attempted via applicability distance and **failed its test** (Spearman with model skill -0.281,
+p = 0.88); the failure is recorded in `MODEL_VALIDATION.md` §F rather than dropped. What the
+model IS reliable for is stated and measured: finding PF01328 sites (95/95), and ranking
+clade-V-like pockets (LOO AUC 0.956). 69.6 % of BFD lies outside the calibration domain.
 
 **Clade assignment is reliable above ~55 % identity and nowhere else.** Precision 100 % / 88 % /
 38 % at 70–100 / 55–70 / 45–55 % identity. BFD median is **43.8 %**. Of 3,052 assigned
