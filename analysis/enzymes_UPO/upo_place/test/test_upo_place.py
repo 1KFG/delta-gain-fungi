@@ -50,6 +50,12 @@ class T(unittest.TestCase):
         self.assertEqual(r["q2"]["fig1_clade"], "Big")          # stem of X lies inside Big
         self.assertEqual(r["q3"]["our_clade"], "unassigned")
         self.assertEqual(r["q3"]["fig1_clade"], "unassigned")
+        self.assertEqual(r["q1"]["flags"], "")
+
+    def test_long_pendant_flag(self):
+        r = self.run_assign([("q", [[0, -1, 1.0, 0, 1.5]])])
+        self.assertEqual(r["q"]["our_clade"], "Clade X")          # flagged, not rejected
+        self.assertEqual(r["q"]["flags"], "long_pendant")
 
     def test_loo_stem_with_leaf_absent(self):
         # A pruned: the B terminal edge is now the stem of Clade X (members present: {B})

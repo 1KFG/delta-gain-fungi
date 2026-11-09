@@ -17,6 +17,8 @@ Clade of a placement. Each epa-ng placement is an edge with a like-weight ratio 
 the *stem* of C when one side equals C (the query then diverged before C's common ancestor, so it
 is not counted as C). A query's support for C is the sum of LWR over its edges inside C. The call
 is the clade with the highest support if that support is >= --min-lwr, otherwise `unassigned`.
+A best placement with a pendant branch longer than --max-pendant is flagged `long_pendant`: the
+query is farther from every reference than any correctly placed leave-one-out leaf was.
 Both clade systems are reported: our Clades I-V and Zamocky 2022 Figure 1 clades (they nest).
 The rule is root-independent: it uses bipartitions, so the jplace tree's arbitrary root does not
 matter.
@@ -150,7 +152,7 @@ def edge_clade_map(bip, clades):
     return out
 
 
-def assign(jplace_path, clade_path, min_lwr):
+def assign(jplace_path, clade_path, min_lwr, max_pendant=1.0):
     jp = json.load(open(jplace_path))
     root = parse_newick(jp["tree"])
     bip = edge_bipartitions(root)
@@ -167,7 +169,8 @@ def assign(jplace_path, clade_path, min_lwr):
         names = pl.get("n") or [x[0] for x in pl.get("nm", [])]
         ps = sorted(pl["p"], key=lambda x: -x[il])
         row = {"best_edge_lwr": f"{ps[0][il]:.3f}", "pendant_length": f"{ps[0][ip]:.4f}",
-               "n_placements": len(ps)}
+               "n_placements": len(ps),
+               "flags": "long_pendant" if ps[0][ip] > max_pendant else ""}
         for system in ("our", "fig1"):
             sup, stem = defaultdict(float), defaultdict(float)
             for p in ps:
@@ -190,7 +193,7 @@ def assign(jplace_path, clade_path, min_lwr):
 
 
 COLS = ["query", "our_clade", "our_lwr", "our_best", "our_stem_lwr", "fig1_clade", "fig1_lwr",
-        "fig1_best", "fig1_stem_lwr", "best_edge_lwr", "pendant_length", "n_placements"]
+        "fig1_best", "fig1_stem_lwr", "best_edge_lwr", "pendant_length", "n_placements", "flags"]
 
 
 def write_rows(path, rows, cols=COLS):
@@ -239,6 +242,9 @@ def main(argv=None):
     a_.add_argument("jplace")
     a_.add_argument("--clades", required=True, help="clade_members.tsv from name_clades.py")
     a_.add_argument("--min-lwr", type=float, default=0.5)
+    a_.add_argument("--max-pendant", type=float, default=1.0,
+                    help="flag (not reject) placements with a longer pendant branch; LOO correct "
+                         "calls reached 0.88, the one wrong call 1.42")
     a_.add_argument("--out", required=True)
     lo = sub.add_parser("loo")
     lo.add_argument("assigned", nargs="+")
@@ -263,7 +269,7 @@ def main(argv=None):
             for name, seq in read_fasta(a.msa):
                 write_fasta(fq if name == a.leaf else fm, name, seq)
     elif a.cmd == "assign":
-        rows = assign(a.jplace, a.clades, a.min_lwr)
+        rows = assign(a.jplace, a.clades, a.min_lwr, a.max_pendant)
         write_rows(a.out, rows)
         print(f"assign: {len(rows)} queries", file=sys.stderr)
     else:
