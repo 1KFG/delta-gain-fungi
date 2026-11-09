@@ -18,7 +18,15 @@ module load parallel-fastq-dump/0.6.7
 module load fastp/0.23.2
 module load salmon/1.7.0
 
-REF=/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Alternaria_alternata_Y9/predict_results/Alternaria_alternata_Y9.cds-transcripts.fa.gz
+# Reference is passed in as UPO_REF. It is strain Alternaria_alternata_Z7 (BFD F40104A9), the
+# SAME STRAIN the RNA-seq came from, so there is no cross-strain penalty.
+#
+# The first attempt used Alternaria_alternata_Y9 (F75F20B0) and mapped at 3.9 %. That is not a
+# biological result and it nearly produced a false "cross-strain quantification failed" verdict.
+# The same reads map at 44.4 % to JS-1623 and 50.6 % to XJaa, so the Y9 annotation is the
+# outlier. Mapping rate is now checked against a floor before any conclusion is drawn.
+: "${UPO_REF:?set UPO_REF to the cds-transcripts fasta}"
+REF="$UPO_REF"
 MAN="$UPO_ROOT/data/g3/rnaseq/runs.tsv"
 SRA="$UPO_ROOT/data/g3/rnaseq/sra"
 QDIR="$UPO_ROOT/data/g3/rnaseq/quant"
@@ -29,7 +37,7 @@ mkdir -p "$WORK"
 cp "$REF" "$WORK/ref.fa.gz"
 
 echo "=== building salmon index ==="
-salmon index -t "$WORK/ref.fa.gz" -i "$WORK/idx" -k 31 -p 16 --gencode 2>&1 | tail -3
+salmon index -t "$WORK/ref.fa.gz" -i "$WORK/idx" -k 31 -p 16 2>&1 | tail -3
 
 while IFS=$'\t' read -r run cond nreads proj; do
   [ -z "$run" ] && continue

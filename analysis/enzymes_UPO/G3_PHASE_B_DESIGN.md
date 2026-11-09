@@ -59,3 +59,43 @@ than worked around.
   never a finding about clade IV.
 - Phase A found the clade IV CCAAT enrichment is partly confounded with ancestry
   (p = 0.0005, see `G3_FINDINGS.md` caveat 5). Nothing here can undo that.
+
+---
+
+## Reference correction, 2026-11-08 — recorded because it nearly caused a false negative
+
+The first quantification used `Alternaria_alternata_Y9` (BFD `F75F20B0`) and mapped at
+**3.9 %**. Under the pre-registered QC rule that would have been reported as "cross-strain
+quantification has failed, the comparison is void."
+
+That verdict would have been wrong. The same 100,000 reads map at:
+
+| reference | strain | mapping rate |
+|---|---|---|
+| Alternaria_alternata_Y9 | Y9 | **3.9 %** |
+| Alternaria_alternata_JS-1623 | JS-1623 | 44.4 % |
+| Alternaria_alternata_XJaa | XJaa | 50.6 % |
+| **Alternaria_alternata_Z7** | **Z7** | **50.7 %** |
+
+The Y9 annotation is the outlier, not the reads and not the biology. The reads are clean 150 bp
+pairs at 53.3 % GC with a normal transcript-abundance profile, and the Y9 CDS file looks
+superficially fine (12,614 transcripts, 17.2 Mb), so nothing but an explicit comparison would
+have caught this.
+
+**The reference is now `Alternaria_alternata_Z7` (BFD `F40104A9`), which is the SAME STRAIN the
+RNA-seq came from.** The cross-strain caveat in the original design is therefore removed, not
+merely reduced.
+
+Consequences for the design above:
+- Z7 carries **12** PF01328 proteins, and again exactly **one** clade IV by placement
+  (`F40104A9_012798`, reliable). The power limit is unchanged: clade IV remains an observation on
+  one gene, never a test.
+- The mapping floor is set to 40 %. About 50 % is the realistic ceiling for a CDS-only reference,
+  because RNA-seq also contains UTRs, intronic pre-mRNA, rRNA and ncRNA that a CDS file cannot
+  represent. A floor of 50 % would have rejected a perfectly good run.
+- The CCAAT-complex gene set is re-derived in Z7: `F40104A9_003727` (CBFB_NFYA) plus eight
+  PF00808 histone-fold candidates.
+
+The general lesson, which applies beyond this analysis: a QC rule that can only say "pass" or
+"fail" will convert a broken reference into a biological conclusion. The floor needed a second
+reference to be interpretable.
