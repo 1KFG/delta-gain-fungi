@@ -45,8 +45,13 @@ Nothing. Every job in the standing goal has finished.
 
 ### The deliverable
 
-`data/bfd_full/upo_sites_bfd_final.tsv.zst` — one row per PF01328 protein in BFD,
-97,520 rows. Filter on `clade_trust`.
+`data/bfd_full/upo_sites_bfd_scored.tsv.zst` — one row per PF01328 protein in BFD,
+97,520 rows. Filter on `clade_trust`, rank on `t1_pocket_matches`.
+
+**Shortlist: 5,115 proteins across 1,378 species** carry both the catalytic core and
+≥ 3/5 pocket matches. 1,246 of them sit outside clade V, including 29 in early-diverging
+phyla. This is a candidate list for assay, not a prediction of activity: the score reaches
+LOO AUC 0.956 overall but 0.556 with clade V removed. See `T1_SCORE_REPORT.md`.
 
 | tier | n | % |
 |---|---|---|

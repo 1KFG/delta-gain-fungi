@@ -67,3 +67,10 @@ catalytic residues are present, which is necessary for peroxygenase chemistry
 and not sufficient for it. No assay supports a rate or a substrate range for
 any of these proteins. Clade IV additionally has ONE characterized member, so
 every clade IV row stays flagged `+provisional_cladeIV`.
+
+## Superseded by the scored table
+
+This table carries no activity score. That was corrected on 2026-11-08 after the score was
+cross-validated rather than refused in advance. Use
+`data/bfd_full/upo_sites_bfd_scored.tsv.zst`, which is this table plus `t1_pocket_matches` and
+`t1_pocket_flag`. See `T1_SCORE_REPORT.md` and `MODEL_VALIDATION.md` section D.

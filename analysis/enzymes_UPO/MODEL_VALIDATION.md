@@ -115,8 +115,35 @@ removed its entire clade.
   Absolute values still do not match the published 7 / 11 Å, so Karich's absolute cutoff cannot be
   applied; a **relative ranking** can. n = 4. See `CHANNEL_FINDINGS.md`.
 
-**No activity score is emitted.** Producing one would rank 97,520 proteins by a feature measured to
-have no predictive power.
+**CORRECTION, 2026-11-08. A score IS now emitted. The statement below was wrong.**
+
+The line that stood here said no activity score would be emitted, because producing one would
+rank 97,520 proteins by a feature measured to have no predictive power. That conclusion came
+from an IN-SAMPLE partial correlation (partial r = +0.129 given clade). It was never
+cross-validated. Refusing on the strength of an unvalidated statistic is the same error as
+publishing on the strength of one.
+
+Cross-validating it changed the answer. `upo_sites/bin/score_t1.py`, leave-one-out with the
+consensus, clade means and coefficients all refit per fold:
+
+| model | LOO R² | LOO AUC |
+|---|---|---|
+| null | −0.114 | 0.000 |
+| clade only | +0.434 | 0.922 |
+| **pocket only** | **+0.496** | **0.956** |
+
+Permutation p = 0.0005. The pocket beats the clade label OUT OF SAMPLE. The earlier "pocket is
+clade in disguise" claim does not survive cross-validation and is withdrawn.
+
+**What does survive is the clade V confound, in a sharper form.** 9 of the 10 active enzymes are
+clade V. Remove clade V and the pocket AUC falls to 0.556 — chance — on ONE remaining active.
+The score detects clade-V-like pockets. It is not shown to find actives outside clade V, and it
+misses the one that exists (GmaUPO-II, 49.3 % active, 1/5 matches). So a low score is NOT
+evidence of inactivity.
+
+The score is emitted in `data/bfd_full/upo_sites_bfd_scored.tsv.zst` with those limits recorded
+in the file header, because the placement caller declines 78.9 % of BFD and for those 76,913
+proteins it is the only ranking signal available. See `T1_SCORE_REPORT.md`.
 
 ---
 
@@ -129,7 +156,9 @@ whole of BFD in two minutes.
 
 **Subtype assignment is reliable for 2,088 of 7,055 representatives and says which.**
 
-**Activity prediction is not possible from the published data by the statistical route.** The
+**Activity prediction: partially possible, and bounded.** A cross-validated pocket score reaches
+LOO AUC 0.956 overall but 0.556 once clade V is removed, so it ranks candidates rather than
+predicting activity. 5,115 proteins carry both the catalytic core and a passing score. The
 mechanistic route — ranking by CAVER 3.0.3 channel width — is a live lead at r = +0.93 on four
 enzymes, enough to justify modelling clade representatives, not enough to ship a predictor.
 
