@@ -15,16 +15,28 @@ supported programmatic route. It contains:
 
 ## `tableS1_resolved.tsv`
 
+Sequences are fetched by `../../refset/bin/fetch_refset.py` (see `../../refset/slurm/fetch_refset.sh`) into
+`fetched/`. Where a row has two possible sources, the one whose length matches Table S1 is kept.
+
 One row per Table S1 entry, with the route to a sequence (`route` column):
 
 | route | n | how step 1 fetches it |
 |---|---|---|
-| `uniprot_direct` | 73 | UniProt REST by accession (all 73 live in release 2026_04) |
+| `uniprot_direct` | 73 | UniProt REST by accession. **15 are no longer in UniProtKB** (deleted as "not part of a reference proteome", or demerged); the script takes those from UniParc. (An earlier note here said all 73 were live; that check was wrong.) |
 | `uniprot_xref` | 29 | PeroxiBase ID resolved through UniProt's PeroxiBase cross-reference (DB-0072) |
-| `wayback_view_perox` | 61 | PeroxiBase ID with no UniProt link; the archived PeroxiBase entry page (Wayback Machine, `peroxibase.toulouse.inra.fr/display_perox/view_perox/<id>`, 2024 captures) holds the full protein sequence, class and orthogroup. Checked on ID 10810: 371 aa, matches Table S1 |
+| `wayback_view_perox` | 59 | PeroxiBase ID with no UniProt link. From the Wayback Machine: the archived FASTA endpoint `tools/get_fasta/<id>/PEP` first (many entry pages do not inline the sequence), then the entry page `display_perox/view_perox/<id>`, on both the `inra.fr` and `inrae.fr` domains; capture closest to 2022-04-07, Zamocky's access date |
 | `ncbi_efetch` | 8 | NCBI protein efetch (all 8 resolve) |
-| `inferred_unique_PF01328_len_match` | 2 | ID unusable (`L2GBA` truncated; PeroxiBase 4233 not archived). Each has exactly one UniProt PF01328 entry in that organism at the stated length (`L2GBA1`, `A0ACM9MD70`). **Inferred, not given**; flag them |
+| `inferred_unique_PF01328_len_match` | 4 | Given ID unusable: `L2GBA` truncated; PeroxiBase 4233 not archived; PeroxiBase 12620 archived without sequence; PeroxiBase 6766 archived at 305 aa vs 386 in Table S1. Each resolves to the one UniProt PF01328 entry in that organism at the stated length (`L2GBA1`, `A0ACM9MD70`, `A0A0D0A0B1` by elimination against SlutHTP1/2, `B0DV60`). **Inferred, not given**; the `note` column says how |
 | `pdb` | 1 | `5FUJ_A` is MroUPO, already in `clade_backbone/` |
+
+Unresolved after two fetch runs (jobs 31880062, 31880552):
+
+- **AteHTP2** (PeroxiBase 4192, *A. terreus*, 265 aa): archived without sequence, no UniProt entry
+  at that length. **Missing: 173 of 174 recoverable.**
+- **AorHTP2**: only a 205-aa UniProt gene model exists (Table S1: 259). Kept and flagged; step 3 QC
+  decides.
+- **CfumagHTP** (P04963, CPO): UniProt gives the 373-aa precursor; the mature chain (21-319, 299 aa)
+  is what Table S1 lists. Kept as the precursor; the PF01328 alignment ignores the propeptide.
 
 PeroxiBase IDs 4207 and 4222 (*Phytophthora infestans*) each map to two UniProt entries; keep one
 after checking that the sequences are identical.

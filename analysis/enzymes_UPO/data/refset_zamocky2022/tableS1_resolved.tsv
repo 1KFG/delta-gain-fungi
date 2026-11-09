@@ -21,14 +21,14 @@ AniHTP4a	4202	peroxibase	Q00668	uniprot_xref	Aspergillus nidulans-Emericella nid
 AniHTP4b	4204	peroxibase	Q00668	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	311		
 AniHTP5	4206	peroxibase	Q5AUV6	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	183		
 AorHTP1	4194	peroxibase	Q2UFV5	uniprot_xref	Aspergillus oryzae	Ascomycota	242		
-AorHTP2	4197	peroxibase	Q2TX33	uniprot_xref	Aspergillus oryzae	Ascomycota	259		
+AorHTP2	4197	peroxibase	Q2TX33	uniprot_xref	Aspergillus oryzae	Ascomycota	259		UniProt Q2TX33 is a 205-aa gene model vs 259 in Table S1; PeroxiBase 4197 archived without sequence; kept, flagged for QC
 AorHTP3	4209	peroxibase	Q2UAL0	uniprot_xref	Aspergillus oryzae	Ascomycota	275		
 AorHTP4	4242	peroxibase	Q2UE54	uniprot_xref	Aspergillus oryzae	Ascomycota	239		
 AphasHTP1	W4GGT9	uniprot	W4GGT9	uniprot_direct	Aphanomyces astaci	Stramenopiles_Oomycota	247		heme-haloperoxidase domain containing protein
 AphinHTP1	XP_008875467	ncbi_protein	XP_008875467	ncbi_efetch	Aphanomyces invadans	Stramenopiles_Oomycota	298		
 AphinHTP2	A0A024TX20	uniprot	A0A024TX20	uniprot_direct	Aphanomyces invadans	Stramenopiles_Oomycota	246		heme-haloperoxidase domain containing protein
 AteHTP1	4186	peroxibase	peroxibase:4186	wayback_view_perox	Aspergillus terreus	Ascomycota	242		
-AteHTP2	4192	peroxibase	peroxibase:4192	wayback_view_perox	Aspergillus terreus	Ascomycota	265		
+AteHTP2	4192	peroxibase	peroxibase:4192	wayback_view_perox	Aspergillus terreus	Ascomycota	265		PeroxiBase 4192 archived without sequence; no 265-aa A. terreus PF01328 entry in UniProt: unrecoverable
 AteHTP3	4233	peroxibase	A0ACM9MD70	inferred_unique_PF01328_len_match	Aspergillus terreus	Ascomycota	451		
 BcinHTP	XP_001556989	ncbi_protein	XP_001556989	ncbi_efetch	Botrytis cinerea	Ascomycota	276		strain B05.10
 BfucHTP1	A0A384JUN3	uniprot	A0A384JUN3	uniprot_direct	Botryotinia fuckeliana	Ascomycota	276		
@@ -43,7 +43,7 @@ CcinHTP3	6519	peroxibase	peroxibase:6519	wayback_view_perox	Coprinopsis cinerea	
 CcinHTP4	A8NAQ8	uniprot	A8NAQ8	uniprot_direct	Coprinopsis cinerea	Basidiomycota	387		
 CcucHTP	A0A1C7N2V4	uniprot	A0A1C7N2V4	uniprot_direct	Choanephora cucurbitarum	Mucoromycotina	268		chloroperoxidase
 CfioHTP1	A0A010SNE9	uniprot	A0A010SNE9	uniprot_direct	Colletotrichum fioriniae	Ascomycota	271		373
-CfumagHTP	4070	peroxibase	P04963	uniprot_xref	Caldariomyces_fumago (Leptoxyphium fumago)	Ascomycota	298	1CPO	
+CfumagHTP	4070	peroxibase	P04963	uniprot_xref	Caldariomyces_fumago (Leptoxyphium fumago)	Ascomycota	298	1CPO	P04963 is the 373-aa precursor; mature chain 21-319 (299 aa) matches Table S1 (298) within 1
 CgHTP1	4189	peroxibase	Q2GU92	uniprot_xref	Chaetomium globosum	Ascomycota	271		
 CgHTP2	4193	peroxibase	Q2GWW6	uniprot_xref	Chaetomium globosum	Ascomycota	260		
 CgHTP3	4198	peroxibase	Q2HHI5	uniprot_xref	Chaetomium globosum	Ascomycota	251		
@@ -72,7 +72,7 @@ LbiHTP1	6514	peroxibase	peroxibase:6514	wayback_view_perox	Laccaria bicolor	Basi
 LbiHTP2	6515	peroxibase	peroxibase:6515	wayback_view_perox	Laccaria bicolor	Basidiomycota	294		
 LbiHTP3	6516	peroxibase	peroxibase:6516	wayback_view_perox	Laccaria bicolor	Basidiomycota	340		
 LbiHTP4	6733	peroxibase	peroxibase:6733	wayback_view_perox	Laccaria bicolor	Basidiomycota	253		
-LbiHTP5	6766	peroxibase	peroxibase:6766	wayback_view_perox	Laccaria bicolor	Basidiomycota	386		
+LbiHTP5	6766	peroxibase	B0DV60	inferred_unique_PF01328_len_match	Laccaria bicolor	Basidiomycota	386		archived PeroxiBase 6766 is 305 aa (entry revised after 2022?); B0DV60 is the only 386-aa L. bicolor PF01328 entry, matching Table S1
 MgrHTP1	XP_030986273	ncbi_protein	XP_030986273	ncbi_efetch	Magnaporthe_grisea	Ascomycota	257		uncharacterized protein
 MlarHTP1	F4S6R1	uniprot	F4S6R1	uniprot_direct	Melampsora larici-populina	Basidiomycota	357		
 MlarHTP2	F4RMS8	uniprot	F4RMS8	uniprot_direct	Melampsora larici-populina	Basidiomycota	351		
@@ -159,7 +159,7 @@ SlacHTP1	F8PRI8	uniprot	F8PRI8	uniprot_direct	Serpula lacrymans	Basidiomycota	28
 SlutHTP1	12615	peroxibase	peroxibase:12615	wayback_view_perox	Suillus luteus	Basidiomycota	288		bolete fungus
 SlutHTP2	12621	peroxibase	peroxibase:12621	wayback_view_perox	Suillus luteus	Basidiomycota	289		
 SlutHTP4	12613	peroxibase	peroxibase:12613	wayback_view_perox	Suillus luteus	Basidiomycota	251		
-SlutHTP5	12620	peroxibase	peroxibase:12620	wayback_view_perox	Suillus luteus	Basidiomycota	289		
+SlutHTP5	12620	peroxibase	A0A0D0A0B1	inferred_unique_PF01328_len_match	Suillus luteus	Basidiomycota	289		PeroxiBase 12620 not archived with a sequence; the only 289-aa S. luteus PF01328 entry not identical to SlutHTP1/SlutHTP2 (by elimination)
 SmusHTP	M3D222	uniprot	M3D222	uniprot_direct	Sphaerulina musiva	Ascomycota	262		Cloroperoxidase from strain SO2202, poplar stem canker
 SpipunHTP	A0A0L0HUM0	uniprot	A0A0L0HUM0	uniprot_direct	Spizellomyces punctatus	Chytridiomycota	517		strain DAOM BR117
 SpispHTP	A0A507EVL0	uniprot	A0A507EVL0	uniprot_direct	Spizellomyces sp. palustris	Chytridiomycota	238		integral component of menbrane

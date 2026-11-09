@@ -306,7 +306,7 @@ def resolve_row(r: dict, src: Sources) -> dict:
     m.update({k: r.get(k, "") for k in ("abbrev", "given_id", "route", "resolved_id")})
     m["table_len"] = r.get("length_aa", "")
     want = int(m["table_len"]) if m["table_len"].isdigit() else None
-    notes, tried, chosen = [], [], None
+    notes, tried, chosen = ([r["note"]] if r.get("note") else []), [], None
     cands = candidates(r, src)
     if not cands:
         notes.append(f"unknown route {r['route']!r}")
