@@ -138,3 +138,14 @@ without the four catalytic residues cannot do peroxygenase chemistry whatever th
 This is a ranked candidate list for assay. It is not a prediction of activity, and it says
 nothing about which rings any of these enzymes cleave. One substrate, one assay, one
 publication, 19 calibration enzymes, 9 of 10 actives in a single clade.
+
+## Applicability domain (added after the score was applied)
+
+Every protein now carries `calib_distance` and `calib_domain` in
+`data/bfd_full/upo_sites_bfd_domain.tsv.zst`. 69.6 % of BFD sits outside the range of
+active-site divergence present in the 19 calibration enzymes, as do 40.1 % of the proteins
+scoring >= 3/5.
+
+Distance was tested as a per-protein confidence measure and **failed that test** (Spearman with
+model skill -0.281, p = 0.88). It is a coverage statement, not a confidence. Full reasoning and
+the confound that had to be removed first: `MODEL_VALIDATION.md` section F, `APPLICABILITY.md`.

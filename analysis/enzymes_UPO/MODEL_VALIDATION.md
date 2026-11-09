@@ -197,3 +197,61 @@ Two routes that would actually work:
 Until one of those happens, the honest status is: **site identification is validated; subtype
 assignment and the T1 score are bounded, and the bounds are measured and published in the file
 headers.** Calling it reliable would be inflation.
+
+---
+
+## F. Applicability domain: a per-protein reliability statement was attempted and NOT obtained
+
+Sections D and E bound the score globally. One caveat sentence covers all 97,520 proteins, which
+cannot separate a protein whose active site closely resembles a characterized enzyme from one
+that resembles nothing ever measured. Those deserve different trust. This section tested whether
+distance from the calibration set supplies that per-protein statement. `upo_sites/bin/applicability.py`.
+
+**The distance.** Fraction of differing residues at the 10 active-site positions shared between
+the Figure S2 calibration table and the BFD site layer, EXCLUDING the five the score uses:
+80, 84, 108, 110, 172, 173, 175, 176, 179, 180. No position is used by both, so a protein can be
+far from the calibration set and still score 5/5.
+
+**The confound, found before the test was read.** Distance is almost perfectly confounded with
+clade. All 7 enzymes at distance <= 0.10 are clade V; only 1 of 8 at >= 0.30 is. Clade V holds 9
+of the 10 actives, whose activities lie far from the overall mean, and absolute error is larger
+wherever the response is far from the mean for ANY model including the null. A raw
+Spearman(distance, |LOO error|) therefore measures the activity distribution, not the model. It
+comes out at -0.384, p = 0.94, and that number is not interpretable.
+
+**The unconfounded test.** Skill = |null-model error| - |pocket-model error|, positive where the
+pocket model beat the baseline. The response magnitude cancels because both models face it.
+
+| distance band | n | mean skill |
+|---|---|---|
+| <= 0.10 | 7 | +5.6 |
+| >= 0.30 | 8 | +13.2 |
+
+Spearman(distance, -skill) = -0.281, one-sided permutation p = 0.88, 10,000 shuffles.
+
+**Result: null.** Distance does not predict where the model fails. Skill is if anything HIGHER
+far from the calibration set, because the distant enzymes are mostly non-clade-V inactives that
+the pocket model correctly scores low while the null predicts the mean. The attempt to convert
+the global caveat into a calibrated per-protein confidence **failed, and is reported as failed**.
+`calib_domain` is therefore emitted as a COVERAGE statement only. It must not be read as a
+probability that the score is right.
+
+**What the coverage number does establish.** The largest nearest-neighbour distance inside the
+calibration set is 0.50. Measuring every BFD protein against that range:
+
+| domain | n | % of BFD |
+|---|---|---|
+| inside | 28,845 | 29.6 |
+| outside | 67,854 | 69.6 |
+| no profile | 821 | 0.8 |
+
+**69.6 % of BFD lies outside the range of active-site divergence the score was ever calibrated
+over.** Among the 8,192 proteins scoring >= 3/5, **3,284 (40.1 %) are outside it**. For those a
+high score is an extrapolation on two axes at once: the clade is usually not V, and the rest of
+the active site resembles nothing measured. 62,353 of the outside-domain proteins are in the
+`unassigned` clade tier, so for them neither the placement caller nor the calibration set offers
+any grip.
+
+This does not make the score worse than section D already said. It states, per protein and as a
+column rather than a footnote, how much of BFD the 19 enzymes can speak for. The answer is under
+a third.
