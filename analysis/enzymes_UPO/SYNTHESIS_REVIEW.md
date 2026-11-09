@@ -74,6 +74,11 @@ so 87 % of calls are extrapolations. Zamocky et al. 2022 (Antioxidants 11:1011, 
 published **174 curated full-length sequences** of this superfamily, and RedoxiBase
 (`peroxibase.toulouse.inra.fr`) is the live curated database behind it.
 
+> **Correction 2026-11-08:** RedoxiBase/PeroxiBase is **not** live; the site does not respond.
+> UniProt keeps only its cross-references (DB-0072; 33 PF01328 entries), and the Wayback Machine
+> keeps the entry pages with sequences. Zamocky's Table S1 is the usable source. It gives IDs but no
+> clade labels; see `data/refset_zamocky2022/README.md`.
+
 Folding those in attacks four problems at once:
 
 - **It raises the backbone from 19 to ~174**, which is the only cheap route to lifting proteins out
@@ -156,6 +161,14 @@ a pivot that measurement has since overtaken. `PLAN.superseded.md` got an honest
 header; `DESIGN.md` needs the same treatment or a corrected §10.
 
 ### 4.2 Clade IV supplies 39 % of all validated-range calls, and is the one clade that cannot be validated
+
+> **Status 2026-11-08: resolved.** The labelling problem was a real bug (two definitions of
+> "validated range" in `summarize_bfd.py`), fixed by the skylark session; Clade IV is now flagged
+> provisional everywhere. On *why* identity runs high: `upo_sites.py` `identity()` scores every
+> backbone member identically over PF01328 match columns, MphUPO (259 aa) is a typical short UPO,
+> MphUPO is the sole attractor for all 6,922 calls, and Clade IV is the least novel clade vs nr
+> (14.4 %). So the first reading below holds: a genuine conserved subfamily with one characterized
+> member. See `COORDINATION.md` and `G1_FINDINGS.md` Finding 3/4.
 
 This is the sharpest issue I found.
 
@@ -242,7 +255,7 @@ ready-made negative distribution for calibrating the identity floor.
 2. **Bring in Zamocky 2022 Table S1 and RedoxiBase; rebuild the backbone at ~174 sequences.**
    Highest value by a wide margin: it attacks the extrapolation problem, supplies the outgroup, and
    closes the prior-art gap in one action.
-3. **Check Clade IV** (§4.2) before anything downstream consumes the validated-range set, and add
+3. ~~**Check Clade IV** (§4.2)~~ *(done 2026-11-08)* before anything downstream consumes the validated-range set, and add
    the provisional flag to the summary tables.
 4. **Join `gene_transcripts` QC flags** to the output and re-report the catalytic-machinery numbers
    QC-clean versus flagged (§3.4).

@@ -53,8 +53,12 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
   excluding provisional Clade IV — not 97,520 and not 34,561.
 - **Clade IV supplies 38.8 % of all validated-range calls** (4,968 of 12,818) at a mean identity of
   62.1 %, ~20 points above every other clade — and it is the one clade that *cannot* be validated,
-  having a single characterized member. Not yet explained. Check before any candidate list is drawn
-  from it.
+  having a single characterized member. **Checked 2026-11-08, closed** (see `COORDINATION.md`
+  "Your point 1"): a summariser bug (two definitions of "validated") was fixed and Clade IV is now
+  flagged provisional in every table; MphUPO is the sole attractor for all 6,922 calls; Clade IV is
+  the *least* novel vs nr (14.4 %). The identity metric in `upo_sites.py` is computed the same way
+  for every backbone member (PF01328 match columns only), so the high identity is not a per-reference
+  artefact. Reading: a real, conserved, under-characterized subfamily. Calls stay provisional.
 - **Clade I (33,424 proteins, 34 % of all calls) carries the universal Glu180 at only 16.8 %**,
   while all five characterized Clade I enzymes have it. `G1_BFD_SUMMARY.md` §6 reads this as the
   low-identity Clade I bin absorbing proteins that are not UPOs. That caveat needs to travel with
@@ -69,7 +73,7 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
 2. **`DESIGN.md` is stale.** Its §10 still says "pivot to T1" and calls the S8 digitization "the
    gate on whether T1 is viable". That gate was run and T1 failed. `PLAN.md` is correct;
    `DESIGN.md`, the longest document and the one framed as the intent document, is not.
-3. **Clade IV check** (above), before dereplication picks representatives.
+3. ~~**Clade IV check**~~ — done 2026-11-08 (above). Do not redo.
 4. **Gene-model QC was dropped in the rescope** while exposure grew from ~800 genomes to 15,137 of
    self-generated models. BFD's `gene_transcripts` already carries `is_partial`,
    `has_start_codon`, `has_stop_codon`; joining them is one query and would let the
@@ -93,6 +97,8 @@ scope, all-BFD versus RNA-seq-followable clades — and §4 says the two options
 projects, not different settings". Job 31865695 is processing **7,055 target genes in 3,274
 genomes**, i.e. the broad option. D6 appears to have been settled by starting rather than by
 decision. If that is intended, `PLAN.md` should stop listing it as open.
+**Resolved:** the user decided D6 on 2026-11-08 (all-BFD core, clade-stratified) before G3
+started; `PLAN.md` §2 and §4.2 now record it. Not an open item.
 
 Note also that `G1_FINDINGS.md` (skylark) and `SYNTHESIS_REVIEW.md` (laptop) were written
 independently and overlap. They do not contradict each other, but they should probably be merged.
