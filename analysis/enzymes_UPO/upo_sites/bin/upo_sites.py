@@ -199,7 +199,10 @@ def load_backbone(path: str):
     for name, seq in read_fasta(path):
         f = name.split("|")
         clade = f[1].replace("clade", "") if len(f) > 1 else "?"
-        out.append((f[0], clade, seq))
+        # hmmalign takes UNALIGNED sequence. Accept either the raw backbone or an aligned one
+        # (.afa): degapping here is always correct and is the single point where backbone
+        # sequences enter, so both the anchor map and every alignment chunk stay valid.
+        out.append((f[0], clade, seq.replace("-", "").replace(".", "")))
     return out
 
 
@@ -263,7 +266,7 @@ def main() -> None:
         with open(anchor_fa, "w") as fh:
             for n, c, s in backbone:
                 if n == args.anchor:
-                    fh.write(f">{n}\n{s}\n")
+                    fh.write(f">{n}\n{s}\n")   # already degapped by load_backbone
                     break
             else:
                 sys.exit(f"ERROR: anchor {args.anchor} not in backbone")
