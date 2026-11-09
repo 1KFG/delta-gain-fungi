@@ -6,6 +6,8 @@
 #   dedup.tsv qc.tsv tree_input.faa aln.afa aln.trim.afa
 #   mfp.*      IQ-TREE, ModelFinder + 1000 UFBoot + 1000 SH-aLRT (the tree we use)
 #   lgig.*     IQ-TREE, fixed LG+I+G4 (Zamocky's reported model; a check, not the result)
+#   {mfp,lgig}.clade_{members,report}.tsv   clade names (name_clades.py)
+# Re-run only the naming step (seconds) after editing fig1_anchors.tsv: see the loop at the end.
 #SBATCH -p epyc,intel
 #SBATCH --constraint="ryzen|broadwell|cascade|sapphire"
 #SBATCH -c 16
@@ -59,4 +61,11 @@ iqtree3 -s $OUT/aln.trim.afa -m MFP -B 1000 -alrt 1000 -T "$CPU" --seed $SEED \
 iqtree3 -s $OUT/aln.trim.afa -m LG+I+G4 -B 1000 -alrt 1000 -T "$CPU" --seed $SEED \
     --prefix $OUT/lgig -redo
 rm -f $OUT/*.ckp.gz $OUT/*.uniqueseq.phy
+
+# 5. name clades (Zamocky Fig 1 via text anchors; our Clades I-V via backbone members)
+for T in mfp lgig; do
+  $PY $UPO/refset/bin/name_clades.py --tree $OUT/$T.contree --anchors $REF/fig1_anchors.tsv \
+      --dedup $OUT/dedup.tsv --out-members $OUT/$T.clade_members.tsv \
+      --out-report $OUT/$T.clade_report.tsv
+done
 echo "done $(date +%T)"
