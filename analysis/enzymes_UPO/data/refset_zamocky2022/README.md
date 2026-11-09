@@ -36,9 +36,11 @@ AaeAPO = PaDa-I parent (B9W4V6). Do the full deduplication by sequence in step 2
 
 - **No clade labels are published in machine-readable form.** Figure 1 (condensed tree, 11 named
   clades) and Figure 2 (circular tree, leaf labels unreadable at the published resolution) are
-  the only clade information. Labels have to come from rebuilding the tree (their method: MUSCLE,
-  LG+G+I ML, 75 % site coverage, 239 positions) and matching clades to Figure 1 by membership, or
-  from the authors' Newick on request.
+  the only clade information. **We rebuild the tree ourselves** (decided 2026-11-08): align the
+  174 plus our 19 references, infer an ML tree with IQ-TREE (ModelFinder + UFBoot; their reported
+  model was LG+G+I on 239 positions at 75 % site coverage), then name clades by matching their
+  membership and phylum composition to Figure 1. The rebuilt tree is a check on Zamocky's topology
+  as well as a source of labels; where the two disagree, report it rather than force a match.
 - **Naming collision.** Zamocky's "Dikaryal Family I" is the *short* family and "Family II" the
   *long* one (the older Hofrichter usage). In our backbone, Clade I is *Long*. Never map by numeral.
 - Taxon strings are inconsistent (`Ascomycota ` with a trailing space, `Amobeozoa`, three spellings
