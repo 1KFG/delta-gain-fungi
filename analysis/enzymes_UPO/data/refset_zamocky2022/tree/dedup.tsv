@@ -1,0 +1,193 @@
+label	set	name	taxon_group	length	dup_of
+B__AacUPO__cladeV	backbone	AacUPO		273	
+B__AbrUPO-I__cladeV	backbone	AbrUPO-I		265	
+B__AbrUPO-II__cladeV	backbone	AbrUPO-II		263	
+B__AluUPO__cladeV	backbone	AluUPO		267	
+B__CabUPO-III__cladeI	backbone	CabUPO-III		387	
+B__CmaUPO-I__cladeI	backbone	CmaUPO-I		380	
+B__CviUPO__cladeII	backbone	CviUPO		226	
+B__GmaUPO-II__cladeI	backbone	GmaUPO-II		373	
+B__MorUPO__cladeIII	backbone	MorUPO		250	
+B__MroUPO__cladeIII	backbone	MroUPO		239	
+B__PanUPO__cladeII	backbone	PanUPO		268	
+B__RneUPO__cladeV	backbone	RneUPO		250	
+B__TteUPO__cladeV	backbone	TteUPO		274	Z__TterHTP1__Asco
+B__AtuUPO__cladeV	backbone	AtuUPO		267	
+B__DspUPO-I__cladeV	backbone	DspUPO-I		262	
+B__HspUPO__cladeV	backbone	HspUPO		261	Z__HspHTP1__Asco
+B__LspUPO-II__cladeI	backbone	LspUPO-II		377	
+B__MphUPO__cladeIV	backbone	MphUPO		259	
+B__PaDa-I_parent_AaeUPO__cladeI	backbone	PaDa-I_parent_AaeUPO		371	Z__AaeAPO__Basidio
+Z__AaeAPO__Basidio	zamocky	AaeAPO	Basidio	371	B__PaDa-I_parent_AaeUPO__cladeI
+Z__AbHTP1__Basidio	zamocky	AbHTP1	Basidio	284	
+Z__AbHTP2__Basidio	zamocky	AbHTP2	Basidio	269	
+Z__AbHTP3__Basidio	zamocky	AbHTP3	Basidio	374	
+Z__AbHTP4__Basidio	zamocky	AbHTP4	Basidio	375	
+Z__AbHTP5__Basidio	zamocky	AbHTP5	Basidio	371	
+Z__AdelHTP1__Basidio	zamocky	AdelHTP1	Basidio	383	
+Z__AdelHTP5__Basidio	zamocky	AdelHTP5	Basidio	393	
+Z__AfumHTP1__Asco	zamocky	AfumHTP1	Asco	275	
+Z__AfumHTP2__Asco	zamocky	AfumHTP2	Asco	443	
+Z__AfumHTP3__Asco	zamocky	AfumHTP3	Asco	341	
+Z__AglauHTP__Mucoro	zamocky	AglauHTP	Mucoro	309	
+Z__AkawHTP1__Asco	zamocky	AkawHTP1	Asco	244	
+Z__AnHTP1__Asco	zamocky	AnHTP1	Asco	244	
+Z__AnHTP2__Asco	zamocky	AnHTP2	Asco	265	
+Z__AniHTP1__Asco	zamocky	AniHTP1	Asco	264	
+Z__AniHTP2__Asco	zamocky	AniHTP2	Asco	268	
+Z__AniHTP3__Asco	zamocky	AniHTP3	Asco	271	
+Z__AniHTP4a__Asco	zamocky	AniHTP4a	Asco	305	
+Z__AniHTP4b__Asco	zamocky	AniHTP4b	Asco	311	
+Z__AniHTP5__Asco	zamocky	AniHTP5	Asco	183	
+Z__AorHTP1__Asco	zamocky	AorHTP1	Asco	242	
+Z__AorHTP2__Asco	zamocky	AorHTP2	Asco	205	
+Z__AorHTP3__Asco	zamocky	AorHTP3	Asco	275	
+Z__AorHTP4__Asco	zamocky	AorHTP4	Asco	239	
+Z__AphasHTP1__Oomycota	zamocky	AphasHTP1	Oomycota	247	
+Z__AphinHTP1__Oomycota	zamocky	AphinHTP1	Oomycota	298	
+Z__AphinHTP2__Oomycota	zamocky	AphinHTP2	Oomycota	246	
+Z__AteHTP1__Asco	zamocky	AteHTP1	Asco	242	
+Z__AteHTP3__Asco	zamocky	AteHTP3	Asco	451	
+Z__BcinHTP__Asco	zamocky	BcinHTP	Asco	276	
+Z__BfucHTP1__Asco	zamocky	BfucHTP1	Asco	276	Z__BcinHTP__Asco
+Z__BmesHTP1__Basidio	zamocky	BmesHTP1	Basidio	224	
+Z__BnarHTP1__Asco	zamocky	BnarHTP1	Asco	276	
+Z__BtulHTP1__Asco	zamocky	BtulHTP1	Asco	276	
+Z__CaberAPO1__Basidio	zamocky	CaberAPO1	Basidio	379	
+Z__CchloHTP1__Asco	zamocky	CchloHTP1	Asco	284	
+Z__CcinHTP1__Basidio	zamocky	CcinHTP1	Basidio	304	
+Z__CcinHTP2__Basidio	zamocky	CcinHTP2	Basidio	295	
+Z__CcinHTP3__Basidio	zamocky	CcinHTP3	Basidio	269	
+Z__CcinHTP4__Basidio	zamocky	CcinHTP4	Basidio	387	
+Z__CcucHTP__Mucoro	zamocky	CcucHTP	Mucoro	268	
+Z__CfioHTP1__Asco	zamocky	CfioHTP1	Asco	271	
+Z__CfumagHTP__Asco	zamocky	CfumagHTP	Asco	373	
+Z__CgHTP1__Asco	zamocky	CgHTP1	Asco	271	
+Z__CgHTP2__Asco	zamocky	CgHTP2	Asco	260	
+Z__CgHTP3__Asco	zamocky	CgHTP3	Asco	251	
+Z__CgHTP4__Asco	zamocky	CgHTP4	Asco	261	
+Z__ChigHTP1__Asco	zamocky	ChigHTP1	Asco	278	
+Z__ChigHTP2__Asco	zamocky	ChigHTP2	Asco	281	
+Z__CmicAPO1__Basidio	zamocky	CmicAPO1	Basidio	384	
+Z__ColgloeoHTP__Asco	zamocky	ColgloeoHTP	Asco	277	
+Z__CsubHTP5__Basidio	zamocky	CsubHTP5	Basidio	304	
+Z__DaspAPO1__Basidio	zamocky	DaspAPO1	Basidio	326	
+Z__DfragHTP1__Basidio	zamocky	DfragHTP1	Basidio	223	
+Z__DsquaHTP1__Basidio	zamocky	DsquaHTP1	Basidio	301	
+Z__FagHTP1__Asco	zamocky	FagHTP1	Asco	231	
+Z__GcerHTP1__Glomero	zamocky	GcerHTP1	Glomero	221	
+Z__GrosHTP1__Glomero	zamocky	GrosHTP1	Glomero	230	
+Z__GrosHTP2__Glomero	zamocky	GrosHTP2	Glomero	239	
+Z__GzHTP1__Asco	zamocky	GzHTP1	Asco	266	
+Z__GzHTP2__Asco	zamocky	GzHTP2	Asco	205	
+Z__GzHTP3__Asco	zamocky	GzHTP3	Asco	268	
+Z__GzHTP4__Asco	zamocky	GzHTP4	Asco	448	
+Z__GzHTP5__Asco	zamocky	GzHTP5	Asco	453	
+Z__HirrHTP__Basidio	zamocky	HirrHTP	Basidio	298	
+Z__HjHTP1__Asco	zamocky	HjHTP1	Asco	260	
+Z__HspHTP1__Asco	zamocky	HspHTP1	Asco	261	B__HspUPO__cladeV
+Z__LbiHTP1__Basidio	zamocky	LbiHTP1	Basidio	292	
+Z__LbiHTP2__Basidio	zamocky	LbiHTP2	Basidio	294	
+Z__LbiHTP3__Basidio	zamocky	LbiHTP3	Basidio	340	
+Z__LbiHTP4__Basidio	zamocky	LbiHTP4	Basidio	253	
+Z__LbiHTP5__Basidio	zamocky	LbiHTP5	Basidio	386	
+Z__MgrHTP1__Asco	zamocky	MgrHTP1	Asco	257	
+Z__MlarHTP1__Basidio	zamocky	MlarHTP1	Basidio	357	
+Z__MlarHTP2__Basidio	zamocky	MlarHTP2	Basidio	351	
+Z__MoHTP1__Asco	zamocky	MoHTP1	Asco	257	
+Z__MpiHTP1__Asco	zamocky	MpiHTP1	Asco	414	
+Z__MrotHTP1__Basidio	zamocky	MrotHTP1	Basidio	236	
+Z__MscoHTP__Asco	zamocky	MscoHTP	Asco	267	
+Z__MtherHTP__Asco	zamocky	MtherHTP	Asco	261	
+Z__MucambHTP__Mucoro	zamocky	MucambHTP	Mucoro	304	
+Z__MuccirHTP__Mucoro	zamocky	MuccirHTP	Mucoro	308	
+Z__MuclusHTP__Mucoro	zamocky	MuclusHTP	Mucoro	309	
+Z__NcHTP1__Asco	zamocky	NcHTP1	Asco	272	
+Z__NhaeHTP__Asco	zamocky	NhaeHTP	Asco	271	
+Z__OpsiHTP__Asco	zamocky	OpsiHTP	Asco	484	
+Z__PanHTP1__Asco	zamocky	PanHTP1	Asco	386	
+Z__PantHTP1__Basidio	zamocky	PantHTP1	Basidio	413	
+Z__PbraHTP1__Asco	zamocky	PbraHTP1	Asco	243	
+Z__PcarHTP1__Basidio	zamocky	PcarHTP1	Basidio	296	
+Z__PcarHTP4__Basidio	zamocky	PcarHTP4	Basidio	263	
+Z__PcHTP1__Basidio	zamocky	PcHTP1	Basidio	295	
+Z__PcHTP2__Basidio	zamocky	PcHTP2	Basidio	388	
+Z__PcHTP3__Basidio	zamocky	PcHTP3	Basidio	279	
+Z__PcyanHTP1__Basidio	zamocky	PcyanHTP1	Basidio	374	
+Z__PficHTP1__Asco	zamocky	PficHTP1	Asco	253	
+Z__PfungHTP1__Amoebozoa	zamocky	PfungHTP1	Amoebozoa	304	
+Z__PfungHTP2__Amoebozoa	zamocky	PfungHTP2	Amoebozoa	327	
+Z__PhubeHTP1__Basidio	zamocky	PhubeHTP1	Basidio	422	
+Z__PiHTP1__Oomycota	zamocky	PiHTP1	Oomycota	255	
+Z__PiHTP2__Oomycota	zamocky	PiHTP2	Oomycota	254	
+Z__PinvHTP1__Basidio	zamocky	PinvHTP1	Basidio	291	
+Z__PinvHTP2__Basidio	zamocky	PinvHTP2	Basidio	291	
+Z__PinvHTP3__Basidio	zamocky	PinvHTP3	Basidio	276	
+Z__PinvHTP4__Basidio	zamocky	PinvHTP4	Basidio	225	
+Z__PnoHTP01__Asco	zamocky	PnoHTP01	Asco	280	
+Z__PnoHTP02__Asco	zamocky	PnoHTP02	Asco	248	
+Z__PnoHTP03__Asco	zamocky	PnoHTP03	Asco	269	
+Z__PnoHTP04__Asco	zamocky	PnoHTP04	Asco	268	
+Z__PnoHTP05__Asco	zamocky	PnoHTP05	Asco	308	
+Z__PnoHTP06__Asco	zamocky	PnoHTP06	Asco	451	
+Z__PnoHTP07__Asco	zamocky	PnoHTP07	Asco	272	
+Z__PnoHTP08__Asco	zamocky	PnoHTP08	Asco	421	
+Z__PnoHTP09__Asco	zamocky	PnoHTP09	Asco	415	
+Z__PnoHTP10__Asco	zamocky	PnoHTP10	Asco	425	
+Z__PnoHTP11__Asco	zamocky	PnoHTP11	Asco	380	
+Z__PnoHTP12__Asco	zamocky	PnoHTP12	Asco	454	
+Z__PnoHTP13__Asco	zamocky	PnoHTP13	Asco	436	
+Z__PoxaHTP1__Asco	zamocky	PoxaHTP1	Asco	226	
+Z__PpaHTP__Mucoro	zamocky	PpaHTP	Mucoro	309	
+Z__PparHTP1__Oomycota	zamocky	PparHTP1	Oomycota	255	
+Z__PparHTP2__Oomycota	zamocky	PparHTP2	Oomycota	255	
+Z__PparHTP3__Oomycota	zamocky	PparHTP3	Oomycota	262	
+Z__PplHTP1__Basidio	zamocky	PplHTP1	Basidio	296	
+Z__PplHTP2__Basidio	zamocky	PplHTP2	Basidio	280	
+Z__PplHTP3__Basidio	zamocky	PplHTP3	Basidio	298	
+Z__PplHTP4__Basidio	zamocky	PplHTP4	Basidio	421	
+Z__PplHTP5__Basidio	zamocky	PplHTP5	Basidio	277	
+Z__PramHTP1__Oomycota	zamocky	PramHTP1	Oomycota	255	
+Z__PramHTP2__Oomycota	zamocky	PramHTP2	Oomycota	265	
+Z__PsojHTP1__Oomycota	zamocky	PsojHTP1	Oomycota	242	
+Z__PsojHTP2__Oomycota	zamocky	PsojHTP2	Oomycota	245	
+Z__PsojHTP3__Oomycota	zamocky	PsojHTP3	Oomycota	269	
+Z__PsubHTP__Asco	zamocky	PsubHTP	Asco	269	
+Z__PultHTP1__Oomycota	zamocky	PultHTP1	Oomycota	247	
+Z__PultHTP2__Oomycota	zamocky	PultHTP2	Oomycota	288	
+Z__RclaHTP1__Mucoro	zamocky	RclaHTP1	Mucoro	221	
+Z__RdelHTP__Mucoro	zamocky	RdelHTP	Mucoro	295	
+Z__RirrHTP1__Mucoro	zamocky	RirrHTP1	Mucoro	237	
+Z__RirrHTP2__Mucoro	zamocky	RirrHTP2	Mucoro	233	
+Z__RmelHTP1__Basidio	zamocky	RmelHTP1	Basidio	220	
+Z__RmicroHTP1__Mucoro	zamocky	RmicroHTP1	Mucoro	303	
+Z__RmicroHTP2__Mucoro	zamocky	RmicroHTP2	Mucoro	303	
+Z__RstolHTP1__Mucoro	zamocky	RstolHTP1	Mucoro	306	
+Z__RvesHTP1__Basidio	zamocky	RvesHTP1	Basidio	288	
+Z__RvinHTP1__Basidio	zamocky	RvinHTP1	Basidio	295	
+Z__SAcoHTP2__Asco	zamocky	SAcoHTP2	Asco	337	
+Z__SborHTP1__Asco	zamocky	SborHTP1	Asco	275	
+Z__SbreHTP1__Basidio	zamocky	SbreHTP1	Basidio	288	
+Z__SbreHTP2__Basidio	zamocky	SbreHTP2	Basidio	289	
+Z__SbreHTP5__Basidio	zamocky	SbreHTP5	Basidio	288	
+Z__ScepHTP1__Asco	zamocky	ScepHTP1	Asco	236	
+Z__SdicHTP1__Oomycota	zamocky	SdicHTP1	Oomycota	249	
+Z__SindHTP1__Basidio	zamocky	SindHTP1	Basidio	295	
+Z__SlacHTP1__Basidio	zamocky	SlacHTP1	Basidio	288	
+Z__SlutHTP1__Basidio	zamocky	SlutHTP1	Basidio	288	
+Z__SlutHTP2__Basidio	zamocky	SlutHTP2	Basidio	289	
+Z__SlutHTP4__Basidio	zamocky	SlutHTP4	Basidio	251	
+Z__SlutHTP5__Basidio	zamocky	SlutHTP5	Basidio	289	
+Z__SmusHTP__Asco	zamocky	SmusHTP	Asco	262	
+Z__SpipunHTP__Chytrid	zamocky	SpipunHTP	Chytrid	517	
+Z__SpispHTP__Chytrid	zamocky	SpispHTP	Chytrid	238	
+Z__SreHTP1__Basidio	zamocky	SreHTP1	Basidio	419	
+Z__SreHTP2__Basidio	zamocky	SreHTP2	Basidio	408	
+Z__SsclHTP1__Asco	zamocky	SsclHTP1	Asco	276	
+Z__StriHTP1__Asco	zamocky	StriHTP1	Asco	276	
+Z__ThetHTP1__Asco	zamocky	ThetHTP1	Asco	261	Z__MtherHTP__Asco
+Z__TterHTP1__Asco	zamocky	TterHTP1	Asco	274	B__TteUPO__cladeV
+Z__UhHTP1__Basidio	zamocky	UhHTP1	Basidio	416	
+Z__UmHTP1__Basidio	zamocky	UmHTP1	Basidio	410	
+Z__UmHTP2__Basidio	zamocky	UmHTP2	Basidio	410	
+Z__UmHTP3__Basidio	zamocky	UmHTP3	Basidio	428	
