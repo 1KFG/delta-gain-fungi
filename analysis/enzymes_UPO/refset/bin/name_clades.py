@@ -6,16 +6,17 @@ backbone Clades I-V. Writes one row per leaf plus a per-clade report.
                  --out-members clade_members.tsv --out-report clade_report.tsv
 
 Zamocky Figure 1 clades (`--anchors`): each is the most recent common ancestor (MRCA) of its
-anchor leaves in the tree rooted on the `root` row's anchors, extended upward by the same rule as
-our clades below (parent UFBoot >= --min-ufb, no other clade's anchors). Anchors come from the paper's text
+anchor leaves in the tree rooted on the `root` row's anchors, grown by the same rule as our clades
+below (no other clade's anchors). A row whose anchors are the root anchors names the outgroup. Anchors come from the paper's text
 (genera, phyla, named enzymes), not from this tree; the `evidence` column says which. Checks that
 do not depend on the anchors are reported next to each clade: its UFBoot, its taxon composition,
 whether it contains another Figure 1 clade's anchors (a conflict), and its mean length against
 the average the paper states.
 
 Our Clades I-V (from the `B__<name>__clade<N>` leaves): start at the MRCA of a clade's backbone
-members (the member itself for a one-member clade), then move up while the parent has
-UFBoot >= --min-ufb and contains no backbone member of another clade. A clade whose members' MRCA
+members (the member itself for a one-member clade), then take the largest ancestor with
+UFBoot >= --min-ufb that contains no backbone member of another clade; unsupported intermediate
+nodes are passed through. The clade never grows into the whole ingroup. A clade whose members' MRCA
 already contains another clade's member is reported `not_monophyletic`.
 
 A leaf can sit in no Figure 1 clade (deep backbone, unsupported) and in none of Clades I-V; the
@@ -79,8 +80,18 @@ def extendable(n: Node) -> bool:
     whole ingroup carries the outgroup split's support, so extending there would swallow every
     non-outgroup leaf."""
     p = n.parent
-    return p is not None and p.parent is not None and p.parent.parent is not None \
-        and ufb(p) is not None
+    return p is not None and p.parent is not None and p.parent.parent is not None
+
+
+def grow(node: Node, below, foreign, min_ufb):
+    """The largest ancestor of node (or node itself) with UFBoot >= min_ufb that contains no
+    foreign leaf. Unsupported intermediate nodes are passed through, not stopped at."""
+    best, n = node, node
+    while extendable(n) and not (below[id(n.parent)] & foreign):
+        n = n.parent
+        if ufb(n) is not None and ufb(n) >= min_ufb:
+            best = n
+    return best
 
 
 def load_anchors(path):
@@ -105,10 +116,7 @@ def backbone_clades(leaves, below, min_ufb):
         if below[id(node)] & others:
             out[clade] = (None, "not_monophyletic", names)
             continue
-        while (extendable(node) and ufb(node.parent) >= min_ufb
-               and not (below[id(node.parent)] & others)):
-            node = node.parent
-        out[clade] = (node, "ok", names)
+        out[clade] = (grow(node, below, others, min_ufb), "ok", names)
     return out
 
 
@@ -134,11 +142,12 @@ def main(argv=None):
     nodes = {}
     for r in fig1:
         others = {x for x, c in anchor_owner.items() if c != r["clade"]}
-        n = mrca(leaves, r["anchors"])
-        while (extendable(n) and ufb(n.parent) >= a.min_ufb
-               and not (below[id(n.parent)] & others)):
-            n = n.parent
-        nodes[r["clade"]] = n
+        if set(r["anchors"]) == set(root_row["anchors"]):
+            # the outgroup itself: the root's child on the anchors' side
+            nodes[r["clade"]] = next(c for c in root.children
+                                     if set(r["anchors"]) <= below[id(c)])
+            continue
+        nodes[r["clade"]] = grow(mrca(leaves, r["anchors"]), below, others, a.min_ufb)
 
     report = []
     for r in fig1:

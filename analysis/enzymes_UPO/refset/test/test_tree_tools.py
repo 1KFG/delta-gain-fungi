@@ -64,6 +64,19 @@ class TreeTools(unittest.TestCase):
         self.assertEqual(m["w"]["fig1_clade"], "")
         self.assertEqual(m["w"]["our_clade"], "")
         self.assertEqual(rep["Muc"]["mean_length"], "100")
+        self.assertEqual(rep["Muc"]["n_leaves"], "2")  # the outgroup, named from the root side
+
+    def test_grow_skips_unsupported_intermediate(self):
+        # a's MRCA with p is unsupported (50) but the clade above it is supported (99)
+        tree = ("((Z__m1__Mucoro:1,Z__m2__Mucoro:1)100:1,"
+                "(((B__a__cladeI:1,Z__p__Asco:1)50:1,Z__q__Asco:1)99:1,B__c__cladeV:1)70:1,"
+                "Z__w__Asco:1);")
+        r = to.reroot(to.parse_newick(tree), {"Z__m1__Mucoro", "Z__m2__Mucoro"})
+        leaves, below = nc.index(r)
+        bb = nc.backbone_clades(leaves, below, 95)
+        self.assertEqual(sorted(below[id(bb["I"][0])]),
+                         ["B__a__cladeI", "Z__p__Asco", "Z__q__Asco"])
+        self.assertEqual(sorted(below[id(bb["V"][0])]), ["B__c__cladeV"])
 
 
 if __name__ == "__main__":
