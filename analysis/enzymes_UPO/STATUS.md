@@ -1,5 +1,10 @@
 # UPO project status
 
+**Model card: `MODEL_CARD.md`** — the model stated as three separate tasks with measured
+operating characteristics. Two are reliable (site finding, clade-V-like ranking). Predicting
+activity outside clade V is not, and §I of `MODEL_VALIDATION.md` shows why reanalysis cannot
+fix it.
+
 **2026-11-08.** One page. Full reasoning is in the documents linked from each line.
 
 ## What is finished and defensible
