@@ -69,8 +69,10 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
 1. **Zamocky reference set: steps 0-4 done 2026-11-08** on branch `upo-zamocky-refset` (see
    `analysis/enzymes_UPO/data/refset_zamocky2022/README.md`): 173/174 fetched, in-house IQ-TREE of
    187, all 11 Figure 1 clades recovered, Clade IV = MphUPO + 19 (UFBoot 96-97), Clade I = Family
-   II exactly. Next: use the tree as the placement reference (epa-ng) and/or an expanded
-   nearest-neighbour backbone, then re-run leave-one-out and BFD. Original note:
+   II exactly. **Placement caller done 2026-11-09** (`analysis/enzymes_UPO/upo_place/README.md`):
+   leave-one-out 184/187; BFD re-called (97,520). Old extrapolated Clade III/V calls mostly do not
+   survive; old Clade I is confirmed as Family II, and its low Glu180 is ascomycete long UPOs
+   (Ala), not non-UPOs, contradicting `G1_BFD_SUMMARY.md` §6. Original note:
    **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
    curated sequences would raise the clade backbone from 19, which is the only cheap route out of
    the extrapolation problem, and would supply the missing outgroup and the prior-art baseline in
