@@ -280,3 +280,34 @@ published active-site assignment was reproduced from sequence alone by a differe
 
 Full account, including six falsifiable pre-registered predictions on already-expressed enzymes:
 `EXTERNAL_VALIDATION.md`.
+
+
+---
+
+## H. Structural features tested and rejected (the last untried route)
+
+The 19 Boltz-2 structures were built to take the channel work from n = 4 to n = 19
+(`CHANNEL_FINDINGS.md`). They had never been applied to T1. Geometry was the remaining reason to
+expect the out-of-clade problem to be solvable computationally: a heme access channel is a
+physical constraint that should not track phylogeny.
+
+| model | LOO R2 | LOO AUC (all) | LOO AUC, clade V removed |
+|---|---|---|---|
+| clade | +0.434 | 0.922 | 0.222 |
+| **pocket (incumbent)** | **+0.496** | **0.956** | **0.556** |
+| channel bottleneck | +0.108 | 0.689 | 0.333 |
+| corridor profile | -0.168 | 0.678 | 0.444 |
+| pocket + channel | +0.490 | 0.944 | 0.444 |
+
+Channel bottleneck carries a real but small signal (permutation p = 0.023) and is beaten by the
+residue score on every axis. Adding it to the residue score makes both the fit and the
+out-of-clade AUC worse, so it is **not adopted**. Full account and the parser bug that corrupted
+the first run: `STRUCTURE_VS_RESIDUES.md`.
+
+Against expectation, active enzymes have NARROWER bottlenecks (mean 3.99 A) than inactive ones
+(5.83 A). Confounded with clade and measured on apo predicted models, so not a finding, but
+recorded rather than dropped.
+
+**With this, every computational route to an out-of-clade model is closed by measurement.** The
+out-of-clade AUC of 0.556 still rests on ONE active enzyme outside clade V, and no AUC on one
+positive case is evidence. Only measurement on new enzymes can settle it.

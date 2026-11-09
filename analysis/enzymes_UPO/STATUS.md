@@ -110,7 +110,9 @@ Six existing enzymes on one substrate is far smaller than the 96-well panel and 
 exact weakness. A failure on DcaUPO or DchUPO is the informative outcome: it would confirm the
 rule overcalls outside clade V, which is what the 0.556 out-of-clade AUC warns about.
 
-Why no computational route remains: a second panel on this substrate does not exist; an external
+Why no computational route remains: structural features from the 19 Boltz-2 models were tested
+and rejected (out-of-clade AUC 0.333 for channel, against 0.556 for the residue score; adding
+them makes the model worse) - `STRUCTURE_VS_RESIDUES.md`; a second panel on this substrate does not exist; an external
 set built from other papers' labels is invalid, because PaDa-I (the AaeUPO variant, the field's
 benchmark peroxygenase) converts 4-PG at 1.7 % and T1 correctly calls it inactive; and
 applicability distance failed as a confidence measure (p = 0.88).
