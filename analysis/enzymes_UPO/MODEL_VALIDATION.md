@@ -255,3 +255,28 @@ any grip.
 This does not make the score worse than section D already said. It states, per protein and as a
 column rather than a footnote, how much of BFD the 19 enzymes can speak for. The answer is under
 a third.
+
+
+---
+
+## G. The external-validation route is blocked by label incommensurability, not data scarcity
+
+Section E recorded that no external validation set exists, on the grounds that commercial UPO
+panels withhold sequences. That reason was correct but weaker than the real one, which a check
+of the calibration set itself supplies.
+
+**PaDa-I is the directed-evolution variant of AaeUPO, the field's benchmark peroxygenase. Its
+measured 4-propylguaiacol conversion is 2 %, 0 %, 3 %. Mean 1.7 %. T1 labels it inactive.**
+
+Any external test set assembled from other papers' "is it a peroxygenase?" labels would call
+PaDa-I active, because on ethylbenzene and naphthalene it is. Scoring the T1 rule against such a
+label would measure a different property and would report failure where there is none. The
+barrier is that activity is substrate-specific, not that sequences are hard to obtain. No
+computation removes it.
+
+A by-product worth recording: running the AaeUPO sequence through `upo_sites.py` independently
+recovers the pocket `FAAFL`, exactly the pocket the published Figure S2 lists for PaDa-I. A
+published active-site assignment was reproduced from sequence alone by a different route.
+
+Full account, including six falsifiable pre-registered predictions on already-expressed enzymes:
+`EXTERNAL_VALIDATION.md`.
