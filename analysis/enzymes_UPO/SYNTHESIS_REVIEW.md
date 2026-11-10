@@ -3,6 +3,12 @@
 Written 2026-11-08 from the laptop session `novelty-enzymes-50`, at the user's request, after
 committing the 2026-11-07 HPCC work (`c090229`) and the previously-unshared review (`4dcd560`).
 
+> **Revisited 2026-11-09.** Clade calls were re-made by phylogenetic placement on a 187-leaf
+> reference tree built from Zamocky 2022 (`upo_place/README.md`). The text and tables below are kept
+> as written on 2026-11-08; every number that depended on the old nearest-neighbour clade call is
+> re-measured in **§8**, and each superseded table carries a pointer to it. In short: §3.1 is done,
+> §3.2 and §4.6 are overturned, §4.2 is resolved further, §4.3's denominator is now 17,178.
+
 **Note for the session working in this directory:** I did not edit any of your files. This document
 and the two commits are all I added. I could not reach you by message — you run on `skylark` and
 are not addressable from the laptop's session list — so this file is the channel.
@@ -35,6 +41,8 @@ Three things now hold it back, in order:
 3. **The confidence tiering, which is the project's main defence, has a load-bearing soft spot at
    Clade IV** that nothing currently flags in the summary tables.
 
+*(2026-11-09: items 1 and 3 resolved; see §8.)*
+
 ---
 
 ## 2. Scorecard: the review against the current work
@@ -58,6 +66,9 @@ it has been overtaken. Mapping each point:
 | 12 | Reproducibility: missing extraction query, inconsistent denominators | **Largely resolved.** The tool is documented, the LOO test is runnable in one command, extraction is now `bin/extract_pf01328.py`, denominators are reconciled |
 
 Six of twelve resolved or moot, two partly, four still open.
+
+*(2026-11-09: points 2, 3 and 11 resolved by the Zamocky reference set and in-house tree; point 6's
+identity floor no longer decides clade calls; point 8 is half done, see §8.)*
 
 ---
 
@@ -101,6 +112,10 @@ against.
 **This is the highest-value unexploited action in the project.** It is also cheap: a download and a
 backbone rebuild.
 
+*(2026-11-09: done. All 11 Zamocky Figure 1 clades recovered in-house. The Glomeromycota numbers
+above were artefacts of reference coverage: under placement 121 of 124 fall in the glomeromycete
+clade, none in Clades III or V. See §8.)*
+
 ### 3.2 The thresholds are still uncalibrated
 
 `PLAN.md` §3.1 and `upo_sites/README.md` are both candid that the 30 % floor and `--min-margin` are
@@ -112,6 +127,11 @@ set of PF01328 proteins that are confidently *not* UPOs gives a negative distrib
 becomes an ROC operating point instead of a round number. The project already has a natural decoy
 source in its own data — see §4.2.
 
+*(2026-11-09: overturned in part. Clade calls no longer use the identity floor or margin; the
+remaining thresholds are LWR >= 0.5 and a pendant-length flag, set from 187 leave-one-out
+placements. The "natural decoy source" proposed here and in §4.6 is withdrawn: those proteins are
+ascomycete long UPOs. See §8.)*
+
 ### 3.3 The novelty metric will not work as specified
 
 G1 step 4 still specifies DIAMOND identity. **Measured here**, per-clade mean identity to the
@@ -122,6 +142,10 @@ meaningfully inside it.
 The planned move to phylogenetic placement (`epa-ng`/`pplacer`) already produces the right
 measure as a by-product — **patristic distance** to the nearest characterized enzyme. Do the novelty
 metric in the same pass rather than as a separate DIAMOND step.
+
+*(2026-11-09: placement is done; patristic distance is not yet computed. Under placement the
+per-clade identity band is no longer flat (Clades III-V 61-64 %, Clades I/II and unassigned 35-42 %);
+see §8.)*
 
 ### 3.4 Gene-model artifact control was dropped in the rescope, and the exposure grew
 
@@ -201,6 +225,9 @@ the nearest reference for 7,978 proteins. Two readings: MphUPO genuinely sits at
 large conserved fungal subfamily, or the identity calculation treats it differently from the others.
 Worth one check before any of those 4,565 proteins are used.
 
+*(2026-11-09: superseded table; see §8. Clade IV is now a 20-leaf clade in the reference tree, so it
+can be and has been validated by leave-one-out: 20/20.)*
+
 ### 4.3 The real working denominator is ~11,000, not 97,520
 
 Worth stating once, plainly, because three different denominators circulate.
@@ -212,6 +239,9 @@ Clade IV contribution (4,565, §4.2) and the well-supported core is **~6,700**.
 
 6,700 of 97,520 is 6.9 %. That is a perfectly good result and a much more defensible headline than
 any number ten times larger. It should be the stated denominator for downstream work.
+
+*(2026-11-09: superseded. The working denominator is **17,178**: catalytic core and a placement call
+in Clades I-V. See §8.)*
 
 ### 4.4 Two internal numbers look contradictory and need one sentence of reconciliation
 
@@ -246,6 +276,11 @@ the document. The caveat should travel with the number.
 This also supplies the decoy set §3.2 needs: low-identity Clade I proteins lacking Glu180 are a
 ready-made negative distribution for calibrating the identity floor.
 
+*(2026-11-09: **overturned.** The reading above, which this section called "almost certainly right",
+is not supported. 99.8 % of these proteins place inside Family II, and the missing Glu180 is a
+property of ascomycete long UPOs (1.5 % Glu180, mostly Ala) against 66.9 % in basidiomycete members.
+See §8.)*
+
 ---
 
 ## 5. Recommended order
@@ -266,6 +301,9 @@ ready-made negative distribution for calibrating the identity floor.
 
 Items 1, 3, 5 and 4.4–4.5 are documentation and checking, and could be done today. Item 2 is the
 one that changes the science.
+
+*(2026-11-09: item 2 done; item 6 placement done, patristic novelty and decoy calibration not (decoy
+source withdrawn); item 5 superseded by §8.)*
 
 ---
 
@@ -303,3 +341,45 @@ Not verified by me: everything quoted from the 2025 paper, the r values in
 `CALIBRATION_MATRIX.md`, the LOO result, and the Figure S2 transcription. The Clade IV
 identity anomaly (§4.2) is reported as an observation with two candidate explanations; I did not
 determine which holds.
+
+---
+
+## 8. Revisit, 2026-11-09: the numbers under placement clade calls
+
+Written from session `upo-iqtree-naming` (laptop). Clade calls re-made by epa-ng placement on the
+187-leaf reference tree (19 characterized + 168 Zamocky 2022 curated HTPs). Sources:
+`upo_place/README.md`, regenerated `G1_BFD_SUMMARY.md`, `data/bfd_place/CLADE_STATS.md`,
+per-protein table `data/bfd_full/upo_place_bfd_all.tsv.zst`. Identity below is still the old metric
+(identity to the nearest of the 19 characterized enzymes); it no longer decides calls.
+
+**Validation now covers the regime BFD occupies.** Leave-one-out over all 187 leaves: 184/187 for
+Clades I-V; 102/104 at 30-52.7 % and 32/32 below 30 % identity. Per clade: I 31/31, II 6/7, III 2/3,
+IV 20/20, V 14/14, outside I-V 111/112.
+
+**§4.2 table, re-measured** (placement clade; compare the 2026-11-08 table above):
+
+| clade | n | mean identity | n at identity >= 52.7 | Glu180 | catalytic core |
+|---|---|---|---|---|---|
+| I | 41,679 | 35.5 | 3,731 | 13.9 % | 5,081 |
+| II | 3,547 | 41.6 | 403 | 94.2 % | 2,835 |
+| III | 431 | 61.5 | 361 | 82.1 % | 320 |
+| IV | 8,437 | 61.0 | 4,987 | 96.2 % | 7,407 |
+| V | 2,425 | 63.8 | 2,087 | 74.1 % | 1,535 |
+| outside I-V | 41,001 | 34.5 | 1,249 | 55.1 % | 17,383 |
+
+- **§4.2 Clade IV:** a real clade (MphUPO + 19 curated, UFBoot 96, leave-one-out 20/20). It grows
+  to 8,437, including 2,853 proteins the old caller put in Clade V (old nearest reference HspUPO
+  2,148, TteUPO 612). Its activity calibration is still MphUPO alone.
+- **§4.3 denominator:** catalytic core and a Clade I-V call = **17,178** (17.6 %). The other
+  17,383 catalytic-core proteins sit outside Clades I-V, in Zamocky lineages with no characterized
+  enzyme (Ascomycetous 1st 3,636; Family I outside our clades 3,656; Basidiomycetous 2nd 2,421;
+  unresolved 7,226).
+- **§4.6 Clade I:** overturned (inline note). Mean length 427 aa is consistent with Family II.
+- **§3.1 early lineages:** Glomeromycota 124 → 121 glomeromycete clade; Mucoromycota 370 → 314
+  Mucorales basal; Chytridiomycota 188 → 171 unresolved, 6 in the oomycete (Stramenopilous 1st)
+  clade (as Zamocky reported for *Spizellomyces*), 2 in the chytrid clade.
+- **§3.3 identity band:** no longer flat under placement (table). Patristic distance still to do.
+- **§4.4 (1/87 vs 13.1 %)** and **§4.5 (comment headers)** are unaffected.
+- **Old caller, measured against placement:** validated-range calls confirmed for I, II, IV
+  (100 %) and V (2,087/2,637); extrapolated calls mostly not (V 319/22,210; III 40/9,075).
+
