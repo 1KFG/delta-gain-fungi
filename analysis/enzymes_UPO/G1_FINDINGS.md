@@ -4,6 +4,14 @@
 `data/bfd_full/out` by `upo_sites/bin/summarize_bfd.py`. Per-protein table:
 `data/bfd_full/upo_sites_bfd_all.tsv.zst`.
 
+> **Superseded in part, 2026-11-09.** Clade calls here are nearest-neighbour calls from
+> `upo_sites`, now replaced by phylogenetic placement (`upo_place/README.md`; regenerated
+> `G1_BFD_SUMMARY.md`; per-protein table `data/bfd_full/upo_place_bfd_all.tsv.zst`). Two
+> statements below no longer hold: (1) "the Clade I bin absorbs non-UPOs": placement puts these
+> proteins in Family II, and their missing Glu180 is a property of ascomycete long UPOs; (2)
+> per-clade counts and the "provisional" status of Clade IV (now a 20-leaf clade in the tree;
+> activity still n = 1). Residue-level and copy-number numbers are unaffected.
+
 ## The census
 
 **97,520 PF01328 proteins in 15,137 genomes.** BFD holds 23,451 genomes with gene models, so

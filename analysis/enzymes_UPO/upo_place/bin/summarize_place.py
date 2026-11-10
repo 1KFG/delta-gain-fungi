@@ -252,7 +252,7 @@ def build(rows, source):
     for k, v in cf.most_common():
         W(f"| {k} | {v} |")
     W("\nThe core set is a **conservative** UPO set: by construction it excludes nearly all "
-      "ascomycete Clade I (long) proteins and all Basidiomycetous 1st proteins, because of the "
+      "ascomycete Clade I (long) proteins and nearly all Basidiomycetous 1st proteins, because of the "
       "Glu180 requirement. Whether those lineages are functional UPOs is the open question above, "
       "not something the filter settles. Use the core set where a strict UPO definition is "
       "needed; report the excluded lineages separately rather than as non-UPOs.\n")

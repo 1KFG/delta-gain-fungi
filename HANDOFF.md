@@ -46,23 +46,30 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
 
 ### The numbers to be careful with
 
-- **Only 8.05 % of clade calls fall inside the caller's validated identity range.** The backbone is
-  19 sequences; BFD proteins sit at 25–42 % identity to anything characterized. Everything else is
-  labelled extrapolation, correctly.
-- **The real working denominator is ~11,200** (catalytic-core AND validated-range), or **~6,700**
-  excluding provisional Clade IV — not 97,520 and not 34,561.
-- **Clade IV supplies 38.8 % of all validated-range calls** (4,968 of 12,818) at a mean identity of
-  62.1 %, ~20 points above every other clade — and it is the one clade that *cannot* be validated,
-  having a single characterized member. **Checked 2026-11-08, closed** (see `COORDINATION.md`
-  "Your point 1"): a summariser bug (two definitions of "validated") was fixed and Clade IV is now
-  flagged provisional in every table; MphUPO is the sole attractor for all 6,922 calls; Clade IV is
-  the *least* novel vs nr (14.4 %). The identity metric in `upo_sites.py` is computed the same way
-  for every backbone member (PF01328 match columns only), so the high identity is not a per-reference
-  artefact. Reading: a real, conserved, under-characterized subfamily. Calls stay provisional.
-- **Clade I (33,424 proteins, 34 % of all calls) carries the universal Glu180 at only 16.8 %**,
-  while all five characterized Clade I enzymes have it. `G1_BFD_SUMMARY.md` §6 reads this as the
-  low-identity Clade I bin absorbing proteins that are not UPOs. That caveat needs to travel with
-  the lineage table in §4, where it currently does not.
+Clade calls were **re-made by phylogenetic placement on 2026-11-09** (`analysis/enzymes_UPO/upo_place/`,
+`G1_BFD_SUMMARY.md` regenerated). The nearest-neighbour numbers that used to be here (8.05 %
+validated, Clade I 33,424 at 16.8 % Glu180, Clade IV 6,922 "provisional") are superseded; they are
+in git history and in the "old" columns of `G1_BFD_SUMMARY.md` §2.
+
+- **The caller is now validated across the identity range BFD actually occupies.** Leave-one-out
+  over the 187-leaf reference tree: 184/187 for Clades I-V, including 102/104 at 30-52.7 % and
+  32/32 below 30 % identity to the nearest characterized enzyme. 57.1 % of BFD proteins are
+  assigned at LWR >= 0.95; 2.5 % carry `long_pendant`.
+- **40.8 % of BFD PF01328 proteins (39,770) lie outside Clades I-V**: early basidiomycete and
+  ascomycete lineages, glomeromycete, Mucorales (Zamocky Figure 1). These are not failures of the
+  caller; the old caller had forced most of them into Clades III and V.
+- **Working denominator: 17,178** proteins with the catalytic core (Cys39, Glu109, Asp111, Glu180)
+  *and* a placement call in Clades I-V (I 5,081; II 2,835; III 320; IV 7,407; V 1,535). Not
+  97,520, and not the 34,561 catalytic-core proteins, 17,383 of which sit outside Clades I-V.
+- **Clade IV (8,437) is a real clade** (20 reference leaves, UFBoot 96), but its activity
+  calibration is still MphUPO alone: no activity statement for Clade IV beyond n = 1.
+- **Clade I (41,679) carries Glu180 at 13.9 %, and that is lineage-structured, not
+  contamination**: ascomycete members 1.5 % (Ala dominates), basidiomycete 66.9 %. All 13 curated
+  ascomycete long UPOs in Zamocky 2022 also lack it. Whether ascomycete long UPOs lack the acid-base
+  Glu or carry it at a position that does not align to HspUPO 180 is open (structure-based
+  alignment of one ascomycete long UPO would settle it). Until then the catalytic-core filter is
+  a strict definition that excludes nearly all ascomycete long UPOs by construction; report them
+  separately, never as non-UPOs.
 
 ### Open items, highest value first
 
@@ -72,7 +79,7 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
    II exactly. **Placement caller done 2026-11-09** (`analysis/enzymes_UPO/upo_place/README.md`):
    leave-one-out 184/187; BFD re-called (97,520). Old extrapolated Clade III/V calls mostly do not
    survive; old Clade I is confirmed as Family II, and its low Glu180 is ascomycete long UPOs
-   (Ala), not non-UPOs, contradicting `G1_BFD_SUMMARY.md` §6. Original note:
+   (Ala), not non-UPOs; `G1_BFD_SUMMARY.md` regenerated from placement calls. Original note:
    **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
    curated sequences would raise the clade backbone from 19, which is the only cheap route out of
    the extrapolation problem, and would supply the missing outgroup and the prior-art baseline in
@@ -86,9 +93,11 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
    `has_start_codon`, `has_stop_codon`; joining them is one query and would let the
    catalytic-machinery numbers be reported QC-clean versus flagged. Until then "65 % lack the full
    catalytic set" is not safely a biological statement.
-5. **Thresholds are uncalibrated.** The 30 % identity floor and `--min-margin` are explicitly
-   labelled heuristics. Low-identity Clade I proteins lacking Glu180 are a ready-made decoy set for
-   calibrating them.
+5. **Placement thresholds are lightly calibrated.** The 30 % identity floor and `--min-margin` no
+   longer decide clade calls. What remains is LWR >= 0.5 to call and pendant > 1.0 to flag, set
+   from 187 leave-one-out placements (correct pendants reach 0.88; the one wrong call was 1.42).
+   (The earlier idea of using low-identity Clade I proteins lacking Glu180 as a decoy set is
+   withdrawn: placement shows they are ascomycete long UPOs.)
 
 ### Coordination warning — two sessions are in this directory
 

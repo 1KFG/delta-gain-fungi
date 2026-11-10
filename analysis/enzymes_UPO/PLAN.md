@@ -268,7 +268,7 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Novelty-vs-nr inherits a deposition confound | **Confirmed** | Search nucleotide/WGS too |
 | Lichen and Glomeromycota contamination | **Untested** | Contig-level checks before reporting |
 | Only 35.4 % of fungal PF01328 carries the UPO catalytic core | **Confirmed 2026-11-08** | All downstream work uses the 34,561 catalytic-core set, not the raw 97,520 |
-| Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Confirmed** | Unfiltered Clade I counts are an upper bound; filtered count is 5,101 |
+| Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Overturned 2026-11-09** | Placement puts 99.8 % of these in Family II; the non-Glu180 proteins are ascomycete long UPOs (Ala), as in all 13 curated ones. See `upo_place/README.md`, `G1_BFD_SUMMARY.md` §6 |
 | Clade IV is the best-supported clade but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a Clade IV enzyme is the top experimental recommendation |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
 | Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |
