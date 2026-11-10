@@ -70,9 +70,12 @@ def build(rows, source):
       "Clades I-V, across identity strata from < 30 % to > 52.7 % to the nearest characterized "
       "enzyme. This replaces the nearest-neighbour report (same file, git history before "
       "2026-11-09), whose calls were validated only at >= 52.7 % identity (13 % of proteins).\n")
+    n_out = len({r["place_fig1_clade"] for r in rows}
+                - {"unassigned", "Basidiomycetous 3rd (Family II, long)",
+                   "Ascomycetous 2nd (Family I, short)"})
     W("A protein is `unassigned` when its placements do not fall inside Clades I-V with "
-      "accumulated LWR >= 0.5. That is a result: Zamocky's tree has six lineages outside our "
-      "clades (section 2b).\n")
+      f"accumulated LWR >= 0.5. That is a result: {n_out} of Zamocky's Figure 1 clades that "
+      "received BFD proteins lie outside our clades (section 2b).\n")
 
     W("## 1. Call confidence\n")
     tc = Counter(conf_tier(r) for r in rows)
@@ -109,9 +112,27 @@ def build(rows, source):
     for k in sorted(mv):
         W(f"| {k} | " + " | ".join(str(mv[k][c]) for c in CLADES)
           + f" | {sum(mv[k].values())} |")
-    W("\nValidated-range calls are confirmed except Clade III, whose remaining validated calls "
-      "sit on the stem of the 3-leaf reference Clade III inside Family I. Most extrapolated "
-      "Clade III and V calls are not confirmed.\n")
+    conf = []
+    for c in CLADES[:-1]:
+        k = f"{c} (validated)"
+        tot = sum(mv[k].values())
+        if tot:
+            conf.append(f"{c} {mv[k][c]}/{tot}")
+    ext = []
+    for c in CLADES[:-1]:
+        k = f"{c} (extrapolated)"
+        tot = sum(mv[k].values())
+        if tot:
+            ext.append(f"{c} {mv[k][c]}/{tot}")
+    iii = [r for r in rows if r["clade"] == "III"
+           and r["clade_confidence"].startswith("validated")
+           and r["place_our_clade"] == "unassigned"]
+    iii_stem = sum(1 for r in iii if float(r["place_our_stem_lwr"]) >= 0.5)
+    W("\nOld validated-range calls confirmed by placement: " + "; ".join(conf) + ". "
+      "Old extrapolated calls confirmed: " + "; ".join(ext) + ". "
+      f"Of the {len(iii)} unconfirmed validated Clade III calls, {iii_stem} sit on the stem of "
+      "the 3-leaf reference Clade III (close relatives of MroUPO/MorUPO branching just outside "
+      "it).\n")
 
     W("### 2b. Zamocky Figure 1 clades\n")
     f1 = Counter(r["place_fig1_clade"] for r in rows)
@@ -196,8 +217,13 @@ def build(rows, source):
         t = gp[ph][True] + gp[ph][False]
         W(f"| {ph} | {t} | {pct(gp[ph][True], t)} | "
           + ", ".join(f"{k} {v}" for k, v in res[ph].most_common(4)) + " |")
-    W("\nThe earlier report read the 16.8 % Glu180 rate of Clade I as the low-identity bin "
-      "absorbing non-UPOs. Placement puts 99.8 % of those proteins inside Family II, and the "
+    oi = [r for r in rows if r["clade"] == "I"]
+    oi_glu = sum(1 for r in oi if r.get("p180_Acid") == "E")
+    oi_f2 = sum(1 for r in oi
+                if r["place_fig1_clade"] == "Basidiomycetous 3rd (Family II, long)")
+    W(f"\nThe earlier report read the {pct(oi_glu, len(oi))} Glu180 rate of old Clade I calls "
+      f"as the low-identity bin absorbing non-UPOs. Placement puts {pct(oi_f2, len(oi))} of "
+      "those proteins inside Family II, and the "
       "non-Glu residue (mostly Ala) is concentrated in **ascomycete long UPOs**, matching all 13 "
       "curated ascomycete Family II sequences in Zamocky et al. 2022 (A/S/T at this position). The "
       "five characterized Clade I enzymes are basidiomycete and carry Glu. So the low rate is a "
