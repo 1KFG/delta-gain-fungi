@@ -1,0 +1,17 @@
+set	clade	n_leaves	ufboot	composition	mean_length	paper_mean_length	conflict_with	status	evidence
+zamocky_fig1	Mucoromycetous basal	10	100	Mucoro 10	301	301		ok	text: Mucor and Rhizopus genes; RdelHTP
+zamocky_fig1	Basidiomycetous 1st	34	100	Basidio 33, Asco 1	315	316		ok	text: mostly Pucciniomycetes (Melampsora) and Ustilaginomycetes; Ustilago paralog chosen from tree (Ustilago also has Family II paralogs)
+zamocky_fig1	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	6	93	Glomero 3, Mucoro 3	230	230		ok	text: glomeromycetous HTP clade; Gigaspora, Rhizophagus (Table S1 mislabels Rhizophagus as Mucoromycotina)
+zamocky_fig1	Ascomycetous 1st	8	100	Asco 8	256	265		ok	tree: text names no member
+zamocky_fig1	Basidiomycetous 2nd	15	100	Basidio 15	279	279		ok	tree: text names no member
+zamocky_fig1	Stramenopilous 1st	4	100	Oomycota 4	260	276		ok	text: Saprolegnia and Aphanomyces; SdicHTP1 (276 aa is the oomycete-family mean)
+zamocky_fig1	Stramenopilous 2nd	12	100	Oomycota 12	258	276		ok	text: Phytophthora (276 aa is the oomycete-family mean)
+zamocky_fig1	Chytridiomycetous	2	100	Chytrid 2	378			ok	text: two Spizellomyces HTPs
+zamocky_fig1	Amoebozoan	2	100	Amoebozoa 2	316			ok	text: two HTPs from one protosteloid amoeba (Protostelium fungivorum)
+zamocky_fig1	Basidiomycetous 3rd (Family II, long)	31	100	Basidio 13, Asco 13, backbone:cladeI 5	403	402		ok	text: AaeAPO in Family II long; long UPOs by definition
+zamocky_fig1	Ascomycetous 2nd (Family I, short)	44	85	Asco 31, backbone:cladeV 9, backbone:cladeIII 2, backbone:cladeIV 1, Basidio 1	265	265		ok	text: MtherHTP in late Family I; HspHTP1 (7O2D) and MrotHTP1 (5FUJ) structures in the dikaryal families
+backbone	Clade I	31	100	Basidio 13, Asco 13, backbone:cladeI 5	403			ok	5 backbone members
+backbone	Clade II	7	98	Asco 5, backbone:cladeII 2	310			ok	2 backbone members
+backbone	Clade III	3	100	backbone:cladeIII 2, Basidio 1	242			ok	2 backbone members
+backbone	Clade IV	20	97	Asco 19, backbone:cladeIV 1	264			ok	1 backbone members
+backbone	Clade V	14	85	backbone:cladeV 9, Asco 5	262			ok	9 backbone members

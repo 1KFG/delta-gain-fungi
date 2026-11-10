@@ -46,38 +46,58 @@ none). Max copy number 144, in *Sphaerobolus stellatus*.
 
 ### The numbers to be careful with
 
-- **Only 8.05 % of clade calls fall inside the caller's validated identity range.** The backbone is
-  19 sequences; BFD proteins sit at 25–42 % identity to anything characterized. Everything else is
-  labelled extrapolation, correctly.
-- **The real working denominator is ~11,200** (catalytic-core AND validated-range), or **~6,700**
-  excluding provisional Clade IV — not 97,520 and not 34,561.
-- **Clade IV supplies 38.8 % of all validated-range calls** (4,968 of 12,818) at a mean identity of
-  62.1 %, ~20 points above every other clade — and it is the one clade that *cannot* be validated,
-  having a single characterized member. Not yet explained. Check before any candidate list is drawn
-  from it.
-- **Clade I (33,424 proteins, 34 % of all calls) carries the universal Glu180 at only 16.8 %**,
-  while all five characterized Clade I enzymes have it. `G1_BFD_SUMMARY.md` §6 reads this as the
-  low-identity Clade I bin absorbing proteins that are not UPOs. That caveat needs to travel with
-  the lineage table in §4, where it currently does not.
+Clade calls were **re-made by phylogenetic placement on 2026-11-09** (`analysis/enzymes_UPO/upo_place/`,
+`G1_BFD_SUMMARY.md` regenerated). The nearest-neighbour numbers that used to be here (8.05 %
+validated, Clade I 33,424 at 16.8 % Glu180, Clade IV 6,922 "provisional") are superseded; they are
+in git history and in the "old" columns of `G1_BFD_SUMMARY.md` §2.
+
+- **The caller is now validated across the identity range BFD actually occupies.** Leave-one-out
+  over the 187-leaf reference tree: 184/187 for Clades I-V, including 102/104 at 30-52.7 % and
+  32/32 below 30 % identity to the nearest characterized enzyme. 57.1 % of BFD proteins are
+  assigned at LWR >= 0.95; 2.5 % carry `long_pendant`.
+- **40.8 % of BFD PF01328 proteins (39,770) lie outside Clades I-V**: early basidiomycete and
+  ascomycete lineages, glomeromycete, Mucorales (Zamocky Figure 1). These are not failures of the
+  caller; the old caller had forced most of them into Clades III and V.
+- **Working denominator: 17,178** proteins with the catalytic core (Cys39, Glu109, Asp111, Glu180)
+  *and* a placement call in Clades I-V (I 5,081; II 2,835; III 320; IV 7,407; V 1,535). Not
+  97,520, and not the 34,561 catalytic-core proteins, 17,383 of which sit outside Clades I-V.
+- **Clade IV (8,437) is a real clade** (20 reference leaves, UFBoot 96), but its activity
+  calibration is still MphUPO alone: no activity statement for Clade IV beyond n = 1.
+- **Clade I (41,679) carries Glu180 at 13.9 %, and that is lineage-structured, not
+  contamination**: ascomycete members 1.5 % (Ala dominates), basidiomycete 66.9 %. All 13 curated
+  ascomycete long UPOs in Zamocky 2022 also lack it. Whether ascomycete long UPOs lack the acid-base
+  Glu or carry it at a position that does not align to HspUPO 180 is open (structure-based
+  alignment of one ascomycete long UPO would settle it). Until then the catalytic-core filter is
+  a strict definition that excludes nearly all ascomycete long UPOs by construction; report them
+  separately, never as non-UPOs.
 
 ### Open items, highest value first
 
-1. **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
+1. **Zamocky reference set: steps 0-4 done 2026-11-08** on branch `upo-zamocky-refset` (see
+   `analysis/enzymes_UPO/data/refset_zamocky2022/README.md`): 173/174 fetched, in-house IQ-TREE of
+   187, all 11 Figure 1 clades recovered, Clade IV = MphUPO + 19 (UFBoot 96-97), Clade I = Family
+   II exactly. **Placement caller done 2026-11-09** (`analysis/enzymes_UPO/upo_place/README.md`):
+   leave-one-out 184/187; BFD re-called (97,520). Old extrapolated Clade III/V calls mostly do not
+   survive; old Clade I is confirmed as Family II, and its low Glu180 is ascomycete long UPOs
+   (Ala), not non-UPOs; `G1_BFD_SUMMARY.md` regenerated from placement calls. Original note:
+   **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
    curated sequences would raise the clade backbone from 19, which is the only cheap route out of
    the extrapolation problem, and would supply the missing outgroup and the prior-art baseline in
    the same action. Highest-value unexploited item in the project.
 2. **`DESIGN.md` is stale.** Its §10 still says "pivot to T1" and calls the S8 digitization "the
    gate on whether T1 is viable". That gate was run and T1 failed. `PLAN.md` is correct;
    `DESIGN.md`, the longest document and the one framed as the intent document, is not.
-3. **Clade IV check** (above), before dereplication picks representatives.
+3. ~~**Clade IV check**~~ — done 2026-11-08 (above). Do not redo.
 4. **Gene-model QC was dropped in the rescope** while exposure grew from ~800 genomes to 15,137 of
    self-generated models. BFD's `gene_transcripts` already carries `is_partial`,
    `has_start_codon`, `has_stop_codon`; joining them is one query and would let the
    catalytic-machinery numbers be reported QC-clean versus flagged. Until then "65 % lack the full
    catalytic set" is not safely a biological statement.
-5. **Thresholds are uncalibrated.** The 30 % identity floor and `--min-margin` are explicitly
-   labelled heuristics. Low-identity Clade I proteins lacking Glu180 are a ready-made decoy set for
-   calibrating them.
+5. **Placement thresholds are lightly calibrated.** The 30 % identity floor and `--min-margin` no
+   longer decide clade calls. What remains is LWR >= 0.5 to call and pendant > 1.0 to flag, set
+   from 187 leave-one-out placements (correct pendants reach 0.88; the one wrong call was 1.42).
+   (The earlier idea of using low-identity Clade I proteins lacking Glu180 as a decoy set is
+   withdrawn: placement shows they are ascomycete long UPOs.)
 
 ### Coordination warning — two sessions are in this directory
 
@@ -93,6 +113,8 @@ scope, all-BFD versus RNA-seq-followable clades — and §4 says the two options
 projects, not different settings". Job 31865695 is processing **7,055 target genes in 3,274
 genomes**, i.e. the broad option. D6 appears to have been settled by starting rather than by
 decision. If that is intended, `PLAN.md` should stop listing it as open.
+**Resolved:** the user decided D6 on 2026-11-08 (all-BFD core, clade-stratified) before G3
+started; `PLAN.md` §2 and §4.2 now record it. Not an open item.
 
 Note also that `G1_FINDINGS.md` (skylark) and `SYNTHESIS_REVIEW.md` (laptop) were written
 independently and overlap. They do not contradict each other, but they should probably be merged.

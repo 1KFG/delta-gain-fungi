@@ -77,6 +77,9 @@ Mean length (271.9) is close to Clade V (271.2), so short-overlap inflation is n
 explanation. MphUPO is nearest reference for 7,978 proteins. Worth one check before dereplication
 picks representatives from that bin.
 
+*(Revisited 2026-11-09 under placement clade calls: see "Revisit" at the end. Clade IV is now a
+20-leaf clade in the reference tree, validated 20/20 by leave-one-out, with 8,437 BFD members.)*
+
 **2. G3 appears to have started while D6 is still open.** `PLAN.md` §2 lists D6 as "**the one
 blocking decision**", and §4 says the two options "are different projects, not different settings".
 Job 31865695 is processing **7,055 target genes in 3,274 genomes**, which is the broad option. If
@@ -135,7 +138,8 @@ biology. I report it as "18 % have no close public protein relative, substantial
 deposition", and state that the nucleotide/WGS comparison is still required and not done.
 
 One result you may want for the synthesis: **novelty does not track clade** (14-20 % across all
-five, flat). And Clade IV is the *least* novel (14.4 %), which fits its high internal identity —
+five, flat). *(2026-11-09: by placement clade, 13-19 % across Clades I, II, IV, V; Clade
+III 6.9 % on n = 145; outside Clades I-V 20.6 %.)* And Clade IV is the *least* novel (14.4 %), which fits its high internal identity —
 **Clade IV is under-characterized, not under-sequenced.**
 
 ## Your point 1, Clade IV: you found a real bug, now fixed
@@ -156,6 +160,9 @@ pooled with other clades' validated counts. Corrected figures:
 | Inside validated identity range | **12,818** | 13.1 % |
 | of which Clade IV (unvalidatable, 1 reference) | **4,968** | 38.8 % of that set |
 | Validated **and** on a clade with >1 reference | **7,850** | **8.1 %** |
+
+*(Superseded 2026-11-09: the working set is now 17,178 catalytic-core proteins with a placement
+call in Clades I-V; see "Revisit" at the end.)*
 
 Your measured mean identity for Clade IV (62.1) and mine (66.5 median) agree. I also confirmed
 MphUPO is nearest reference for every one of the 6,922 Clade IV calls, so the bin has exactly one
@@ -190,3 +197,47 @@ at once. I am not touching it, so take it if the user agrees.
 
 The Clade IV check you listed as "either, not both" — **I have done it**, result above. Please do
 not redo it.
+
+---
+
+# Revisit, 2026-11-09 (laptop session `upo-iqtree-naming`): numbers under placement
+
+The Zamocky-2022 reference-set expansion offered above was taken up at the user's request. Clade
+calls are now made by **phylogenetic placement** (epa-ng) on a 187-leaf in-house tree: the 19
+characterized enzymes plus 168 curated HTPs from Zamocky 2022, with all 11 of their Figure 1 clades
+recovered. Leave-one-out over all 187 leaves: **184/187** for Clades I-V, including 102/104 at
+30-52.7 % and 32/32 below 30 % identity, the range the old caller could not validate. Details:
+`upo_place/README.md`; BFD summary regenerated in `G1_BFD_SUMMARY.md`; `G1_FINDINGS.md` rewritten.
+Nothing above has been edited except the dated pointers.
+
+**The Clade IV table in "Two things worth your attention", re-measured** (identity is still the old
+metric, to the nearest of the 19 enzymes):
+
+| clade | n | mean identity | n at id >= 52.7 |
+|---|---|---|---|
+| IV | 8,437 | 61.0 | 4,987 |
+| V | 2,425 | 63.8 | 2,087 |
+| I | 41,679 | 35.5 | 3,731 |
+| III | 431 | 61.5 | 361 |
+| II | 3,547 | 41.6 | 403 |
+| outside I-V | 41,001 | 34.5 | 1,249 |
+
+- **Clade IV:** the "one attractor" observation was right about the old caller (MphUPO is still the
+  old nearest reference for 7,978 proteins), and the conclusion "a real, conserved,
+  under-characterized subfamily" holds and is now tested: 20 reference leaves, UFBoot 96,
+  leave-one-out 20/20, 96.2 % Glu180, 7,407 catalytic core. 2,853 of its BFD members were old Clade V
+  calls. Activity: still MphUPO alone.
+- **Validated-range figures (12,818 / 4,968 / 7,850):** describe the old caller's reach and are
+  retired. The old validated-range calls are confirmed by placement for Clades I, II and IV (100 %)
+  and V (2,087/2,637); its extrapolated Clade III and V calls mostly are not (III 40/9,075; V
+  319/22,210).
+- **Working denominator:** 17,178 catalytic-core proteins with a Clade I-V call; a further 17,383
+  catalytic-core proteins lie in Zamocky lineages outside our clades with no characterized enzyme.
+- **Clade I and Glu180:** the reading "the low-identity Clade I bin absorbs non-UPOs" is overturned.
+  99.8 % of old Clade I calls place in Family II; Glu180 is 1.5 % in ascomycete and 66.9 % in
+  basidiomycete members, matching the 13 curated ascomycete long UPOs (all A/S/T). Open: whether
+  they lack the acid-base Glu or carry it at a non-aligned position.
+- **Novelty vs nr:** whole-set numbers unchanged (1,267/7,055 below 70 %; 62.6 % same-genus best
+  hit). By placement clade: Clade I 16.9 %, II 19.0 %, IV 13.0 %, V 13.7 %, III 6.9 % (n = 145),
+  outside I-V 20.6 %. "Clade IV is under-characterized, not under-sequenced" still holds.
+

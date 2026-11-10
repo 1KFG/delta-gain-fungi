@@ -1,0 +1,892 @@
+IQ-TREE 3.0.1 built May 14 2025
+
+Input file name: analysis/enzymes_UPO/data/refset_zamocky2022/tree/aln.trim.afa
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 20261108
+
+REFERENCES
+----------
+
+To cite IQ-TREE 3 please use:
+
+Thomas K.F. Wong, Nhan Ly-Trong, Huaiyan Ren, Hector Banos, Andrew J. Roger,
+Edward Susko, Chris Bielow, Nicola De Maio, Nick Goldman, Matthew W. Hahn,
+Gavin Huttley, Robert Lanfear, Bui Quang Minh (2025)
+IQ-TREE 3: Phylogenomic Inference Software using Complex Evolutionary Models.
+Submitted.
+
+Please also cite the following paper(s) for the feature(s) that you used:
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2018) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol. Biol. Evol., 35:518–522.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 187 sequences with 224 amino-acid sites
+Number of constant sites: 2 (= 0.892857% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 2 (= 0.892857% of all sites)
+Number of parsimony informative sites: 219
+Number of distinct site patterns: 224
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: LG+I+G4
+
+State frequencies: (model)
+
+Model of rate heterogeneity: Invar+Gamma with 4 categories
+Proportion of invariable sites: 0.0089
+Gamma shape alpha: 1.2383
+
+ Category  Relative_rate  Proportion
+  0         0              0.0089
+  1         0.1836         0.2478
+  2         0.5431         0.2478
+  3         1.0398         0.2478
+  4         2.2695         0.2478
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -53357.2466 (s.e. 1422.5268)
+Unconstrained log-likelihood (without tree): -1212.2087
+Number of free parameters (#branches + #model parameters): 373
+Akaike information criterion (AIC) score: 107460.4933
+Corrected Akaike information criterion (AICc) score: 386464.4933
+Bayesian information criterion (BIC) score: 108733.0373
+
+**************************** WARNING ****************************
+Number of parameters (K, model parameters and branch lengths): 373
+Sample size (n, alignment length): 224
+
+Given that K>=n, the parameter estimates might be inaccurate.
+Thus, phylogenetic estimates should be interpreted with caution.
+
+Ideally, it is desirable that n >> K. When selecting optimal models,
+1. use AIC or BIC if n > 40K;
+2. use AICc or BIC if 40K >= n > K;
+3. be extremely cautious if n <= K
+
+To improve the situation (3), consider the following options:
+  1. Increase the sample size (n)
+  2. Decrease the number of parameters (K) to be estimated. If
+     possible:
+     a. Remove the least important sequences from the alignment
+     b. Specify some of the parameter values for the substitution
+        model (e.g., the nucleotide or amino acid frequencies)
+     c. Specify some of the parameter values for the rates-across-
+        sites model (e.g., the shape parameter for the discrete
+        Gamma distribution, the proportion of invariable sites, or
+        the rates of change for different rate categories under
+        the FreeRate model)
+
+Reference:
+Burnham KR, Anderson DR (2002). Model Selection and Multimodel
+Inference: A Practical Information-Theoretic Approach. Springer,
+New York.
+************************ END OF WARNING ***********************
+
+Total tree length (sum of branch lengths): 63.2827
+Sum of internal branch lengths: 27.3138 (43.1615% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon 'B__AacUPO__cladeV' is drawn at root
+Numbers in parentheses are SH-aLRT support (%) / ultrafast bootstrap support (%)
+
++--B__AacUPO__cladeV
+|
+|  +------B__AbrUPO-I__cladeV
++--| (84.9/100)
+|  |                                                                          +--B__CabUPO-III__cladeI
+|  |                                                                       +--| (95.4/100)
+|  |                                                                       |  +---B__CmaUPO-I__cladeI
+|  |                                                                    +--| (87.8/92)
+|  |                                                                    |  +--B__PaDa-I_parent_AaeUPO__cladeI
+|  |                                                                 +--| (50.5/48)
+|  |                                                                 |  +---B__LspUPO-II__cladeI
+|  |                                                              +--| (36.2/46)
+|  |                                                              |  |  +--Z__CaberAPO1__Basidio
+|  |                                                              |  +--| (91.6/90)
+|  |                                                              |     |  +--Z__CcinHTP4__Basidio
+|  |                                                              |     +--| (62.7/94)
+|  |                                                              |        +--Z__CmicAPO1__Basidio
+|  |                                                           +--| (71.2/44)
+|  |                                                           |  |     +--B__GmaUPO-II__cladeI
+|  |                                                           |  |  +--| (93.5/99)
+|  |                                                           |  |  |  +--Z__PcyanHTP1__Basidio
+|  |                                                           |  +--| (92/80)
+|  |                                                           |     |     +--Z__AdelHTP1__Basidio
+|  |                                                           |     |  +--| (99.7/100)
+|  |                                                           |     |  |  +--Z__AdelHTP5__Basidio
+|  |                                                           |     +--| (55/78)
+|  |                                                           |        +--Z__LbiHTP5__Basidio
+|  |                                                        +--| (85.2/63)
+|  |                                                        |  |  +--Z__AbHTP3__Basidio
+|  |                                                        |  +--| (99.1/100)
+|  |                                                        |     +--Z__AbHTP4__Basidio
+|  |                                               +--------| (100/100)
+|  |                                               |        +--Z__AbHTP5__Basidio
+|  |                                            +--| (92/99)
+|  |                                            |  |                     +--Z__AfumHTP2__Asco
+|  |                                            |  |                  +--| (99.1/100)
+|  |                                            |  |                  |  +--Z__AteHTP3__Asco
+|  |                                            |  |               +--| (99/100)
+|  |                                            |  |               |  +----Z__PnoHTP13__Asco
+|  |                                            |  |            +--| (85.4/98)
+|  |                                            |  |            |  +-------Z__GzHTP5__Asco
+|  |                                            |  |         +--| (83.6/76)
+|  |                                            |  |         |  |     +-------Z__GzHTP4__Asco
+|  |                                            |  |         |  |  +--| (96.5/95)
+|  |                                            |  |         |  |  |  +------Z__PnoHTP09__Asco
+|  |                                            |  |         |  +--| (55.3/71)
+|  |                                            |  |         |     |  +------Z__PnoHTP10__Asco
+|  |                                            |  |         |     +--| (91.9/100)
+|  |                                            |  |         |        +----------Z__PnoHTP12__Asco
+|  |                                            |  |      +--| (95.4/99)
+|  |                                            |  |      |  +--------Z__MpiHTP1__Asco
+|  |                                            |  |   +--| (55.3/91)
+|  |                                            |  |   |  |       +-------Z__PanHTP1__Asco
+|  |                                            |  |   |  +-------| (99.9/100)
+|  |                                            |  |   |          |  +--Z__PnoHTP08__Asco
+|  |                                            |  |   |          +--| (79.9/99)
+|  |                                            |  |   |             +---Z__PnoHTP11__Asco
+|  |                                            |  +---| (91.8/99)
+|  |                                            |      +---------------Z__PnoHTP06__Asco
+|  |                                       +----| (96.9/100)
+|  |                                       |    |              +--Z__SreHTP2__Basidio
+|  |                                       |    +--------------| (100/100)
+|  |                                       |                   |  +--Z__UmHTP1__Basidio
+|  |                                       |                   +--| (68.8/90)
+|  |                                       |                      +--Z__UmHTP2__Basidio
+|  |                                    +--| (64.4/63)
+|  |                                    |  |                 +--Z__GcerHTP1__Glomero
+|  |                                    |  |              +--| (14.6/24)
+|  |                                    |  |              |  +--Z__RclaHTP1__Mucoro
+|  |                                    |  |     +--------| (100/100)
+|  |                                    |  |     |        +--Z__RirrHTP2__Mucoro
+|  |                                    |  |  +--| (70.8/93)
+|  |                                    |  |  |  |       +--Z__GrosHTP1__Glomero
+|  |                                    |  |  |  +-------| (100/100)
+|  |                                    |  |  |          +--Z__GrosHTP2__Glomero
+|  |                                    |  +--| (88.7/93)
+|  |                                    |     +-------------Z__RirrHTP1__Mucoro
+|  |                                 +--| (74.4/13)
+|  |                                 |  |                    +-----Z__AfumHTP1__Asco
+|  |                                 |  |                 +--| (95.2/100)
+|  |                                 |  |                 |  |     +--Z__AkawHTP1__Asco
+|  |                                 |  |                 |  |  +--| (99.8/100)
+|  |                                 |  |                 |  |  |  +--Z__AnHTP1__Asco
+|  |                                 |  |                 |  +--| (80.8/100)
+|  |                                 |  |                 |     +-----Z__AorHTP3__Asco
+|  |                                 |  |            +----| (99.1/100)
+|  |                                 |  |            |    |   +--Z__PbraHTP1__Asco
+|  |                                 |  |            |    +---| (99.6/100)
+|  |                                 |  |            |        +--Z__PoxaHTP1__Asco
+|  |                                 |  |        +---| (92.7/100)
+|  |                                 |  |        |   |         +--Z__GzHTP3__Asco
+|  |                                 |  |        |   +---------| (100/100)
+|  |                                 |  |        |             +--Z__NhaeHTP__Asco
+|  |                                 |  |     +--| (83/86)
+|  |                                 |  |     |  |            +------Z__AglauHTP__Mucoro
+|  |                                 |  |     |  +------------| (100/100)
+|  |                                 |  |     |               |     +-----Z__CcucHTP__Mucoro
+|  |                                 |  |     |               |  +--| (45/97)
+|  |                                 |  |     |               |  |  |        +--Z__MucambHTP__Mucoro
+|  |                                 |  |     |               |  |  |     +--| (92.4/100)
+|  |                                 |  |     |               |  |  |     |  +--Z__MuclusHTP__Mucoro
+|  |                                 |  |     |               |  |  |  +--| (89.8/100)
+|  |                                 |  |     |               |  |  |  |  +--Z__MuccirHTP__Mucoro
+|  |                                 |  |     |               |  |  +--| (98.9/100)
+|  |                                 |  |     |               |  |     +--Z__PpaHTP__Mucoro
+|  |                                 |  |     |               +--| (93.1/100)
+|  |                                 |  |     |                  |     +------Z__RdelHTP__Mucoro
+|  |                                 |  |     |                  |  +--| (40.5/99)
+|  |                                 |  |     |                  |  |  +---Z__RstolHTP1__Mucoro
+|  |                                 |  |     |                  +--| (90.5/99)
+|  |                                 |  |     |                     |   +--Z__RmicroHTP1__Mucoro
+|  |                                 |  |     |                     +---| (100/100)
+|  |                                 |  |     |                         +--Z__RmicroHTP2__Mucoro
+|  |                                 |  |  +--| (85.4/82)
+|  |                                 |  |  |  |          +--Z__SpipunHTP__Chytrid
+|  |                                 |  |  |  +----------| (100/100)
+|  |                                 |  |  |             +--Z__SpispHTP__Chytrid
+|  |                                 |  +--| (82.6/58)
+|  |                                 |     |                 +--Z__AfumHTP3__Asco
+|  |                                 |     +-----------------| (100/100)
+|  |                                 |                       +---------Z__AorHTP4__Asco
+|  |                              +--| (78.6/37)
+|  |                              |  |                                        +---Z__AbHTP1__Basidio
+|  |                              |  |                                     +--| (34/83)
+|  |                              |  |                                     |  |  +--Z__CcinHTP1__Basidio
+|  |                              |  |                                     |  +--| (100/100)
+|  |                              |  |                                     |     +--Z__CcinHTP2__Basidio
+|  |                              |  |                                  +--| (92/98)
+|  |                              |  |                                  |  |  +--Z__LbiHTP1__Basidio
+|  |                              |  |                                  |  +--| (99/100)
+|  |                              |  |                                  |     +--Z__LbiHTP2__Basidio
+|  |                              |  |                               +--| (99.4/100)
+|  |                              |  |                               |  |        +--Z__PinvHTP1__Basidio
+|  |                              |  |                               |  |     +--| (99.5/100)
+|  |                              |  |                               |  |     |  +--Z__PinvHTP2__Basidio
+|  |                              |  |                               |  |  +--| (98.2/100)
+|  |                              |  |                               |  |  |  |        +--Z__RvesHTP1__Basidio
+|  |                              |  |                               |  |  |  |     +--| (99.5/100)
+|  |                              |  |                               |  |  |  |     |  +--Z__RvinHTP1__Basidio
+|  |                              |  |                               |  |  |  |  +--| (30.8/98)
+|  |                              |  |                               |  |  |  |  |  |     +--Z__SbreHTP1__Basidio
+|  |                              |  |                               |  |  |  |  |  |  +--| (100/100)
+|  |                              |  |                               |  |  |  |  |  |  |  +--Z__SlutHTP1__Basidio
+|  |                              |  |                               |  |  |  |  |  +--| (96.4/100)
+|  |                              |  |                               |  |  |  |  |     |  +--Z__SbreHTP2__Basidio
+|  |                              |  |                               |  |  |  |  |     +--| (100/100)
+|  |                              |  |                               |  |  |  |  |        +**Z__SlutHTP2__Basidio
+|  |                              |  |                               |  |  |  +--| (99.6/100)
+|  |                              |  |                               |  |  |     |  +--Z__SbreHTP5__Basidio
+|  |                              |  |                               |  |  |     +--| (94.2/100)
+|  |                              |  |                               |  |  |        +--Z__SlutHTP5__Basidio
+|  |                              |  |                               |  +--| (97.1/100)
+|  |                              |  |                               |     +--Z__SlacHTP1__Basidio
+|  |                              |  |                            +--| (93.9/95)
+|  |                              |  |                            |  +--Z__HirrHTP__Basidio
+|  |                              |  |                         +--| (79.6/80)
+|  |                              |  |                         |  |     +---Z__DsquaHTP1__Basidio
+|  |                              |  |                         |  |  +--| (86.2/80)
+|  |                              |  |                         |  |  |  +-----Z__PnoHTP07__Asco
+|  |                              |  |                         |  +--| (93.2/77)
+|  |                              |  |                         |     |  +--Z__PcarHTP1__Basidio
+|  |                              |  |                         |     +--| (97.9/100)
+|  |                              |  |                         |        +--Z__PcHTP1__Basidio
+|  |                              |  |                      +--| (89.3/95)
+|  |                              |  |                      |  |     +**Z__PplHTP1__Basidio
+|  |                              |  |                      |  |  +--| (99.7/100)
+|  |                              |  |                      |  |  |  +--Z__PplHTP3__Basidio
+|  |                              |  |                      |  +--| (87.8/99)
+|  |                              |  |                      |     +--Z__PplHTP2__Basidio
+|  |                              |  |                   +--| (89.1/99)
+|  |                              |  |                   |  +-------Z__CsubHTP5__Basidio
+|  |                              |  |               +---| (96.8/100)
+|  |                              |  |               |   +-----Z__DaspAPO1__Basidio
+|  |                              |  |            +--| (88.7/100)
+|  |                              |  |            |  +--------Z__SindHTP1__Basidio
+|  |                              |  |  +---------| (99.9/100)
+|  |                              |  |  |         |           +--Z__MlarHTP1__Basidio
+|  |                              |  |  |         |     +-----| (98.6/100)
+|  |                              |  |  |         |     |     +-------Z__MlarHTP2__Basidio
+|  |                              |  |  |         +-----| (97.9/100)
+|  |                              |  |  |               |                +--Z__PantHTP1__Basidio
+|  |                              |  |  |               |             +--| (96.3/100)
+|  |                              |  |  |               |             |  +--Z__UhHTP1__Basidio
+|  |                              |  |  |               |          +--| (84/100)
+|  |                              |  |  |               |          |  |  +--Z__PhubeHTP1__Basidio
+|  |                              |  |  |               |          |  +--| (90.3/100)
+|  |                              |  |  |               |          |     +--Z__UmHTP3__Basidio
+|  |                              |  |  |               +----------| (100/100)
+|  |                              |  |  |                          +--Z__SreHTP1__Basidio
+|  |                              |  +--| (90.1/67)
+|  |                              |     |                  +--Z__AbHTP2__Basidio
+|  |                              |     |             +----| (100/100)
+|  |                              |     |             |    |  +-----Z__CcinHTP3__Basidio
+|  |                              |     |             |    +--| (91.2/100)
+|  |                              |     |             |       +--Z__LbiHTP4__Basidio
+|  |                              |     |          +--| (82.9/92)
+|  |                              |     |          |  |  +-----Z__PinvHTP3__Basidio
+|  |                              |     |          |  +--| (85.7/91)
+|  |                              |     |          |     +-----------Z__PplHTP5__Basidio
+|  |                              |     |       +--| (91.7/100)
+|  |                              |     |       |  |     +--Z__PcarHTP4__Basidio
+|  |                              |     |       |  |  +--| (99.7/100)
+|  |                              |     |       |  |  |  |  +--Z__PcHTP2__Basidio
+|  |                              |     |       |  |  |  +--| (70.2/99)
+|  |                              |     |       |  |  |     +---Z__PcHTP3__Basidio
+|  |                              |     |       |  +--| (98.5/100)
+|  |                              |     |       |     +----Z__PplHTP4__Basidio
+|  |                              |     |  +----| (98.8/100)
+|  |                              |     |  |    |         +----Z__BmesHTP1__Basidio
+|  |                              |     |  |    |     +---| (98.8/100)
+|  |                              |     |  |    |     |   +----Z__DfragHTP1__Basidio
+|  |                              |     |  |    |  +--| (50.7/99)
+|  |                              |     |  |    |  |  |   +----------Z__LbiHTP3__Basidio
+|  |                              |     |  |    |  |  +---| (96.2/100)
+|  |                              |     |  |    |  |      |  +--Z__PinvHTP4__Basidio
+|  |                              |     |  |    |  |      +--| (96.6/100)
+|  |                              |     |  |    |  |         +---Z__SlutHTP4__Basidio
+|  |                              |     |  |    +--| (96.7/100)
+|  |                              |     |  |       +---Z__RmelHTP1__Basidio
+|  |                              |     +--| (13.7/43)
+|  |                              |        +---------------Z__SAcoHTP2__Asco
+|  |                           +--| (94.1/66)
+|  |                           |  |        +-----Z__PfungHTP1__Amoebozoa
+|  |                           |  |  +-----| (99.8/100)
+|  |                           |  |  |     +-----------Z__PfungHTP2__Amoebozoa
+|  |                           |  +--| (62.5/37)
+|  |                           |     |                      +--Z__PiHTP1__Oomycota
+|  |                           |     |                   +--| (95.2/100)
+|  |                           |     |                   |  +--Z__PparHTP2__Oomycota
+|  |                           |     |                +--| (98.4/100)
+|  |                           |     |                |  +--Z__PramHTP1__Oomycota
+|  |                           |     |           +----| (99.9/100)
+|  |                           |     |           |    +--Z__PsojHTP1__Oomycota
+|  |                           |     |        +--| (78.4/89)
+|  |                           |     |        |  |  +-------Z__PsojHTP2__Oomycota
+|  |                           |     |        |  +--| (56/87)
+|  |                           |     |        |     +-----Z__PultHTP1__Oomycota
+|  |                           |     |     +--| (97.8/100)
+|  |                           |     |     |  |       +--Z__PiHTP2__Oomycota
+|  |                           |     |     |  +-------| (100/100)
+|  |                           |     |     |          +--Z__PparHTP1__Oomycota
+|  |                           |     |  +--| (91.1/98)
+|  |                           |     |  |  |           +--Z__PparHTP3__Oomycota
+|  |                           |     |  |  |   +-------| (100/100)
+|  |                           |     |  |  |   |       +--Z__PsojHTP3__Oomycota
+|  |                           |     |  |  +---| (97.2/100)
+|  |                           |     |  |      +-----Z__PultHTP2__Oomycota
+|  |                           |     +--| (95.9/100)
+|  |                           |        +-----------Z__PramHTP2__Oomycota
+|  |                       +---| (99.8/94)
+|  |                       |   |                +--Z__AphasHTP1__Oomycota
+|  |                       |   |          +-----| (100/100)
+|  |                       |   |          |     +--Z__AphinHTP2__Oomycota
+|  |                       |   |       +--| (54.4/56)
+|  |                       |   |       |  +---------Z__AphinHTP1__Oomycota
+|  |                       |   +-------| (99.9/100)
+|  |                       |           +-------Z__SdicHTP1__Oomycota
+|  |                    +--| (74/90)
+|  |                    |  |                +--B__CviUPO__cladeII
+|  |                    |  |             +--| (96.4/100)
+|  |                    |  |             |  +--B__PanUPO__cladeII
+|  |                    |  |        +----| (99.6/100)
+|  |                    |  |        |    |     +**Z__AniHTP4a__Asco
+|  |                    |  |        |    +-----| (100/100)
+|  |                    |  |        |          +--Z__AniHTP4b__Asco
+|  |                    |  |     +--| (94.5/100)
+|  |                    |  |     |  +-------Z__PnoHTP04__Asco
+|  |                    |  |  +--| (90.5/98)
+|  |                    |  |  |  |  +----------------Z__OpsiHTP__Asco
+|  |                    |  |  |  +--| (60.3/98)
+|  |                    |  |  |     +--------Z__PnoHTP05__Asco
+|  |                    |  +--| (84.9/92)
+|  |                    |     |            +--Z__MscoHTP__Asco
+|  |                    |     +------------| (100/100)
+|  |                    |                  +--Z__PsubHTP__Asco
+|  |                 +--| (85.5/85)
+|  |                 |  |         +-------Z__AniHTP5__Asco
+|  |                 |  |  +------| (99.7/100)
+|  |                 |  |  |      +----Z__CgHTP4__Asco
+|  |                 |  +--| (94.6/96)
+|  |                 |     |        +--Z__FagHTP1__Asco
+|  |                 |     |     +--| (89.5/100)
+|  |                 |     |     |  +----Z__GzHTP2__Asco
+|  |                 |     |  +--| (20.9/94)
+|  |                 |     |  |  |       +--Z__MgrHTP1__Asco
+|  |                 |     |  |  +-------| (100/100)
+|  |                 |     |  |          +--Z__MoHTP1__Asco
+|  |                 |     +--| (91.7/100)
+|  |                 |        +-------Z__NcHTP1__Asco
+|  |              +--| (84.1/96)
+|  |              |  |          +--B__MorUPO__cladeIII
+|  |              |  |  +-------| (100/100)
+|  |              |  |  |       |   +**B__MroUPO__cladeIII
+|  |              |  |  |       +---| (99.7/100)
+|  |              |  |  |           +**Z__MrotHTP1__Basidio
+|  |              |  +--| (68/86)
+|  |              |     +------------------Z__HjHTP1__Asco
+|  |           +--| (98.1/100)
+|  |           |  |          +--Z__CfioHTP1__Asco
+|  |           |  |       +--| (87/94)
+|  |           |  |       |  +--Z__ChigHTP2__Asco
+|  |           |  |    +--| (93.4/94)
+|  |           |  |    |  |  +-----Z__ChigHTP1__Asco
+|  |           |  |    |  +--| (94.1/100)
+|  |           |  |    |     +--Z__ColgloeoHTP__Asco
+|  |           |  +----| (98.5/97)
+|  |           |       +-------------------------Z__CfumagHTP__Asco
+|  |        +--| (92.6/85)
+|  |        |  |                          +--B__MphUPO__cladeIV
+|  |        |  |                       +--| (91.8/100)
+|  |        |  |                       |  +--Z__PnoHTP03__Asco
+|  |        |  |                    +--| (86.9/100)
+|  |        |  |                    |  |             +--Z__BcinHTP__Asco
+|  |        |  |                    |  |          +--| (99.3/100)
+|  |        |  |                    |  |          |  |  +**Z__BnarHTP1__Asco
+|  |        |  |                    |  |          |  +--| (96/100)
+|  |        |  |                    |  |          |     +**Z__BtulHTP1__Asco
+|  |        |  |                    |  |       +--| (94.1/99)
+|  |        |  |                    |  |       |  +--Z__SborHTP1__Asco
+|  |        |  |                    |  |    +--| (38.9/98)
+|  |        |  |                    |  |    |  +--Z__ScepHTP1__Asco
+|  |        |  |                    |  +----| (100/100)
+|  |        |  |                    |       |  +--Z__SsclHTP1__Asco
+|  |        |  |                    |       +--| (85.8/100)
+|  |        |  |                    |          +--Z__StriHTP1__Asco
+|  |        |  |                 +--| (74.8/99)
+|  |        |  |                 |  +--Z__CchloHTP1__Asco
+|  |        |  |              +--| (71.3/88)
+|  |        |  |              |  +---Z__CgHTP1__Asco
+|  |        |  |           +--| (93.5/87)
+|  |        |  |           |  |  +---Z__AniHTP2__Asco
+|  |        |  |           |  +--| (84.2/97)
+|  |        |  |           |     +--Z__AorHTP2__Asco
+|  |        |  |        +--| (80.5/95)
+|  |        |  |        |  +-----Z__AniHTP3__Asco
+|  |        |  |     +--| (93.9/100)
+|  |        |  |     |  +-----------Z__SmusHTP__Asco
+|  |        |  |  +--| (85.1/97)
+|  |        |  |  |  |                 +--Z__AniHTP1__Asco
+|  |        |  |  |  |              +--| (92.8/99)
+|  |        |  |  |  |              |  +--Z__GzHTP1__Asco
+|  |        |  |  |  |           +--| (92.5/99)
+|  |        |  |  |  |           |  +--Z__AteHTP1__Asco
+|  |        |  |  |  |        +--| (53.6/89)
+|  |        |  |  |  |        |  +---Z__PnoHTP01__Asco
+|  |        |  |  |  +--------| (100/100)
+|  |        |  |  |           +--Z__PficHTP1__Asco
+|  |        |  +--| (53.6/85)
+|  |        |     +------Z__PnoHTP02__Asco
+|  |     +--| (8.2/51)
+|  |     |  |     +---------B__RneUPO__cladeV
+|  |     |  |  +--| (99.4/100)
+|  |     |  |  |  |  +--B__DspUPO-I__cladeV
+|  |     |  |  |  +--| (91.8/100)
+|  |     |  |  |     +--B__HspUPO__cladeV
+|  |     |  +--| (57/85)
+|  |     |     +--B__TteUPO__cladeV
+|  |  +--| (51.4/71)
+|  |  |  |    +--Z__CgHTP2__Asco
+|  |  |  +----| (100/100)
+|  |  |       |  +--Z__CgHTP3__Asco
+|  |  |       +--| (41/88)
+|  |  |          +--Z__MtherHTP__Asco
+|  +--| (21.1/71)
+|     +-----Z__AorHTP1__Asco
+|
+|  +--B__AbrUPO-II__cladeV
++--| (100/100)
+   |     +--B__AluUPO__cladeV
+   |  +--| (37.3/96)
+   |  |  +--B__AtuUPO__cladeV
+   +--| (80.7/99)
+      +--Z__AnHTP2__Asco
+
+Tree in newick format:
+
+(B__AacUPO__cladeV:0.1850236369,(B__AbrUPO-I__cladeV:0.3474222517,((((((((((((((((((((((B__CabUPO-III__cladeI:0.1615428352,B__CmaUPO-I__cladeI:0.2226358201)95.4/100:0.0815349371,B__PaDa-I_parent_AaeUPO__cladeI:0.0988041730)87.8/92:0.0533498091,B__LspUPO-II__cladeI:0.2312227364)50.5/48:0.0372828764,(Z__CaberAPO1__Basidio:0.1388543498,(Z__CcinHTP4__Basidio:0.1486558674,Z__CmicAPO1__Basidio:0.1335937572)62.7/94:0.0468007723)91.6/90:0.0503004387)36.2/46:0.0322619875,((B__GmaUPO-II__cladeI:0.0687611464,Z__PcyanHTP1__Basidio:0.1015150873)93.5/99:0.0412331296,((Z__AdelHTP1__Basidio:0.1409776108,Z__AdelHTP5__Basidio:0.1520308246)99.7/100:0.1432111800,Z__LbiHTP5__Basidio:0.1232077138)55/78:0.0278170058)92/80:0.0347405731)71.2/44:0.0362483573,(Z__AbHTP3__Basidio:0.0113375183,Z__AbHTP4__Basidio:0.0292366569)99.1/100:0.0744874430)85.2/63:0.0678606895,Z__AbHTP5__Basidio:0.1168147009)100/100:0.4697035458,(((((((Z__AfumHTP2__Asco:0.1228119829,Z__AteHTP3__Asco:0.0647374604)99.1/100:0.1595420798,Z__PnoHTP13__Asco:0.2744657996)99/100:0.1951390238,Z__GzHTP5__Asco:0.4229473629)85.4/98:0.1069326936,((Z__GzHTP4__Asco:0.3971698034,Z__PnoHTP09__Asco:0.3853451346)96.5/95:0.1292114681,(Z__PnoHTP10__Asco:0.3577082349,Z__PnoHTP12__Asco:0.5832629743)91.9/100:0.1239102434)55.3/71:0.0611244533)83.6/76:0.0573595978,Z__MpiHTP1__Asco:0.4751868299)95.4/99:0.1579455504,(Z__PanHTP1__Asco:0.4151215134,(Z__PnoHTP08__Asco:0.1516941281,Z__PnoHTP11__Asco:0.2050327767)79.9/99:0.1076431059)99.9/100:0.4282865936)55.3/91:0.0838724912,Z__PnoHTP06__Asco:0.7909075599)91.8/99:0.2299877493)92/99:0.1829801368,(Z__SreHTP2__Basidio:0.0171528213,(Z__UmHTP1__Basidio:0.0707305511,Z__UmHTP2__Basidio:0.0718750711)68.8/90:0.0555365809)100/100:0.7666348899)96.9/100:0.2680475484,((((Z__GcerHTP1__Glomero:0.0712531103,Z__RclaHTP1__Mucoro:0.0140464715)14.6/24:0.0126991214,Z__RirrHTP2__Mucoro:0.0157683851)100/100:0.4453465169,(Z__GrosHTP1__Glomero:0.0852901479,Z__GrosHTP2__Glomero:0.1493737112)100/100:0.3957259519)70.8/93:0.1170605948,Z__RirrHTP1__Mucoro:0.7298581521)88.7/93:0.1367849351)64.4/63:0.0876350447,((((((Z__AfumHTP1__Asco:0.3144485546,((Z__AkawHTP1__Asco:0.0229555136,Z__AnHTP1__Asco:0.0177217171)99.8/100:0.1832431272,Z__AorHTP3__Asco:0.3146362238)80.8/100:0.0680836771)95.2/100:0.1245581477,(Z__PbraHTP1__Asco:0.0925761815,Z__PoxaHTP1__Asco:0.1263559217)99.6/100:0.2194557827)99.1/100:0.2739371855,(Z__GzHTP3__Asco:0.1344354686,Z__NhaeHTP__Asco:0.1010753494)100/100:0.5278113894)92.7/100:0.2071489575,(Z__AglauHTP__Mucoro:0.3744102773,((Z__CcucHTP__Mucoro:0.3079538238,(((Z__MucambHTP__Mucoro:0.0331120146,Z__MuclusHTP__Mucoro:0.0099794674)92.4/100:0.0227030890,Z__MuccirHTP__Mucoro:0.0308978259)89.8/100:0.0439481952,Z__PpaHTP__Mucoro:0.1069354820)98.9/100:0.1679177084)45/97:0.0712663567,((Z__RdelHTP__Mucoro:0.3433377661,Z__RstolHTP1__Mucoro:0.2439215625)40.5/99:0.0332014344,(Z__RmicroHTP1__Mucoro:0.0523529606,Z__RmicroHTP2__Mucoro:0.0104554598)100/100:0.2101871226)90.5/99:0.0633180653)93.1/100:0.1574473456)100/100:0.6713802739)83/86:0.1215486837,(Z__SpipunHTP__Chytrid:0.0301210232,Z__SpispHTP__Chytrid:0.0083290272)100/100:0.5686480684)85.4/82:0.0685021202,(Z__AfumHTP3__Asco:0.1351439043,Z__AorHTP4__Asco:0.5316639382)100/100:0.9038922470)82.6/58:0.0633152846)74.4/13:0.0153429281,(((((((((((Z__AbHTP1__Basidio:0.2322081333,(Z__CcinHTP1__Basidio:0.0180617224,Z__CcinHTP2__Basidio:0.0054018869)100/100:0.1538985439)34/83:0.0509611418,(Z__LbiHTP1__Basidio:0.0299121340,Z__LbiHTP2__Basidio:0.1328163591)99/100:0.0944919582)92/98:0.0499582652,(((Z__PinvHTP1__Basidio:0.0305321489,Z__PinvHTP2__Basidio:0.1104343096)99.5/100:0.0880811262,(((Z__RvesHTP1__Basidio:0.0121972245,Z__RvinHTP1__Basidio:0.0320255526)99.5/100:0.0513469887,((Z__SbreHTP1__Basidio:0.0055027390,Z__SlutHTP1__Basidio:0.0111129846)100/100:0.1192830211,(Z__SbreHTP2__Basidio:0.0228712475,Z__SlutHTP2__Basidio:0.0039580859)100/100:0.1678595316)96.4/100:0.0508323776)30.8/98:0.0129180769,(Z__SbreHTP5__Basidio:0.0173407183,Z__SlutHTP5__Basidio:0.0275998645)94.2/100:0.0244719330)99.6/100:0.0827883075)98.2/100:0.0758911065,Z__SlacHTP1__Basidio:0.0991384247)97.1/100:0.0646460653)99.4/100:0.0990997379,Z__HirrHTP__Basidio:0.1562825004)93.9/95:0.0748035205,((Z__DsquaHTP1__Basidio:0.2172032958,Z__PnoHTP07__Asco:0.3344639231)86.2/80:0.0383883628,(Z__PcarHTP1__Basidio:0.0471468044,Z__PcHTP1__Basidio:0.0481924793)97.9/100:0.0691431921)93.2/77:0.0638682834)79.6/80:0.0457465549,((Z__PplHTP1__Basidio:0.0000022799,Z__PplHTP3__Basidio:0.0211057830)99.7/100:0.0932846327,Z__PplHTP2__Basidio:0.1100044869)87.8/99:0.0640118065)89.3/95:0.0827334662,Z__CsubHTP5__Basidio:0.4045671112)89.1/99:0.1355525555,Z__DaspAPO1__Basidio:0.3408603717)96.8/100:0.2129176123,Z__SindHTP1__Basidio:0.4540011327)88.7/100:0.1472677763,((Z__MlarHTP1__Basidio:0.1304403811,Z__MlarHTP2__Basidio:0.4155472604)98.6/100:0.3257107276,(((Z__PantHTP1__Basidio:0.0721632642,Z__UhHTP1__Basidio:0.1116793494)96.3/100:0.0469798378,(Z__PhubeHTP1__Basidio:0.0791126178,Z__UmHTP3__Basidio:0.0288606983)90.3/100:0.0342171682)84/100:0.0425508408,Z__SreHTP1__Basidio:0.0276063127)100/100:0.5811980399)97.9/100:0.3128928677)99.9/100:0.5047317375,(((((Z__AbHTP2__Basidio:0.1285854588,(Z__CcinHTP3__Basidio:0.3198201524,Z__LbiHTP4__Basidio:0.1682280566)91.2/100:0.0645036345)100/100:0.2715425553,(Z__PinvHTP3__Basidio:0.3191414641,Z__PplHTP5__Basidio:0.6127344046)85.7/91:0.0755983805)82.9/92:0.0732089557,((Z__PcarHTP4__Basidio:0.0985880620,(Z__PcHTP2__Basidio:0.1329206485,Z__PcHTP3__Basidio:0.2278062590)70.2/99:0.0638799530)99.7/100:0.1823405173,Z__PplHTP4__Basidio:0.2861697049)98.5/100:0.1702972483)91.7/100:0.0954883199,(((Z__BmesHTP1__Basidio:0.2919546429,Z__DfragHTP1__Basidio:0.2650915852)98.8/100:0.1973892952,(Z__LbiHTP3__Basidio:0.5611981574,(Z__PinvHTP4__Basidio:0.1405125263,Z__SlutHTP4__Basidio:0.2034588381)96.6/100:0.1720452143)96.2/100:0.2063633598)50.7/99:0.1057744693,Z__RmelHTP1__Basidio:0.2287054218)96.7/100:0.1670382073)98.8/100:0.2702008591,Z__SAcoHTP2__Asco:0.7912979695)13.7/43:0.1266375116)90.1/67:0.1761026870)78.6/37:0.0486476670,((Z__PfungHTP1__Amoebozoa:0.3383821338,Z__PfungHTP2__Amoebozoa:0.6279214535)99.8/100:0.3257890427,(((((((Z__PiHTP1__Oomycota:0.0502549585,Z__PparHTP2__Oomycota:0.0169109235)95.2/100:0.0426749394,Z__PramHTP1__Oomycota:0.0382560059)98.4/100:0.0979582414,Z__PsojHTP1__Oomycota:0.0874299864)99.9/100:0.2678522407,(Z__PsojHTP2__Oomycota:0.4204551677,Z__PultHTP1__Oomycota:0.2940071661)56/87:0.0847248461)78.4/89:0.0629802386,(Z__PiHTP2__Oomycota:0.0231597307,Z__PparHTP1__Oomycota:0.0401532710)100/100:0.4332832041)97.8/100:0.1620402202,((Z__PparHTP3__Oomycota:0.0697536744,Z__PsojHTP3__Oomycota:0.0396644299)100/100:0.4353103753,Z__PultHTP2__Oomycota:0.3294266920)97.2/100:0.2069996756)91.1/98:0.1406371471,Z__PramHTP2__Oomycota:0.5964046798)95.9/100:0.1712440921)62.5/37:0.0298460616)94.1/66:0.1041384310,(((Z__AphasHTP1__Oomycota:0.0497921640,Z__AphinHTP2__Oomycota:0.0335861963)100/100:0.2998093034,Z__AphinHTP1__Oomycota:0.5008160043)54.4/56:0.0376229766,Z__SdicHTP1__Oomycota:0.4167577257)99.9/100:0.4302546133)99.8/94:0.2071925110,(((((B__CviUPO__cladeII:0.0595684352,B__PanUPO__cladeII:0.1561630355)96.4/100:0.1363480626,(Z__AniHTP4a__Asco:0.0000024913,Z__AniHTP4b__Asco:0.0779090131)100/100:0.3123701272)99.6/100:0.2766152699,Z__PnoHTP04__Asco:0.4194945191)94.5/100:0.1589108716,(Z__OpsiHTP__Asco:0.8687868455,Z__PnoHTP05__Asco:0.4523097369)60.3/98:0.0531348434)90.5/98:0.1189600345,(Z__MscoHTP__Asco:0.0433765135,Z__PsubHTP__Asco:0.0689265227)100/100:0.6591688992)84.9/92:0.0786835877)74/90:0.0472138265,((Z__AniHTP5__Asco:0.3948422343,Z__CgHTP4__Asco:0.2819071788)99.7/100:0.3734271549,(((Z__FagHTP1__Asco:0.1474003767,Z__GzHTP2__Asco:0.2517266414)89.5/100:0.0786341074,(Z__MgrHTP1__Asco:0.0312374805,Z__MoHTP1__Asco:0.0547368235)100/100:0.4267464767)20.9/94:0.0539984113,Z__NcHTP1__Asco:0.4044076461)91.7/100:0.1390745959)94.6/96:0.1153026241)85.5/85:0.0841259451,((B__MorUPO__cladeIII:0.0894211120,(B__MroUPO__cladeIII:0.0000010000,Z__MrotHTP1__Basidio:0.0000010000)99.7/100:0.2401385279)100/100:0.4198189022,Z__HjHTP1__Asco:0.9351823172)68/86:0.1077953192)84.1/96:0.1137692278,(((Z__CfioHTP1__Asco:0.1364699263,Z__ChigHTP2__Asco:0.1358742032)87/94:0.0682419956,(Z__ChigHTP1__Asco:0.3147707734,Z__ColgloeoHTP__Asco:0.1527944985)94.1/100:0.1210584274)93.4/94:0.1767609690,Z__CfumagHTP__Asco:1.2846214250)98.5/97:0.2711978238)98.1/100:0.1658047709,(((((((((B__MphUPO__cladeIV:0.1465050503,Z__PnoHTP03__Asco:0.1651420134)91.8/100:0.0486738864,((((Z__BcinHTP__Asco:0.0250925695,(Z__BnarHTP1__Asco:0.0030272495,Z__BtulHTP1__Asco:0.0000025062)96/100:0.0183970217)99.3/100:0.0395626785,Z__SborHTP1__Asco:0.0517499851)94.1/99:0.0307263769,Z__ScepHTP1__Asco:0.0283695099)38.9/98:0.0088061446,(Z__SsclHTP1__Asco:0.0157534509,Z__StriHTP1__Asco:0.0841005834)85.8/100:0.0307739461)100/100:0.2609551322)86.9/100:0.0379113884,Z__CchloHTP1__Asco:0.1330355503)74.8/99:0.0442375245,Z__CgHTP1__Asco:0.2213288136)71.3/88:0.0318252136,(Z__AniHTP2__Asco:0.2342243133,Z__AorHTP2__Asco:0.0627113198)84.2/97:0.0395737609)93.5/87:0.0729497345,Z__AniHTP3__Asco:0.3090473196)80.5/95:0.0995783885,Z__SmusHTP__Asco:0.6281374773)93.9/100:0.1057201734,((((Z__AniHTP1__Asco:0.1170274147,Z__GzHTP1__Asco:0.1262103444)92.8/99:0.0505813316,Z__AteHTP1__Asco:0.0559642324)92.5/99:0.0413820749,Z__PnoHTP01__Asco:0.2005100411)53.6/89:0.0247641800,Z__PficHTP1__Asco:0.1392222787)100/100:0.4559555050)85.1/97:0.0500630986,Z__PnoHTP02__Asco:0.3590019493)53.6/85:0.0367836671)92.6/85:0.0661348523,((B__RneUPO__cladeV:0.5019977336,(B__DspUPO-I__cladeV:0.1424674472,B__HspUPO__cladeV:0.1163356638)91.8/100:0.0634951980)99.4/100:0.1434872582,B__TteUPO__cladeV:0.1808655990)57/85:0.0380423005)8.2/51:0.0380201132,(Z__CgHTP2__Asco:0.0992930754,(Z__CgHTP3__Asco:0.1039083643,Z__MtherHTP__Asco:0.1236112247)41/88:0.0431508160)100/100:0.2494263145)51.4/71:0.0329929027,Z__AorHTP1__Asco:0.3383902754)21.1/71:0.0277202673)84.9/100:0.0443133251,(B__AbrUPO-II__cladeV:0.0152579596,((B__AluUPO__cladeV:0.0131680753,B__AtuUPO__cladeV:0.0220904785)37.3/96:0.0079746114,Z__AnHTP2__Asco:0.0190053851)80.7/99:0.0224501060)100/100:0.1055417882);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -53439.229568
+Robinson-Foulds distance between ML tree and consensus tree: 4
+
+Branches with support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++--B__AacUPO__cladeV
+|
+|  +-----B__AbrUPO-I__cladeV
++--| (100)
+|  |                                                                          +--B__CabUPO-III__cladeI
+|  |                                                                       +--| (100)
+|  |                                                                       |  +---B__CmaUPO-I__cladeI
+|  |                                                                    +--| (92)
+|  |                                                                    |  +--B__PaDa-I_parent_AaeUPO__cladeI
+|  |                                                                 +--| (48)
+|  |                                                                 |  +---B__LspUPO-II__cladeI
+|  |                                                              +--| (46)
+|  |                                                              |  |  +--Z__CaberAPO1__Basidio
+|  |                                                              |  +--| (90)
+|  |                                                              |     |  +--Z__CcinHTP4__Basidio
+|  |                                                              |     +--| (94)
+|  |                                                              |        +--Z__CmicAPO1__Basidio
+|  |                                                           +--| (44)
+|  |                                                           |  |     +--B__GmaUPO-II__cladeI
+|  |                                                           |  |  +--| (99)
+|  |                                                           |  |  |  +--Z__PcyanHTP1__Basidio
+|  |                                                           |  +--| (80)
+|  |                                                           |     |     +--Z__AdelHTP1__Basidio
+|  |                                                           |     |  +--| (100)
+|  |                                                           |     |  |  +--Z__AdelHTP5__Basidio
+|  |                                                           |     +--| (78)
+|  |                                                           |        +--Z__LbiHTP5__Basidio
+|  |                                                        +--| (63)
+|  |                                                        |  |  +--Z__AbHTP3__Basidio
+|  |                                                        |  +--| (100)
+|  |                                                        |     +--Z__AbHTP4__Basidio
+|  |                                               +--------| (100)
+|  |                                               |        +--Z__AbHTP5__Basidio
+|  |                                            +--| (99)
+|  |                                            |  |                     +--Z__AfumHTP2__Asco
+|  |                                            |  |                  +--| (100)
+|  |                                            |  |                  |  +--Z__AteHTP3__Asco
+|  |                                            |  |               +--| (100)
+|  |                                            |  |               |  +----Z__PnoHTP13__Asco
+|  |                                            |  |            +--| (98)
+|  |                                            |  |            |  +-------Z__GzHTP5__Asco
+|  |                                            |  |         +--| (76)
+|  |                                            |  |         |  |     +------Z__GzHTP4__Asco
+|  |                                            |  |         |  |  +--| (95)
+|  |                                            |  |         |  |  |  +-------Z__PnoHTP09__Asco
+|  |                                            |  |         |  +--| (71)
+|  |                                            |  |         |     |  +------Z__PnoHTP10__Asco
+|  |                                            |  |         |     +--| (100)
+|  |                                            |  |         |        +----------Z__PnoHTP12__Asco
+|  |                                            |  |      +--| (99)
+|  |                                            |  |      |  +--------Z__MpiHTP1__Asco
+|  |                                            |  |   +--| (91)
+|  |                                            |  |   |  |       +-------Z__PanHTP1__Asco
+|  |                                            |  |   |  +-------| (100)
+|  |                                            |  |   |          |  +--Z__PnoHTP08__Asco
+|  |                                            |  |   |          +--| (99)
+|  |                                            |  |   |             +---Z__PnoHTP11__Asco
+|  |                                            |  +---| (99)
+|  |                                            |      +--------------Z__PnoHTP06__Asco
+|  |                                       +----| (100)
+|  |                                       |    |              +--Z__SreHTP2__Basidio
+|  |                                       |    +--------------| (100)
+|  |                                       |                   |  +--Z__UmHTP1__Basidio
+|  |                                       |                   +--| (90)
+|  |                                       |                      +--Z__UmHTP2__Basidio
+|  |                                    +--| (63)
+|  |                                    |  |                 +--Z__GcerHTP1__Glomero
+|  |                                    |  |              +--| (69)
+|  |                                    |  |              |  +--Z__RirrHTP2__Mucoro
+|  |                                    |  |     +--------| (100)
+|  |                                    |  |     |        +--Z__RclaHTP1__Mucoro
+|  |                                    |  |  +--| (93)
+|  |                                    |  |  |  |      +--Z__GrosHTP1__Glomero
+|  |                                    |  |  |  +------| (100)
+|  |                                    |  |  |         +--Z__GrosHTP2__Glomero
+|  |                                    |  +--| (93)
+|  |                                    |     +-------------Z__RirrHTP1__Mucoro
+|  |                                 +--| (13)
+|  |                                 |  |                    +-----Z__AfumHTP1__Asco
+|  |                                 |  |                 +--| (100)
+|  |                                 |  |                 |  |     +--Z__AkawHTP1__Asco
+|  |                                 |  |                 |  |  +--| (100)
+|  |                                 |  |                 |  |  |  +--Z__AnHTP1__Asco
+|  |                                 |  |                 |  +--| (100)
+|  |                                 |  |                 |     +-----Z__AorHTP3__Asco
+|  |                                 |  |            +----| (100)
+|  |                                 |  |            |    |   +--Z__PbraHTP1__Asco
+|  |                                 |  |            |    +---| (100)
+|  |                                 |  |            |        +--Z__PoxaHTP1__Asco
+|  |                                 |  |        +---| (100)
+|  |                                 |  |        |   |         +--Z__GzHTP3__Asco
+|  |                                 |  |        |   +---------| (100)
+|  |                                 |  |        |             +--Z__NhaeHTP__Asco
+|  |                                 |  |     +--| (86)
+|  |                                 |  |     |  |            +------Z__AglauHTP__Mucoro
+|  |                                 |  |     |  +------------| (100)
+|  |                                 |  |     |               |     +-----Z__CcucHTP__Mucoro
+|  |                                 |  |     |               |  +--| (97)
+|  |                                 |  |     |               |  |  |        +--Z__MucambHTP__Mucoro
+|  |                                 |  |     |               |  |  |     +--| (100)
+|  |                                 |  |     |               |  |  |     |  +--Z__MuclusHTP__Mucoro
+|  |                                 |  |     |               |  |  |  +--| (100)
+|  |                                 |  |     |               |  |  |  |  +--Z__MuccirHTP__Mucoro
+|  |                                 |  |     |               |  |  +--| (100)
+|  |                                 |  |     |               |  |     +--Z__PpaHTP__Mucoro
+|  |                                 |  |     |               +--| (100)
+|  |                                 |  |     |                  |     +-----Z__RdelHTP__Mucoro
+|  |                                 |  |     |                  |  +--| (99)
+|  |                                 |  |     |                  |  |  +---Z__RstolHTP1__Mucoro
+|  |                                 |  |     |                  +--| (99)
+|  |                                 |  |     |                     |   +--Z__RmicroHTP1__Mucoro
+|  |                                 |  |     |                     +---| (100)
+|  |                                 |  |     |                         +--Z__RmicroHTP2__Mucoro
+|  |                                 |  |  +--| (82)
+|  |                                 |  |  |  |          +--Z__SpipunHTP__Chytrid
+|  |                                 |  |  |  +----------| (100)
+|  |                                 |  |  |             +--Z__SpispHTP__Chytrid
+|  |                                 |  +--| (58)
+|  |                                 |     |                 +--Z__AfumHTP3__Asco
+|  |                                 |     +-----------------| (100)
+|  |                                 |                       +---------Z__AorHTP4__Asco
+|  |                              +--| (37)
+|  |                              |  |                                         +---Z__AbHTP1__Basidio
+|  |                              |  |                                      +--| (83)
+|  |                              |  |                                      |  |  +--Z__CcinHTP1__Basidio
+|  |                              |  |                                      |  +--| (100)
+|  |                              |  |                                      |     +--Z__CcinHTP2__Basidio
+|  |                              |  |                                   +--| (98)
+|  |                              |  |                                   |  |  +--Z__LbiHTP1__Basidio
+|  |                              |  |                                   |  +--| (100)
+|  |                              |  |                                   |     +--Z__LbiHTP2__Basidio
+|  |                              |  |                                +--| (100)
+|  |                              |  |                                |  |        +--Z__PinvHTP1__Basidio
+|  |                              |  |                                |  |     +--| (100)
+|  |                              |  |                                |  |     |  +--Z__PinvHTP2__Basidio
+|  |                              |  |                                |  |  +--| (100)
+|  |                              |  |                                |  |  |  |        +--Z__RvesHTP1__Basidio
+|  |                              |  |                                |  |  |  |     +--| (100)
+|  |                              |  |                                |  |  |  |     |  +--Z__RvinHTP1__Basidio
+|  |                              |  |                                |  |  |  |  +--| (98)
+|  |                              |  |                                |  |  |  |  |  |     +--Z__SbreHTP1__Basidio
+|  |                              |  |                                |  |  |  |  |  |  +--| (100)
+|  |                              |  |                                |  |  |  |  |  |  |  +--Z__SlutHTP1__Basidio
+|  |                              |  |                                |  |  |  |  |  +--| (100)
+|  |                              |  |                                |  |  |  |  |     |  +--Z__SbreHTP2__Basidio
+|  |                              |  |                                |  |  |  |  |     +--| (100)
+|  |                              |  |                                |  |  |  |  |        +--Z__SlutHTP2__Basidio
+|  |                              |  |                                |  |  |  +--| (100)
+|  |                              |  |                                |  |  |     |  +--Z__SbreHTP5__Basidio
+|  |                              |  |                                |  |  |     +--| (100)
+|  |                              |  |                                |  |  |        +--Z__SlutHTP5__Basidio
+|  |                              |  |                                |  +--| (100)
+|  |                              |  |                                |     +--Z__SlacHTP1__Basidio
+|  |                              |  |                             +--| (95)
+|  |                              |  |                             |  +--Z__HirrHTP__Basidio
+|  |                              |  |                          +--| (80)
+|  |                              |  |                          |  |     +---Z__DsquaHTP1__Basidio
+|  |                              |  |                          |  |  +--| (80)
+|  |                              |  |                          |  |  |  +-----Z__PnoHTP07__Asco
+|  |                              |  |                          |  +--| (77)
+|  |                              |  |                          |     |  +--Z__PcarHTP1__Basidio
+|  |                              |  |                          |     +--| (100)
+|  |                              |  |                          |        +--Z__PcHTP1__Basidio
+|  |                              |  |                       +--| (95)
+|  |                              |  |                       |  |     +--Z__PplHTP1__Basidio
+|  |                              |  |                       |  |  +--| (100)
+|  |                              |  |                       |  |  |  +--Z__PplHTP3__Basidio
+|  |                              |  |                       |  +--| (99)
+|  |                              |  |                       |     +--Z__PplHTP2__Basidio
+|  |                              |  |                    +--| (99)
+|  |                              |  |                    |  +-------Z__CsubHTP5__Basidio
+|  |                              |  |                 +--| (100)
+|  |                              |  |                 |  +-----Z__DaspAPO1__Basidio
+|  |                              |  |              +--| (100)
+|  |                              |  |              |  +-------Z__SindHTP1__Basidio
+|  |                              |  |      +-------| (100)
+|  |                              |  |      |       |           +--Z__MlarHTP1__Basidio
+|  |                              |  |      |       |     +-----| (100)
+|  |                              |  |      |       |     |     +-------Z__MlarHTP2__Basidio
+|  |                              |  |      |       +-----| (100)
+|  |                              |  |      |             |                +--Z__PantHTP1__Basidio
+|  |                              |  |      |             |             +--| (100)
+|  |                              |  |      |             |             |  +--Z__UhHTP1__Basidio
+|  |                              |  |      |             |          +--| (100)
+|  |                              |  |      |             |          |  |  +--Z__PhubeHTP1__Basidio
+|  |                              |  |      |             |          |  +--| (100)
+|  |                              |  |      |             |          |     +--Z__UmHTP3__Basidio
+|  |                              |  |      |             +----------| (100)
+|  |                              |  |      |                        +--Z__SreHTP1__Basidio
+|  |                              |  |   +--| (51)
+|  |                              |  |   |  +-------------Z__SAcoHTP2__Asco
+|  |                              |  +---| (67)
+|  |                              |      |                +--Z__AbHTP2__Basidio
+|  |                              |      |           +----| (100)
+|  |                              |      |           |    |  +-----Z__CcinHTP3__Basidio
+|  |                              |      |           |    +--| (100)
+|  |                              |      |           |       +--Z__LbiHTP4__Basidio
+|  |                              |      |        +--| (92)
+|  |                              |      |        |  |  +-----Z__PinvHTP3__Basidio
+|  |                              |      |        |  +--| (91)
+|  |                              |      |        |     +-----------Z__PplHTP5__Basidio
+|  |                              |      |     +--| (100)
+|  |                              |      |     |  |     +--Z__PcarHTP4__Basidio
+|  |                              |      |     |  |  +--| (100)
+|  |                              |      |     |  |  |  |  +--Z__PcHTP2__Basidio
+|  |                              |      |     |  |  |  +--| (99)
+|  |                              |      |     |  |  |     +---Z__PcHTP3__Basidio
+|  |                              |      |     |  +--| (100)
+|  |                              |      |     |     +----Z__PplHTP4__Basidio
+|  |                              |      +-----| (100)
+|  |                              |            |         +-----Z__BmesHTP1__Basidio
+|  |                              |            |     +---| (100)
+|  |                              |            |     |   +----Z__DfragHTP1__Basidio
+|  |                              |            |  +--| (99)
+|  |                              |            |  |  |   +----------Z__LbiHTP3__Basidio
+|  |                              |            |  |  +---| (100)
+|  |                              |            |  |      |  +--Z__PinvHTP4__Basidio
+|  |                              |            |  |      +--| (100)
+|  |                              |            |  |         +---Z__SlutHTP4__Basidio
+|  |                              |            +--| (100)
+|  |                              |               +---Z__RmelHTP1__Basidio
+|  |                           +--| (66)
+|  |                           |  |        +-----Z__PfungHTP1__Amoebozoa
+|  |                           |  |  +-----| (100)
+|  |                           |  |  |     +-----------Z__PfungHTP2__Amoebozoa
+|  |                           |  +--| (37)
+|  |                           |     |                      +--Z__PiHTP1__Oomycota
+|  |                           |     |                   +--| (100)
+|  |                           |     |                   |  +--Z__PparHTP2__Oomycota
+|  |                           |     |                +--| (100)
+|  |                           |     |                |  +--Z__PramHTP1__Oomycota
+|  |                           |     |           +----| (100)
+|  |                           |     |           |    +--Z__PsojHTP1__Oomycota
+|  |                           |     |        +--| (89)
+|  |                           |     |        |  |  +-------Z__PsojHTP2__Oomycota
+|  |                           |     |        |  +--| (87)
+|  |                           |     |        |     +-----Z__PultHTP1__Oomycota
+|  |                           |     |     +--| (100)
+|  |                           |     |     |  |       +--Z__PiHTP2__Oomycota
+|  |                           |     |     |  +-------| (100)
+|  |                           |     |     |          +--Z__PparHTP1__Oomycota
+|  |                           |     |  +--| (98)
+|  |                           |     |  |  |           +--Z__PparHTP3__Oomycota
+|  |                           |     |  |  |   +-------| (100)
+|  |                           |     |  |  |   |       +--Z__PsojHTP3__Oomycota
+|  |                           |     |  |  +---| (100)
+|  |                           |     |  |      +-----Z__PultHTP2__Oomycota
+|  |                           |     +--| (100)
+|  |                           |        +----------Z__PramHTP2__Oomycota
+|  |                       +---| (94)
+|  |                       |   |               +--Z__AphasHTP1__Oomycota
+|  |                       |   |          +----| (100)
+|  |                       |   |          |    +--Z__AphinHTP2__Oomycota
+|  |                       |   |       +--| (56)
+|  |                       |   |       |  +---------Z__AphinHTP1__Oomycota
+|  |                       |   +-------| (100)
+|  |                       |           +-------Z__SdicHTP1__Oomycota
+|  |                    +--| (90)
+|  |                    |  |                +--B__CviUPO__cladeII
+|  |                    |  |             +--| (100)
+|  |                    |  |             |  +--B__PanUPO__cladeII
+|  |                    |  |        +----| (100)
+|  |                    |  |        |    |     +--Z__AniHTP4a__Asco
+|  |                    |  |        |    +-----| (100)
+|  |                    |  |        |          +--Z__AniHTP4b__Asco
+|  |                    |  |     +--| (100)
+|  |                    |  |     |  +-------Z__PnoHTP04__Asco
+|  |                    |  |  +--| (98)
+|  |                    |  |  |  |  +----------------Z__OpsiHTP__Asco
+|  |                    |  |  |  +--| (98)
+|  |                    |  |  |     +--------Z__PnoHTP05__Asco
+|  |                    |  +--| (92)
+|  |                    |     |            +--Z__MscoHTP__Asco
+|  |                    |     +------------| (100)
+|  |                    |                  +--Z__PsubHTP__Asco
+|  |                 +--| (85)
+|  |                 |  |         +------Z__AniHTP5__Asco
+|  |                 |  |  +------| (100)
+|  |                 |  |  |      +----Z__CgHTP4__Asco
+|  |                 |  +--| (96)
+|  |                 |     |        +--Z__FagHTP1__Asco
+|  |                 |     |     +--| (100)
+|  |                 |     |     |  +---Z__GzHTP2__Asco
+|  |                 |     |  +--| (94)
+|  |                 |     |  |  |       +--Z__MgrHTP1__Asco
+|  |                 |     |  |  +-------| (100)
+|  |                 |     |  |          +--Z__MoHTP1__Asco
+|  |                 |     +--| (100)
+|  |                 |        +------Z__NcHTP1__Asco
+|  |              +--| (96)
+|  |              |  |          +--B__MorUPO__cladeIII
+|  |              |  |  +-------| (100)
+|  |              |  |  |       |   +--B__MroUPO__cladeIII
+|  |              |  |  |       +---| (100)
+|  |              |  |  |           +--Z__MrotHTP1__Basidio
+|  |              |  +--| (86)
+|  |              |     +-----------------Z__HjHTP1__Asco
+|  |           +--| (100)
+|  |           |  |          +--Z__CfioHTP1__Asco
+|  |           |  |       +--| (94)
+|  |           |  |       |  +--Z__ChigHTP2__Asco
+|  |           |  |    +--| (94)
+|  |           |  |    |  |  +-----Z__ChigHTP1__Asco
+|  |           |  |    |  +--| (100)
+|  |           |  |    |     +--Z__ColgloeoHTP__Asco
+|  |           |  +----| (97)
+|  |           |       +------------------------Z__CfumagHTP__Asco
+|  |        +--| (85)
+|  |        |  |                          +--B__MphUPO__cladeIV
+|  |        |  |                       +--| (100)
+|  |        |  |                       |  +--Z__PnoHTP03__Asco
+|  |        |  |                    +--| (100)
+|  |        |  |                    |  |             +--Z__BcinHTP__Asco
+|  |        |  |                    |  |          +--| (100)
+|  |        |  |                    |  |          |  |  +--Z__BnarHTP1__Asco
+|  |        |  |                    |  |          |  +--| (100)
+|  |        |  |                    |  |          |     +--Z__BtulHTP1__Asco
+|  |        |  |                    |  |       +--| (99)
+|  |        |  |                    |  |       |  +--Z__SborHTP1__Asco
+|  |        |  |                    |  |    +--| (98)
+|  |        |  |                    |  |    |  +--Z__ScepHTP1__Asco
+|  |        |  |                    |  +----| (100)
+|  |        |  |                    |       |  +--Z__SsclHTP1__Asco
+|  |        |  |                    |       +--| (100)
+|  |        |  |                    |          +--Z__StriHTP1__Asco
+|  |        |  |                 +--| (99)
+|  |        |  |                 |  +--Z__CchloHTP1__Asco
+|  |        |  |              +--| (88)
+|  |        |  |              |  +---Z__CgHTP1__Asco
+|  |        |  |           +--| (87)
+|  |        |  |           |  |  +---Z__AniHTP2__Asco
+|  |        |  |           |  +--| (97)
+|  |        |  |           |     +--Z__AorHTP2__Asco
+|  |        |  |        +--| (95)
+|  |        |  |        |  +-----Z__AniHTP3__Asco
+|  |        |  |     +--| (100)
+|  |        |  |     |  +-----------Z__SmusHTP__Asco
+|  |        |  |  +--| (97)
+|  |        |  |  |  |                 +--Z__AniHTP1__Asco
+|  |        |  |  |  |              +--| (99)
+|  |        |  |  |  |              |  +--Z__GzHTP1__Asco
+|  |        |  |  |  |           +--| (99)
+|  |        |  |  |  |           |  +--Z__AteHTP1__Asco
+|  |        |  |  |  |        +--| (89)
+|  |        |  |  |  |        |  +--Z__PnoHTP01__Asco
+|  |        |  |  |  +--------| (100)
+|  |        |  |  |           +--Z__PficHTP1__Asco
+|  |        |  +--| (85)
+|  |        |     +------Z__PnoHTP02__Asco
+|  |     +--| (51)
+|  |     |  |     +--------B__RneUPO__cladeV
+|  |     |  |  +--| (100)
+|  |     |  |  |  |  +--B__DspUPO-I__cladeV
+|  |     |  |  |  +--| (100)
+|  |     |  |  |     +--B__HspUPO__cladeV
+|  |     |  +--| (85)
+|  |     |     +--B__TteUPO__cladeV
+|  |  +--| (71)
+|  |  |  |   +--Z__CgHTP2__Asco
+|  |  |  +---| (100)
+|  |  |      |  +--Z__CgHTP3__Asco
+|  |  |      +--| (88)
+|  |  |         +--Z__MtherHTP__Asco
+|  +--| (71)
+|     +-----Z__AorHTP1__Asco
+|
+|  +--B__AbrUPO-II__cladeV
++--| (100)
+   |     +--B__AluUPO__cladeV
+   |  +--| (96)
+   |  |  +--B__AtuUPO__cladeV
+   +--| (99)
+      +--Z__AnHTP2__Asco
+
+
+Consensus tree in newick format: 
+
+(B__AacUPO__cladeV:0.3332092722,(B__AbrUPO-I__cladeV:0.6235185683,((((((((((((((((((((((B__CabUPO-III__cladeI:0.2866167327,B__CmaUPO-I__cladeI:0.4048702283)100:0.1500041723,B__PaDa-I_parent_AaeUPO__cladeI:0.1766311997)92:0.0952529896,B__LspUPO-II__cladeI:0.4198968450)48:0.0663598535,(Z__CaberAPO1__Basidio:0.2467460903,(Z__CcinHTP4__Basidio:0.2619766877,Z__CmicAPO1__Basidio:0.2431723894)94:0.0821526295)90:0.0916329823)46:0.0570514584,((B__GmaUPO-II__cladeI:0.1226919462,Z__PcyanHTP1__Basidio:0.1790088565)99:0.0675109069,((Z__AdelHTP1__Basidio:0.2537089186,Z__AdelHTP5__Basidio:0.2682962250)100:0.2535064269,Z__LbiHTP5__Basidio:0.2185224718)78:0.0516260789)80:0.0628804503)44:0.0663603300,(Z__AbHTP3__Basidio:0.0198826339,Z__AbHTP4__Basidio:0.0517794103)100:0.1305833819)63:0.1236009717,Z__AbHTP5__Basidio:0.2066349020)100:0.8536954466,(((((((Z__AfumHTP2__Asco:0.2166096932,Z__AteHTP3__Asco:0.1151864557)100:0.2938657458,Z__PnoHTP13__Asco:0.4869566089)100:0.3569438281,Z__GzHTP5__Asco:0.7607109347)98:0.1805517300,((Z__GzHTP4__Asco:0.7118497758,Z__PnoHTP09__Asco:0.7269907574)95:0.2327731636,(Z__PnoHTP10__Asco:0.6443133991,Z__PnoHTP12__Asco:1.0437663265)100:0.2372306129)71:0.1120018021)76:0.1086338869,Z__MpiHTP1__Asco:0.8505873990)99:0.2948927760,(Z__PanHTP1__Asco:0.7517473990,(Z__PnoHTP08__Asco:0.2615318720,Z__PnoHTP11__Asco:0.3620443413)99:0.1969010377)100:0.7514525569)91:0.1670332458,Z__PnoHTP06__Asco:1.4127584666)99:0.4136382999)99:0.3092960549,(Z__SreHTP2__Basidio:0.0392142728,(Z__UmHTP1__Basidio:0.1259623579,Z__UmHTP2__Basidio:0.1273073988)90:0.0882081134)100:1.3641678800)100:0.5009534555,((((Z__GcerHTP1__Glomero:0.1288291073,Z__RirrHTP2__Mucoro:0.0502389700)69:0.0160665503,Z__RclaHTP1__Mucoro:0.0090101702)100:0.8581599205,(Z__GrosHTP1__Glomero:0.1426853794,Z__GrosHTP2__Glomero:0.2770136204)100:0.7137553579)93:0.1964248830,Z__RirrHTP1__Mucoro:1.3283399935)93:0.2504294670)63:0.1440051570,((((((Z__AfumHTP1__Asco:0.5644964250,((Z__AkawHTP1__Asco:0.0384087337,Z__AnHTP1__Asco:0.0349578814)100:0.3408754671,Z__AorHTP3__Asco:0.5618564485)100:0.1265204416)100:0.2181290705,(Z__PbraHTP1__Asco:0.1689394958,Z__PoxaHTP1__Asco:0.2205585969)100:0.3969084034)100:0.4887580139,(Z__GzHTP3__Asco:0.2397881709,Z__NhaeHTP__Asco:0.1802423321)100:0.9559919968)100:0.3791224892,(Z__AglauHTP__Mucoro:0.6611541731,((Z__CcucHTP__Mucoro:0.5714356372,(((Z__MucambHTP__Mucoro:0.0592411500,Z__MuclusHTP__Mucoro:0.0177683978)100:0.0437735772,Z__MuccirHTP__Mucoro:0.0526954910)100:0.0794865091,Z__PpaHTP__Mucoro:0.1911810282)100:0.2947131138)97:0.1334176968,((Z__RdelHTP__Mucoro:0.6191707234,Z__RstolHTP1__Mucoro:0.4382356814)99:0.0625865785,(Z__RmicroHTP1__Mucoro:0.0917872435,Z__RmicroHTP2__Mucoro:0.0184709456)100:0.3808906169)99:0.1101825463)100:0.3018482277)100:1.2037060305)86:0.2202949592,(Z__SpipunHTP__Chytrid:0.0471886598,Z__SpispHTP__Chytrid:0.0216474716)100:1.0411262992)82:0.1219612960,(Z__AfumHTP3__Asco:0.2288389530,Z__AorHTP4__Asco:0.9701518764)100:1.6319449220)58:0.1337950757)13:0.0308415674,((((((((((((Z__AbHTP1__Basidio:0.4160932253,(Z__CcinHTP1__Basidio:0.0356101532,Z__CcinHTP2__Basidio:0.0057143755)100:0.2764196935)83:0.0922693225,(Z__LbiHTP1__Basidio:0.0498501137,Z__LbiHTP2__Basidio:0.2392472606)100:0.1727407298)98:0.0936108684,(((Z__PinvHTP1__Basidio:0.0534817497,Z__PinvHTP2__Basidio:0.1961800434)100:0.1564895282,(((Z__RvesHTP1__Basidio:0.0206097303,Z__RvinHTP1__Basidio:0.0565109115)100:0.0884605257,((Z__SbreHTP1__Basidio:0.0095014779,Z__SlutHTP1__Basidio:0.0192633646)100:0.2080166073,(Z__SbreHTP2__Basidio:0.0385885715,Z__SlutHTP2__Basidio:0.0083317010)100:0.2970599058)100:0.0911339177)98:0.0230447185,(Z__SbreHTP5__Basidio:0.0318937391,Z__SlutHTP5__Basidio:0.0463247584)100:0.0435677108)100:0.1441003228)100:0.1344147500,Z__SlacHTP1__Basidio:0.1783145444)100:0.1192794340)100:0.1720697724,Z__HirrHTP__Basidio:0.2788427261)95:0.1312335207,((Z__DsquaHTP1__Basidio:0.3883665173,Z__PnoHTP07__Asco:0.5880428946)80:0.0727513088,(Z__PcarHTP1__Basidio:0.0833412680,Z__PcHTP1__Basidio:0.0862498277)100:0.1240287151)77:0.1134635295)80:0.0803895732,((Z__PplHTP1__Basidio:0.0000021089,Z__PplHTP3__Basidio:0.0373212820)100:0.1663423876,Z__PplHTP2__Basidio:0.1961805809)99:0.1100320088)95:0.1574902721,Z__CsubHTP5__Basidio:0.7194846745)99:0.2455628324,Z__DaspAPO1__Basidio:0.5937661945)100:0.3586439801,Z__SindHTP1__Basidio:0.7953815545)100:0.2895680813,((Z__MlarHTP1__Basidio:0.2243945533,Z__MlarHTP2__Basidio:0.7457535169)100:0.5850669676,(((Z__PantHTP1__Basidio:0.1290383681,Z__UhHTP1__Basidio:0.1964167829)100:0.0808384798,(Z__PhubeHTP1__Basidio:0.1406372067,Z__UmHTP3__Basidio:0.0495054332)100:0.0602913013)100:0.0831477687,Z__SreHTP1__Basidio:0.0430772215)100:1.0532710336)100:0.5400664040)100:0.7902183073,Z__SAcoHTP2__Asco:1.3136199586)51:0.1797931093,((((Z__AbHTP2__Basidio:0.2380516905,(Z__CcinHTP3__Basidio:0.5819787247,Z__LbiHTP4__Basidio:0.3061853118)100:0.1175478885)100:0.4909441949,(Z__PinvHTP3__Basidio:0.5619222343,Z__PplHTP5__Basidio:1.0827886197)91:0.1377372880)92:0.1367108859,((Z__PcarHTP4__Basidio:0.1676228312,(Z__PcHTP2__Basidio:0.2461351665,Z__PcHTP3__Basidio:0.4051099661)99:0.1225922863)100:0.3513692916,Z__PplHTP4__Basidio:0.4984335543)100:0.3105131249)100:0.1544402313,(((Z__BmesHTP1__Basidio:0.5447061620,Z__DfragHTP1__Basidio:0.4719008763)100:0.3726330744,(Z__LbiHTP3__Basidio:1.0144114302,(Z__PinvHTP4__Basidio:0.2639697589,Z__SlutHTP4__Basidio:0.3678960967)100:0.3103812571)100:0.3881936144)99:0.1832642084,Z__RmelHTP1__Basidio:0.4043578545)100:0.3407336306)100:0.5670173602)67:0.3904048069)37:0.0884309296,((Z__PfungHTP1__Amoebozoa:0.6253302394,Z__PfungHTP2__Amoebozoa:1.0951125851)100:0.5787521436,(((((((Z__PiHTP1__Oomycota:0.0875961394,Z__PparHTP2__Oomycota:0.0286456269)100:0.0750675224,Z__PramHTP1__Oomycota:0.0673044805)100:0.1761572464,Z__PsojHTP1__Oomycota:0.1527006082)100:0.4822919535,(Z__PsojHTP2__Oomycota:0.7455948948,Z__PultHTP1__Oomycota:0.5406164653)87:0.1589850826)89:0.1115658257,(Z__PiHTP2__Oomycota:0.0456322566,Z__PparHTP1__Oomycota:0.0669852136)100:0.7786735808)100:0.2791271412,((Z__PparHTP3__Oomycota:0.1232633309,Z__PsojHTP3__Oomycota:0.0692918795)100:0.7848413034,Z__PultHTP2__Oomycota:0.5862370291)100:0.3641917026)98:0.2544819486,Z__PramHTP2__Oomycota:1.0478052869)100:0.3208769560)37:0.0624433207)66:0.1869333746,(((Z__AphasHTP1__Oomycota:0.0951869786,Z__AphinHTP2__Oomycota:0.0533237020)100:0.5323615629,Z__AphinHTP1__Oomycota:0.9110194354)56:0.0713692054,Z__SdicHTP1__Oomycota:0.7412142711)100:0.7706476368)94:0.3793081755,(((((B__CviUPO__cladeII:0.1059905079,B__PanUPO__cladeII:0.2790822054)100:0.2496365840,(Z__AniHTP4a__Asco:0.0000029664,Z__AniHTP4b__Asco:0.1368146526)100:0.5505071330)100:0.5098828843,Z__PnoHTP04__Asco:0.7624612445)100:0.2749291636,(Z__OpsiHTP__Asco:1.5613624230,Z__PnoHTP05__Asco:0.8073360963)98:0.0913617826)98:0.2331632367,(Z__MscoHTP__Asco:0.0766698097,Z__PsubHTP__Asco:0.1242607181)100:1.1679036650)92:0.1537576928)90:0.0813651105,((Z__AniHTP5__Asco:0.7089417109,Z__CgHTP4__Asco:0.4996215259)100:0.6566206855,(((Z__FagHTP1__Asco:0.2591383034,Z__GzHTP2__Asco:0.4452238815)100:0.1472161294,(Z__MgrHTP1__Asco:0.0601515537,Z__MoHTP1__Asco:0.0913918867)100:0.7509011400)94:0.1015186066,Z__NcHTP1__Asco:0.7111457512)100:0.2525441692)96:0.2067677003)85:0.1451748425,((B__MorUPO__cladeIII:0.1584877503,(B__MroUPO__cladeIII:0.0000026561,Z__MrotHTP1__Basidio:0.0000020944)100:0.4333907181)100:0.7729178275,Z__HjHTP1__Asco:1.6579268291)86:0.1886420476)96:0.1876138037,(((Z__CfioHTP1__Asco:0.2469979622,Z__ChigHTP2__Asco:0.2350755135)94:0.1322567071,(Z__ChigHTP1__Asco:0.5623252374,Z__ColgloeoHTP__Asco:0.2705812834)100:0.2047952606)94:0.3398993108,Z__CfumagHTP__Asco:2.2674527468)97:0.4708731424)100:0.2865289605,(((((((((B__MphUPO__cladeIV:0.2566935028,Z__PnoHTP03__Asco:0.2944937070)100:0.0864480156,((((Z__BcinHTP__Asco:0.0447173021,(Z__BnarHTP1__Asco:0.0052908643,Z__BtulHTP1__Asco:0.0000020944)100:0.0319995794)100:0.0705094844,Z__SborHTP1__Asco:0.0922611419)99:0.0544101468,Z__ScepHTP1__Asco:0.0517946134)98:0.0152304350,(Z__SsclHTP1__Asco:0.0284432764,Z__StriHTP1__Asco:0.1487561981)100:0.0549320285)100:0.4652159800)100:0.0662899990,Z__CchloHTP1__Asco:0.2354997467)99:0.0764798404,Z__CgHTP1__Asco:0.3945843054)88:0.0546770158,(Z__AniHTP2__Asco:0.4157304736,Z__AorHTP2__Asco:0.1150239579)97:0.0715839556)87:0.1364988300,Z__AniHTP3__Asco:0.5483204799)95:0.1706087777,Z__SmusHTP__Asco:1.1153499248)100:0.2030829039,((((Z__AniHTP1__Asco:0.2139552069,Z__GzHTP1__Asco:0.2223269345)99:0.0916973147,Z__AteHTP1__Asco:0.0977845557)99:0.0793373579,Z__PnoHTP01__Asco:0.3563426442)89:0.0485303647,Z__PficHTP1__Asco:0.2482247511)100:0.8220119609)97:0.0861373431,Z__PnoHTP02__Asco:0.6393748852)85:0.0779860394)85:0.1219986542,((B__RneUPO__cladeV:0.8875108271,(B__DspUPO-I__cladeV:0.2523374472,B__HspUPO__cladeV:0.2127879839)100:0.1214638771)100:0.2427574633,B__TteUPO__cladeV:0.3383642908)85:0.0648129302)51:0.0683888904,(Z__CgHTP2__Asco:0.1816974635,(Z__CgHTP3__Asco:0.1826621863,Z__MtherHTP__Asco:0.2200755217)88:0.0759444191)100:0.4471509093)71:0.0608347215,Z__AorHTP1__Asco:0.5939442414)71:0.0536152498)100:0.0778092711,(B__AbrUPO-II__cladeV:0.0266235503,((B__AluUPO__cladeV:0.0221749313,B__AtuUPO__cladeV:0.0397473081)96:0.0142061180,Z__AnHTP2__Asco:0.0332052165)99:0.0396800021)100:0.1920336617);
+
+ALISIM COMMAND
+--------------
+To simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis, you can use the following command:
+
+--alisim simulated_MSA -t analysis/enzymes_UPO/data/refset_zamocky2022/tree/lgig.treefile -m "LG+I{0.00892314}+G4{1.23833}" --length 224
+
+To mimic the alignment used to produce this analysis, i.e. simulate an alignment of the same length as the original alignment, using the tree and model parameters estimated from this analysis *and* copying the same gap positions as the original alignment, you can use the following command:
+
+iqtree -s analysis/enzymes_UPO/data/refset_zamocky2022/tree/aln.trim.afa --alisim mimicked_MSA
+
+To simulate any number of alignments in either of the two commandlines above, use the --num-alignments options, for example mimic 100 alignments you would use the command line:
+
+iqtree -s analysis/enzymes_UPO/data/refset_zamocky2022/tree/aln.trim.afa --alisim mimicked_MSA --num-alignments 100
+
+For more information on using AliSim, please visit: www.iqtree.org/doc/AliSim
+
+TIME STAMP
+----------
+
+Date and time: Sun Nov  8 22:02:40 2026
+Total CPU time used: 4633.143759 seconds (1h:17m:13s)
+Total wall-clock time used: 306.607549 seconds (0h:5m:6s)
+

@@ -1,0 +1,193 @@
+# upo_sites: measured sequence features and clade assignment.
+# NOT an activity prediction. See CALIBRATION_MATRIX.md sections 4, 5, 8.
+# Residue numbering is HspUPO (PDB 7O1R). pocket_score is over [73, 77, 81, 183, 187] only.
+# clade_T1_insample is the OBSERVED range in the 19-enzyme calibration set, not a prediction for this protein.
+# clade_confidence tiers: validated_range = identity >= 52.7 (the leave-one-out validated range, 18/19 = 94.7% accurate); extrapolated = 30.0-52.7 identity, BELOW the validated range, treat as a hypothesis; below_identity_floor = < 30.0, reported as unassigned. Suffix _low_margin: < 3.0 identity margin over the next clade (heuristic; margin did not separate correct from incorrect at n=19). Suffix +provisional_cladeIV: Clade IV has one characterized member.
+sample	protein_id	hmm_evalue	length	clade	clade_identity	clade_margin	clade_confidence	nearest_ref	pocket_score	pocket_max	pocket_residues	catalytic_ok	catalytic_detail	sites_mapped	clade_T1_insample	p39_Cys_proximal	p73_AP	p77_AP	p80_E	p81_AP	p84_E	p108_CP	p109_E_of_EHD	p110_Base_EHD	p111_D_of_EHD	p172_E	p173_base_long	p175_E	p176_CP	p179_CP	p180_Acid	p183_AP	p187_AP
+combined	B__AacUPO__cladeV	1.2e-55	273	V	100.0	46.7	validated_range	AacUPO	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	Y	L	E	L	E	H	D	L	G	A	F	G	E	A	I
+combined	B__AbrUPO-I__cladeV	4.6e-55	265	V	100.0	48.1	validated_range	AbrUPO-I	5	5	LLLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	I	L	A	L	E	H	D	I	G	A	F	G	E	A	I
+combined	B__AbrUPO-II__cladeV	1.9e-56	263	V	100.0	43.7	validated_range	AbrUPO-II	5	5	ILLAV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	Y	L	E	L	E	H	D	L	G	A	F	G	E	A	V
+combined	B__AluUPO__cladeV	1.6e-55	267	V	100.0	45.7	validated_range	AluUPO	5	5	ILLAV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	Y	L	E	L	E	H	D	L	G	S	F	G	E	A	V
+combined	B__CabUPO-III__cladeI	1.7e-50	387	I	100.0	65.4	validated_range	CabUPO-III	3	5	FAAFL	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	F	A	S	A	L	F	E	G	D	V	R	L	T	G	E	F	L
+combined	B__CmaUPO-I__cladeI	6.7e-49	380	I	100.0	63.8	validated_range	CmaUPO-I	2	5	LGAFN	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	L	G	L	A	A	F	E	G	D	F	R	S	T	G	E	F	N
+combined	B__CviUPO__cladeII	2.3e-55	226	II	100.0	58.7	validated_range	CviUPO	3	5	LLIKT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	T	I	L	F	E	H	D	Q	Q	I	T	G	E	K	T
+combined	B__GmaUPO-II__cladeI	6.4e-53	373	I	100.0	64.9	validated_range	GmaUPO-II	3	5	MLVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	L	F	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	B__MorUPO__cladeIII	1.9e-59	250	III	100.0	57.3	validated_range	MorUPO	4	5	IIAFV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	I	I	L	A	V	I	E	H	D	T	T	F	I	A	E	F	V
+combined	B__MroUPO__cladeIII	3e-59	239	III	100.0	61.6	validated_range	MroUPO	4	5	VIAFV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	V	I	L	A	I	I	E	H	D	L	T	T	I	S	E	F	V
+combined	B__PanUPO__cladeII	9.4e-50	268	II	100.0	60.3	validated_range	PanUPO	3	5	LLVKT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	T	V	L	F	E	H	D	T	H	I	T	G	E	K	T
+combined	B__RneUPO__cladeV	1.9e-48	250	V	100.0	57.1	validated_range	RneUPO	4	5	LFLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	F	F	L	A	F	E	H	D	V	G	D	F	A	E	A	I
+combined	B__TteUPO__cladeV	5.6e-55	274	V	100.0	45.9	validated_range	TteUPO	5	5	VLLAA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	L	L	L	F	L	E	H	D	I	G	A	F	G	E	A	A
+combined	B__AtuUPO__cladeV	8.6e-57	267	V	100.0	45.1	validated_range	AtuUPO	5	5	ILLAV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	F	L	E	L	E	H	D	L	G	S	F	G	E	A	V
+combined	B__DspUPO-I__cladeV	6.8e-53	262	V	100.0	53.0	validated_range	DspUPO-I	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	F	L	F	L	E	H	D	L	G	S	F	G	E	A	I
+combined	B__HspUPO__cladeV	7.3e-53	261	V	100.0	50.0	validated_range	HspUPO	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	L	L	F	L	E	H	D	L	G	A	F	G	E	A	I
+combined	B__LspUPO-II__cladeI	3.6e-56	377	I	100.0	62.7	validated_range	LspUPO-II	2	5	MTIFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	T	I	I	G	F	E	G	D	A	R	V	A	A	E	F	F
+combined	B__MphUPO__cladeIV	7.5e-52	259	IV	100.0	43.7	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAV	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	I	M	Q	L	E	H	D	T	T	A	F	G	E	A	V
+combined	B__PaDa-I_parent_AaeUPO__cladeI	4.3e-53	371	I	100.0	63.0	validated_range	PaDa-I_parent_AaeUPO	3	5	FAAFL	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	F	A	F	A	A	F	E	G	D	F	R	F	T	G	E	F	L
+combined	Z__AbHTP1__Basidio	4.1e-52	284	III	30.8	0.2	extrapolated_low_margin	MroUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	F	F	F	V	Y	I	E	H	D	I	H	M	F	S	N	T	I
+combined	Z__AbHTP2__Basidio	4.7e-53	269	II	31.4	1.6	extrapolated_low_margin	PanUPO	5	5	LLLIV	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	F	L	V	I	E	H	D	V	H	E	I	G	E	I	V
+combined	Z__AbHTP3__Basidio	5e-53	374	I	79.2	43.4	validated_range	GmaUPO-II	3	5	MVVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	V	L	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__AbHTP4__Basidio	1.1e-53	375	I	79.2	43.6	validated_range	GmaUPO-II	3	5	MVVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	V	L	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__AbHTP5__Basidio	1.4e-54	371	I	74.9	39.2	validated_range	GmaUPO-II	3	5	MLVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	L	F	V	A	F	E	G	D	P	R	I	T	A	E	F	F
+combined	Z__AdelHTP1__Basidio	7.8e-53	383	I	68.3	33.2	validated_range	PaDa-I_parent_AaeUPO	3	5	MVVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	V	L	V	A	F	E	G	D	P	R	A	T	V	E	F	F
+combined	Z__AdelHTP5__Basidio	2.9e-47	393	I	68.9	31.6	validated_range	GmaUPO-II	3	5	MIIFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	I	L	I	A	F	E	G	D	P	R	A	T	A	E	F	F
+combined	Z__AfumHTP1__Asco	1.5e-41	275	II	31.0	0.2	extrapolated_low_margin	PanUPO	5	5	MVLAI	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	M	V	I	L	G	V	E	H	D	F	N	F	S	A	E	A	I
+combined	Z__AfumHTP2__Asco	1.5e-45	443	I	32.1	3.4	extrapolated	LspUPO-II	4	5	MLLLR	no	39C,109E,111D,180A!,110A	18/18	0-53 (bimodal, n=5)	C	M	L	I	L	M	I	E	A	D	V	T	F	I	N	A	L	R
+combined	Z__AfumHTP3__Asco	7.7e-32	341	unassigned	26.8	1.2	below_identity_floor	MphUPO	1	5	FNPNV	no	39C,109N!,111P!,180Q!,110C	18/18	n/a	C	F	N	L	P	E	I	N	C	P	Q	G	I	C	A	Q	N	V
+combined	Z__AglauHTP__Mucoro	6.8e-41	309	V	35.0	4.7	extrapolated	RneUPO	4	5	IFVLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	F	T	V	R	I	E	H	D	L	Y	F	S	T	E	L	I
+combined	Z__AkawHTP1__Asco	2.9e-46	244	unassigned	29.7	0.2	below_identity_floor	MphUPO	5	5	LILAV	yes	39C,109E,111D,180E,110H	18/18	n/a	C	L	I	V	L	R	L	E	H	D	F	E	Y	V	S	E	A	V
+combined	Z__AnHTP1__Asco	2.6e-45	244	unassigned	29.7	0.9	below_identity_floor	MphUPO	5	5	LILAV	yes	39C,109E,111D,180E,110H	18/18	n/a	C	L	I	V	L	R	L	E	H	D	F	E	Y	V	S	E	A	V
+combined	Z__AnHTP2__Asco	1.4e-55	265	V	94.5	39.6	validated_range	AluUPO	5	5	ILLAV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	Y	L	E	L	E	H	D	L	G	S	F	G	E	A	V
+combined	Z__AniHTP1__Asco	7.6e-59	264	V	49.2	10.3	extrapolated	HspUPO	3	5	IDLSI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	D	L	L	Q	L	E	H	D	L	A	G	F	G	E	S	I
+combined	Z__AniHTP2__Asco	7.2e-51	268	IV	64.1	12.8	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	L	M	M	L	E	H	D	S	T	Q	F	G	E	A	A
+combined	Z__AniHTP3__Asco	5.7e-47	271	IV	57.1	9.5	validated_range+provisional_cladeIV	MphUPO	3	5	FLMFA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	S	M	N	G	E	H	D	K	T	Q	T	T	E	F	A
+combined	Z__AniHTP4a__Asco	1.4e-53	305	II	56.0	14.7	validated_range	CviUPO	3	5	LLVKT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	I	V	L	F	E	H	D	Q	Q	I	T	G	E	K	T
+combined	Z__AniHTP4b__Asco	1.7e-51	311	II	53.8	14.1	validated_range	CviUPO	3	5	LLVKT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	I	V	L	F	E	H	D	Q	Q	I	T	G	E	K	T
+combined	Z__AniHTP5__Asco	1.7e-38	183	unassigned	27.6	1.5	below_identity_floor	MroUPO	1	5	YTM--	no	39C,109E,111D,180-!,110F	10/18	n/a	C	Y	T	F	M	A	I	E	F	D	-	-	-	-	-	-	-	-
+combined	Z__AorHTP1__Asco	1.7e-51	242	V	58.5	13.4	validated_range	AbrUPO-II	4	5	VLLTV	no	39C,109E,111D,180Q!,110H	18/18	33-82 (n=9)	C	V	L	T	L	A	I	E	H	D	F	R	R	F	A	Q	T	V
+combined	Z__AorHTP2__Asco	2.6e-29	205	IV	54.6	11.6	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	no	39-!,109-!,111T!,180E,110-	14/18	0-5 (n=1)	-	F	L	L	M	M	-	-	-	T	S	M	Q	F	G	E	A	A
+combined	Z__AorHTP3__Asco	1.1e-44	275	III	33.0	2.4	extrapolated_low_margin	MorUPO	3	5	LTLGV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	T	G	L	I	I	E	H	D	R	M	Y	I	A	E	G	V
+combined	Z__AorHTP4__Asco	4.6e-16	239	unassigned	10.0	0.3	below_identity_floor	RneUPO	0	5	F----	no	39C,109-!,111-!,180-!,110-	2/18	n/a	C	F	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-	-
+combined	Z__AphasHTP1__Oomycota	6.7e-40	247	V	33.0	3.1	extrapolated	AacUPO	4	5	VLFLA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	L	L	F	S	M	E	H	D	K	Q	F	L	A	E	L	A
+combined	Z__AphinHTP1__Oomycota	9.8e-41	298	V	33.3	1.3	extrapolated_low_margin	AbrUPO-I	3	5	VFLFM	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	F	L	L	S	I	E	H	D	Y	A	L	F	T	E	F	M
+combined	Z__AphinHTP2__Oomycota	7.2e-40	246	V	33.0	1.4	extrapolated_low_margin	TteUPO	4	5	VLFLA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	L	L	F	A	M	E	H	D	K	Q	F	L	A	E	L	A
+combined	Z__AteHTP1__Asco	9.7e-60	242	V	51.9	11.2	extrapolated	HspUPO	3	5	IDLSI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	D	L	L	Q	L	E	H	D	L	A	G	F	G	E	S	I
+combined	Z__AteHTP3__Asco	3.9e-46	451	I	30.4	2.3	extrapolated_low_margin	LspUPO-II	4	5	MLLLR	no	39C,109E,111D,180A!,110S	18/18	0-53 (bimodal, n=5)	C	M	L	I	L	M	I	E	S	D	V	T	L	I	N	A	L	R
+combined	Z__BcinHTP__Asco	4.6e-49	276	IV	66.5	16.2	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	I	M	Q	L	E	H	D	T	T	A	F	G	E	A	A
+combined	Z__BmesHTP1__Basidio	4.2e-54	224	II	33.5	1.6	extrapolated_low_margin	PanUPO	5	5	ILLLV	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	I	L	I	L	L	I	E	H	D	A	H	I	I	G	E	L	V
+combined	Z__BnarHTP1__Asco	9.5e-49	276	IV	66.9	16.6	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	V	M	Q	L	E	H	D	T	T	A	F	G	E	A	A
+combined	Z__BtulHTP1__Asco	2.8e-49	276	IV	66.9	16.6	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	V	M	Q	L	E	H	D	T	T	A	F	G	E	A	A
+combined	Z__CaberAPO1__Basidio	2.3e-55	379	I	69.9	35.4	validated_range	GmaUPO-II	2	5	MTLFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	T	F	L	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__CchloHTP1__Asco	7.7e-53	284	IV	73.8	17.7	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	L	M	M	L	E	H	D	T	T	N	F	G	E	A	A
+combined	Z__CcinHTP1__Basidio	4.1e-53	304	V	32.8	1.3	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	V	H	T	F	A	N	T	I
+combined	Z__CcinHTP2__Basidio	1.1e-53	295	V	32.8	1.8	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	V	H	T	F	A	N	T	I
+combined	Z__CcinHTP3__Basidio	3e-48	269	unassigned	29.7	1.5	below_identity_floor	MorUPO	4	5	LFLIV	no	39C,109E,111N!,180E,110H	18/18	n/a	C	L	F	F	L	T	V	E	H	N	V	Q	K	I	G	E	I	V
+combined	Z__CcinHTP4__Basidio	2.4e-52	387	I	68.3	33.2	validated_range	GmaUPO-II	3	5	MIVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	I	F	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__CcucHTP__Mucoro	1.8e-30	268	unassigned	20.2	0.7	below_identity_floor	DspUPO-I	2	5	AIF--	no	39C,109E,111D,180-!,110H	10/18	n/a	C	A	I	A	F	Y	I	E	H	D	-	-	-	-	-	-	-	-
+combined	Z__CfioHTP1__Asco	2.1e-50	271	V	44.0	1.1	extrapolated_low_margin	AacUPO	5	5	ILALL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	A	A	P	I	E	H	D	S	S	P	L	G	E	L	L
+combined	Z__CfumagHTP__Asco	1.2e-37	373	V	31.5	1.8	extrapolated_low_margin	AluUPO	4	5	IVAFL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	V	L	A	N	F	E	H	D	E	S	P	I	V	E	F	L
+combined	Z__CgHTP1__Asco	4.9e-53	271	IV	65.0	9.8	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	V	M	Q	L	E	H	D	S	V	N	F	G	E	A	A
+combined	Z__CgHTP2__Asco	5.6e-51	260	V	61.7	11.7	validated_range	DspUPO-I	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	S	L	F	L	E	H	D	L	G	G	F	G	E	A	I
+combined	Z__CgHTP3__Asco	7.2e-43	251	V	56.8	10.6	validated_range	AbrUPO-II	5	5	VLLAL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	L	F	L	F	L	E	H	D	L	G	A	F	G	E	A	L
+combined	Z__CgHTP4__Asco	2.8e-44	261	V	38.3	1.0	extrapolated_low_margin	AbrUPO-II	2	5	YSLLT	no	39C,109E,111D,180T!,110M	18/18	33-82 (n=9)	C	Y	S	Q	L	A	I	E	M	D	A	Q	M	G	G	T	L	T
+combined	Z__ChigHTP1__Asco	5e-46	278	V	41.0	0.5	extrapolated_low_margin	HspUPO	3	5	LFTMI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	F	V	T	N	I	E	H	D	P	E	P	V	G	E	M	I
+combined	Z__ChigHTP2__Asco	9e-49	281	V	42.1	1.6	extrapolated_low_margin	AacUPO	4	5	ILAFI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	A	A	P	I	E	H	D	S	A	P	A	G	E	F	I
+combined	Z__CmicAPO1__Basidio	3.4e-50	384	I	71.6	37.5	validated_range	GmaUPO-II	2	5	MTVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	T	F	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__ColgloeoHTP__Asco	4.7e-48	277	IV	44.0	2.7	extrapolated_low_margin+provisional_cladeIV	MphUPO	3	5	VRIFI	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	V	R	N	I	N	I	E	H	D	E	Q	P	V	G	E	F	I
+combined	Z__CsubHTP5__Basidio	5.6e-50	304	III	31.4	1.3	extrapolated_low_margin	MroUPO	2	5	FFLIT	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	F	F	L	L	Y	I	E	H	D	I	H	L	F	A	N	I	T
+combined	Z__DaspAPO1__Basidio	3.8e-54	326	unassigned	29.7	1.2	below_identity_floor	MorUPO	1	5	FFVTT	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	Y	I	E	H	D	F	Q	L	F	S	N	T	T
+combined	Z__DfragHTP1__Basidio	2.6e-51	223	V	30.3	0.0	extrapolated_low_margin	AluUPO	4	5	ILLLT	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	L	L	V	I	E	H	D	I	H	A	I	G	E	L	T
+combined	Z__DsquaHTP1__Basidio	2e-51	301	unassigned	29.5	1.8	below_identity_floor	AbrUPO-I	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	Y	I	E	H	D	I	H	I	F	S	N	T	I
+combined	Z__FagHTP1__Asco	5.8e-55	231	V	43.4	2.3	extrapolated_low_margin	AacUPO	5	5	LAVLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	A	L	V	K	I	E	H	D	D	L	Q	F	I	E	L	V
+combined	Z__GcerHTP1__Glomero	6.8e-59	221	III	36.2	0.7	extrapolated_low_margin	MroUPO	3	5	LFQLI	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	F	M	Q	T	L	E	H	D	R	Q	S	L	G	E	L	I
+combined	Z__GrosHTP1__Glomero	2.2e-59	230	V	36.4	1.3	extrapolated_low_margin	AacUPO	3	5	SVLLF	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	S	V	Y	L	S	V	E	H	D	P	Q	F	A	G	E	L	F
+combined	Z__GrosHTP2__Glomero	4.6e-57	239	V	35.9	1.3	extrapolated_low_margin	AacUPO	4	5	ALLLF	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	A	L	F	L	G	C	E	H	D	K	Q	F	L	G	E	L	F
+combined	Z__GzHTP1__Asco	4.4e-59	266	V	49.2	10.6	extrapolated	HspUPO	3	5	IDLSI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	D	L	L	Q	L	E	H	D	L	A	G	F	G	E	S	I
+combined	Z__GzHTP2__Asco	3e-48	205	V	37.9	4.8	extrapolated	AacUPO	5	5	LAVLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	A	L	V	K	L	E	H	D	E	Q	K	I	I	E	L	V
+combined	Z__GzHTP3__Asco	1e-47	268	III	33.0	1.8	extrapolated_low_margin	MorUPO	4	5	LLFLV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	L	A	F	P	V	E	H	D	F	E	D	L	A	E	L	V
+combined	Z__GzHTP4__Asco	8.1e-46	448	I	32.2	2.5	extrapolated_low_margin	LspUPO-II	3	5	MLLSR	no	39C,109E,111D,180S!,110S	18/18	0-53 (bimodal, n=5)	C	M	L	F	L	Y	Y	E	S	D	F	A	V	L	P	S	S	R
+combined	Z__GzHTP5__Asco	3.8e-41	453	I	34.8	6.7	extrapolated	LspUPO-II	3	5	MLLSR	no	39C,109E,111D,180S!,110V	18/18	0-53 (bimodal, n=5)	C	M	L	V	L	L	F	E	V	D	A	S	W	M	A	S	S	R
+combined	Z__HirrHTP__Basidio	1e-50	298	V	31.7	1.4	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	S	H	M	F	S	N	T	I
+combined	Z__HjHTP1__Asco	1.8e-38	260	V	35.0	0.4	extrapolated_low_margin	TteUPO	4	5	VFAMM	no	39C,109Q!,111I!,180E,110H	18/18	33-82 (n=9)	C	V	F	A	A	F	I	Q	H	I	N	Q	T	F	F	E	M	M
+combined	Z__LbiHTP1__Basidio	1.7e-54	292	V	31.7	0.3	extrapolated_low_margin	AbrUPO-I	2	5	FFVTV	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	F	I	E	H	D	F	H	M	F	S	N	T	V
+combined	Z__LbiHTP2__Basidio	3.2e-51	294	III	34.1	3.5	extrapolated	MroUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	F	F	Y	V	F	I	E	H	D	S	H	T	F	S	N	T	I
+combined	Z__LbiHTP3__Basidio	3.8e-39	340	unassigned	28.6	1.5	below_identity_floor	MorUPO	5	5	ILLLV	no	39C,109T!,111D,180E,110H	18/18	n/a	C	I	L	L	L	V	I	T	H	D	F	H	Q	I	G	E	L	V
+combined	Z__LbiHTP4__Basidio	1.6e-52	253	II	30.8	0.5	extrapolated_low_margin	PanUPO	5	5	LLLIV	no	39C,109E,111N!,180E,110H	18/18	0 (n=2)	C	L	L	F	L	V	V	E	H	N	V	H	E	I	G	E	I	V
+combined	Z__LbiHTP5__Basidio	6.4e-52	386	I	77.0	40.3	validated_range	GmaUPO-II	3	5	MLVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	L	F	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__MgrHTP1__Asco	2e-57	257	III	40.0	0.3	extrapolated_low_margin	MorUPO	5	5	LAALV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	A	F	A	K	L	E	H	D	N	E	L	I	I	E	L	V
+combined	Z__MlarHTP1__Basidio	3.2e-36	357	unassigned	26.4	1.4	below_identity_floor	AacUPO	5	5	LILLI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	L	I	Q	L	G	I	E	H	D	N	F	L	F	G	N	L	I
+combined	Z__MlarHTP2__Basidio	1.3e-30	351	unassigned	26.5	2.3	below_identity_floor	MroUPO	2	5	CFSVV	no	39C,109A!,111D,180N!,110H	18/18	n/a	C	C	F	R	S	G	I	A	H	D	Q	T	I	I	M	N	V	V
+combined	Z__MoHTP1__Asco	1.2e-57	257	III	41.1	0.3	extrapolated_low_margin	MorUPO	5	5	LAALV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	A	F	A	K	L	E	H	D	E	E	M	F	I	E	L	V
+combined	Z__MpiHTP1__Asco	1.1e-54	414	I	35.5	2.5	extrapolated_low_margin	PaDa-I_parent_AaeUPO	4	5	IFLLL	no	39C,109E,111D,180T!,110S	18/18	0-53 (bimodal, n=5)	C	I	F	F	L	L	F	E	S	D	N	T	F	I	A	T	L	L
+combined	Z__MrotHTP1__Basidio	2.9e-59	236	III	100.0	61.6	validated_range	MroUPO	4	5	VIAFV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	V	I	L	A	I	I	E	H	D	L	T	T	I	S	E	F	V
+combined	Z__MscoHTP__Asco	9.1e-48	267	V	39.9	5.7	extrapolated	AacUPO	4	5	LIFLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	I	V	F	V	I	E	H	D	K	E	I	L	G	E	L	I
+combined	Z__MtherHTP__Asco	7.6e-55	261	V	64.5	15.0	validated_range	AbrUPO-II	5	5	ILLAV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	F	L	F	L	E	H	D	L	G	A	F	G	E	A	V
+combined	Z__MucambHTP__Mucoro	2.6e-39	304	unassigned	29.7	1.1	below_identity_floor	CviUPO	5	5	AVILI	yes	39C,109E,111D,180E,110H	18/18	n/a	C	A	V	L	I	F	L	E	H	D	F	S	F	A	T	E	L	I
+combined	Z__MuccirHTP__Mucoro	2.8e-42	308	V	30.3	1.1	extrapolated_low_margin	TteUPO	5	5	AVILI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	A	V	V	I	Y	L	E	H	D	F	S	F	A	T	E	L	I
+combined	Z__MuclusHTP__Mucoro	6.1e-40	309	unassigned	29.7	1.1	below_identity_floor	CviUPO	5	5	AVILI	yes	39C,109E,111D,180E,110H	18/18	n/a	C	A	V	L	I	F	L	E	H	D	F	S	F	A	T	E	L	I
+combined	Z__NcHTP1__Asco	1.3e-53	272	V	41.6	1.1	extrapolated_low_margin	AbrUPO-I	5	5	LAVLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	A	I	V	K	I	E	H	D	E	D	R	F	I	E	L	V
+combined	Z__NhaeHTP__Asco	3.4e-46	271	III	32.4	0.2	extrapolated_low_margin	MorUPO	4	5	LLFLV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	L	V	F	P	V	E	H	D	F	E	D	L	A	E	L	V
+combined	Z__OpsiHTP__Asco	1.5e-46	484	III	38.4	3.6	extrapolated	MroUPO	5	5	VIILA	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	V	I	A	I	F	I	E	H	D	R	A	F	N	S	E	L	A
+combined	Z__PanHTP1__Asco	2.2e-49	386	I	34.4	3.4	extrapolated	CabUPO-III	4	5	VLLFL	no	39C,109E,111D,180A!,110I	18/18	0-53 (bimodal, n=5)	C	V	L	F	L	Y	M	E	I	D	I	L	L	F	G	A	F	L
+combined	Z__PantHTP1__Basidio	1.9e-39	413	unassigned	26.4	0.3	below_identity_floor	AacUPO	5	5	IMLLV	no	39C,109E,111D,180S!,110H	18/18	n/a	C	I	M	Q	L	P	I	E	H	D	V	Q	L	I	G	S	L	V
+combined	Z__PbraHTP1__Asco	1.1e-44	243	II	33.7	2.0	extrapolated_low_margin	CviUPO	5	5	VILIV	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	V	I	T	L	R	V	E	H	D	T	K	K	V	G	E	I	V
+combined	Z__PcarHTP1__Basidio	5e-52	296	unassigned	29.2	0.2	below_identity_floor	MroUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	Y	I	E	H	D	F	H	F	F	S	N	T	I
+combined	Z__PcarHTP4__Basidio	5.2e-50	263	V	33.7	1.8	extrapolated_low_margin	AacUPO	5	5	LLLIM	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	I	L	G	I	E	H	D	L	H	E	I	G	E	I	M
+combined	Z__PcHTP1__Basidio	2.8e-54	295	III	30.3	0.2	extrapolated_low_margin	MroUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	F	F	F	V	Y	I	E	H	D	F	H	F	F	S	N	T	I
+combined	Z__PcHTP2__Basidio	1.1e-49	388	V	34.2	0.7	extrapolated_low_margin	AacUPO	5	5	LLLIM	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	A	L	G	V	E	H	D	V	H	E	L	G	E	I	M
+combined	Z__PcHTP3__Basidio	1.8e-49	279	V	33.2	2.2	extrapolated_low_margin	AacUPO	5	5	LLLVM	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	A	L	G	V	E	H	D	V	Q	A	V	G	E	V	M
+combined	Z__PcyanHTP1__Basidio	1.7e-53	374	I	83.6	46.8	validated_range	GmaUPO-II	3	5	MIVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	M	I	L	V	A	F	E	G	D	P	R	F	T	A	E	F	F
+combined	Z__PficHTP1__Asco	4.3e-56	253	V	49.7	8.4	extrapolated	AbrUPO-II	3	5	IDLSI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	D	G	L	L	L	E	H	D	L	A	G	F	G	E	S	I
+combined	Z__PfungHTP1__Amoebozoa	1e-56	304	V	38.0	1.1	extrapolated_low_margin	AacUPO	5	5	VVLLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	V	L	L	G	I	E	H	D	K	Q	I	A	G	E	L	I
+combined	Z__PfungHTP2__Amoebozoa	6.9e-53	327	III	36.8	3.4	extrapolated	MroUPO	5	5	LVLIV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	L	V	L	L	L	I	E	H	D	N	Q	V	G	S	E	I	V
+combined	Z__PhubeHTP1__Basidio	4.6e-39	422	unassigned	26.4	1.9	below_identity_floor	AacUPO	5	5	IMLLV	no	39C,109E,111D,180S!,110H	18/18	n/a	C	I	M	Q	L	P	I	E	H	D	V	Q	L	I	G	S	L	V
+combined	Z__PiHTP1__Oomycota	2.9e-54	255	V	34.6	2.7	extrapolated_low_margin	TteUPO	3	5	FLLVG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	F	L	V	L	Q	L	E	H	D	N	Q	T	F	L	E	V	G
+combined	Z__PiHTP2__Oomycota	2.9e-45	254	V	31.9	3.2	extrapolated	TteUPO	3	5	QALGV	no	39C,109D!,111D,180Q!,110H	18/18	33-82 (n=9)	C	Q	A	A	L	S	W	D	H	D	A	Q	T	Q	S	Q	G	V
+combined	Z__PinvHTP1__Basidio	2.5e-50	291	V	31.1	2.5	extrapolated_low_margin	AbrUPO-I	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	F	H	V	F	A	N	T	I
+combined	Z__PinvHTP2__Basidio	1.9e-50	291	unassigned	29.5	1.4	below_identity_floor	RneUPO	1	5	FFTTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	T	Y	I	E	H	D	F	H	V	F	A	N	T	I
+combined	Z__PinvHTP3__Basidio	1.9e-53	276	II	35.7	0.9	extrapolated_low_margin	CviUPO	5	5	LLLII	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	L	L	S	I	E	H	D	V	H	E	V	G	E	I	I
+combined	Z__PinvHTP4__Basidio	9.9e-55	225	V	33.9	3.4	extrapolated	AacUPO	5	5	LLLLL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	L	L	A	I	E	H	D	L	H	E	I	G	E	L	L
+combined	Z__PnoHTP01__Asco	1.6e-53	280	V	48.1	6.8	extrapolated	TteUPO	3	5	IDLSI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	D	I	L	Q	L	E	H	D	L	A	G	F	G	E	S	I
+combined	Z__PnoHTP02__Asco	3.6e-51	248	V	55.2	5.5	validated_range	TteUPO	4	5	VILGV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	I	L	L	F	L	E	H	D	L	A	A	F	G	E	G	V
+combined	Z__PnoHTP03__Asco	6.8e-46	269	IV	68.9	23.4	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	L	M	Q	L	E	H	D	S	T	E	F	G	E	A	A
+combined	Z__PnoHTP04__Asco	4.6e-54	268	II	43.5	6.2	extrapolated	CviUPO	5	5	VVLAL	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	V	V	S	L	L	I	E	H	D	A	Q	F	P	F	E	A	L
+combined	Z__PnoHTP05__Asco	3.3e-54	308	II	39.1	0.2	extrapolated_low_margin	CviUPO	3	5	IFILG	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	I	F	A	I	A	I	E	H	D	R	E	V	L	G	E	L	G
+combined	Z__PnoHTP06__Asco	4.6e-50	451	I	31.7	0.3	extrapolated_low_margin	CmaUPO-I	3	5	MLLFF	no	39C,109E,111D,180A!,110A	18/18	0-53 (bimodal, n=5)	C	M	L	V	L	F	V	E	A	D	F	P	I	V	G	A	F	F
+combined	Z__PnoHTP07__Asco	1.9e-48	272	V	30.6	2.2	extrapolated_low_margin	AbrUPO-I	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	F	I	E	H	D	F	H	G	F	A	N	T	I
+combined	Z__PnoHTP08__Asco	6.4e-50	421	I	36.1	4.5	extrapolated	CabUPO-III	4	5	VLLFL	no	39C,109E,111D,180A!,110G	18/18	0-53 (bimodal, n=5)	C	V	L	L	L	L	F	E	G	D	P	L	L	L	G	A	F	L
+combined	Z__PnoHTP09__Asco	5.5e-47	415	unassigned	29.7	0.2	below_identity_floor	MroUPO	3	5	MLLE-	no	39C,109E,111D,180A!,110G	17/18	n/a	C	M	L	F	L	L	Y	E	G	D	F	S	V	L	P	A	E	-
+combined	Z__PnoHTP10__Asco	2.8e-46	425	I	31.0	3.4	extrapolated	GmaUPO-II	3	5	MLLFF	no	39C,109E,111D,180A!,110G	18/18	0-53 (bimodal, n=5)	C	M	L	F	L	V	Y	E	G	D	F	S	M	V	A	A	F	F
+combined	Z__PnoHTP11__Asco	8.3e-51	380	I	36.1	4.2	extrapolated	CabUPO-III	4	5	VLLFL	no	39C,109E,111D,180A!,110A	17/18	0-53 (bimodal, n=5)	C	V	L	I	L	I	F	E	A	D	L	A	L	-	G	A	F	L
+combined	Z__PnoHTP12__Asco	3e-36	454	I	34.4	6.9	extrapolated	PaDa-I_parent_AaeUPO	4	5	LALFL	no	39C,109E,111D,180A!,110G	18/18	0-53 (bimodal, n=5)	C	L	A	F	L	A	S	E	G	D	A	Y	G	V	G	A	F	L
+combined	Z__PnoHTP13__Asco	2.8e-47	436	I	34.2	4.0	extrapolated	LspUPO-II	2	5	MTLFR	no	39C,109E,111D,180A!,110A	18/18	0-53 (bimodal, n=5)	C	M	T	I	L	M	I	E	A	D	V	T	M	V	N	A	F	R
+combined	Z__PoxaHTP1__Asco	1.1e-45	226	V	33.0	2.0	extrapolated_low_margin	RneUPO	4	5	TILLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	T	I	T	L	R	I	E	H	D	S	K	K	K	G	E	L	I
+combined	Z__PpaHTP__Mucoro	1.8e-39	309	unassigned	28.6	0.5	below_identity_floor	CviUPO	5	5	AVILI	yes	39C,109E,111D,180E,110H	18/18	n/a	C	A	V	L	I	Y	L	E	H	D	F	A	F	A	T	E	L	I
+combined	Z__PparHTP1__Oomycota	1.5e-45	255	V	32.8	4.1	extrapolated	RneUPO	3	5	QALGV	no	39C,109D!,111D,180Q!,110H	18/18	33-82 (n=9)	C	Q	A	A	L	S	W	D	H	D	A	Q	T	Q	S	Q	G	V
+combined	Z__PparHTP2__Oomycota	4.4e-55	255	V	35.7	2.2	extrapolated_low_margin	TteUPO	3	5	FLLVG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	F	L	I	L	Q	L	E	H	D	N	Q	T	F	L	E	V	G
+combined	Z__PparHTP3__Oomycota	9e-48	262	unassigned	29.2	0.4	below_identity_floor	CabUPO-III	2	5	FVIFG	no	39C,109D!,111D,180E,110H	18/18	n/a	C	F	V	V	I	A	I	D	H	D	L	A	F	V	G	E	F	G
+combined	Z__PplHTP1__Basidio	2.5e-51	296	V	31.1	0.9	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	F	H	L	F	S	N	T	I
+combined	Z__PplHTP2__Basidio	1.6e-53	280	III	31.4	2.4	extrapolated_low_margin	MroUPO	1	5	YFVNT	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	Y	F	F	V	Y	I	E	H	D	F	H	L	F	T	N	N	T
+combined	Z__PplHTP3__Basidio	6.4e-51	298	V	31.1	0.3	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	Y	I	E	H	D	F	H	L	F	S	N	T	I
+combined	Z__PplHTP4__Basidio	1.3e-47	421	V	31.3	0.3	extrapolated_low_margin	AacUPO	5	5	LLLIL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	V	L	G	I	E	H	D	L	H	E	I	G	E	I	L
+combined	Z__PplHTP5__Basidio	5.5e-50	277	V	33.2	5.4	extrapolated	HspUPO	5	5	LLLMI	no	39C,109E,111N!,180E,110H	18/18	33-82 (n=9)	C	L	L	F	L	S	I	E	H	N	L	H	E	I	G	E	M	I
+combined	Z__PramHTP1__Oomycota	1.4e-55	255	V	35.7	2.7	extrapolated_low_margin	TteUPO	3	5	FLLVG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	F	L	T	L	Q	L	E	H	D	N	Q	T	F	L	E	V	G
+combined	Z__PramHTP2__Oomycota	2.4e-51	265	V	34.6	2.4	extrapolated_low_margin	AacUPO	4	5	ILMLG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	V	M	L	V	E	H	D	T	P	F	I	A	E	L	G
+combined	Z__PsojHTP1__Oomycota	1.7e-58	242	V	35.5	0.0	extrapolated_low_margin	AacUPO	2	5	TFLVG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	T	F	T	L	Q	V	E	H	D	N	Q	A	I	L	E	V	G
+combined	Z__PsojHTP2__Oomycota	1.1e-51	245	V	32.4	2.0	extrapolated_low_margin	TteUPO	5	5	IVLVA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	V	L	L	A	I	E	H	D	Q	A	S	L	L	E	V	A
+combined	Z__PsojHTP3__Oomycota	3.1e-45	269	V	31.1	0.9	extrapolated_low_margin	HspUPO	2	5	FLIFG	no	39C,109D!,111D,180E,110H	18/18	33-82 (n=9)	C	F	L	L	I	A	I	D	H	D	L	A	F	V	G	E	F	G
+combined	Z__PsubHTP__Asco	7.8e-48	269	V	38.8	4.0	extrapolated	AacUPO	4	5	LIFLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	I	M	F	V	I	E	H	D	K	E	I	L	G	E	L	I
+combined	Z__PultHTP1__Oomycota	1e-52	247	V	33.5	2.7	extrapolated_low_margin	TteUPO	3	5	ILFLG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	F	F	A	I	E	H	D	S	P	A	R	G	E	L	G
+combined	Z__PultHTP2__Oomycota	5.3e-54	288	V	35.5	2.7	extrapolated_low_margin	AacUPO	4	5	ILLAG	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	T	L	P	I	E	H	D	K	L	A	S	A	E	A	G
+combined	Z__RclaHTP1__Mucoro	6.1e-61	221	V	37.2	1.5	extrapolated_low_margin	AluUPO	3	5	LFQLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	F	L	Q	T	L	E	H	D	K	Q	S	L	G	E	L	I
+combined	Z__RdelHTP__Mucoro	6.9e-38	295	II	31.5	3.0	extrapolated_low_margin	CviUPO	3	5	IFILT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	I	F	G	I	F	L	E	H	D	F	L	I	A	F	E	L	T
+combined	Z__RirrHTP1__Mucoro	8.9e-50	237	III	33.5	3.2	extrapolated	MroUPO	4	5	VILLC	no	39C,109E,111P!,180E,110H	18/18	0-3 (n=2)	C	V	I	I	L	A	I	E	H	P	L	Q	Y	Q	G	E	L	C
+combined	Z__RirrHTP2__Mucoro	1.3e-60	233	V	38.3	1.5	extrapolated_low_margin	AluUPO	2	5	TFQLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	T	F	V	Q	G	L	E	H	D	R	Q	S	L	G	E	L	V
+combined	Z__RmelHTP1__Basidio	6.1e-60	220	V	34.1	0.5	extrapolated_low_margin	AtuUPO	5	5	LLLLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	F	L	V	I	E	H	D	V	H	E	I	G	E	L	V
+combined	Z__RmicroHTP1__Mucoro	2.4e-39	303	unassigned	29.0	0.5	below_identity_floor	HspUPO	4	5	PVLLV	yes	39C,109E,111D,180E,110H	18/18	n/a	C	P	V	L	L	Y	L	E	H	D	F	P	L	A	V	E	L	V
+combined	Z__RmicroHTP2__Mucoro	3.5e-40	303	unassigned	29.5	1.2	below_identity_floor	MphUPO	4	5	PVVLV	yes	39C,109E,111D,180E,110H	18/18	n/a	C	P	V	L	V	Y	L	E	H	D	F	P	F	A	V	E	L	V
+combined	Z__RstolHTP1__Mucoro	2.1e-38	306	V	30.1	2.9	extrapolated_low_margin	RneUPO	4	5	VFLLI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	F	F	L	V	V	E	H	D	A	H	F	A	V	E	L	I
+combined	Z__RvesHTP1__Basidio	3.3e-45	288	unassigned	29.5	1.9	below_identity_floor	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	Y	V	F	I	E	H	D	F	H	I	F	A	N	T	I
+combined	Z__RvinHTP1__Basidio	3.8e-42	295	unassigned	29.5	0.9	below_identity_floor	AbrUPO-I	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	Y	V	F	I	E	H	D	F	H	I	F	S	N	T	I
+combined	Z__SAcoHTP2__Asco	5.2e-52	337	V	34.4	2.9	extrapolated_low_margin	HspUPO	4	5	ASLLV	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	A	S	A	L	G	I	E	H	D	P	H	I	L	G	E	L	V
+combined	Z__SborHTP1__Asco	1.4e-49	275	IV	62.6	13.7	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	I	M	Q	L	E	H	D	T	T	Q	F	G	E	A	A
+combined	Z__SbreHTP1__Basidio	7.5e-47	288	unassigned	28.4	1.4	below_identity_floor	AbrUPO-I	2	5	FFVTA	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	F	I	E	H	D	I	H	I	F	T	N	T	A
+combined	Z__SbreHTP2__Basidio	1.4e-48	289	III	31.4	0.2	extrapolated_low_margin	MorUPO	4	5	ILVLT	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	I	L	F	V	Y	I	E	H	D	F	H	L	F	A	N	L	T
+combined	Z__SbreHTP5__Basidio	3.4e-48	288	unassigned	29.5	1.4	below_identity_floor	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	F	I	E	H	D	F	H	I	F	A	N	T	I
+combined	Z__ScepHTP1__Asco	1.3e-38	236	IV	62.1	14.6	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	no	39-!,109E,111D,180E,110H	17/18	0-5 (n=1)	-	F	L	I	M	Q	L	E	H	D	T	T	A	F	G	E	A	A
+combined	Z__SdicHTP1__Oomycota	1.8e-37	249	V	37.2	4.7	extrapolated	AbrUPO-I	4	5	CILVA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	C	I	I	L	D	I	E	H	D	R	E	V	V	A	E	V	A
+combined	Z__SindHTP1__Basidio	2.2e-47	295	V	30.1	1.3	extrapolated_low_margin	HspUPO	4	5	LLLIT	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	L	L	G	L	I	I	E	H	D	V	H	A	F	N	N	I	T
+combined	Z__SlacHTP1__Basidio	1.7e-51	288	V	31.1	0.5	extrapolated_low_margin	RneUPO	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	33-82 (n=9)	C	F	F	F	V	F	I	E	H	D	F	H	M	F	S	N	T	I
+combined	Z__SlutHTP1__Basidio	2.3e-46	288	unassigned	29.5	1.9	below_identity_floor	AbrUPO-I	2	5	FFVTA	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	F	I	E	H	D	I	H	I	F	T	N	T	A
+combined	Z__SlutHTP2__Basidio	2.9e-48	289	III	31.9	0.7	extrapolated_low_margin	MorUPO	4	5	ILVLT	no	39C,109E,111D,180N!,110H	18/18	0-3 (n=2)	C	I	L	F	V	Y	I	E	H	D	F	H	L	F	A	N	L	T
+combined	Z__SlutHTP4__Basidio	2.4e-54	251	V	30.8	0.0	extrapolated_low_margin	TteUPO	5	5	LLLLL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	V	L	A	I	E	H	D	V	H	Q	I	A	E	L	L
+combined	Z__SlutHTP5__Basidio	6.5e-48	289	unassigned	29.5	1.4	below_identity_floor	AbrUPO-I	2	5	FFVTI	no	39C,109E,111D,180N!,110H	18/18	n/a	C	F	F	F	V	Y	I	E	H	D	F	H	V	F	S	N	T	I
+combined	Z__SmusHTP__Asco	6.4e-48	262	V	45.4	0.8	extrapolated_low_margin	HspUPO	2	5	FIASW	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	F	I	G	A	A	L	E	H	D	K	A	T	F	G	E	S	W
+combined	Z__SpipunHTP__Chytrid	7.2e-49	517	V	36.1	1.1	extrapolated_low_margin	AacUPO	4	5	IILLT	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	I	R	L	I	I	E	H	D	W	Q	L	L	G	E	L	T
+combined	Z__SpispHTP__Chytrid	6.8e-49	238	V	35.0	1.6	extrapolated_low_margin	AacUPO	4	5	IILLT	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	I	R	L	I	I	E	H	D	W	Q	L	L	G	E	L	T
+combined	Z__SreHTP1__Basidio	1e-39	419	unassigned	28.0	2.5	below_identity_floor	AacUPO	5	5	IMLLV	no	39C,109E,111D,180S!,110H	18/18	n/a	C	I	M	Q	L	P	I	E	H	D	V	Q	L	I	G	S	L	V
+combined	Z__SreHTP2__Basidio	5.1e-51	408	I	36.1	3.5	extrapolated	CmaUPO-I	4	5	LLLFV	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	L	L	I	L	I	L	E	G	D	W	R	L	V	G	E	F	V
+combined	Z__SsclHTP1__Asco	1.6e-50	276	IV	64.1	11.7	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	I	M	H	L	E	H	D	T	T	A	F	G	E	A	A
+combined	Z__StriHTP1__Asco	4e-51	276	IV	62.0	11.1	validated_range+provisional_cladeIV	MphUPO	4	5	FLMAA	yes	39C,109E,111D,180E,110H	18/18	0-5 (n=1)	C	F	L	I	M	Q	L	E	H	D	K	T	S	F	G	E	A	A
+combined	Z__UhHTP1__Basidio	9.5e-38	416	unassigned	28.0	3.0	below_identity_floor	AacUPO	5	5	IMLLI	no	39C,109E,111D,180S!,110H	18/18	n/a	C	I	M	Q	L	P	I	E	H	D	V	Q	L	I	G	S	L	I
+combined	Z__UmHTP1__Basidio	1.7e-48	410	I	39.3	5.6	extrapolated	CmaUPO-I	4	5	LLLFV	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	L	L	I	L	I	L	E	G	D	W	R	L	V	G	E	F	V
+combined	Z__UmHTP2__Basidio	3.9e-49	410	I	35.0	0.2	extrapolated_low_margin	CmaUPO-I	4	5	LLLFV	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	L	L	I	L	I	L	E	G	D	W	R	L	V	S	E	F	V
+combined	Z__UmHTP3__Basidio	3e-41	428	unassigned	27.3	0.7	below_identity_floor	DspUPO-I	5	5	IMLLV	no	39C,109E,111D,180S!,110H	18/18	n/a	C	I	M	Q	L	P	I	E	H	D	V	Q	L	I	G	S	L	V

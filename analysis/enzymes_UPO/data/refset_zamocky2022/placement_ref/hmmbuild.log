@@ -1,0 +1,16 @@
+# hmmbuild :: profile HMM construction from multiple sequence alignments
+# HMMER 3.4 (Aug 2023); http://hmmer.org/
+# Copyright (C) 2023 Howard Hughes Medical Institute.
+# Freely distributed under the BSD open source license.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# input alignment file:             analysis/enzymes_UPO/data/refset_zamocky2022/tree/aln.trim.afa
+# output HMM file:                  analysis/enzymes_UPO/data/refset_zamocky2022/placement_ref/ref.hmm
+# name (the single) HMM:            upo_ref
+# sym fraction for model structure: 0.000
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# idx name                  nseq  alen  mlen eff_nseq re/pos description
+#---- -------------------- ----- ----- ----- -------- ------ -----------
+1     upo_ref                187   224   224     3.87  0.590 
+
+# CPU time: 0.22u 0.00s 00:00:00.22 Elapsed: 00:00:00.23

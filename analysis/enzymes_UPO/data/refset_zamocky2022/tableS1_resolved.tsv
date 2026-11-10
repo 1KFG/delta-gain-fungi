@@ -1,0 +1,175 @@
+abbrev	given_id	id_type	resolved_id	route	organism	taxon	length_aa	pdb	note
+AaeAPO	B9W4V6	uniprot	B9W4V6	uniprot_direct	Agrocybe aegerita	Basidiomycota	371	2YOR	Aromatic peroxygenase
+AbHTP1	4224	peroxibase	Q9HGX3	uniprot_xref	Agaricus bisporus	Basidiomycota	284		
+AbHTP2	7602	peroxibase	peroxibase:7602	wayback_view_perox	Agaricus bisporus	Basidiomycota	269		
+AbHTP3	7595	peroxibase	peroxibase:7595	wayback_view_perox	Agaricus bisporus	Basidiomycota	374		
+AbHTP4	7596	peroxibase	peroxibase:7596	wayback_view_perox	Agaricus bisporus	Basidiomycota	375		
+AbHTP5	10810	peroxibase	peroxibase:10810	wayback_view_perox	Agaricus bisporus	Basidiomycota	371		
+AdelHTP1	11355	peroxibase	J0DBC0	uniprot_xref	Auricularia delicata	Basidiomycota	383		
+AdelHTP5	J0DDH9	uniprot	J0DDH9	uniprot_direct	Auricularia delicata	Basidiomycota	393		heme-thiolate peroxidase from strainTFB 10046
+AfumHTP1	4226	peroxibase	Q4WEA3	uniprot_xref	Aspergillus fumigatus	Ascomycota	275		
+AfumHTP2	4231	peroxibase	Q4WDT7	uniprot_xref	Aspergillus fumigatus	Ascomycota	443		
+AfumHTP3	4240	peroxibase	Q4WA37	uniprot_xref	Aspergillus fumigatus	Ascomycota	341		toxin biosynthesis peroxidase, putative
+AglauHTP	A0A168PJ24	uniprot	A0A168PJ24	uniprot_direct	Absidia glauca	Zygomycota_Mucoromycotina	309		pin mould
+AkawHTP1	G7XCF5	uniprot	G7XCF5	uniprot_direct	Aspergillus kawachii	Ascomycota	244		strain NBRC 4308
+AnHTP1	G3Y1C3	uniprot	G3Y1C3	uniprot_direct	Aspergillus niger	Ascomycota	244		heme haloperoxidase domain-containing protein
+AnHTP2	11356	peroxibase	peroxibase:11356	wayback_view_perox	Aspergillus niger	Ascomycota	265		
+AniHTP1	4185	peroxibase	Q5AZ23	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	264		
+AniHTP2	4190	peroxibase	Q5ATI5	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	268		
+AniHTP3	4195	peroxibase	peroxibase:4195	wayback_view_perox	Aspergillus nidulans-Emericella nidulans	Ascomycota	271		
+AniHTP4a	4202	peroxibase	Q00668	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	305		
+AniHTP4b	4204	peroxibase	Q00668	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	311		
+AniHTP5	4206	peroxibase	Q5AUV6	uniprot_xref	Aspergillus nidulans-Emericella nidulans	Ascomycota	183		
+AorHTP1	4194	peroxibase	Q2UFV5	uniprot_xref	Aspergillus oryzae	Ascomycota	242		
+AorHTP2	4197	peroxibase	Q2TX33	uniprot_xref	Aspergillus oryzae	Ascomycota	259		UniProt Q2TX33 is a 205-aa gene model vs 259 in Table S1; PeroxiBase 4197 archived without sequence; kept, flagged for QC
+AorHTP3	4209	peroxibase	Q2UAL0	uniprot_xref	Aspergillus oryzae	Ascomycota	275		
+AorHTP4	4242	peroxibase	Q2UE54	uniprot_xref	Aspergillus oryzae	Ascomycota	239		
+AphasHTP1	W4GGT9	uniprot	W4GGT9	uniprot_direct	Aphanomyces astaci	Stramenopiles_Oomycota	247		heme-haloperoxidase domain containing protein
+AphinHTP1	XP_008875467	ncbi_protein	XP_008875467	ncbi_efetch	Aphanomyces invadans	Stramenopiles_Oomycota	298		
+AphinHTP2	A0A024TX20	uniprot	A0A024TX20	uniprot_direct	Aphanomyces invadans	Stramenopiles_Oomycota	246		heme-haloperoxidase domain containing protein
+AteHTP1	4186	peroxibase	peroxibase:4186	wayback_view_perox	Aspergillus terreus	Ascomycota	242		
+AteHTP2	4192	peroxibase	peroxibase:4192	wayback_view_perox	Aspergillus terreus	Ascomycota	265		PeroxiBase 4192 archived without sequence; no 265-aa A. terreus PF01328 entry in UniProt: unrecoverable
+AteHTP3	4233	peroxibase	A0ACM9MD70	inferred_unique_PF01328_len_match	Aspergillus terreus	Ascomycota	451		
+BcinHTP	XP_001556989	ncbi_protein	XP_001556989	ncbi_efetch	Botrytis cinerea	Ascomycota	276		strain B05.10
+BfucHTP1	A0A384JUN3	uniprot	A0A384JUN3	uniprot_direct	Botryotinia fuckeliana	Ascomycota	276		
+BmesHTP1	A0A4S4MA07	uniprot	A0A4S4MA07	uniprot_direct	Bondarzewia mesenterica	Basidiomycota	224		
+BnarHTP1	A0A4Z1IIS0	uniprot	A0A4Z1IIS0	uniprot_direct	Botryotinia narcissicola	Ascomycota	276		
+BtulHTP1	A0A4Z1EF10	uniprot	A0A4Z1EF10	uniprot_direct	Botrytis tulipae	Ascomycota	276		
+CaberAPO1	A0A4Q2D9Y7	uniprot	A0A4Q2D9Y7	uniprot_direct	Candolleomyces aberdarensis	Basidiomycota	379		heme-thiolate peroxidase
+CchloHTP1	OLN86587	ncbi_protein	OLN86587	ncbi_efetch	Colletotrichum chlorophyti	Ascomycota	284		sterigmatocystin biosynthesis peroxidase
+CcinHTP1	6518	peroxibase	peroxibase:6518	wayback_view_perox	Coprinopsis_cinerea	Basidiomycota	304		
+CcinHTP2	6553	peroxibase	peroxibase:6553	wayback_view_perox	Coprinopsis cinerea	Basidiomycota	295		
+CcinHTP3	6519	peroxibase	peroxibase:6519	wayback_view_perox	Coprinopsis cinerea	Basidiomycota	269		heme haloperoxidase domain-containing protein
+CcinHTP4	A8NAQ8	uniprot	A8NAQ8	uniprot_direct	Coprinopsis cinerea	Basidiomycota	387		
+CcucHTP	A0A1C7N2V4	uniprot	A0A1C7N2V4	uniprot_direct	Choanephora cucurbitarum	Mucoromycotina	268		chloroperoxidase
+CfioHTP1	A0A010SNE9	uniprot	A0A010SNE9	uniprot_direct	Colletotrichum fioriniae	Ascomycota	271		373
+CfumagHTP	4070	peroxibase	P04963	uniprot_xref	Caldariomyces_fumago (Leptoxyphium fumago)	Ascomycota	298	1CPO	P04963 is the 373-aa precursor; mature chain 21-319 (299 aa) matches Table S1 (298) within 1
+CgHTP1	4189	peroxibase	Q2GU92	uniprot_xref	Chaetomium globosum	Ascomycota	271		
+CgHTP2	4193	peroxibase	Q2GWW6	uniprot_xref	Chaetomium globosum	Ascomycota	260		
+CgHTP3	4198	peroxibase	Q2HHI5	uniprot_xref	Chaetomium globosum	Ascomycota	251		
+CgHTP4	4205	peroxibase	Q2H8A8	uniprot_xref	Chaetomium globosum	Ascomycota	261		
+ChigHTP1	11349	peroxibase	H1VNH1	uniprot_xref	Colletotrichum_higginsianum	Ascomycota	278		
+ChigHTP2	11350	peroxibase	H1W2K3	uniprot_xref	Colletotrichum_higginsianum	Ascomycota	281		
+CmicAPO1	A0A4Y7TB78	uniprot	A0A4Y7TB78	uniprot_direct	Coprinellus micaceus	Basidiomycota	384		aromatic peroxygenase 
+ColgloeoHTP	L2GBA	uniprot_truncated	L2GBA1	inferred_unique_PF01328_len_match	Colletotrichum gloeosporioides	Ascomycota	277		
+CsubHTP5	M2QYC8	uniprot	M2QYC8	uniprot_direct	Ceriporiopsis subvermispora	Basidiomycota	304		heme-thiolate peroxidase from white rot fungus
+DaspAPO1	M5FYQ1	uniprot	M5FYQ1	uniprot_direct	Dacryopinax sp	Basidiomycota	326		aromatic peroxygenase from brown rot fungus
+DfragHTP1	A0A4Y9ZDW9	uniprot	A0A4Y9ZDW9	uniprot_direct	Dentipellis fragilis	Basidiomycota	223		
+DsquaHTP1	R7SJY6	uniprot	R7SJY6	uniprot_direct	Dichomitus squalens	Basidiomycota	301		chloroperoxidase-like protein from white rot fungus, integral component of membrane
+FagHTP1	KAF4503608	ncbi_protein	KAF4503608	ncbi_efetch	Fusarium agapanthi	Ascomycota	231		
+GcerHTP1	A0A397SK56	uniprot	A0A397SK56	uniprot_direct	Glomus cerebriforme	Glomeromycotina_Mucoromycota	221		chloroperoxidase
+GrosHTP1	A0A397TVS6	uniprot	A0A397TVS6	uniprot_direct	Gigaspora rosea	Glomeromycotina_Mucoromycota	230		chloroperoxidase
+GrosHTP2	A0A397VVL9	uniprot	A0A397VVL9	uniprot_direct	Gigaspora rosea	Glomeromycotina_Mucoromycota	239		chloroperoxidase
+GzHTP1	4188	peroxibase	peroxibase:4188	wayback_view_perox	Gibberella zeae	Ascomycota	266		
+GzHTP2	4200	peroxibase	peroxibase:4200	wayback_view_perox	Gibberella zeae	Ascomycota	205		
+GzHTP3	4219	peroxibase	peroxibase:4219	wayback_view_perox	Gibberella zeae	Ascomycota	268		
+GzHTP4	4227	peroxibase	peroxibase:4227	wayback_view_perox	Gibberella zeae	Ascomycota	448		
+GzHTP5	4238	peroxibase	peroxibase:4238	wayback_view_perox	Gibberella zeae	Ascomycota	453		
+HirrHTP	W4JVD1	uniprot	W4JVD1	uniprot_direct	Heterobasidion irregulare	Basidiomycota	298		Chloroperoxidase 4, integral component of membrane from tree root pathogenic fungus
+HjHTP1	4184	peroxibase	peroxibase:4184	wayback_view_perox	 Hypocrea jecorina	Ascomycota	260		
+HspHTP1	A0A1Y2TH07	uniprot	A0A1Y2TH07	uniprot_direct	Hypoxylon sp.	Ascomycota	261	7O2D	EC38
+LbiHTP1	6514	peroxibase	peroxibase:6514	wayback_view_perox	Laccaria bicolor	Basidiomycota	292		
+LbiHTP2	6515	peroxibase	peroxibase:6515	wayback_view_perox	Laccaria bicolor	Basidiomycota	294		
+LbiHTP3	6516	peroxibase	peroxibase:6516	wayback_view_perox	Laccaria bicolor	Basidiomycota	340		
+LbiHTP4	6733	peroxibase	peroxibase:6733	wayback_view_perox	Laccaria bicolor	Basidiomycota	253		
+LbiHTP5	6766	peroxibase	B0DV60	inferred_unique_PF01328_len_match	Laccaria bicolor	Basidiomycota	386		archived PeroxiBase 6766 is 305 aa (entry revised after 2022?); B0DV60 is the only 386-aa L. bicolor PF01328 entry, matching Table S1
+MgrHTP1	XP_030986273	ncbi_protein	XP_030986273	ncbi_efetch	Magnaporthe_grisea	Ascomycota	257		uncharacterized protein
+MlarHTP1	F4S6R1	uniprot	F4S6R1	uniprot_direct	Melampsora larici-populina	Basidiomycota	357		
+MlarHTP2	F4RMS8	uniprot	F4RMS8	uniprot_direct	Melampsora larici-populina	Basidiomycota	351		
+MoHTP1	11351	peroxibase	G4N266	uniprot_xref	Magnaporthe_oryzae	Ascomycota	257		
+MpiHTP1	4232	peroxibase	Q8TFD4	uniprot_xref	Mycosphaerella_pini	Ascomycota	414		
+MrotHTP1	5FUJ_A	pdb_chain	5FUJ_A	pdb (MroUPO; already in backbone as UPI002016A75C)	Marasmius rotula	Basidiomycota	236	5FUJ	
+MscoHTP	A0A132B1Z8	uniprot	A0A132B1Z8	uniprot_direct	Mollisia scopiformis	Ascomycota	267		
+MtherHTP	XP_003665551	ncbi_protein	XP_003665551	ncbi_efetch	Myceliophthora thermophila	Ascomycota	261		chloroperoxidase from strain ATCC 42464
+MucambHTP	A0A0C9MMY0	uniprot	A0A0C9MMY0	uniprot_direct	Mucor ambiguus	Mucoromycotina	304		
+MuccirHTP	S2J0Z9	uniprot	S2J0Z9	uniprot_direct	Mucor circinelloides	Mucoromycotina	308		early diverging fungal lineages
+MuclusHTP	A0A168NZM9	uniprot	A0A168NZM9	uniprot_direct	Mucor lusitanicus	Mucoromycotina	309		
+NcHTP1	4199	peroxibase	peroxibase:4199	wayback_view_perox	Neurospora crassa	Ascomycota	272		
+NhaeHTP	C7YNC2	uniprot	C7YNC2	uniprot_direct	Nectria haematococca	Ascomycota	271		heme haloperoxidase domain containing protein
+OpsiHTP	T5ABQ4	uniprot	T5ABQ4	uniprot_direct	Ophiocordyceps sinensis	Ascomycota	484		
+PanHTP1	6784	peroxibase	B2AFP6	uniprot_xref	Podospora anserina	Ascomycota	386		
+PantHTP1	M9MFD9	uniprot	M9MFD9	uniprot_direct	Pseudozyma antarctica	Basidiomycota	413		heme haloperoxidase from the yeast Candida antarctica
+PbraHTP1	A0A1S9RVU3	uniprot	A0A1S9RVU3	uniprot_direct	Penicillium brasilianum	Ascomycota	243		
+PcarHTP1	9963	peroxibase	peroxibase:9963	wayback_view_perox	Phanerochaete carnosa	Basidiomycota	296		
+PcarHTP4	9929	peroxibase	peroxibase:9929	wayback_view_perox	Phanerochaete carnosa	Basidiomycota	263		
+PcHTP1	6735	peroxibase	peroxibase:6735	wayback_view_perox	Phanerochaete chrysosporium	Basidiomycota	295		
+PcHTP2	6736	peroxibase	peroxibase:6736	wayback_view_perox	Phanerochaete chrysosporium	Basidiomycota	388		
+PcHTP3	6738	peroxibase	peroxibase:6738	wayback_view_perox	Phanerochaete chrysosporium	Basidiomycota	279		
+PcyanHTP1	A0A409WMN3	uniprot	A0A409WMN3	uniprot_direct	Psilocybe cyanescens	Basidiomycota	374		heme haloperoxidase domain containing protein from strain W106-1
+PficHTP1	W3X364	uniprot	W3X364	uniprot_direct	Pestalotiopsis fici	Ascomycota	253		heme haloperoxidase domain containing protein from strain W106-1
+PfungHTP1	A0A2P6MXV3	uniprot	A0A2P6MXV3	uniprot_direct	Planoprotostelium fungivorum (Protostelium aurantium)	Amobeozoa	304		integral component of membrane
+PfungHTP2	A0A2P6MP65	uniprot	A0A2P6MP65	uniprot_direct	Planoprotostelium fungivorum (Protostelium aurantium)	Amobeozoa	327		integral component of membrane
+PhubeHTP1	R9P357	uniprot	R9P357	uniprot_direct	Pseudozyma hubeiensis	Basidiomycota	422		
+PiHTP1	4207	peroxibase	A0A833WJI1;Q8H6Y2	uniprot_xref	Phytophthora infestans	Stramenopiles_Oomycota	255		two UniProt entries carry this PeroxiBase ID; keep first after sequence-identity check
+PiHTP2	4222	peroxibase	A0A833TAH2;Q8H6Y6	uniprot_xref	Phytophthora infestans	Stramenopiles_Oomycota	254		two UniProt entries carry this PeroxiBase ID; keep first after sequence-identity check
+PinvHTP1	6504	peroxibase	peroxibase:6504	wayback_view_perox	Paxillus_involutus	Basidiomycota	291		ectomycorrhizal fungus
+PinvHTP2	10813	peroxibase	peroxibase:10813	wayback_view_perox	Paxillus_involutus	Basidiomycota	291		
+PinvHTP3	10814	peroxibase	peroxibase:10814	wayback_view_perox	Paxillus_involutus	Basidiomycota	276		
+PinvHTP4	10815	peroxibase	peroxibase:10815	wayback_view_perox	Paxillus_involutus	Basidiomycota	225		
+PnoHTP01	4187	peroxibase	peroxibase:4187	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	280		
+PnoHTP02	4191	peroxibase	peroxibase:4191	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	248		
+PnoHTP03	4196	peroxibase	peroxibase:4196	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	269		
+PnoHTP04	4203	peroxibase	peroxibase:4203	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	268		
+PnoHTP05	4208	peroxibase	peroxibase:4208	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	308		
+PnoHTP06	4215	peroxibase	peroxibase:4215	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	451		
+PnoHTP07	4220	peroxibase	peroxibase:4220	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	272		
+PnoHTP08	4225	peroxibase	peroxibase:4225	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	421		
+PnoHTP09	4230	peroxibase	peroxibase:4230	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	415		
+PnoHTP10	4234	peroxibase	peroxibase:4234	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	425		
+PnoHTP11	4235	peroxibase	peroxibase:4235	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	380		
+PnoHTP12	4236	peroxibase	peroxibase:4236	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	454		
+PnoHTP13	4237	peroxibase	peroxibase:4237	wayback_view_perox	Phaeosphaeria nodorum	Ascomycota	436		
+PoxaHTP1	S8AXK7	uniprot	S8AXK7	uniprot_direct	Penicillium oxalicum	Ascomycota	226		heme haloperoxidase domain containing protein
+PpaHTP	A0A0B7NHB7	uniprot	A0A0B7NHB7	uniprot_direct	Parasitella parasitica	Mucoromycotina	309		
+PparHTP1	W2PAH2	uniprot	W2PAH2	uniprot_direct	Phytophthora parasitica	Stramenopiles_Oomycota	255		model oomycete plant pathogen, strain INRA-310
+PparHTP2	W2YR02	uniprot	W2YR02	uniprot_direct	Phytophthora parasitica	Stramenopiles_Oomycota	255		model oomycete plant pathogen, strain P10297
+PparHTP3	W2ZS85	uniprot	W2ZS85	uniprot_direct	Phytophthora parasitica	Stramenopiles_Oomycota	262		model oomycete plant pathogen, strain P10297
+PplHTP1	6729	peroxibase	peroxibase:6729	wayback_view_perox	Postia placenta	Basidiomycota	296		
+PplHTP2	6730	peroxibase	peroxibase:6730	wayback_view_perox	Postia placenta	Basidiomycota	280		
+PplHTP3	6731	peroxibase	peroxibase:6731	wayback_view_perox	Postia placenta	Basidiomycota	298		
+PplHTP4	6732	peroxibase	peroxibase:6732	wayback_view_perox	Postia placenta	Basidiomycota	421		
+PplHTP5	6734	peroxibase	peroxibase:6734	wayback_view_perox	Postia placenta	Basidiomycota	277		
+PramHTP1	H3G8S3	uniprot	H3G8S3	uniprot_direct	Phytophthora ramorum	Stramenopiles_Oomycota	255		heme-haloperoxidase domain containing protein from sudden oak death agent
+PramHTP2	H3H4P0	uniprot	H3H4P0	uniprot_direct	Phytophthora ramorum	Stramenopiles_Oomycota	265		
+PsojHTP1	G5AHA1	uniprot	G5AHA1	uniprot_direct	Phytophthora sojae	Stramenopiles_Oomycota	242		chloroperoxidase from soybean root and stem rot agent
+PsojHTP2	G4Z525	uniprot	G4Z525	uniprot_direct	Phytophthora sojae	Stramenopiles_Oomycota	245		
+PsojHTP3	G5A445	uniprot	G5A445	uniprot_direct	Phytophthora sojae	Stramenopiles_Oomycota	269		
+PsubHTP	A0A1L7XF99	uniprot	A0A1L7XF99	uniprot_direct	Phialocephala subalpina	Ascomycota	269		related to chloroperoxidase
+PultHTP1	K3WBV2	uniprot	K3WBV2	uniprot_direct	Pythium ultimum	Stramenopiles_Oomycota	247		heme-haloperoxidase domain containing protein from root plant pathogen
+PultHTP2	K3WVQ8	uniprot	K3WVQ8	uniprot_direct	Pythium ultimum	Stramenopiles_Oomycota	288		
+RclaHTP1	A0A2Z6SCW9	uniprot	A0A2Z6SCW9	uniprot_direct	Rhizophagus clarus	Mucoromycotina	221		heme-haloperoxidase domain containing protein from early diverging fungal lineage
+RdelHTP	I1BPA9	uniprot	I1BPA9	uniprot_direct	Rhizopus delemar	Mucoromycotina	295		early diverging fungal lineage
+RirrHTP1	A0A015KWA5	uniprot	A0A015KWA5	uniprot_direct	Rhizophagus irregularis	Mucoromycotina	237		early diverging fungal lineage
+RirrHTP2	A0A015KB27	uniprot	A0A015KB27	uniprot_direct	Rhizophagus irregularis	Mucoromycotina	233		heme-haloperoxidase domain containing protein from early diverging fungal lineage
+RmelHTP1	A0A4Y7PLR6	uniprot	A0A4Y7PLR6	uniprot_direct	Rickenella mellea	Basidiomycota	220		
+RmicroHTP1	A0A1X0RF88	uniprot	A0A1X0RF88	uniprot_direct	Rhizopus microsporus	Mucoromycota	303		chloroperoxidase from var. microsporus
+RmicroHTP2	A0A0A1N0W0	uniprot	A0A0A1N0W0	uniprot_direct	Rhizopus microsporus	Mucoromycotina	303		chloroperoxidase from strain ATCC:11559
+RstolHTP1	A0A367KKN7	uniprot	A0A367KKN7	uniprot_direct	Rhizopus stolonifer	Mucoromycotina	306		
+RvesHTP1	A0A1J8Q2H6	uniprot	A0A1J8Q2H6	uniprot_direct	Rhizopogon vesiculosus	Basidiomycota	288		
+RvinHTP1	A0A1B7NBL1	uniprot	A0A1B7NBL1	uniprot_direct	Rhizopogon vinicolor	Basidiomycota	295		
+SAcoHTP2	11214	peroxibase	peroxibase:11214	wayback_view_perox	Saitoella complicata	Ascomycota	337		
+SborHTP1	W9CCX2	uniprot	W9CCX2	uniprot_direct	Sclerotinia borealis	Ascomycota	275		strain F-4128
+SbreHTP1	12616	peroxibase	peroxibase:12616	wayback_view_perox	Suillus brevipes	Basidiomycota	288		bolete fungus
+SbreHTP2	12618	peroxibase	peroxibase:12618	wayback_view_perox	Suillus brevipes	Basidiomycota	289		
+SbreHTP5	12617	peroxibase	peroxibase:12617	wayback_view_perox	Suillus brevipes	Basidiomycota	288		
+ScepHTP1	KAF7879209	ncbi_protein	KAF7879209	ncbi_efetch	Sclerotium cepivorum	Ascomycota	236		
+SdicHTP1	T0PIC0	uniprot	T0PIC0	uniprot_direct	Saprolegnia diclina	Stramenopiles_Oomycota	249		strain VS20
+SindHTP1	G4TF47	uniprot	G4TF47	uniprot_direct	Serendipita indica	Basidiomycota	295		heme haloperoxidase from root endophyte fungus
+SlacHTP1	F8PRI8	uniprot	F8PRI8	uniprot_direct	Serpula lacrymans	Basidiomycota	288		heme haloperoxidase domain containing protein from dry rot fungus
+SlutHTP1	12615	peroxibase	peroxibase:12615	wayback_view_perox	Suillus luteus	Basidiomycota	288		bolete fungus
+SlutHTP2	12621	peroxibase	peroxibase:12621	wayback_view_perox	Suillus luteus	Basidiomycota	289		
+SlutHTP4	12613	peroxibase	peroxibase:12613	wayback_view_perox	Suillus luteus	Basidiomycota	251		
+SlutHTP5	12620	peroxibase	A0A0D0A0B1	inferred_unique_PF01328_len_match	Suillus luteus	Basidiomycota	289		PeroxiBase 12620 not archived with a sequence; the only 289-aa S. luteus PF01328 entry not identical to SlutHTP1/SlutHTP2 (by elimination)
+SmusHTP	M3D222	uniprot	M3D222	uniprot_direct	Sphaerulina musiva	Ascomycota	262		Cloroperoxidase from strain SO2202, poplar stem canker
+SpipunHTP	A0A0L0HUM0	uniprot	A0A0L0HUM0	uniprot_direct	Spizellomyces punctatus	Chytridiomycota	517		strain DAOM BR117
+SpispHTP	A0A507EVL0	uniprot	A0A507EVL0	uniprot_direct	Spizellomyces sp. palustris	Chytridiomycota	238		integral component of menbrane
+SreHTP1	E6ZM57	uniprot	E6ZM57	uniprot_direct	Sporisorium reilianum	Basidiomycota	419		
+SreHTP2	10669	peroxibase	E7A211	uniprot_xref	Sporisorium reilianum	Basidiomycota	408		
+SsclHTP1	11354	peroxibase	A7F4T4	uniprot_xref	Sclerotinia sclerotiorum	Ascomycota	276		heme_haloperoxidase domain containing protein
+StriHTP1	CAD6456256	ncbi_protein	CAD6456256	ncbi_efetch	Sclerotinia trifoliorum	Ascomycota	276		
+ThetHTP1	G2QID2	uniprot	G2QID2	uniprot_direct	Thielavia heterothallica	Ascomycota	261		
+TterHTP1	11358	peroxibase	G2R8M6	uniprot_xref	Thielavia terrestris	Ascomycota	274		
+UhHTP1	I2FU85	uniprot	I2FU85	uniprot_direct	Ustilago hordei	Basidiomycota	416		barley covered smut fungus
+UmHTP1	4216	peroxibase	peroxibase:4216	wayback_view_perox	Ustilago maydis	Basidiomycota	410		
+UmHTP2	4217	peroxibase	peroxibase:4217	wayback_view_perox	Ustilago maydis	Basidiomycota	410		
+UmHTP3	4221	peroxibase	peroxibase:4221	wayback_view_perox	Ustilago maydis	Basidiomycota	428		

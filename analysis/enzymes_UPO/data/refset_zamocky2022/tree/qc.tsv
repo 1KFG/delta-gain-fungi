@@ -1,0 +1,193 @@
+label	set	name	taxon_group	length	dup_of	pf01328_evalue	catalytic_ok	catalytic_detail	upo_sites_clade	nearest_ref	nearest_identity	in_tree	reason
+B__AacUPO__cladeV	backbone	AacUPO		273		1.2e-55	yes	39C,109E,111D,180E,110H	V	AacUPO	100.0	yes	
+B__AbrUPO-I__cladeV	backbone	AbrUPO-I		265		4.6e-55	yes	39C,109E,111D,180E,110H	V	AbrUPO-I	100.0	yes	
+B__AbrUPO-II__cladeV	backbone	AbrUPO-II		263		1.9e-56	yes	39C,109E,111D,180E,110H	V	AbrUPO-II	100.0	yes	
+B__AluUPO__cladeV	backbone	AluUPO		267		1.6e-55	yes	39C,109E,111D,180E,110H	V	AluUPO	100.0	yes	
+B__CabUPO-III__cladeI	backbone	CabUPO-III		387		1.7e-50	yes	39C,109E,111D,180E,110G	I	CabUPO-III	100.0	yes	
+B__CmaUPO-I__cladeI	backbone	CmaUPO-I		380		6.7e-49	yes	39C,109E,111D,180E,110G	I	CmaUPO-I	100.0	yes	
+B__CviUPO__cladeII	backbone	CviUPO		226		2.3e-55	yes	39C,109E,111D,180E,110H	II	CviUPO	100.0	yes	
+B__GmaUPO-II__cladeI	backbone	GmaUPO-II		373		6.4e-53	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	100.0	yes	
+B__MorUPO__cladeIII	backbone	MorUPO		250		1.9e-59	yes	39C,109E,111D,180E,110H	III	MorUPO	100.0	yes	
+B__MroUPO__cladeIII	backbone	MroUPO		239		3e-59	yes	39C,109E,111D,180E,110H	III	MroUPO	100.0	yes	
+B__PanUPO__cladeII	backbone	PanUPO		268		9.4e-50	yes	39C,109E,111D,180E,110H	II	PanUPO	100.0	yes	
+B__RneUPO__cladeV	backbone	RneUPO		250		1.9e-48	yes	39C,109E,111D,180E,110H	V	RneUPO	100.0	yes	
+B__TteUPO__cladeV	backbone	TteUPO		274	Z__TterHTP1__Asco	5.6e-55	yes	39C,109E,111D,180E,110H	V	TteUPO	100.0	yes	
+B__AtuUPO__cladeV	backbone	AtuUPO		267		8.6e-57	yes	39C,109E,111D,180E,110H	V	AtuUPO	100.0	yes	
+B__DspUPO-I__cladeV	backbone	DspUPO-I		262		6.8e-53	yes	39C,109E,111D,180E,110H	V	DspUPO-I	100.0	yes	
+B__HspUPO__cladeV	backbone	HspUPO		261	Z__HspHTP1__Asco	7.3e-53	yes	39C,109E,111D,180E,110H	V	HspUPO	100.0	yes	
+B__LspUPO-II__cladeI	backbone	LspUPO-II		377		3.6e-56	yes	39C,109E,111D,180E,110G	I	LspUPO-II	100.0	yes	
+B__MphUPO__cladeIV	backbone	MphUPO		259		7.5e-52	yes	39C,109E,111D,180E,110H	IV	MphUPO	100.0	yes	
+B__PaDa-I_parent_AaeUPO__cladeI	backbone	PaDa-I_parent_AaeUPO		371	Z__AaeAPO__Basidio	4.3e-53	yes	39C,109E,111D,180E,110G	I	PaDa-I_parent_AaeUPO	100.0	yes	
+Z__AaeAPO__Basidio	zamocky	AaeAPO	Basidio	371	B__PaDa-I_parent_AaeUPO__cladeI							no	duplicate of B__PaDa-I_parent_AaeUPO__cladeI
+Z__AbHTP1__Basidio	zamocky	AbHTP1	Basidio	284		4.1e-52	no	39C,109E,111D,180N!,110H	III	MroUPO	30.8	yes	catalytic_residues_differ
+Z__AbHTP2__Basidio	zamocky	AbHTP2	Basidio	269		4.7e-53	yes	39C,109E,111D,180E,110H	II	PanUPO	31.4	yes	
+Z__AbHTP3__Basidio	zamocky	AbHTP3	Basidio	374		5e-53	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	79.2	yes	
+Z__AbHTP4__Basidio	zamocky	AbHTP4	Basidio	375		1.1e-53	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	79.2	yes	
+Z__AbHTP5__Basidio	zamocky	AbHTP5	Basidio	371		1.4e-54	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	74.9	yes	
+Z__AdelHTP1__Basidio	zamocky	AdelHTP1	Basidio	383		7.8e-53	yes	39C,109E,111D,180E,110G	I	PaDa-I_parent_AaeUPO	68.3	yes	
+Z__AdelHTP5__Basidio	zamocky	AdelHTP5	Basidio	393		2.9e-47	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	68.9	yes	
+Z__AfumHTP1__Asco	zamocky	AfumHTP1	Asco	275		1.5e-41	yes	39C,109E,111D,180E,110H	II	PanUPO	31.0	yes	
+Z__AfumHTP2__Asco	zamocky	AfumHTP2	Asco	443		1.5e-45	no	39C,109E,111D,180A!,110A	I	LspUPO-II	32.1	yes	catalytic_residues_differ
+Z__AfumHTP3__Asco	zamocky	AfumHTP3	Asco	341		7.7e-32	no	39C,109N!,111P!,180Q!,110C	unassigned	MphUPO	26.8	yes	catalytic_residues_differ
+Z__AglauHTP__Mucoro	zamocky	AglauHTP	Mucoro	309		6.8e-41	yes	39C,109E,111D,180E,110H	V	RneUPO	35.0	yes	
+Z__AkawHTP1__Asco	zamocky	AkawHTP1	Asco	244		2.9e-46	yes	39C,109E,111D,180E,110H	unassigned	MphUPO	29.7	yes	
+Z__AnHTP1__Asco	zamocky	AnHTP1	Asco	244		2.6e-45	yes	39C,109E,111D,180E,110H	unassigned	MphUPO	29.7	yes	
+Z__AnHTP2__Asco	zamocky	AnHTP2	Asco	265		1.4e-55	yes	39C,109E,111D,180E,110H	V	AluUPO	94.5	yes	
+Z__AniHTP1__Asco	zamocky	AniHTP1	Asco	264		7.6e-59	yes	39C,109E,111D,180E,110H	V	HspUPO	49.2	yes	
+Z__AniHTP2__Asco	zamocky	AniHTP2	Asco	268		7.2e-51	yes	39C,109E,111D,180E,110H	IV	MphUPO	64.1	yes	
+Z__AniHTP3__Asco	zamocky	AniHTP3	Asco	271		5.7e-47	yes	39C,109E,111D,180E,110H	IV	MphUPO	57.1	yes	
+Z__AniHTP4a__Asco	zamocky	AniHTP4a	Asco	305		1.4e-53	yes	39C,109E,111D,180E,110H	II	CviUPO	56.0	yes	
+Z__AniHTP4b__Asco	zamocky	AniHTP4b	Asco	311		1.7e-51	yes	39C,109E,111D,180E,110H	II	CviUPO	53.8	yes	
+Z__AniHTP5__Asco	zamocky	AniHTP5	Asco	183		1.7e-38	no	39C,109E,111D,180-!,110F	unassigned	MroUPO	27.6	yes	catalytic_residues_differ
+Z__AorHTP1__Asco	zamocky	AorHTP1	Asco	242		1.7e-51	no	39C,109E,111D,180Q!,110H	V	AbrUPO-II	58.5	yes	catalytic_residues_differ
+Z__AorHTP2__Asco	zamocky	AorHTP2	Asco	205		2.6e-29	no	39-!,109-!,111T!,180E,110-	IV	MphUPO	54.6	yes	catalytic_residues_differ;length_205_vs_tableS1_259
+Z__AorHTP3__Asco	zamocky	AorHTP3	Asco	275		1.1e-44	yes	39C,109E,111D,180E,110H	III	MorUPO	33.0	yes	
+Z__AorHTP4__Asco	zamocky	AorHTP4	Asco	239		4.6e-16	no	39C,109-!,111-!,180-!,110-	unassigned	RneUPO	10.0	yes	catalytic_residues_differ
+Z__AphasHTP1__Oomycota	zamocky	AphasHTP1	Oomycota	247		6.7e-40	yes	39C,109E,111D,180E,110H	V	AacUPO	33.0	yes	
+Z__AphinHTP1__Oomycota	zamocky	AphinHTP1	Oomycota	298		9.8e-41	yes	39C,109E,111D,180E,110H	V	AbrUPO-I	33.3	yes	
+Z__AphinHTP2__Oomycota	zamocky	AphinHTP2	Oomycota	246		7.2e-40	yes	39C,109E,111D,180E,110H	V	TteUPO	33.0	yes	
+Z__AteHTP1__Asco	zamocky	AteHTP1	Asco	242		9.7e-60	yes	39C,109E,111D,180E,110H	V	HspUPO	51.9	yes	
+Z__AteHTP3__Asco	zamocky	AteHTP3	Asco	451		3.9e-46	no	39C,109E,111D,180A!,110S	I	LspUPO-II	30.4	yes	catalytic_residues_differ
+Z__BcinHTP__Asco	zamocky	BcinHTP	Asco	276		4.6e-49	yes	39C,109E,111D,180E,110H	IV	MphUPO	66.5	yes	
+Z__BfucHTP1__Asco	zamocky	BfucHTP1	Asco	276	Z__BcinHTP__Asco							no	duplicate of Z__BcinHTP__Asco
+Z__BmesHTP1__Basidio	zamocky	BmesHTP1	Basidio	224		4.2e-54	yes	39C,109E,111D,180E,110H	II	PanUPO	33.5	yes	
+Z__BnarHTP1__Asco	zamocky	BnarHTP1	Asco	276		9.5e-49	yes	39C,109E,111D,180E,110H	IV	MphUPO	66.9	yes	
+Z__BtulHTP1__Asco	zamocky	BtulHTP1	Asco	276		2.8e-49	yes	39C,109E,111D,180E,110H	IV	MphUPO	66.9	yes	
+Z__CaberAPO1__Basidio	zamocky	CaberAPO1	Basidio	379		2.3e-55	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	69.9	yes	
+Z__CchloHTP1__Asco	zamocky	CchloHTP1	Asco	284		7.7e-53	yes	39C,109E,111D,180E,110H	IV	MphUPO	73.8	yes	
+Z__CcinHTP1__Basidio	zamocky	CcinHTP1	Basidio	304		4.1e-53	no	39C,109E,111D,180N!,110H	V	RneUPO	32.8	yes	catalytic_residues_differ
+Z__CcinHTP2__Basidio	zamocky	CcinHTP2	Basidio	295		1.1e-53	no	39C,109E,111D,180N!,110H	V	RneUPO	32.8	yes	catalytic_residues_differ
+Z__CcinHTP3__Basidio	zamocky	CcinHTP3	Basidio	269		3e-48	no	39C,109E,111N!,180E,110H	unassigned	MorUPO	29.7	yes	catalytic_residues_differ
+Z__CcinHTP4__Basidio	zamocky	CcinHTP4	Basidio	387		2.4e-52	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	68.3	yes	
+Z__CcucHTP__Mucoro	zamocky	CcucHTP	Mucoro	268		1.8e-30	no	39C,109E,111D,180-!,110H	unassigned	DspUPO-I	20.2	yes	catalytic_residues_differ
+Z__CfioHTP1__Asco	zamocky	CfioHTP1	Asco	271		2.1e-50	yes	39C,109E,111D,180E,110H	V	AacUPO	44.0	yes	
+Z__CfumagHTP__Asco	zamocky	CfumagHTP	Asco	373		1.2e-37	yes	39C,109E,111D,180E,110H	V	AluUPO	31.5	yes	length_373_vs_tableS1_298
+Z__CgHTP1__Asco	zamocky	CgHTP1	Asco	271		4.9e-53	yes	39C,109E,111D,180E,110H	IV	MphUPO	65.0	yes	
+Z__CgHTP2__Asco	zamocky	CgHTP2	Asco	260		5.6e-51	yes	39C,109E,111D,180E,110H	V	DspUPO-I	61.7	yes	
+Z__CgHTP3__Asco	zamocky	CgHTP3	Asco	251		7.2e-43	yes	39C,109E,111D,180E,110H	V	AbrUPO-II	56.8	yes	
+Z__CgHTP4__Asco	zamocky	CgHTP4	Asco	261		2.8e-44	no	39C,109E,111D,180T!,110M	V	AbrUPO-II	38.3	yes	catalytic_residues_differ
+Z__ChigHTP1__Asco	zamocky	ChigHTP1	Asco	278		5e-46	yes	39C,109E,111D,180E,110H	V	HspUPO	41.0	yes	
+Z__ChigHTP2__Asco	zamocky	ChigHTP2	Asco	281		9e-49	yes	39C,109E,111D,180E,110H	V	AacUPO	42.1	yes	
+Z__CmicAPO1__Basidio	zamocky	CmicAPO1	Basidio	384		3.4e-50	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	71.6	yes	
+Z__ColgloeoHTP__Asco	zamocky	ColgloeoHTP	Asco	277		4.7e-48	yes	39C,109E,111D,180E,110H	IV	MphUPO	44.0	yes	
+Z__CsubHTP5__Basidio	zamocky	CsubHTP5	Basidio	304		5.6e-50	no	39C,109E,111D,180N!,110H	III	MroUPO	31.4	yes	catalytic_residues_differ
+Z__DaspAPO1__Basidio	zamocky	DaspAPO1	Basidio	326		3.8e-54	no	39C,109E,111D,180N!,110H	unassigned	MorUPO	29.7	yes	catalytic_residues_differ
+Z__DfragHTP1__Basidio	zamocky	DfragHTP1	Basidio	223		2.6e-51	yes	39C,109E,111D,180E,110H	V	AluUPO	30.3	yes	
+Z__DsquaHTP1__Basidio	zamocky	DsquaHTP1	Basidio	301		2e-51	no	39C,109E,111D,180N!,110H	unassigned	AbrUPO-I	29.5	yes	catalytic_residues_differ
+Z__FagHTP1__Asco	zamocky	FagHTP1	Asco	231		5.8e-55	yes	39C,109E,111D,180E,110H	V	AacUPO	43.4	yes	
+Z__GcerHTP1__Glomero	zamocky	GcerHTP1	Glomero	221		6.8e-59	yes	39C,109E,111D,180E,110H	III	MroUPO	36.2	yes	
+Z__GrosHTP1__Glomero	zamocky	GrosHTP1	Glomero	230		2.2e-59	yes	39C,109E,111D,180E,110H	V	AacUPO	36.4	yes	
+Z__GrosHTP2__Glomero	zamocky	GrosHTP2	Glomero	239		4.6e-57	yes	39C,109E,111D,180E,110H	V	AacUPO	35.9	yes	
+Z__GzHTP1__Asco	zamocky	GzHTP1	Asco	266		4.4e-59	yes	39C,109E,111D,180E,110H	V	HspUPO	49.2	yes	
+Z__GzHTP2__Asco	zamocky	GzHTP2	Asco	205		3e-48	yes	39C,109E,111D,180E,110H	V	AacUPO	37.9	yes	
+Z__GzHTP3__Asco	zamocky	GzHTP3	Asco	268		1e-47	yes	39C,109E,111D,180E,110H	III	MorUPO	33.0	yes	
+Z__GzHTP4__Asco	zamocky	GzHTP4	Asco	448		8.1e-46	no	39C,109E,111D,180S!,110S	I	LspUPO-II	32.2	yes	catalytic_residues_differ
+Z__GzHTP5__Asco	zamocky	GzHTP5	Asco	453		3.8e-41	no	39C,109E,111D,180S!,110V	I	LspUPO-II	34.8	yes	catalytic_residues_differ
+Z__HirrHTP__Basidio	zamocky	HirrHTP	Basidio	298		1e-50	no	39C,109E,111D,180N!,110H	V	RneUPO	31.7	yes	catalytic_residues_differ
+Z__HjHTP1__Asco	zamocky	HjHTP1	Asco	260		1.8e-38	no	39C,109Q!,111I!,180E,110H	V	TteUPO	35.0	yes	catalytic_residues_differ
+Z__HspHTP1__Asco	zamocky	HspHTP1	Asco	261	B__HspUPO__cladeV							no	duplicate of B__HspUPO__cladeV
+Z__LbiHTP1__Basidio	zamocky	LbiHTP1	Basidio	292		1.7e-54	no	39C,109E,111D,180N!,110H	V	AbrUPO-I	31.7	yes	catalytic_residues_differ
+Z__LbiHTP2__Basidio	zamocky	LbiHTP2	Basidio	294		3.2e-51	no	39C,109E,111D,180N!,110H	III	MroUPO	34.1	yes	catalytic_residues_differ
+Z__LbiHTP3__Basidio	zamocky	LbiHTP3	Basidio	340		3.8e-39	no	39C,109T!,111D,180E,110H	unassigned	MorUPO	28.6	yes	catalytic_residues_differ
+Z__LbiHTP4__Basidio	zamocky	LbiHTP4	Basidio	253		1.6e-52	no	39C,109E,111N!,180E,110H	II	PanUPO	30.8	yes	catalytic_residues_differ
+Z__LbiHTP5__Basidio	zamocky	LbiHTP5	Basidio	386		6.4e-52	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	77.0	yes	
+Z__MgrHTP1__Asco	zamocky	MgrHTP1	Asco	257		2e-57	yes	39C,109E,111D,180E,110H	III	MorUPO	40.0	yes	
+Z__MlarHTP1__Basidio	zamocky	MlarHTP1	Basidio	357		3.2e-36	no	39C,109E,111D,180N!,110H	unassigned	AacUPO	26.4	yes	catalytic_residues_differ
+Z__MlarHTP2__Basidio	zamocky	MlarHTP2	Basidio	351		1.3e-30	no	39C,109A!,111D,180N!,110H	unassigned	MroUPO	26.5	yes	catalytic_residues_differ
+Z__MoHTP1__Asco	zamocky	MoHTP1	Asco	257		1.2e-57	yes	39C,109E,111D,180E,110H	III	MorUPO	41.1	yes	
+Z__MpiHTP1__Asco	zamocky	MpiHTP1	Asco	414		1.1e-54	no	39C,109E,111D,180T!,110S	I	PaDa-I_parent_AaeUPO	35.5	yes	catalytic_residues_differ
+Z__MrotHTP1__Basidio	zamocky	MrotHTP1	Basidio	236		2.9e-59	yes	39C,109E,111D,180E,110H	III	MroUPO	100.0	yes	
+Z__MscoHTP__Asco	zamocky	MscoHTP	Asco	267		9.1e-48	yes	39C,109E,111D,180E,110H	V	AacUPO	39.9	yes	
+Z__MtherHTP__Asco	zamocky	MtherHTP	Asco	261		7.6e-55	yes	39C,109E,111D,180E,110H	V	AbrUPO-II	64.5	yes	
+Z__MucambHTP__Mucoro	zamocky	MucambHTP	Mucoro	304		2.6e-39	yes	39C,109E,111D,180E,110H	unassigned	CviUPO	29.7	yes	
+Z__MuccirHTP__Mucoro	zamocky	MuccirHTP	Mucoro	308		2.8e-42	yes	39C,109E,111D,180E,110H	V	TteUPO	30.3	yes	
+Z__MuclusHTP__Mucoro	zamocky	MuclusHTP	Mucoro	309		6.1e-40	yes	39C,109E,111D,180E,110H	unassigned	CviUPO	29.7	yes	
+Z__NcHTP1__Asco	zamocky	NcHTP1	Asco	272		1.3e-53	yes	39C,109E,111D,180E,110H	V	AbrUPO-I	41.6	yes	
+Z__NhaeHTP__Asco	zamocky	NhaeHTP	Asco	271		3.4e-46	yes	39C,109E,111D,180E,110H	III	MorUPO	32.4	yes	
+Z__OpsiHTP__Asco	zamocky	OpsiHTP	Asco	484		1.5e-46	yes	39C,109E,111D,180E,110H	III	MroUPO	38.4	yes	
+Z__PanHTP1__Asco	zamocky	PanHTP1	Asco	386		2.2e-49	no	39C,109E,111D,180A!,110I	I	CabUPO-III	34.4	yes	catalytic_residues_differ
+Z__PantHTP1__Basidio	zamocky	PantHTP1	Basidio	413		1.9e-39	no	39C,109E,111D,180S!,110H	unassigned	AacUPO	26.4	yes	catalytic_residues_differ
+Z__PbraHTP1__Asco	zamocky	PbraHTP1	Asco	243		1.1e-44	yes	39C,109E,111D,180E,110H	II	CviUPO	33.7	yes	
+Z__PcarHTP1__Basidio	zamocky	PcarHTP1	Basidio	296		5e-52	no	39C,109E,111D,180N!,110H	unassigned	MroUPO	29.2	yes	catalytic_residues_differ
+Z__PcarHTP4__Basidio	zamocky	PcarHTP4	Basidio	263		5.2e-50	yes	39C,109E,111D,180E,110H	V	AacUPO	33.7	yes	
+Z__PcHTP1__Basidio	zamocky	PcHTP1	Basidio	295		2.8e-54	no	39C,109E,111D,180N!,110H	III	MroUPO	30.3	yes	catalytic_residues_differ
+Z__PcHTP2__Basidio	zamocky	PcHTP2	Basidio	388		1.1e-49	yes	39C,109E,111D,180E,110H	V	AacUPO	34.2	yes	
+Z__PcHTP3__Basidio	zamocky	PcHTP3	Basidio	279		1.8e-49	yes	39C,109E,111D,180E,110H	V	AacUPO	33.2	yes	
+Z__PcyanHTP1__Basidio	zamocky	PcyanHTP1	Basidio	374		1.7e-53	yes	39C,109E,111D,180E,110G	I	GmaUPO-II	83.6	yes	
+Z__PficHTP1__Asco	zamocky	PficHTP1	Asco	253		4.3e-56	yes	39C,109E,111D,180E,110H	V	AbrUPO-II	49.7	yes	
+Z__PfungHTP1__Amoebozoa	zamocky	PfungHTP1	Amoebozoa	304		1e-56	yes	39C,109E,111D,180E,110H	V	AacUPO	38.0	yes	
+Z__PfungHTP2__Amoebozoa	zamocky	PfungHTP2	Amoebozoa	327		6.9e-53	yes	39C,109E,111D,180E,110H	III	MroUPO	36.8	yes	
+Z__PhubeHTP1__Basidio	zamocky	PhubeHTP1	Basidio	422		4.6e-39	no	39C,109E,111D,180S!,110H	unassigned	AacUPO	26.4	yes	catalytic_residues_differ
+Z__PiHTP1__Oomycota	zamocky	PiHTP1	Oomycota	255		2.9e-54	yes	39C,109E,111D,180E,110H	V	TteUPO	34.6	yes	
+Z__PiHTP2__Oomycota	zamocky	PiHTP2	Oomycota	254		2.9e-45	no	39C,109D!,111D,180Q!,110H	V	TteUPO	31.9	yes	catalytic_residues_differ
+Z__PinvHTP1__Basidio	zamocky	PinvHTP1	Basidio	291		2.5e-50	no	39C,109E,111D,180N!,110H	V	AbrUPO-I	31.1	yes	catalytic_residues_differ
+Z__PinvHTP2__Basidio	zamocky	PinvHTP2	Basidio	291		1.9e-50	no	39C,109E,111D,180N!,110H	unassigned	RneUPO	29.5	yes	catalytic_residues_differ
+Z__PinvHTP3__Basidio	zamocky	PinvHTP3	Basidio	276		1.9e-53	yes	39C,109E,111D,180E,110H	II	CviUPO	35.7	yes	
+Z__PinvHTP4__Basidio	zamocky	PinvHTP4	Basidio	225		9.9e-55	yes	39C,109E,111D,180E,110H	V	AacUPO	33.9	yes	
+Z__PnoHTP01__Asco	zamocky	PnoHTP01	Asco	280		1.6e-53	yes	39C,109E,111D,180E,110H	V	TteUPO	48.1	yes	
+Z__PnoHTP02__Asco	zamocky	PnoHTP02	Asco	248		3.6e-51	yes	39C,109E,111D,180E,110H	V	TteUPO	55.2	yes	
+Z__PnoHTP03__Asco	zamocky	PnoHTP03	Asco	269		6.8e-46	yes	39C,109E,111D,180E,110H	IV	MphUPO	68.9	yes	
+Z__PnoHTP04__Asco	zamocky	PnoHTP04	Asco	268		4.6e-54	yes	39C,109E,111D,180E,110H	II	CviUPO	43.5	yes	
+Z__PnoHTP05__Asco	zamocky	PnoHTP05	Asco	308		3.3e-54	yes	39C,109E,111D,180E,110H	II	CviUPO	39.1	yes	
+Z__PnoHTP06__Asco	zamocky	PnoHTP06	Asco	451		4.6e-50	no	39C,109E,111D,180A!,110A	I	CmaUPO-I	31.7	yes	catalytic_residues_differ
+Z__PnoHTP07__Asco	zamocky	PnoHTP07	Asco	272		1.9e-48	no	39C,109E,111D,180N!,110H	V	AbrUPO-I	30.6	yes	catalytic_residues_differ
+Z__PnoHTP08__Asco	zamocky	PnoHTP08	Asco	421		6.4e-50	no	39C,109E,111D,180A!,110G	I	CabUPO-III	36.1	yes	catalytic_residues_differ
+Z__PnoHTP09__Asco	zamocky	PnoHTP09	Asco	415		5.5e-47	no	39C,109E,111D,180A!,110G	unassigned	MroUPO	29.7	yes	catalytic_residues_differ
+Z__PnoHTP10__Asco	zamocky	PnoHTP10	Asco	425		2.8e-46	no	39C,109E,111D,180A!,110G	I	GmaUPO-II	31.0	yes	catalytic_residues_differ
+Z__PnoHTP11__Asco	zamocky	PnoHTP11	Asco	380		8.3e-51	no	39C,109E,111D,180A!,110A	I	CabUPO-III	36.1	yes	catalytic_residues_differ
+Z__PnoHTP12__Asco	zamocky	PnoHTP12	Asco	454		3e-36	no	39C,109E,111D,180A!,110G	I	PaDa-I_parent_AaeUPO	34.4	yes	catalytic_residues_differ
+Z__PnoHTP13__Asco	zamocky	PnoHTP13	Asco	436		2.8e-47	no	39C,109E,111D,180A!,110A	I	LspUPO-II	34.2	yes	catalytic_residues_differ
+Z__PoxaHTP1__Asco	zamocky	PoxaHTP1	Asco	226		1.1e-45	yes	39C,109E,111D,180E,110H	V	RneUPO	33.0	yes	
+Z__PpaHTP__Mucoro	zamocky	PpaHTP	Mucoro	309		1.8e-39	yes	39C,109E,111D,180E,110H	unassigned	CviUPO	28.6	yes	
+Z__PparHTP1__Oomycota	zamocky	PparHTP1	Oomycota	255		1.5e-45	no	39C,109D!,111D,180Q!,110H	V	RneUPO	32.8	yes	catalytic_residues_differ
+Z__PparHTP2__Oomycota	zamocky	PparHTP2	Oomycota	255		4.4e-55	yes	39C,109E,111D,180E,110H	V	TteUPO	35.7	yes	
+Z__PparHTP3__Oomycota	zamocky	PparHTP3	Oomycota	262		9e-48	no	39C,109D!,111D,180E,110H	unassigned	CabUPO-III	29.2	yes	catalytic_residues_differ
+Z__PplHTP1__Basidio	zamocky	PplHTP1	Basidio	296		2.5e-51	no	39C,109E,111D,180N!,110H	V	RneUPO	31.1	yes	catalytic_residues_differ
+Z__PplHTP2__Basidio	zamocky	PplHTP2	Basidio	280		1.6e-53	no	39C,109E,111D,180N!,110H	III	MroUPO	31.4	yes	catalytic_residues_differ
+Z__PplHTP3__Basidio	zamocky	PplHTP3	Basidio	298		6.4e-51	no	39C,109E,111D,180N!,110H	V	RneUPO	31.1	yes	catalytic_residues_differ
+Z__PplHTP4__Basidio	zamocky	PplHTP4	Basidio	421		1.3e-47	yes	39C,109E,111D,180E,110H	V	AacUPO	31.3	yes	
+Z__PplHTP5__Basidio	zamocky	PplHTP5	Basidio	277		5.5e-50	no	39C,109E,111N!,180E,110H	V	HspUPO	33.2	yes	catalytic_residues_differ
+Z__PramHTP1__Oomycota	zamocky	PramHTP1	Oomycota	255		1.4e-55	yes	39C,109E,111D,180E,110H	V	TteUPO	35.7	yes	
+Z__PramHTP2__Oomycota	zamocky	PramHTP2	Oomycota	265		2.4e-51	yes	39C,109E,111D,180E,110H	V	AacUPO	34.6	yes	
+Z__PsojHTP1__Oomycota	zamocky	PsojHTP1	Oomycota	242		1.7e-58	yes	39C,109E,111D,180E,110H	V	AacUPO	35.5	yes	
+Z__PsojHTP2__Oomycota	zamocky	PsojHTP2	Oomycota	245		1.1e-51	yes	39C,109E,111D,180E,110H	V	TteUPO	32.4	yes	
+Z__PsojHTP3__Oomycota	zamocky	PsojHTP3	Oomycota	269		3.1e-45	no	39C,109D!,111D,180E,110H	V	HspUPO	31.1	yes	catalytic_residues_differ
+Z__PsubHTP__Asco	zamocky	PsubHTP	Asco	269		7.8e-48	yes	39C,109E,111D,180E,110H	V	AacUPO	38.8	yes	
+Z__PultHTP1__Oomycota	zamocky	PultHTP1	Oomycota	247		1e-52	yes	39C,109E,111D,180E,110H	V	TteUPO	33.5	yes	
+Z__PultHTP2__Oomycota	zamocky	PultHTP2	Oomycota	288		5.3e-54	yes	39C,109E,111D,180E,110H	V	AacUPO	35.5	yes	
+Z__RclaHTP1__Mucoro	zamocky	RclaHTP1	Mucoro	221		6.1e-61	yes	39C,109E,111D,180E,110H	V	AluUPO	37.2	yes	
+Z__RdelHTP__Mucoro	zamocky	RdelHTP	Mucoro	295		6.9e-38	yes	39C,109E,111D,180E,110H	II	CviUPO	31.5	yes	
+Z__RirrHTP1__Mucoro	zamocky	RirrHTP1	Mucoro	237		8.9e-50	no	39C,109E,111P!,180E,110H	III	MroUPO	33.5	yes	catalytic_residues_differ
+Z__RirrHTP2__Mucoro	zamocky	RirrHTP2	Mucoro	233		1.3e-60	yes	39C,109E,111D,180E,110H	V	AluUPO	38.3	yes	
+Z__RmelHTP1__Basidio	zamocky	RmelHTP1	Basidio	220		6.1e-60	yes	39C,109E,111D,180E,110H	V	AtuUPO	34.1	yes	
+Z__RmicroHTP1__Mucoro	zamocky	RmicroHTP1	Mucoro	303		2.4e-39	yes	39C,109E,111D,180E,110H	unassigned	HspUPO	29.0	yes	
+Z__RmicroHTP2__Mucoro	zamocky	RmicroHTP2	Mucoro	303		3.5e-40	yes	39C,109E,111D,180E,110H	unassigned	MphUPO	29.5	yes	
+Z__RstolHTP1__Mucoro	zamocky	RstolHTP1	Mucoro	306		2.1e-38	yes	39C,109E,111D,180E,110H	V	RneUPO	30.1	yes	
+Z__RvesHTP1__Basidio	zamocky	RvesHTP1	Basidio	288		3.3e-45	no	39C,109E,111D,180N!,110H	unassigned	RneUPO	29.5	yes	catalytic_residues_differ
+Z__RvinHTP1__Basidio	zamocky	RvinHTP1	Basidio	295		3.8e-42	no	39C,109E,111D,180N!,110H	unassigned	AbrUPO-I	29.5	yes	catalytic_residues_differ
+Z__SAcoHTP2__Asco	zamocky	SAcoHTP2	Asco	337		5.2e-52	yes	39C,109E,111D,180E,110H	V	HspUPO	34.4	yes	
+Z__SborHTP1__Asco	zamocky	SborHTP1	Asco	275		1.4e-49	yes	39C,109E,111D,180E,110H	IV	MphUPO	62.6	yes	
+Z__SbreHTP1__Basidio	zamocky	SbreHTP1	Basidio	288		7.5e-47	no	39C,109E,111D,180N!,110H	unassigned	AbrUPO-I	28.4	yes	catalytic_residues_differ
+Z__SbreHTP2__Basidio	zamocky	SbreHTP2	Basidio	289		1.4e-48	no	39C,109E,111D,180N!,110H	III	MorUPO	31.4	yes	catalytic_residues_differ
+Z__SbreHTP5__Basidio	zamocky	SbreHTP5	Basidio	288		3.4e-48	no	39C,109E,111D,180N!,110H	unassigned	RneUPO	29.5	yes	catalytic_residues_differ
+Z__ScepHTP1__Asco	zamocky	ScepHTP1	Asco	236		1.3e-38	no	39-!,109E,111D,180E,110H	IV	MphUPO	62.1	yes	catalytic_residues_differ
+Z__SdicHTP1__Oomycota	zamocky	SdicHTP1	Oomycota	249		1.8e-37	yes	39C,109E,111D,180E,110H	V	AbrUPO-I	37.2	yes	
+Z__SindHTP1__Basidio	zamocky	SindHTP1	Basidio	295		2.2e-47	no	39C,109E,111D,180N!,110H	V	HspUPO	30.1	yes	catalytic_residues_differ
+Z__SlacHTP1__Basidio	zamocky	SlacHTP1	Basidio	288		1.7e-51	no	39C,109E,111D,180N!,110H	V	RneUPO	31.1	yes	catalytic_residues_differ
+Z__SlutHTP1__Basidio	zamocky	SlutHTP1	Basidio	288		2.3e-46	no	39C,109E,111D,180N!,110H	unassigned	AbrUPO-I	29.5	yes	catalytic_residues_differ
+Z__SlutHTP2__Basidio	zamocky	SlutHTP2	Basidio	289		2.9e-48	no	39C,109E,111D,180N!,110H	III	MorUPO	31.9	yes	catalytic_residues_differ
+Z__SlutHTP4__Basidio	zamocky	SlutHTP4	Basidio	251		2.4e-54	yes	39C,109E,111D,180E,110H	V	TteUPO	30.8	yes	
+Z__SlutHTP5__Basidio	zamocky	SlutHTP5	Basidio	289		6.5e-48	no	39C,109E,111D,180N!,110H	unassigned	AbrUPO-I	29.5	yes	catalytic_residues_differ
+Z__SmusHTP__Asco	zamocky	SmusHTP	Asco	262		6.4e-48	yes	39C,109E,111D,180E,110H	V	HspUPO	45.4	yes	
+Z__SpipunHTP__Chytrid	zamocky	SpipunHTP	Chytrid	517		7.2e-49	yes	39C,109E,111D,180E,110H	V	AacUPO	36.1	yes	
+Z__SpispHTP__Chytrid	zamocky	SpispHTP	Chytrid	238		6.8e-49	yes	39C,109E,111D,180E,110H	V	AacUPO	35.0	yes	
+Z__SreHTP1__Basidio	zamocky	SreHTP1	Basidio	419		1e-39	no	39C,109E,111D,180S!,110H	unassigned	AacUPO	28.0	yes	catalytic_residues_differ
+Z__SreHTP2__Basidio	zamocky	SreHTP2	Basidio	408		5.1e-51	yes	39C,109E,111D,180E,110G	I	CmaUPO-I	36.1	yes	
+Z__SsclHTP1__Asco	zamocky	SsclHTP1	Asco	276		1.6e-50	yes	39C,109E,111D,180E,110H	IV	MphUPO	64.1	yes	
+Z__StriHTP1__Asco	zamocky	StriHTP1	Asco	276		4e-51	yes	39C,109E,111D,180E,110H	IV	MphUPO	62.0	yes	
+Z__ThetHTP1__Asco	zamocky	ThetHTP1	Asco	261	Z__MtherHTP__Asco							no	duplicate of Z__MtherHTP__Asco
+Z__TterHTP1__Asco	zamocky	TterHTP1	Asco	274	B__TteUPO__cladeV							no	duplicate of B__TteUPO__cladeV
+Z__UhHTP1__Basidio	zamocky	UhHTP1	Basidio	416		9.5e-38	no	39C,109E,111D,180S!,110H	unassigned	AacUPO	28.0	yes	catalytic_residues_differ
+Z__UmHTP1__Basidio	zamocky	UmHTP1	Basidio	410		1.7e-48	yes	39C,109E,111D,180E,110G	I	CmaUPO-I	39.3	yes	
+Z__UmHTP2__Basidio	zamocky	UmHTP2	Basidio	410		3.9e-49	yes	39C,109E,111D,180E,110G	I	CmaUPO-I	35.0	yes	
+Z__UmHTP3__Basidio	zamocky	UmHTP3	Basidio	428		3e-41	no	39C,109E,111D,180S!,110H	unassigned	DspUPO-I	27.3	yes	catalytic_residues_differ

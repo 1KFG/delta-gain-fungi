@@ -1,0 +1,19 @@
+# Anchors for naming Zamocky et al. 2022 Figure 1 clades in the in-house tree (name_clades.py).
+# A clade = MRCA of its anchors, extended upward while UFBoot >= 95 and no other clade's anchor
+# is included. `evidence` says where each anchor comes from; "tree" means the paper's text names
+# no genus or enzyme for that clade and the anchors were picked from this tree (composition and
+# position only), so that row is a label of convenience, not an independent match.
+# paper_mean_length: the average length the paper's text states for that clade (aa).
+clade	anchors	paper_mean_length	evidence
+root	Z__AglauHTP__Mucoro,Z__CcucHTP__Mucoro,Z__MucambHTP__Mucoro,Z__MuclusHTP__Mucoro,Z__MuccirHTP__Mucoro,Z__PpaHTP__Mucoro,Z__RdelHTP__Mucoro,Z__RstolHTP1__Mucoro,Z__RmicroHTP1__Mucoro,Z__RmicroHTP2__Mucoro		text: basal clade of Mucor and Rhizopus (RdelHTP its modelled representative); anchors are every Mucorales sequence in Table S1 (Rhizophagus excluded: Glomeromycotina, mislabelled in Table S1)
+Mucoromycetous basal	Z__AglauHTP__Mucoro,Z__CcucHTP__Mucoro,Z__MucambHTP__Mucoro,Z__MuclusHTP__Mucoro,Z__MuccirHTP__Mucoro,Z__PpaHTP__Mucoro,Z__RdelHTP__Mucoro,Z__RstolHTP1__Mucoro,Z__RmicroHTP1__Mucoro,Z__RmicroHTP2__Mucoro	301	text: Mucor and Rhizopus genes; RdelHTP
+Basidiomycetous 1st	Z__MlarHTP1__Basidio,Z__UhHTP1__Basidio	316	text: mostly Pucciniomycetes (Melampsora) and Ustilaginomycetes; Ustilago paralog chosen from tree (Ustilago also has Family II paralogs)
+Glomeromycetous (Fig 1 "Mucoromycetous small")	Z__GrosHTP1__Glomero,Z__RirrHTP1__Mucoro	230	text: glomeromycetous HTP clade; Gigaspora, Rhizophagus (Table S1 mislabels Rhizophagus as Mucoromycotina)
+Ascomycetous 1st	Z__AfumHTP1__Asco,Z__NhaeHTP__Asco	265	tree: text names no member
+Basidiomycetous 2nd	Z__AbHTP2__Basidio,Z__RmelHTP1__Basidio	279	tree: text names no member
+Stramenopilous 1st	Z__SdicHTP1__Oomycota,Z__AphinHTP1__Oomycota	276	text: Saprolegnia and Aphanomyces; SdicHTP1 (276 aa is the oomycete-family mean)
+Stramenopilous 2nd	Z__PiHTP1__Oomycota,Z__PsojHTP1__Oomycota	276	text: Phytophthora (276 aa is the oomycete-family mean)
+Chytridiomycetous	Z__SpipunHTP__Chytrid,Z__SpispHTP__Chytrid		text: two Spizellomyces HTPs
+Amoebozoan	Z__PfungHTP1__Amoebozoa,Z__PfungHTP2__Amoebozoa		text: two HTPs from one protosteloid amoeba (Protostelium fungivorum)
+Basidiomycetous 3rd (Family II, long)	B__PaDa-I_parent_AaeUPO__cladeI,B__LspUPO-II__cladeI,B__CabUPO-III__cladeI	402	text: AaeAPO in Family II long; long UPOs by definition
+Ascomycetous 2nd (Family I, short)	Z__MtherHTP__Asco,B__HspUPO__cladeV,Z__MrotHTP1__Basidio	265	text: MtherHTP in late Family I; HspHTP1 (7O2D) and MrotHTP1 (5FUJ) structures in the dikaryal families
