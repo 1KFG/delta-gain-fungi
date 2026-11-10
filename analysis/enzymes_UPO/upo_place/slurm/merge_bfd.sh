@@ -1,7 +1,8 @@
 #!/bin/bash
 # Merge the place_bfd.sh chunk outputs and compare with the old upo_sites BFD calls.
 #   sbatch analysis/enzymes_UPO/upo_place/slurm/merge_bfd.sh     (after place_bfd.sh)
-# Output (this clone): data/bfd_place/bfd_place.tsv.zst, data/bfd_place/COMPARE.md
+# Output (this clone): data/bfd_place/{bfd_place.tsv.zst,COMPARE.md,G1_BFD_SUMMARY.md}
+# G1_BFD_SUMMARY.md is copied to analysis/enzymes_UPO/ by hand after review.
 #SBATCH -p epyc,intel
 #SBATCH --constraint="ryzen|broadwell|cascade|sapphire"
 #SBATCH -c 1
@@ -18,4 +19,6 @@ OLD=${OLD:-/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi/analysis/enzy
 OUT=$UPO/data/bfd_place
 $PY $UPO/upo_place/bin/compare_bfd.py --placed $OUT/chunk_*.tsv --old "$OLD" \
     --out-merged $OUT/bfd_place.tsv.zst --out-report $OUT/COMPARE.md
+$PY $UPO/upo_place/bin/summarize_place.py --table $OUT/bfd_place.tsv.zst \
+    --source-label "data/bfd_full/upo_place_bfd_all.tsv.zst" --out $OUT/G1_BFD_SUMMARY.md
 echo "done $(date +%T)"

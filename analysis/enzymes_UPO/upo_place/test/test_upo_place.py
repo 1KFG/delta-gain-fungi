@@ -106,5 +106,26 @@ class T(unittest.TestCase):
         self.assertEqual(rows[0]["place_our_clade"], "Clade I")
 
 
+    def test_summarize_place(self):
+        import summarize_place as sp
+        base = {"clade_confidence": "extrapolated", "pocket_score": "3", "catalytic_ok": "yes",
+                "p39_Cys_proximal": "C", "p109_E_of_EHD": "E", "p111_D_of_EHD": "D",
+                "p110_Base_EHD": "H", "PHYLUM": "Ascomycota", "LINEAGE_GROUP": "Sordariomycetes",
+                "SPECIES": "X y", "place_flags": "", "place_our_stem_lwr": "0.000"}
+        rows = [
+            dict(base, protein_id="G1_1", clade="I", p180_Acid="A", place_our_clade="Clade I",
+                 place_our_lwr="0.990", place_fig1_clade="Basidiomycetous 3rd (Family II, long)"),
+            dict(base, protein_id="G1_2", clade="V", p180_Acid="E", place_our_clade="unassigned",
+                 place_our_lwr="0.000", place_our_stem_lwr="0.900",
+                 place_fig1_clade="Basidiomycetous 1st", place_flags="long_pendant"),
+        ]
+        md = sp.build(rows, "t")
+        self.assertIn("| Clade I | 1 | 1 | 0 |", md)                 # placement / old / old-val
+        self.assertIn("| unassigned: on the stem of a clade | 1 |", md)
+        self.assertIn("**1** proteins", md)                            # long_pendant count
+        self.assertIn("| Ascomycota | 1 | 0.0 % | A 1 |", md)
+        self.assertIn("**1/2 (50.0 %)** proteins", md)                 # catalytic core
+
+
 if __name__ == "__main__":
     unittest.main()
