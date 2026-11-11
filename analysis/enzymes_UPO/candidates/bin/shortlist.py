@@ -17,7 +17,8 @@ Eligibility, every pool:
   - length within the 5th-95th percentile of the pool's eligible proteins (drops fragments and
     fusions);
   - pools A and B: catalytic core (Cys39, Glu109, Asp111, Glu180) and placement LWR >= 0.95 for
-    the pool's clade; pool C: Cys39, Glu109, Asp111 (Glu180 is the open question) and LWR >= 0.95.
+    the pool's clade; pool C: Cys39, Glu109, Asp111 present, Glu180 ABSENT (the lineage trait under
+    test; CANDIDATES.md deviation 1) and LWR >= 0.95.
 
 Pools and quotas: see POOLS. Selection inside a pool: one protein per 70 % identity cluster
 (catalytic-core clusters from the G1 dereplication; proteins outside that set are their own

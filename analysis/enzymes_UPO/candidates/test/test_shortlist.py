@@ -33,10 +33,11 @@ class T(unittest.TestCase):
         self.assertEqual((why["in pool"], why["long_pendant"], why["incomplete gene model"],
                           why["catalytic residues"], why["LWR < 0.95"]), (5, 1, 1, 1, 1))
 
-    def test_pool_c_ignores_glu180(self):
-        kept, _, _ = sl.eligible([row("noglu", e="A")], PRED, "place_our_lwr", False,
-                                 {"noglu": qc()})
-        self.assertEqual(len(kept), 1)
+    def test_pool_c_requires_glu180_absent(self):
+        kept, why, _ = sl.eligible([row("noglu", e="A"), row("glu", e="E")], PRED,
+                                   "place_our_lwr", False, {"noglu": qc(), "glu": qc()})
+        self.assertEqual([r["protein_id"] for r in kept], ["noglu"])
+        self.assertEqual(why["catalytic residues"], 1)
 
     def test_select_cluster_genus_lineage_and_refseq(self):
         pool = [row("a1", species="Fusarium a"), row("a2", species="Botrytis b"),   # cluster A

@@ -23,7 +23,7 @@ measurement for its lineage.
 4. Pools A and B: full catalytic core (Cys39, Glu109, Asp111, Glu180; HspUPO numbering) and
    placement LWR >= 0.95 for the pool's clade.
 5. Pool C: Cys39, Glu109, Asp111 and LWR >= 0.95. Glu180 is not required, because its absence is
-   the lineage trait in question (G1 Finding 2).
+   the lineage trait in question (G1 Finding 2). *(Tightened to "Glu180 absent"; see Deviations.)*
 
 **Pools and quotas (38 in total):**
 
@@ -56,6 +56,15 @@ representative, the T1 pocket match count (clade-V rule, not evidence outside Cl
 lineage. Inactivity of a single candidate is weak evidence about its lineage (one gene model, one
 expression attempt, one substrate). Pool C candidates should not be expressed until the Glu180
 structural question is answered; they are listed so the structure check has concrete targets.
+
+## Deviations from the rules, recorded when made
+
+1. **Pool C must have Glu180 absent, not merely "not required"** (changed 2026-11-11 after the first
+   run, job 31992843). As written, the rule let the selection prefer the 70 % catalytic-core
+   clusters, which by construction carry Glu180, so all six pool C picks had Glu where their lineage
+   almost never does (ascomycete long UPOs: 1.5 % Glu180). That defeats pool C's purpose, which is
+   to give the structure check targets carrying the lineage trait. Rule 5 now reads: Cys39, Glu109,
+   Asp111 present and **Glu180 absent**. Pools A and B are unaffected.
 
 ## Results
 
