@@ -1,8 +1,10 @@
 # UPO project status
 
 > **2026-11-11:** the clade-calling numbers below (78.9 % unassigned, precision 38 % below 55 %) are
-> for the 19-reference caller. A 187-leaf reference from Zamocky 2022 is now on main
-> (`upo_place/`); `RECONCILIATION.md` compares them and records the open measurement.
+> for the 19-reference caller. The production clade call is now placement on the 187-leaf Zamocky
+> 2022 reference (`upo_place/`, column `place_our_clade`): 42 % of BFD unassigned, and at matched
+> identity 0 errors on the 19 characterized enzymes down to < 35 % identity (13/13 at 45-55 %).
+> Caveats and the comparison: `RECONCILIATION.md` §1.
 
 **Model card: `MODEL_CARD.md`** — the model stated as three separate tasks with measured
 operating characteristics. Two are reliable (site finding, clade-V-like ranking). Predicting

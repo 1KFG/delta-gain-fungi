@@ -79,7 +79,12 @@ in git history and in the "old" columns of `G1_BFD_SUMMARY.md` §2.
    II exactly. **Placement caller done 2026-11-09** (`analysis/enzymes_UPO/upo_place/README.md`):
    leave-one-out 184/187; BFD re-called (97,520). Old extrapolated Clade III/V calls mostly do not
    survive; old Clade I is confirmed as Family II, and its low Glu180 is ascomycete long UPOs
-   (Ala), not non-UPOs; `G1_BFD_SUMMARY.md` regenerated from placement calls. Original note:
+   (Ala), not non-UPOs; `G1_BFD_SUMMARY.md` regenerated from placement calls. **Reconciled with the
+   skylark session's work 2026-11-11** (`analysis/enzymes_UPO/RECONCILIATION.md`, PR #3): at matched
+   identity the 187-leaf caller made 0 errors on the 19 characterized enzymes down to < 35 %
+   identity (skylark's 19-reference caller: 38 % at 45-55 %), so `place_our_clade` is the production
+   clade call. Clade IV is "sister to Clade V", supported but marginal (SH-aLRT/UFBoot 83/96).
+   Original note:
    **Zamocky et al. 2022 (PMC9138132) and RedoxiBase appear in no current document.** Their ~174
    curated sequences would raise the clade backbone from 19, which is the only cheap route out of
    the extrapolation problem, and would supply the missing outgroup and the prior-art baseline in

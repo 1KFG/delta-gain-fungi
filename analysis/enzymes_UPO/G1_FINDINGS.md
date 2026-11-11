@@ -10,9 +10,11 @@ changed, the old reading is stated and why it no longer holds.
 **How clades are called now.** Each protein is placed (epa-ng) on a 187-leaf reference tree: the 19
 characterized enzymes plus 168 curated HTPs from Zamocky et al. 2022, rebuilt in-house
 (`data/refset_zamocky2022/`). A clade is called when placements inside it carry like-weight ratio
->= 0.5. Leave-one-out over all 187 leaves: **184/187** for Clades I-V, including 102/104 at 30-52.7 %
-and 32/32 below 30 % identity to the nearest characterized enzyme, the range where BFD sits. The
-old caller was validated only at >= 52.7 % (13 % of BFD). See `upo_place/README.md`.
+>= 0.5. Leave-one-out over all 187 leaves: **184/187** for Clades I-V. At **matched identity**
+(every reference above a ceiling removed, so the query faces BFD-like divergence), the 19
+characterized enzymes were called with **no errors** in 56 tested cases down to < 35 % identity to
+the nearest surviving reference (9 abstentions); the 19-reference caller was 38 % precise at
+45-55 %. See `upo_place/README.md` and `RECONCILIATION.md` §1.
 
 ## The census
 
@@ -121,8 +123,9 @@ better supported: characterize a Clade IV enzyme.**
   `PLACEMENT_FINDINGS.md`) MphUPO fell inside Clade V on nodes with 20-28 % bootstrap. On the
   187-leaf tree Clade IV is recovered at SH-aLRT/UFBoot 83/96 and Clade V at 94/86, IV+V at
   98.5/99. Say "Clade IV, sister to Clade V", not "a distinct subtype". `RECONCILIATION.md` §2.
-- Clade calls at low identity to the nearest surviving reference are under test
-  (`RECONCILIATION.md` §1); the counts in this document follow its decision rule.
+- At matched identity (every reference above a ceiling removed) the 187-leaf caller called the
+  characterized enzymes with no errors down to < 35 % identity, MphUPO included at every ceiling
+  (`RECONCILIATION.md` §1). The 19-reference caller was 38 % precise at 45-55 %.
 
 ## Finding 4: clade confidence across BFD
 
@@ -312,8 +315,8 @@ available as a stronger check if a specific lineage claim becomes load-bearing.*
 ## Still open in G1
 
 1. **Glu180 in ascomycete long UPOs** (Finding 2): structure-based alignment of one against AaeUPO.
-2. **Clade calls below ~55 % identity to the nearest surviving reference**: see
-   `RECONCILIATION.md` for the matched-identity comparison of the two placement references.
+2. **Matched identity with per-case tree rebuilds** (`RECONCILIATION.md` §1 caveat 1), and more
+   Clade II/III references: those two clades carry the least validation.
 3. **Gene-model QC** (`gene_transcripts` partial/start/stop flags) before catalytic-machinery
    numbers are stated as biology (HANDOFF open item 4).
 4. Taxonomic verification of contig neighbours, if a specific lineage claim becomes load-bearing

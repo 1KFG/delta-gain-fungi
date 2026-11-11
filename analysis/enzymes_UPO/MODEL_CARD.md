@@ -1,7 +1,10 @@
 # Model card: UPO active-site identification and T1 pocket scoring
 
-> **2026-11-11:** clade-call reliability statements here refer to the 19-reference caller. See
-> `RECONCILIATION.md` for the 187-leaf reference and the pending matched-identity comparison.
+> **2026-11-11:** clade-call reliability statements here ("precision 38 % below 55 %", "no clade
+> call for 78.9 %") refer to the 19-reference caller. The 187-leaf placement caller (`upo_place/`)
+> made no errors on the characterized enzymes at matched identity down to < 35 % and is now the
+> production clade call; see `RECONCILIATION.md` §1. Tasks A-C below are otherwise unchanged:
+> clade calls do not make Task C (activity outside clade V) reliable.
 
 Version 1.0, 2026-11-08. Software: `upo_sites/bin/upo_scan.py`. Branch `upo-review-and-coordination`.
 

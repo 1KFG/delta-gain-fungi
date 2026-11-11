@@ -1,6 +1,6 @@
 # Reconciliation: two UPO workstreams, one main
 
-**Drafted 2026-11-11** (laptop session `upo-iqtree-naming`) on branch `upo-reconcile`, which merges
+**Drafted 2026-11-11, matched-identity result added the same day** (laptop session `upo-iqtree-naming`) on branch `upo-reconcile`, which merges
 the 40 commits of `upo-review-and-coordination` (the skylark session, `fungal-tf-clade-contrasts`,
 work of 2026-11-08 after PR #1 merged) into `main` (which already carries PR #2, the Zamocky
 reference set and the 187-leaf placement caller).
@@ -8,7 +8,8 @@ reference set and the 187-leaf placement caller).
 The two sessions worked in parallel on 2026-11-08/09 without seeing each other's later results.
 Most of their work does not overlap. Where it does, both sessions reached the same diagnosis (19
 characterized enzymes cannot support clade calls at BFD divergence) and took different routes out.
-This document says which claims stand, which are superseded, and which wait on one measurement.
+This document says which claims stand and which are superseded. The one measurement it waited on
+(matched identity on the 187-leaf reference, §1) is done.
 
 ## What merges without contention
 
@@ -29,7 +30,7 @@ Textual conflicts were only in `G1_FINDINGS.md` and `PLAN.md`. `G1_FINDINGS.md` 
 placement-based rewrite from main and adds skylark §5b and §6; `PLAN.md` keeps both sessions' risk
 rows with statuses updated to what is now measured.
 
-## 1. Two placement references: the one open measurement
+## 1. Two placement references, compared at matched identity
 
 | | skylark (`upo_sites`, 2026-11-08) | main (`upo_place`, 2026-11-09) |
 |---|---|---|
@@ -38,7 +39,7 @@ rows with statuses updated to what is now measured.
 | Columns | 183 PF01328 match states | 224 MAFFT L-INS-i columns after trimAl -gt 0.75 |
 | Tree / placement | RAxML-NG LG+G4, 400 bootstraps; RAxML-8 EPA | IQ-TREE ModelFinder topology, LG+G4 branch lengths; epa-ng |
 | Plain leave-one-out | 18/19 | 184/187 (characterized 19: see below) |
-| **Matched identity** (drop every reference above a ceiling) | **100 % precision at 70-100 %, 88 % at 55-70 %, 38 % at 45-55 %**; 71/114 cases impossible | **pending** (job `place_matched.sh`, same design) |
+| **Matched identity** (drop every reference above a ceiling) | **100 % precision at 70-100 %, 88 % at 55-70 %, 38 % at 45-55 %**; 71/114 cases impossible | **characterized 19: 100 % precision in every bin (0 wrong in 56 tested; 13/13 at 45-55 %)**; 20/76 impossible. Job 31991872 |
 | BFD unassigned | 57 % of 7,055 representatives; 78.9 % of 97,520 in the final table | 42.0 % of 97,520 |
 
 **Why these disagree on coverage, and why plain leave-one-out cannot settle it.** Main's
@@ -72,6 +73,51 @@ expected clades are published, is the independent check.
   calls below 55 % identity to the nearest surviving reference are marked unverified, and the
   counts in `G1_BFD_SUMMARY.md` and `G1_FINDINGS.md` that rest on them get the same caveat.
 - Either way the per-protein table keeps both callers' columns so the comparison stays visible.
+
+### Result (job 31991872, 2026-11-11): the rule is met
+
+`upo_place/bin/matched_identity.py`, `slurm/place_matched.sh`; full tables in
+`data/refset_zamocky2022/placement_ref/MATCHED_IDENTITY.md`, cases in `matched_cases.tsv`.
+Ceilings 70/55/45/35 % plus plain leave-one-out; 935 cases, every output present.
+
+**The 19 characterized enzymes** (published clades, independent of the tree's labels):
+
+| identity to nearest surviving reference | tested | correct | declined | wrong | precision when committing | skylark (19-ref tree) |
+|---|---|---|---|---|---|---|
+| 55-70 % | 18 | 16 | 2 | 0 | 100 % | 88 % |
+| 45-55 % | 14 | 13 | 1 | 0 | **100 %** | **38 %** |
+| 35-45 % | 8 | 4 | 4 | 0 | 100 % | 50 % (n = 2) |
+| < 35 % | 16 | 14 | 2 | 0 | 100 % | — |
+| **all** | 56 | 47 | 9 | 0 | **100 %** | 80 % |
+
+Impossible (query's whole clade removed): 20 of 76, almost all Clade III (MorUPO/MroUPO at 3 of 4
+ceilings; Clade III still has 3 leaves) and Clade V at the lowest ceilings. MphUPO (Clade IV) was
+testable at every ceiling and was correct each time it was called.
+
+**The 168 Zamocky leaves** (tree-derived expected clades, so a self-consistency check): 604 correct,
+39 declined, 5 wrong in 648 tested; precision 100 % down to 45 %, 99 % at 35-45 %, 98 % below 35 %.
+
+Unlike the 19-reference caller, this one **declines rather than commits** when it is uncertain:
+all 9 characterized misses are abstentions, not wrong clades.
+
+**Outcome.** Main's placement on the 187-leaf reference becomes the production clade call
+(`place_our_clade` in `data/bfd_full/upo_place_bfd_all.tsv.zst`). The statement "clade calls below
+55 % identity are unreliable" is retired **for this caller**; it remains true of the 19-reference
+caller and stays in `PLACEMENT_FINDINGS.md` as measured. No measured precision boundary has been
+found for the 187-leaf caller down to < 35 % identity on the characterized set.
+
+**Caveats that travel with this result:**
+
+1. **Easier than skylark's design in one respect.** Here the query and its relatives are pruned
+   from a fixed reference tree whose topology was estimated with them present; skylark rebuilt the
+   tree for every case. Topology information can leak. Rebuilding per case (935 IQ-TREE runs) would
+   close this; it is not done.
+2. **Small numbers.** 56 characterized cases, 13 committed at 45-55 %. 0 errors in 13 is consistent
+   with a true precision well below 100 % (95 % CI lower bound about 75 %).
+3. **Clade III is untested at low identity** (3 leaves; impossible at most ceilings) and Clade II has
+   7. Calls into those two clades carry the least evidence.
+4. Identity here is over the 224 reference columns; skylark's is over 183 PF01328 match states.
+   The bins are close but not identical.
 
 ## 2. Clade IV: membership agreed, rank now marginal rather than unresolved
 
@@ -112,14 +158,15 @@ position that does not align to HspUPO 180.
 | `data/bfd_full/upo_sites_bfd_final.tsv.zst`, `..._scored.tsv.zst` | skylark placement (`clade_trust`: reliable / extrapolated / unassigned) | carries the T1 pocket score; the skylark deliverable |
 | `data/bfd_full/upo_place_bfd_all.tsv.zst` | main placement (`place_our_clade`, `place_fig1_clade`, LWR) | adds Zamocky Figure 1 lineages |
 
-Next step after §1: one merged table with both clade columns plus the T1 score, and the decision
-rule's outcome recorded in `STATUS.md` and `MODEL_CARD.md`.
+Production clade call: `place_our_clade` (§1 outcome). Still to do: one merged table carrying both
+callers' clade columns plus the T1 score.
 
-## 5. Documents that need a follow-up edit once §1 is measured
+## 5. Follow-up edits (done 2026-11-11 unless noted)
 
-- `STATUS.md`, `MODEL_CARD.md`: "No clade call for 78.9 % of BFD" and "precision 38 % below 55 %"
-  are true of the skylark caller; add the 187-leaf result whichever way it lands.
+- `STATUS.md`, `MODEL_CARD.md`: banners updated with the §1 outcome.
 - `PLACEMENT_FINDINGS.md`: pointer added; its own measurements stand.
 - Glu180 by phylum on the *old* Clade I calls, to make §3 exact.
-- `G1_BFD_SUMMARY.md`, `G1_FINDINGS.md`, `HANDOFF.md`: keep or caveat main's counts per the
-  decision rule.
+- `G1_BFD_SUMMARY.md`, `G1_FINDINGS.md`, `HANDOFF.md`, `PLAN.md`, `upo_place/README.md`: main's
+  counts kept (rule met); matched-identity result added.
+- Not done: the merged per-protein table (§4); Glu180 on old Clade I calls (below); per-case tree
+  rebuild (§1 caveat 1).
