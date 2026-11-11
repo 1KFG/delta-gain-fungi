@@ -40,7 +40,7 @@ tips <- read_tsv(file.path(dat, "fig1_tips.tsv"), show_col_types = FALSE)
 sup  <- read_tsv(file.path(dat, "fig1_support.tsv"), show_col_types = FALSE,
                  col_types = cols(.default = "c"))
 tr <- read.tree(file.path(upo, "data/refset_zamocky2022/tree/mfp.treefile"))
-muc <- tips$label[tips$fig1_clade == "Mucoromycetous basal"]
+muc <- tips$label[which(tips$fig1_clade == "Mucoromycetous basal")]  # which(): empty clade fields read as NA
 tr <- root(tr, outgroup = muc, resolve.root = TRUE)
 tr <- ladderize(tr)
 
