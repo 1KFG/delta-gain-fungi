@@ -117,7 +117,10 @@ def eligible(rows, pred, lwr_col, need_glu, geneqc):
                 or q["has_stop_codon"].upper() != "TRUE":
             reasons["incomplete gene model"] += 1
             continue
-        if not (core4(r) if need_glu else core3(r)):
+        # need_glu True: full core (Glu180 present). False: pool C, the lineage trait itself, so
+        # Cys39/Glu109/Asp111 present and Glu180 ABSENT (deviation 1 in CANDIDATES.md).
+        ok = core4(r) if need_glu else (core3(r) and r.get("p180_Acid") != "E")
+        if not ok:
             reasons["catalytic residues"] += 1
             continue
         if fnum(r.get(lwr_col)) < 0.95:

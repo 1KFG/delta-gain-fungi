@@ -1,0 +1,9 @@
+pool	label	quota	in pool	long_pendant	incomplete gene model	catalytic residues	LWR < 0.95	length outside 5-95 %	eligible	length_lo	length_hi	selected
+A	Clade IV (one characterized member, MphUPO)	10	8437	0	1043	909	6	465	6014	254	301	10
+B1	Ascomycetous 1st (no characterized member)	5	6228	6	548	2476	48	207	2943	242	279	5
+B2	Basidiomycetous 2nd (no characterized member)	5	4394	38	303	1811	37	176	2029	221	485	5
+B3	Family I (short), outside Clades I-V (no characterized member)	5	6291	199	321	2268	5	349	3149	247	447	5
+B4	Glomeromycete clade (no characterized member)	3	784	585	108	54	4	4	29	214	307	3
+B5	Mucorales basal clade (no characterized member)	3	315	0	292	1	0	4	18	279	335	3
+C1	Ascomycete long UPOs, Clade I (Glu180 replaced; contingent on structure check)	3	33783	342	3670	2049	8	2468	25246	396	477	3
+C2	Basidiomycetous 1st (Glu180 replaced; contingent on structure check)	3	6378	14	395	1665	116	399	3789	272	420	3
