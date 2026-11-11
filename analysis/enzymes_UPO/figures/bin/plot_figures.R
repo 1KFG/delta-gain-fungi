@@ -72,7 +72,7 @@ p1 <- ggtree(tr, layout = "circular", linewidth = 0.25, colour = INK2) %<+% tips
               colour = INK) +
   geom_cladelab(data = ours, mapping = aes(node = node, label = lab), offset = 0.75, align = TRUE,
                 barsize = 0.8, barcolour = INK, textcolour = INK, fontsize = 2.6,
-                angle = "auto", hjust = 0.5, offset.text = 0.12) +
+                angle = "auto", hjust = 0, offset.text = 0.08) +
   theme(legend.position = "right", legend.text = element_text(size = 7),
         legend.title = element_text(size = 8, face = "bold"),
         plot.background = element_rect(fill = SURFACE, colour = NA)) +
