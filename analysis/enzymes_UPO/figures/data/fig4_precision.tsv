@@ -1,0 +1,8 @@
+caller	bin	tested	correct	declined	wrong
+187-leaf reference (Zamocky 2022)	55-70	18	16	2	0
+187-leaf reference (Zamocky 2022)	45-55	14	13	1	0
+187-leaf reference (Zamocky 2022)	35-45	8	4	4	0
+187-leaf reference (Zamocky 2022)	<35	16	14	2	0
+19-reference (characterized only)	55-70	14	11	1	2
+19-reference (characterized only)	45-55	9	3	1	5
+19-reference (characterized only)	35-45	2	1	0	1

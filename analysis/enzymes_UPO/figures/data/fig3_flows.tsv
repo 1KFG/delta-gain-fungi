@@ -1,0 +1,34 @@
+old_clade	old_tier	new_clade	n
+Clade I	extrapolated	Clade I	29633
+Clade I	extrapolated	Clade IV	1
+Clade I	extrapolated	unassigned	59
+Clade I	validated	Clade I	3731
+Clade II	extrapolated	Clade I	163
+Clade II	extrapolated	Clade II	1187
+Clade II	extrapolated	unassigned	1360
+Clade II	validated	Clade II	403
+Clade III	extrapolated	Clade I	992
+Clade III	extrapolated	Clade II	418
+Clade III	extrapolated	Clade III	40
+Clade III	extrapolated	unassigned	7625
+Clade III	validated	Clade III	361
+Clade III	validated	unassigned	718
+Clade IV	extrapolated	Clade I	12
+Clade IV	extrapolated	Clade II	5
+Clade IV	extrapolated	Clade IV	348
+Clade IV	extrapolated	unassigned	1589
+Clade IV	validated	Clade IV	4968
+Clade V	extrapolated	Clade I	207
+Clade V	extrapolated	Clade II	1316
+Clade V	extrapolated	Clade IV	2834
+Clade V	extrapolated	Clade V	319
+Clade V	extrapolated	unassigned	17534
+Clade V	validated	Clade IV	19
+Clade V	validated	Clade V	2087
+Clade V	validated	unassigned	531
+unassigned	below floor	Clade I	6941
+unassigned	below floor	Clade II	218
+unassigned	below floor	Clade III	30
+unassigned	below floor	Clade IV	267
+unassigned	below floor	Clade V	19
+unassigned	below floor	unassigned	11585
