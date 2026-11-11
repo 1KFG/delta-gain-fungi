@@ -1,0 +1,13 @@
+metric	value
+clade	IV
+motif_presence_method	FIMO on data/g3/streme/Sordariomycetes_cladeIV/streme.xml, p < 1e-4, motifs whose id or match contains CCAAT
+n_aligned	760
+carriers	259
+mean_identity_carriers	0.574865
+mean_identity_all	0.543574
+difference_points	3.1291
+null_mean_points	-0.0118
+null_sd_points	0.9138
+p_one_sided_more_similar	0.000500
+z	3.4371
+permutations	10000

@@ -1,0 +1,30 @@
+# upo_scan output: PF01328 active-site residues, T1 pocket score, applicability domain.
+# t1_pocket_matches: matches (of 5) to the ACTIVE consensus ILLAI at HspUPO p73,p77,p81,p183,p187.
+# t1_pocket_flag: 'clade_V_like' at >= 3 matches.
+# CROSS-VALIDATED on 19 enzymes: LOO R2 +0.496, LOO AUC 0.956, permutation p 0.0005.
+# LIMIT: 9 of 10 active calibration enzymes are clade V. With clade V removed the AUC is
+#   0.556 (chance) on ONE active. This detects clade-V-like pockets. It is NOT shown to find
+#   actives outside clade V, and it MISSES the one that exists (GmaUPO-II, 49.3 % active,
+#   1/5 matches). A LOW SCORE IS NOT EVIDENCE OF INACTIVITY.
+# Substrate: 4-propylguaiacol conversion only. Says nothing about ring cleavage.
+# calib_distance: fraction of differing residues at positions (80, 84, 108, 110, 172, 173, 175, 176, 179, 180) to the nearest of
+#   the 19 characterized enzymes. These positions are DISJOINT from the scored five.
+# calib_domain: 'inside' at distance <= 0.50, the largest nearest-neighbour distance
+#   WITHIN the calibration set. This is a COVERAGE statement, not a confidence: distance was
+#   tested against model error and did NOT predict it (p = 0.88). See MODEL_VALIDATION.md F.
+# NO CLADE CALL: this tool does not run phylogenetic placement, so the score's central limit
+#   (that it detects clade-V-LIKE pockets) cannot be checked per protein here.
+sample	protein_id	hmm_evalue	length	clade	clade_identity	clade_margin	clade_confidence	nearest_ref	pocket_score	pocket_max	pocket_residues	catalytic_ok	catalytic_detail	sites_mapped	clade_T1_insample	p39_Cys_proximal	p73_AP	p77_AP	p80_E	p81_AP	p84_E	p108_CP	p109_E_of_EHD	p110_Base_EHD	p111_D_of_EHD	p172_E	p173_base_long	p175_E	p176_CP	p179_CP	p180_Acid	p183_AP	p187_AP	t1_pocket_matches	t1_pocket_flag	calib_distance	calib_domain
+charrefs	AaeUPO	3e-54	371	I	100.0	63.0	validated_range	PaDa-I_parent_AaeUPO	3	5	FAAFL	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	F	A	F	A	A	F	E	G	D	F	R	F	T	G	E	F	L	0	below_cut	0.000	inside
+charrefs	CraUPO	2.6e-51	261	I	65.9	31.3	validated_range	PaDa-I_parent_AaeUPO	1	5	FGVFF	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	F	G	F	V	F	F	E	G	D	P	R	F	T	A	E	F	F	0	below_cut	0.100	inside
+charrefs	LfuCPO	8e-39	373	V	31.5	1.8	extrapolated_low_margin	AluUPO	4	5	IVAFL	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	V	L	A	N	F	E	H	D	E	S	P	I	V	E	F	L	1	below_cut	0.600	outside
+charrefs	MroUPO	2e-60	236	III	100.0	61.6	validated_range	MroUPO	4	5	VIAFV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	V	I	L	A	I	I	E	H	D	L	T	T	I	S	E	F	V	0	below_cut	0.200	inside
+charrefs	MweUPO	1.1e-60	240	III	97.8	58.9	validated_range	MroUPO	4	5	VIAFV	yes	39C,109E,111D,180E,110H	18/18	0-3 (n=2)	C	V	I	L	A	V	I	E	H	D	L	T	T	I	S	E	F	V	0	below_cut	0.300	inside
+charrefs	TteUPO	3.9e-56	274	V	100.0	45.9	validated_range	TteUPO	5	5	VLLAA	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	V	L	L	L	F	L	E	H	D	I	G	A	F	G	E	A	A	3	clade_V_like	0.000	inside
+charrefs	DcaUPO	1.8e-51	245	V	79.1	31.0	validated_range	DspUPO-I	4	5	LLLCI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	D	L	F	L	E	H	D	L	G	G	F	G	E	C	I	3	clade_V_like	0.200	inside
+charrefs	HspUPO	5e-54	261	V	100.0	50.0	validated_range	HspUPO	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	L	L	F	L	E	H	D	L	G	A	F	G	E	A	I	5	clade_V_like	0.000	inside
+charrefs	PabUPO-II	2.8e-51	386	I	86.3	51.7	validated_range	CabUPO-III	3	5	FAAFL	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	F	A	V	A	L	F	E	G	D	V	R	I	T	G	E	F	L	0	below_cut	0.200	inside
+charrefs	CviUPO	1.6e-56	227	II	100.0	58.7	validated_range	CviUPO	3	5	LLIKT	yes	39C,109E,111D,180E,110H	18/18	0 (n=2)	C	L	L	T	I	L	F	E	H	D	Q	Q	I	T	G	E	K	T	1	below_cut	0.100	inside
+charrefs	UPO1_Codo	1.9e-53	381	I	50.5	15.4	extrapolated	LspUPO-II	3	5	VLQFL	yes	39C,109E,111D,180E,110G	18/18	0-53 (bimodal, n=5)	C	V	L	V	Q	G	F	E	G	D	N	R	F	A	N	E	F	L	1	below_cut	0.400	inside
+charrefs	DchUPO	2.6e-53	279	V	83.0	37.1	validated_range	DspUPO-I	5	5	LLLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	L	L	F	L	F	L	E	H	D	L	G	D	F	G	E	A	I	4	clade_V_like	0.100	inside
+charrefs	DspUPO	3.1e-54	227	V	100.0	53.0	validated_range	DspUPO-I	5	5	ILLAI	yes	39C,109E,111D,180E,110H	18/18	33-82 (n=9)	C	I	L	F	L	F	L	E	H	D	L	G	S	F	G	E	A	I	5	clade_V_like	0.000	inside

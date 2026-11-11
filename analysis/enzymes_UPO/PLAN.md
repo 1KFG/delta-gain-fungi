@@ -17,6 +17,10 @@ Companion documents, all in this directory:
 | `RESULT_T2_negative.md` | The G2 negative result, written up standalone |
 | `G1_BFD_SUMMARY.md` | Auto-generated full-BFD tables |
 | `G1_FINDINGS.md` | G1 interpretation, including the Clade IV result |
+| `PLACEMENT_FINDINGS.md` | Phylogenetic placement on the 19-reference tree: the clade caller, and clade support |
+| `upo_place/README.md`, `data/refset_zamocky2022/README.md` | Placement on the 187-leaf Zamocky 2022 reference |
+| `RECONCILIATION.md` | Where the two placement efforts agree and disagree, and which claims stand |
+| `G3_FINDINGS.md`, `G3_MOTIF_REPLICATION.md` | G3 Phase A regulatory result |
 | `upo_sites/` | The software built from all of the above |
 
 ---
@@ -235,14 +239,30 @@ close match in a thin database", not "novel"**. That caveat is written into the 
    3 minutes in a single job, so the planned array is unnecessary and would be pure scheduling
    overhead. One job, 8 cores, 24 GB. The real cost in this workstream is the **sequence
    extraction** from 15,137 gzipped per-genome files, not the annotation.
-8. Phylogenetic placement to replace nearest neighbour; re-validate at matched identity.
+8. ~~Phylogenetic placement to replace nearest neighbour~~ - **DONE 2026-11-08.** EPA onto a
+   93-reference, 400-bootstrap tree. Unassigned rate rises from 19.5 % to 57 %, which is the honest
+   answer at BFD divergence; 92.6 % agreement with nearest neighbour where both commit. Found and
+   removed 13 `NEG_` controls that align to 1 of 183 columns. Clades II and III are monophyletic at
+   100 % support, Clade I at 53 %, and the Clade IV/V relationship is **unresolved** (20-28 %
+   support). See `PLACEMENT_FINDINGS.md`. **Re-validation at matched identity is now DONE** (job 31868181):
+   precision is 100 % above 70 % identity, 88 % at 55-70 %, and collapses to **38 % at 45-55 %**.
+   BFD representatives sit at median 43.8 % identity to the nearest reference. **The defensible
+   output is the 2,088 representatives above the 55 % reliability threshold**, not all 7,055.
+   **Second placement, 2026-11-09** (`upo_place/`): 187-leaf reference from Zamocky 2022 curated
+   HTPs; leave-one-out 184/187; BFD re-called. The two references are compared in
+   `RECONCILIATION.md`.
 9. G1 steps 2-5. **Step 2 (dereplication) done**: the 34,561 catalytic-core proteins reduce to
    7,055 representatives at 90 % identity and 2,805 at 70 %. **Step 3 (clade distribution) done**,
    see `G1_FINDINGS.md`. **Step 4 (novelty) running**: DIAMOND of the 7,055 representatives
    against `nr` (523 GB, Jan 2026). Step 5 depends on step 4.
 10. G2 write-up of the T2 negative; structure comparison on clade representatives.
-11. ~~G3 Phase A once D6 is settled~~ - **D6 settled 2026-11-08, Phase A running.** Promoters
-    extracted (job 31865695); STREME within-lineage contrasts running (job 31865884).
+11. ~~G3 Phase A~~ - **COMPLETE 2026-11-08.** See `G3_FINDINGS.md` and `G3_MOTIF_REPLICATION.md`.
+    17 within-lineage clade contrasts plus two pooled controls. **Clade IV is the only clade whose
+    motifs replicate across independent lineages and survive both controls**, carrying a
+    `TACGCGTA`/`TCGTACTCG` element and a **CCAAT box** that names to the CCAAT-binding complex
+    twice over (HAP3 q=0.023 in the Clade IV run, HAP5 q=0.046 in the pooled run). Clades I, II
+    and III are negative; Clade V is most likely a base-composition artifact. Phase B (RNA-seq) is
+    deferred at the user's direction.
 
 ### 4.1 Possible future refinement, not adopted
 
@@ -267,9 +287,16 @@ dependency. Outputs, if ever wanted: `Fungi_BFD_runs/paralogoscope_pilot` and
 | Figure S8 values are printed data labels | Not a risk | These are the authors' own numbers |
 | Novelty-vs-nr inherits a deposition confound | **Confirmed** | Search nucleotide/WGS too |
 | Lichen and Glomeromycota contamination | **Untested** | Contig-level checks before reporting |
+| STREME `--nmotifs N` reports N motifs regardless of significance | **Confirmed 2026-11-08** | 136 reported across 17 contrasts, only 57 pass the held-out test. Replication analysis filters on test p-value in BOTH lineages |
+| Dinucleotide shuffle does not control for repeats | **Confirmed 2026-11-08** | Shuffle control returned poly-A and other low-complexity tracts absent from the real-background run. Genome-matched real promoters are the primary control |
 | Only 35.4 % of fungal PF01328 carries the UPO catalytic core | **Confirmed 2026-11-08** | All downstream work uses the 34,561 catalytic-core set, not the raw 97,520 |
-| Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Overturned 2026-11-09** | Placement puts 99.8 % of these in Family II; the non-Glu180 proteins are ascomycete long UPOs (Ala), as in all 13 curated ones. See `upo_place/README.md`, `G1_BFD_SUMMARY.md` §6 |
-| Clade IV is the best-supported clade but has one characterized member | **Confirmed** | Always flagged provisional; characterizing a Clade IV enzyme is the top experimental recommendation |
+| Clade I bin absorbs non-UPO PF01328 at low identity (Glu180 in only 16.8 %) | **Overturned 2026-11-09** | Placement on the 187-leaf reference puts 99.8 % of these in Family II; the non-Glu180 proteins are ascomycete long UPOs (Ala), as in all 13 curated ones. See `upo_place/README.md`, `G1_BFD_SUMMARY.md` §6, `RECONCILIATION.md` |
+| Clade IV is the tightest group but has one characterized member | **Confirmed** | Characterizing a member is the top experimental recommendation. Activity calibration is still n = 1 |
+| Clade IV's position relative to Clade V is unresolved (20-28 % bootstrap, 19-reference tree) | **Partly resolved 2026-11-11** | On the 187-leaf tree IV (20 leaves) and V (14) are each recovered: IV SH-aLRT/UFBoot 83/96, V 94/86, IV+V 98.5/99. The split is supported but marginal; say "Clade IV, sister to Clade V", not "a distinct subtype beyond doubt". `RECONCILIATION.md` §2 |
+| Clade calls below 55 % identity to a reference are unreliable (38-50 % precision) | **Confirmed for the 19-reference tree; re-test on the 187-leaf tree pending** | `RECONCILIATION.md` §1. Until the matched-identity result is in, treat 187-leaf calls below 55 % identity to the nearest surviving reference as unverified |
+| Semi-supervised reference expansion DEGRADES the caller (80 % -> 66 % precision) | **Confirmed 2026-11-08** | Applies to promoting *inferred-label BFD members*. Expansion with independently curated sequences (Zamocky 2022) is a different experiment, under test in `RECONCILIATION.md` §1 |
+| 3 of 5 clades have 1-2 reference enzymes | **Addressed 2026-11-09** | The 187-leaf tree gives Clades I-V 31/7/3/20/14 reference leaves (characterized: 5/2/2/1/9). Clade III remains thin |
+| Rooted MRCA tests are invalid on unrooted RAxML trees | **Confirmed 2026-11-08** | Monophyly is tested with bipartitions (both `upo_sites` and `upo_place` do) |
 | CAVER not installed | **Confirmed** | Budget install, or substitute MOLE / custom probe measure |
 | Agaricomycete copy-number conflict (147 vs 144) | **RESOLVED 2026-11-07** | 144 distinct proteins is correct; 147 counted `pfam.parquet` ROWS, double-counting multi-domain proteins. Top genome is *Sphaerobolus stellatus* (144), then *Mycena* spp. (66-106). Always `count(distinct protein_id)` |
 | 5 UniProt accessions from Table S1 return HTTP 200 with an empty body | **Confirmed** | Scripts must check body length, not status code; NCBI accessions are the reliable route |

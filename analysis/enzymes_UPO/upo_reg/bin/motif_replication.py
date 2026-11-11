@@ -19,6 +19,11 @@ ap.add_argument("--streme-dir", required=True)
 ap.add_argument("--out", required=True)
 ap.add_argument("--jaspar", default=None)
 ap.add_argument("--tomtom-thresh", type=float, default=0.05)
+ap.add_argument("--test-pvalue", type=float, default=0.05,
+                help="STREME held-out test p-value a motif must beat to be considered at all. "
+                     "STREME with --nmotifs N always REPORTS N motifs regardless of significance, "
+                     "so without this filter non-significant motifs would be counted as "
+                     "replicating.")
 a = ap.parse_args()
 
 runs = {}
@@ -34,23 +39,39 @@ if not runs:
     sys.exit(f"no STREME outputs under {a.streme_dir}")
 print(f"{len(runs)} contrasts with motifs", file=sys.stderr)
 
+
 by_clade = defaultdict(list)
 for (lin, clade), f in runs.items():
     by_clade[clade].append((lin, f))
 
-def motif_ids(path):
-    ids = []
-    for line in open(path):
-        m = re.match(r"^MOTIF\s+(\S+)", line)
-        if m:
-            ids.append(m.group(1))
-    return ids
+def significant_ids(streme_txt, thresh):
+    """Motif ids whose STREME held-out TEST p-value beats `thresh`."""
+    xml = os.path.join(os.path.dirname(streme_txt), "streme.xml")
+    if not os.path.exists(xml):
+        return None                      # cannot filter; caller must not claim significance
+    s = open(xml).read()
+    out = set()
+    for m in re.finditer(r'id="(\d+-[^"]+)"[\s\S]{0,400}?test_pvalue="([^"]*)"', s):
+        try:
+            if float(m.group(2)) < thresh:
+                out.add(m.group(1))
+        except ValueError:
+            pass
+    return out
+
+SIG = {}
+for k, f in runs.items():
+    SIG[k] = significant_ids(f, a.test_pvalue)
 
 out = []
 W = out.append
 W("# G3 Phase A: cross-lineage motif replication\n")
-W("A motif is reported as **clade-linked** only if STREME found a match for it in two or more "
-  "INDEPENDENT lineages for the same clade. Single-lineage motifs are lineage elements.\n")
+W("A motif is reported as **clade-linked** only if it is significant on STREME's held-out test "
+  f"set (test p < {a.test_pvalue}) in two or more INDEPENDENT lineages for the same clade, and "
+  "the two are matched by Tomtom. Single-lineage motifs are lineage elements.\n")
+W("**Significance filter matters here.** STREME run with `--nmotifs 8` always reports 8 motifs "
+  "per contrast whether or not they are significant. Across the 17 contrasts it reported 136 "
+  "motifs, of which only those passing the held-out test are considered below.\n")
 W("STREME p-values are not used for ranking; see the module docstring for why.\n")
 
 summary = []
@@ -82,6 +103,9 @@ for clade in sorted(by_clade):
                         f_ = line.split("\t")
                         if len(f_) > 5:
                             hits.append((f_[0], f_[1], f_[4]))
+            s1, s2 = SIG.get((l1, clade)), SIG.get((l2, clade))
+            if s1 is not None and s2 is not None:
+                hits = [h for h in hits if h[0] in s1 and h[1] in s2]
             pairs += 1
             if hits:
                 W(f"- **{l1} vs {l2}: {len(hits)} matching motif pair(s)**")
