@@ -68,17 +68,17 @@ p1 <- ggtree(tr, layout = "circular", linewidth = 0.25, colour = INK2) %<+% tips
                alpha = 0.28, extend = 0.35, to.bottom = TRUE) +
   scale_fill_manual(values = group_col, name = "Zamocky 2022 lineage", drop = FALSE) +
   geom_tippoint(aes(subset = set == "backbone"), size = 1.6, colour = INK) +
-  geom_tiplab(aes(label = char, subset = set == "backbone"), size = 2.1, offset = 0.05,
+  geom_tiplab(aes(label = char, subset = set == "backbone"), size = 1.8, offset = 0.04,
               colour = INK) +
-  geom_cladelab(data = ours, mapping = aes(node = node, label = lab), offset = 0.95,
+  geom_cladelab(data = ours, mapping = aes(node = node, label = lab), offset = 0.75, align = TRUE,
                 barsize = 0.8, barcolour = INK, textcolour = INK, fontsize = 2.6,
                 angle = "auto", hjust = 0.5, offset.text = 0.12) +
   theme(legend.position = "right", legend.text = element_text(size = 7),
         legend.title = element_text(size = 8, face = "bold"),
         plot.background = element_rect(fill = SURFACE, colour = NA)) +
   labs(title = "UPO reference tree: 19 characterized enzymes + 168 curated HTPs (Zamocky 2022)",
-       subtitle = paste("ML tree (IQ-TREE, Q.PFAM+R7), rooted on Mucorales. Arcs: Clades I-V with",
-                        "SH-aLRT/UFBoot. Named tips: characterized enzymes."))
+       subtitle = paste0("ML tree (IQ-TREE, Q.PFAM+R7), rooted on Mucorales. Sectors: Zamocky lineages.\n",
+                         "Arcs: our Clades I-V with SH-aLRT/UFBoot. Named tips: the 19 characterized enzymes."))
 save_fig(p1, "fig1_reference_tree", 9, 7.5)
 
 # ---------------- Figure 3 ----------------
@@ -92,10 +92,15 @@ p3 <- ggplot(fl, aes(axis1 = old_clade, axis2 = new_clade, y = n)) +
   geom_alluvium(aes(fill = old_tier), width = 0.28, alpha = 0.75, knot.pos = 0.4,
                 colour = SURFACE, linewidth = 0.2) +
   geom_stratum(width = 0.28, fill = "#f0efec", colour = INK2, linewidth = 0.3) +
-  geom_text(stat = "stratum", aes(label = after_stat(sprintf("%s\n%s", stratum,
-            format(count, big.mark = ",")))), size = 2.4, colour = INK, lineheight = 0.9) +
+  # big strata labelled inside; small ones (< 6,000) beside the bar, outward, so they cannot overprint
+  geom_text(stat = "stratum", aes(label = after_stat(ifelse(count >= 6000, sprintf("%s\n%s", stratum,
+            format(count, big.mark = ",")), ""))), size = 2.4, colour = INK, lineheight = 0.9) +
+  geom_text(stat = "stratum", aes(label = after_stat(ifelse(count < 6000, sprintf("%s  %s", stratum,
+            format(count, big.mark = ",")), "")),
+            x = after_stat(ifelse(x == 1, x - 0.16, x + 0.16)),
+            hjust = after_stat(ifelse(x == 1, 1, 0))), size = 2.3, colour = INK) +
   scale_x_discrete(limits = c("Nearest neighbour\n(19 enzymes)", "Placement\n(187-leaf tree)"),
-                   expand = c(0.12, 0.12)) +
+                   expand = c(0.25, 0.25)) +
   scale_y_continuous(labels = scales::comma) +
   scale_fill_manual(values = setNames(SLOTS[1:3], TIERS), name = "Old call's tier") +
   labs(title = "What placement changed: 97,520 BFD PF01328 proteins",
@@ -129,8 +134,8 @@ p4a <- ggplot(pr, aes(bin, precision, colour = caller, group = caller)) +
   scale_y_continuous(labels = scales::percent, limits = c(-0.1, 1.02), breaks = seq(0, 1, 0.25)) +
   labs(x = "identity to nearest surviving reference (%)", y = "precision when the caller commits",
        title = "Matched-identity validation on the 19 characterized enzymes",
-       subtitle = paste("Every reference above an identity ceiling removed before placing.",
-                        "Bars: exact binomial 95 % CI; labels: correct/committed")) +
+       subtitle = paste0("Every reference above an identity ceiling removed before placing.\n",
+                         "Bars: exact binomial 95 % CI; labels: correct / committed calls.")) +
   theme_fig + theme(legend.position = "top")
 p4b <- ggplot(pr, aes(bin, declined_frac, colour = caller, group = caller)) +
   geom_point(size = 2.2, position = dodge) +
