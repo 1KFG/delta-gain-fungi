@@ -9,6 +9,9 @@ NCOL=224                                          # columns of tree/aln.trim.afa
 # ("Invalid model name"). LG+G4 on the same (mfp) topology: clade membership was identical under
 # LG+I+G4 (lgig run), so the clades being placed into do not depend on the matrix.
 MODEL=${MODEL:-LG+G4}
-# Pinned bioconda builds through pixi (no module exists for epa-ng / gappa).
+# Pinned bioconda builds through pixi (no module exists for epa-ng / gappa). pixi lives in
+# ~/.pixi/bin, which a non-interactive submission shell may not have on PATH.
+export PATH="$HOME/.pixi/bin:$PATH"
+command -v pixi > /dev/null || { echo "pixi not found (expected in ~/.pixi/bin)" >&2; exit 1; }
 PX="pixi exec -c conda-forge -c bioconda -s epa-ng==0.3.8 -s raxml-ng==2.0.4 --"
 module load hmmer/3.4
