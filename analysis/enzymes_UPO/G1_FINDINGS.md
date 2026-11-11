@@ -10,9 +10,11 @@ changed, the old reading is stated and why it no longer holds.
 **How clades are called now.** Each protein is placed (epa-ng) on a 187-leaf reference tree: the 19
 characterized enzymes plus 168 curated HTPs from Zamocky et al. 2022, rebuilt in-house
 (`data/refset_zamocky2022/`). A clade is called when placements inside it carry like-weight ratio
->= 0.5. Leave-one-out over all 187 leaves: **184/187** for Clades I-V, including 102/104 at 30-52.7 %
-and 32/32 below 30 % identity to the nearest characterized enzyme, the range where BFD sits. The
-old caller was validated only at >= 52.7 % (13 % of BFD). See `upo_place/README.md`.
+>= 0.5. Leave-one-out over all 187 leaves: **184/187** for Clades I-V. At **matched identity**
+(every reference above a ceiling removed, so the query faces BFD-like divergence), the 19
+characterized enzymes were called with **no errors** in 56 tested cases down to < 35 % identity to
+the nearest surviving reference (9 abstentions); the 19-reference caller was 38 % precise at
+45-55 %. See `upo_place/README.md` and `RECONCILIATION.md` §1.
 
 ## The census
 
@@ -89,8 +91,8 @@ inactive" nor "they are normal UPOs" is supported.
 
 ## Finding 3 (the headline): the clade with the most intact UPO machinery rests on one characterized enzyme
 
-**Clade IV is now a well-supported clade, not a one-reference bin**, and it is still the clearest
-target for characterization.
+**Clade IV is now a supported clade with 20 references, not a one-reference bin**, and it is still
+the clearest target for characterization.
 
 - **In the tree:** MphUPO plus 19 curated ascomycete HTPs (Botrytis, Sclerotinia, Aspergillus,
   Fusarium, Colletotrichum, ...), UFBoot 96-97. Leave-one-out 20/20.
@@ -117,6 +119,13 @@ better supported: characterize a Clade IV enzyme.**
 - The 2,853 proteins moved from old Clade V depend on the placement boundary between IV and V, which
   sits on a pectinate run of short branches in the reference tree. They are assigned at high LWR, but
   this is the boundary most likely to move with a denser reference set.
+- **Rank versus Clade V is supported but marginal.** On the 19-reference tree (skylark,
+  `PLACEMENT_FINDINGS.md`) MphUPO fell inside Clade V on nodes with 20-28 % bootstrap. On the
+  187-leaf tree Clade IV is recovered at SH-aLRT/UFBoot 83/96 and Clade V at 94/86, IV+V at
+  98.5/99. Say "Clade IV, sister to Clade V", not "a distinct subtype". `RECONCILIATION.md` §2.
+- At matched identity (every reference above a ceiling removed) the 187-leaf caller called the
+  characterized enzymes with no errors down to < 35 % identity, MphUPO included at every ceiling
+  (`RECONCILIATION.md` §1). The 19-reference caller was 38 % precise at 45-55 %.
 
 ## Finding 4: clade confidence across BFD
 
@@ -206,8 +215,44 @@ measures **deposition status at least as much as biological novelty**:
 | Chytridiomycota | 6.2 % | 96 |
 
 The ordering tracks how heavily each group has been sequenced and deposited (*Aspergillus* and
-*Penicillium* among the most, lichens among the least), not biological unusualness. **A
-nucleotide/WGS comparison is required before any novelty claim.** It is not done.
+*Penicillium* among the most, lichens among the least), not biological unusualness. Finding 5b quantifies this directly.
+
+### Finding 5b: the confound is now quantified, and it explains the result
+
+*(From the skylark session, merged 2026-11-11; independent of clade calls.)*
+
+**Measured 2026-11-08**, closing the item `PLAN.md` left open as "a nucleotide/WGS comparison is
+still required".
+
+Every one of the 23,680 BFD genomes carries a public NCBI assembly accession. The meaningful split
+is therefore not public-versus-private but **GCF (RefSeq, where NCBI has annotated the genome and
+its proteins are in `nr`) versus GCA-only (assembly public, proteins possibly never deposited)**.
+
+| Assembly source | representatives | novel (< 70 %) |
+|---|---|---|
+| **GCF** (RefSeq-annotated) | 300 | **2.0 %** |
+| **GCA-only** | 6,755 | **18.7 %** |
+
+**A 16.7-point difference, z = 7.4.**
+
+**This is close to a complete explanation of the apparent novelty.** When the source genome's
+proteins have been deposited, essentially nothing looks novel (2 %). When they have not, 18.7 %
+does. The 18 % headline figure is a statement about annotation deposition, not about fungal
+biology.
+
+It also disposes of the lineage ordering in the table above: Eurotiomycetes looked least novel and
+lichens most, and that is what deposition rate predicts.
+
+**What this does and does not replace.** It answers the question the nucleotide comparison was
+meant to answer — separating novelty from deposition — and answers it more directly, because the
+genomes themselves are all public, so a tblastn against WGS would by construction find nearly every
+sequence and return a near-zero novelty rate. A literal tblastn-versus-`nt`/WGS run has **not**
+been done. Nothing in this project should quote a biological novelty rate for fungal UPOs; the
+defensible statement is that **no dereplicated fungal UPO in BFD lacks a public relative, and
+apparent novelty tracks whether the source genome has deposited protein annotation.**
+
+The residual 2 % in GCF genomes is most plausibly annotation disagreement — funannotate calling a
+gene model NCBI did not — rather than novelty.
 
 ### Finding 5a: novelty barely tracks clade
 
@@ -229,11 +274,51 @@ Ascomycetous 1st 24.1 %, Basidiomycetous 2nd 20.8 %). Clade IV remains among the
 **under-characterized, not under-sequenced.** The sequences are public; what is missing is
 biochemistry.
 
+## Finding 6: lichen and Glomeromycota contamination — checked, no evidence found
+
+*(From the skylark session, merged 2026-11-11; independent of clade calls. The 124 Glomeromycota
+UPO genes here are the ones placement puts in the glomeromycete clade, 121 of 124.)*
+
+**Measured 2026-11-08**, closing the `PLAN.md` item "contig-level checks before any lineage claim
+is reported". 2,444 UPO genes across 547 genomes in the lineages where symbiont or host
+contamination is the standing worry.
+
+The classic contamination signature is a gene sitting alone on a short, gene-poor contig. Tested by
+comparing, within each genome, how many protein-coding genes share a UPO's contig against how many
+share a **randomly chosen gene's** contig (a gene-weighted baseline, so fragmented assemblies are
+compared against their own fragmentation, not against a global expectation).
+
+| Lineage | UPO genes | genes on UPO contig | genes on random-gene contig | ratio |
+|---|---|---|---|---|
+| Lecanoromycetes (lichens) | 2,176 | 11.0 | 9.0 | **1.22** |
+| Arthoniomycetes (lichens) | 132 | 21.0 | 15.0 | **1.40** |
+| Glomeromycota | 124 | 13.5 | 5.5 | **2.45** |
+| Coniocybomycetes | 5 | 36.0 | 25.0 | 1.44 |
+| Lichinomycetes | 2 | 47.0 | 33.0 | 1.42 |
+| Candelariomycetes | 5 | 40.0 | 107.0 | 0.37 |
+
+**In every lineage with a meaningful sample, UPO genes sit on contigs that are *more* gene-rich
+than the typical contig in the same genome**, not less. Glomeromycota UPOs are on contigs carrying
+2.45 times as many genes as a random Glomeromycota gene's contig. There is no sign of UPOs being
+stranded on short foreign contigs.
+
+Candelariomycetes is below 1, but n = 5 and that is a single genome's worth of genes; no weight
+should be put on it.
+
+**What this test does and does not cover.** It detects the common signature — a gene isolated on a
+short contig. It does **not** detect contamination carried on a large, well-assembled contig from
+another organism, which would need taxonomic assignment of the neighbouring genes. So the honest
+statement is: **the standard contig-level contamination signature is absent, and the lineage
+counts in Findings 3 and 5 can be reported, with taxonomic verification of neighbours still
+available as a stronger check if a specific lineage claim becomes load-bearing.**
+
 ## Still open in G1
 
 1. **Glu180 in ascomycete long UPOs** (Finding 2): structure-based alignment of one against AaeUPO.
-2. **Novelty against nucleotide/WGS**, required before any novelty claim (Finding 5).
-3. **Contamination checks** for lichen and Glomeromycota lineages, required before any
-   lineage-level claim.
-4. **Gene-model QC** (`gene_transcripts` partial/start/stop flags) before catalytic-machinery
+2. **Matched identity with per-case tree rebuilds** (`RECONCILIATION.md` §1 caveat 1), and more
+   Clade II/III references: those two clades carry the least validation.
+3. **Gene-model QC** (`gene_transcripts` partial/start/stop flags) before catalytic-machinery
    numbers are stated as biology (HANDOFF open item 4).
+4. Taxonomic verification of contig neighbours, if a specific lineage claim becomes load-bearing
+   (Finding 6). A literal tblastn against nt/WGS is *not* planned: Finding 5b answers the question
+   it was for.

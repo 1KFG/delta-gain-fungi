@@ -1,0 +1,104 @@
+# Assay panel from the BFD UPO shortlist.
+# Built for INFORMATION, not for confirmation: weighted toward the cases where the
+#   score is untested (outside clade V, out-of-clade AUC 0.556) and toward pocket
+#   combinations absent from the 19 characterized enzymes.
+# 84 predicted active + 12 predicted INACTIVE controls.
+# The controls are not filler. Without them no false-negative rate can be measured,
+#   and GmaUPO-II shows that an active enzyme CAN carry a low pocket score.
+rank	role	protein_id	sample	species	PHYLUM	LINEAGE_GROUP	clade	clade_trust	identity_to_nearest_ref	t1_pocket_matches	pocket_residues	pocket_is_novel	priority
+1	predicted_active	F00F927D_007279-T1	chunk_0001	Basidiobolus sp. MH 6.3	Basidiobolomycota	Basidiobolomycota	unassigned	unassigned	35.7	3	IVLLI	yes	8
+2	predicted_active	F05916B5_000837-T1	chunk_0001	Elsinoe australis	Ascomycota	Dothideomycetes	IV	reliable+provisional_cladeIV	56.8	3	FLLAA	yes	6
+3	predicted_active	F20A5C88_000034-T1	chunk_0003	Psilocybe tampanensis	Basidiomycota	Agaricomycetes	I	reliable	80.3	3	ILLFF	yes	6
+4	predicted_active	F068107F_003102-T1	chunk_0001	Pilobolus umbonatus	Mucoromycota	Mucoromycota	unassigned	unassigned	30.8	3	ILILI	yes	8
+5	predicted_active	F18DB08B_003061-T1	chunk_0002	Boothiomyces sp. JEL0838	Chytridiomycota	Chytridiomycota	unassigned	unassigned	38.6	3	ILLLT	yes	8
+6	predicted_active	F46AF962_002825-T1	chunk_0006	Acaulopage tetraceros	Zoopagomycota	Zoopagomycota	unassigned	unassigned	28.8	3	MLLAV	yes	8
+7	predicted_active	FA186146_050775-T1	chunk_0013	Gigaspora margarita	Glomeromycota	Glomeromycota	unassigned	unassigned	37.8	3	VLLLI	yes	8
+8	predicted_active	F00B5FC2_006994-T1	chunk_0001	Trichosporon sp. PG3703	Basidiomycota	Tremellomycetes	unassigned	unassigned	35.0	3	ILLFV	yes	5
+9	predicted_active	F0110F3C_007235-T1	chunk_0001	Aspergillus fumigatus	Ascomycota	Eurotiomycetes	unassigned	unassigned	31.0	3	MVLAI	yes	5
+10	predicted_active	F417D980_002659-T1	chunk_0006	Helicoceras oryzae	Ascomycota	Ascomycota	II	extrapolated	50.5	3	ITLAL	yes	5
+11	predicted_active	F00AD517_002272-T1	chunk_0001	Diaporthe ueckeri	Ascomycota	Sordariomycetes	V	reliable	58.5	3	IFLAV	yes	3
+12	predicted_active	F125328A_004162-T1	chunk_0002	Aspergillus wentii	Ascomycota	Eurotiomycetes	IV	reliable+provisional_cladeIV	60.1	3	FLMAI	yes	6
+13	predicted_active	F79133C9_006279-T1	chunk_0010	Diaporthe citriasiana	Ascomycota	Sordariomycetes	IV	reliable+provisional_cladeIV	71.4	3	FLLAV	yes	6
+14	predicted_active	FAEA25B0_018503-T1	chunk_0014	Mycena capillaripes	Basidiomycota	Agaricomycetes	III	reliable	59.5	3	ILAVI	yes	6
+15	predicted_active	F0014F4F_004320-T1	chunk_0001	Clavariadelphus pistillaris	Basidiomycota	Agaricomycetes	unassigned	unassigned	31.9	4	ILLLI	yes	5
+16	predicted_active	F00BE49C_004509-T1	chunk_0001	Dothistroma septosporum	Ascomycota	Dothideomycetes	II	extrapolated	46.2	3	ILLLV	yes	5
+17	predicted_active	F029BB50_007380-T1	chunk_0001	Microcera coccophila	Ascomycota	Sordariomycetes	unassigned	unassigned	34.6	3	ILLLV	yes	5
+18	predicted_active	F06C35B6_003113-T1	chunk_0001	Lecanosticta acicola	Ascomycota	Dothideomycetes	unassigned	unassigned	47.8	3	IFLLI	yes	5
+19	predicted_active	F09425E6_009426-T1	chunk_0001	Phialocephala subalpina	Ascomycota	Leotiomycetes	unassigned	unassigned	29.7	3	MLLAA	yes	5
+20	predicted_active	F14A609E_009114-T1	chunk_0002	Punctelia caseana	Ascomycota	Lecanoromycetes	unassigned	unassigned	34.2	3	ILLLT	yes	5
+21	predicted_active	F23AAAAB_007956-T1	chunk_0003	Hyalorbilia sp. HsImV25	Ascomycota	Orbiliomycetes	unassigned	unassigned	35.9	3	LLLLI	yes	5
+22	predicted_active	F964385A_000312-T1	chunk_0012	Kendrickiella phycomyces	Ascomycota	Ascomycota	unassigned	unassigned	31.7	3	FVLAI	yes	5
+23	predicted_active	FC463472_002182-T1	chunk_0015	Ustilago esculenta	Basidiomycota	Ustilaginomycetes	unassigned	unassigned	37.2	3	ILLFA	yes	5
+24	predicted_active	FF98D398_008570-T1	chunk_0020	Atractiella rhizophila	Basidiomycota	Atractiellomycetes	unassigned	unassigned	35.0	3	LLLAL	yes	5
+25	predicted_active	F05D3311_010346-T1	chunk_0001	Aspergillus vadensis	Ascomycota	Eurotiomycetes	V	reliable	75.4	4	ILLAA	yes	3
+26	predicted_active	F0791C14_011600-T1	chunk_0001	Didymosphaeria variabile	Ascomycota	Dothideomycetes	V	reliable	57.9	4	IVLAI	yes	3
+27	predicted_active	F089B7A0_007745-T1	chunk_0001	Hymenoscyphus koreanus	Ascomycota	Leotiomycetes	V	reliable	55.2	3	FLLAV	yes	3
+28	predicted_active	F849343D_006140-T1	chunk_0010	Nadvornikia sorediata	Ascomycota	Lecanoromycetes	V	reliable	63.4	3	MTLAI	yes	3
+29	predicted_active	F7442460_005575-T1	chunk_0009	Coleodictyospora muriformis	Ascomycota	Ascomycota	V	reliable	62.3	4	ILLAV	no	1
+30	predicted_active	F0F939A4_007304-T1	chunk_0002	Basidiobolus sp. ARSEF 9894	Basidiobolomycota	Basidiobolomycota	unassigned	unassigned	36.2	4	ILLAS	yes	8
+31	predicted_active	F1D7B4F9_005132-T1	chunk_0003	Spizellomyces sp. palustris	Chytridiomycota	Chytridiomycota	unassigned	unassigned	38.8	3	CLLAF	yes	8
+32	predicted_active	F22E7D53_006149-T1	chunk_0003	Backusella morwellensis	Mucoromycota	Mucoromycota	unassigned	unassigned	29.3	3	SLLLI	yes	8
+33	predicted_active	F46AF962_005498-T1	chunk_0006	Acaulopage tetraceros	Zoopagomycota	Zoopagomycota	unassigned	unassigned	37.2	3	VTLAI	yes	8
+34	predicted_active	F931F230_001407-T1	chunk_0012	Spizellomyces punctatus	Chytridiomycota	Chytridiomycota	unassigned	unassigned	39.3	4	CLLAI	yes	8
+35	predicted_active	FA52B7CF_003209-T1	chunk_0013	Fimicolochytrium jonesii	Chytridiomycota	Chytridiomycota	unassigned	unassigned	39.7	3	ILLLY	yes	8
+36	predicted_active	FCDBFCBD_006952-T1	chunk_0016	Gorgonomyces haynaldii	Chytridiomycota	Chytridiomycota	unassigned	unassigned	32.1	3	IALAV	yes	8
+37	predicted_active	FD3A14F2_005290-T1	chunk_0017	Gigaspora rosea	Glomeromycota	Glomeromycota	unassigned	unassigned	35.9	4	ILLLI	yes	8
+38	predicted_active	FDF1D73F_021937-T1	chunk_0017	Basidiobolus sp. ARSEF 9899	Basidiobolomycota	Basidiobolomycota	unassigned	unassigned	36.2	3	IPLAT	yes	8
+39	predicted_active	FEC49E8E_002621-T1	chunk_0019	Endogone sp. FLAS-F59071	Mucoromycota	Mucoromycota	unassigned	unassigned	37.8	3	ILLIG	yes	8
+40	predicted_active	FEC49E8E_005541-T1	chunk_0019	Endogone sp. FLAS-F59071	Mucoromycota	Mucoromycota	unassigned	unassigned	37.0	3	ILLLG	yes	8
+41	predicted_active	F1D42C64_005050-T1	chunk_0003	Parahypoxylon ruwenzoriense	Ascomycota	Sordariomycetes	IV	reliable+provisional_cladeIV	64.7	3	FLLAA	yes	6
+42	predicted_active	FB9A76F2_019074-T1	chunk_0015	Marasmius cohortalis	Basidiomycota	Agaricomycetes	III	reliable	57.3	3	ILALI	yes	6
+43	predicted_active	FD179291_002545-T1	chunk_0016	Hymenoscyphus repandus	Ascomycota	Leotiomycetes	IV	reliable+provisional_cladeIV	55.5	3	FLLAV	yes	6
+44	predicted_active	FE4E4FF3_011725-T1	chunk_0018	Collybiopsis confluens	Basidiomycota	Agaricomycetes	III	reliable	63.2	3	FLLAV	yes	6
+45	predicted_active	F0014F4F_012662-T1	chunk_0001	Clavariadelphus pistillaris	Basidiomycota	Agaricomycetes	unassigned	unassigned	31.4	3	VLLLI	yes	5
+46	predicted_active	F0077350_004482-T1	chunk_0001	Rhizoctonia solani	Basidiomycota	Agaricomycetes	unassigned	unassigned	29.9	3	LLLLI	yes	5
+47	predicted_active	F01F205C_007600-T1	chunk_0001	Chalciporus chontae	Basidiomycota	Agaricomycetes	unassigned	unassigned	33.5	3	ILLIV	yes	5
+48	predicted_active	F02DB017_001544-T1	chunk_0001	Hericium erinaceus	Basidiomycota	Agaricomycetes	unassigned	unassigned	30.8	3	ILLLL	yes	5
+49	predicted_active	F03F3572_009509-T1	chunk_0001	Zasmidium citrigriseum	Ascomycota	Dothideomycetes	II	extrapolated	50.5	3	IFLLI	yes	5
+50	predicted_active	F042DB9A_003536-T1	chunk_0001	Hermanssonia centrifuga	Basidiomycota	Agaricomycetes	unassigned	unassigned	31.5	3	ILLLV	yes	5
+51	predicted_active	F051A2A3_006617-T1	chunk_0001	Phlyctis speirea	Ascomycota	Lecanoromycetes	unassigned	unassigned	31.9	3	ILLLV	yes	5
+52	predicted_active	F05A9C8B_013294-T1	chunk_0001	Ganoderma lingzhi	Basidiomycota	Agaricomycetes	unassigned	unassigned	33.7	3	ILLLA	yes	5
+53	predicted_active	F05B6213_021658-T1	chunk_0001	Mycena floridula	Basidiomycota	Agaricomycetes	unassigned	unassigned	34.6	3	ILLMF	yes	5
+54	predicted_active	F05D3311_004905-T1	chunk_0001	Aspergillus vadensis	Ascomycota	Eurotiomycetes	unassigned	unassigned	30.2	3	LLLAV	yes	5
+55	predicted_active	F06EFDE7_003587-T1	chunk_0001	Baorangia sp. TRTC168334	Basidiomycota	Agaricomycetes	unassigned	unassigned	32.6	3	LLLII	yes	5
+56	predicted_active	F078888C_001762-T1	chunk_0001	Pyrenophora teres	Ascomycota	Dothideomycetes	unassigned	unassigned	49.2	3	FLLAG	yes	5
+57	predicted_active	F08C3430_005016-T1	chunk_0001	Pleurotus eryngii	Basidiomycota	Agaricomycetes	unassigned	unassigned	33.0	3	LLLMI	yes	5
+58	predicted_active	F0A381ED_008233-T1	chunk_0001	Boletus coccyginus	Basidiomycota	Agaricomycetes	unassigned	unassigned	35.1	3	LLLVI	yes	5
+59	predicted_active	F0C1F7CD_014107-T1	chunk_0001	Boletus edulis	Basidiomycota	Agaricomycetes	unassigned	unassigned	35.7	3	LLLTI	yes	5
+60	predicted_active	F0FEDE7E_004931-T1	chunk_0002	Aspergillus nidulans	Ascomycota	Eurotiomycetes	unassigned	unassigned	49.2	3	IDLSI	yes	5
+61	predicted_active	F10EB3D7_007455-T1	chunk_0002	Lentinus squarrosulus	Basidiomycota	Agaricomycetes	unassigned	unassigned	34.6	3	ILLTV	yes	5
+62	predicted_active	F1135795_011084-T1	chunk_0002	Aspergillus terreus	Ascomycota	Eurotiomycetes	unassigned	unassigned	31.7	3	AVLAI	yes	5
+63	predicted_active	F180DDBB_000620-T1	chunk_0002	Xylographa trunciseda	Ascomycota	Lecanoromycetes	unassigned	unassigned	36.4	3	ILLFV	yes	5
+64	predicted_active	F1DF6270_000262-T1	chunk_0003	Diaporthe caulivora	Ascomycota	Sordariomycetes	unassigned	unassigned	40.1	3	ILLFT	yes	5
+65	predicted_active	F1E5204D_012263-T1	chunk_0003	Seiridium mearnsii	Ascomycota	Sordariomycetes	unassigned	unassigned	33.3	3	LLLII	yes	5
+66	predicted_active	F20CE445_036018-T1	chunk_0003	Mycena latifolia	Basidiomycota	Agaricomycetes	III	extrapolated	53.5	3	LLLLI	yes	5
+67	predicted_active	F2383A38_001782-T1	chunk_0003	Boletus sp. MULU70	Basidiomycota	Agaricomycetes	unassigned	unassigned	53.3	3	MLLAF	yes	5
+68	predicted_active	F25B84A0_003728-T1	chunk_0003	Plenodomus lingam	Ascomycota	Dothideomycetes	II	extrapolated	44.0	3	VTLAI	yes	5
+69	predicted_active	F2A2C89F_005725-T1	chunk_0004	Russula gracillima	Basidiomycota	Agaricomycetes	unassigned	unassigned	32.1	3	ILLLT	yes	5
+70	predicted_active	F2D15797_004809-T1	chunk_0004	Leptoxyphium fumago	Ascomycota	Dothideomycetes	II	extrapolated	44.9	3	ILLFT	yes	5
+71	predicted_active	F31DFC25_003724-T1	chunk_0004	Tylopilus felleus	Basidiomycota	Agaricomycetes	unassigned	unassigned	33.9	3	LLLAV	yes	5
+72	predicted_active	F344AE84_011283-T1	chunk_0005	Seiridium kartense	Ascomycota	Sordariomycetes	unassigned	unassigned	32.8	3	LLLFI	yes	5
+73	predicted_active	F365B4EE_000743-T1	chunk_0005	Macronectria jungneri	Ascomycota	Sordariomycetes	unassigned	unassigned	36.1	3	IVLAV	yes	5
+74	predicted_active	F382DE4E_002570-T1	chunk_0005	Emarellia grisea	Ascomycota	Dothideomycetes	unassigned	unassigned	31.0	3	MVLAI	yes	5
+75	predicted_active	F391AE36_010241-T1	chunk_0005	Flavopunctelia flaventior	Ascomycota	Lecanoromycetes	unassigned	unassigned	34.8	3	VLLFI	yes	5
+76	predicted_active	F3DAE981_003510-T1	chunk_0005	Mycena haematopus	Basidiomycota	Agaricomycetes	III	extrapolated	51.9	3	ILRLI	yes	5
+77	predicted_active	F43BA660_008056-T1	chunk_0006	Parastagonospora avenae	Ascomycota	Dothideomycetes	II	extrapolated	44.0	3	IVLAL	yes	5
+78	predicted_active	F48C94B8_012935-T1	chunk_0006	Athelia psychrophila	Basidiomycota	Agaricomycetes	unassigned	unassigned	28.4	3	ILLML	yes	5
+79	predicted_active	F4AF1F6E_004271-T1	chunk_0006	Aureoboletus auriporus	Basidiomycota	Agaricomycetes	unassigned	unassigned	34.8	4	ILLVI	yes	5
+80	predicted_active	F4B7E5D0_007108-T1	chunk_0006	Pleurotus tuber-regium	Basidiomycota	Agaricomycetes	unassigned	unassigned	34.1	3	MLLMI	yes	5
+81	predicted_active	F51630C9_012123-T1	chunk_0007	Rhizoctonia solani	Basidiomycota	Agaricomycetes	unassigned	unassigned	30.3	3	ILLFV	yes	5
+82	predicted_active	F565D87F_005513-T1	chunk_0007	Naganishia vishniacii	Basidiomycota	Tremellomycetes	unassigned	unassigned	30.3	3	ILLFF	yes	5
+83	predicted_active	F5A9A89C_006468-T1	chunk_0007	Crespoa crozalsiana	Ascomycota	Lecanoromycetes	unassigned	unassigned	35.0	3	ILLFT	yes	5
+84	predicted_active	F5ECCF12_004208-T1	chunk_0008	Tricholoma sp. MG99	Basidiomycota	Agaricomycetes	unassigned	unassigned	31.0	3	VLLTI	yes	5
+85	predicted_inactive_control	F003DA93_002653-T1	chunk_0001	Mucor griseocyanus	Mucoromycota	Mucoromycota	unassigned	unassigned	29.7	1	AVILI	yes	6
+86	predicted_inactive_control	F00438DE_005980-T1	chunk_0001	Epichloe typhina	Ascomycota	Sordariomycetes	III	extrapolated	37.8	0	TTVMA	yes	3
+87	predicted_inactive_control	F0076711_005010-T1	chunk_0001	Psilocybe subaeruginosa	Basidiomycota	Agaricomycetes	I	reliable	73.8	1	MLVFF	no	3
+88	predicted_inactive_control	F00F927D_003904-T1	chunk_0001	Basidiobolus sp. MH 6.3	Basidiobolomycota	Basidiobolomycota	unassigned	unassigned	36.8	1	VPLIV	yes	6
+89	predicted_inactive_control	F02BEDAE_000164-T1	chunk_0001	Chytriomyces hyalinus	Chytridiomycota	Chytridiomycota	unassigned	unassigned	38.6	1	LNALI	yes	6
+90	predicted_inactive_control	F07E82A1_003885-T1	chunk_0001	Rhizophagus irregularis	Glomeromycota	Glomeromycota	unassigned	unassigned	38.3	0	TFQLV	yes	6
+91	predicted_inactive_control	F46AF962_002477-T1	chunk_0006	Acaulopage tetraceros	Zoopagomycota	Zoopagomycota	unassigned	unassigned	31.4	0	LAFLV	yes	6
+92	predicted_inactive_control	FC8B8027_012419-T1	chunk_0016	Gonapodya prolifera	Monoblepharomycota	Monoblepharomycota	unassigned	unassigned	31.4	1	TIIFI	yes	6
+93	predicted_inactive_control	FCC8231C_004843-T1	chunk_0016	Amoeboaphelidium occidentale	Aphelidiomycota	Aphelidiomycota	unassigned	unassigned	36.8	1	VVLLV	yes	6
+94	predicted_inactive_control	F00043C3_011466-T1	chunk_0001	Aspergillus flavus	Ascomycota	Eurotiomycetes	unassigned	unassigned	33.5	1	LTLGV	yes	3
+95	predicted_inactive_control	F0094924_005328-T1	chunk_0001	Parastagonospora nodorum	Ascomycota	Dothideomycetes	II	extrapolated	39.1	1	IFILG	yes	3
+96	predicted_inactive_control	F00B5FC2_003723-T1	chunk_0001	Trichosporon sp. PG3703	Basidiomycota	Tremellomycetes	unassigned	unassigned	41.5	1	MTLFV	yes	3

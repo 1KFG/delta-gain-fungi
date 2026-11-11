@@ -34,6 +34,14 @@ By identity to the nearest of the 19 enzymes (the old caller's regime):
 >= 52.7 %: 50/51; 30-52.7 %: 102/104; < 30 %: 32/32. Of correct assigned calls, 72/73 have
 LWR >= 0.95; correct pendant lengths reach 0.88 (median 0.17).
 
+**Matched identity** (`slurm/place_matched.sh`, job 31991872; same design as the skylark session's
+job 31868181): for each query and ceiling 70/55/45/35 %, every reference above the ceiling is
+removed as well. On the 19 characterized enzymes: 47 correct, 9 declined, **0 wrong** in 56 tested
+cases, including 13/13 committed calls at 45-55 % identity to the nearest surviving reference
+(the 19-reference caller: 38 %). Zamocky leaves: 604/648 correct, 5 wrong. Caveats (fixed-topology
+pruning, small n, Clade III too thin to test at low identity): `../RECONCILIATION.md` §1. Tables:
+`../data/refset_zamocky2022/placement_ref/MATCHED_IDENTITY.md`.
+
 **Against the old caller on the same 168 Zamocky leaves** (neither has them as references):
 placement 166/168; nearest-neighbour 79/168, having given a clade to 81 proteins that are in none
 of Clades I-V.

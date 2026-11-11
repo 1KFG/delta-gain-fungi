@@ -39,3 +39,32 @@ data/bfd_full/
 # Scratch test output from upo_sites development.
 upo_sites/test/
 .tmp/
+
+# Phylogenetic placement: EPA output and intermediates. The reference alignment,
+# reference tree, labels and the derived per-query clade table ARE committed.
+data/placement/*
+!data/placement/ref_aln.filtered.fa
+!data/placement/ref_labels.tsv
+!data/placement/reftree.raxml.bestTree
+!data/placement/reftree_bootstrap.support
+!data/placement/placement_clades.tsv
+!data/placement/matched_identity_validation.tsv
+!data/placement/expanded/
+data/placement/expanded/*
+!data/placement/expanded/matched_identity_validation_expanded.tsv
+!data/placement/expanded/ext_labels.tsv
+
+# CAVER 3.0.2: my downloaded copy, superseded by the system install at
+# /opt/linux/centos/8.x/x86_64/pkgs/caver/3.02/caver which is what the results used.
+tools/caver_dl/
+
+# Downloaded reference PDB structures and CAVER output.
+data/structures/
+
+# Boltz-2 inputs and output: MSAs (19 MB) and predicted structures, all regenerable from
+# upo_sites/bin/build_boltz_inputs.py plus upo_sites/slurm/boltz_19.sh. The YAML inputs are
+# regenerable too and reference absolute MSA paths, so they are not committed either.
+data/boltz/
+
+# CAVER writes this into the working directory; it is run output, not source.
+whole_clustering.csv

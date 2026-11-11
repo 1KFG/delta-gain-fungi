@@ -1,0 +1,115 @@
+query	true_clade	threshold	nearest_surviving_identity	call	weight	outcome
+AacUPO	V	95.0	85.7	I	1.0	WRONG
+AacUPO	V	70.0	67.4	V	1.0	correct
+AacUPO	V	55.0	54.7	I	1.0	WRONG
+AacUPO	V	45.0	44.8	V	0.7	correct
+AacUPO	V	40.0				impossible_no_same_clade_ref
+AacUPO	V	35.0				impossible_no_same_clade_ref
+AbrUPO-I	V	95.0	65.9	I	1.0	WRONG
+AbrUPO-I	V	70.0	65.9	I	1.0	WRONG
+AbrUPO-I	V	55.0	54.9	IV	0.6	WRONG
+AbrUPO-I	V	45.0	44.3	I	1.0	WRONG
+AbrUPO-I	V	40.0				impossible_no_same_clade_ref
+AbrUPO-I	V	35.0				impossible_no_same_clade_ref
+AbrUPO-II	V	95.0	91.8	I	1.0	WRONG
+AbrUPO-II	V	70.0	67.0	V	1.0	correct
+AbrUPO-II	V	55.0	54.9	unassigned	0.3	declined
+AbrUPO-II	V	45.0				impossible_no_same_clade_ref
+AbrUPO-II	V	40.0				impossible_no_same_clade_ref
+AbrUPO-II	V	35.0				impossible_no_same_clade_ref
+AluUPO	V	95.0	91.8	V	1.0	correct
+AluUPO	V	70.0	65.9	V	1.0	correct
+AluUPO	V	55.0	54.9	unassigned	0.2	declined
+AluUPO	V	45.0	44.8	V	1.0	correct
+AluUPO	V	40.0				impossible_no_same_clade_ref
+AluUPO	V	35.0				impossible_no_same_clade_ref
+AtuUPO	V	95.0	90.7	V	1.0	correct
+AtuUPO	V	70.0	66.5	V	1.0	correct
+AtuUPO	V	55.0	54.6	unassigned	0.3	declined
+AtuUPO	V	45.0				impossible_no_same_clade_ref
+AtuUPO	V	40.0				impossible_no_same_clade_ref
+AtuUPO	V	35.0				impossible_no_same_clade_ref
+CabUPO-III	I	95.0	86.3	I	1.0	correct
+CabUPO-III	I	70.0	69.6	I	1.0	correct
+CabUPO-III	I	55.0				impossible_no_same_clade_ref
+CabUPO-III	I	45.0				impossible_no_same_clade_ref
+CabUPO-III	I	40.0				impossible_no_same_clade_ref
+CabUPO-III	I	35.0				impossible_no_same_clade_ref
+CmaUPO-I	I	95.0	71.2	I	1.0	correct
+CmaUPO-I	I	70.0	69.6	I	1.0	correct
+CmaUPO-I	I	55.0	54.9	V	1.0	WRONG
+CmaUPO-I	I	45.0				impossible_no_same_clade_ref
+CmaUPO-I	I	40.0				impossible_no_same_clade_ref
+CmaUPO-I	I	35.0				impossible_no_same_clade_ref
+CviUPO	II	95.0	76.5	I	1.0	WRONG
+CviUPO	II	70.0				impossible_no_same_clade_ref
+CviUPO	II	55.0				impossible_no_same_clade_ref
+CviUPO	II	45.0				impossible_no_same_clade_ref
+CviUPO	II	40.0				impossible_no_same_clade_ref
+CviUPO	II	35.0				impossible_no_same_clade_ref
+DspUPO-I	V	95.0	83.4	V	1.0	correct
+DspUPO-I	V	70.0	61.9	V	1.0	correct
+DspUPO-I	V	55.0	54.1	I	1.0	WRONG
+DspUPO-I	V	45.0				impossible_no_same_clade_ref
+DspUPO-I	V	40.0				impossible_no_same_clade_ref
+DspUPO-I	V	35.0				impossible_no_same_clade_ref
+GmaUPO-II	I	95.0	92.9	I	1.0	correct
+GmaUPO-II	I	70.0	68.3	I	1.0	correct
+GmaUPO-II	I	55.0				impossible_no_same_clade_ref
+GmaUPO-II	I	45.0				impossible_no_same_clade_ref
+GmaUPO-II	I	40.0				impossible_no_same_clade_ref
+GmaUPO-II	I	35.0				impossible_no_same_clade_ref
+HspUPO	V	95.0	80.7	I	1.0	WRONG
+HspUPO	V	70.0	67.4	V	1.0	correct
+HspUPO	V	55.0	54.4	I	1.0	WRONG
+HspUPO	V	45.0				impossible_no_same_clade_ref
+HspUPO	V	40.0				impossible_no_same_clade_ref
+HspUPO	V	35.0				impossible_no_same_clade_ref
+LspUPO-II	I	95.0	83.6	I	1.0	correct
+LspUPO-II	I	70.0	69.4	I	1.0	correct
+LspUPO-II	I	55.0				impossible_no_same_clade_ref
+LspUPO-II	I	45.0				impossible_no_same_clade_ref
+LspUPO-II	I	40.0				impossible_no_same_clade_ref
+LspUPO-II	I	35.0				impossible_no_same_clade_ref
+MorUPO	III	95.0	74.5	I	1.0	WRONG
+MorUPO	III	70.0	69.6	III	1.0	correct
+MorUPO	III	55.0				impossible_no_same_clade_ref
+MorUPO	III	45.0				impossible_no_same_clade_ref
+MorUPO	III	40.0				impossible_no_same_clade_ref
+MorUPO	III	35.0				impossible_no_same_clade_ref
+MphUPO	IV	95.0	76.0	I	1.0	WRONG
+MphUPO	IV	70.0	70.0	IV	1.0	correct
+MphUPO	IV	55.0				impossible_no_same_clade_ref
+MphUPO	IV	45.0				impossible_no_same_clade_ref
+MphUPO	IV	40.0				impossible_no_same_clade_ref
+MphUPO	IV	35.0				impossible_no_same_clade_ref
+MroUPO	III	95.0	73.4	III	1.0	correct
+MroUPO	III	70.0	67.9	III	1.0	correct
+MroUPO	III	55.0				impossible_no_same_clade_ref
+MroUPO	III	45.0				impossible_no_same_clade_ref
+MroUPO	III	40.0				impossible_no_same_clade_ref
+MroUPO	III	35.0				impossible_no_same_clade_ref
+PaDa-I_parent_AaeUPO	I	95.0	81.4	I	1.0	correct
+PaDa-I_parent_AaeUPO	I	70.0	69.9	I	1.0	correct
+PaDa-I_parent_AaeUPO	I	55.0				impossible_no_same_clade_ref
+PaDa-I_parent_AaeUPO	I	45.0				impossible_no_same_clade_ref
+PaDa-I_parent_AaeUPO	I	40.0				impossible_no_same_clade_ref
+PaDa-I_parent_AaeUPO	I	35.0				impossible_no_same_clade_ref
+PanUPO	II	95.0	76.5	II	1.0	correct
+PanUPO	II	70.0				impossible_no_same_clade_ref
+PanUPO	II	55.0				impossible_no_same_clade_ref
+PanUPO	II	45.0				impossible_no_same_clade_ref
+PanUPO	II	40.0				impossible_no_same_clade_ref
+PanUPO	II	35.0				impossible_no_same_clade_ref
+RneUPO	V	95.0	80.1	I	1.0	WRONG
+RneUPO	V	70.0	55.2	V	1.0	correct
+RneUPO	V	55.0	53.0	V	1.0	correct
+RneUPO	V	45.0	44.2	unassigned	0.2	declined
+RneUPO	V	40.0	39.9	V	0.8	correct
+RneUPO	V	35.0				impossible_no_same_clade_ref
+TteUPO	V	95.0	71.8	I	1.0	WRONG
+TteUPO	V	70.0	67.4	V	1.0	correct
+TteUPO	V	55.0	54.9	V	1.0	correct
+TteUPO	V	45.0				impossible_no_same_clade_ref
+TteUPO	V	40.0				impossible_no_same_clade_ref
+TteUPO	V	35.0				impossible_no_same_clade_ref

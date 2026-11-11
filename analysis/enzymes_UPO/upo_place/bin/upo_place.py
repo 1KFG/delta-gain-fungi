@@ -8,7 +8,8 @@ the alignment and placement steps are external (hmmalign, epa-ng) and driven by
 
 Subcommands
   match-cols  hmmalign A2M/AFA output -> FASTA in reference-column space (inserts dropped)
-  prune       drop one leaf from the reference tree + MSA (leave-one-out), emit it as the query
+  prune       drop one leaf from the reference tree + MSA (leave-one-out), emit it as the query;
+              --remove also drops other leaves (matched-identity validation)
   assign      jplace + clade table -> one row per query with clade and its accumulated LWR
   loo         summarise leave-one-out assign outputs against the leaves' own clades
 
@@ -238,6 +239,7 @@ def main(argv=None):
     pr.add_argument("--out-tree", required=True)
     pr.add_argument("--out-msa", required=True)
     pr.add_argument("--out-query", required=True)
+    pr.add_argument("--remove", help="comma-separated extra leaves to drop (matched identity)")
     a_ = sub.add_parser("assign")
     a_.add_argument("jplace")
     a_.add_argument("--clades", required=True, help="clade_members.tsv from name_clades.py")
@@ -263,11 +265,18 @@ def main(argv=None):
                 n += 1
         print(f"match-cols: {n} sequences", file=sys.stderr)
     elif a.cmd == "prune":
-        root = prune(parse_newick(open(a.tree).read()), a.leaf)
+        extra = [x for x in (a.remove or "").split(",") if x]
+        root = parse_newick(open(a.tree).read())
+        for leaf in [a.leaf] + extra:
+            root = prune(root, leaf)
         open(a.out_tree, "w").write(to_newick(root) + "\n")
+        drop = set(extra)
         with open(a.out_msa, "w") as fm, open(a.out_query, "w") as fq:
             for name, seq in read_fasta(a.msa):
-                write_fasta(fq if name == a.leaf else fm, name, seq)
+                if name == a.leaf:
+                    write_fasta(fq, name, seq)
+                elif name not in drop:
+                    write_fasta(fm, name, seq)
     elif a.cmd == "assign":
         rows = assign(a.jplace, a.clades, a.min_lwr, a.max_pendant)
         write_rows(a.out, rows)
