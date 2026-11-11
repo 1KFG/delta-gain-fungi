@@ -75,6 +75,27 @@ class T(unittest.TestCase):
         self.assertEqual(len(root.children), 3)
         self.assertEqual(sorted(l.name for l in root.leaves()), ["A", "B", "C", "D"])
 
+    def test_prune_many_and_matched_cases(self):
+        import matched_identity as mi
+        d = self.d
+        tree, msa = os.path.join(d, "t.nwk"), os.path.join(d, "a.fa")
+        open(tree, "w").write("((A:1,B:1):1,(C:1,D:1):1,(E:1,F:1):1);")
+        # A~B identical, C/D distinct; clades: X = {A, B}
+        open(msa, "w").write(">A\nACDEFGHIKL\n>B\nACDEFGHIKL\n>C\nMNPQRSTVWY\n"
+                             ">D\nMNPQRSTVWA\n>E\nACDEFMNPQR\n>F\nACDEFMNPQA\n")
+        up.main(["prune", "--tree", tree, "--msa", msa, "--leaf", "A", "--remove", "B,C",
+                 "--out-tree", os.path.join(d, "o.nwk"), "--out-msa", os.path.join(d, "o.fa"),
+                 "--out-query", os.path.join(d, "q.fa")])
+        left = sorted(l.name for l in parse_newick(open(os.path.join(d, "o.nwk")).read()).leaves())
+        self.assertEqual(left, ["D", "E", "F"])
+        cl = os.path.join(d, "cl.tsv")
+        open(cl, "w").write("label\tour_clade\nA\tClade X\nB\tClade X\nC\t\nD\t\nE\t\nF\t\n")
+        rows = {r["case"]: r for r in mi.cases(msa, cl, [None, 70.0])}
+        self.assertEqual(rows["A@loo"]["possible"], "yes")        # B survives
+        self.assertEqual(rows["A@70.0"]["possible"], "no")        # B (100 %) removed: impossible
+        self.assertEqual(rows["A@70.0"]["nearest_surviving"], "E")
+        self.assertEqual(rows["C@70.0"]["possible"], "yes")       # outside leaf: always possible
+
     def test_loo_summary(self):
         out = os.path.join(self.d, "a.tsv")
         up.write_rows(out, [{"query": "A", "our_clade": "Clade X", "fig1_clade": "Big"},
