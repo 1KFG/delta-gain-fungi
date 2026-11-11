@@ -1,0 +1,785 @@
+protein_id	species	phylum	class	lineage	fig1_clade	fig1_lwr	pendant_length	flags	our_clade	length	p180	gene_model
+F00509DC_008781-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F00BE49C_004087-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.906	1.1464	long_pendant	unassigned	246	Q	complete
+F00F927D_003904-T1	Basidiobolus sp. MH 6.3	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0038	long_pendant	unassigned	264	E	complete
+F00F927D_007279-T1	Basidiobolus sp. MH 6.3	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.0072	long_pendant	unassigned	261	E	complete
+F00F927D_012680-T1	Basidiobolus sp. MH 6.3	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	0.9830		unassigned	266	E	no_start
+F0107072_005443-T1	Xanthoria sp. 2 TBL-2021	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1220	long_pendant	unassigned	241	Q	complete
+F019F81D_002372-T1	Cladosporium sp. MBC 237	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2364	long_pendant	unassigned	240	Q	complete
+F02EF989_010038-T1	Microdochium majus	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2536	long_pendant	unassigned	249	I	complete
+F0320CB2_024594-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F03E1989_002463-T1	Cladosporium asperulatum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2144	long_pendant	unassigned	240	Q	complete
+F03F3572_014670-T1	Zasmidium citrigriseum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1456	long_pendant	unassigned	248	Q	complete
+F051D7C0_010361-T1	Phaeoisaria parallela	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.0669	long_pendant	unassigned	238	I	complete
+F0548F2C_003147-T1	Basidiobolus sp. ARSEF 9909	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9724		unassigned	264	E	complete
+F0548F2C_015252-T1	Basidiobolus sp. ARSEF 9909	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9988		unassigned	261	E	complete
+F06578CB_003443-T1	Venturia nashicola	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1879	long_pendant	unassigned	551	Q	complete
+F072A9EB_011785-T1	Stachybotrys elegans	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1857	long_pendant	unassigned	258	I	complete
+F0779CA9_005420-T1	Sphaerulina populicola	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.594	1.2032	long_pendant	unassigned	251	Q	complete
+F078427D_011535-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2097	long_pendant	unassigned	247	Q	complete
+F0791C14_000278-T1	Didymosphaeria variabile	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.0218	long_pendant	unassigned	241	Q	no_stop
+F07E82A1_003885-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F07E82A1_029226-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0336		unassigned	237	E	neither
+F08911D9_011315-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F08BC49E_005446-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F09B5A7C_001375-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F09CB43F_006298-T1	Phialophora chinensis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	1.1800	long_pendant	unassigned	242	Q	complete
+F0A7CE0D_009972-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+F0B34D32_003185-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F0C21537_007836-T1	Xanthoria mediterranea	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1404	long_pendant	unassigned	241	Q	complete
+F0C41FB5_008551-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F0C5F806_008356-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9933		unassigned	183	-	complete
+F0C8AF9C_008578-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	0.9490		unassigned	185	-	complete
+F0CF3CA0_005295-T1	Exserohilum rostratum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1217	long_pendant	unassigned	240	Q	no_stop
+F0D37D47_016183-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F0D8CF0C_000800-T1	Cladosporium sp. F1	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2125	long_pendant	unassigned	240	Q	no_stop
+F0D9A683_003661-T1	Dactylellina drechsleri	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.983	1.0234	long_pendant	unassigned	242	Q	complete
+F0DD9F5B_014443-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F0E6B391_007518-T1	Fonsecaea pugnacius	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.794	1.0835	long_pendant	unassigned	242	Q	complete
+F0EA43F2_001332-T1	Entrophospora candida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5033		unassigned	238	E	no_start
+F0EA43F2_004118-T1	Entrophospora candida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4843		unassigned	257	E	no_stop
+F0EF9E31_016383-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F0EFD706_001367-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F0F27035_001873-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.947	1.1581	long_pendant	unassigned	258	Q	complete
+F0F5BF74_024649-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F0F601DC_002277-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F0F8BBD7_002771-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F0F8BBD7_003140-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1256	long_pendant	unassigned	240	Q	complete
+F0F939A4_007304-T1	Basidiobolus sp. ARSEF 9894	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.880	0.9187		unassigned	259	E	complete
+F0F939A4_009954-T1	Basidiobolus sp. ARSEF 9894	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0815	long_pendant	unassigned	261	E	complete
+F104509E_003980-T1	Rhizophagus sp. LPA8_1_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0235		unassigned	221	E	neither
+F104509E_004970-T1	Rhizophagus sp. LPA8_1_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0782		unassigned	233	E	neither
+F106BE0C_010838-T1	Apiospora kogelbergensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.907	1.2021	long_pendant	unassigned	318	V	complete
+F10A3DEB_008267-T1	Cadophora malorum	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.1252	long_pendant	unassigned	240	Q	complete
+F10C2A7C_008435-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1222	long_pendant	unassigned	243	Q	complete
+F1126D48_007967-T1	Cadophora luteo-olivacea	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1418	long_pendant	unassigned	240	Q	complete
+F113375D_010707-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F116017B_002948-T1	Cladosporium xanthochromaticum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0850	long_pendant	unassigned	240	Q	complete
+F117457E_011342-T1	Fusarium proliferatum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+F11FE386_005469-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F1249C48_006802-T1	Cladosporium sphaerospermum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.1680	long_pendant	unassigned	240	Q	complete
+F125775F_014542-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F127650D_024587-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F12D5FA3_006444-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F12FB0D5_012240-T1	Melanomma pulvis-pyrius	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1297	long_pendant	unassigned	240	Q	complete
+F136007B_008257-T1	Exophiala sp. CCFEE 6169	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F13F3617_006492-T1	Vermiconidia calcicola	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F15236BE_010807-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F15638F7_011440-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2937	long_pendant	unassigned	240	I	complete
+F15725C1_004578-T1	Cladosporium sp. F165	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2418	long_pendant	unassigned	240	Q	complete
+F157A9B1_007128-T1	Penicillium canescens	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.978	1.0941	long_pendant	unassigned	241	Q	complete
+F15AB5E1_013322-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F1815028_006033-T1	Entrophospora sp. SA101	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5210		unassigned	238	E	no_start
+F1815028_009693-T1	Entrophospora sp. SA101	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4878		unassigned	257	E	no_stop
+F183CEAE_015856-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F1861AE9_008352-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.982	1.2761	long_pendant	unassigned	178	Q	complete
+F1896437_007289-T1	Hysterium pulicare	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3522	long_pendant	unassigned	169	Q	complete
+F18B2F03_026705-T1	Racocetra persica	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0838		unassigned	230	E	neither
+F196B698_003392-T1	Pseudopithomyces chartarum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.885	1.2179	long_pendant	unassigned	243	Q	no_stop
+F1A69A01_009680-T1	Venturia nashicola	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1879	long_pendant	unassigned	255	Q	no_stop
+F1B25B65_014454-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F1B4ED93_001932-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.2072	long_pendant	unassigned	247	Q	complete
+F1BDF61C_007300-T1	Apiospora hysterina	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.891	0.9657		unassigned	240	I	complete
+F1C02D3C_005990-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F1C28FDE_005881-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0551	long_pendant	unassigned	240	Q	complete
+F1CE3C22_008557-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F1CFE3DD_002679-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1008	long_pendant	unassigned	243	Q	complete
+F1D897FF_000163-T1	Aureobasidium melanogenum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1201	long_pendant	unassigned	243	Q	complete
+F1F27B0B_012335-T1	Fonsecaea pedrosoi	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.645	1.0831	long_pendant	unassigned	242	Q	complete
+F1F40303_003591-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F1FE4DFE_006625-T1	Nigrospora bambusae	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.796	1.2247	long_pendant	unassigned	240	V	complete
+F203573B_014460-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F20A2054_024610-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F2186B22_020194-T1	Dentiscutata heterogama	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1087		unassigned	229	E	complete
+F2186B22_030554-T1	Dentiscutata heterogama	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4841		unassigned	150	E	complete
+F21A99C0_000537-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F21FED46_005631-T1	Drechslerella dactyloides	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	0.9857		unassigned	242	Q	complete
+F220A301_007681-T1	Fonsecaea nubica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.870	1.0788	long_pendant	unassigned	242	Q	complete
+F2311BC8_005490-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F232E018_008112-T1	Dentiscutata erythropus	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5049		unassigned	223	E	complete
+F232E018_009935-T1	Dentiscutata erythropus	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3380		unassigned	225	E	complete
+F232E018_014550-T1	Dentiscutata erythropus	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1085		unassigned	229	E	complete
+F2351B06_006900-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	0.9574		unassigned	183	-	complete
+F235B3C9_001678-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.852	1.1360	long_pendant	unassigned	246	Q	complete
+F2400D34_002137-T1	Exserohilum rostratum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1056	long_pendant	unassigned	240	Q	complete
+F24BF5E1_010079-T1	Apiospora marii	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1503	long_pendant	unassigned	240	I	complete
+F2556B83_003086-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1256	long_pendant	unassigned	240	Q	complete
+F2556B83_009659-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F2600EA2_002671-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1657	long_pendant	unassigned	247	Q	complete
+F271A4D0_010394-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F272BE81_009492-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F27FD0A3_008008-T1	Puccinia horiana	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2006	long_pendant	unassigned	241	E	complete
+F29CF79F_002947-T1	Basidiobolus sp. MH 9.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0038	long_pendant	unassigned	264	E	complete
+F29CF79F_006832-T1	Basidiobolus sp. MH 9.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.0072	long_pendant	unassigned	261	E	complete
+F29CF79F_018809-T1	Basidiobolus sp. MH 9.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	0.9830		unassigned	266	E	no_start
+F2A0195C_005345-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F2A2A82C_003850-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F2A54672_000917-T1	Leucodermia appalachiensis	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.978	1.3700	long_pendant	unassigned	207	Q	complete
+F2AE47EE_001286-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F2B4CC7A_003533-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F2BB63DE_000296-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F2CA0765_017150-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F2CAA5A4_017147-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F2D4453A_005837-T1	Cetraspora pellucida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3716		unassigned	225	E	complete
+F2D4453A_017949-T1	Cetraspora pellucida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1281		unassigned	226	E	no_start
+F2D4453A_022753-T1	Cetraspora pellucida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5102		unassigned	224	E	no_stop
+F2D5ADF9_007426-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2039	long_pendant	unassigned	243	Q	complete
+F2D68A8A_024546-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F2DB102C_003538-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F2DB102C_004899-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0322		unassigned	234	E	neither
+F2DC5960_001224-T1	Albifimbria verrucaria	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.837	1.1920	long_pendant	unassigned	240	I	complete
+F2E1B904_009636-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F2E3BB8E_008243-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1822	long_pendant	unassigned	247	Q	complete
+F2E51F58_010330-T1	Ramulariopsis pseudoglycines	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2549	long_pendant	unassigned	243	Q	complete
+F2E6C237_005359-T1	Graphiopsis chlorocephala	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.2149	long_pendant	unassigned	240	Q	complete
+F2E9BCE4_005090-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.983	1.1156	long_pendant	unassigned	240	Q	complete
+F2E9BCE4_006239-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.0817	long_pendant	unassigned	240	Q	complete
+F2F363F2_006154-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F2F363F2_008827-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F2F39887_002408-T1	Phialophora tarda	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1952	long_pendant	unassigned	242	Q	complete
+F2F8C8DF_003162-T1	Pseudopyrenochaeta terrestris	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0847	long_pendant	unassigned	240	Q	no_stop
+F2F97283_011990-T1	Paraconiothyrium brasiliense	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1334	long_pendant	unassigned	241	Q	complete
+F2FB3FF0_012482-T1	Thelonectria olida	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2957	long_pendant	unassigned	237	I	complete
+F2FEBFA2_001681-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.975	1.1527	long_pendant	unassigned	240	Q	complete
+F301936A_011129-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F3025612_006115-T1	Basidiobolus sp. MH 8.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.978	1.0268	long_pendant	unassigned	261	E	complete
+F3025612_011358-T1	Basidiobolus sp. MH 8.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.753	0.9001		unassigned	606	E	complete
+F3025612_014160-T1	Basidiobolus sp. MH 8.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9906		unassigned	264	E	no_stop
+F3025612_015321-T1	Basidiobolus sp. MH 8.1	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.919	0.9974		unassigned	264	E	complete
+F30D2E26_014299-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.2661	long_pendant	unassigned	178	Q	complete
+F31639E3_014628-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F326BD7E_009715-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.906	1.1464	long_pendant	unassigned	246	Q	complete
+F330388C_004568-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1826	long_pendant	unassigned	247	Q	complete
+F3306CFC_015634-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.600	0.8881		unassigned	240	I	no_start
+F343B854_011076-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	238	E	complete
+F343B854_027721-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.693	1.3333	long_pendant	unassigned	192	E	complete
+F34839E9_003546-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F34DEB74_004800-T1	Physcia stellaris	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2051	long_pendant	unassigned	241	Q	complete
+F34E4A59_009257-T1	Fonsecaea multimorphosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.628	1.1098	long_pendant	unassigned	242	Q	complete
+F3536C10_017656-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2251	long_pendant	unassigned	241	I	complete
+F36F4703_012563-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F3713A22_003579-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F37B67DC_005648-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F37C7C9A_003120-T1	Scutellospora calospora	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3304		unassigned	228	E	no_start
+F37C7C9A_010779-T1	Scutellospora calospora	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5016		unassigned	223	E	complete
+F37E2F67_000176-T1	Phialophora chinensis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.694	1.1693	long_pendant	unassigned	242	Q	complete
+F3877DD7_005363-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+F3953D74_009716-T1	Cadophora sp. MPI-SDFR-AT-0126	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.1578	long_pendant	unassigned	240	Q	complete
+F3969BD4_000002-T1	Cladosporium sp. SW67	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.951	1.1730	long_pendant	unassigned	240	Q	complete
+F39ABC50_024604-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F3A2FF18_011200-T1	Oehlia diaphana	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0143		unassigned	221	E	neither
+F3A2FF18_018329-T1	Oehlia diaphana	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0393		unassigned	233	E	neither
+F3A8FD8F_003661-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F3A94695_007679-T1	Cladophialophora immunda	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.555	1.0980	long_pendant	unassigned	241	Q	complete
+F3AF167E_003535-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F3B0684E_009094-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.1538	long_pendant	unassigned	243	Q	complete
+F3B976A6_005094-T1	Dactylellina cionopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9742		unassigned	242	Q	complete
+F3BAD71F_004126-T1	Cladosporium allicinum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.993	1.3134	long_pendant	unassigned	240	Q	complete
+F3BD46A3_007674-T1	Apiospora phragmitis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.952	0.9561		unassigned	240	I	complete
+F3CD8118_008608-T1	Acremonium polychromum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.2244	long_pendant	unassigned	240	I	complete
+F3D18B4D_024579-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F3D24EB4_011110-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F3DEADC9_000138-T1	Fonsecaea erecta	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.506	1.1095	long_pendant	unassigned	242	Q	complete
+F3E37AB9_000834-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F3E6BFE9_005937-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.3288	long_pendant	unassigned	182	Q	complete
+F3F3694E_005692-T1	Exserohilum rostratum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.2310	long_pendant	unassigned	240	Q	no_stop
+F3F8C519_016213-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F3FABA4D_003551-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F400FA7A_007878-T1	Fonsecaea monophora	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.645	1.0831	long_pendant	unassigned	242	Q	complete
+F407732A_003111-T1	Cladosporium sp. IMV 00045	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	1.1970	long_pendant	unassigned	240	Q	complete
+F40AC84B_016518-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2208	long_pendant	unassigned	240	I	complete
+F40B6B44_024637-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F40C96A8_008733-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F40C96A8_032080-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	neither
+F40E1965_012454-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F40F55D6_002832-T1	Paraglomus occultum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.937	0.3423		unassigned	222	E	no_stop
+F41217C2_006755-T1	Basidiobolus sp. ARSEF 9908	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9936		unassigned	261	E	complete
+F41217C2_007535-T1	Basidiobolus sp. ARSEF 9908	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9724		unassigned	264	E	complete
+F4127315_001437-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1798	long_pendant	unassigned	247	Q	complete
+F4166311_009582-T1	Rhizophagus clarus	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1207		unassigned	236	E	no_stop
+F4166311_011795-T1	Rhizophagus clarus	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F41A975A_011556-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F41D10D9_005945-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F41EED49_010075-T1	Nothopassalora personata	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.751	1.1495	long_pendant	unassigned	240	Q	complete
+F420D8C3_008390-T1	Heterodermia aff. obscurata	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.954	1.3389	long_pendant	unassigned	164	Q	complete
+F42FB4FF_010994-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F434605D_003518-T1	Dactylellina haptotyla	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.899	0.9970		unassigned	242	Q	complete
+F4363744_006528-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F43D7D9D_014547-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F43DD65E_009429-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F43FF3DE_005774-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1822	long_pendant	unassigned	247	Q	complete
+F4454B2C_003529-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.2100	long_pendant	unassigned	252	Q	complete
+F44DC4E3_009700-T1	Venturia nashicola	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1879	long_pendant	unassigned	255	Q	no_stop
+F45121E2_005346-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F45AC097_000605-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F462B638_024625-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F478800F_025637-T1	Cetraspora pellucida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3603		unassigned	225	E	no_start
+F47D17E1_011440-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F47DCC53_008771-T1	Microdochium bolleyi	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.974	1.2108	long_pendant	unassigned	249	I	complete
+F48630AD_014181-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+F489F97F_004696-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F48F6EB1_013210-T1	Rhypophila decipiens	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.0494	long_pendant	unassigned	244	Q	complete
+F4907269_008495-T1	Arthrobotrys entomopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9676		unassigned	242	Q	no_stop
+F492BF4F_024722-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F495AC09_008368-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	260	E	complete
+F4A5A2E2_007168-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F4AA49D5_000838-T1	Cladosporium europaeum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2738	long_pendant	unassigned	240	Q	complete
+F4AB221D_007197-T1	Rhizophagus sp. MUCL 43196	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0393		unassigned	233	E	no_start
+F4AB221D_015215-T1	Rhizophagus sp. MUCL 43196	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0143		unassigned	221	E	neither
+F4B0148D_010165-T1	Capronia americana	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2171	long_pendant	unassigned	242	Q	complete
+F4B907B9_010706-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F4BBB2FE_004686-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+F4BE1DDF_000171-T1	Dactylellina leptospora	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9498		unassigned	242	Q	no_start
+F4C0EEFA_024664-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F4C9D27C_002754-T1	Paraconiothyrium sp. Pb-2020	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.0309	long_pendant	unassigned	226	Q	complete
+F4CAB83A_002924-T1	Polycauliona sp. 2 TL-2023	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1913	long_pendant	unassigned	241	Q	complete
+F4CB690D_024741-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F4DB07BF_006142-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F4DB07BF_018904-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	neither
+F4DD5929_001097-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2329	long_pendant	unassigned	240	Q	no_stop
+F4E48CF3_005154-T1	Verruconis gallopava	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.877	0.8650		unassigned	224	E	complete
+F4EA7B9E_003547-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F4EB23B5_001498-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.2692	long_pendant	unassigned	178	Q	complete
+F4EB23B5_001751-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0985	long_pendant	unassigned	240	Q	complete
+F4F5E615_001006-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0627	long_pendant	unassigned	243	Q	complete
+F4F5E615_002334-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+F4FCE3DD_016008-T1	Clonostachys chloroleuca	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2937	long_pendant	unassigned	240	I	complete
+F5065ABA_012691-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0640	long_pendant	unassigned	240	Q	complete
+F5065ABA_012783-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F510ABE3_006748-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0336		unassigned	237	E	no_start
+F510ABE3_012306-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F52A1D84_015134-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+F52CDC63_000125-T1	Cladosporium sp. MBC 869	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2504	long_pendant	unassigned	240	Q	no_stop
+F5327486_008189-T1	Rusavskia elegans	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.926	1.1624	long_pendant	unassigned	241	Q	complete
+F54978DB_004915-T1	Nigrospora sphaerica	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.584	1.1799	long_pendant	unassigned	152	-	complete
+F551CC7B_024610-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F55A06A4_000319-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+F56D9349_010145-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F5733E3A_024718-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F57DAC51_001776-T1	Echinodenticula allantospora	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2789	long_pendant	unassigned	240	I	complete
+F57E7EEE_002761-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F588A2C7_009585-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.3288	long_pendant	unassigned	182	Q	complete
+F58F52F4_002138-T1	Puccinia coronata	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2260	long_pendant	unassigned	234	E	complete
+F5931C4A_003565-T1	Paraglomus brasilianum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3820		unassigned	224	E	complete
+F59719F3_011224-T1	Pseudocercospora eumusae	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.847	0.9756		unassigned	261	Q	complete
+F5A75CBA_003630-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F5A80D1E_006906-T1	Diplocarpon coronariae	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2590	long_pendant	unassigned	241	Q	complete
+F5B0CF87_008759-T1	Aureobasidium sp. M94-06E	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1008	long_pendant	unassigned	243	Q	complete
+F5B1FD30_007448-T1	Aureobasidium sp. EXF-12298	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1522	long_pendant	unassigned	243	Q	complete
+F5B1FD30_008895-T1	Aureobasidium sp. EXF-12298	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	0.9363		unassigned	194	-	no_stop
+F5B953D1_024643-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F5BA5F3F_005960-T1	Basidiobolus sp. ARSEF 9900	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9750		unassigned	261	E	complete
+F5BA5F3F_006438-T1	Basidiobolus sp. ARSEF 9900	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.9586		unassigned	264	E	complete
+F5BA5F3F_011628-T1	Basidiobolus sp. ARSEF 9900	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.0131	long_pendant	unassigned	266	E	complete
+F5BFA9EF_010093-T1	Cladosporium colombiae	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1079	long_pendant	unassigned	240	Q	complete
+F5C0CF16_002382-T1	Madurella mycetomatis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.2055	long_pendant	unassigned	246	Q	complete
+F5C47799_009079-T1	Cladosporium halotolerans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.1637	long_pendant	unassigned	240	Q	complete
+F5C60991_006821-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.948	1.2587	long_pendant	unassigned	241	Q	complete
+F5C9B3FE_004368-T1	Glomus cerebriforme	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2495		unassigned	240	E	neither
+F5C9B3FE_016938-T1	Glomus cerebriforme	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F5CBCAFB_002636-T1	Cladosporium pseudocladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.1890	long_pendant	unassigned	240	Q	complete
+F5CE2A9B_004314-T1	Leotiomycetes sp. Styx10C10m-37	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.631	1.1378	long_pendant	unassigned	241	Q	complete
+F5D1EE04_003861-T1	Phialophora chinensis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.694	1.1693	long_pendant	unassigned	242	Q	complete
+F5DDF961_002687-T1	Drechslerella stenobrocha	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9799		unassigned	242	Q	complete
+F5EA604A_004837-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F5EF1BCE_018965-T1	Clonostachys chloroleuca	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.3051	long_pendant	unassigned	241	I	complete
+F5FCF43D_007732-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1233	long_pendant	unassigned	169	-	complete
+F5FE01AC_002991-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1826	long_pendant	unassigned	247	Q	complete
+F607B03B_007565-T1	Cladosporium halotolerans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.937	1.1792	long_pendant	unassigned	240	Q	complete
+F609BA9F_008290-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0551	long_pendant	unassigned	240	Q	complete
+F60D01C5_005797-T1	Oculimacula yallundae	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1517	long_pendant	unassigned	252	Q	complete
+F61368C9_006582-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+F614359C_001061-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2492	long_pendant	unassigned	181	Q	complete
+F61C387F_006972-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F61C387F_017735-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F61DA72E_004542-T1	Paraglomus occultum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3281		unassigned	222	E	no_stop
+F626E92C_000076-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F6453F21_000456-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1822	long_pendant	unassigned	247	Q	complete
+F64F82F1_005910-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F650CC66_001159-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.2072	long_pendant	unassigned	247	Q	complete
+F65124B6_001196-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0985	long_pendant	unassigned	240	Q	complete
+F65124B6_001717-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.2692	long_pendant	unassigned	178	Q	complete
+F656E47F_001780-T1	Venturia pyrina	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1152	long_pendant	unassigned	254	Q	complete
+F65FD153_004965-T1	Apiospora saccharicola	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.638	0.9626		unassigned	240	I	complete
+F66AD584_004142-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F675D939_024605-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F67DD6EE_014365-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+F6881BDA_005227-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F68F0771_018307-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.643	1.2987	long_pendant	unassigned	241	I	complete
+F68FC2F7_011988-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F6953C13_006161-T1	Rhypophila sp. PSN 637	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1283	long_pendant	unassigned	244	Q	complete
+F69D86DB_010410-T1	Melanodothis sp. VS III C KN 2	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.2378	long_pendant	unassigned	240	Q	complete
+F6A0CFC7_004140-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.977	1.2484	long_pendant	unassigned	240	Q	no_stop
+F6B8C6A9_008782-T1	Nigrospora camelliae-sinensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.859	0.9466		unassigned	240	I	complete
+F6BB51C0_009504-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F6BE261D_010016-T1	Cylindrodendrum album	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1322	long_pendant	unassigned	235	I	complete
+F6C14AF2_004797-T1	Penicillium egyptiacum	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.1292	long_pendant	unassigned	241	Q	complete
+F6C19CC9_008191-T1	Aureobasidium melanogenum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1492	long_pendant	unassigned	243	Q	complete
+F6C9BEA6_003919-T1	Cladosporium sp. BF-F	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0788	long_pendant	unassigned	240	Q	complete
+F6CF42F2_006869-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F6D09EBE_002450-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1728	long_pendant	unassigned	243	Q	complete
+F6D1C18D_003861-T1	Penicillium canescens	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.978	1.0941	long_pendant	unassigned	241	Q	complete
+F6D401F1_002880-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2329	long_pendant	unassigned	240	Q	no_stop
+F6DB5F6D_008532-T1	Cladosporium xanthochromaticum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0850	long_pendant	unassigned	240	Q	complete
+F6DCEF1C_005814-T1	Basidiobolus sp. ARSEF 9912	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.9586		unassigned	264	E	complete
+F6DCEF1C_008177-T1	Basidiobolus sp. ARSEF 9912	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.0131	long_pendant	unassigned	266	E	complete
+F6DCEF1C_009276-T1	Basidiobolus sp. ARSEF 9912	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9750		unassigned	261	E	complete
+F6E17FFD_006968-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F6E207B5_011575-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F6FB650C_009097-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F6FFC4F2_010212-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F704D3AC_027256-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.993	1.2618	long_pendant	unassigned	238	E	complete
+F7123ADE_010552-T1	Fonsecaea pedrosoi	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.627	1.0721	long_pendant	unassigned	242	Q	complete
+F716202B_002926-T1	Aureobasidium sp. EXF-10727	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1091	long_pendant	unassigned	243	Q	complete
+F71D2AD7_003158-T1	Ambispora leptoticha	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	0.4940		unassigned	220	E	complete
+F72639B6_007056-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.2358	long_pendant	unassigned	240	Q	no_stop
+F726799D_007383-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2039	long_pendant	unassigned	243	Q	complete
+F72C1F5F_011097-T1	Apiospora sp. TS-2023a	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.612	0.9513		unassigned	240	I	complete
+F73610D5_004188-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.1538	long_pendant	unassigned	243	Q	complete
+F73AE930_006806-T1	Cladosporium sphaerospermum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.951	1.1730	long_pendant	unassigned	240	Q	complete
+F73B9557_007030-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	0.9033		unassigned	185	-	complete
+F73E06F8_001216-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F73E06F8_004075-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F7433FDC_014392-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F74661F3_004920-T1	Myrothecium sp. GS58	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.936	1.2355	long_pendant	unassigned	240	V	complete
+F749310B_006899-T1	Cladorrhinum sp. PSN259	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1080	long_pendant	unassigned	236	I	complete
+F74E4320_024600-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F7584170_005571-T1	Orbilia brochopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	0.9735		unassigned	242	Q	complete
+F7599CA2_003542-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.712	1.1849	long_pendant	unassigned	224	Q	complete
+F75C2D08_009123-T1	Aureobasidium sp. EXF-3400	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1522	long_pendant	unassigned	243	Q	complete
+F75C2D08_011172-T1	Aureobasidium sp. EXF-3400	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	0.9580		unassigned	192	-	neither
+F75E14C0_005615-T1	Polycauliona sp. 1 TL-2023	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.850	1.1501	long_pendant	unassigned	241	Q	complete
+F75E41DE_011764-T1	Thozetella sp. PMI_491	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.962	1.2058	long_pendant	unassigned	240	I	complete
+F76EE6C2_007337-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F76F8959_003556-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1969	long_pendant	unassigned	252	Q	complete
+F776D6BB_002708-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F776D6BB_030426-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F77B4EFE_001839-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.2502	long_pendant	unassigned	240	Q	no_stop
+F77FBFD7_024475-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F782B956_008996-T1	Xanthoria steineri	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1463	long_pendant	unassigned	241	Q	complete
+F78EADFB_007627-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.975	1.1527	long_pendant	unassigned	240	Q	complete
+F793A076_014540-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F79D78C9_002767-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+F7A56DA6_017036-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F7A8C092_003484-T1	Funneliformis caledonium	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2785		unassigned	227	E	no_stop
+F7A8C092_012820-T1	Funneliformis caledonium	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1959		unassigned	221	E	no_stop
+F7AD0CD4_011758-T1	Venturia pyrina	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1659	long_pendant	unassigned	254	Q	complete
+F7B17A4F_010443-T1	Exophiala spinifera	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.958	1.2906	long_pendant	unassigned	241	Q	complete
+F7BD9C9A_009733-T1	Podospora appendiculata	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1407	long_pendant	unassigned	243	Q	complete
+F7BE1FE3_009613-T1	Orbilia brochopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	0.9668		unassigned	242	Q	complete
+F7C2FC56_004921-T1	Puccinia coronata	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2260	long_pendant	unassigned	234	E	complete
+F7C2FC56_029869-T1	Puccinia coronata	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2260	long_pendant	unassigned	234	E	complete
+F7C3302F_004950-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F7C3302F_006996-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0407		unassigned	233	E	neither
+F7C47AE7_006188-T1	Orbilia brochopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	0.9446		unassigned	242	Q	complete
+F7CB83B3_005677-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+F7CB83B3_013555-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.967	1.1044	long_pendant	unassigned	240	Q	complete
+F7D3F482_005478-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0336		unassigned	237	E	neither
+F7D3F482_006571-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F7D923D4_004735-T1	Polyblastidium squamulosum	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.3206	long_pendant	unassigned	169	Q	complete
+F7DB6208_004032-T1	Dactylella cylindrospora	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.0009	long_pendant	unassigned	242	Q	complete
+F7E4D5D2_012784-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2556	long_pendant	unassigned	240	Q	no_stop
+F7E625F5_006742-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.923	1.1480	long_pendant	unassigned	258	Q	complete
+F7E78CC8_001346-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+F7EC3E2F_004994-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.852	1.1360	long_pendant	unassigned	246	Q	complete
+F7F23392_015075-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.600	0.8881		unassigned	240	I	no_start
+F7F3090E_011737-T1	Basidiobolus ranarum	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.0072	long_pendant	unassigned	261	E	complete
+F7F3090E_016833-T1	Basidiobolus ranarum	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.954	1.0109	long_pendant	unassigned	264	E	complete
+F7F69F4B_011330-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.975	1.1527	long_pendant	unassigned	240	Q	complete
+F7F7E6F0_016319-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F80272E6_024634-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F80513D5_007575-T1	Venturia aucupariae	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1502	long_pendant	unassigned	247	Q	complete
+F809DDC1_008188-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F809E850_005638-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.0975	long_pendant	unassigned	240	Q	complete
+F80B8C12_008921-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F80C5E63_024653-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F819E970_004693-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+F81FE203_024667-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F8234265_000008-T1	Heterodermia langdoniana	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2515	long_pendant	unassigned	193	Q	complete
+F82F97E9_008009-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F83D4B81_001865-T1	Aureobasidium melanogenum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1008	long_pendant	unassigned	243	Q	complete
+F83E5D7E_010874-T1	Cladosporium sp. F190	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.2025	long_pendant	unassigned	240	Q	complete
+F847B481_002884-T1	Entrophospora candida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5033		unassigned	238	E	no_start
+F852AC0A_001983-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2097	long_pendant	unassigned	247	Q	complete
+F85824B1_009486-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F85A44CF_001549-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F85B111B_019370-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	238	E	complete
+F85B111B_032542-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	238	E	complete
+F85B3D8A_009628-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.852	1.1360	long_pendant	unassigned	246	Q	complete
+F85BDFBC_004750-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+F85BDFBC_015607-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F85F6E38_015676-T1	Hyaloscypha variabilis	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.651	0.9321		unassigned	243	Q	complete
+F8620338_005815-T1	Parasarocladium wereldwijsianum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0472	long_pendant	unassigned	226	M	complete
+F8658F76_014523-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+F873E540_004638-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F8790AED_009832-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F8792FB6_009440-T1	Camptophora hylomeconis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.0127	long_pendant	unassigned	242	Q	complete
+F87FFEF0_007073-T1	Albophoma yamanashiensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.599	0.9180		unassigned	176	-	complete
+F8846244_024599-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F8860608_017476-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1322	long_pendant	unassigned	235	I	complete
+F888814A_008448-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1222	long_pendant	unassigned	232	Q	complete
+F88AC843_003162-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0640	long_pendant	unassigned	240	Q	complete
+F88AC843_004009-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F88C6D98_012031-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1384	long_pendant	unassigned	240	Q	complete
+F893B3A6_003919-T1	Cladosporium sp. BD-128	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0788	long_pendant	unassigned	240	Q	complete
+F894B0CC_008477-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	0.9659		unassigned	187	-	no_stop
+F89CCEDF_011487-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F8A4EBCB_007080-T1	Capronia americana	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2171	long_pendant	unassigned	242	Q	complete
+F8A9729D_010472-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F8ADB3F0_024514-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F8AE487E_024664-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F8B780DC_003543-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+F8BBE0CD_003020-T1	Cladosporium pseudocladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2062	long_pendant	unassigned	240	Q	complete
+F8C2E294_012938-T1	Nothopassalora personata	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.739	1.1346	long_pendant	unassigned	240	Q	complete
+F8C4A3B1_011958-T1	Apiospora marii	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1503	long_pendant	unassigned	240	I	complete
+F8C506F3_005020-T1	Dactylellina parvicollis	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9725		unassigned	242	Q	complete
+F8C76576_024616-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F8E03EAA_001518-T1	Basidiobolus sp. ARSEF 9901	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	0.9968		unassigned	264	E	complete
+F8E03EAA_006699-T1	Basidiobolus sp. ARSEF 9901	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9939		unassigned	264	E	complete
+F8E03EAA_013167-T1	Basidiobolus sp. ARSEF 9901	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.0131	long_pendant	unassigned	266	E	complete
+F8E2A55D_010455-T1	Gyoerffyella rotula	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	0.9699		unassigned	242	Q	complete
+F8EC6EDB_004368-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.8399		unassigned	182	-	complete
+F8EF8A46_005048-T1	Arthrinium phaeospermum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.579	1.0090	long_pendant	unassigned	240	I	complete
+F8F18AB0_002098-T1	Funneliformis mosseae	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2815		unassigned	226	E	no_stop
+F8F18AB0_011994-T1	Funneliformis mosseae	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1823		unassigned	221	E	no_stop
+F8FB3C5E_011628-T1	Cladosporium phlei	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.2043	long_pendant	unassigned	240	Q	complete
+F906EE27_024589-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F90D23CD_005040-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F90D4F76_000705-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.983	1.1156	long_pendant	unassigned	240	Q	complete
+F90D4F76_018316-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+F90EAB76_010456-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F9191359_008609-T1	Stachybotrys chlorohalonatus	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.2244	long_pendant	unassigned	240	I	complete
+F92102E8_007234-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.3288	long_pendant	unassigned	182	Q	complete
+F921E9BC_005521-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F9241B7C_001282-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+F9241B7C_015985-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0627	long_pendant	unassigned	243	Q	complete
+F9289A92_002272-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F92D9E99_007338-T1	Squamulea squamosa	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.770	1.0498	long_pendant	unassigned	241	Q	no_stop
+F94263C6_002209-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.945	1.2450	long_pendant	unassigned	241	Q	complete
+F9674ADF_017705-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2983	long_pendant	unassigned	241	I	complete
+F96EBDDE_002078-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F96EBDDE_002769-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	neither
+F97397BE_005748-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	173	Q	complete
+F974C31A_006266-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1256	long_pendant	unassigned	240	Q	complete
+F974C31A_008991-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F98E61F4_005164-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1826	long_pendant	unassigned	247	Q	complete
+F98EDE17_007985-T1	Aureobasidium melanogenum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1492	long_pendant	unassigned	243	Q	complete
+F98F21B5_003655-T1	Rhizophagus sp. LPA8_4_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0235		unassigned	221	E	neither
+F98F21B5_009245-T1	Rhizophagus sp. LPA8_4_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0782		unassigned	233	E	neither
+F994C8C8_010246-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F99A96E4_000220-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+F99A96E4_014407-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0627	long_pendant	unassigned	243	Q	complete
+F99C8F94_011304-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+F9A1FA61_024568-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F9A66289_008696-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+F9A66289_011479-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1256	long_pendant	unassigned	240	Q	complete
+F9A74DFE_009011-T1	Fonsecaea multimorphosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.628	1.1098	long_pendant	unassigned	242	Q	complete
+F9A79471_003068-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+F9A897E8_004617-T1	Apiospora sphaerosperma	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9741		unassigned	240	I	complete
+F9B002B9_009142-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2039	long_pendant	unassigned	243	Q	complete
+F9B00D9A_024659-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F9B8C3B7_024449-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+F9BBFB09_009403-T1	Clonostachys chloroleuca	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.3134	long_pendant	unassigned	241	I	complete
+F9BFB2A6_004957-T1	Puccinia brachypodii	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2245	long_pendant	unassigned	241	E	complete
+F9C06E7C_007817-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2039	long_pendant	unassigned	243	Q	complete
+F9C0968C_000508-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+F9C71CB2_009122-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0322		unassigned	234	E	neither
+F9C71CB2_034973-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F9C71CB2_035183-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0149		unassigned	193	E	neither
+F9C77A76_004127-T1	Glomus cerebriforme	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2495		unassigned	240	E	neither
+F9C77A76_012996-T1	Glomus cerebriforme	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+F9D47226_001043-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+F9D93B80_008063-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	311	Q	complete
+F9EA45C5_008221-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+F9F7649B_004425-T1	Ambispora gerdemannii	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4001		unassigned	224	E	neither
+F9F7649B_004554-T1	Ambispora gerdemannii	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.915	0.6614		unassigned	302	E	no_start
+FA09F412_010607-T1	Xanthoria sp. 1 TBL-2021	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.834	1.1308	long_pendant	unassigned	241	Q	complete
+FA1538BD_010852-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FA186146_006463-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4443		unassigned	224	E	complete
+FA186146_050775-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2205		unassigned	229	E	complete
+FA186146_050777-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1717		unassigned	187	E	no_stop
+FA186146_050942-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4196		unassigned	204	E	complete
+FA186146_081617-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3834		unassigned	225	E	complete
+FA186146_082362-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0386		unassigned	239	E	no_stop
+FA186146_085368-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0715		unassigned	230	E	complete
+FA186146_085597-T1	Gigaspora margarita	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1006		unassigned	239	E	no_stop
+FA285392_004538-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.906	1.1464	long_pendant	unassigned	246	Q	complete
+FA2A8273_003796-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0640	long_pendant	unassigned	240	Q	complete
+FA2A8273_003981-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+FA3202CF_003593-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+FA3969AF_000604-T1	Cladosporium sp. VS III D KN 1	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1156	long_pendant	unassigned	240	Q	complete
+FA3C93D1_009039-T1	Nigrospora musae	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.831	1.1741	long_pendant	unassigned	240	V	complete
+FA40B0CC_000326-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FA4CCE0F_010614-T1	Funneliformis geosporum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1599		unassigned	221	E	no_stop
+FA4CCE0F_011589-T1	Funneliformis geosporum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2908		unassigned	227	E	neither
+FA4F0D45_005284-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FA522356_000991-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FA53423B_000960-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FA5896EE_010641-T1	Microdochium nivale	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2427	long_pendant	unassigned	249	I	complete
+FA5BF1FD_003541-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FA5BF1FD_006339-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0407		unassigned	233	E	neither
+FA67C576_000005-T1	Cladosporium endophyticum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.1680	long_pendant	unassigned	240	Q	complete
+FA73AFA5_002941-T1	Exserohilum rostratum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1217	long_pendant	unassigned	240	Q	no_stop
+FA7496A2_008156-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.852	1.1360	long_pendant	unassigned	246	Q	complete
+FA7987EB_008980-T1	Gliomastix tumulicola	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2178	long_pendant	unassigned	240	I	complete
+FA822CE4_011316-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FA96E933_005330-T1	Pseudopithomyces toxicarius	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.933	1.2047	long_pendant	unassigned	243	Q	no_stop
+FA9FB14F_010059-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+FA9FB14F_015013-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FAA6F757_008502-T1	Cladosporium ramotenellum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.1933	long_pendant	unassigned	240	Q	complete
+FAA90D9D_007613-T1	Ceratobasidium sp. 392	Basidiomycota	Agaricomycetes	Agaricomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.781	0.3237		unassigned	69	-	complete
+FAAB9CFB_002581-T1	Squamulea sp. 1 TL-2023	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.866	1.1359	long_pendant	unassigned	241	Q	complete
+FAAC03CD_000059-T1	Mycosphaerella sp. PB-2012b	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.871	1.1610	long_pendant	unassigned	252	Q	no_stop
+FAAD5990_007030-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.0729	long_pendant	unassigned	240	Q	complete
+FAB8DC1A_011529-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+FABA52C6_004550-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.0551	long_pendant	unassigned	240	Q	complete
+FABD1EAA_003933-T1	Drechslerella dactyloides	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	0.9857		unassigned	242	Q	complete
+FAC3A705_012567-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FAC6D685_016300-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+FAC88CC3_001041-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0387		unassigned	233	E	neither
+FAC88CC3_013194-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	235	E	no_start
+FACECFCD_005062-T1	Neophaeococcomyces aloes	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.873	1.1512	long_pendant	unassigned	240	Q	complete
+FAD200EB_009332-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+FAE1BE92_000646-T1	Exophiala oligosperma	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.945	1.2848	long_pendant	unassigned	241	Q	complete
+FAEA7003_004314-T1	Capronia americana	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2171	long_pendant	unassigned	242	Q	complete
+FAEB69AA_003537-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.698	1.1962	long_pendant	unassigned	224	Q	complete
+FAF4B645_008749-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FAFF8EEA_018119-T1	Hyaloscypha variabilis	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.643	0.9341		unassigned	243	Q	complete
+FB075358_000804-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.8388		unassigned	184	-	complete
+FB07DD75_024699-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FB0FA0BF_006054-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2492	long_pendant	unassigned	181	Q	complete
+FB0FA0BF_009278-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FB20D125_008513-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+FB25BC4E_003565-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FB265963_003567-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+FB2BC807_008640-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0640	long_pendant	unassigned	240	Q	complete
+FB2BC807_013081-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+FB3BF502_000448-T1	Pseudopyrenochaeta lycopersici	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.0423	long_pendant	unassigned	242	Q	complete
+FB4BC2FA_024594-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FB4C4372_028454-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+FB4C4372_029443-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FB6030EF_008163-T1	Xanthoria parietina	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.979	1.1425	long_pendant	unassigned	241	Q	complete
+FB643B19_000411-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.1037	long_pendant	unassigned	240	Q	complete
+FB682192_001464-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	238	E	complete
+FB682192_023849-T1	Puccinia graminis	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.992	1.2594	long_pendant	unassigned	238	E	complete
+FB72CF39_002649-T1	Articulospora tetracladia	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.966	1.0424	long_pendant	unassigned	242	Q	complete
+FB746A4A_013686-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.600	0.8881		unassigned	240	I	complete
+FB7548AA_024663-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FB849791_013315-T1	Apiospora guizhouensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.715	0.9934		unassigned	240	I	complete
+FB8697BF_007288-T1	Cladosporium sp. BSL10	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2059	long_pendant	unassigned	240	Q	complete
+FB8998AA_001437-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FB8C35EA_001691-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+FB981874_011641-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FB9BF4CE_000876-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.983	1.1156	long_pendant	unassigned	240	Q	complete
+FB9BF4CE_006665-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FBAA79D3_007536-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0985	long_pendant	unassigned	240	Q	complete
+FBAA79D3_007736-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.2692	long_pendant	unassigned	178	Q	complete
+FBAF5A71_014577-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FBBA5C9E_008205-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+FBBC8A37_011800-T1	Venturia pyrina	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1804	long_pendant	unassigned	254	Q	complete
+FBC6281C_005270-T1	Apiospora saccharicola	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.612	0.9513		unassigned	240	I	no_stop
+FBCDA3AB_013926-T1	Paramyrothecium sp. XJ0827	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.958	1.1255	long_pendant	unassigned	240	I	complete
+FBCF154D_024604-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FBD2A023_003291-T1	Cladophialophora sylvestris	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1780	long_pendant	unassigned	241	Q	complete
+FBD55F63_015958-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FBDE6CDC_003357-T1	Racocetra fulgida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.3689		unassigned	225	E	neither
+FBDE6CDC_013097-T1	Racocetra fulgida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0978		unassigned	222	E	complete
+FBDE6CDC_016218-T1	Racocetra fulgida	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4517		unassigned	164	E	complete
+FBE36FB5_000071-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FBF02939_008057-T1	Capronia americana	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2171	long_pendant	unassigned	242	Q	complete
+FC104475_006578-T1	Orbilia ellipsospora	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.993	0.9795		unassigned	242	Q	complete
+FC135A5E_002306-T1	Stachybotrys chlorohalonatus	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.975	1.2902	long_pendant	unassigned	241	I	complete
+FC161700_006363-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	0.9356		unassigned	187	-	complete
+FC1CBB48_005997-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0778	long_pendant	unassigned	225	Q	complete
+FC21DEB9_014222-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.2885	long_pendant	unassigned	178	Q	complete
+FC24849E_005171-T1	Dactylellina haptotyla	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.900	1.0032	long_pendant	unassigned	242	Q	complete
+FC303ED2_013426-T1	Geosiphon pyriformis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.902	0.9440		unassigned	637	E	no_stop
+FC303ED2_016925-T1	Geosiphon pyriformis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	0.9189		unassigned	299	E	complete
+FC303ED2_021353-T1	Geosiphon pyriformis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.5716		unassigned	383	E	complete
+FC50BFEF_003538-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+FC520184_007685-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FC53CB96_007311-T1	Nigrospora hainanensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1313	long_pendant	unassigned	240	V	complete
+FC59513B_006691-T1	Cladosporium sp. SL-16	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.2618	long_pendant	unassigned	240	Q	complete
+FC6B3DC4_001556-T1	Paraconiothyrium brasiliense	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1334	long_pendant	unassigned	241	Q	complete
+FC6E0CBD_009958-T1	Phialophora verrucosa	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1804	long_pendant	unassigned	242	Q	complete
+FC72122E_010909-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FC74094C_002023-T1	Phialophora chinensis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1810	long_pendant	unassigned	242	Q	complete
+FC7A1E40_001633-T1	Clonostachys chloroleuca	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.2937	long_pendant	unassigned	240	I	complete
+FC82642E_006982-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0865	long_pendant	unassigned	240	Q	complete
+FC859F4B_006576-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2474	long_pendant	unassigned	190	Q	complete
+FC859F4B_007221-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FC946768_001432-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2492	long_pendant	unassigned	181	Q	complete
+FC946768_005530-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FC970975_004748-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FC970975_007087-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0407		unassigned	233	E	neither
+FC9CB793_002277-T1	Pseudotulostoma volvatum	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.513	0.9254		unassigned	243	N	complete
+FCA4F520_014053-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.990	1.2661	long_pendant	unassigned	178	Q	complete
+FCB59EAC_006402-T1	Cladosporium subtilissimum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2622	long_pendant	unassigned	383	Q	complete
+FCB7F81E_003737-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.2502	long_pendant	unassigned	240	Q	no_stop
+FCBBD620_009435-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FCCB11B8_009291-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+FCCDAF56_002733-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FCD769A0_004136-T1	Cladophialophora carrionii	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1427	long_pendant	unassigned	242	Q	complete
+FCD988F1_005878-T1	Cladophialophora endolichena	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.972	1.2463	long_pendant	unassigned	243	Q	complete
+FCDFDB34_017004-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+FCDFF12F_003130-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FCE86407_004998-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+FCEAD8ED_016636-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FCEFF7AC_000917-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FCF8152E_003060-T1	Apiospora saccharicola	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.641	0.9418		unassigned	240	I	complete
+FCFCA196_004480-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.635	1.1524	long_pendant	unassigned	246	Q	complete
+FD0323AF_023000-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD044E6B_003258-T1	Mycosphaerellales sp. BF13	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.732	1.2757	long_pendant	unassigned	501	Q	complete
+FD14D2EB_009206-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FD159D2E_024507-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD1663E1_004374-T1	Aureobasidium pullulans	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.542	0.9116		unassigned	185	-	complete
+FD1E6533_004676-T1	Acaulospora morrowiae	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	0.5490		unassigned	225	E	complete
+FD1FFE34_011690-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+FD252833_024691-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD2E25D0_014991-T1	Aureobasidium sp. DW-1	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	0.9778		unassigned	206	-	complete
+FD32CEE1_000955-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0627	long_pendant	unassigned	243	Q	complete
+FD32CEE1_001825-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FD3A14F2_004154-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0074		unassigned	239	E	neither
+FD3A14F2_005290-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1808		unassigned	229	E	complete
+FD3A14F2_005291-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	0.1256		unassigned	177	E	complete
+FD3A14F2_022651-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4237		unassigned	225	E	no_stop
+FD3A14F2_028247-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0084		unassigned	230	E	complete
+FD3BE42C_006993-T1	Aureobasidium sp. 121K	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1257	long_pendant	unassigned	243	Q	complete
+FD3C0871_010760-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FD53724A_002578-T1	Phialocephala sp. D728	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.0930	long_pendant	unassigned	243	Q	complete
+FD53724A_014253-T1	Phialocephala sp. D728	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.634	1.0008	long_pendant	unassigned	239	E	complete
+FD5FD6D7_006860-T1	Dactylellina sp. tibetensis	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	0.9284		unassigned	242	Q	complete
+FD65F311_011364-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FD66529E_009887-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.975	1.1527	long_pendant	unassigned	240	Q	complete
+FD6DBC0C_006957-T1	Rusavskia elegans	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.897	1.1099	long_pendant	unassigned	241	Q	complete
+FD71DC4B_003596-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+FD736CD5_001194-T1	Drechslerella coelobrocha	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	0.9439		unassigned	242	Q	no_start
+FD753D58_024701-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD7609CB_023032-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD7A79A3_002908-T1	Drechslerella dactyloides	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	0.9857		unassigned	242	Q	complete
+FD7AAACF_024681-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FD7F1132_009636-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FD825FFB_009483-T1	Puccinia sorghi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.921	1.5053	long_pendant	unassigned	179	-	complete
+FD895639_004984-T1	Nigrospora rubi	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.869	1.1366	long_pendant	unassigned	240	V	complete
+FD8C9AB9_001253-T1	Aureobasidium melanogenum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1008	long_pendant	unassigned	243	Q	complete
+FD97020E_004433-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+FD99D97F_003354-T1	Cladosporium pseudocladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.1890	long_pendant	unassigned	240	Q	complete
+FDA77154_007476-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.8388		unassigned	184	-	complete
+FDAC7A7B_003602-T1	Cladosporium colombiae	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1025	long_pendant	unassigned	240	Q	complete
+FDAD96BB_009684-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.0739	long_pendant	unassigned	240	Q	complete
+FDB574B3_002743-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FDB574B3_017959-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	no_start
+FDC0B4DB_005185-T1	Pseudopithomyces chartarum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.847	1.2055	long_pendant	unassigned	244	Q	no_stop
+FDC3F3F3_002738-T1	Venturia pyrina	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1659	long_pendant	unassigned	254	Q	complete
+FDCA49FA_004767-T1	Basidiobolus sp. ARSEF 270	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.738	1.1199	long_pendant	unassigned	254	E	complete
+FDCD0227_005519-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0216		unassigned	237	E	neither
+FDCD0227_016352-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FDD73FD1_009878-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+FDE29271_009055-T1	Aureobasidium sp. EXF-12344	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1522	long_pendant	unassigned	243	Q	complete
+FDE29271_015322-T1	Aureobasidium sp. EXF-12344	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	0.9580		unassigned	192	-	neither
+FDEA04A0_003642-T1	Dactylellina cionopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9676		unassigned	242	Q	complete
+FDEA18B0_015750-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FDED09F9_008184-T1	Nothopassalora personata	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.751	1.1495	long_pendant	unassigned	240	Q	complete
+FDEFD9C9_014472-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FDF1D73F_021937-T1	Basidiobolus sp. ARSEF 9899	Basidiobolomycota	Basidiobolomycetes	Basidiobolomycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.8995		unassigned	319	E	complete
+FDF5A6BB_007390-T1	Didymosphaeria rubi-ulmifolii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1334	long_pendant	unassigned	241	Q	complete
+FDFA41F4_008731-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FDFB01A5_024565-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FDFDD591_024565-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FE091B16_011317-T1	Pseudopithomyces chartarum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.891	1.2052	long_pendant	unassigned	243	Q	no_stop
+FE107B47_010330-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.1826	long_pendant	unassigned	247	Q	complete
+FE12AC59_017302-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1914	long_pendant	unassigned	240	I	complete
+FE193994_017356-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FE1BC758_010966-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FE2000E6_001869-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2492	long_pendant	unassigned	181	Q	complete
+FE2000E6_002132-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.986	1.1152	long_pendant	unassigned	240	Q	complete
+FE299F14_005754-T1	Nothopassalora personata	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.751	1.1495	long_pendant	unassigned	240	Q	complete
+FE2F3692_007793-T1	Xanthoria calcicola	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.729	1.1784	long_pendant	unassigned	241	Q	complete
+FE2F513A_004623-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FE337FF4_007581-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1502	long_pendant	unassigned	247	Q	complete
+FE4FF23C_010417-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.3486	long_pendant	unassigned	182	Q	complete
+FE5967B6_003084-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.1256	long_pendant	unassigned	240	Q	complete
+FE5967B6_010071-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.950	1.2996	long_pendant	unassigned	178	Q	complete
+FE596CFF_015361-T1	Puccinia hordei	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.981	1.2105	long_pendant	unassigned	125	E	complete
+FE5CE77A_011804-T1	Cadophora malorum	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.1252	long_pendant	unassigned	240	Q	complete
+FE5E9306_010231-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FE651091_001555-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FE6CF547_006776-T1	Nigrospora musae	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.831	1.1741	long_pendant	unassigned	240	V	complete
+FE6ECFF1_011368-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FE71C9FC_000702-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FE728AFD_010549-T1	Physcia sp.	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1879	long_pendant	unassigned	241	Q	complete
+FE7AA46D_013218-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FE7B5EB4_003317-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.1190	long_pendant	unassigned	240	Q	complete
+FE8CC738_011301-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FE9449CC_001707-T1	Rhizophagus prolifer	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0384		unassigned	221	E	complete
+FE9449CC_001883-T1	Rhizophagus prolifer	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.4574		unassigned	132	N	complete
+FE9449CC_018436-T1	Rhizophagus prolifer	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0905		unassigned	163	E	no_stop
+FE9E942F_016023-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FEA06EAF_005169-T1	Xanthocarpia ochracea	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1919	long_pendant	unassigned	241	Q	complete
+FEAE1FA0_013144-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FEBB419A_011574-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FEBBF75D_008869-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FEBE50EF_003452-T1	Dothistroma septosporum	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.947	1.1581	long_pendant	unassigned	258	Q	complete
+FEC2FC70_005205-T1	Xanthoria aureola	Ascomycota	Lecanoromycetes	Lecanoromycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.729	1.1784	long_pendant	unassigned	241	Q	complete
+FED7A29A_010656-T1	Funneliformis geosporum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1599		unassigned	221	E	no_stop
+FED7A29A_021957-T1	Funneliformis geosporum	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.2908		unassigned	227	E	neither
+FEE01744_007634-T1	Dothideomycetes sp. NU30	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.895	0.8456		unassigned	410	-	complete
+FEE676BC_001737-T1	Dactylellina cionopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9675		unassigned	242	Q	complete
+FEF18550_003102-T1	Apiospora pterosperma	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.966	0.8163		unassigned	240	V	complete
+FEF2A960_005129-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	1.1484	long_pendant	unassigned	240	Q	complete
+FF0107FE_003821-T1	Venturia pyrina	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1659	long_pendant	unassigned	254	Q	complete
+FF092DDF_005987-T1	Glutinoglossum americanum	Ascomycota	Geoglossomycetes	Geoglossomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.697	0.8491		unassigned	240	S	no_start
+FF09EE3B_003533-T1	Sphaerulina musiva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1947	long_pendant	unassigned	224	Q	complete
+FF0F4086_001874-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.993	0.1336		unassigned	179	E	complete
+FF0F4086_001875-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.1808		unassigned	229	E	complete
+FF0F4086_016306-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0074		unassigned	239	E	no_stop
+FF0F4086_023310-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0170		unassigned	154	E	complete
+FF0F4086_024925-T1	Gigaspora rosea	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0182		unassigned	57	-	complete
+FF10604B_024679-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FF1673B0_007497-T1	Rhypophila decipiens	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1023	long_pendant	unassigned	244	Q	complete
+FF192CC4_004386-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.958	1.2906	long_pendant	unassigned	241	Q	complete
+FF1B2460_010073-T1	Cadophora sp. DSE1049	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.984	1.1252	long_pendant	unassigned	240	Q	complete
+FF24A963_004141-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FF29C826_003297-T1	Cladosporium cladosporioides	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2329	long_pendant	unassigned	240	Q	no_stop
+FF320860_002731-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FF332C3D_018968-T1	Clonostachys chloroleuca	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.3051	long_pendant	unassigned	241	I	complete
+FF351595_011417-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FF3C82E0_011550-T1	Arachnopeziza aurata	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.8154		unassigned	222	-	complete
+FF3CFBCE_009381-T1	Dactylellina cionopaga	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	0.9676		unassigned	242	Q	complete
+FF3F4337_009905-T1	Microdochium nivale	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2557	long_pendant	unassigned	249	I	complete
+FF3F629C_007511-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.991	1.1484	long_pendant	unassigned	240	Q	complete
+FF409751_001316-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2097	long_pendant	unassigned	247	Q	complete
+FF429C44_008971-T1	Phialophora chinensis	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.694	1.1693	long_pendant	unassigned	242	Q	complete
+FF47882E_008560-T1	Cladosporium velox	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.985	1.2364	long_pendant	unassigned	240	Q	complete
+FF504819_000638-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FF59EDE1_002008-T1	Phaeosphaeriaceae sp.	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.781	0.9879		unassigned	242	Q	complete
+FF5A6610_010994-T1	Exophiala xenobiotica	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.940	1.2663	long_pendant	unassigned	241	Q	complete
+FF608DCD_006130-T1	Clonostachys rosea	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	1.3051	long_pendant	unassigned	241	I	complete
+FF613E17_000228-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FF62424A_015511-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.1923	long_pendant	unassigned	240	I	complete
+FF645591_014125-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.987	1.0994	long_pendant	unassigned	240	Q	complete
+FF6AA07E_004515-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.995	1.1891	long_pendant	unassigned	247	Q	complete
+FF6E85A6_003510-T1	Venturia oleaginea	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.1263	long_pendant	unassigned	253	Q	complete
+FF70E305_009750-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+FF7793A4_003334-T1	Cladophialophora immunda	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.555	1.0980	long_pendant	unassigned	241	Q	complete
+FF825835_012963-T1	Capronia americana	Ascomycota	Eurotiomycetes	Eurotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	1.2171	long_pendant	unassigned	242	Q	complete
+FF869AE9_000348-T1	Apiospora kogelbergensis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.836	1.2529	long_pendant	unassigned	240	V	complete
+FFA0882B_000421-T1	Fulvia fulva	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.0081	long_pendant	unassigned	240	Q	complete
+FFA41330_012687-T1	Venturiaceae sp. KMAF11	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.980	1.1580	long_pendant	unassigned	251	Q	complete
+FFA60835_001345-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.996	1.2000	long_pendant	unassigned	247	Q	complete
+FFAE74B3_023473-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FFB21448_003181-T1	Aureobasidium sp. Y128-05A	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.800	0.9095		unassigned	185	-	complete
+FFB46957_003915-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0107		unassigned	221	E	neither
+FFB46957_006647-T1	Rhizophagus irregularis	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0407		unassigned	233	E	neither
+FFB87B94_000342-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FFC03A4A_007988-T1	Hortaea werneckii	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.999	1.2039	long_pendant	unassigned	243	Q	complete
+FFD52AD9_015191-T1	Fusarium oxysporum	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.548	0.9090		unassigned	240	I	complete
+FFDC009D_024659-T1	Phakopsora pachyrhizi	Basidiomycota	Pucciniomycetes	Pucciniomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.692	1.3611	long_pendant	unassigned	180	-	complete
+FFE1A4F3_003828-T1	Rhizophagus sp. LPA8_3_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0235		unassigned	221	E	neither
+FFE1A4F3_009388-T1	Rhizophagus sp. LPA8_3_AMF	Glomeromycota	Glomeromycetes	Glomeromycota	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	1.000	0.0782		unassigned	233	E	neither
+FFEC28BA_002759-T1	Madurella mycetomatis	Ascomycota	Sordariomycetes	Sordariomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.997	1.2055	long_pendant	unassigned	246	Q	complete
+FFF118E1_010492-T1	Venturia inaequalis	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.989	1.2147	long_pendant	unassigned	247	Q	complete
+FFF63643_004154-T1	Cladosporium velox	Ascomycota	Dothideomycetes	Dothideomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.988	1.2556	long_pendant	unassigned	240	Q	no_stop
+FFF662BE_000808-T1	Margaritispora aquatica	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.994	0.9947		unassigned	245	Q	complete
+FFF7C4FE_001196-T1	Arachnopeziza aurelia	Ascomycota	Leotiomycetes	Leotiomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	1.1271	long_pendant	unassigned	252	Q	complete
+FFFB015E_007510-T1	Orbilia quercus	Ascomycota	Orbiliomycetes	Orbiliomycetes	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	0.998	0.9715		unassigned	242	Q	no_start
