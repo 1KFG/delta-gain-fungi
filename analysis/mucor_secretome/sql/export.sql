@@ -24,8 +24,11 @@ copy (select protein_id, len, ExpAA, First60, PredHel, Topology from read_parque
       where species_prefix in (select LOCUSTAG from g))
   to '${OUT}/tmhmm.tsv' (header, delimiter '\t');
 
+-- PredGPI writes a `Chain` row for every protein and a `GPI-anchor` row only for the anchored
+-- ones (224 M vs 3.3 M rows BFD-wide), so the feature filter is what makes this table mean
+-- "GPI-anchored" at all.
 copy (select distinct protein_id, feature, start, "end" from read_parquet('predgpi.parquet')
-      where species_prefix in (select LOCUSTAG from g))
+      where species_prefix in (select LOCUSTAG from g) and feature = 'GPI-anchor')
   to '${OUT}/gpi.tsv' (header, delimiter '\t');
 
 copy (select protein_id, prediction, probability from read_parquet('targetP.parquet')

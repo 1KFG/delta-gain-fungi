@@ -65,9 +65,18 @@ TIER_LABEL = {"T1": "chitin/chitosan", "T2": "plant-facing enzyme", "T3": "effec
               "T4": "other secreted"}
 
 
-def tsv(path):
+def tsv(path, optional=False):
+    if optional and not os.path.exists(path):
+        return []
     with open(path, newline="") as fh:
         return list(csv.DictReader(fh, delimiter="\t"))
+
+
+def gpi_set(rows):
+    """Protein IDs with a GPI anchor. PredGPI emits a `Chain` row for every protein and a
+    `GPI-anchor` row only for the anchored ones, so an unfiltered table would mark everything."""
+    return {r["protein_id"] for r in rows
+            if r.get("feature", "GPI-anchor").strip() == "GPI-anchor"}
 
 
 def fnum(x, d=0.0):
@@ -154,13 +163,13 @@ def main(argv=None):
 
     sig = {r["protein_id"]: r for r in tsv(D("signalp.tsv"))}
     tm = {r["protein_id"]: r for r in tsv(D("tmhmm.tsv"))}
-    gpi = {r["protein_id"] for r in tsv(D("gpi.tsv"))}
-    tp = {r["protein_id"]: r for r in tsv(D("targetp.tsv"))}
-    length = {r["protein_id"]: int(r["length"]) for r in tsv(D("lengths.tsv"))}
+    gpi = gpi_set(tsv(D("gpi.tsv"), optional=True))
+    tp = {r["protein_id"]: r for r in tsv(D("targetp.tsv"), optional=True)}
+    length = {r["protein_id"]: int(r["length"]) for r in tsv(D("lengths.tsv"), optional=True)}
     pfam, cazy, subs = defaultdict(list), defaultdict(list), defaultdict(list)
     for r in tsv(D("pfam.tsv")):
         pfam[r["protein_id"]].append((r["pfam_acc"], r["pfam_id"]))
-    for r in tsv(D("cazy.tsv")):
+    for r in tsv(D("cazy.tsv"), optional=True):
         cazy[r["protein_id"]].append(r["cazyme_fam"])
         if r.get("substrate"):
             subs[r["protein_id"]].append(r["substrate"])

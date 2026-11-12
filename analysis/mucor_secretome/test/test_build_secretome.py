@@ -147,6 +147,17 @@ class Annot(unittest.TestCase):
         self.assertEqual(at.fam_from_hmm("GH18.hmm"), "GH18")
         self.assertEqual(at.fam_from_hmm("CBM50"), "CBM50")
 
+class Gpi(unittest.TestCase):
+    def test_only_anchor_rows_count(self):
+        rows = [{"protein_id": "A", "feature": "Chain"},
+                {"protein_id": "B", "feature": "GPI-anchor"},
+                {"protein_id": "C", "feature": "Chain"},
+                {"protein_id": "C", "feature": "GPI-anchor"}]
+        self.assertEqual(bs.gpi_set(rows), {"B", "C"})
+
+    def test_missing_feature_column_is_treated_as_anchor(self):
+        self.assertEqual(bs.gpi_set([{"protein_id": "A"}]), {"A"})
+
 
 if __name__ == "__main__":
     unittest.main()
