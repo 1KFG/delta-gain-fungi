@@ -12,6 +12,7 @@ import build_secretome as bs  # noqa: E402
 import extract_proteins as ep  # noqa: E402
 import annotate_to_tables as at  # noqa: E402
 import gff3_to_cds as gc  # noqa: E402
+import unite_tax as ut  # noqa: E402
 
 
 class Classify(unittest.TestCase):
@@ -146,6 +147,63 @@ class Annot(unittest.TestCase):
     def test_fam_from_hmm(self):
         self.assertEqual(at.fam_from_hmm("GH18.hmm"), "GH18")
         self.assertEqual(at.fam_from_hmm("CBM50"), "CBM50")
+
+class Unite(unittest.TestCase):
+    TAX = (
+        "Feature ID\tTaxon\n"
+        "SH1.10FU_X1_refs\tk__Fungi;p__Ascomycota;c__D;o__A;f__A;g__Abrothallus;"
+        "s__Abrothallus_subhalei;sh__SH1\n"
+        "SH2.10FU_X2_refs\tk__Fungi;p__Mucoromycota;c__Mucoromycetes;o__Mucorales;"
+        "f__Mucoraceae;g__Mucor;s__Mucor_hiemalis;sh__SH2\n"
+        "SH3.10FU_X3_refs\tk__Fungi;p__Mucoromycota;c__Mucoromycetes;o__Mucorales;"
+        "f__Mucoraceae;g__Mucor;s__Mucor_circinelloides;sh__SH3\n"
+    )
+    FASTA = ">SH1.10FU_X1_refs\nAAAA\n>SH2.10FU_X2_refs desc\nCCCC\n>SH3.10FU_X3_refs\nGGGG\n"
+
+    def tax(self):
+        return ut.parse_taxonomy(io.StringIO(self.TAX))
+
+    def test_header_row_is_not_a_record(self):
+        self.assertNotIn("Feature ID", self.tax())
+        self.assertEqual(len(self.tax()), 3)
+
+    def test_rank_of(self):
+        lin = self.tax()["SH2.10FU_X2_refs"]
+        self.assertEqual(ut.rank_of(lin, "p"), "Mucoromycota")
+        self.assertEqual(ut.rank_of(lin, "s"), "Mucor_hiemalis")
+        self.assertEqual(ut.rank_of(lin, "x"), "")
+
+    def test_phylum_filter_uses_the_taxonomy_not_the_header(self):
+        # the headers carry no lineage at all, which is why a grep on the FASTA finds nothing
+        self.assertNotIn("Mucoromycota", self.FASTA)
+        ids = ut.ids_in_phylum(self.tax(), "Mucoromycota")
+        out = io.StringIO()
+        self.assertEqual(ut.filter_fasta(io.StringIO(self.FASTA), ids, out), 2)
+        self.assertEqual(out.getvalue().count(">"), 2)
+        self.assertIn("CCCC", out.getvalue())
+        self.assertNotIn("AAAA", out.getvalue())
+
+    def test_filter_fasta_keeps_only_the_accession_part_of_the_header(self):
+        out = io.StringIO()
+        ut.filter_fasta(io.StringIO(self.FASTA), {"SH2.10FU_X2_refs"}, out)
+        self.assertEqual(out.getvalue(), ">SH2.10FU_X2_refs desc\nCCCC\n")
+
+    def test_rank_hits_keeps_the_best_hit_per_species(self):
+        def row(acc, pid, ln, bits, qlen=500):
+            return dict(zip(ut.BLAST_COLS,
+                            [acc, "ctg1", pid, ln, "0", "0", "1", ln, "1", ln, "0.0", bits, qlen]))
+        ranked = ut.rank_hits([row("SH2.10FU_X2_refs", "99.0", "450", "800"),
+                               row("SH2.10FU_X2_refs", "95.0", "400", "700"),
+                               row("SH3.10FU_X3_refs", "88.0", "300", "500")], self.tax())
+        self.assertEqual([r[0] for r in ranked], ["Mucor_hiemalis", "Mucor_circinelloides"])
+        self.assertEqual(ranked[0][2:5], (99.0, 450, 0.9))   # the 800-bit hit, not the 700
+
+    def test_rank_hits_falls_back_to_the_accession_when_unknown(self):
+        row = dict(zip(ut.BLAST_COLS,
+                       ["NOPE", "c", "90", "100", "0", "0", "1", "100", "1", "100", "0", "90",
+                        "100"]))
+        self.assertEqual(ut.rank_hits([row], self.tax())[0][0], "NOPE")
+
 
 class Gpi(unittest.TestCase):
     def test_only_anchor_rows_count(self):
