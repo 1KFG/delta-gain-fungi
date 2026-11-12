@@ -14,7 +14,12 @@
 # hundred short proteins, and the job is resumable - models already written are skipped - so a
 # timeout costs only a resubmit.
 #SBATCH -p short_gpu
-#SBATCH --gres=gpu:1
+# a100 specifically, not any GPU: the esm/2.0.0 module's torch is 1.13.1+cu117, built for
+# sm_37..sm_86. On the ada6000 (sm_89), h100 (sm_90) or blackwell6000 (sm_120) nodes it does not
+# refuse - it warns and returns garbage (job 32033882: 487 errors and 72 equally worthless
+# "successes"). bin/esmfold_batch.py now checks this and aborts, but the right GPU is requested
+# here so it never comes up.
+#SBATCH --gres=gpu:a100:1
 #SBATCH -N 1 -n 1 -c 16
 #SBATCH --mem=64G
 #SBATCH -t 2:00:00

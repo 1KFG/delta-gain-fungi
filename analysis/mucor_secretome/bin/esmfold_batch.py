@@ -58,6 +58,23 @@ def main(argv=None):
     import torch
     import esm
 
+    # The GPU must be one this torch was built for, or every result is silently wrong. The
+    # esm/2.0.0 module ships torch 1.13.1+cu117, built for sm_37..sm_86, so it runs correctly on
+    # an a100 (sm_80) but not on the ada6000 (sm_89), h100 (sm_90) or blackwell6000 (sm_120)
+    # nodes. On a Blackwell node it does not refuse: it prints a warning and then returns
+    # garbage, which in job 32033882 meant 487 nonsense errors and - worse - 72 "successful"
+    # models that were also nonsense. Fail loudly instead.
+    if not torch.cuda.is_available():
+        sys.exit("no CUDA device visible")
+    cap = torch.cuda.get_device_capability()
+    sm, arch = f"sm_{cap[0]}{cap[1]}", torch.cuda.get_arch_list()
+    name = torch.cuda.get_device_name(0)
+    print(f"device {name} ({sm}); torch {torch.__version__} built for {arch}", file=sys.stderr)
+    if arch and sm not in arch:
+        sys.exit(f"REFUSING TO RUN: {name} is {sm}, but torch {torch.__version__} was built for "
+                 f"{arch}. Results would be silently wrong - request a supported GPU "
+                 f"(--gres=gpu:a100:1).")
+
     model = esm.pretrained.esmfold_v1().eval().cuda()
     model.set_chunk_size(a.chunk)
     log = os.path.join(a.out, "plddt.tsv")
