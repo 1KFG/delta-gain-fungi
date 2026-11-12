@@ -1,0 +1,18 @@
+system	clade	ref_leaves	characterized	support_sh_ufb	loo_correct	bfd_proteins	catalytic_core	core_pct	glu180_pct	mean_length	high_conf_pct	top_lineages	t1_peroxygenase_pct
+Clades I-V	Clade I	31	5	98.5/97	31/31	41679	5081	12.2	13.9	427	99.4	Dothideomycetes 18744; Sordariomycetes 9083; Agaricomycetes 6292	0-53 (n=5)
+Clades I-V	Clade II	7	2	90.3/98	6/7	3547	2835	79.9	94.2	301	94.1	Dothideomycetes 2181; Sordariomycetes 871; Leotiomycetes 193	0-0 (n=2)
+Clades I-V	Clade III	3	2	100/100	2/3	431	320	74.2	82.1	286	60.1	Agaricomycetes 418; Dothideomycetes 13	2-3 (n=2)
+Clades I-V	Clade IV	20	1	83.2/96	20/20	8437	7407	87.8	96.2	264	99.6	Sordariomycetes 3441; Dothideomycetes 2954; Eurotiomycetes 1690	5-5 (n=1)
+Clades I-V	Clade V	14	9	93.8/86	14/14	2425	1535	63.3	74.1	253	94.8	Eurotiomycetes 1140; Sordariomycetes 1112; Dothideomycetes 102	33-82 (n=9)
+Clades I-V	outside Clades I-V	0	0		111/112	41001	17383	42.4	55.1	275		Sordariomycetes 18083; Agaricomycetes 9255; Dothideomycetes 5861	not measured
+Zamocky Figure 1	Ascomycetous 1st	8	0	93.6/100		6228	3636	58.4	69.8	261		Sordariomycetes 4008; Eurotiomycetes 1746; Lecanoromycetes 250	
+Zamocky Figure 1	Ascomycetous 2nd (Family I, short)	44	12	79.4/65		17584	12918	73.5	90.9	267		Sordariomycetes 7213; Dothideomycetes 5518; Eurotiomycetes 2856	
+Zamocky Figure 1	Basidiomycetous 1st	34	0	99.3/100		6378	8	0.1	0.2	302		Agaricomycetes 3705; Dothideomycetes 1364; Eurotiomycetes 680	
+Zamocky Figure 1	Basidiomycetous 2nd	15	0	99.7/100		4394	2421	55.1	94.2	311		Agaricomycetes 4369; Pucciniomycetes 19; Leotiomycetes 4	
+Zamocky Figure 1	Basidiomycetous 3rd (Family II, long)	31	5	98.5/97		41679	5081	12.2	13.9	427		Dothideomycetes 18744; Sordariomycetes 9083; Agaricomycetes 6292	
+Zamocky Figure 1	Chytridiomycetous	2	0	100/100		2	2	100.0	100.0	238		Chytridiomycota 2	
+Zamocky Figure 1	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	6	0	73.9/94		784	122	15.6	20.9	233		Dothideomycetes 360; Glomeromycota 121; Sordariomycetes 86	
+Zamocky Figure 1	Mucoromycetous basal	10	0	100/100		315	308	97.8	99.0	317		Mucoromycota 314; Eurotiomycetes 1	
+Zamocky Figure 1	Stramenopilous 1st	4	0	99.9/100		7	3	42.9	57.1	215		Chytridiomycota 6; Dothideomycetes 1	
+Zamocky Figure 1	Stramenopilous 2nd	12	0	96.6/99		1	1	100.0	100.0	182		Chytridiomycota 1	
+Zamocky Figure 1	no Figure 1 clade	0	0			20148	10061	49.9	55.8	269		Sordariomycetes 12135; Dothideomycetes 3690; Eurotiomycetes 2504	

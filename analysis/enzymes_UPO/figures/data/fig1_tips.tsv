@@ -1,0 +1,188 @@
+label	set	name	group	fig1_clade	fig1_group	our_clade
+B__AacUPO__cladeV	backbone	AacUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__AbrUPO-II__cladeV	backbone	AbrUPO-II	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__AbrUPO-I__cladeV	backbone	AbrUPO-I	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__AluUPO__cladeV	backbone	AluUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__AtuUPO__cladeV	backbone	AtuUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__CabUPO-III__cladeI	backbone	CabUPO-III	backbone:cladeI	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+B__CmaUPO-I__cladeI	backbone	CmaUPO-I	backbone:cladeI	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+B__CviUPO__cladeII	backbone	CviUPO	backbone:cladeII			Clade II
+B__DspUPO-I__cladeV	backbone	DspUPO-I	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__GmaUPO-II__cladeI	backbone	GmaUPO-II	backbone:cladeI	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+B__HspUPO__cladeV	backbone	HspUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__LspUPO-II__cladeI	backbone	LspUPO-II	backbone:cladeI	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+B__MorUPO__cladeIII	backbone	MorUPO	backbone:cladeIII	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade III
+B__MphUPO__cladeIV	backbone	MphUPO	backbone:cladeIV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+B__MroUPO__cladeIII	backbone	MroUPO	backbone:cladeIII	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade III
+B__PaDa-I_parent_AaeUPO__cladeI	backbone	PaDa-I_parent_AaeUPO	backbone:cladeI	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+B__PanUPO__cladeII	backbone	PanUPO	backbone:cladeII			Clade II
+B__RneUPO__cladeV	backbone	RneUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+B__TteUPO__cladeV	backbone	TteUPO	backbone:cladeV	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__AbHTP1__Basidio	zamocky	AbHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__AbHTP2__Basidio	zamocky	AbHTP2	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__AbHTP3__Basidio	zamocky	AbHTP3	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AbHTP4__Basidio	zamocky	AbHTP4	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AbHTP5__Basidio	zamocky	AbHTP5	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AdelHTP1__Basidio	zamocky	AdelHTP1	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AdelHTP5__Basidio	zamocky	AdelHTP5	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AfumHTP1__Asco	zamocky	AfumHTP1	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__AfumHTP2__Asco	zamocky	AfumHTP2	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__AfumHTP3__Asco	zamocky	AfumHTP3	Asco			
+Z__AglauHTP__Mucoro	zamocky	AglauHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__AkawHTP1__Asco	zamocky	AkawHTP1	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__AnHTP1__Asco	zamocky	AnHTP1	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__AnHTP2__Asco	zamocky	AnHTP2	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__AniHTP1__Asco	zamocky	AniHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__AniHTP2__Asco	zamocky	AniHTP2	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__AniHTP3__Asco	zamocky	AniHTP3	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__AniHTP4a__Asco	zamocky	AniHTP4a	Asco			Clade II
+Z__AniHTP4b__Asco	zamocky	AniHTP4b	Asco			Clade II
+Z__AniHTP5__Asco	zamocky	AniHTP5	Asco			
+Z__AorHTP1__Asco	zamocky	AorHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__AorHTP2__Asco	zamocky	AorHTP2	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__AorHTP3__Asco	zamocky	AorHTP3	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__AorHTP4__Asco	zamocky	AorHTP4	Asco			
+Z__AphasHTP1__Oomycota	zamocky	AphasHTP1	Oomycota	Stramenopilous 1st	Oomycete, chytrid, amoebozoan	
+Z__AphinHTP1__Oomycota	zamocky	AphinHTP1	Oomycota	Stramenopilous 1st	Oomycete, chytrid, amoebozoan	
+Z__AphinHTP2__Oomycota	zamocky	AphinHTP2	Oomycota	Stramenopilous 1st	Oomycete, chytrid, amoebozoan	
+Z__AteHTP1__Asco	zamocky	AteHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__AteHTP3__Asco	zamocky	AteHTP3	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__BcinHTP__Asco	zamocky	BcinHTP	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__BmesHTP1__Basidio	zamocky	BmesHTP1	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__BnarHTP1__Asco	zamocky	BnarHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__BtulHTP1__Asco	zamocky	BtulHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__CaberAPO1__Basidio	zamocky	CaberAPO1	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__CchloHTP1__Asco	zamocky	CchloHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__CcinHTP1__Basidio	zamocky	CcinHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__CcinHTP2__Basidio	zamocky	CcinHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__CcinHTP3__Basidio	zamocky	CcinHTP3	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__CcinHTP4__Basidio	zamocky	CcinHTP4	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__CcucHTP__Mucoro	zamocky	CcucHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__CfioHTP1__Asco	zamocky	CfioHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__CfumagHTP__Asco	zamocky	CfumagHTP	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__CgHTP1__Asco	zamocky	CgHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__CgHTP2__Asco	zamocky	CgHTP2	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__CgHTP3__Asco	zamocky	CgHTP3	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__CgHTP4__Asco	zamocky	CgHTP4	Asco			
+Z__ChigHTP1__Asco	zamocky	ChigHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__ChigHTP2__Asco	zamocky	ChigHTP2	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__CmicAPO1__Basidio	zamocky	CmicAPO1	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__ColgloeoHTP__Asco	zamocky	ColgloeoHTP	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__CsubHTP5__Basidio	zamocky	CsubHTP5	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__DaspAPO1__Basidio	zamocky	DaspAPO1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__DfragHTP1__Basidio	zamocky	DfragHTP1	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__DsquaHTP1__Basidio	zamocky	DsquaHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__FagHTP1__Asco	zamocky	FagHTP1	Asco			
+Z__GcerHTP1__Glomero	zamocky	GcerHTP1	Glomero	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__GrosHTP1__Glomero	zamocky	GrosHTP1	Glomero	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__GrosHTP2__Glomero	zamocky	GrosHTP2	Glomero	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__GzHTP1__Asco	zamocky	GzHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__GzHTP2__Asco	zamocky	GzHTP2	Asco			
+Z__GzHTP3__Asco	zamocky	GzHTP3	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__GzHTP4__Asco	zamocky	GzHTP4	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__GzHTP5__Asco	zamocky	GzHTP5	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__HirrHTP__Basidio	zamocky	HirrHTP	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__HjHTP1__Asco	zamocky	HjHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__LbiHTP1__Basidio	zamocky	LbiHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__LbiHTP2__Basidio	zamocky	LbiHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__LbiHTP3__Basidio	zamocky	LbiHTP3	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__LbiHTP4__Basidio	zamocky	LbiHTP4	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__LbiHTP5__Basidio	zamocky	LbiHTP5	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__MgrHTP1__Asco	zamocky	MgrHTP1	Asco			
+Z__MlarHTP1__Basidio	zamocky	MlarHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__MlarHTP2__Basidio	zamocky	MlarHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__MoHTP1__Asco	zamocky	MoHTP1	Asco			
+Z__MpiHTP1__Asco	zamocky	MpiHTP1	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__MrotHTP1__Basidio	zamocky	MrotHTP1	Basidio	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade III
+Z__MscoHTP__Asco	zamocky	MscoHTP	Asco			
+Z__MtherHTP__Asco	zamocky	MtherHTP	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade V
+Z__MucambHTP__Mucoro	zamocky	MucambHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__MuccirHTP__Mucoro	zamocky	MuccirHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__MuclusHTP__Mucoro	zamocky	MuclusHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__NcHTP1__Asco	zamocky	NcHTP1	Asco			
+Z__NhaeHTP__Asco	zamocky	NhaeHTP	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__OpsiHTP__Asco	zamocky	OpsiHTP	Asco			Clade II
+Z__PanHTP1__Asco	zamocky	PanHTP1	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PantHTP1__Basidio	zamocky	PantHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PbraHTP1__Asco	zamocky	PbraHTP1	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__PcHTP1__Basidio	zamocky	PcHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PcHTP2__Basidio	zamocky	PcHTP2	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PcHTP3__Basidio	zamocky	PcHTP3	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PcarHTP1__Basidio	zamocky	PcarHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PcarHTP4__Basidio	zamocky	PcarHTP4	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PcyanHTP1__Basidio	zamocky	PcyanHTP1	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PficHTP1__Asco	zamocky	PficHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__PfungHTP1__Amoebozoa	zamocky	PfungHTP1	Amoebozoa	Amoebozoan	Oomycete, chytrid, amoebozoan	
+Z__PfungHTP2__Amoebozoa	zamocky	PfungHTP2	Amoebozoa	Amoebozoan	Oomycete, chytrid, amoebozoan	
+Z__PhubeHTP1__Basidio	zamocky	PhubeHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PiHTP1__Oomycota	zamocky	PiHTP1	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PiHTP2__Oomycota	zamocky	PiHTP2	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PinvHTP1__Basidio	zamocky	PinvHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PinvHTP2__Basidio	zamocky	PinvHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PinvHTP3__Basidio	zamocky	PinvHTP3	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PinvHTP4__Basidio	zamocky	PinvHTP4	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PnoHTP01__Asco	zamocky	PnoHTP01	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__PnoHTP02__Asco	zamocky	PnoHTP02	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	
+Z__PnoHTP03__Asco	zamocky	PnoHTP03	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__PnoHTP04__Asco	zamocky	PnoHTP04	Asco			Clade II
+Z__PnoHTP05__Asco	zamocky	PnoHTP05	Asco			Clade II
+Z__PnoHTP06__Asco	zamocky	PnoHTP06	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP07__Asco	zamocky	PnoHTP07	Asco	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PnoHTP08__Asco	zamocky	PnoHTP08	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP09__Asco	zamocky	PnoHTP09	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP10__Asco	zamocky	PnoHTP10	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP11__Asco	zamocky	PnoHTP11	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP12__Asco	zamocky	PnoHTP12	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PnoHTP13__Asco	zamocky	PnoHTP13	Asco	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__PoxaHTP1__Asco	zamocky	PoxaHTP1	Asco	Ascomycetous 1st	Ascomycetous 1st	
+Z__PpaHTP__Mucoro	zamocky	PpaHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__PparHTP1__Oomycota	zamocky	PparHTP1	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PparHTP2__Oomycota	zamocky	PparHTP2	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PparHTP3__Oomycota	zamocky	PparHTP3	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PplHTP1__Basidio	zamocky	PplHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PplHTP2__Basidio	zamocky	PplHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PplHTP3__Basidio	zamocky	PplHTP3	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__PplHTP4__Basidio	zamocky	PplHTP4	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PplHTP5__Basidio	zamocky	PplHTP5	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__PramHTP1__Oomycota	zamocky	PramHTP1	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PramHTP2__Oomycota	zamocky	PramHTP2	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PsojHTP1__Oomycota	zamocky	PsojHTP1	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PsojHTP2__Oomycota	zamocky	PsojHTP2	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PsojHTP3__Oomycota	zamocky	PsojHTP3	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PsubHTP__Asco	zamocky	PsubHTP	Asco			
+Z__PultHTP1__Oomycota	zamocky	PultHTP1	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__PultHTP2__Oomycota	zamocky	PultHTP2	Oomycota	Stramenopilous 2nd	Oomycete, chytrid, amoebozoan	
+Z__RclaHTP1__Mucoro	zamocky	RclaHTP1	Mucoro	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__RdelHTP__Mucoro	zamocky	RdelHTP	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__RirrHTP1__Mucoro	zamocky	RirrHTP1	Mucoro	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__RirrHTP2__Mucoro	zamocky	RirrHTP2	Mucoro	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	Glomeromycete	
+Z__RmelHTP1__Basidio	zamocky	RmelHTP1	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__RmicroHTP1__Mucoro	zamocky	RmicroHTP1	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__RmicroHTP2__Mucoro	zamocky	RmicroHTP2	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__RstolHTP1__Mucoro	zamocky	RstolHTP1	Mucoro	Mucoromycetous basal	Mucorales (basal)	
+Z__RvesHTP1__Basidio	zamocky	RvesHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__RvinHTP1__Basidio	zamocky	RvinHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SAcoHTP2__Asco	zamocky	SAcoHTP2	Asco			
+Z__SborHTP1__Asco	zamocky	SborHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__SbreHTP1__Basidio	zamocky	SbreHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SbreHTP2__Basidio	zamocky	SbreHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SbreHTP5__Basidio	zamocky	SbreHTP5	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__ScepHTP1__Asco	zamocky	ScepHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__SdicHTP1__Oomycota	zamocky	SdicHTP1	Oomycota	Stramenopilous 1st	Oomycete, chytrid, amoebozoan	
+Z__SindHTP1__Basidio	zamocky	SindHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SlacHTP1__Basidio	zamocky	SlacHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SlutHTP1__Basidio	zamocky	SlutHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SlutHTP2__Basidio	zamocky	SlutHTP2	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SlutHTP4__Basidio	zamocky	SlutHTP4	Basidio	Basidiomycetous 2nd	Basidiomycetous 2nd	
+Z__SlutHTP5__Basidio	zamocky	SlutHTP5	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SmusHTP__Asco	zamocky	SmusHTP	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__SpipunHTP__Chytrid	zamocky	SpipunHTP	Chytrid	Chytridiomycetous	Oomycete, chytrid, amoebozoan	
+Z__SpispHTP__Chytrid	zamocky	SpispHTP	Chytrid	Chytridiomycetous	Oomycete, chytrid, amoebozoan	
+Z__SreHTP1__Basidio	zamocky	SreHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__SreHTP2__Basidio	zamocky	SreHTP2	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__SsclHTP1__Asco	zamocky	SsclHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__StriHTP1__Asco	zamocky	StriHTP1	Asco	Ascomycetous 2nd (Family I, short)	Family I (short)	Clade IV
+Z__UhHTP1__Basidio	zamocky	UhHTP1	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	
+Z__UmHTP1__Basidio	zamocky	UmHTP1	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__UmHTP2__Basidio	zamocky	UmHTP2	Basidio	Basidiomycetous 3rd (Family II, long)	Family II (long)	Clade I
+Z__UmHTP3__Basidio	zamocky	UmHTP3	Basidio	Basidiomycetous 1st	Basidiomycetous 1st	

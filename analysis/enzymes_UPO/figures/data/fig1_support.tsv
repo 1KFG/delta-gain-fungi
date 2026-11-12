@@ -1,0 +1,17 @@
+system	clade	n_leaves	exact	sh_alrt	ufboot
+fig1	Amoebozoan	2	yes	99.7	100
+fig1	Ascomycetous 1st	8	yes	93.6	100
+fig1	Ascomycetous 2nd (Family I, short)	44	yes	79.4	65
+fig1	Basidiomycetous 1st	34	yes	99.3	100
+fig1	Basidiomycetous 2nd	15	yes	99.7	100
+fig1	Basidiomycetous 3rd (Family II, long)	31	yes	98.5	97
+fig1	Chytridiomycetous	2	yes	100	100
+fig1	"Glomeromycetous (Fig 1 ""Mucoromycetous small"")"	6	yes	73.9	94
+fig1	Mucoromycetous basal	10	yes	100	100
+fig1	Stramenopilous 1st	4	yes	99.9	100
+fig1	Stramenopilous 2nd	12	yes	96.6	99
+our	Clade I	31	yes	98.5	97
+our	Clade II	7	yes	90.3	98
+our	Clade III	3	yes	100	100
+our	Clade IV	20	yes	83.2	96
+our	Clade V	14	yes	93.8	86

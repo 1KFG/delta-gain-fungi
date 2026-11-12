@@ -1,0 +1,12 @@
+phylum	genomes	upo_models	upo_complete	upo_no_start	upo_no_stop	upo_neither	upo_flags_null	upo_incomplete_pct	genomewide_models	genomewide_incomplete_pct	genomewide_neither_pct
+Ascomycota	12061	78382	71032	4654	2286	410	0	9.4	152266750	12.7	0.5
+Basidiomycota	2677	18327	16872	835	576	44	0	7.9	37383930	14.8	1.6
+Mucoromycota	252	370	63	46	97	164	0	83.0	3305006	48.9	10.9
+Chytridiomycota	56	188	145	20	20	3	0	22.9	618254	27.7	3.4
+Glomeromycota	57	124	31	19	19	55	0	75.0	1662317	60.8	17.7
+Basidiobolomycota	18	86	76	5	5	0	0	11.6	361949	20.6	5.6
+Zoopagomycota	10	30	21	2	7	0	0	30.0	83755	27.7	2.4
+Monoblepharomycota	2	4	4	0	0	0	0	0.0	23341	13.4	0.7
+?	1	4	4	0	0	0	0	0.0	18179	21.1	1.0
+Aphelidiomycota	2	3	2	1	0	0	0	33.3	15032	20.7	1.2
+Calcarisporiellomycota	1	2	2	0	0	0	0	0.0	10499	23.1	1.2
