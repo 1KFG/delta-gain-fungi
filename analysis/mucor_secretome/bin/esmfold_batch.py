@@ -84,7 +84,15 @@ def main(argv=None):
                      f"(--gres=gpu:a100:1).")
 
     model = esm.pretrained.esmfold_v1().eval()
-    model = model.cuda() if a.device == "cuda" else model.cpu()
+    if a.device == "cuda":
+        model = model.cuda()
+    else:
+        # esmfold_v1 keeps its ESM-2 trunk in fp16, and CPU has no half-precision LayerNorm
+        # ("LayerNormKernelImpl not implemented for 'Half'"), so everything is cast to fp32.
+        # That roughly doubles the memory and is the price of running without a GPU.
+        model = model.cpu().float()
+        if hasattr(model, "esm"):
+            model.esm = model.esm.float()
     model.set_chunk_size(a.chunk)
     log = os.path.join(a.out, "plddt.tsv")
     new = not os.path.exists(log)
@@ -92,9 +100,11 @@ def main(argv=None):
     if new:
         fh.write("protein_id\tlength\tplddt\tptm\tseconds\n")
 
-    n_done = n_skip = n_fail = 0
+    n_done = n_skip = n_fail = n_tried = 0
     for name, raw in read_fasta(a.fasta):
-        if a.limit and n_done >= a.limit:
+        # attempts, not successes: a --limit that only counts successes never stops a run in
+        # which everything fails, which is exactly when stopping matters
+        if a.limit and n_tried >= a.limit:
             break
         pdb_path = os.path.join(a.out, f"{name}.pdb")
         if os.path.exists(pdb_path) and os.path.getsize(pdb_path) > 0:
@@ -106,6 +116,7 @@ def main(argv=None):
             n_skip += 1
             continue
         chunk = a.chunk
+        n_tried += 1
         for attempt in range(3):
             try:
                 t0 = time.time()
