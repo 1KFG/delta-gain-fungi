@@ -20,6 +20,8 @@ website:
     left:
       - href: index.qmd
         text: Overview
+      - href: mucor_secretome.qmd
+        text: "Mucor effectors"
 
 format:
   html:

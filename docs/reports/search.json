@@ -5,5 +5,117 @@
     "title": "DeltaGain: Report Overview",
     "section": "",
     "text": "Placeholder — no pipeline results are rendered here yet.\nOnce Stage 1 (genome classification) and Stage 3 (protein novelty) have real run output under ../results/, this page and its siblings will summarize:\n\nGenome classification counts (redundant strain / novel strain / label mismatch / candidate novel species)\nProtein novelty screen results, per novelty axis (new fold / new domain architecture / new family member / taxonomic breadth / lineage expansion)\nUMAP/embedding-space figures, rarefaction curves, enrichment tables\n\nSee the design doc and project README for the full plan."
+  },
+  {
+    "objectID": "mucor_secretome.html",
+    "href": "mucor_secretome.html",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "",
+    "text": "NoteWhat this is\n\n\n\nA working analysis, not a finished study. Every candidate here is a prediction from sequence and structure; none has been expressed or assayed. Section 10 of the report states the limitations explicitly, and the section headed Upstream issues found records problems located in reference data rather than in this analysis.\nThe source of truth is analysis/mucor_secretome/ in the repository; this page renders REPORT.md from that directory, so the two cannot drift."
+  },
+  {
+    "objectID": "mucor_secretome.html#the-question",
+    "href": "mucor_secretome.html#the-question",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "The question",
+    "text": "The question\nTwo Mucor strains, JEM1 and JEM2, were isolated from Marchantia (MorenoLab, shared/projects/MorenoLab/Mucor_genomes). The practical questions are:\n\nWhich of their secreted proteins are candidate effectors?\nCould any of them interact with host proteins?\n\nSpecies identity was a secondary question that turned out to matter, because it determines which genomes count as “relatives” when measuring how lineage-restricted a candidate is."
+  },
+  {
+    "objectID": "mucor_secretome.html#summary-of-findings",
+    "href": "mucor_secretome.html#summary-of-findings",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "Summary of findings",
+    "text": "Summary of findings\n\n\n\n\n\n\n\n\n#\nFinding\nConfidence\n\n\n\n\n1\nJEM1 is Mucor hiemalis, JEM2 is M. circinelloides — samples.csv was right\nHigh (ITS, controls passed)\n\n\n2\nBFD’s only “M. hiemalis” genome (GCA_977110905.1) is not M. hiemalis\nHigh (its own ITS)\n\n\n3\nJEM2’s raw assembly is ~2,233 contigs of Fusarium; the cleaned assembly used for annotation is free of it\nHigh (positive control fired)\n\n\n4\n1,344 secreted candidates across the two strains; 99 are chitin/chitosan-active\nHigh\n\n\n5\nChitin-active candidates fold confidently to deacetylase, LysM and cerato-platanin scaffolds\nHigh (TM ≥ 0.93, pLDDT ≥ 71)\n\n\n6\nA protein with no Pfam domain is a cerato-platanin by structure\nModerate (TM 0.84, pLDDT 71)\n\n\n7\nJEM1 has ~8× more strain-specific secreted proteins than JEM2 after controlling for reference sampling\nModerate — see caveat\n\n\n8\nBoth Marchantia species carry comparable LysM receptor complements\nHigh"
+  },
+  {
+    "objectID": "mucor_secretome.html#species-identity",
+    "href": "mucor_secretome.html#species-identity",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "1. Species identity",
+    "text": "1. Species identity\nsamples.csv listed JEM1 as M. hiemalis and JEM2 as M. circinelloides. An earlier fastANI run appeared to contradict this: JEM2 matched M. circinelloides at 99.8 %, but JEM1 had no relative above 80 %, its best hit being BFD’s M. hiemalis at 79.5 %.\nITS against UNITE v10 resolved it, with both BFD assemblies included as controls — which is what made the result interpretable.\n\n\n\n\n\n\n\n\n\nAssembly\nTop ITS hit\nIdentity\nVerdict\n\n\n\n\nJEM1 (cleaned)\nMucor hiemalis\n99.3 %\nM. hiemalis\n\n\nJEM2 (cleaned)\nMucor circinelloides\n98.6 %\nM. circinelloides\n\n\nBFD M. circinelloides (control)\nMucor circinelloides\n98.8 %\ncontrol passes\n\n\nBFD M. hiemalis (control)\n“Mucorales sp.”\n98.5 %\nM. hiemalis not in its top 5\n\n\n\nThe mislabelled genome is BFD’s, not MorenoLab’s. JEM1’s low ANI reflects a bad reference, not an unusual query. No correction to samples.csv is needed; the public label on GCA_977110905.1_gzMucHiem1 is the one worth questioning.\nTwo bugs had to be fixed before this ran at all:\n\nUNITE’s QIIME release keeps lineages in sh_taxonomy_*.txt, not in the FASTA headers, so grepping the FASTA for “Mucoromycota” matched nothing. bin/unite_tax.py joins the two.\nITSx found no ITS in any of the four assemblies, controls included: the rDNA array is collapsed or broken in all of them. The MorenoLab ITSx result that an earlier version of this analysis would have fallen back on is not ITS either — JEM1’s “full” sequence is SSU, reported with a negative ITS length. The method was changed to blast every Mucoromycota UNITE reference against each assembly, which needs no intact ITS."
+  },
+  {
+    "objectID": "mucor_secretome.html#contamination",
+    "href": "mucor_secretome.html#contamination",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "2. Contamination",
+    "text": "2. Contamination\nThe ITS run found a 100 %-identity Fusarium graminearum ITS in JEM2’s spades assembly. FCS-GX had already flagged 2,233 of its 13,555 contigs as Fusarium venenatum and marked them EXCLUDE; the cleaned assembly has 2,584 contigs. Since the proteome feeding effector calling is predicted from the cleaned assembly, a surviving contaminant would be scored as a Mucor effector. Verified directly rather than assumed:\n\n\n\nAssembly\nAscomycota ITS hits ≥ 97 % over ≥ 300 bp\nContigs hit\n\n\n\n\nJEM1 clean / masked\n0\n0\n\n\nJEM2 clean / masked\n0\n0\n\n\nJEM2 spades (positive control)\n5\n1\n\n\n\nThe positive control firing while the cleaned assemblies stay at zero is what makes this a result rather than an absence of evidence."
+  },
+  {
+    "objectID": "mucor_secretome.html#annotation",
+    "href": "mucor_secretome.html#annotation",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "3. Annotation",
+    "text": "3. Annotation\nThe two strains had only funannotate predict output — no functional annotation — so the BFD predictor set was run over them and over both Marchantia proteomes, matching BFD’s own invocations (Fungi_BFD/nextflow/modules/BFD/*) so that a candidate here means what it means across the 292 BFD Mucoromycota genomes.\n\n\n\n\n\n\n\n\nStep\nInvocation\nMatches BFD module\n\n\n\n\nSignalP 6\nsignalp6 -org euk --mode fast -format none -bs 100, GPU\nRUN_SIGNALP\n\n\nTMHMM 2.0\ntmhmm --short --noplot\nRUN_TMHMM\n\n\nPredGPI\npredgpi.py -m gff3\nRUN_PREDGPI\n\n\nTargetP 2.0\ntargetp -format short -org non-pl\nRUN_TARGETP\n\n\nPfam\nhmmsearch --cut_ga --noali\nRUN_PFAM\n\n\ndbCAN\ndbcanlight search -m cazyme / -m sub, conclude\nRUN_CAZY\n\n\n\n\n\n\nProteome\nProteins\nSignal peptides\n\n\n\n\nJEM1 (M. hiemalis)\n11,487\n668\n\n\nJEM2 (M. circinelloides)\n11,485\n676\n\n\nM. polymorpha Tak-1\n20,412\n1,911\n\n\nM. paleacea\n18,566\n—\n\n\n\nThree gaps closed in the process, none cosmetic:\n\nPredGPI and TargetP were not being run at all, so two of the four secretion categories (gpi_anchored, mitochondrial) were unreachable for these genomes.\nCAZymes came from a plain hmmsearch against dbCAN.hmm, which yields family names and no substrates. Tier T2 is defined on dbCAN substrate strings, so it would have been systematically empty.\nSignalP’s table is built from the GFF3, as merge_signalp.py does, not from prediction_results.txt."
+  },
+  {
+    "objectID": "mucor_secretome.html#candidate-effectors",
+    "href": "mucor_secretome.html#candidate-effectors",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "4. Candidate effectors",
+    "text": "4. Candidate effectors\nSecretion call and tiers are bin/build_secretome.py’s, reused unchanged so the JEM strains and the BFD genomes are scored identically.\n\n\n\nCategory\nJEM1 + JEM2\n\n\n\n\nsecreted\n863\n\n\ngpi_anchored\n171\n\n\nmembrane\n266\n\n\nweak_signal\n41\n\n\nmitochondrial\n3\n\n\ntotal candidates\n1,344\n\n\n\n\n\n\n\n\n\n\n\nTier\nDefinition\nn\n\n\n\n\nT1 chitin/chitosan\nCE4, GH18/20/46/75, LysM/CBM\n99\n\n\nT2 plant-facing\ndbCAN plant substrate, cutinase, lipase, peroxygenase\n55\n\n\nT3 effector-like\nno Pfam, ≤ 300 aa, ≥ 4 Cys, ≥ 2 % Cys\n155\n\n\nT4 other secreted\n—\n1,035\n\n\n\nThe fold set is deliberately not T3. A protein enters it if it is secreted or GPI-anchored and either carries no Pfam domain and is ≤ 300 aa (unknown_small), or is tier T1 (chitin_active). T3’s cysteine thresholds are a reasonable prior for classical effectors but would discard exactly the cysteine-poor unknowns a structure is most informative about: filtering on a sequence feature is self-defeating when the premise is that sequence tells us nothing."
+  },
+  {
+    "objectID": "mucor_secretome.html#lineage-restriction",
+    "href": "mucor_secretome.html#lineage-restriction",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "5. Lineage restriction",
+    "text": "5. Lineage restriction\nCandidates were clustered with the 195,284 secreted candidates of all 292 BFD Mucoromycota genomes (MMseqs2, 50 % identity, 80 % coverage) and each family’s reach measured.\n\n\n\nReach\nJEM1\nJEM2\nJEM2, conspecifics hidden\n\n\n\n\ngenome_specific\n105\n4\n13\n\n\nspecies_restricted\n3\n5\n0\n\n\ngenus_restricted\n22\n19\n18\n\n\nmucorales_wide\n103\n173\n170\n\n\nmucoromycota_wide\n53\n47\n47\n\n\n\n105 against 4 looks like a large biological difference, and the first thing to ask is whether it is an artefact of which genomes happen to have been sequenced: JEM2 has 24 conspecific M. circinelloides genomes in BFD, JEM1 has none, because BFD’s single “M. hiemalis” is the mislabelled one. Hiding JEM2’s conspecifics (third column) raises its genome_specific count only from 4 to 13 — so sampling explains part of the gap but not most of it.\nCaveat that remains. JEM1 is the only M. hiemalis genome available, so “strain-specific” and “species-specific” cannot be distinguished for it. The honest statement is that JEM1 has ~105 secreted proteins with no homologue in any sequenced Mucoromycota genome, and that this is ~8× JEM2’s matched figure."
+  },
+  {
+    "objectID": "mucor_secretome.html#predicted-folds",
+    "href": "mucor_secretome.html#predicted-folds",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "6. Predicted folds",
+    "text": "6. Predicted folds\nESMFold (single-sequence, so no MSA and nothing leaves the cluster) on 640 candidates; 559 modelled, 81 skipped as &gt; 400 aa. Foldseek against PDB100, CATH50 and the AlphaFold proteome set, fold called at TM-score ≥ 0.5 with pLDDT ≥ 70.\n\n\n\nFold set\nassigned\nlow_confidence\nno_match\n\n\n\n\nchitin_active\n35 (95 %)\n2\n0\n\n\nunknown_small\n52 (15 %)\n266\n28\n\n\n\n\n\n\npLDDT\nn\n\n\n\n\n≥ 90\n11\n\n\n70–90\n121\n\n\n50–70\n156\n\n\n&lt; 50\n271\n\n\n\nThe split is the main methodological result. ESMFold folds the chitin-active enzymes almost perfectly and fails on most orphan small proteins — which is what single-sequence prediction is expected to do, and why the unfoldable set is being re-run with AlphaFold 3 and real MSAs.\n\nChitin-axis hits\n\n\n\n\n\n\n\n\n\nProtein\nTM\npLDDT\nFold\n\n\n\n\nJEM2MUCOR_005224\n0.96\n96.2\nPdaC peptidoglycan deacetylase\n\n\nJEM1MUCOR_009286\n0.97\n94.6\nChitin deacetylase, Colletotrichum lindemuthianum\n\n\nJEM2MUCOR_010829\n0.97\n93.0\nChitin deacetylase AngCDA, Aspergillus niger\n\n\nJEM1MUCOR_002372\n0.96\n93.0\nChitin deacetylase AngCDA\n\n\nJEM1MUCOR_000290\n0.92\n83.7\nChitinase domain-containing protein 1\n\n\nJEM1MUCOR_006585\n0.94\n76.2\nLysM domain\n\n\nJEM1MUCOR_004460\n0.92\n73.5\nLysM domain\n\n\nJEM2MUCOR_009931\n0.93\n72.5\nLysM domain\n\n\nJEM2MUCOR_004445\n0.94\n72.5\nLysM domain\n\n\nJEM1MUCOR_005242\n0.93\n72.0\nLysM domain\n\n\nJEM1MUCOR_001522\n0.84\n71.1\ncerato-platanin\n\n\n\nJEM1MUCOR_001522 is the clearest demonstration of why structure was worth predicting: it has no Pfam domain, was classed unknown_small, and is a cerato-platanin — a well-described fungal chitin-binding effector/elicitor family — by fold alone."
+  },
+  {
+    "objectID": "mucor_secretome.html#host-target-panel",
+    "href": "mucor_secretome.html#host-target-panel",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "7. Host target panel",
+    "text": "7. Host target panel\nBuilt identically for both liverworts, because the isolation host is not recorded anywhere in the MorenoLab project. The two differ in the respect that matters: M. paleacea forms arbuscular mycorrhizal symbiosis and M. polymorpha has lost it.\n\n\n\nClass\nM. polymorpha\nM. paleacea\n\n\n\n\nLysM receptor\n5\n4\n\n\nchitinase\n14\n18\n\n\nchitin_binding\n7\n3\n\n\nLRR receptor\n200\n161\n\n\ncysteine protease\n11\n23\n\n\nprotease inhibitor\n2\n4\n\n\nsubtilase\n10\n16\n\n\nPR protein\n50\n22\n\n\nlectin\n11\n4\n\n\nexpansin\n38\n31\n\n\n\nReceptor kinases enter as their ectodomain, not the full receptor: the interaction surface is outside the membrane, and a cytoplasmic kinase domain would dominate any structure prediction.\nBoth species carry a comparable LysM receptor complement, so the unrecorded host species does not block the chitin screen. The other differences should not be read biologically yet — M. polymorpha has 20,412 annotated proteins against M. paleacea’s 18,566, and the annotations come from different groups, so counts need normalising first. The panel also makes no orthology claim between the two species; that is a phylogenetic question, not a Pfam one."
+  },
+  {
+    "objectID": "mucor_secretome.html#why-the-chitin-axis",
+    "href": "mucor_secretome.html#why-the-chitin-axis",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "8. Why the chitin axis",
+    "text": "8. Why the chitin axis\nMucorales cell walls are chitin and chitosan. In M. paleacea, the LysM pair MpaLYR/MpaCERK1 discriminates symbiosis from immunity by chitin-oligomer length — CO7 triggers immunity, CO4 activates symbiosis genes (Cell 2025). In M. polymorpha, chitin and peptidoglycan are the patterns that trigger a ROS burst while other MAMPs do not (Curr Biol 2023).\nThat makes a mechanistic screen rather than a fishing expedition:\n\n\n\n\n\n\n\n\nFungal side\nPredicted action\nHost side\n\n\n\n\nCE4 chitin deacetylase\nchitin → chitosan, poorly bound by LysM\nMpLYK1 / MpLYR ectodomains\n\n\nLysM / CBM50 protein\nsequesters CO7 before the receptor sees it\nsame, competitively\n\n\ncerato-platanin\nbinds chitin oligomers\nsame\n\n\nGH18 / GH20\ntrims CO7 → CO4: immunity → symbiosis signal\nsame\n\n\n\nFor LysM biology the decisive interaction is protein–ligand, not protein–protein, so the screen models effector + (GlcNAc)ₙ and receptor ectodomain + (GlcNAc)ₙ at n = 4 and 7 and compares binding, rather than relying on protein–protein iPTM alone."
+  },
+  {
+    "objectID": "mucor_secretome.html#in-progress",
+    "href": "mucor_secretome.html#in-progress",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "9. In progress",
+    "text": "9. In progress\n\nAlphaFold 3, chitin panel — the folds above against both species’ LysM ectodomains and chitinases, plus CO4/CO7 ligands. MSAs computed once per chain and reused across pairs.\nAlphaFold 3, unknowns — the ~300 candidates ESMFold left below pLDDT 70. Most are mucorales_wide, so homologues exist and an MSA-based predictor has something to work with.\n\nControls are built in. iPTM has no universal threshold, and the AlphaFold-Multimer figures (&gt; 0.8 confident, &lt; 0.6 likely wrong) were calibrated on large complexes, not small cysteine-rich effectors, where false negatives are common. The run includes 4EBZ (AtCERK1 LysM ectodomain with chito-oligosaccharide) and 6Q76 (AVR-PikD with the Pikp-1 HMA domain) as positives and a cross-pairing as negative. bin/af3_report.py prints the controls first and applies no threshold of its own: a cut is only worth using if the positives clear it and the negatives do not."
+  },
+  {
+    "objectID": "mucor_secretome.html#limitations",
+    "href": "mucor_secretome.html#limitations",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "10. Limitations",
+    "text": "10. Limitations\n\nNo expression data. Every candidate is a prediction from sequence and structure; none is known to be expressed in planta.\nStructure prediction is prioritisation, not evidence of interaction. A confident fold says what a protein resembles. A confident iPTM says two chains can be modelled together. Neither is a binding assay.\nJEM1’s lineage restriction is confounded with species sampling (§5).\nThe Marchantia panel counts are not normalised (§7), and assert no orthology.\nThe host species of the isolates is unrecorded, so both liverworts are treated symmetrically; knowing it would let them be weighted.\nESMFold’s low-pLDDT models are ambiguous. Low confidence may mean prediction failure or genuine disorder — small, cysteine-rich, secreted and unstructured-until-bound is a real effector phenotype. The pTM values near 0.1 suggest both are present. The AF3 re-run is what separates them."
+  },
+  {
+    "objectID": "mucor_secretome.html#upstream-issues-found",
+    "href": "mucor_secretome.html#upstream-issues-found",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "11. Upstream issues found",
+    "text": "11. Upstream issues found\n\n\n\n\n\n\n\n\nWhere\nIssue\nStatus\n\n\n\n\nFungi_BFD/nextflow/bin/build_BFD_duckDB.sh:316\nSELECT DISTINCT protein_id FROM predgpi makes is_gpi_anchored TRUE for every protein — PredGPI writes a Chain row per protein and a GPI-anchor row only for anchored ones (224 M vs 3.3 M rows)\nReported, not fixed — one-clause fix; BFD_dashboard’s J4_function_counts.sql already filters correctly\n\n\ntables/gene_transcripts.parquet\nstart/stop codon flags wrong (case-sensitive matching on soft-masked genomes); fixed upstream in fb1d7cd, but the parquet predates it\nWorked around — codons read from sequence\n\n\nGCA_977110905.1_gzMucHiem1\nlabelled M. hiemalis in BFD; its ITS says otherwise\nReported here\n\n\nMorenoLab/Mucor_genomes/asm/AAFTF/\nJEM2’s AAFTF output is in a stray x/ subdirectory, leaving four broken ITS/JEM2.* symlinks\nWorked around; MorenoLab’s files untouched"
+  },
+  {
+    "objectID": "mucor_secretome.html#notes-for-anyone-re-running-this",
+    "href": "mucor_secretome.html#notes-for-anyone-re-running-this",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "12. Notes for anyone re-running this",
+    "text": "12. Notes for anyone re-running this\n\nESMFold must run on an a100. The esm/2.0.0 module ships torch 1.13.1+cu117, built for sm_37–sm_86. On an ada6000 (sm_89), h100 (sm_90) or blackwell6000 (sm_120) it does not refuse — it warns and returns garbage. One run produced 487 nonsense errors and 72 “successful” models that were equally worthless. bin/esmfold_batch.py now checks the device capability against torch.cuda.get_arch_list() and exits.\nexfab cannot run ESMFold or AF3 — its node has only ada6000.\nThe signalp, esm, predgpi, targetp and dbcanlight modules all activate conda environments via the shell function, so eval \"$(conda shell.bash hook)\" must precede them.\nReusable intermediates do not belong in $SCRATCH. The DuckDB export, candidate FASTA and MMseqs families were written there once and lost when the job ended; they live in analysis/mucor_secretome/cache/ (gitignored) now and rebuild in under three minutes.\nSlurm’s START_TIME for pending jobs here is a pessimistic placeholder, not a forecast."
+  },
+  {
+    "objectID": "mucor_secretome.html#reproducing",
+    "href": "mucor_secretome.html#reproducing",
+    "title": "Candidate effectors of two Mucor strains isolated from Marchantia",
+    "section": "13. Reproducing",
+    "text": "13. Reproducing\nsbatch analysis/mucor_secretome/slurm/secretome.sh        # Mucoromycota secretome + cache\nsbatch analysis/mucor_secretome/slurm/signalp_gpu.sh      # SignalP for the non-BFD panels\nsbatch analysis/mucor_secretome/slurm/annotate_panels.sh  # the other predictors\nsbatch analysis/mucor_secretome/slurm/its_identify.sh     # species identification\nsbatch analysis/mucor_secretome/slurm/contam_check.sh     # contamination verification\nsbatch analysis/mucor_secretome/slurm/fold_effectors.sh   # ESMFold + Foldseek + host panel\nsbatch analysis/mucor_secretome/slurm/conservation.sh     # lineage restriction\nsbatch analysis/mucor_secretome/slurm/af3_prepare.sh      # then af3_msa.sh, af3_fold.sh\nTests: python3 -m unittest discover -s analysis/mucor_secretome/test (68 tests)."
   }
 ]
