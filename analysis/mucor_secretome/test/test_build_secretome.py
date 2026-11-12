@@ -401,3 +401,50 @@ class FromSecretome(unittest.TestCase):
     def test_locustag_comes_from_the_protein_id_prefix(self):
         rows = ce.from_secretome(self.p, {})
         self.assertEqual({r["LOCUSTAG"] for r in rows}, {"F0"})
+
+
+import conservation as cons  # noqa: E402
+
+
+class Conservation(unittest.TestCase):
+    GEN = {"A": ("Mucor hiemalis", "Mucor", "Mucorales", "a"),
+           "B": ("Mucor hiemalis", "Mucor", "Mucorales", "b"),
+           "C": ("Mucor circinelloides", "Mucor", "Mucorales", "c"),
+           "D": ("Rhizopus arrhizus", "Rhizopus", "Mucorales", "d"),
+           "E": ("Umbelopsis isabellina", "Umbelopsis", "Umbelopsidales", "e")}
+
+    def cls(self, members):
+        return cons.classify(members, self.GEN)[0]
+
+    def test_reach_widens_with_the_lineages_present(self):
+        self.assertEqual(self.cls(["A_1"]), "genome_specific")
+        self.assertEqual(self.cls(["A_1", "A_2"]), "genome_specific")   # 2 copies, 1 genome
+        self.assertEqual(self.cls(["A_1", "B_1"]), "species_restricted")
+        self.assertEqual(self.cls(["A_1", "C_1"]), "genus_restricted")
+        self.assertEqual(self.cls(["A_1", "D_1"]), "mucorales_wide")
+        self.assertEqual(self.cls(["A_1", "E_1"]), "mucoromycota_wide")
+
+    def test_order_beats_genus_beats_species(self):
+        # a cluster spanning two orders is reported at its widest reach, not its narrowest
+        self.assertEqual(self.cls(["A_1", "B_1", "C_1", "D_1", "E_1"]), "mucoromycota_wide")
+
+    def test_unknown_locustag_does_not_inflate_reach(self):
+        # a member from a genome absent from the table contributes no lineage
+        self.assertEqual(self.cls(["A_1", "ZZZ_1"]), "genome_specific")
+
+    def test_counts_reported_with_the_class(self):
+        c, n, ng, nsp, ngen, nord = cons.classify(["A_1", "B_1", "C_1"], self.GEN)
+        self.assertEqual((c, n, ng, nsp, ngen, nord),
+                         ("genus_restricted", 3, 3, 2, 1, 1))
+
+    def test_representative_is_counted_once(self):
+        clu = {"A_1": ["A_1", "B_1"]}
+        rows = cons.build(clu, self.GEN, focus=["A"])
+        self.assertEqual(rows["A_1"]["cluster_members"], 2)
+        self.assertEqual(set(rows), {"A_1"})       # focus filters to A only
+
+    def test_representative_absent_from_members_is_added(self):
+        clu = {"A_1": ["B_1"]}
+        rows = cons.build(clu, self.GEN, focus=["A", "B"])
+        self.assertEqual(rows["A_1"]["cluster_members"], 2)
+        self.assertEqual(rows["A_1"]["conservation"], "species_restricted")
