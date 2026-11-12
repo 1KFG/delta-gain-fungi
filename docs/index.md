@@ -18,7 +18,12 @@ configured) a custom domain are wired up correctly before any real report
 content exists.
 
 - Pipeline code: [github.com/1KFG/delta-gain](https://github.com/1KFG/delta-gain)
-- Reports (once built): will appear under `/reports/`
+- Reports: [/reports/](reports/)
+
+## Reports
+
+- [Candidate effectors of two *Mucor* strains isolated from *Marchantia*](reports/mucor_secretome.html)
+  — secretome, predicted folds, and a structure-based interaction screen.
 
 ## Roadmap
 
