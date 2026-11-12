@@ -9,10 +9,11 @@
 # evaluate, so the hook below is required - without it the module load fails with
 # "Run 'conda init' before 'conda activate'", which is what killed job 32013761.
 # Reads shared folders read-only; writes mucor_secretome/out/panels/.
-# exfab is this group's GPU queue, but it is a single node (gpu12, 2 x ada6000) and both GPUs
-# are routinely busy; short_gpu reaches the same node plus the a100/h100/blackwell nodes, which
-# is where the free capacity is. Slurm takes whichever frees first, exfab preferred.
-#SBATCH -p exfab,short_gpu
+# exfab is a single node (gpu12, 2 x ada6000) and both GPUs stay busy; short_gpu reaches that
+# node plus the a100/h100/blackwell nodes, where the free capacity is. A multi-partition request
+# is refused here ("Multiple partition job request not supported when a partition is set in the
+# association"), so it is short_gpu alone. SignalP takes ~4 min, well inside the 2 h cap.
+#SBATCH -p short_gpu
 #SBATCH --gres=gpu:1
 #SBATCH -N 1 -n 1 -c 2
 #SBATCH --mem=24G
