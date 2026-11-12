@@ -39,7 +39,13 @@ FUNGAL_FOLDS = [
     ("cerato_platanin", re.compile(r"cerato", re.I)),
     ("chitinase", re.compile(r"chitin.*(ase|domain)", re.I)),
 ]
-HOST_CLASSES = {"lysm_receptor", "chitinase", "chitin_binding"}
+# Tier A, the default: the LysM receptors are what perceive the chitin signal, and they are the
+# chains the hypothesis names. Tier B (--host-classes lysm_receptor,chitinase,chitin_binding)
+# adds the host chitinases, which are legitimate effector targets - LysM effectors and AVR4-type
+# proteins protect the fungal wall from them - but crossing all of them with all the fungal
+# chains is 784 predictions, and a screen is worth widening only once its controls have said
+# what a score means.
+HOST_CLASSES = {"lysm_receptor"}
 
 
 def fungal_hits(rows, min_plddt=70.0):
@@ -107,12 +113,15 @@ def main(argv=None):
     ap.add_argument("--plant-panel", required=True)
     ap.add_argument("--plant-faa", required=True)
     ap.add_argument("--min-plddt", type=float, default=70.0)
+    ap.add_argument("--host-classes", default=",".join(sorted(HOST_CLASSES)),
+                    help="comma-separated panel classes to take as host chains")
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
 
     fung = fungal_hits(read_tsv(a.fold_calls), a.min_plddt)
-    host = host_hits(read_tsv(a.plant_panel))
+    host = host_hits(read_tsv(a.plant_panel),
+                     classes={c for c in a.host_classes.split(",") if c})
     fseq = dict(read_fasta(a.folds_faa))
     # the plant panel FASTA names constructs "<id>|<class>|<construct>"
     pseq = {h.split("|")[0]: s for h, s in read_fasta(a.plant_faa)}
