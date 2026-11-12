@@ -273,3 +273,14 @@ class Gpi(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class UniteRanks(unittest.TestCase):
+    def test_subset_at_any_rank(self):
+        tax = ut.parse_taxonomy(io.StringIO(Unite.TAX))
+        self.assertEqual(ut.ids_at_rank(tax, "g", "Mucor"),
+                         {"SH2.10FU_X2_refs", "SH3.10FU_X3_refs"})
+        self.assertEqual(ut.ids_at_rank(tax, "p", "Ascomycota"), {"SH1.10FU_X1_refs"})
+        # the phylum helper is the same call, so both subsets stay in step
+        self.assertEqual(ut.ids_in_phylum(tax, "Mucoromycota"),
+                         ut.ids_at_rank(tax, "p", "Mucoromycota"))

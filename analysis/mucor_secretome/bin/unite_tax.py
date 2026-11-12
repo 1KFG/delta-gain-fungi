@@ -48,7 +48,12 @@ def rank_of(lineage, letter):
 
 
 def ids_in_phylum(tax, phylum):
-    return {acc for acc, lin in tax.items() if rank_of(lin, "p") == phylum}
+    return ids_at_rank(tax, "p", phylum)
+
+
+def ids_at_rank(tax, letter, taxon):
+    """Accessions whose lineage has `taxon` at rank `letter` ('p' phylum, 'g' genus, ...)."""
+    return {acc for acc, lin in tax.items() if rank_of(lin, letter) == taxon}
 
 
 def filter_fasta(src, ids, out):
@@ -102,6 +107,7 @@ def main(argv=None):
     s.add_argument("--fasta", required=True)
     s.add_argument("--tax", required=True)
     s.add_argument("--phylum", default="Mucoromycota")
+    s.add_argument("--rank", default="p", help="rank letter the --phylum value is matched at")
     s.add_argument("--out", required=True)
     r = sub.add_parser("rank")
     r.add_argument("--blast", required=True)
@@ -113,7 +119,7 @@ def main(argv=None):
     with open(a.tax) as fh:
         tax = parse_taxonomy(fh)
     if a.cmd == "subset":
-        ids = ids_in_phylum(tax, a.phylum)
+        ids = ids_at_rank(tax, a.rank, a.phylum)
         with open(a.fasta) as fh, open(a.out, "w") as fo:
             n = filter_fasta(fh, ids, fo)
         print(f"{n} {a.phylum} references of {len(ids)} in the taxonomy -> {a.out}",
