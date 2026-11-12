@@ -1,6 +1,7 @@
 """Offline tests for build_secretome.py and extract_proteins.py.
 Run: python3 -m unittest discover -s mucor_secretome/test"""
 import gzip
+import json
 import io
 import os
 import sys
@@ -483,3 +484,107 @@ class ConservationControl(unittest.TestCase):
     def test_drop_species_is_case_insensitive_and_ignores_blanks(self):
         g = cons.read_genomes(self.write(), drop_species=["  mucor CIRCINELLOIDES ", "", "  "])
         self.assertEqual(set(g), {"A"})
+
+
+import af3_input as ai  # noqa: E402
+import af3_report as ar  # noqa: E402
+import build_chitin_panel as bcp  # noqa: E402
+
+
+class Af3Input(unittest.TestCase):
+    def test_protein_entry_without_msa_leaves_the_pipeline_to_run(self):
+        e = ai.protein_entry("A", "MKV")["protein"]
+        self.assertEqual(e, {"id": "A", "sequence": "MKV"})
+
+    def test_protein_entry_with_msa_sets_all_three_fields(self):
+        # AF3 rejects a chain with one MSA field set and not the others
+        e = ai.protein_entry("A", "MKV", {"unpairedMsa": ">q\nMKV\n"})["protein"]
+        self.assertEqual(set(e), {"id", "sequence", "unpairedMsa", "pairedMsa", "templates"})
+        self.assertEqual(e["pairedMsa"], "")
+        self.assertEqual(e["templates"], [])
+
+    def test_nag_chain_is_beta_1_4_linked(self):
+        entry, bonds = ai.nag_ligand("B", 4)
+        self.assertEqual(entry["ligand"]["ccdCodes"], ["NAG"] * 4)
+        self.assertEqual(len(bonds), 3)        # n-1 bonds for n residues
+        self.assertEqual(bonds[0], [["B", 1, "C1"], ["B", 2, "O4"]])
+        self.assertEqual(bonds[-1], [["B", 3, "C1"], ["B", 4, "O4"]])
+
+    def test_single_nag_has_no_bonds(self):
+        self.assertEqual(ai.nag_ligand("B", 1)[1], [])
+
+    def test_job_json_shape(self):
+        j = ai.job_json("x", [ai.protein_entry("A", "MKV")])
+        self.assertEqual(j["dialect"], "alphafold3")
+        self.assertEqual(j["modelSeeds"], [1])
+        self.assertNotIn("bondedAtomPairs", j)
+
+    def test_extract_msas_round_trip(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "x_data.json")
+            with open(p, "w") as fh:
+                json.dump({"sequences": [{"protein": {"id": "A", "sequence": "MKV",
+                                                      "unpairedMsa": ">q\nMKV\n",
+                                                      "pairedMsa": "", "templates": []}}]}, fh)
+            got = ai.extract_msas(p)
+            self.assertEqual(got["A"]["unpairedMsa"], ">q\nMKV\n")
+
+    def test_safe_names(self):
+        self.assertEqual(ai.safe("JEM1MUCOR_000119-T1"), "JEM1MUCOR_000119-T1")
+        self.assertEqual(ai.safe("a/b c"), "a_b_c")
+
+
+class Af3Report(unittest.TestCase):
+    def test_pair_iptm_comes_from_the_chain_pair_matrix(self):
+        s = {"iptm": 0.1, "chain_pair_iptm": [[0.9, 0.73], [0.73, 0.88]]}
+        self.assertEqual(ar.pair_iptm(s), 0.73)
+
+    def test_pair_iptm_falls_back_to_the_global_value(self):
+        self.assertEqual(ar.pair_iptm({"iptm": 0.42}), 0.42)
+
+    def test_split_name(self):
+        self.assertEqual(ar.split_name("A__B"), ("A", "B"))
+        self.assertEqual(ar.split_name("A__CO7"), ("A", "CO7"))
+        self.assertEqual(ar.split_name("solo"), ("solo", ""))
+
+
+class ChitinPanel(unittest.TestCase):
+    ROWS = [
+        {"protein_id": "f1", "fold_call": "assigned", "plddt": "76.2",
+         "best_desc": "Crystal Structure of LysM domain from Equisetum arvense chitinase A"},
+        {"protein_id": "f2", "fold_call": "assigned", "plddt": "94.5",
+         "best_desc": "Structure of the chitin deacetylase AngCDA from Aspergillus niger"},
+        {"protein_id": "f3", "fold_call": "assigned", "plddt": "71.1",
+         "best_desc": "Crystal structure of cerato-platanin 1 from M. perniciosa"},
+        {"protein_id": "f4", "fold_call": "assigned", "plddt": "88.0",
+         "best_desc": "Monomeric Human Cu,Zn Superoxide dismutase"},
+        {"protein_id": "f5", "fold_call": "low_confidence", "plddt": "55.0",
+         "best_desc": "Crystal Structure of LysM domain"},
+        {"protein_id": "f6", "fold_call": "assigned", "plddt": "60.0",
+         "best_desc": "Crystal Structure of LysM domain"},
+    ]
+
+    def test_only_confident_chitin_axis_folds_are_taken(self):
+        got = dict(bcp.fungal_hits(self.ROWS))
+        self.assertEqual(set(got), {"f1", "f2", "f3"})
+        self.assertEqual(got["f1"], "lysm")
+        self.assertEqual(got["f2"], "deacetylase")
+        self.assertEqual(got["f3"], "cerato_platanin")
+        # an unrelated fold, a low-confidence call, and a sub-threshold pLDDT are all excluded
+        self.assertNotIn("f4", got)
+        self.assertNotIn("f5", got)
+        self.assertNotIn("f6", got)
+
+    def test_host_selection_keeps_ectodomains_and_drops_whole_receptors(self):
+        rows = [{"protein_id": "h1", "class": "lysm_receptor", "construct_len": "180",
+                 "species": "MPTAK"},
+                {"protein_id": "h2", "class": "chitinase", "construct_len": "300",
+                 "species": "MPALE"},
+                {"protein_id": "h3", "class": "lrr_receptor", "construct_len": "200",
+                 "species": "MPTAK"},
+                {"protein_id": "h4", "class": "lysm_receptor", "construct_len": "900",
+                 "species": "MPTAK"},
+                {"protein_id": "h5", "class": "lysm_receptor", "construct_len": "20",
+                 "species": "MPTAK"}]
+        got = {r[0] for r in bcp.host_hits(rows)}
+        self.assertEqual(got, {"h1", "h2"})
