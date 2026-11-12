@@ -129,11 +129,15 @@ quota.**
 
 ### What the run showed, beyond the list
 
-- **Mucorales UPO gene models in BFD are mostly incomplete.** 292 of 315 proteins in the Mucorales
-  basal clade fail the gene-model check; 159 lack both start and stop codons. Clade IV, by contrast,
-  is 88 % complete. Pool B5's 3 picks come from 18 eligible proteins. This is a BFD annotation
-  problem for Mucorales and bears on HANDOFF open item 4 (gene-model QC): catalytic-residue
-  statistics for Mucorales should not be read as biology until it is resolved.
+- ~~Mucorales UPO gene models in BFD are mostly incomplete.~~ **Corrected 2026-11-11
+  (`bfd_findings/REPORT.md` §1): the models are complete; BFD's start/stop flags are wrong.**
+  292 of 315 Mucorales-clade proteins failed the gene-model check, but every flagged-missing start
+  is an ATG in the genome. Across 5,816 checked models, 99.3 % of flagged-missing starts and
+  99.8 % of stops are present. The cause is case-sensitive codon matching on soft-masked genomes,
+  fixed in Fungi_BFD fb1d7cd, but `tables/gene_transcripts.parquet` predates the fix. Rule 2
+  therefore removed complete proteins, about half in Mucorales and Glomeromycota and about 10 %
+  elsewhere. The 37 picks stand, but pools B4 and B5 were drawn from too small an eligible set.
+  Re-run after the tables are rebuilt.
 - **The glomeromycete clade attracts divergent outsiders.** Of its 784 BFD members only 121 are
   Glomeromycota (360 are Dothideomycetes), and 585 carry `long_pendant`. Most are probably
   divergent proteins drawn to a small, isolated reference clade, not glomeromycete UPOs; read this
@@ -144,7 +148,9 @@ quota.**
   Eurotiomycetes 680 of 6,378), and unlike the glomeromycete case they are *not* long-pendant (14 of
   6,378 flagged). Zamocky noted one ascomycete transfer into this clade; this is two orders of
   magnitude more. It may be transfer, or an ascomycete lineage the reference set does not resolve.
-  Not interpreted here; it needs its own look before any claim.
+  Not interpreted here; it needs its own look before any claim. *Followed up in
+  `bfd_findings/REPORT.md` §3: 2,265 proteins, single-copy, in 47.5 % of Dothideomycetes and all
+  Orbiliomycetes genomes.*
 - **Pool C, Basidiomycetous 1st:** two of three picks are ascomycetes (*Neohortaea*, *Hyaloscypha*)
   carrying Asn at 180, consistent with the horizontal transfer Zamocky noted into this clade.
   Pool C proteins fall outside the catalytic-core 70 % clusters (they lack Glu180), so cluster size
