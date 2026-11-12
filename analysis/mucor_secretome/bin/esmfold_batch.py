@@ -52,6 +52,10 @@ def main(argv=None):
     ap.add_argument("--out", required=True)
     ap.add_argument("--max-len", type=int, default=400)
     ap.add_argument("--chunk", type=int, default=128)
+    ap.add_argument("--device", default="cuda", choices=["cuda", "cpu"],
+                    help="cpu is the fallback when no compatible GPU is free; it needs no "
+                         "architecture check, just patience")
+    ap.add_argument("--limit", type=int, help="stop after this many proteins (for timing runs)")
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
 
@@ -64,18 +68,23 @@ def main(argv=None):
     # nodes. On a Blackwell node it does not refuse: it prints a warning and then returns
     # garbage, which in job 32033882 meant 487 nonsense errors and - worse - 72 "successful"
     # models that were also nonsense. Fail loudly instead.
-    if not torch.cuda.is_available():
+    if a.device == "cpu":
+        print(f"running on CPU, torch {torch.__version__}", file=sys.stderr)
+    elif not torch.cuda.is_available():
         sys.exit("no CUDA device visible")
-    cap = torch.cuda.get_device_capability()
-    sm, arch = f"sm_{cap[0]}{cap[1]}", torch.cuda.get_arch_list()
-    name = torch.cuda.get_device_name(0)
-    print(f"device {name} ({sm}); torch {torch.__version__} built for {arch}", file=sys.stderr)
-    if arch and sm not in arch:
-        sys.exit(f"REFUSING TO RUN: {name} is {sm}, but torch {torch.__version__} was built for "
-                 f"{arch}. Results would be silently wrong - request a supported GPU "
-                 f"(--gres=gpu:a100:1).")
+    if a.device == "cuda":
+        cap = torch.cuda.get_device_capability()
+        sm, arch = f"sm_{cap[0]}{cap[1]}", torch.cuda.get_arch_list()
+        name = torch.cuda.get_device_name(0)
+        print(f"device {name} ({sm}); torch {torch.__version__} built for {arch}",
+              file=sys.stderr)
+        if arch and sm not in arch:
+            sys.exit(f"REFUSING TO RUN: {name} is {sm}, but torch {torch.__version__} was built "
+                     f"for {arch}. Results would be silently wrong - request a supported GPU "
+                     f"(--gres=gpu:a100:1).")
 
-    model = esm.pretrained.esmfold_v1().eval().cuda()
+    model = esm.pretrained.esmfold_v1().eval()
+    model = model.cuda() if a.device == "cuda" else model.cpu()
     model.set_chunk_size(a.chunk)
     log = os.path.join(a.out, "plddt.tsv")
     new = not os.path.exists(log)
@@ -85,6 +94,8 @@ def main(argv=None):
 
     n_done = n_skip = n_fail = 0
     for name, raw in read_fasta(a.fasta):
+        if a.limit and n_done >= a.limit:
+            break
         pdb_path = os.path.join(a.out, f"{name}.pdb")
         if os.path.exists(pdb_path) and os.path.getsize(pdb_path) > 0:
             n_skip += 1
@@ -110,7 +121,7 @@ def main(argv=None):
                 fh.flush()
                 n_done += 1
                 break
-            except torch.cuda.OutOfMemoryError:
+            except torch.cuda.OutOfMemoryError:  # noqa: B902 - cuda only
                 torch.cuda.empty_cache()
                 chunk = max(8, chunk // 2)
                 model.set_chunk_size(chunk)
