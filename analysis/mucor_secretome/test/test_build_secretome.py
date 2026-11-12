@@ -367,3 +367,37 @@ class PlantPanel(unittest.TestCase):
     def test_ectodomain_too_short_to_model_is_dropped(self):
         # helix starts at 40, leaving 15 residues outside the membrane
         self.assertEqual(pp.construct_range(400, 24, "o25-39i40-62o", 1)[2], "none")
+
+
+class FromSecretome(unittest.TestCase):
+    ROW = ("protein_id\tcategory\ttier\ttier_evidence\tlength\tn_cys\tcys_pct\tpfam\tcazy\n"
+           "F0_1\tsecreted\tT4\t\t150\t8\t0.05\t\t\n"
+           "F0_2\tsecreted\tT1\tCE4\t400\t4\t0.01\tPF01522\t\n"
+           "F0_3\tsecreted\tT2\tpectin\t280\t6\t0.02\tPF01328\t\n"
+           "F0_4\tmembrane\tT4\t\t150\t8\t0.05\t\t\n")
+
+    def setUp(self):
+        self.d = tempfile.TemporaryDirectory()
+        self.p = os.path.join(self.d.name, "focal.tsv")
+        with open(self.p, "w") as fh:
+            fh.write(self.ROW)
+
+    def tearDown(self):
+        self.d.cleanup()
+
+    def test_fold_set_matches_the_table_driven_rules(self):
+        seqs = {f"F0_{i}": "MKV" for i in range(1, 5)}
+        rows = {r["protein_id"]: r for r in ce.from_secretome(self.p, seqs)}
+        self.assertEqual(rows["F0_1"]["fold_reason"], "unknown_small")
+        self.assertEqual(rows["F0_2"]["fold_reason"], "chitin_active")
+        self.assertEqual(rows["F0_3"]["fold_reason"], "")      # T2 with a domain
+        self.assertEqual(rows["F0_4"]["fold_reason"], "")      # not secreted
+
+    def test_protein_without_a_sequence_is_not_folded(self):
+        rows = {r["protein_id"]: r for r in ce.from_secretome(self.p, {"F0_2": "MKV"})}
+        self.assertEqual(rows["F0_1"]["fold_reason"], "")      # no sequence available
+        self.assertEqual(rows["F0_2"]["fold_reason"], "chitin_active")
+
+    def test_locustag_comes_from_the_protein_id_prefix(self):
+        rows = ce.from_secretome(self.p, {})
+        self.assertEqual({r["LOCUSTAG"] for r in rows}, {"F0"})

@@ -108,11 +108,40 @@ def call(tables, seqs, locustags, codons=None, max_len=FOLD_MAX_LEN):
     return sorted(out, key=lambda r: (r["LOCUSTAG"], r["protein_id"]))
 
 
+def from_secretome(path, seqs, max_len=FOLD_MAX_LEN):
+    """Rows from build_secretome.py's focal_secretome.tsv, in the same shape as call().
+
+    The BFD reference genome was classified by the earlier Mucoromycota run, whose SQL export no
+    longer exists; its per-protein table carries the same category, tier, pfam and length, so the
+    fold set can be selected from it without re-exporting."""
+    rows = []
+    for r in bs.tsv(path):
+        accs = [a for a in (r.get("pfam") or "").replace(",", ";").split(";") if a]
+        slen = int(bs.fnum(r.get("length")))
+        row = {
+            "protein_id": r["protein_id"], "LOCUSTAG": r["protein_id"].split("_")[0],
+            "category": r.get("category", ""), "tier": r.get("tier", ""),
+            "tier_why": r.get("tier_evidence", ""), "length": slen,
+            "sigp_prob": r.get("sigp_prob", ""), "sigp_cleavage": r.get("sigp_cleavage", ""),
+            "n_cys": r.get("n_cys", ""), "cys_frac": r.get("cys_pct", ""),
+            "pfam": r.get("pfam", ""), "cazy": r.get("cazy", ""),
+            "cazy_substrate": r.get("cazy_substrate", ""), "targetp": "",
+            "seq_start_ATG": r.get("seq_start_ATG", ""),
+        }
+        row["fold_reason"] = fold_reason(row["category"], row["tier"], accs, slen, max_len)
+        # a protein with no sequence available cannot be folded
+        if row["fold_reason"] and row["protein_id"] not in seqs:
+            row["fold_reason"] = ""
+        rows.append(row)
+    return sorted(rows, key=lambda r: (r["LOCUSTAG"], r["protein_id"]))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("--dir", required=True, help="directory of the annotation tables")
+    ap.add_argument("--dir", help="directory of the annotation tables")
+    ap.add_argument("--secretome", help="build_secretome.py focal_secretome.tsv, instead of --dir")
     ap.add_argument("--fasta", help="proteome FASTA(s), comma separated", default="")
-    ap.add_argument("--locustags", required=True)
+    ap.add_argument("--locustags", default="")
     ap.add_argument("--codons", help="check_codons.py output, for seq_start_ATG")
     ap.add_argument("--max-len", type=int, default=FOLD_MAX_LEN)
     ap.add_argument("--out", required=True)
@@ -130,7 +159,12 @@ def main(argv=None):
             if key:
                 codons[key] = r.get("seq_start_ATG", r.get("start_codon", ""))
 
-    rows = call(load_tables(a.dir), seqs, lts, codons, a.max_len)
+    if a.secretome:
+        rows = from_secretome(a.secretome, seqs, a.max_len)
+    elif a.dir:
+        rows = call(load_tables(a.dir), seqs, lts, codons, a.max_len)
+    else:
+        ap.error("one of --dir or --secretome is required")
     cols = ["protein_id", "LOCUSTAG", "category", "tier", "tier_why", "fold_reason", "length",
             "n_cys", "cys_frac", "sigp_prob", "sigp_cleavage", "pfam", "cazy", "cazy_substrate",
             "targetp", "seq_start_ATG"]

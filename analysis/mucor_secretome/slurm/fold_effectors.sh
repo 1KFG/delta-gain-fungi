@@ -40,11 +40,11 @@ $PY $A/bin/call_effectors.py --dir $PANELS --locustags JEM1MUCOR,JEM2MUCOR \
 
 # The BFD Mucor reference goes through the same code on the BFD export, as a non-Marchantia
 # outgroup. Its tables are the sql/export.sql output, which has the same columns.
-if [ -s $A/out/signalp.tsv ] && [ -s $A/out/candidates.faa ]; then
-  $PY $A/bin/call_effectors.py --dir $A/out --locustags F00CDB58 \
-      --fasta $A/out/candidates.faa --out $OUT/bfd
+if [ -s $A/out/focal_secretome.tsv ] && [ -s $A/out/screen_set.faa ]; then
+  $PY $A/bin/call_effectors.py --secretome $A/out/focal_secretome.tsv \
+      --fasta $A/out/screen_set.faa --out $OUT/bfd
 else
-  echo "no BFD export in $A/out - skipping the reference genome" >&2
+  echo "no focal secretome table in $A/out - skipping the reference genome" >&2
 fi
 
 cat $OUT/jem/to_fold.faa $OUT/bfd/to_fold.faa 2>/dev/null > $W/to_fold.faa || \
@@ -53,6 +53,12 @@ cp $W/to_fold.faa $OUT/to_fold.faa
 echo "to fold: $(grep -c '>' $OUT/to_fold.faa)"
 
 # --- 2. ESMFold, resumable: models already in out/effectors/folds are not refolded
+# The esm module activates a conda env with `conda activate --stack`, which is the shell
+# function, not the conda executable - without the hook it fails with
+# "conda: error: unrecognized arguments: --stack" (job 32033764).
+export CONDA_NO_PLUGINS=true
+module load miniconda3
+eval "$(conda shell.bash hook)"
 module load esm/2.0.0
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true
 python3 $A/bin/esmfold_batch.py --fasta $OUT/to_fold.faa --out $OUT/folds --max-len 400
