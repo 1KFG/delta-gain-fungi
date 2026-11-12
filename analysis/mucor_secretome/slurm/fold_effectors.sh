@@ -13,7 +13,12 @@
 # refused by the account association. short_gpu caps at 2 h, which is ample for ESMFold on a few
 # hundred short proteins, and the job is resumable - models already written are skipped - so a
 # timeout costs only a resubmit.
-#SBATCH -p short_gpu
+# preempt_gpu, not short_gpu: every a100 is allocated, and the backfill estimate for an a100 in
+# short_gpu is five days away (gpu partition: three weeks). preempt_gpu reaches the same gpu08
+# node in hours. Being preempted costs only a resubmit, because the ESMFold step skips models
+# already written.
+#SBATCH -p preempt_gpu
+#SBATCH --account=preempt
 # a100 specifically, not any GPU: the esm/2.0.0 module's torch is 1.13.1+cu117, built for
 # sm_37..sm_86. On the ada6000 (sm_89), h100 (sm_90) or blackwell6000 (sm_120) nodes it does not
 # refuse - it warns and returns garbage (job 32033882: 487 errors and 72 equally worthless
