@@ -586,5 +586,10 @@ class ChitinPanel(unittest.TestCase):
                  "species": "MPTAK"},
                 {"protein_id": "h5", "class": "lysm_receptor", "construct_len": "20",
                  "species": "MPTAK"}]
-        got = {r[0] for r in bcp.host_hits(rows)}
-        self.assertEqual(got, {"h1", "h2"})
+        # tier B: receptors and chitinases, ectodomain-sized only
+        wide = {"lysm_receptor", "chitinase", "chitin_binding"}
+        self.assertEqual({r[0] for r in bcp.host_hits(rows, classes=wide)}, {"h1", "h2"})
+        # h3 is an LRR receptor (wrong class), h4 a whole receptor (900 aa), h5 a 20 aa stub
+        # tier A, the default: the LysM receptors the hypothesis names, and nothing else
+        self.assertEqual({r[0] for r in bcp.host_hits(rows)}, {"h1"})
+        self.assertEqual(bcp.HOST_CLASSES, {"lysm_receptor"})
