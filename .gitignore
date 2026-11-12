@@ -32,3 +32,6 @@ logs/slurm/*.err
 # Exception: the UPO tool's small, committed outputs (zstd/parquet, ~105 KB).
 # The generic `results/` rule above targets Nextflow run output, not this.
 !analysis/enzymes_UPO/upo_id/results/
+
+# External reference data downloaded by analysis jobs (Marchantia proteome, etc.)
+data_external/
