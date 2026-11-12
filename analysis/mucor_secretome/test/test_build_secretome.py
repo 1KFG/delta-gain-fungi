@@ -148,6 +148,60 @@ class Annot(unittest.TestCase):
         self.assertEqual(at.fam_from_hmm("GH18.hmm"), "GH18")
         self.assertEqual(at.fam_from_hmm("CBM50"), "CBM50")
 
+
+class BfdParity(unittest.TestCase):
+    """Each parser against the merge_*.py it mirrors in Fungi_BFD/nextflow/bin."""
+
+    def test_signalp_gff3_is_sp_positive_only_and_scores_from_column_6(self):
+        gff = ("##gff-version 3\n"
+               "# comment\n"
+               "P1 some description\tSignalP-6.0\tsignal_peptide\t1\t22\t0.9979\t.\t.\t.\n"
+               "P3\tSignalP-6.0\tlipoprotein_signal_peptide\t1\t19\t0.8810\t.\t.\t.\n")
+        got = at.parse_signalp_gff3(io.StringIO(gff))
+        # merge_signalp.py takes the id up to the first space and columns 4, 5, 6
+        self.assertEqual(got, [("P1", "0.9979", "1", "22"), ("P3", "0.8810", "1", "19")])
+
+    def test_predgpi_keeps_only_anchor_rows(self):
+        gff = ("##gff-version 3\n"
+               "P1\tPredGPI\tChain\t1\t255\t1.0\t.\t.\tevidence=ECO:0000256\n"
+               "P1\tPredGPI\tGPI-anchor\t230\t230\t0.99\t.\t.\t.\n"
+               "P2\tPredGPI\tChain\t1\t100\t1.0\t.\t.\t.\n")
+        self.assertEqual(at.parse_predgpi_gff3(io.StringIO(gff)),
+                         [("P1", "GPI-anchor", "230", "230")])
+
+    def test_targetp_drops_notp_and_scores_the_predicted_class(self):
+        tp = ("# TargetP-2.0\n"
+              "P1\tSP\t0.0012\t0.9980\t0.0008\tCS pos: 22-23. ANA-AT. Pr: 0.76\n"
+              "P2\tmTP\t0.0100\t0.0300\t0.9600\tCS pos: 31-32. VRA-SS. Pr: 0.51\n"
+              "P3\tnoTP\t0.9900\t0.0050\t0.0050\t\n")
+        got = at.parse_targetp(io.StringIO(tp))
+        self.assertEqual([r[0] for r in got], ["P1", "P2"])
+        # the SP protein's probability belongs to SP, not to mTP - build_secretome.py must look
+        # at `prediction` before reading it as a mitochondrial score
+        self.assertEqual(got[0][1:3], ("SP", "0.9980"))
+        self.assertEqual(got[1][1:], ("mTP", "0.9600", "31", "32"))
+
+    def test_cazy_overview_carries_substrates_one_row_per_family(self):
+        ov = ("Gene_ID\tEC\tcazyme_fam\tsub_fam\tdiamond_fam\tSubstrate\t#ofTools\n"
+              "P1\t3.2.1.14\tGH18+CBM18\tGH18_e1+-\tGH18\tchitin\t3\n"
+              "P2\t-\tGH28\t-\tGH28\tpectin, polygalacturonan\t2\n")
+        got = at.parse_cazy_overview(io.StringIO(ov))
+        self.assertEqual([(r[0], r[2], r[4]) for r in got],
+                         [("P1", "GH18", "chitin"), ("P1", "CBM18", "chitin"),
+                          ("P2", "GH28", "pectin, polygalacturonan")])
+        self.assertEqual(got[0][1], "3.2.1.14")
+        self.assertEqual(got[1][3], "")          # '-' sub_fam becomes empty
+        self.assertEqual(got[2][1], "")          # '-' EC becomes empty
+
+    def test_cazy_overview_rows_feed_the_plant_tier(self):
+        rows = at.parse_cazy_overview(io.StringIO(
+            "Gene_ID\tEC\tcazyme_fam\tsub_fam\tdiamond_fam\tSubstrate\t#ofTools\n"
+            "P2\t-\tGH28\t-\tGH28\tpectin, polygalacturonan\t2\n"))
+        fams = [f"{r[2]}" for r in rows]
+        subs = [r[4] for r in rows]
+        self.assertEqual(bs.tier_of(fams, subs, [], 350, 2, 0.01)[0], "T2")
+
+
 class Unite(unittest.TestCase):
     TAX = (
         "Feature ID\tTaxon\n"

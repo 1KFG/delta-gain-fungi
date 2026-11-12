@@ -36,17 +36,24 @@ module load ncbi-blast/2.16.0+ ITSx/1.1.3
 
 # --- assemblies: the two strains by both assemblers, and the BFD references as controls
 #     (the single M. hiemalis, plus M. circinelloides, which JEM2 matched at 99.8 % ANI)
+# JEM2's AAFTF run landed in a stray asm/AAFTF/x/ subdirectory, which is why ITS/ holds four
+# broken JEM2 symlinks; $MOR/genomes/ is the stable path for the sorted assemblies (it is what
+# the lab's own ANI run reads). The spades assemblies are taken wherever they are, and a
+# missing one is skipped rather than failing the job.
 declare -A ASM=( [BFD_M_hiemalis]=$RUNS/input_clean_genomes/GCA_977110905.1_gzMucHiem1.fa.gz
                  [BFD_M_circinelloides]=$RUNS/input_clean_genomes/GCA_973907015.1_gzMucCirc1.fa.gz
-                 [JEM1_sorted]=$MOR/asm/AAFTF/JEM1.sorted.fasta
+                 [JEM1_sorted]=$MOR/genomes/JEM1.sorted.fasta
+                 [JEM2_sorted]=$MOR/genomes/JEM2.sorted.fasta
                  [JEM1_spades]=$MOR/asm/AAFTF/JEM1.spades.fasta
-                 [JEM2_sorted]=$MOR/asm/AAFTF/JEM2.sorted.fasta
-                 [JEM2_spades]=$MOR/asm/AAFTF/JEM2.spades.fasta )
-NAMES="BFD_M_hiemalis BFD_M_circinelloides JEM1_sorted JEM1_spades JEM2_sorted JEM2_spades"
-for s in $NAMES; do
+                 [JEM2_spades]=$MOR/asm/AAFTF/x/JEM2.spades.fasta )
+NAMES=""
+for s in BFD_M_hiemalis BFD_M_circinelloides JEM1_sorted JEM2_sorted JEM1_spades JEM2_spades; do
   src=${ASM[$s]}
+  if [ ! -s "$src" ]; then echo "skipping $s: no assembly at $src" >&2; continue; fi
   case $src in *.gz) zcat "$src" > $W/$s.fa ;; *) cp "$src" $W/$s.fa ;; esac
+  NAMES="$NAMES $s"
 done
+echo "assemblies:$NAMES"
 
 # --- UNITE restricted to Mucoromycota. The lineage is in the taxonomy file, not the FASTA
 #     header, so this goes through the accession map (see bin/unite_tax.py).
