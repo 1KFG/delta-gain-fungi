@@ -22,7 +22,9 @@ OUT=$A/out; mkdir -p $OUT
 # candidate FASTA and the clusters: those are inputs every later step reads, they take hours to
 # rebuild, and a $SCRATCH that is cleared at job end lost them once already. They go in a
 # persistent, gitignored cache and are reused when present. REBUILD=1 forces a fresh build.
-CACHE=${CACHE:-$A/cache}; mkdir -p $CACHE
+# Absolute: the DuckDB export runs inside `cd $RUNS/tables`, where a path relative to the
+# submit directory does not resolve (that is what broke job 32035089).
+CACHE=${CACHE:-$A/cache}; mkdir -p $CACHE; CACHE=$(readlink -f "$CACHE")
 W="${SCRATCH:?}/mucor_secr"; mkdir -p $W
 [ "${REBUILD:-0}" = "1" ] && rm -f $CACHE/*.tsv $CACHE/*.faa
 module load duckdb/1.1.3
