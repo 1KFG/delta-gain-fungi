@@ -57,6 +57,16 @@ $PY $A/bin/conservation.py --clusters $OUT/pool_cluster.tsv --genomes $CACHE/gen
     --extra-genomes $W/jem_genomes.tsv --focus JEM1MUCOR,JEM2MUCOR \
     --out $OUT/jem_conservation.tsv
 
+# Control. JEM2 (M. circinelloides) has 24 conspecific genomes in BFD; JEM1 (M. hiemalis) has
+# none, because BFD's single "M. hiemalis" assembly is mislabelled (out/its/). So JEM1's
+# genome_specific count is inflated relative to JEM2's by reference sampling alone. Removing
+# JEM2's conspecifics from the genome table puts the two on the same footing: if JEM2's
+# genome_specific count then rises to JEM1's, the asymmetry was sampling, not biology.
+$PY $A/bin/conservation.py --clusters $OUT/pool_cluster.tsv --genomes $CACHE/genomes.tsv \
+    --extra-genomes $W/jem_genomes.tsv --focus JEM1MUCOR,JEM2MUCOR \
+    --drop-species "Mucor circinelloides" \
+    --out $OUT/jem_conservation_no_conspecifics.tsv
+
 # join onto the candidate table, so one file carries tier, fold reason and reach
 $PY - "$OUT/jem/candidates.tsv" "$OUT/jem_conservation.tsv" "$OUT/jem_candidates_annotated.tsv" <<'PYEOF'
 import csv, sys

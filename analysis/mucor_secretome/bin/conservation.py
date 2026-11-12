@@ -31,8 +31,16 @@ import sys
 from collections import Counter, defaultdict
 
 
-def read_genomes(path, *paths):
-    """genomes.tsv -> {LOCUSTAG: (species, genus, order, asmid)}; later files win on conflict."""
+def read_genomes(path, *paths, drop_species=()):
+    """genomes.tsv -> {LOCUSTAG: (species, genus, order, asmid)}; later files win on conflict.
+
+    `drop_species` removes those species from the table entirely. Because a member whose
+    LOCUSTAG is not in the table contributes neither a lineage nor a genome, this is how a
+    like-for-like control is run: JEM2 has 24 conspecific M. circinelloides genomes in BFD and
+    JEM1 has none (BFD's single "M. hiemalis" is mislabelled - out/its/), so dropping JEM2's
+    conspecifics asks how much of its lower genome_specific count is biology and how much is
+    reference sampling."""
+    drop = {d.strip().lower() for d in drop_species if d and d.strip()}
     out = {}
     for p in (path,) + paths:
         if not p:
@@ -42,7 +50,11 @@ def read_genomes(path, *paths):
                 lt = r.get("LOCUSTAG") or r.get("locustag")
                 if not lt:
                     continue
-                out[lt] = (r.get("SPECIES", ""), r.get("GENUS", ""),
+                sp = r.get("SPECIES", "")
+                if sp.strip().lower() in drop:
+                    out.pop(lt, None)
+                    continue
+                out[lt] = (sp, r.get("GENUS", ""),
                            r.get("ORD") or r.get("ORDER", ""), r.get("ASMID", ""))
     return out
 
@@ -105,10 +117,14 @@ def main(argv=None):
     ap.add_argument("--genomes", required=True)
     ap.add_argument("--extra-genomes", help="genome table for genomes outside BFD")
     ap.add_argument("--focus", default="", help="comma-separated LOCUSTAGs to report")
+    ap.add_argument("--drop-species", default="",
+                    help="comma-separated species to remove from the genome table, for a "
+                         "like-for-like control against a genome with no sequenced relatives")
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
 
-    genomes = read_genomes(a.genomes, a.extra_genomes)
+    genomes = read_genomes(a.genomes, a.extra_genomes,
+                           drop_species=a.drop_species.split(","))
     with open(a.clusters) as fh:
         clusters = read_clusters(fh)
     focus = [x for x in a.focus.split(",") if x]

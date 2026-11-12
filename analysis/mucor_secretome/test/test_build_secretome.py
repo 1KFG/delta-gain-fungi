@@ -448,3 +448,38 @@ class Conservation(unittest.TestCase):
         rows = cons.build(clu, self.GEN, focus=["A", "B"])
         self.assertEqual(rows["A_1"]["cluster_members"], 2)
         self.assertEqual(rows["A_1"]["conservation"], "species_restricted")
+
+
+class ConservationControl(unittest.TestCase):
+    TSV = ("LOCUSTAG\tASMID\tSPECIES\tSTRAIN\tORD\tFAMILY\tGENUS\n"
+           "A\ta\tMucor hiemalis\t1\tMucorales\tMucoraceae\tMucor\n"
+           "C1\tc1\tMucor circinelloides\t1\tMucorales\tMucoraceae\tMucor\n"
+           "C2\tc2\tMucor circinelloides\t2\tMucorales\tMucoraceae\tMucor\n")
+
+    def write(self):
+        d = tempfile.mkdtemp()
+        p = os.path.join(d, "g.tsv")
+        with open(p, "w") as fh:
+            fh.write(self.TSV)
+        return p
+
+    def test_drop_species_removes_those_genomes(self):
+        p = self.write()
+        self.assertEqual(set(cons.read_genomes(p)), {"A", "C1", "C2"})
+        g = cons.read_genomes(p, drop_species=["Mucor circinelloides"])
+        self.assertEqual(set(g), {"A"})
+
+    def test_dropping_conspecifics_makes_a_family_look_genome_specific(self):
+        # JEM2 plus its two conspecifics: a shared family reads as species_restricted...
+        full = cons.read_genomes(self.write())
+        full["J2"] = ("Mucor circinelloides", "Mucor", "Mucorales", "j2")
+        self.assertEqual(cons.classify(["J2_1", "C1_1", "C2_1"], full)[0], "species_restricted")
+        # ...and with the conspecifics removed from the table, the same family reads as
+        # genome_specific - which is what the control is for
+        dropped = cons.read_genomes(self.write(), drop_species=["Mucor circinelloides"])
+        dropped["J2"] = ("Mucor circinelloides", "Mucor", "Mucorales", "j2")
+        self.assertEqual(cons.classify(["J2_1", "C1_1", "C2_1"], dropped)[0], "genome_specific")
+
+    def test_drop_species_is_case_insensitive_and_ignores_blanks(self):
+        g = cons.read_genomes(self.write(), drop_species=["  mucor CIRCINELLOIDES ", "", "  "])
+        self.assertEqual(set(g), {"A"})
