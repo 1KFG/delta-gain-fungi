@@ -35,3 +35,11 @@ logs/slurm/*.err
 
 # External reference data downloaded by analysis jobs (Marchantia proteome, etc.)
 data_external/
+
+# Reusable analysis intermediates, kept out of $SCRATCH on purpose: the DuckDB export of the
+# BFD tables, the candidate-secretome FASTA and the MMseqs families take hours to rebuild and
+# every later step reads them. $SCRATCH is cleared when the job ends, which lost them once
+# (see analysis/mucor_secretome/slurm/secretome.sh). Large, reproducible, not for git history.
+analysis/*/cache/
+analysis/*/out/
+data_external/

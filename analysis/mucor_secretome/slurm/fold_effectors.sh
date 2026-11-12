@@ -40,11 +40,18 @@ $PY $A/bin/call_effectors.py --dir $PANELS --locustags JEM1MUCOR,JEM2MUCOR \
 
 # The BFD Mucor reference goes through the same code on the BFD export, as a non-Marchantia
 # outgroup. Its tables are the sql/export.sql output, which has the same columns.
-if [ -s $A/out/focal_secretome.tsv ] && [ -s $A/out/screen_set.faa ]; then
+# Prefer the restored export tables, so the reference goes through exactly the code path the
+# JEM genomes do; fall back to the per-protein table from the earlier run if the cache is not
+# rebuilt yet (slurm/secretome.sh).
+if [ -s $A/cache/signalp.tsv ] && [ -s $A/cache/candidates.faa ]; then
+  $PY $A/bin/call_effectors.py --dir $A/cache --locustags F00CDB58 \
+      --fasta $A/cache/candidates.faa --codons $A/out/codon_check.tsv --out $OUT/bfd
+elif [ -s $A/out/focal_secretome.tsv ] && [ -s $A/out/screen_set.faa ]; then
+  echo "cache not built; using the per-protein table from the earlier run" >&2
   $PY $A/bin/call_effectors.py --secretome $A/out/focal_secretome.tsv \
       --fasta $A/out/screen_set.faa --out $OUT/bfd
 else
-  echo "no focal secretome table in $A/out - skipping the reference genome" >&2
+  echo "no BFD tables and no focal secretome table - skipping the reference genome" >&2
 fi
 
 cat $OUT/jem/to_fold.faa $OUT/bfd/to_fold.faa 2>/dev/null > $W/to_fold.faa || \
