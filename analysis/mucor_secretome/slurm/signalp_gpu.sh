@@ -9,7 +9,9 @@
 # evaluate, so the hook below is required - without it the module load fails with
 # "Run 'conda init' before 'conda activate'", which is what killed job 32013761.
 # Reads shared folders read-only; writes mucor_secretome/out/panels/.
-#SBATCH -p short_gpu
+# The BFD profile's `signalp` label uses short_gpu; exfab is this group's GPU queue (one node,
+# 2 x ada6000, 256 cores), so jobs here go to exfab instead.
+#SBATCH -p exfab
 #SBATCH --gres=gpu:1
 #SBATCH -N 1 -n 1 -c 2
 #SBATCH --mem=24G
