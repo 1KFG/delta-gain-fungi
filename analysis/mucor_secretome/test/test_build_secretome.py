@@ -284,3 +284,53 @@ class UniteRanks(unittest.TestCase):
         # the phylum helper is the same call, so both subsets stay in step
         self.assertEqual(ut.ids_in_phylum(tax, "Mucoromycota"),
                          ut.ids_at_rank(tax, "p", "Mucoromycota"))
+
+
+import call_effectors as ce  # noqa: E402
+import fold_report as fr  # noqa: E402
+
+
+class Effectors(unittest.TestCase):
+    def test_fold_reason_picks_unknown_small_and_chitin(self):
+        # no Pfam, short -> folded even though it is cysteine-poor (T3 would have dropped it)
+        self.assertEqual(ce.fold_reason("secreted", "T4", [], 150, 300), "unknown_small")
+        # a chitin-active enzyme is folded for its binding site, Pfam or not
+        self.assertEqual(ce.fold_reason("secreted", "T1", ["PF01522"], 400, 300), "chitin_active")
+        # a domain-bearing protein that is not chitin-active is not folded
+        self.assertEqual(ce.fold_reason("secreted", "T2", ["PF01328"], 280, 300), "")
+        # too long to be an unknown effector
+        self.assertEqual(ce.fold_reason("secreted", "T4", [], 600, 300), "")
+        # not secreted at all
+        self.assertEqual(ce.fold_reason("membrane", "T4", [], 150, 300), "")
+        self.assertEqual(ce.fold_reason("gpi_anchored", "T4", [], 150, 300), "unknown_small")
+
+    def test_mito_prob_only_counts_mtp(self):
+        self.assertEqual(ce.mito_prob({"prediction": "mTP", "probability": "0.96"}), 0.96)
+        # an SP-predicted protein's probability belongs to SP, not to mTP
+        self.assertEqual(ce.mito_prob({"prediction": "SP", "probability": "0.99"}), 0.0)
+        self.assertEqual(ce.mito_prob({}), 0.0)
+
+
+class FoldCalls(unittest.TestCase):
+    HITS = (
+        "P1\t1abc_A\t1abc_A LysM domain\t0.11\t60\t0.9\t0.8\t1e-3\t55\t0.72\t0.95\n"
+        "P1\t2xyz_B\t2xyz_B something else\t0.09\t55\t0.8\t0.7\t1e-1\t40\t0.41\t0.60\n"
+        "P2\t3def_A\t3def_A unrelated\t0.08\t40\t0.5\t0.4\t2.0\t20\t0.31\t0.20\n"
+    )
+
+    def test_only_hits_at_or_above_tm_threshold_count(self):
+        best = fr.best_per_query(fr.read_hits_from_string(self.HITS), 0.5)
+        self.assertEqual(set(best), {"P1"})           # P2's best is TM 0.31
+        self.assertEqual(best["P1"]["target"], "1abc_A")
+
+    def test_low_plddt_model_is_held_back(self):
+        best = {"pdb": fr.best_per_query(fr.read_hits_from_string(self.HITS), 0.5)}
+        rows = fr.call_folds(best, {"P1": {"plddt": "55.0", "ptm": "0.3", "length": "120"}})
+        self.assertEqual(rows["P1"]["fold_call"], "low_confidence")
+        rows = fr.call_folds(best, {"P1": {"plddt": "88.0", "ptm": "0.8", "length": "120"}})
+        self.assertEqual(rows["P1"]["fold_call"], "assigned")
+        self.assertEqual(rows["P1"]["best_tm"], 0.72)
+
+    def test_folded_but_unmatched_is_a_result_not_a_failure(self):
+        rows = fr.call_folds({"pdb": {}}, {"P9": {"plddt": "90.0", "ptm": "0.8", "length": "99"}})
+        self.assertEqual(rows["P9"]["fold_call"], "no_match")
