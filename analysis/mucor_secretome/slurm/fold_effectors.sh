@@ -74,3 +74,11 @@ $PY $A/bin/fold_report.py --hits "${HITARG#,}" --plddt $OUT/folds/plddt.tsv \
 echo "=== fold calls, best 25 by TM-score ==="
 head -26 $OUT/fold_calls.tsv | cut -f1,2,5,6,9 | column -t -s $'\t'
 echo "done $(date +%T)"
+
+# --- 5. host panel, built identically for both liverworts (the isolation host is unrecorded)
+$PY $A/bin/plant_panel.py --dir $PANELS --locustags MPTAK,MPALE --out $OUT/plant_panel || \
+  echo "plant panel skipped (Marchantia tables not ready)" >&2
+if [ -s $OUT/plant_panel/compare.tsv ]; then
+  echo "=== host target classes: M. polymorpha vs M. paleacea ==="
+  column -t -s $'\t' $OUT/plant_panel/compare.tsv | cut -c1-150
+fi

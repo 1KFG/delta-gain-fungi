@@ -334,3 +334,36 @@ class FoldCalls(unittest.TestCase):
     def test_folded_but_unmatched_is_a_result_not_a_failure(self):
         rows = fr.call_folds({"pdb": {}}, {"P9": {"plddt": "90.0", "ptm": "0.8", "length": "99"}})
         self.assertEqual(rows["P9"]["fold_call"], "no_match")
+
+
+import plant_panel as pp  # noqa: E402
+
+
+class PlantPanel(unittest.TestCase):
+    def test_class_assignment_prefers_the_specific_class(self):
+        # a LysM receptor kinase carries both LysM and a kinase domain; LysM wins
+        self.assertEqual(pp.classify_protein(["PF01476", "PF00069"]), "lysm_receptor")
+        self.assertEqual(pp.classify_protein(["PF00704"]), "chitinase")
+        self.assertEqual(pp.classify_protein(["PF00112"]), "cys_protease")
+        self.assertEqual(pp.classify_protein(["PF99999"]), "")
+
+    def test_receptor_gives_an_ectodomain_not_the_whole_chain(self):
+        # 600 aa receptor, SP cleaved at 25, single TM helix at 300-322
+        start, end, kind = pp.construct_range(600, 25, "o26-299i300-322o", 1)
+        self.assertEqual((start, end, kind), (26, 299, "ectodomain"))
+        # the kinase domain (323-600) is excluded
+        self.assertLess(end, 323)
+
+    def test_secreted_protein_with_no_helix_is_the_mature_chain(self):
+        self.assertEqual(pp.construct_range(300, 22, "", 0), (23, 300, "mature"))
+
+    def test_helix_inside_the_signal_peptide_is_not_a_tm(self):
+        # the only helix sits within the cleavage site + slack, so the chain stays "mature"
+        self.assertEqual(pp.construct_range(300, 22, "n5-20o", 1)[2], "mature")
+
+    def test_no_signal_peptide_is_not_a_surface_target(self):
+        self.assertEqual(pp.construct_range(300, 0, "i10-32o", 1)[2], "none")
+
+    def test_ectodomain_too_short_to_model_is_dropped(self):
+        # helix starts at 40, leaving 15 residues outside the membrane
+        self.assertEqual(pp.construct_range(400, 24, "o25-39i40-62o", 1)[2], "none")

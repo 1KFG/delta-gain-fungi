@@ -33,10 +33,11 @@ module load miniconda3
 eval "$(conda shell.bash hook)"
 module load signalp/6-gpu
 
-bash $A/bin/panel_proteomes.sh $FAA
+LOCUSTAGS="${PANEL_LOCUSTAGS:-JEM1MUCOR JEM2MUCOR MPTAK MPALE}"
+bash $A/bin/panel_proteomes.sh $FAA $LOCUSTAGS
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true
 
-for LT in JEM1MUCOR JEM2MUCOR MPTAK; do
+for LT in $LOCUSTAGS; do
   echo "=== $LT $(date +%T)"
   rm -rf $W/sp_$LT
   signalp6 -od $W/sp_$LT -org euk --mode fast -format none \
