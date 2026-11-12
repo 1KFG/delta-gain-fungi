@@ -9,9 +9,10 @@
 # evaluate, so the hook below is required - without it the module load fails with
 # "Run 'conda init' before 'conda activate'", which is what killed job 32013761.
 # Reads shared folders read-only; writes mucor_secretome/out/panels/.
-# The BFD profile's `signalp` label uses short_gpu; exfab is this group's GPU queue (one node,
-# 2 x ada6000, 256 cores), so jobs here go to exfab instead.
-#SBATCH -p exfab
+# exfab is this group's GPU queue, but it is a single node (gpu12, 2 x ada6000) and both GPUs
+# are routinely busy; short_gpu reaches the same node plus the a100/h100/blackwell nodes, which
+# is where the free capacity is. Slurm takes whichever frees first, exfab preferred.
+#SBATCH -p exfab,short_gpu
 #SBATCH --gres=gpu:1
 #SBATCH -N 1 -n 1 -c 2
 #SBATCH --mem=24G

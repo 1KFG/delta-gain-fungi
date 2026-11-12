@@ -9,7 +9,10 @@
 # Runs on exfab (2 x RTX 6000 Ada). The Foldseek half is CPU and could be split out, but the
 # whole thing is short enough to keep in one job, and ESMFold must finish first anyway.
 # Reads shared folders read-only; writes mucor_secretome/out/effectors/.
-#SBATCH -p exfab
+# exfab first, but short_gpu reaches the nodes with free GPUs (see slurm/signalp_gpu.sh).
+# ESMFold here is resumable - models already written are skipped - so a short time limit on a
+# busy queue costs nothing but a requeue.
+#SBATCH -p exfab,short_gpu
 #SBATCH --gres=gpu:1
 #SBATCH -N 1 -n 1 -c 16
 #SBATCH --mem=64G
