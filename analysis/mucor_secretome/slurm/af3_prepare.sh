@@ -59,24 +59,31 @@ $PY $A/bin/build_chitin_panel.py --fold-calls $CALLS --folds-faa $E/to_fold.faa 
 for pdb in 4EBZ 6Q76; do
   curl -sS --max-time 300 "https://www.rcsb.org/fasta/entry/$pdb/display" -o $CH/$pdb.fa.raw
   $PY - "$CH/$pdb.fa.raw" "$pdb" "$CH/$pdb.fa" <<'PYEOF'
-import sys, re
+import sys, re, hashlib
 src, pdb, dst = sys.argv[1:4]
-# one entry per distinct polymer chain; name them CTRL_<pdb>_<n> and drop duplicates
-seqs, name = [], None
+# One entry per distinct polymer chain. The name must be a function of the SEQUENCE, not of its
+# position in the fetch: this script re-fetches from RCSB on every run, and a positional name
+# (CTRL_<pdb>_1, _2, ...) can land on a different chain next time while the stage-1 MSAs under
+# msas/ still belong to the old one. That silently pairs a sequence with another chain's
+# alignment and AF3 dies in featurising - all 26 control predictions in job 32069698.
+# A short sequence hash makes the name stable across fetches and across RCSB reordering, so an
+# MSA either matches by name or is absent, never mismatched.
+seqs, cur = [], None
 for line in open(src):
     if line.startswith(">"):
-        name = f"CTRL_{pdb}_{len(seqs) + 1}"
-        seqs.append([name, ""])
-    elif seqs:
-        seqs[-1][1] += line.strip()
+        cur = [None, ""]
+        seqs.append(cur)
+    elif cur:
+        cur[1] += line.strip()
 seen = set()
 with open(dst, "w") as fo:
-    for n, s in seqs:
-        s = re.sub(r"[^A-Z]", "", s.upper())
+    for e in seqs:
+        s = re.sub(r"[^A-Z]", "", e[1].upper())
         if len(s) < 40 or s in seen:
             continue
         seen.add(s)
-        fo.write(f">{n}\n{s}\n")
+        h = hashlib.sha1(s.encode()).hexdigest()[:6]
+        fo.write(f">CTRL_{pdb}_{h}\n{s}\n")
 print(f"{pdb}: {len(seen)} control chains", file=sys.stderr)
 PYEOF
   cat $CH/$pdb.fa >> $CH/panel.faa

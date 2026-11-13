@@ -62,8 +62,10 @@ if [ "$TASK" = "0" ]; then
     $PY $A/bin/af3_input.py ligand --fasta $OUT/panel.faa --ids $OUT/ligand_ids.txt \
         --msa-dir $OUT/msas --nag 4,7 --out $OUT/pairs
   else
-    # the unknowns are monomers: fold each with the MSA its stage-1 run produced
-    $PY $A/bin/af3_input.py single --fasta $OUT/panel.faa --out $OUT/pairs
+    # the unknowns are monomers: fold each with the MSA its stage-1 run produced. --msa-dir is
+    # what makes that true; without it these are bare sequences and AF3 dies in featurising
+    # under --norun_data_pipeline (job 32069699: 0 of 426 succeeded).
+    $PY $A/bin/af3_input.py single --fasta $OUT/panel.faa --msa-dir $OUT/msas --out $OUT/pairs
   fi
   touch $OUT/pairs/.ready
 else
