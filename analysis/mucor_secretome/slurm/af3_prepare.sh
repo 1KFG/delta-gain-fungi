@@ -25,8 +25,31 @@ CH=$A/out/af3/chitin;   mkdir -p $CH
 UN=$A/out/af3/unknowns; mkdir -p $UN
 $PY -W ignore -m unittest discover -s $A/test
 
+# --- which ESMFold run selects the panels
+# Both panels are chosen from the fold calls: panel 1 from the confidently assigned chitin-axis
+# folds, panel 2 from everything ESMFold left below pLDDT 70. So the backend that produced those
+# calls decides panel membership. From 2026-11-13 that is the transformers run (fold_calls_hf.tsv,
+# models in out/effectors/folds_hf), which is the project default - see analysis/mucor_secretome/
+# HANDOFF.md. 18 of 559 candidates change fold_call class between backends, so membership moves a
+# little; the MSA step below is keyed by chain name and skips what it has already computed, so
+# only genuinely new members cost anything.
+ESM_BACKEND=${ESM_BACKEND:-transformers}
+case $ESM_BACKEND in
+  transformers) SUF=_hf ;;
+  fair-esm)     SUF= ;;
+  *) echo "unknown ESM_BACKEND=$ESM_BACKEND (transformers|fair-esm)" >&2; exit 2 ;;
+esac
+CALLS=$E/fold_calls$SUF.tsv
+[ -s "$CALLS" ] || { echo "no fold calls at $CALLS - run slurm/fold_effectors.sh first" >&2; exit 1; }
+echo "panels selected from $CALLS (backend $ESM_BACKEND)"
+
+# Stale job JSONs from a previous panel would still be folded, because af3_msa.sh and af3_fold.sh
+# glob jobs/*.json rather than reading panel.faa. Clear them; msas/ is keyed by chain name and is
+# deliberately kept, so previously computed MSAs are reused.
+rm -f $CH/jobs/*.json $CH/jobs/.ready $UN/jobs/*.json $UN/jobs/.ready
+
 # --- panel 1: the chitin axis
-$PY $A/bin/build_chitin_panel.py --fold-calls $E/fold_calls.tsv --folds-faa $E/to_fold.faa \
+$PY $A/bin/build_chitin_panel.py --fold-calls $CALLS --folds-faa $E/to_fold.faa \
     --plant-panel $E/plant_panel/panel.tsv --plant-faa $E/plant_panel/panel.faa \
     --out $CH
 
@@ -80,7 +103,7 @@ sort -u -o $CH/host.txt $CH/host.txt
 wc -l $CH/fungal.txt $CH/host.txt $CH/ligand_ids.txt $CH/controls.tsv
 
 # --- panel 2: the unfoldable unknowns, where an MSA is the thing that was missing
-$PY - "$E/fold_calls.tsv" "$E/to_fold.faa" "$UN/panel.faa" <<'PYEOF'
+$PY - "$CALLS" "$E/to_fold.faa" "$UN/panel.faa" <<'PYEOF'
 import csv, sys
 calls, faa, out = sys.argv[1:4]
 want = set()
