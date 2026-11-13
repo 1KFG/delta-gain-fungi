@@ -1,4 +1,84 @@
-# DeltaGain_Fungi — Handoff / Status (2026-11-08)
+# DeltaGain_Fungi — Handoff / Status (2026-11-12)
+
+## Update 2026-11-12: the delta-gain funnel is finished — this file was two days stale (read this first)
+
+**Everything below dated 2026-11-05 and 2026-11-04 about the funnel is superseded.** This file
+stopped tracking the funnel on 11-05, while the work continued on the HPCC and finished on 11-08.
+Anyone reading only this repo would quote v1 numbers (`80.0 / 15.7 / 4.31 %`, the 47.5 % vs 12.6 %
+self-hit inflation) as if they were current. They are not.
+
+**Source of truth, both dated 2026-11-08 09:58, both on the HPCC, neither in this repo:**
+
+- `/bigdata/stajichlab/shared/projects/BFD/DeltaGain/docs/DELTA_GAIN_PLAN.md` — §11 status log,
+  job ids and exact settings. The plans win over the narrative where they disagree.
+- `/bigdata/stajichlab/shared/projects/BFD/DeltaGain/docs/FINDINGS.md` — the narrative synthesis,
+  marked "complete draft for collaborator review".
+- Working directory for results: `/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi`
+  (`results/`, `bin/`, `launch/`) — distinct from this laptop repo of the same name.
+
+### What actually happened
+
+The v2 funnel **ran in full on 2026-11-06** (job 31780270, 1h47m, 64 CPUs), after a first attempt
+crashed on 44 baseline folder names carrying a trailing carriage return from a CRLF CSV (MMseqs
+treats `\r` as whitespace, DuckDB as a newline). Baseline 5,703 genomes with a prior NCBI
+annotation; new 17,864 without one, 183.1 M proteins. A long series of controls followed through
+11-08. **The goal is recorded as "closed by user decision" on 2026-11-08** (`DELTA_GAIN_PLAN.md`
+§11, last entry), with antiSMASH-on-all-genomes and full-scale structure prediction explicitly out
+of scope given the 2026-11-10 shutdown.
+
+### The numbers that replace the ones below
+
+| Result | Value |
+|---|---|
+| New proteins novel at 95 / 70 / 50 % identity | **50.2 / 29.2 / 22.4 %** of 183,095,650 |
+| Same, counted once per species (5,454 species) | **~39 %** at 50 % (median 37 %) |
+| Rank decomposition, novel at 50 % | strain of baseline species **13.3 %** → new species in baseline genus **27.6 %** → new genus **57.0 %** → new family/order/class **59.6–63.2 %** |
+| Predictor-mismatch control (NCBI vs BFD models, 300 genomes) | **+1.5 to 3 points** — does not explain the headline |
+| Survivor clusters in ≥ 5 genomes with a baseline homolog by sensitive search | **79.3 %** (no hit 10.7 %) |
+| Single-genome survivor clusters (all 12.2 M, 3 shards) | 63.0 % homolog, **21.3 % no hit** (2,602,543 clusters) |
+| No detectable homolog after profile search (≥ 5-genome clusters) | **96,843 profile clusters / 2.14 M proteins** |
+| Survivor clusters from one species | **82 %** of clusters, 61 % of proteins |
+| New genomes vs equally many same-order baseline genomes, per family | **+1 to 3 points** (every 95 % interval spans 0 except PF08659) |
+| ESMFold pilot, pLDDT ≥ 0.5 (no-hit vs hit-bearing control) | **8.8 % vs 27.3 %** |
+| Species accumulation at 50 % | **not saturated**; ~2.7–4.5 k new clusters per added species |
+
+### What this means, and the standing criticisms
+
+Reviewed by a Fable session on 2026-11-12. Its verdict, which I agree with: **delta gain as defined
+is approximately the null.** Novelty decomposes almost entirely by taxonomic rank, and the
+order-matched null shows new genomes add what any equal number of genomes would. That is a
+legitimate resource statement — the 50 % cluster pangenome is open and the sampling gaps are now
+mapped — but it is not a discovery. Publish it as a section of the BFD resource paper with the null
+stated plainly; do not build a standalone paper on it.
+
+Three criticisms that are **not yet addressed** and should be, before any of it is shown outside the lab:
+
+1. **The funnel mixes annotation sources; the family walk does not.** The family walk already uses
+   BFD re-annotation of both groups. The funnel compares NCBI proteins (baseline) with BFD proteins
+   (new). The predictor control bounds the *mean* effect at 1.5–3 points, but a mean shift of 1.5–3
+   points on 183 M proteins is 2.7–5.5 M proteins, which is the same size as the whole no-hit
+   residue (~6.2 M). The control cleared the headline, not the tail. The all-BFD 78 M-representative
+   clustering already exists; redoing the funnel on it would remove the confound rather than bound it.
+2. **"Seen in ≥ 5 genomes" is not replication when the genomes are conspecific.** A deterministic
+   predictor makes the same wrong call in 500 *S. cerevisiae* strains, and the 110 k clusters in ≥ 20
+   genomes of one species have the *highest* unannotated share (64 %). The replication unit must be
+   species or genus, not genome.
+3. **The enriched-Pfam signal (+15 points) is "a Saccharomycotina yeast list".** Y1000+ genomes
+   (Opulente et al. 2024) may sit at NCBI as assemblies with their annotations on figshare — in
+   which case they are "new" here only by deposition venue, which is the v1 objection returning.
+   **Unverified.** The check is a join of the new-genome accessions against the Y1000+ and MycoCosm
+   lists, and it is cheap.
+
+Also unaddressed: the contamination/TE triage is blind where it matters (the TE screen is by Pfam
+name while the no-hit class is 95 % Pfam-less; the Swiss-Prot taxonomy screen needs a hit; GC
+outliers are genome-level, and a *Trebouxia* or bacterial contig in a lichen assembly need not
+shift genome GC).
+
+### Next
+
+`analysis/NEXT_STEPS.md` is being drafted from that review — orphan triage with a detection-failure
+null, lichen convergence across independent origins, structure rescue on multi-genus no-hit
+families, and structure-based effector mining. Not yet written at the time of this update.
 
 ## Update 2026-11-08: enzymes_UPO brought under version control, reviewed, and a coordination warning
 
@@ -206,7 +286,10 @@ affect gene calls.
   cannot read compressed input. `.gitignore` carries an exception so the generic `results/` rule does not
   drop `upo_id/results/`.
 
-## Update 2026-11-05: strategy change — baseline funnel replaces the universal search (read this first)
+## Update 2026-11-05: strategy change — baseline funnel replaces the universal search
+
+> **Superseded 2026-11-12.** The funnel described here ran and finished; see the 2026-11-12
+> section at the top. Numbers below are v1 or pre-run.
 
 Full plan, definitions, workflow diagram and measures of success:
 `DeltaGain/docs/DELTA_GAIN_PLAN.md`. This section replaces the 11-04 section where they disagree.
@@ -234,7 +317,10 @@ Full plan, definitions, workflow diagram and measures of success:
 - **Next:** finish the gap download and refresh the status table -> launch the funnel -> fill the measured counts in the
   plan -> write the survivor-search stage -> Pfam family walk. Open questions are listed in section 13 of the plan.
 
-## Update 2026-11-04: full-set run, pangenome scripts, run-state (read this first)
+## Update 2026-11-04: full-set run, pangenome scripts, run-state
+
+> **Superseded 2026-11-12** for anything about the funnel or the DIAMOND search. The hardware
+> notes (never run on `abu_dhabi`; `-p epyc,intel --constraint=...`) are still current.
 
 This section replaces the 10-24 section below where they disagree.
 

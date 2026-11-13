@@ -21,12 +21,14 @@
 # short_gpu caps at 2 h; the ESMFold step skips models already written, so if 640 proteins do not
 # finish in one go, resubmitting continues where it stopped.
 #SBATCH -p short_gpu
-# a100 specifically, not any GPU: the esm/2.0.0 module's torch is 1.13.1+cu117, built for
-# sm_37..sm_86. On the ada6000 (sm_89), h100 (sm_90) or blackwell6000 (sm_120) nodes it does not
-# refuse - it warns and returns garbage (job 32033882: 487 errors and 72 equally worthless
-# "successes"). bin/esmfold_batch.py now checks this and aborts, but the right GPU is requested
-# here so it never comes up.
-#SBATCH --gres=gpu:a100:1
+# Any GPU. This used to be `--gres=gpu:a100:1`, because the esm/2.0.0 module's torch is
+# 1.13.1+cu117, built for sm_37..sm_86: on the ada6000 (sm_89), h100 (sm_90) or blackwell6000
+# (sm_120) nodes it does not refuse - it warns and returns garbage (job 32033882: 487 errors and
+# 72 equally worthless "successes"). The default backend is now the project env built by
+# scripts/setup_gpu_env.sh (torch 2.8.0+cu128, transformers), which runs on all of them, so the
+# queue is 84 GPUs wide instead of 24. bin/esmfold_batch.py still refuses a mismatched card.
+# For a fair-esm run, override on the command line: sbatch --gres=gpu:a100:1 ... ESM_BACKEND=fair-esm
+#SBATCH --gres=gpu:1
 #SBATCH -N 1 -n 1 -c 16
 #SBATCH --mem=64G
 #SBATCH -t 2:00:00
@@ -42,6 +44,22 @@ PANELS=$A/out/panels
 OUT=$A/out/effectors; mkdir -p $OUT
 FSDB=/srv/projects/db/foldseek
 W="${SCRATCH:?}/fold_eff"; mkdir -p $W
+
+# --- which ESMFold implementation, and therefore which output folder
+# The two backends are the same weights but not bit-identical, so their models are kept in
+# separate folders and never mixed in one set. `folds/` is the original fair-esm run (559 models,
+# a100 only); `folds_hf/` is the transformers run, which is the default from 2026-11-13 because
+# it reaches all 84 GPUs. Downstream files carry the same suffix, so both runs can coexist and
+# be compared. See scripts/setup_gpu_env.sh.
+ESM_BACKEND=${ESM_BACKEND:-transformers}
+ESMFOLD_ENV=${ESMFOLD_ENV:-/bigdata/stajichlab/jstajich/envs/esmfold-torch28}
+ESMFOLD_CACHE=${ESMFOLD_CACHE:-/bigdata/stajichlab/jstajich/cache/huggingface}
+case $ESM_BACKEND in
+  transformers) FOLDS=$OUT/folds_hf; SUF=_hf ;;
+  fair-esm)     FOLDS=$OUT/folds;    SUF= ;;
+  *) echo "unknown ESM_BACKEND=$ESM_BACKEND (transformers|fair-esm)" >&2; exit 2 ;;
+esac
+echo "backend $ESM_BACKEND -> $FOLDS"
 
 $PY -W ignore -m unittest discover -s $A/test
 
@@ -71,17 +89,61 @@ cat $OUT/jem/to_fold.faa $OUT/bfd/to_fold.faa 2>/dev/null > $W/to_fold.faa || \
 cp $W/to_fold.faa $OUT/to_fold.faa
 echo "to fold: $(grep -c '>' $OUT/to_fold.faa)"
 
-# --- 2. ESMFold, resumable: models already in out/effectors/folds are not refolded
+# --- 2. ESMFold, resumable: models already in $FOLDS are not refolded
 # The esm module activates a conda env with `conda activate --stack`, which is the shell
 # function, not the conda executable - without the hook it fails with
 # "conda: error: unrecognized arguments: --stack" (job 32033764).
 export CONDA_NO_PLUGINS=true
 module load miniconda3
 eval "$(conda shell.bash hook)"
-module load esm/2.0.0
-nvidia-smi --query-gpu=name,memory.total --format=csv,noheader || true
-python3 $A/bin/esmfold_batch.py --fasta $OUT/to_fold.faa --out $OUT/folds --max-len 400
-echo "models: $(ls $OUT/folds/*.pdb 2>/dev/null | wc -l)"
+if [ "$ESM_BACKEND" = transformers ]; then
+  conda activate "$ESMFOLD_ENV"
+  # Weights are prefetched to $HF_HOME on the login node by scripts/setup_gpu_env.sh, because
+  # compute nodes may have no outbound network.
+  export HF_HOME="$ESMFOLD_CACHE"
+  export TOKENIZERS_PARALLELISM=false
+  RUNPY=python
+else
+  module load esm/2.0.0
+  RUNPY=python3
+fi
+nvidia-smi --query-gpu=name,compute_cap,memory.total --format=csv,noheader || true
+$RUNPY $A/bin/esmfold_batch.py --fasta $OUT/to_fold.faa --out $FOLDS --max-len 400 \
+    --backend $ESM_BACKEND
+echo "models: $(ls $FOLDS/*.pdb 2>/dev/null | wc -l)"
+
+# If the other backend's run exists, compare them on the proteins both folded. Same weights,
+# different implementation: pLDDT should track closely, and a systematic gap is a bug, not a
+# finding. Costs nothing and is the cheapest check that the swap was sound.
+OTHER=$OUT/folds/plddt.tsv
+[ "$ESM_BACKEND" = fair-esm ] && OTHER=$OUT/folds_hf/plddt.tsv
+if [ -s "$OTHER" ] && [ -s "$FOLDS/plddt.tsv" ]; then
+  echo "=== backend comparison (pLDDT, 0-100, shared proteins) ==="
+  $PY - "$FOLDS/plddt.tsv" "$OTHER" <<'PYEOF'
+import sys, statistics as st
+def load(p):
+    d = {}
+    with open(p) as fh:
+        head = fh.readline()
+        for line in fh:
+            f = line.rstrip("\n").split("\t")
+            if len(f) >= 3:
+                d[f[0]] = float(f[2])
+    return d
+a, b = load(sys.argv[1]), load(sys.argv[2])
+both = sorted(set(a) & set(b))
+print(f"this backend {len(a)} models, other {len(b)}, shared {len(both)}")
+if both:
+    xa = [a[k] for k in both]; xb = [b[k] for k in both]
+    d = [x - y for x, y in zip(xa, xb)]
+    print(f"mean pLDDT this {st.mean(xa):.1f} vs other {st.mean(xb):.1f}; "
+          f"mean diff {st.mean(d):+.1f}, median diff {st.median(d):+.1f}, "
+          f"max |diff| {max(abs(v) for v in d):.1f}")
+    # the number that actually matters downstream: does the >= 70 call flip?
+    flip = sum((x >= 70) != (y >= 70) for x, y in zip(xa, xb))
+    print(f"proteins crossing the pLDDT 70 line between backends: {flip} of {len(both)}")
+PYEOF
+fi
 
 # --- 3. Foldseek against the three structure databases
 module unload esm/2.0.0 2>/dev/null || true
@@ -90,18 +152,18 @@ FMT="query,target,theader,fident,alnlen,qcov,tcov,evalue,bits,alntmscore,prob"
 HITARG=""
 for db in pdb cath afproteome; do
   [ -s $FSDB/$db.dbtype ] || { echo "no foldseek db $db at $FSDB" >&2; continue; }
-  foldseek easy-search $OUT/folds $FSDB/$db $W/hits_$db.tsv $W/tmp_$db \
+  foldseek easy-search $FOLDS $FSDB/$db $W/hits_$db$SUF.tsv $W/tmp_$db \
       --format-output "$FMT" --alignment-type 1 -e 10 --max-seqs 1000 \
       --threads $CPU -v 1
-  cp $W/hits_$db.tsv $OUT/hits_$db.tsv
-  HITARG="$HITARG,$db=$OUT/hits_$db.tsv"
+  cp $W/hits_$db$SUF.tsv $OUT/hits_$db$SUF.tsv
+  HITARG="$HITARG,$db=$OUT/hits_$db$SUF.tsv"
 done
 
 # --- 4. one fold call per candidate
-$PY $A/bin/fold_report.py --hits "${HITARG#,}" --plddt $OUT/folds/plddt.tsv \
-    --candidates $OUT/jem/candidates.tsv --out $OUT/fold_calls.tsv
+$PY $A/bin/fold_report.py --hits "${HITARG#,}" --plddt $FOLDS/plddt.tsv \
+    --candidates $OUT/jem/candidates.tsv --out $OUT/fold_calls$SUF.tsv
 echo "=== fold calls, best 25 by TM-score ==="
-head -26 $OUT/fold_calls.tsv | cut -f1,2,5,6,9 | column -t -s $'\t'
+head -26 $OUT/fold_calls$SUF.tsv | cut -f1,2,5,6,9 | column -t -s $'\t'
 
 # --- 5. host panel, built identically for both liverworts (the isolation host is unrecorded)
 $PY $A/bin/plant_panel.py --dir $PANELS --locustags MPTAK,MPALE --out $OUT/plant_panel || \
