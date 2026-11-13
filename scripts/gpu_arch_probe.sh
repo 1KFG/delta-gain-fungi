@@ -51,7 +51,11 @@ sm = f"sm_{cap[0]}{cap[1]}"
 archs = torch.cuda.get_arch_list()
 print("device", torch.cuda.get_device_name(0), sm)
 print("built_for", archs)
-print("arch_match", "YES" if sm in archs else f"NO - relies on PTX JIT from {archs[-1] if archs else 'nothing'}")
+# A card absent from the list is not automatically broken: CUDA can JIT from embedded PTX, or
+# run a binary built for an earlier arch of the same family. Which of those happens is not
+# knowable from here, so do not guess a source - the matmul and fold checks below decide it.
+# (Measured: ada6000 is sm_89, absent from torch 2.8.0+cu128's list, and passes both.)
+print("arch_match", "YES" if sm in archs else "NO - not in the list; the checks below decide")
 
 # 2. correctness, not just absence of a crash
 torch.manual_seed(0)
