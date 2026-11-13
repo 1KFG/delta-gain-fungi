@@ -119,7 +119,16 @@ def load_model(backend, device, chunk, torch):
             ids = ids.cuda()
         out = model(ids)
         pdb = model.output_to_pdb(out)[0]
-        plddt = float(out["plddt"][0, :, 1].mean()) * 100.0
+        # Match fair-esm's mean_plddt exactly: the mask-weighted mean over all 37 atom slots,
+        # not the CA column. transformers returns plddt as (batch, residues, 37) on a 0-1 scale
+        # with atom37_atom_exists as the mask; fair-esm computes
+        #   (plddt * atom37_atom_exists).sum() / atom37_atom_exists.sum()
+        # and scales by 100. Averaging CA only instead inflates the score by about 3 points,
+        # because backbone atoms are predicted better than side chains - measured on the 559
+        # Mucor candidates, mean 57.9 vs 54.9, and it moved 31 of them across the pLDDT 70 line
+        # that fold_report.py uses. That is a units bug masquerading as a backend difference.
+        p, m = out["plddt"][0], out["atom37_atom_exists"][0]
+        plddt = float((p * m).sum() / m.sum()) * 100.0
         ptm = float(out["ptm"])
         return pdb, plddt, ptm
 
