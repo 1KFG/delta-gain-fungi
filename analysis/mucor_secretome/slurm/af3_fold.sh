@@ -119,7 +119,8 @@ if [ "$missing" -gt 0 ]; then
   echo "task $TASK done; $missing of ${#JOBS[@]} predictions still missing - no report written"
   exit 0
 fi
-$PY $A/bin/af3_report.py --dir $OUT/pred --controls $OUT/controls.tsv --out $OUT/af3_scores.tsv
+$PY $A/bin/af3_report.py --dir $OUT/pred --controls $OUT/controls.tsv \
+    --jobs-dir $OUT/pairs --out $OUT/af3_scores.tsv
 echo "=== best 20 ==="
 head -21 $OUT/af3_scores.tsv | cut -f1,2,3,6,7,8 | column -t -s $'\t'
 echo "done $(date +%T)"
