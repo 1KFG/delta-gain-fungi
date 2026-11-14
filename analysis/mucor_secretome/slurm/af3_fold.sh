@@ -44,6 +44,17 @@ mkdir -p $OUT/pairs $OUT/pred
 TASK=${SLURM_ARRAY_TASK_ID:-0}
 NTASK=${SLURM_ARRAY_TASK_COUNT:-1}
 
+# AF3 3.0.2 writes its output under the job name AS GIVEN, e.g. pred/CTRL_4EBZ_03a7bf__CO4/
+# CTRL_4EBZ_03a7bf__CO4_summary_confidences.json. These scripts assumed it lowercased the name.
+# It does not, so every "is this already done?" test silently failed: nothing was ever skipped,
+# every rerun refolded the whole panel from scratch, and the completeness gate never fired, so
+# the report was never written even when all 196 and all 426 predictions existed. Accept either
+# spelling, the way bin/af3_input.py's find_msa already does.
+af3_done() {   # af3_done <dir> <name> <suffix>
+  local d=$1 n=$2 sfx=$3
+  [ -s "$d/$n/${n}${sfx}" ] || [ -s "$d/${n,,}/${n,,}${sfx}" ] || [ -s "$d/${n,,}/${n}${sfx}" ]
+}
+
 nvidia-smi --query-gpu=name,compute_cap --format=csv,noheader || true
 # Fail fast rather than spend the whole allocation on CPU. AF3 falls back silently otherwise,
 # and a 30-day exfab job doing that is the expensive version of this mistake.
@@ -85,7 +96,7 @@ for i in "${!JOBS[@]}"; do
   [ $(( i % NTASK )) -eq "$TASK" ] || continue
   j="${JOBS[$i]}"
   n=$(basename "$j" .json)
-  if [ -s "$OUT/pred/${n,,}/${n,,}_summary_confidences.json" ]; then continue; fi
+  if af3_done "$OUT/pred" "$n" _summary_confidences.json; then continue; fi
   echo "=== $n $(date +%T)"
   $AF3 --json_path="$j" --output_dir="$OUT/pred" --db_dir="$ALPHAFOLD_DB" \
        --model_dir="$ALPHAFOLD_DB/model" --norun_data_pipeline --force_output_dir \
@@ -102,7 +113,7 @@ done
 missing=0
 for j in "${JOBS[@]}"; do
   n=$(basename "$j" .json)
-  [ -s "$OUT/pred/${n,,}/${n,,}_summary_confidences.json" ] || missing=$(( missing + 1 ))
+  af3_done "$OUT/pred" "$n" _summary_confidences.json || missing=$(( missing + 1 ))
 done
 if [ "$missing" -gt 0 ]; then
   echo "task $TASK done; $missing of ${#JOBS[@]} predictions still missing - no report written"
