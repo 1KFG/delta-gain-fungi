@@ -56,6 +56,12 @@ sys.exit(0 if any(x.platform == 'gpu' for x in d) else 'ABORT: no GPU visible to
 
 # Task 0 builds the job JSONs; the others wait for them, so one submission does both.
 if [ "$TASK" = "0" ]; then
+  # pairs/ is derived from panel.faa every run, so clear it first. Leaving it means a job from a
+  # previous panel is folded again: after the controls were renamed, 23 stale CTRL_6Q76_1/_2
+  # pairs survived here and failed a second time (job 32071549), while pred/ kept their empty
+  # directories and the completeness check then refused to write the report. Nothing in pairs/ is
+  # expensive - the MSAs live in msas/ and are untouched.
+  rm -f $OUT/pairs/*.json $OUT/pairs/.ready
   if [ "$SET" = "chitin" ]; then
     $PY $A/bin/af3_input.py pairs --fasta $OUT/panel.faa --a $OUT/fungal.txt --b $OUT/host.txt \
         --msa-dir $OUT/msas --out $OUT/pairs
@@ -90,6 +96,9 @@ done
 # Whichever task finishes last does that; if several finish together they write the same file
 # from the same inputs, which is harmless. A set left incomplete by a timeout writes nothing and
 # says so, instead of producing a report that silently covers part of the panel.
+# Completeness is judged against the CURRENT job list, not against whatever pred/ happens to
+# hold: a directory left behind by an earlier panel is not a missing prediction, it is a
+# leftover, and counting it would block the report forever.
 missing=0
 for j in "${JOBS[@]}"; do
   n=$(basename "$j" .json)
