@@ -20,7 +20,7 @@ which genomes count as "relatives" when measuring how lineage-restricted a candi
 |---|---|---|
 | 1 | JEM1 is *Mucor hiemalis*, JEM2 is *M. circinelloides* — `samples.csv` was right | High (ITS, controls passed) |
 | 2 | BFD's only "*M. hiemalis*" genome (`GCA_977110905.1`) is **not** *M. hiemalis* | High (its own ITS) |
-| 3 | JEM2's raw assembly is ~2,233 contigs of *Fusarium*; the cleaned assembly used for annotation is free of it | High (positive control fired) |
+| 3 | JEM2's raw assembly is ~2,233 contigs of *Fusarium*; neither cleaned assembly nor either proteome retains any | High (rDNA and protein level, both controlled) |
 | 4 | 1,344 secreted candidates across the two strains; 99 are chitin/chitosan-active | High |
 | 5 | Chitin-active candidates fold confidently to deacetylase, LysM and cerato-platanin scaffolds | High (TM ≥ 0.93, pLDDT ≥ 71) |
 | 6 | A protein with **no Pfam domain** is a cerato-platanin by structure | Moderate (TM 0.84, pLDDT 71) |
@@ -75,6 +75,33 @@ effector. Verified directly rather than assumed:
 
 The positive control firing while the cleaned assemblies stay at zero is what makes this a
 result rather than an absence of evidence.
+
+That test has one blind spot: it is an rDNA search, so it can only see a contaminant contig that
+carries an rRNA array. A *Fusarium* contig without one would pass it, and its proteins would be
+scored as *Mucor* effectors. The proteomes were therefore compared directly against six
+*Fusarium* proteomes from BFD (of 2,099 available) with diamond, using **JEM1 — never
+contaminated — as the negative control**.
+
+| | Proteins | Any *Fusarium* hit | ≥ 90 % id | ≥ 95 % id |
+|---|---|---|---|---|
+| **JEM1** (control) | 11,487 | 3,635 | **19** | 4 |
+| **JEM2** (was contaminated) | 11,485 | 3,735 | **21** | 6 |
+
+Identity distribution of the best hit per protein:
+
+| % identity | 30–39 | 40–49 | 50–59 | 60–69 | 70–79 | 80–89 | 90–99 |
+|---|---|---|---|---|---|---|---|
+| JEM1 | 1,072 | 903 | 630 | 376 | 207 | 55 | 19 |
+| JEM2 | 1,063 | 972 | 622 | 400 | 201 | 66 | 21 |
+
+**JEM2 shows no excess over JEM1 at any identity**, and the two distributions are
+superimposable. A surviving contaminant would have appeared as a JEM2-only cluster of
+near-identical proteins. The ≥ 90 % proteins in both strains are the canonical ultra-conserved
+eukaryotic set — histones, actin, ribosomal L44, Arf/Ras GTPases, ATG8, TBP, EF-Tu — which sit
+at that identity across fungal phyla by nature.
+
+**Conclusion: no detectable *Fusarium* protein in either proteome.** The candidate effectors are
+*Mucor* proteins.
 
 ## 3. Annotation
 

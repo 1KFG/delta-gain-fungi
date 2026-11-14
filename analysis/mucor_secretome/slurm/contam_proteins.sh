@@ -42,8 +42,10 @@ SQL
 sed -i "s#\${W}#$(readlink -f $W)#" $W/q.sql
 ( cd $RUNS/tables && duckdb < $W/q.sql )
 echo "Fusarium genomes in BFD: $(( $(wc -l < $W/fusarium.tsv) - 1 ))"
-# a handful is plenty - this asks "is this protein Fusarium", not "which Fusarium"
-tail -n +2 $W/fusarium.tsv | head -6 | cut -f1 | sort -u > $W/fus_locustags.txt
+# A handful is plenty - this asks "is this protein Fusarium", not "which Fusarium". Written with
+# awk rather than `tail | head`, because head exits early, tail takes SIGPIPE, and under
+# `set -o pipefail` that non-zero status ends the job (it did: 32050463).
+awk -F'\t' 'NR>1 && n<6 {print $1; n++}' $W/fusarium.tsv | sort -u > $W/fus_locustags.txt
 cat $W/fus_locustags.txt
 $PY $A/bin/extract_proteins.py --seqdb-index $RUNS/seqdb/genomes.tsv \
     --locustags $W/fus_locustags.txt --threads $CPU --out $W/fusarium.faa
