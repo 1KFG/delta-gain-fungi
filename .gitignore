@@ -43,3 +43,8 @@ data_external/
 analysis/*/cache/
 analysis/*/out/
 data_external/
+
+# Python bytecode caches. 15 .pyc files were committed by accident and showed up
+# modified on every run; they are build output, not source.
+__pycache__/
+*.pyc
