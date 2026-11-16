@@ -142,8 +142,10 @@ p4b <- ggplot(pr, aes(bin, declined_frac, colour = caller, group = caller)) +
   scale_colour_manual(values = caller_col, guide = "none") +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   labs(x = "identity to nearest surviving reference (%)", y = "declined to call",
-       subtitle = paste("Declined / tested. Every miss by the 187-leaf caller is an abstention;",
-                        "the 19-reference caller's misses are mostly wrong calls.")) +
+       # Two lines on purpose: as one line this runs off the 6.5 in canvas and the
+       # right-hand half of the sentence is clipped out of the PNG and the PDF.
+       subtitle = paste0("Declined / tested. Every miss by the 187-leaf caller is an abstention;\n",
+                         "the 19-reference caller's misses are mostly wrong calls.")) +
   theme_fig
 save_fig(p4a / p4b + plot_layout(heights = c(3, 1.3)), "fig4_matched_identity", 6.5, 6.5)
 
