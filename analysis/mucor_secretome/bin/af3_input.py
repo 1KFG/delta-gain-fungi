@@ -91,7 +91,10 @@ def extract_msas(path):
             continue
         out[p["id"]] = {"unpairedMsa": p.get("unpairedMsa", "") or "",
                         "pairedMsa": p.get("pairedMsa", "") or "",
-                        "templates": p.get("templates", []) or []}
+                        "templates": p.get("templates", []) or [],
+                        # kept so the caller can check the MSA belongs to the sequence it is
+                        # about to be attached to; stripped before the job JSON is written
+                        "_query_seq": p.get("sequence", "") or ""}
     return out
 
 
@@ -106,13 +109,37 @@ def find_msa(msa_dir, name):
     return None
 
 
-def msa_for(msa_dir, name):
-    """-> the single-chain MSA block for `name`, or None if its data run is missing."""
+def msa_query_seq(msa):
+    """The sequence the MSA was actually built for, or None."""
+    return (msa or {}).get("_query_seq")
+
+
+def msa_for(msa_dir, name, seq=None):
+    """-> the single-chain MSA block for `name`, or None if missing or built for another chain.
+
+    The `seq` check is not pedantry. MSAs are looked up by chain name, and the control chains are
+    named CTRL_<pdb>_<n> by their position in an RCSB fetch that af3_prepare.sh repeats on every
+    run. Re-running prepare can therefore move a name onto a different chain while the stage-1
+    MSAs under msas/ still belong to the old one. The job JSON then carries a sequence of one
+    length with an alignment of another, and AF3 fails in featurising with nothing that points at
+    the cause - which is what happened to all 26 control predictions in job 32069698 (A was 68 aa
+    carrying the 75 aa chain's MSA, and B the reverse). Proteins with real locus tags are immune,
+    which is why the other 170 jobs were fine.
+    """
     p = find_msa(msa_dir, name)
     if not p:
         return None
     m = extract_msas(p)
-    return m.get("A") or (list(m.values())[0] if m else None)
+    msa = m.get("A") or (list(m.values())[0] if m else None)
+    if msa is None:
+        return None
+    if seq is not None:
+        q = msa.get("_query_seq") or ""
+        if q and q != seq:
+            print(f"MSA for {name} was built for a {len(q)} aa sequence but the panel has "
+                  f"{len(seq)} aa - stale MSA, refusing to pair them", file=sys.stderr)
+            return None
+    return {k: v for k, v in msa.items() if not k.startswith("_")}
 
 
 def write(job, out_dir):
@@ -138,6 +165,13 @@ def main(argv=None):
         s.add_argument("--seed", type=int, default=1)
         if cmd == "single":
             s.add_argument("--ids", help="subset of the FASTA to write")
+            # Optional, and the two uses are opposites. Stage 1 (slurm/af3_msa.sh) calls `single`
+            # WITHOUT it, because the whole point of that run is to let the data pipeline build
+            # the MSA. Stage 2 (slurm/af3_fold.sh) runs with --norun_data_pipeline and must pass
+            # it, or every job is a bare sequence with no alignment and AF3 dies in featurising -
+            # which is exactly what happened to all 426 unknowns in job 32069699.
+            s.add_argument("--msa-dir", help="attach the MSA each chain's stage-1 run produced; "
+                                             "required when folding with --norun_data_pipeline")
         else:
             s.add_argument("--msa-dir", required=True)
         if cmd == "pairs":
@@ -157,16 +191,24 @@ def main(argv=None):
             if name not in seqs:
                 missing.append(name)
                 continue
-            write(job_json(name, [protein_entry("A", seqs[name])], seed=a.seed), a.out)
+            m = None
+            if a.msa_dir:
+                m = msa_for(a.msa_dir, name, seqs[name])
+                if m is None:
+                    # Writing it anyway would produce a job that fails in featurising rather
+                    # than one that is obviously absent; report it instead.
+                    missing.append(name)
+                    continue
+            write(job_json(name, [protein_entry("A", seqs[name], m)], seed=a.seed), a.out)
             n_written += 1
     elif a.cmd == "pairs":
         for x in read_ids(a.a):
-            mx = msa_for(a.msa_dir, x)
+            mx = msa_for(a.msa_dir, x, seqs.get(x))
             if x not in seqs or mx is None:
                 missing.append(x)
                 continue
             for y in read_ids(a.b):
-                my = msa_for(a.msa_dir, y)
+                my = msa_for(a.msa_dir, y, seqs.get(y))
                 if y not in seqs or my is None:
                     missing.append(y)
                     continue
@@ -178,7 +220,7 @@ def main(argv=None):
     else:
         lengths = [int(x) for x in a.nag.split(",") if x]
         for name in read_ids(a.ids):
-            m = msa_for(a.msa_dir, name)
+            m = msa_for(a.msa_dir, name, seqs.get(name))
             if name not in seqs or m is None:
                 missing.append(name)
                 continue

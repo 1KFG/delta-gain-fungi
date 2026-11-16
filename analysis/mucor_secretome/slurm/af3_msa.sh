@@ -27,6 +27,17 @@ module load alphafold/3.0.2
 
 TASK=${SLURM_ARRAY_TASK_ID:-0}
 NTASK=${SLURM_ARRAY_TASK_COUNT:-1}
+
+# AF3 3.0.2 writes its output under the job name AS GIVEN, e.g. pred/CTRL_4EBZ_03a7bf__CO4/
+# CTRL_4EBZ_03a7bf__CO4_summary_confidences.json. These scripts assumed it lowercased the name.
+# It does not, so every "is this already done?" test silently failed: nothing was ever skipped,
+# every rerun refolded the whole panel from scratch, and the completeness gate never fired, so
+# the report was never written even when all 196 and all 426 predictions existed. Accept either
+# spelling, the way bin/af3_input.py's find_msa already does.
+af3_done() {   # af3_done <dir> <name> <suffix>
+  local d=$1 n=$2 sfx=$3
+  [ -s "$d/$n/${n}${sfx}" ] || [ -s "$d/${n,,}/${n,,}${sfx}" ] || [ -s "$d/${n,,}/${n}${sfx}" ]
+}
 # Task 0 builds the job JSONs; the others wait for them, so one submission does both.
 if [ "$TASK" = "0" ]; then
   $PY -W ignore -m unittest discover -s $A/test
@@ -43,7 +54,7 @@ for i in "${!JOBS[@]}"; do
   j="${JOBS[$i]}"
   n=$(basename "$j" .json)
   # resumable: a chain whose data JSON exists is already done
-  if [ -s "$OUT/msas/${n,,}/${n,,}_data.json" ]; then echo "skip $n"; continue; fi
+  if af3_done "$OUT/msas" "$n" _data.json; then echo "skip $n"; continue; fi
   echo "=== $n $(date +%T)"
   $AF3 --json_path="$j" --output_dir="$OUT/msas" --db_dir="$ALPHAFOLD_DB" \
        --model_dir="$ALPHAFOLD_DB/model" --norun_inference --jackhmmer_n_cpu=8 \

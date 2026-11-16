@@ -23,9 +23,12 @@ which genomes count as "relatives" when measuring how lineage-restricted a candi
 | 3 | JEM2's raw assembly is ~2,233 contigs of *Fusarium*; neither cleaned assembly nor either proteome retains any | High (rDNA and protein level, both controlled) |
 | 4 | 1,344 secreted candidates across the two strains; 99 are chitin/chitosan-active | High |
 | 5 | Chitin-active candidates fold confidently to deacetylase, LysM and cerato-platanin scaffolds | High (TM ≥ 0.93, pLDDT ≥ 71) |
-| 6 | A protein with **no Pfam domain** is a cerato-platanin by structure | Moderate (TM 0.84, pLDDT 71) |
+| 6 | A protein with **no Pfam domain** is a cerato-platanin by structure | Moderate (TM 0.84, pLDDT 72 — just over the 70 cutoff) |
 | 7 | JEM1 has ~8× more strain-specific secreted proteins than JEM2 after controlling for reference sampling | Moderate — see caveat |
 | 8 | Both *Marchantia* species carry comparable LysM receptor complements | High |
+| 9 | One chitinase domain–containing protein (`JEM1MUCOR_000290`) reaches three host LysM receptors at iPTM 0.54–0.73 | Moderate (replicated across receptors; below the 0.91 positive control) |
+| 10 | Two LysM-domain candidates are **discounted**: a plant-vs-plant LysM pair scores 0.84, above every fungal hit | High — see §9.3 |
+| 11 | 76 of 426 proteins ESMFold could not fold are confidently folded by AF3 with MSAs | High (pTM ≥ 0.7) |
 
 ---
 
@@ -194,6 +197,23 @@ ESMFold (single-sequence, so no MSA and nothing leaves the cluster) on 640 candi
 modelled, 81 skipped as > 400 aa. Foldseek against PDB100, CATH50 and the AlphaFold proteome
 set, fold called at TM-score ≥ 0.5 with pLDDT ≥ 70.
 
+::: {.callout-note}
+## Which ESMFold
+
+These numbers are from the **HuggingFace `transformers` implementation** of ESMFold
+(`facebook/esmfold_v1`), not the `fair-esm` package used in the first run. The weights are the
+same; the code is not. The change was made because `fair-esm` requires `openfold` and its
+compiled CUDA kernels, which pin it to the cluster's Python 3.7 / torch 1.13 module and therefore
+to a single GPU type — 24 cards of 84. The `transformers` implementation vendors the structure
+module in pure torch and runs on all of them.
+
+Both backends were run over the same 559 proteins and compared. Mean pLDDT agrees to **−0.0**
+(max difference on any protein 5.1), and **1 of 559** proteins crosses the pLDDT 70 line between
+them. **18 of 559 change `fold_call` class**, mostly around that threshold: `assigned` 132 → 133,
+`no_match` 42 → 37, `low_confidence` 385 → 389. The fold assignments reported below are
+unchanged in identity.
+:::
+
 | Fold set | assigned | low_confidence | no_match |
 |---|---|---|---|
 | **chitin_active** | **35 (95 %)** | 2 | 0 |
@@ -280,20 +300,96 @@ For LysM biology the decisive interaction is protein–**ligand**, not protein�
 screen models effector + (GlcNAc)ₙ and receptor ectodomain + (GlcNAc)ₙ at n = 4 and 7 and
 compares binding, rather than relying on protein–protein iPTM alone.
 
-## 9. In progress
+## 9. The AlphaFold 3 screen
 
-* **AlphaFold 3, chitin panel** — the folds above against both species' LysM ectodomains and
-  chitinases, plus CO4/CO7 ligands. MSAs computed once per chain and reused across pairs.
-* **AlphaFold 3, unknowns** — the ~300 candidates ESMFold left below pLDDT 70. Most are
-  `mucorales_wide`, so homologues exist and an MSA-based predictor has something to work with.
+Two panels, both complete: 196 chitin-panel jobs (128 fungal × host pairs, 32 pairs involving a
+control chain, 36 ligand runs) and 426 monomers of the set ESMFold could not fold. MSAs were
+computed once per chain and reused.
 
-**Controls are built in.** iPTM has no universal threshold, and the AlphaFold-Multimer figures
-(> 0.8 confident, < 0.6 likely wrong) were calibrated on large complexes, not small
-cysteine-rich effectors, where false negatives are common. The run includes 4EBZ (AtCERK1 LysM
-ectodomain with chito-oligosaccharide) and 6Q76 (AVR-PikD with the Pikp-1 HMA domain) as
-positives and a cross-pairing as negative. `bin/af3_report.py` prints the controls first and
-applies no threshold of its own: a cut is only worth using if the positives clear it and the
-negatives do not.
+### 9.1 Where the threshold comes from
+
+iPTM has no universal cut, and the AlphaFold-Multimer figures (> 0.8 confident, < 0.6 likely
+wrong) were calibrated on large complexes, not small cysteine-rich effectors. So the cut is taken
+from this run's own controls and its own background.
+
+| | iPTM |
+|---|---|
+| **Positive control** — AVR-PikD × Pikp-1 HMA (6Q76), a known effector–target pair | **0.91** |
+| **Negative control** — AVR-PikD × an unrelated *Marchantia* protein | **0.13** |
+| Panel background — 128 fungal × host pairs | median **0.16**, p95 **0.38**, p99 **0.67** |
+
+The negative control (0.13) sits just below the median of the panel's own background (0.16),
+which is the result that makes the rest interpretable: the screen's bulk behaviour *is* the
+no-interaction case, so the background is a usable empirical null rather than an assumption.
+
+**Call line: iPTM ≥ 0.5** — above the 95th percentile of the panel's own null, and about four
+times the negative control. **Nothing in the panel reaches the positive control's 0.91**, so
+every candidate below is weaker evidence than a known effector–target pair, and the five are
+reported as ranked candidates, not as interactions.
+
+### 9.2 What clears it
+
+Five of 128 fungal × host pairs, all with the fungal protein from JEM1 and every host partner a
+LysM receptor ectodomain.
+
+| iPTM | Fungal protein | Fold (§6) | Host receptor |
+|---|---|---|---|
+| **0.73** | JEM1MUCOR_000290 | chitinase domain–containing | MPALE_KAG6550119.1 |
+| **0.67** | JEM1MUCOR_000290 | *same protein* | MPTAK_BFI22390.1 |
+| **0.66** | JEM1MUCOR_004460 | LysM domain | MPTAK_BFI22390.1 |
+| **0.54** | JEM1MUCOR_000290 | *same protein* | MPTAK_BFI16518.1 |
+| **0.50** | JEM1MUCOR_009286 | chitin deacetylase | MPTAK_BFI22390.1 |
+
+**The one result that rests on replication rather than a single number** is `JEM1MUCOR_000290`,
+a chitinase domain–containing protein (§6: TM 0.92, pLDDT 84). It is the top hit and it reaches
+three of the eight host receptors independently, at 0.73, 0.67 and 0.54. One high score in 128
+tries is what a null distribution produces; the same chain recurring across three receptors is
+not.
+
+Neither the cerato-platanin (`JEM1MUCOR_001522`, best 0.39) nor any JEM2 protein clears 0.5.
+
+### 9.3 A control that argues against two of the five
+
+The AtCERK1 LysM ectodomain (4EBZ) was included as a ligand-binding positive. Paired instead with
+a *Marchantia* LysM receptor it scores **0.84 — higher than any fungal candidate in the panel.**
+
+Both chains are LysM domains, and neither is the other's effector. That puts a number on how much
+iPTM "LysM meeting LysM" earns on fold compatibility alone, and it is more than any result in
+§9.2. **The two LysM-domain candidates (`JEM1MUCOR_004460` at 0.66, and `JEM1MUCOR_005242` at
+0.38) should therefore be discounted**: their scores are consistent with domain-family
+compatibility and require no interaction. The chitinase-domain and deacetylase hits are not
+explained by it, though both are chitin-binding proteins paired with chitin-binding receptors,
+which is a weaker version of the same concern.
+
+This control was not planned for this purpose — it fell out of the cross-pairing — and it is the
+most informative single row in the table.
+
+### 9.4 Ligands
+
+Of 32 ligand runs (effector or receptor with (GlcNAc)₄ and (GlcNAc)₇), 16 reach pTM ≥ 0.8. The
+4EBZ positive controls score 0.86 (CO4) and 0.77 (CO7), reproducing the solved complex.
+
+### 9.5 The unknowns: MSAs rescue about a sixth
+
+426 proteins that ESMFold left below pLDDT 70, re-folded by AF3 with real MSAs.
+
+| AF3 pTM | n | % |
+|---|---|---|
+| ≥ 0.8 | 8 | 1.9 % |
+| **≥ 0.7** | **76** | **17.8 %** |
+| ≥ 0.6 | 110 | 25.8 % |
+| ≥ 0.5 | 127 | 29.8 % |
+
+Median pTM is 0.30, so most of this set remains unfoldable — but **76 proteins that
+single-sequence ESMFold could not fold are confidently folded once an alignment is supplied**,
+including several that ESMFold scored below pLDDT 55 (e.g. `JEM2MUCOR_006063`, pLDDT 55 → pTM
+0.87; `JEM1MUCOR_009296`, 54 → 0.81; `F00CDB58_001070`, 48 → 0.78).
+
+This tests the prediction made in §6 — that the unfoldable set is mostly `mucorales_wide`, so
+homologues exist and an MSA-based predictor has something to work with — and confirms it for
+about a sixth of them. The remaining ~70 % stay ambiguous between prediction failure and genuine
+disorder, which §10.6 notes is itself a real effector phenotype. These 76 are now the obvious
+input to a second structural pass.
 
 ## 10. Limitations
 
@@ -308,8 +404,17 @@ negatives do not.
    symmetrically; knowing it would let them be weighted.
 6. **ESMFold's low-pLDDT models are ambiguous.** Low confidence may mean prediction failure or
    genuine disorder — small, cysteine-rich, secreted and unstructured-until-bound is a real
-   effector phenotype. The pTM values near 0.1 suggest both are present. The AF3 re-run is what
-   separates them.
+   effector phenotype. The AF3 re-run (§9.5) separates them for 76 of 426; the remaining ~70 %
+   stay ambiguous.
+7. **The AF3 screen ranks candidates; it does not identify interactions.** Nothing in the panel
+   reaches the positive control, one candidate rests on replication across three receptors rather
+   than on its score, and §9.3 shows that chitin-binding domains paired with chitin-binding
+   receptors score well without any interaction being implied. These are proteins worth assaying,
+   in an order; they are not findings.
+8. **Fold calls come from the `transformers` ESMFold backend** (§6 note), which differs from the
+   original `fair-esm` run for 18 of 559 proteins, nearly all at the pLDDT 70 boundary. The
+   cerato-platanin call sits at 72.0, two points above that cutoff — it is threshold-fragile and
+   should not be quoted as settled.
 
 ## 11. Upstream issues found
 

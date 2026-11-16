@@ -26,14 +26,42 @@ import os
 import sys
 
 
-def find_summaries(root):
-    """-> [(job_name, path to *_summary_confidences.json)]."""
+def job_names(jobs_dir):
+    """The jobs that were actually requested, from the JSONs af3_input.py wrote."""
+    if not jobs_dir or not os.path.isdir(jobs_dir):
+        return None
+    return {os.path.splitext(f)[0] for f in os.listdir(jobs_dir) if f.endswith(".json")}
+
+
+def find_summaries(root, jobs=None):
+    """-> [(job_name, path to the job's top-level *_summary_confidences.json)].
+
+    Deliberately NOT os.walk. AF3 writes one summary for the prediction and another inside every
+    seed-N_sample-M/ subdirectory, so walking produced six rows per job, five of them labelled
+    with the sample directory name rather than the job - 1,010 of 1,212 rows in the first chitin
+    report, carrying scores that then sorted into the "best" list with no way to tell what they
+    belonged to. Only the per-job summary is wanted, so look exactly one level down.
+
+    `jobs`, when given, is the set of currently requested job names: a prediction directory left
+    behind by an earlier panel is not a result. Six CTRL_4EBZ_1__* directories from before the
+    controls were renamed were otherwise reported alongside their renamed equivalents, with
+    identical scores.
+    """
     out = []
-    for dirpath, _dirs, files in os.walk(root):
-        for f in files:
-            if f.endswith("_summary_confidences.json"):
-                out.append((os.path.basename(dirpath), os.path.join(dirpath, f)))
-    return sorted(out)
+    for name in sorted(os.listdir(root)):
+        d = os.path.join(root, name)
+        if not os.path.isdir(d):
+            continue
+        if jobs is not None and name not in jobs:
+            print(f"ignoring {name}: not in the current job list", file=sys.stderr)
+            continue
+        for cand in (f"{name}_summary_confidences.json",
+                     f"{name.lower()}_summary_confidences.json"):
+            p = os.path.join(d, cand)
+            if os.path.exists(p):
+                out.append((name, p))
+                break
+    return out
 
 
 def parse_summary(path):
@@ -63,10 +91,10 @@ def split_name(job):
     return job, ""
 
 
-def rows_from(root, controls=None):
+def rows_from(root, controls=None, jobs=None):
     controls = controls or {}
     rows = []
-    for job, path in find_summaries(root):
+    for job, path in find_summaries(root, jobs):
         try:
             s = parse_summary(path)
         except (OSError, json.JSONDecodeError) as e:
@@ -91,6 +119,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--dir", required=True)
     ap.add_argument("--controls", help="TSV of job<TAB>role, marking control jobs")
+    ap.add_argument("--jobs-dir", help="directory of the job JSONs actually requested; "
+                                       "predictions left over from an earlier panel are ignored")
     ap.add_argument("--out", required=True)
     a = ap.parse_args(argv)
 
@@ -102,7 +132,7 @@ def main(argv=None):
                 if len(f) >= 2 and not line.startswith("#"):
                     controls[f[0]] = f[1]
 
-    rows = rows_from(a.dir, controls)
+    rows = rows_from(a.dir, controls, job_names(a.jobs_dir))
     cols = ["job", "kind", "control_role", "partner_a", "partner_b", "iptm", "ptm",
             "ranking_score", "fraction_disordered", "has_clash"]
 
