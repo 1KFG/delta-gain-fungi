@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DeltaGain: Report Overview – DeltaGain Reports</title>
+<title>DeltaGain: Reports – DeltaGain Reports</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -113,15 +113,25 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#available" id="toc-available" class="nav-link active" data-scroll-target="#available">Available</a>
+  <ul class="collapse">
+  <li><a href="#candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" id="toc-candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" class="nav-link" data-scroll-target="#candidate-effectors-of-two-mucor-strains-isolated-from-marchantia">Candidate effectors of two <em>Mucor</em> strains isolated from <em>Marchantia</em></a></li>
+  </ul></li>
+  <li><a href="#not-published-here" id="toc-not-published-here" class="nav-link" data-scroll-target="#not-published-here">Not published here</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">DeltaGain: Report Overview</h1>
+<h1 class="title">DeltaGain: Reports</h1>
 </div>
 
 
@@ -130,6 +140,12 @@ ul.task-list li input[type="checkbox"] {
 
     
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 15, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -138,16 +154,26 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Placeholder — no pipeline results are rendered here yet.</p>
-<p>Once Stage 1 (genome classification) and Stage 3 (protein novelty) have real run output under <code>../results/</code>, this page and its siblings will summarize:</p>
+<p>Rendered reports from the DeltaGain analyses. Each page is generated from a <code>REPORT.md</code> that lives beside the code that produced it, in <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis"><code>analysis/</code></a> — the page and the source therefore cannot drift.</p>
+<p>These are working analyses. Every result is computational; nothing here has been expressed, assayed or otherwise tested at the bench, and each report states its own limitations.</p>
+<section id="available" class="level2">
+<h2 class="anchored" data-anchor-id="available">Available</h2>
+<section id="candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" class="level3">
+<h3 class="anchored" data-anchor-id="candidate-effectors-of-two-mucor-strains-isolated-from-marchantia"><a href="mucor_secretome.html">Candidate effectors of two <em>Mucor</em> strains isolated from <em>Marchantia</em></a></h3>
+<p>Secretome prediction, structure prediction for the candidate effectors, and an AlphaFold3 interaction screen against a host receptor panel with the call threshold derived from the panel’s own controls. Also records eight silent pipeline failures found while running it, and the upstream reference-data problems the analysis ran into.</p>
+<p>Source: <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/mucor_secretome"><code>analysis/mucor_secretome/</code></a></p>
+</section>
+</section>
+<section id="not-published-here" class="level2">
+<h2 class="anchored" data-anchor-id="not-published-here">Not published here</h2>
+<p>Two finished bodies of work are in the repository but have no page on this site:</p>
 <ul>
-<li>Genome classification counts (redundant strain / novel strain / label mismatch / candidate novel species)</li>
-<li>Protein novelty screen results, per novelty axis (new fold / new domain architecture / new family member / taxonomic breadth / lineage expansion)</li>
-<li>UMAP/embedding-space figures, rarefaction curves, enrichment tables</li>
+<li><strong>The delta-gain funnel itself</strong> — the novelty-yield measurement this project is named for. It has run in full; the plan, status log and findings live on lab storage (<code>BFD/DeltaGain/docs/</code>) rather than in this repository, so there is nothing here to render. Publishing it waits on an open question about whether part of the enrichment signal reflects genuine novelty or only where the genomes were deposited.</li>
+<li><strong>The UPO (unspecific peroxygenase) clade annotation</strong> — <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO"><code>analysis/enzymes_UPO/</code></a>, including a findings report on gene-model and annotation problems found in BFD.</li>
 </ul>
-<p>See the <a href="https://github.com/1KFG/delta-gain">design doc</a> and project README for the full plan.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
