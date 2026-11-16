@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stajich Lab">
+<meta name="dcterms.date" content="2026-11-15">
+
+<title>Unspecific peroxygenases across 15,137 fungal genomes – DeltaGain Reports</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DeltaGain Reports</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../delta_gain/index.html"> 
+<span class="menu-text">Delta-gain funnel</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../y1000_deposition/index.html"> 
+<span class="menu-text">Y1000+ deposition</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../upo_clades/index.html" aria-current="page"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../mucor_secretome.html"> 
+<span class="menu-text">Mucor effectors</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#in-short" id="toc-in-short" class="nav-link active" data-scroll-target="#in-short">In short</a></li>
+  <li><a href="#the-census" id="toc-the-census" class="nav-link" data-scroll-target="#the-census">1. The census</a></li>
+  <li><a href="#novelty-is-deposition-not-biology" id="toc-novelty-is-deposition-not-biology" class="nav-link" data-scroll-target="#novelty-is-deposition-not-biology">2. Novelty is deposition, not biology</a></li>
+  <li><a href="#calling-clades-a-caller-that-refuses" id="toc-calling-clades-a-caller-that-refuses" class="nav-link" data-scroll-target="#calling-clades-a-caller-that-refuses">3. Calling clades: a caller that refuses</a>
+  <ul class="collapse">
+  <li><a href="#reading-table-t1-without-being-misled" id="toc-reading-table-t1-without-being-misled" class="nav-link" data-scroll-target="#reading-table-t1-without-being-misled">Reading Table T1 without being misled</a></li>
+  <li><a href="#what-is-reliable-and-where-it-stops" id="toc-what-is-reliable-and-where-it-stops" class="nav-link" data-scroll-target="#what-is-reliable-and-where-it-stops">What is reliable, and where it stops</a></li>
+  </ul></li>
+  <li><a href="#the-negative-results" id="toc-the-negative-results" class="nav-link" data-scroll-target="#the-negative-results">4. The negative results</a></li>
+  <li><a href="#what-to-assay" id="toc-what-to-assay" class="nav-link" data-scroll-target="#what-to-assay">5. What to assay</a></li>
+  <li><a href="#two-errors-found-in-bfd" id="toc-two-errors-found-in-bfd" class="nav-link" data-scroll-target="#two-errors-found-in-bfd">6. Two errors found in BFD</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">7. Limitations</a></li>
+  <li><a href="#what-would-change-this" id="toc-what-would-change-this" class="nav-link" data-scroll-target="#what-would-change-this">8. What would change this</a></li>
+  <li><a href="#the-deliverable" id="toc-the-deliverable" class="nav-link" data-scroll-target="#the-deliverable">The deliverable</a></li>
+  <li><a href="#figures" id="toc-figures" class="nav-link" data-scroll-target="#figures">Figures</a></li>
+  <li><a href="#source-documents" id="toc-source-documents" class="nav-link" data-scroll-target="#source-documents">Source documents</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unspecific peroxygenases across 15,137 fungal genomes</h1>
+<p class="subtitle lead">Census, clade calling, what the model can and cannot predict, and what to assay</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stajich Lab </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 15, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 16, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What this is
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A working analysis, not a finished study. Every clade call, site call and candidate here is a prediction from sequence and structure; <strong>no enzyme in this report has been expressed or assayed by us.</strong> Section 7 states the limitations and section 4 reports the results that came out negative, including four attempts to extend the model that failed their own tests.</p>
+<p>The report is explicit about where it stops: identifying PF01328 sites is validated (95/95 against the published structure-based matrix), ranking clade-V-like pockets is reliable for ordering candidates, and predicting whether an arbitrary protein is an active peroxygenase <strong>is not reliable</strong> (out-of-clade AUC 0.556). Section 3 explains why that is arithmetic rather than something reanalysis can fix.</p>
+<p>The source of truth is <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO"><code>analysis/enzymes_UPO/</code></a> in the repository; this page renders <code>REPORT.md</code> from that directory, so the two cannot drift. The 45 documents it synthesizes are listed at the end, and the per-protein table it describes is in the repository beside the code that built it.</p>
+</div>
+</div>
+<p><strong>What exists, what can be called reliably, and what cannot.</strong></p>
+<p>2026-11-15. A synthesis of the UPO workstream. Every number here is produced by code in this directory and stated with its own evidence document; where a result is negative or bounded, the bound is given rather than the headline. The documents this draws on are listed at the end, and the per-document detail is the authority — this page is the route through them.</p>
+<p>Unspecific peroxygenases (UPOs, Pfam <strong>PF01328</strong>) are secreted fungal heme-thiolate enzymes that transfer oxygen from H₂O₂ to unactivated C–H bonds. They do with a single cheap co-substrate what P450 monooxygenases need a reductase and NAD(P)H for, which is why they are of interest for synthesis. Fewer than thirty have been characterized biochemically.</p>
+<section id="in-short" class="level2">
+<h2 class="anchored" data-anchor-id="in-short">In short</h2>
+<ol type="1">
+<li><strong>The family is large and the catalytic machinery is common.</strong> 97,520 PF01328 proteins in 15,137 genomes; <strong>34,561 (35.4 %)</strong> carry the full catalytic core.</li>
+<li><strong>Almost none of it is sequence-novel, and the apparent novelty is a deposition artefact.</strong> All 7,055 representatives have an <code>nr</code> hit. Apparent novelty is 2.0 % for RefSeq-annotated genomes and 18.7 % for GenBank-only ones (z = 7.4).</li>
+<li><strong>What is genuinely new is lineage coverage, not sequence.</strong> Whole well-supported clades of UPO-like proteins contain no characterized enzyme at all.</li>
+<li><strong>Active-site identification is reliable; activity prediction outside clade V is not.</strong> 95/95 agreement on site assignment against the published structure-based matrix; out-of-clade AUC <strong>0.556 — chance</strong> — on predicting activity.</li>
+<li><strong>The clade caller refuses most of the database, by design.</strong> 78.9 % unassigned; 10.7 % carry a <code>reliable</code> call. Two independent callers agree 99.6 % above the trust boundary and 78.1 % below it.</li>
+<li><strong>Four attempts to break the ceiling all failed, and each failure was measured.</strong> Reference expansion made precision worse (80 % → 66 %); applicability distance failed as a confidence measure (p = 0.88); structural features from predicted models made the activity model worse (0.333); the Boltz-2 run hit its pre-declared kill switch and its 14 models were discarded.</li>
+<li><strong>Everything traces to one number: 19 characterized enzymes</strong>, three of five clades having one or two.</li>
+<li><strong>Two errors were found in BFD itself</strong> while building the candidate list — one of them affecting every consumer of the gene-model flags.</li>
+</ol>
+<hr>
+</section>
+<section id="the-census" class="level2">
+<h2 class="anchored" data-anchor-id="the-census">1. The census</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>PF01328 proteins in BFD</td>
+<td><strong>97,520</strong></td>
+</tr>
+<tr class="even">
+<td>genomes carrying at least one</td>
+<td><strong>15,137</strong></td>
+</tr>
+<tr class="odd">
+<td>carrying the full catalytic core (Cys39, Glu109, Asp111, Glu180; HspUPO numbering)</td>
+<td><strong>34,561 (35.4 %)</strong></td>
+</tr>
+<tr class="even">
+<td>site assignment coverage</td>
+<td>all 97,520; set-equal to BFD’s own PF01328 annotation, 0 missing, 0 extra</td>
+</tr>
+</tbody>
+</table>
+<p>Detail: <code>G1_FINDINGS.md</code>, <code>G1_BFD_SUMMARY.md</code>, <code>CENSUS.md</code>.</p>
+</section>
+<section id="novelty-is-deposition-not-biology" class="level2">
+<h2 class="anchored" data-anchor-id="novelty-is-deposition-not-biology">2. Novelty is deposition, not biology</h2>
+<p>The workstream began as “are there new UPOs in early-diverging fungi?” The answer is <strong>largely no</strong>, and the way it is no is the interesting part.</p>
+<p>Every one of the 7,055 catalytic-core representatives has a hit in <code>nr</code>. The apparent 18 % novelty splits cleanly by <strong>where the source genome was deposited</strong>: 2.0 % for genomes with a RefSeq (<code>GCF_</code>) annotation against 18.7 % for GenBank-only genomes, z = 7.4. A protein looks new when its genome’s proteins were never deposited in a form <code>nr</code> indexes.</p>
+<p>This is the same effect, in a different family, as the one measured for the delta-gain funnel’s enriched-Pfam result, where counting the Y1000+ yeast genomes as public removes three quarters of the novelty (<code>analysis/delta_gain_funnel/REPORT.md</code>). Two independent analyses in this repository now put a number on the same confound.</p>
+<p>Contamination was checked and is not the explanation: UPO genes sit on contigs <strong>more</strong> gene-rich than their genome’s typical contig (<code>G1_FINDINGS.md</code> §6).</p>
+<p><strong>What is new is lineage coverage.</strong> Several well-supported clades hold thousands of UPO-like proteins and not one characterized enzyme. That is what the candidate list targets.</p>
+</section>
+<section id="calling-clades-a-caller-that-refuses" class="level2">
+<h2 class="anchored" data-anchor-id="calling-clades-a-caller-that-refuses">3. Calling clades: a caller that refuses</h2>
+<p>The production clade call is <strong>phylogenetic placement</strong> (EPA) on a 187-leaf reference tree built in-house from Zamocky et al.&nbsp;2022, not nearest-neighbour identity to the 19 characterized enzymes. It replaced the earlier caller after direct comparison (<code>RECONCILIATION.md</code> §1).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig1_reference_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1. The 187-leaf UPO reference tree.</figcaption>
+</figure>
+</div>
+<p><em>Maximum likelihood (IQ-TREE, Q.PFAM+R7), rooted on Mucorales. Coloured sectors are Zamocky et al.&nbsp;2022’s lineages; the black arcs outside them are Clades I–V with SH-aLRT/UFBoot support. The 19 named tips are every characterized enzyme the field has. Note how few they are, and how unevenly they fall — Clades III and V hold most of them, Clades I and II almost none. That imbalance is the origin of every limit in this report. <a href="figures/out/fig1_reference_tree.pdf">PDF</a></em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>tier</th>
+<th>n</th>
+<th>%</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>unassigned</code></td>
+<td>76,913</td>
+<td>78.9</td>
+<td>no placement reached the 0.5 likelihood-weight threshold</td>
+</tr>
+<tr class="even">
+<td><code>extrapolated</code></td>
+<td>10,152</td>
+<td>10.4</td>
+<td>placed, below the trust boundary</td>
+</tr>
+<tr class="odd">
+<td><code>reliable</code></td>
+<td>10,455</td>
+<td>10.7</td>
+<td><strong>the usable set</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The 78.9 % is <strong>the caller declining, not failing</strong>. PF01328 is wider than the UPO clades, so most of these proteins are not expected to belong to any of them.</p>
+<p><strong>An external check on where the boundary sits.</strong> The table carries two clade calls made by methods that are not derived from each other — EPA placement and nearest-reference identity. They agree on <strong>99.6 %</strong> of <code>reliable</code> rows and <strong>78.1 %</strong> of <code>extrapolated</code> rows. The methods converge above the boundary and diverge below it, measured on real BFD proteins rather than on references. This does not show the calls are correct — two methods can agree and both be wrong, and both rest on the same 19 enzymes — only that the boundary drawn from reference tests reproduces on data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig4_matched_identity.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4. Matched-identity validation of both callers on the 19 characterized enzymes.</figcaption>
+</figure>
+</div>
+<p><em>Each enzyme is re-called with every reference above an identity ceiling removed, so the test asks what happens at a given distance from anything known. Upper panel: precision when the caller commits, with exact binomial 95 % CI and correct/committed counts. Lower panel: how often it declines. The 187-leaf caller (blue) is 16/16, 13/13, 4/4 and 14/14 — it does not make a wrong call at any distance — while the 19-reference caller (orange) falls to 3/8 at 45–55 % identity. The intervals are wide because n = 19; this shows the caller abstains rather than guesses, not that it is accurate to within a few percent. <a href="figures/out/fig4_matched_identity.pdf">PDF</a></em></p>
+<section id="reading-table-t1-without-being-misled" class="level3">
+<h3 class="anchored" data-anchor-id="reading-table-t1-without-being-misled">Reading Table T1 without being misled</h3>
+<p><code>figures/data/table_T1.md</code> gives per-clade references, support, BFD membership, catalytic core, Glu180 frequency and measured activity range. <strong>Its “BFD proteins” column and the tier table above count different things</strong>: Table T1 assigns every protein to its best placement regardless of confidence, so it partitions all 97,520, while the tier table applies the 0.5 threshold. Clade I shows 41,679 in one and 2,565 in the other for that reason. Clade I is also the same group as Zamocky’s <em>Basidiomycetous 3rd (Family II, long)</em>.</p>
+<p>Three caveats travel with that table and should not be separated from it:</p>
+<ul>
+<li><strong>The glomeromycete clade’s 784 members are not 784 glomeromycete UPOs.</strong> Only 121 are Glomeromycota; 360 are Dothideomycetes, and 585 of the 663 outsiders carry <code>long_pendant</code>. Report it as 121 plus 78 short-pendant others.</li>
+<li><strong>Basidiomycetous 1st holds ~2,265 ascomycete proteins that are <em>not</em> long-pendant</strong> — see §6.</li>
+<li><strong>Family I (short) has low node support</strong> (SH-aLRT/UFBoot 79.4/65); Clades III–V sit inside it.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig3_old_vs_placement.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3. What changed when placement replaced nearest-neighbour calling, for all 97,520 proteins.</figcaption>
+</figure>
+</div>
+<p><em>Flows are coloured by how much the <strong>old</strong> call could be trusted. Calls made inside the validated identity range (blue) mostly survive; extrapolated Clade III and V calls (orange) largely move to Clade IV or II, or leave Clades I–V altogether. <strong>This figure counts the way Table T1 does, not the way the tier table does</strong>: every protein is drawn at its best placement regardless of confidence, so “unassigned” here means </em>placed outside Clades I–V* (41,001) and not <em>below the 0.5 likelihood-weight threshold</em> (76,913). The two numbers answer different questions and the columns sum to 97,520 either way. <a href="figures/out/fig3_old_vs_placement.pdf">PDF</a>*</p>
+</section>
+<section id="what-is-reliable-and-where-it-stops" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-reliable-and-where-it-stops">What is reliable, and where it stops</h3>
+<p><code>MODEL_CARD.md</code> states the model as three tasks because the evidence differs sharply between them. Two are reliable. One is not.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>task</th>
+<th>status</th>
+<th>the number</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>A.</strong> Find PF01328 proteins, read active-site residues</td>
+<td><strong>Reliable</strong></td>
+<td>95/95 agreement with the published structure-based matrix; catalytic positions rank 6th, 12th, 15th of 186 match states</td>
+</tr>
+<tr class="even">
+<td><strong>B.</strong> Rank proteins by similarity to the clade-V aliphatic pocket</td>
+<td><strong>Reliable for ranking, on one substrate</strong></td>
+<td>LOO AUC 0.956, R² +0.496, permutation p = 0.0005</td>
+</tr>
+<tr class="odd">
+<td><strong>C.</strong> Predict whether an arbitrary protein is an active peroxygenase</td>
+<td><strong>Not reliable</strong></td>
+<td>out-of-clade AUC <strong>0.556</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>A low score is not evidence of inactivity.</strong> GmaUPO-II is 49.3 % active on 4-propylguaiacol and scores 1 of 5 pocket matches. Clade assignment does not rescue Task C.</p>
+<p><strong>Why Task C cannot be fixed by reanalysis.</strong> The out-of-clade activity distribution has a gap: GmaUPO-II at 49.3 %, then MphUPO at 2.7 %. No threshold between 3 % and 49 % changes the out-of-clade positive count from <strong>one</strong>. The constraint is arithmetic, not analytical.</p>
+</section>
+</section>
+<section id="the-negative-results" class="level2">
+<h2 class="anchored" data-anchor-id="the-negative-results">4. The negative results</h2>
+<p>These are the substance of the workstream, and they are reported because each was tested rather than assumed.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>question</th>
+<th>result</th>
+<th>where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Does the aliphatic pocket predict aromatic-ring activity?</td>
+<td><strong>No.</strong> r = +0.176, n = 19</td>
+<td><code>RESULT_T2_negative.md</code></td>
+</tr>
+<tr class="even">
+<td>Is T1 activity predicted by pocket, given clade?</td>
+<td><strong>Barely.</strong> partial r = +0.129 — it is the clade that predicts</td>
+<td><code>CALIBRATION_MATRIX.md</code> §8</td>
+</tr>
+<tr class="odd">
+<td>Can the reference set be expanded with confident BFD members?</td>
+<td><strong>No.</strong> Precision 80 % → 66 %; inferred labels propagate into topology</td>
+<td><code>PLACEMENT_FINDINGS.md</code></td>
+</tr>
+<tr class="even">
+<td>Can applicability distance give per-protein confidence?</td>
+<td><strong>No.</strong> Spearman with model skill −0.281, p = 0.88</td>
+<td><code>MODEL_VALIDATION.md</code> §F</td>
+</tr>
+<tr class="odd">
+<td>Do structural features from predicted models help?</td>
+<td><strong>No.</strong> Out-of-clade AUC 0.333, worse than sequence alone</td>
+<td><code>STRUCTURE_VS_RESIDUES.md</code></td>
+</tr>
+<tr class="even">
+<td>Are UPOs co-regulated with the CCAAT complex that Phase A implicated?</td>
+<td><strong>No.</strong> 15 RNA-seq libraries, median mapping 59.3 %; no treatment shifts the 12 UPOs as a class (p 0.14–0.79); UPOs correlate <em>less</em> with the CCAAT complex (+0.011) than with random genes (+0.097)</td>
+<td><code>G3_PHASE_B_RESULTS.md</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The Boltz-2 run and its kill switch.</strong> The plan declared in advance that if predicted channel widths failed to reproduce the five experimental ones, the other 14 models would be discarded. They failed. <strong>The 14 models were discarded</strong> and the conclusion recorded is that this cannot be done with predicted structures at this scale.</p>
+<p><strong>The channel-width question, with its reversals recorded.</strong> CAVER 3.0.2 gave ~1 Å bottlenecks and the first conclusion was that the ring rule does not transfer. That was <strong>wrong</strong> — 3.0.2 has a documented bug placing the start vertex in too narrow a cavity. CAVER 3.0.3 reproduced the published ordering and gave r = +0.933 on four enzymes. Adding the fifth structure (TteUPO, 9IZ8 — the widest channel measured, zero activity) dropped it to <strong>r = +0.452</strong>. TteUPO can be set aside on grounds recorded before that measurement, but that is a post-hoc exclusion rescuing a correlation, and n = 4 is not evidence. <code>CHANNEL_FINDINGS.md</code>.</p>
+<p><strong>One positive worth keeping.</strong> Phase A found that <strong>Clade IV is the only clade whose promoter motifs replicate across independent lineages and survive both controls</strong>, including a CCAAT box naming the CCAAT-binding complex twice (HAP3, HAP5) — <code>G3_FINDINGS.md</code>. Phase B then found no co-regulation in RNA-seq. The motif result stands; the regulatory interpretation does not.</p>
+</section>
+<section id="what-to-assay" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-assay">5. What to assay</h2>
+<p>Three lists, answering different questions. They can be run together.</p>
+<p><strong>37 lineage candidates</strong> (<code>CANDIDATES.md</code>) — rules written and committed <em>before</em> the selection was run, in 8 pools across clade IV and six uncharacterized lineages, one protein per genus, one per 70 % identity cluster. A result in pool A or B is a <strong>first measurement for a lineage</strong>. Suggested first set: 12. Pool C (Glu180 absent — the lineage trait itself) waits on the structure question.</p>
+<p><strong>A 96-protein panel</strong> (<code>ASSAY_PANEL.md</code>) — 84 predicted active, <strong>12 predicted inactive controls</strong>, 61 distinct pocket 5-mers, 79 species, 16 lineages, 93 % outside clade V. The controls are the point: GmaUPO-II shows the predicted-inactive cell is exactly where the model is known to fail, so assaying only predicted positives would measure precision and leave the false-negative rate unknown.</p>
+<p><strong>Six pre-registered external predictions</strong> (<code>EXTERNAL_VALIDATION.md</code>) — the cheapest experiment that would settle the model question. Six characterized UPOs already exist as purified enzymes elsewhere with no published 4-propylguaiacol number. Predictions recorded before any measurement: <strong>active</strong> DchUPO, DcaUPO; <strong>inactive</strong> CraUPO, MweUPO, PabUPO-II, UPO1_Codo. <strong>A failure among the predicted actives is the informative outcome</strong> — it would confirm the rule overcalls outside clade V, which is what the 0.556 warns about.</p>
+<p>Decision <strong>D1</strong> (Eurotiales sourcing for the <em>Pichia</em> construct) is recorded as <strong>moot</strong>: it rested on the pocket score, which does not predict anything of interest outside clade V (<code>PLAN.md</code>).</p>
+</section>
+<section id="two-errors-found-in-bfd" class="level2">
+<h2 class="anchored" data-anchor-id="two-errors-found-in-bfd">6. Two errors found in BFD</h2>
+<p>Both were found while building the candidate list, and both are recorded for BFD rather than worked around here (<code>bfd_findings/REPORT.md</code>).</p>
+<p><strong>Start/stop-codon flags are wrong, database-wide.</strong> The shortlist’s gene-model rule removed Mucorales and Glomeromycota proteins wholesale (83 % and 75 % flagged incomplete). They are not incomplete. Splicing 5,816 models from the assemblies showed <strong>99.3 % of flagged-missing starts and 99.8 % of flagged-missing stops are present</strong>; the true incomplete rate is ~0.2 %, not 10–60 %. The cause is case-sensitive codon matching against soft-masked genomes — a lower-case <code>atg</code> read as absent — which is why TAA stops are flagged missing more often (39.8 %) than TAG (18.8 %) or TGA (16.1 %). Fixed in Fungi_BFD <strong>fb1d7cd</strong>; <code>gene_transcripts.parquet</code> predates the fix. <strong>Any consumer that filtered on these flags silently dropped ~10 % of models BFD-wide and about half in Mucorales and Glomeromycota.</strong></p>
+<p><strong>An ascomycete lineage inside a basidiomycete clade.</strong> 2,265 of the 6,378 members of Basidiomycetous 1st are Ascomycota, in 2,190 genomes — almost all single-copy, in 47.5 % of Dothideomycetes and <strong>all 67 Orbiliomycetes genomes</strong>, attaching as close to the references as the clade’s basidiomycete members and carrying the clade’s Asn180 at the same frequency (87.4 %). Zamocky noted one ascomycete transfer into this clade; this is two orders of magnitude more. Spread across thousands of independent genomes at single copy, it is not contamination, and it is not one recent transfer. It fits an <strong>old ascomycete UPO lineage</strong>. Placement cannot decide between nested (transfer) and sister (old lineage) because the reference holds only the basidiomycete diversity. The test that would settle it — an ML tree of ~150 + ~150 dereplicated members with two outgroups — is specified and <strong>not done</strong>.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">7. Limitations</h2>
+<ul>
+<li><strong>Nineteen characterized enzymes.</strong> Three of five clades have one or two. 71 of 114 matched-identity test cases were impossible because removing a reference’s close relatives removed its whole clade.</li>
+<li><strong>One substrate, one assay, one publication.</strong> Task B’s calibration is 4-propylguaiacol conversion. It says nothing about which rings an enzyme cleaves — that is a separate measured negative.</li>
+<li><strong>Clade calls below ~55 % identity are not trustworthy</strong> under the old caller (precision 38 %), and BFD’s median identity to a reference is <strong>43.8 %</strong>. The placement caller made no errors at matched identity down to &lt;35 %, but on 19 enzymes.</li>
+<li><strong>69.6 % of BFD falls outside the calibration domain</strong>, and <code>calib_domain</code> is coverage, not confidence — it was tested as a confidence measure and failed.</li>
+<li><strong>No assay supports any rate or substrate range for any BFD protein here.</strong> <code>catalytic_core</code> means four residues are present: necessary, not sufficient.</li>
+<li><strong>Clade IV has one characterized member</strong>, so every clade IV row stays flagged <code>+provisional_cladeIV</code>; and clade IV’s status as a separate clade is unresolved (20–28 % bootstrap) even though the group is real (652/789 confirmed).</li>
+<li><strong>The shortlist should be re-run</strong> once the BFD tables are rebuilt; pools B4 and B5 were drawn from an eligible set shrunk by the flag bug. The 37 picks themselves stand.</li>
+</ul>
+</section>
+<section id="what-would-change-this" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-this">8. What would change this</h2>
+<p><strong>More characterized enzymes.</strong> Every limit above traces to 19, and the alternatives were tested rather than assumed: expansion with inferred labels makes the caller worse, the structural route is calibrated on four, a second 4-PG panel does not exist, and labels from other papers are invalid because they are substrate-specific — PaDa-I, the field’s benchmark peroxygenase, converts 4-propylguaiacol at 1.7 %.</p>
+<p>The six pre-registered assays are the cheapest move. The 96-well panel is the thorough one.</p>
+</section>
+<section id="the-deliverable" class="level2">
+<h2 class="anchored" data-anchor-id="the-deliverable">The deliverable</h2>
+<p><code>data/bfd_full/upo_sites_bfd_scored.tsv.zst</code> — one row per PF01328 protein, <strong>97,520 rows</strong>. Filter on <code>clade_trust</code>, rank on <code>t1_pocket_matches</code>, read <code>calib_domain</code> per protein. Site residues and <code>catalytic_core</code> are validated for every row; the clade call is bounded, which is why the tier column exists. <strong>No activity score is emitted.</strong></p>
+<p><strong>Shortlist: 5,115 proteins across 1,378 species</strong> carry both the catalytic core and ≥ 3/5 pocket matches; 1,246 sit outside clade V, including 29 in early-diverging phyla. A candidate list for assay, not a prediction of activity.</p>
+<p>Software: <code>upo_sites/bin/upo_scan.py</code> — one command, any proteome → sites + score + applicability domain. Regression-tested 87/87 against the full BFD pipeline.</p>
+</section>
+<section id="figures" class="level2">
+<h2 class="anchored" data-anchor-id="figures">Figures</h2>
+<p>All three are shown inline in §3 above, as PNG with a PDF beside each in <code>figures/out/</code>. They are regenerated end-to-end by <code>figures/slurm/figures.sh</code>, which runs <code>figures/bin/prep_figures.py</code> (tables, tested) and then <code>figures/bin/plot_figures.R</code> (plots) in a pinned conda environment, so the numbers in the panels come from the same tables as the numbers in this text.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>figure</th>
+<th>shows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>figures/out/fig1_reference_tree</code></td>
+<td>the 187-leaf reference, rooted on Mucorales; Zamocky lineages as sectors, Clades I–V as arcs with support; the 19 characterized enzymes named</td>
+</tr>
+<tr class="even">
+<td><code>figures/out/fig3_old_vs_placement</code></td>
+<td>all 97,520 proteins: nearest-neighbour call → placement call, flows coloured by the old call’s confidence</td>
+</tr>
+<tr class="odd">
+<td><code>figures/out/fig4_matched_identity</code></td>
+<td>matched-identity validation of both callers on the 19 enzymes: precision with exact 95 % CI, and abstention rate</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="source-documents" class="level2">
+<h2 class="anchored" data-anchor-id="source-documents">Source documents</h2>
+<p>Census and novelty <code>G1_FINDINGS.md</code>, <code>G1_BFD_SUMMARY.md</code>, <code>CENSUS.md</code> · Model and its bounds <code>MODEL_CARD.md</code>, <code>MODEL_VALIDATION.md</code>, <code>T1_SCORE_REPORT.md</code>, <code>APPLICABILITY.md</code> · Clade calling <code>upo_place/README.md</code>, <code>PLACEMENT_FINDINGS.md</code>, <code>RECONCILIATION.md</code>, <code>FINAL_TABLE_REPORT.md</code> · Negatives <code>RESULT_T2_negative.md</code>, <code>CALIBRATION_MATRIX.md</code>, <code>STRUCTURE_VS_RESIDUES.md</code>, <code>CHANNEL_FINDINGS.md</code>, <code>G3_PHASE_B_RESULTS.md</code> · Motifs <code>G3_FINDINGS.md</code>, <code>G3_MOTIF_REPLICATION.md</code> · Candidates <code>CANDIDATES.md</code>, <code>ASSAY_PANEL.md</code>, <code>EXTERNAL_VALIDATION.md</code> · BFD issues <code>bfd_findings/REPORT.md</code> · Status and decisions <code>STATUS.md</code>, <code>PLAN.md</code>, <code>DESIGN.md</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

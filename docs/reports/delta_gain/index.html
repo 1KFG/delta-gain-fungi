@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stajich Lab">
+<meta name="dcterms.date" content="2026-11-08">
+
+<title>Delta Gain: findings synthesis – DeltaGain Reports</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DeltaGain Reports</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../delta_gain/index.html" aria-current="page"> 
+<span class="menu-text">Delta-gain funnel</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../y1000_deposition/index.html"> 
+<span class="menu-text">Y1000+ deposition</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../upo_clades/index.html"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../mucor_secretome.html"> 
+<span class="menu-text">Mucor effectors</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-question-and-the-short-answer" id="toc-the-question-and-the-short-answer" class="nav-link active" data-scroll-target="#the-question-and-the-short-answer">1. The question and the short answer</a></li>
+  <li><a href="#design-in-brief" id="toc-design-in-brief" class="nav-link" data-scroll-target="#design-in-brief">2. Design in brief</a></li>
+  <li><a href="#whole-proteome-funnel" id="toc-whole-proteome-funnel" class="nav-link" data-scroll-target="#whole-proteome-funnel">3. Whole-proteome funnel</a>
+  <ul class="collapse">
+  <li><a href="#headline-and-spread" id="toc-headline-and-spread" class="nav-link" data-scroll-target="#headline-and-spread">3.1 Headline and spread</a></li>
+  <li><a href="#what-drives-it-relatedness-to-the-baseline-rank-decomposition" id="toc-what-drives-it-relatedness-to-the-baseline-rank-decomposition" class="nav-link" data-scroll-target="#what-drives-it-relatedness-to-the-baseline-rank-decomposition">3.2 What drives it: relatedness to the baseline (rank decomposition)</a></li>
+  <li><a href="#controlling-for-resequencing" id="toc-controlling-for-resequencing" class="nav-link" data-scroll-target="#controlling-for-resequencing">3.3 Controlling for resequencing</a></li>
+  <li><a href="#b-species-accumulation-of-50-clusters-e4" id="toc-b-species-accumulation-of-50-clusters-e4" class="nav-link" data-scroll-target="#b-species-accumulation-of-50-clusters-e4">3.3b Species accumulation of 50 % clusters (E4)</a></li>
+  <li><a href="#artefact-checks" id="toc-artefact-checks" class="nav-link" data-scroll-target="#artefact-checks">3.4 Artefact checks</a></li>
+  </ul></li>
+  <li><a href="#what-the-survivors-are" id="toc-what-the-survivors-are" class="nav-link" data-scroll-target="#what-the-survivors-are">4. What the survivors are</a>
+  <ul class="collapse">
+  <li><a href="#labels-and-breadth" id="toc-labels-and-breadth" class="nav-link" data-scroll-target="#labels-and-breadth">4.1 Labels and breadth</a></li>
+  <li><a href="#sensitive-search-against-the-baseline-known-clusters" id="toc-sensitive-search-against-the-baseline-known-clusters" class="nav-link" data-scroll-target="#sensitive-search-against-the-baseline-known-clusters">4.2 Sensitive search against the baseline-known clusters</a></li>
+  <li><a href="#structure-pilot" id="toc-structure-pilot" class="nav-link" data-scroll-target="#structure-pilot">4.3 Structure pilot</a></li>
+  <li><a href="#secretome-and-lineage-specific-expansions-e7" id="toc-secretome-and-lineage-specific-expansions-e7" class="nav-link" data-scroll-target="#secretome-and-lineage-specific-expansions-e7">4.4 Secretome and lineage-specific expansions (E7)</a></li>
+  </ul></li>
+  <li><a href="#family-level-diversity" id="toc-family-level-diversity" class="nav-link" data-scroll-target="#family-level-diversity">5. Family-level diversity</a>
+  <ul class="collapse">
+  <li><a href="#do-new-genomes-add-more-than-the-same-number-of-baseline-genomes" id="toc-do-new-genomes-add-more-than-the-same-number-of-baseline-genomes" class="nav-link" data-scroll-target="#do-new-genomes-add-more-than-the-same-number-of-baseline-genomes">5.1 Do new genomes add more than the same number of baseline genomes?</a></li>
+  <li><a href="#b-sensitivity-to-clustering-and-region-choices-e9" id="toc-b-sensitivity-to-clustering-and-region-choices-e9" class="nav-link" data-scroll-target="#b-sensitivity-to-clustering-and-region-choices-e9">5.1b Sensitivity to clustering and region choices (E9)</a></li>
+  <li><a href="#unseen-clades" id="toc-unseen-clades" class="nav-link" data-scroll-target="#unseen-clades">5.2 Unseen clades</a></li>
+  <li><a href="#where-the-novelty-sits" id="toc-where-the-novelty-sits" class="nav-link" data-scroll-target="#where-the-novelty-sits">5.3 Where the novelty sits</a></li>
+  <li><a href="#are-novel-family-members-functional-gh18-s08" id="toc-are-novel-family-members-functional-gh18-s08" class="nav-link" data-scroll-target="#are-novel-family-members-functional-gh18-s08">5.4 Are novel family members functional? (GH18, S08)</a></li>
+  </ul></li>
+  <li><a href="#lifestyle-correlates" id="toc-lifestyle-correlates" class="nav-link" data-scroll-target="#lifestyle-correlates">6. Lifestyle correlates</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">7. Limitations</a></li>
+  <li><a href="#not-done-by-decision-given-the-2026-11-10-shutdown" id="toc-not-done-by-decision-given-the-2026-11-10-shutdown" class="nav-link" data-scroll-target="#not-done-by-decision-given-the-2026-11-10-shutdown">8. Not done (by decision, given the 2026-11-10 shutdown)</a></li>
+  <li><a href="#planned-items-and-where-they-are" id="toc-planned-items-and-where-they-are" class="nav-link" data-scroll-target="#planned-items-and-where-they-are">9. Planned items and where they are</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Delta Gain: findings synthesis</h1>
+<p class="subtitle lead">How much new protein-level information newly annotated fungal genomes add</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stajich Lab </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 8, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 16, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>One result on this page has since been qualified
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Section 5.1 reports that <strong>enriched Pfam families</strong> show new genomes adding far more novelty than an order-matched baseline null — <strong>+14.6 to +14.9 points at 70 % identity</strong>, against roughly +0.4 to +2.2 for CAZy, MEROPS and random-Pfam controls. It is the largest effect in the document.</p>
+<p>A later test shows that <strong>most of that excess is where the genomes were deposited, not what is in them.</strong> Two UW-Madison Y1000+ BioProjects contribute 1,033 genomes — 5.8 % of the new side — and they carry about three quarters of the enriched-family novelty. Their assemblies went to GenBank in 2024 but their proteins went to Figshare, so the proteins are public and yet absent from the <code>nr</code> baseline this analysis screens against. Counting them as known turns the enriched families’ <strong>+24.8-point excess over the controls into a 23.1-point deficit</strong>.</p>
+<p><strong><a href="../y1000_deposition/">Read the test → <em>The enriched-Pfam signal is mostly Y1000+ deposition</em></a></strong></p>
+<p>What that test does <strong>not</strong> do is re-run the order-matched null with those genomes moved into the baseline, so the +14.6 figure below has not been recomputed — it has been shown to rest on a confound. The other family sets are far less affected: the median family loses 86.6 % of its novelty among the enriched families and 0.8 % among the random controls. Sections 3 and 4, which are whole-proteome rather than family-level, are not touched by this.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What this is, and where it comes from
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A working analysis, not a finished study. Every result is computational and nothing here has been tested at the bench. Section 7 states the limitations and section 8 lists what was deliberately not done.</p>
+<p>This page <strong>reproduces <code>docs/FINDINGS.md</code> from the pipeline repository <a href="https://github.com/1KFG/delta-gain">1KFG/delta-gain</a> verbatim</strong>, at pinned commit <a href="https://github.com/1KFG/delta-gain/blob/91eb5fe6be888707fcf9c6953ef68a99bd91d414/docs/FINDINGS.md"><code>91eb5fe</code></a> of 2026-11-08. It is reproduced rather than copied so that there is only one source of truth, and both the commit and the file’s checksum are pinned in <a href="https://github.com/1KFG/delta-gain-fungi/blob/main/reports/bin/fetch_external.sh"><code>reports/bin/fetch_external.sh</code></a>, so the text below cannot change without the fetch failing.</p>
+<p>The document refers to its own plans, scripts and results directories, which live in that repository and on lab storage; those references are left as written. Because it is reproduced verbatim, the qualification above appears only here, and not at section 5.1 where the affected number sits.</p>
+</div>
+</div>
+<p>Status: complete draft for collaborator review, 2026-11-08 (includes the species accumulation, secretome / copy-number and parameter-sensitivity analyses). Source of truth for every number is <code>docs/DELTA_GAIN_PLAN.md</code> (§11 status log) and <code>docs/FAMILY_DIVERSITY_PLAN.md</code> (§10 status table). Scripts are in <code>bin/</code>, launchers in <code>launch/</code>, results under <code>results/</code> of the <code>delta-gain-fungi</code> working directory (HPCC, <code>/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi</code>). This file is the narrative; if it and the plans disagree, the plans win (they carry the job ids and exact settings).</p>
+<section id="the-question-and-the-short-answer" class="level2">
+<h2 class="anchored" data-anchor-id="the-question-and-the-short-answer">1. The question and the short answer</h2>
+<blockquote class="blockquote">
+<p>How much NEW protein-level information do newly annotated fungal genomes add, compared with what was already known from previously annotated fungal genomes, controlling for the many re-sequenced strains of the same species?</p>
+</blockquote>
+<p>Baseline = 5,703 genomes with a prior NCBI annotation. New = 17,864 matched genomes without one (183.1 M proteins). About 60 % of new genomes are strains of species already in the baseline.</p>
+<p><strong>Short answer.</strong></p>
+<ol type="1">
+<li><strong>Whole-proteome view.</strong> 50.2 / 29.2 / 22.4 % of new proteins fall in clusters with no baseline member at 95 / 70 / 50 % identity. That protein-weighted headline understates novelty per species and is dominated by heavily resequenced species. Counted once per species about 39 % of proteins are novel at 50 % identity, and the novelty comes from new species and genera, not from new strains.</li>
+<li><strong>Strains add little.</strong> Strains of baseline species are 60 % of new proteins but 36 % of the novel ones (13.3 % novel at 50 %, median genome 5 %). New species in a baseline genus are 27.6 % novel; new genus or higher 57-63 %.</li>
+<li><strong>Most novel proteins are still homologs of known families.</strong> Of the survivor clusters seen in 5 or more genomes, 79 % have a detectable baseline homolog by sensitive search; 10.7 % have none. Among all 12.2 M single-genome clusters 63 % have a homolog and 21 % none.</li>
+<li><strong>Novel protein mass is species-restricted.</strong> 82 % of survivor clusters (61 % of survivor proteins) come from one species.</li>
+<li><strong>Within a family, new genomes add about what the same number of baseline genomes would.</strong> For typical CAZy, MEROPS, random Pfam and secondary-metabolism backbone families the extra is about 1-3 percentage points. Pfam families chosen for being enriched in new genomes (mostly Saccharomycotina yeast families) show about +15 points, and that replicates in independent species.</li>
+<li><strong>Unseen clades are not special.</strong> New genomes from orders with no baseline genome are no more novel than a typical held-out baseline order (pooled and class-matched nulls, about -2 points at 70 %).</li>
+<li><strong>Artefacts do not explain the result.</strong> Predictor mismatch (NCBI vs BFD gene models) adds 1.5-3 points; contamination-flagged genomes supply 8.2 % of novel protein mass; annotated transposons about 1 %; there is no excess of prokaryote-like best hits among novel proteins.</li>
+<li><strong>Novel family members are often degenerate or partial.</strong> Novel GH18 and S08 regions are shorter and more often miss catalytic residues; novel S08 hits include probable carboxylase false hits. These are not evidence of new catalytic function.</li>
+<li><strong>The fungal 50 % cluster pangenome is not saturated.</strong> Adding species in random order, each further species still contributes about 2.7-4.5 thousand new clusters. A new species adds about five times more clusters per genome than a resequenced strain of a known species (about 1,870 vs 350).</li>
+<li><strong>No secretome or expansion signal.</strong> New genomes do not carry more signal peptides or small-secreted-protein candidates than same-order baseline genomes, survivors are not enriched for them, and CAZy/MEROPS copy number changes are small and balanced (19 families expand, 23 contract per 1,000 proteins).</li>
+<li><strong>The family result is robust.</strong> It does not change with coverage threshold, coverage mode or Pfam region definition (five families, sensitivity run).</li>
+</ol>
+</section>
+<section id="design-in-brief" class="level2">
+<h2 class="anchored" data-anchor-id="design-in-brief">2. Design in brief</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>What was done</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Baseline / new</td>
+<td><code>genome_classes.tsv</code>: 5,703 baseline, 17,864 new matched genomes (196 not annotated and 2 ambiguous-tag genomes kept out of headline numbers).</td>
+</tr>
+<tr class="even">
+<td>Funnel</td>
+<td>Nested MMseqs2 linclust over BASE (NCBI proteins) and NEW (BFD proteins) at 95 % (90 % cov), 70 % and 50 % identity (80 % bidirectional coverage). A new protein is novel at a tier if its cluster has no baseline member. Survivors = novel at 50 %.</td>
+</tr>
+<tr class="odd">
+<td>Family walk</td>
+<td>Regions of a Pfam / CAZy / MEROPS family (or subfamily) from the BFD re-annotation of <strong>both</strong> groups (no predictor confound), clustered inside the family at 90 / 70 / 50 / 30 %. Novel region = cluster with no baseline member.</td>
+</tr>
+<tr class="even">
+<td>Nulls</td>
+<td>F3: equally many same-order baseline genomes (baseline-vs-baseline). F3b: leave one whole order out. F3c: class-matched version for orders with no baseline genome. Genome-level and species-collapsed variants, 200 draws.</td>
+</tr>
+<tr class="odd">
+<td>Controls</td>
+<td>Predictor control; rank decomposition; rarefaction to k genomes per species; size-matched random-Pfam control; species-half split-sample test; contamination/TE triage; quality (BUSCO, N50) within-order diagnostics.</td>
+</tr>
+<tr class="even">
+<td>Survivor characterisation</td>
+<td>Pfam/CAZy/MEROPS labels, taxonomic breadth, sensitive MMseqs2 search (-s 6.0) against the 16.45 M baseline-known tier-50 representatives, profile search of no-hit clusters, Swiss-Prot taxonomy screen, ESMFold pilot.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="whole-proteome-funnel" class="level2">
+<h2 class="anchored" data-anchor-id="whole-proteome-funnel">3. Whole-proteome funnel</h2>
+<section id="headline-and-spread" class="level3">
+<h3 class="anchored" data-anchor-id="headline-and-spread">3.1 Headline and spread</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tier</th>
+<th style="text-align: right;">Novel new proteins</th>
+<th style="text-align: right;">Fraction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>95 % id / 90 % cov</td>
+<td style="text-align: right;">91,857,334</td>
+<td style="text-align: right;">50.2 %</td>
+</tr>
+<tr class="even">
+<td>70 %</td>
+<td style="text-align: right;">53,498,892</td>
+<td style="text-align: right;">29.2 %</td>
+</tr>
+<tr class="odd">
+<td>50 %</td>
+<td style="text-align: right;">41,042,274</td>
+<td style="text-align: right;">22.4 %</td>
+</tr>
+</tbody>
+</table>
+<p>Per genome (17,864 genomes) the median fraction novel is 35.6 / 14.1 / 10.2 % and the 90th percentile 99.5 / 82.1 / 62.0 %: the spread separates strains of baseline species from new-taxon genomes.</p>
+</section>
+<section id="what-drives-it-relatedness-to-the-baseline-rank-decomposition" class="level3">
+<h3 class="anchored" data-anchor-id="what-drives-it-relatedness-to-the-baseline-rank-decomposition">3.2 What drives it: relatedness to the baseline (rank decomposition)</h3>
+<p>Novel at 50 % identity, by the lowest rank a new genome shares with a baseline genome:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Stratum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;">Fraction novel at 50 %</th>
+<th style="text-align: right;">Share of novel proteins</th>
+<th style="text-align: right;">Novel proteins per genome</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Strain of baseline species</td>
+<td style="text-align: right;">10,673</td>
+<td style="text-align: right;">13.3 %</td>
+<td style="text-align: right;">36 %</td>
+<td style="text-align: right;">1,374</td>
+</tr>
+<tr class="even">
+<td>New species, baseline genus</td>
+<td style="text-align: right;">5,087</td>
+<td style="text-align: right;">27.6 %</td>
+<td style="text-align: right;">35 %</td>
+<td style="text-align: right;">2,817</td>
+</tr>
+<tr class="odd">
+<td>New genus, baseline family</td>
+<td style="text-align: right;">1,629</td>
+<td style="text-align: right;">57.0 %</td>
+<td style="text-align: right;">22 %</td>
+<td style="text-align: right;">5,652-6,351</td>
+</tr>
+<tr class="even">
+<td>New family / order / class or higher</td>
+<td style="text-align: right;">475 together</td>
+<td style="text-align: right;">59.6-63.2 %</td>
+<td style="text-align: right;">7 %</td>
+<td style="text-align: right;">5,652-6,351</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="controlling-for-resequencing" class="level3">
+<h3 class="anchored" data-anchor-id="controlling-for-resequencing">3.3 Controlling for resequencing</h3>
+<p>Rarefying to k random genomes per species (50 draws, protein-weighted), novel fraction at 95 / 70 / 50 %: k = 1 76.9 / 49.9 / 37.6; k = 2 74.6 / 47.5 / 35.8; k = 5 70.5 / 44.0 / 33.1; k = 10 67.1 / 41.3 / 31.2; all genomes 50.2 / 29.2 / 22.4. One value per species (median over its genomes): 5,454 species, mean novel 78.7 / 52.4 / 39.4 %; the 4,632 species absent from the baseline 85.6 / 58.3 / 43.7 %. The per-species view (about 40 % at 50 %) is the better measure of added sequence diversity.</p>
+</section>
+<section id="b-species-accumulation-of-50-clusters-e4" class="level3">
+<h3 class="anchored" data-anchor-id="b-species-accumulation-of-50-clusters-e4">3.3b Species accumulation of 50 % clusters (E4)</h3>
+<p>All 23,567 genomes with annotated proteins (237 M distinct genome x tier-50 cluster pairs, 33.4 M clusters) were grouped into species units: 2,778 baseline species, 822 new-genome groups of species that also have a baseline genome (<code>N_known</code>, about 10.7 k mostly resequenced genomes) and 4,632 new species (<code>N_newsp</code>, about 7.2 k genomes). Units were added in random order (20 permutations per ordering) and each cluster was credited to the first unit that contains it (<code>bin/accumulation.py</code>, <code>results/accumulation/</code>; figure <code>figures/E4_accumulation.svg</code>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/E4_accumulation.svg" class="img-fluid figure-img"></p>
+<figcaption>Species accumulation</figcaption>
+</figure>
+</div>
+<ul>
+<li><strong>No saturation.</strong> The curve is close to linear. After all 2,778 baseline species (16.25 M clusters) each further species still adds about 4.0-4.5 k clusters at the start of the new units (positions 2,776-3,200), declining only to about 2.7 k for the last 230 new species. The 50 % cluster pangenome of the fungal kingdom is open at this sampling depth.</li>
+<li><strong>Baseline-first ordering.</strong> New units add 17.14 M clusters absent from the baseline (matches the 17.10 M survivor clusters counted independently; the small gap is clusters held only by genomes outside the two classes): 3.72 M from the 822 resequenced-species groups (about 350 clusters per genome) and 13.42 M from the 4,632 new species (about 1,870 clusters per genome). Strains of known species add little per genome; new species add roughly five times more.</li>
+<li><strong>New-first ordering (contrast).</strong> The first 2,778 random new species cover 13.5 M clusters, 17 % fewer than the 2,778 baseline species (16.2 M). The 5,454 new species together cover 22.2 M clusters, and the baseline still adds 11.2 M clusters after all new genomes (about 4.0 k per baseline species). The baseline therefore carries a large share of sequence space that the new genomes do not reproduce.</li>
+<li><strong>Caveat.</strong> Baseline proteins are NCBI gene models and new proteins are BFD models, so cluster counts per species include the 1.5-3 point predictor effect and differences in proteome size and completeness; the curves describe species sampling of 50 % clusters, not new families (most clusters are small and lineage-restricted, see section 4).</li>
+</ul>
+</section>
+<section id="artefact-checks" class="level3">
+<h3 class="anchored" data-anchor-id="artefact-checks">3.4 Artefact checks</h3>
+<ul>
+<li><strong>Predictor mismatch.</strong> 300 baseline genomes scored as NCBI vs BFD annotations against the same 1,000-genome reference: novel fraction 57.3 -&gt; 60.0 / 34.5 -&gt; 35.8 / 25.7 -&gt; 26.8 % (95 / 70 / 50 %). The gene-model difference inflates novelty by about 1.5-3 points.</li>
+<li><strong>Contamination and transposons.</strong> Genomes with GC more than 8 points from their order median (1,067) or BUSCO &lt; 50 (322) are 6-7 % of new genomes and give 8.2 % of novel protein mass. Annotated TE domains label about 1 % of survivor proteins.</li>
+<li><strong>Horizontal transfer / contamination screen.</strong> Best Swiss-Prot hit of survivor representatives (metagenome-bin genomes excluded) is prokaryotic for 4.1-4.8 % of survivors vs 5.2 % of background proteins; at &gt;= 40 % identity 1.0-1.3 % vs 1.3 %. No enrichment. This is a screen only (&lt; 50 % of survivors have a Swiss-Prot hit; no phylogeny).</li>
+</ul>
+</section>
+</section>
+<section id="what-the-survivors-are" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-survivors-are">4. What the survivors are</h2>
+<section id="labels-and-breadth" class="level3">
+<h3 class="anchored" data-anchor-id="labels-and-breadth">4.1 Labels and breadth</h3>
+<p>17,095,910 survivor clusters (41.0 M proteins): 12.2 M seen in one genome, 4.86 M in two or more, 1.25 M in five or more, 184 k in 20 or more. Most still carry a known Pfam domain (41.6 % single-genome, 51.2 % 2-4 genomes, 55.7 % 5-19, 35.9 % &gt;= 20 genomes); the most frequent are protein kinase, MFS, Zn2Cys6 and cytochrome P450 domains, i.e.&nbsp;divergent members of large families. CAZy and MEROPS label 1-2 %.</p>
+<p>Taxonomic breadth: 82 % of clusters (61 % of proteins) come from a single species; only 3.04 M clusters span two or more species and 0.90 M span two or more genera. Among clusters in 5 or more genomes: 33 % one species, 42 % one genus, 16 % one family, 4 % one order, 5 % multi-order.</p>
+</section>
+<section id="sensitive-search-against-the-baseline-known-clusters" class="level3">
+<h3 class="anchored" data-anchor-id="sensitive-search-against-the-baseline-known-clusters">4.2 Sensitive search against the baseline-known clusters</h3>
+<p>Clusters (by cluster count) by genome-count class:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Survivor class</th>
+<th style="text-align: right;">Clusters searched</th>
+<th style="text-align: right;">Homolog</th>
+<th style="text-align: right;">Close, low identity</th>
+<th style="text-align: right;">Distant</th>
+<th style="text-align: right;"><strong>No hit</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5 or more genomes</td>
+<td style="text-align: right;">1,254,423</td>
+<td style="text-align: right;">79.3 %</td>
+<td style="text-align: right;">8.5 %</td>
+<td style="text-align: right;">1.6 %</td>
+<td style="text-align: right;"><strong>10.7 %</strong> (133,599)</td>
+</tr>
+<tr class="even">
+<td>2-4 genomes</td>
+<td style="text-align: right;">3,602,662</td>
+<td style="text-align: right;">74.2 %</td>
+<td style="text-align: right;">11.1 %</td>
+<td style="text-align: right;">1.9 %</td>
+<td style="text-align: right;"><strong>12.8 %</strong> (460,890)</td>
+</tr>
+<tr class="odd">
+<td>1 genome</td>
+<td style="text-align: right;">12,238,825</td>
+<td style="text-align: right;">63.0 %</td>
+<td style="text-align: right;">12.8 %</td>
+<td style="text-align: right;">2.9 %</td>
+<td style="text-align: right;"><strong>21.3 %</strong> (2,602,543)</td>
+</tr>
+</tbody>
+</table>
+<p>The no-hit share rises as the number of genomes falls, as expected if no-hit clusters are enriched for gene-model artefacts and recent lineage-specific genes. A profile search of the 133,599 no-hit clusters of the 5+ class (re-clustered at 30 % into 107,819 profile clusters) found baseline hits for 10.2 % of profile clusters (12.9 % of proteins); 2.14 M proteins remain without any detectable baseline homolog.</p>
+</section>
+<section id="structure-pilot" class="level3">
+<h3 class="anchored" data-anchor-id="structure-pilot">4.3 Structure pilot</h3>
+<p>ESMFold (single sequence) on 400 representatives of no-hit profile clusters vs 400 of profile clusters that did gain a baseline hit: mean pLDDT (0-1) 0.372 vs 0.440; share with pLDDT &gt;= 0.5: 8.8 % vs 27.3 %; &gt;= 0.7: 0.8 % vs 6.3 %. Novel no-hit proteins are predicted with lower confidence, but both sets are low and length differs (150 vs 190 aa), so this fits disorder, orphan or spurious-model status without proving it. Not run at full scale.</p>
+</section>
+<section id="secretome-and-lineage-specific-expansions-e7" class="level3">
+<h3 class="anchored" data-anchor-id="secretome-and-lineage-specific-expansions-e7">4.4 Secretome and lineage-specific expansions (E7)</h3>
+<p>Species-level units (genomes of one species and class averaged), contrast within order (71 orders with at least 3 units of each class), permutation test inside orders. Details and thresholds: <code>docs/E7_RESULTS.md</code>.</p>
+<ul>
+<li><strong>Secretome.</strong> Whole-proteome signal-peptide fraction is 7.64 % in new vs 7.71 % in baseline genomes; small-secreted-protein (SSP) candidates (signal peptide, &lt;= 300 aa, &gt;= 4 Cys, no GPI anchor, no transmembrane helix beyond a signal anchor) are 1.369 % vs 1.359 %. Within order, new genomes carry slightly fewer signal peptides (-0.14 points, p 0.0003) and SSP candidates (-0.04 points, p 0.0003); the effect comes from new species (-0.045 points), not from new strains of known species (+0.001, p 0.94). The SSP rule is a heuristic, not an effector call.</li>
+<li><strong>Survivors are not enriched for secreted proteins.</strong> Observed / expected SSP among survivor representatives (expected from the same genome’s rate): 0.88 (1 genome), 0.98 (2-4), 1.01 (5-19), 0.79 (20 or more); signal-peptide obs/exp 0.72-0.90.</li>
+<li><strong>Copy number.</strong> For 323 CAZy and MEROPS families seen in at least 50 genomes, per 1,000 proteins, 19 families expand and 23 contract in new genomes (q &lt; 0.05), with small effects (4-15 % relative for common families). On raw copies per genome 174 families appear contracted, but new proteomes are about 8 % smaller (10.2 k vs 11.1 k proteins), so the proteome-size-normalised comparison is the fair one. Lineage-specific expansion is not a general property of the new genomes. Counts are proteins with a hit, not independent duplications.</li>
+</ul>
+</section>
+</section>
+<section id="family-level-diversity" class="level2">
+<h2 class="anchored" data-anchor-id="family-level-diversity">5. Family-level diversity</h2>
+<section id="do-new-genomes-add-more-than-the-same-number-of-baseline-genomes" class="level3">
+<h3 class="anchored" data-anchor-id="do-new-genomes-add-more-than-the-same-number-of-baseline-genomes">5.1 Do new genomes add more than the same number of baseline genomes?</h3>
+<p>F3 (order-matched baseline-vs-baseline null): across the pilot families, the wide run (340 CAZy, 174 MEROPS, 200 enriched Pfam; 717 families, 18.0 M regions) and the subfamily run (474 subfamilies), new genomes add about the same novelty as equally many same-order baseline genomes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family set</th>
+<th style="text-align: right;">New minus null at 70 % (points)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CAZy families</td>
+<td style="text-align: right;">+0.7</td>
+<td>CI wholly &gt; 0 in 1.6 % of families, never &lt; 0</td>
+</tr>
+<tr class="even">
+<td>MEROPS families</td>
+<td style="text-align: right;">+1.7</td>
+<td>CI wholly &gt; 0 in 9.9 %</td>
+</tr>
+<tr class="odd">
+<td>CAZy / MEROPS subfamilies</td>
+<td style="text-align: right;">+0.4 / +1.6</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Random Pfam control (size-matched)</td>
+<td style="text-align: right;">+2.2</td>
+<td>66 % of families positive</td>
+</tr>
+<tr class="odd">
+<td>Secondary-metabolism backbone Pfams (10)</td>
+<td style="text-align: right;">-1.3 to +2.3</td>
+<td>intervals span 0 except ketoreductase +0.9</td>
+</tr>
+<tr class="even">
+<td><strong>Enriched Pfam (top 200 by enrichment)</strong></td>
+<td style="text-align: right;"><strong>+14.6 to +14.9</strong></td>
+<td>97-98 % positive; best case by construction</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The family ranking (S08 &gt; GH18 &gt; AA9 &gt; controls) is already present in the null: it reflects inherent family diversity, not the new genomes.</li>
+<li>The enrichment effect <strong>replicates in independent species</strong>: lists selected on half of the species and evaluated on the other half give +14.6 points vs +4.3 for random controls, so it is not a winner’s-curse artefact. The enriched list is a Saccharomycotina yeast list; BUSCO of those orders is 75-80 %, so this is a lineage effect rather than a quality flag.</li>
+</ul>
+</section>
+<section id="b-sensitivity-to-clustering-and-region-choices-e9" class="level3">
+<h3 class="anchored" data-anchor-id="b-sensitivity-to-clustering-and-region-choices-e9">5.1b Sensitivity to clustering and region choices (E9)</h3>
+<p>Five families (GH18, S08, the ketosynthase PF00109, one enriched Pfam PF10450, one random-control Pfam PF01568) were re-clustered and re-nulled (1,010 genomes per side, 200 draws) with later-tier coverage 60 / 80 / 90 %, target-only instead of bidirectional coverage, and Pfam regions by alignment span instead of envelope (Pfam families only; CAZy and MEROPS have one span definition). The 30 % tier is already a default tier. Details: <code>docs/E9_RESULTS.md</code>.</p>
+<ul>
+<li><strong>The family-level result is insensitive to these choices.</strong> New minus null at 70 %: GH18 +0.010, S08 +0.004, PF00109 0.000, control +0.001, with variants differing from the default by at most 0.004-0.007, far inside the null intervals.</li>
+<li><strong>The enriched family keeps its excess in every variant</strong>: PF10450 +0.095 to +0.101 at 70 % (intervals exclude 0 in all five variants) and +0.065 to +0.074 at 50 %, so the enrichment is not an artefact of one clustering setting.</li>
+<li><strong>The 30 % tier adds no signal</strong>: all differences within +-0.02 with intervals spanning 0. Across 15 family x tier cells there is one sign flip, PF10450 at 30 % with alignment-span regions (-0.007 vs +0.018), with every interval spanning 0.</li>
+<li><strong>Limits:</strong> five families, small families (4-6 k regions) have wide intervals, and only clustering and region definition were varied (not the search sensitivity, the first-tier coverage, the null design or upstream annotation thresholds).</li>
+</ul>
+</section>
+<section id="unseen-clades" class="level3">
+<h3 class="anchored" data-anchor-id="unseen-clades">5.2 Unseen clades</h3>
+<p>Leave-one-order-out (F3b): holding out a whole order is far more novel than the within-order null (c70 median 60-85 % for the diverse families), but new genomes from orders with no baseline genome are <strong>not</strong> more novel than a typical held-out baseline order (CAZy/MEROPS c70 -6.8 / -6.4 points pooled; class-matched F3c -1.9 / -1.9 / -1.0 points for CAZy / MEROPS / Pfam). The family-level novelty of new taxa is what sampling any unseen clade gives, not a special property of these genomes. Caveat: only four classes allow the class-matched test, with 5 genomes per draw.</p>
+</section>
+<section id="where-the-novelty-sits" class="level3">
+<h3 class="anchored" data-anchor-id="where-the-novelty-sits">5.3 Where the novelty sits</h3>
+<p>Novelty is clade-specific, not family-wide: GH18 is 7.0 % novel overall but 2.9 % in Hypocreales and 2.1 % in Eurotiales vs 72.8 % in Ascoideales, 34.4 % in Pichiales and 23.0 % in Boletales; S08 is 5.0 % in Hypocreales vs 31.1 % in Agaricales. New diversity concentrates where baseline sampling is thin. Baseline-free clusters are small (1.5-1.7 species on average).</p>
+<p>Quality: raw novelty is 2-3x higher in BUSCO &lt; 95 / N50 &lt; 50 kb genomes, but within the same order the gap is only +2 to +5 points, so it is mostly clade composition. The top species supplies a small share of novel regions (median 0.02-0.07).</p>
+</section>
+<section id="are-novel-family-members-functional-gh18-s08" class="level3">
+<h3 class="anchored" data-anchor-id="are-novel-family-members-functional-gh18-s08">5.4 Are novel family members functional? (GH18, S08)</h3>
+<p>Alignment to the Pfam profile with catalytic sites read from the HMM consensus (c70 clusters):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family</th>
+<th>Group</th>
+<th style="text-align: right;">Regions</th>
+<th style="text-align: right;">Cover all sites</th>
+<th style="text-align: right;">All canonical</th>
+<th style="text-align: right;">Canonical, given coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GH18</td>
+<td>baseline</td>
+<td style="text-align: right;">65,500</td>
+<td style="text-align: right;">97.6 %</td>
+<td style="text-align: right;">83.5 %</td>
+<td style="text-align: right;">85.5 %</td>
+</tr>
+<tr class="even">
+<td>GH18</td>
+<td>new, known cluster</td>
+<td style="text-align: right;">175,122</td>
+<td style="text-align: right;">98.2 %</td>
+<td style="text-align: right;">84.2 %</td>
+<td style="text-align: right;">85.8 %</td>
+</tr>
+<tr class="odd">
+<td>GH18</td>
+<td>new, novel cluster</td>
+<td style="text-align: right;">13,169</td>
+<td style="text-align: right;">93.1 %</td>
+<td style="text-align: right;">74.4 %</td>
+<td style="text-align: right;">79.8 %</td>
+</tr>
+<tr class="even">
+<td>S08</td>
+<td>baseline</td>
+<td style="text-align: right;">64,787</td>
+<td style="text-align: right;">90.9 %</td>
+<td style="text-align: right;">66.8 %</td>
+<td style="text-align: right;">73.5 %</td>
+</tr>
+<tr class="odd">
+<td>S08</td>
+<td>new, known cluster</td>
+<td style="text-align: right;">183,064</td>
+<td style="text-align: right;">93.6 %</td>
+<td style="text-align: right;">70.3 %</td>
+<td style="text-align: right;">75.1 %</td>
+</tr>
+<tr class="even">
+<td>S08</td>
+<td>new, novel cluster</td>
+<td style="text-align: right;">17,126</td>
+<td style="text-align: right;">70.2 %</td>
+<td style="text-align: right;">44.8 %</td>
+<td style="text-align: right;">63.9 %</td>
+</tr>
+</tbody>
+</table>
+<p>Most of the deficit is truncation (30 % of novel S08 regions lack a catalytic site vs 6-9 %); among spanning regions novel ones are 6-10 points less often fully canonical. About 46 % of S08 regions with carboxylase-type co-domains are novel and are probably MEROPS false hits. The His position of S08 is only 74-75 % canonical even in the baseline, so use it for relative comparison only.</p>
+</section>
+</section>
+<section id="lifestyle-correlates" class="level2">
+<h2 class="anchored" data-anchor-id="lifestyle-correlates">6. Lifestyle correlates</h2>
+<p>FungalTraits 1.2 genus labels (Põlme et al.&nbsp;2020) cover 1,061 of 1,204 genera with a new genome (16,085 of 17,865 genomes). Unit = genus; within-order deviation in novel fraction at 50 %, permutation test inside orders. All genomes: mycorrhizal +4.4 points, saprotroph +1.2, plant pathogen -3.9, animal-associated -2.8 (n.s.), yeast growth form -4.1. Holding relatedness fixed, only mycorrhizal remains (+7.5 points among new species in a baseline genus; +2.0 among new genera or higher); plant pathogens stay at -3.0 among distant genomes. Most lifestyle differences are sampling depth and relatedness, and lifestyle is nested in clade, so this is a screen, not a causal result.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">7. Limitations</h2>
+<ul>
+<li><strong>Baseline definition.</strong> “Baseline” is “had a prior NCBI annotation”. It is a sampling, not a knowledge, boundary: the baseline is enriched for model organisms and well-sampled clades.</li>
+<li><strong>Strain pseudo-replication.</strong> Handled by rarefaction, species-collapsed variants and genus-level units, but any protein-weighted number is dominated by heavily resequenced species.</li>
+<li><strong>Predictor.</strong> The funnel mixes NCBI baseline proteins with BFD new proteins (1.5-3 points); the family walk uses BFD annotation for both groups and avoids this.</li>
+<li><strong>Selection.</strong> The enriched Pfam list is selected on the outcome; it is a candidate list, not a genome-wide estimate.</li>
+<li><strong>Family nulls</strong> only cover orders present in both groups; the clade-matched F3c has few classes.</li>
+<li><strong>Labels and searches</strong> use cluster representatives; sensitive-search hits indicate homology, not function. No-hit clusters are a mix of orphan genes and gene-model artefacts that this work cannot separate.</li>
+<li><strong>Proxies.</strong> The HGT screen (Swiss-Prot taxonomy) and the BGC-backbone analysis (domain level) are cheaper stand-ins for a phylogeny-based HGT analysis and for antiSMASH.</li>
+</ul>
+</section>
+<section id="not-done-by-decision-given-the-2026-11-10-shutdown" class="level2">
+<h2 class="anchored" data-anchor-id="not-done-by-decision-given-the-2026-11-10-shutdown">8. Not done (by decision, given the 2026-11-10 shutdown)</h2>
+<ul>
+<li>antiSMASH on all genomes (replaced by the backbone-Pfam proxy).</li>
+<li>Phylogeny-based horizontal gene transfer screen (replaced by the Swiss-Prot taxonomy proxy).</li>
+<li>Full-scale structure prediction and structure-database search of the ~97 k no-hit profile clusters (replaced by the 400 + 400 ESMFold pilot; the representative list is <code>results/nohit_profile/profile_clusters.tsv</code>).</li>
+<li>F3c per-order ranking; sibling-flag list for the 57 strains with several assemblies; date-ordered addition curve.</li>
+</ul>
+</section>
+<section id="planned-items-and-where-they-are" class="level2">
+<h2 class="anchored" data-anchor-id="planned-items-and-where-they-are">9. Planned items and where they are</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Status</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Funnel (95/70/50)</td>
+<td>done</td>
+<td>§3</td>
+</tr>
+<tr class="even">
+<td>Predictor control, rank decomposition, rarefaction</td>
+<td>done</td>
+<td>§3.2-3.4</td>
+</tr>
+<tr class="odd">
+<td>Family census, extraction, clustering, F3/F3b/F3c nulls</td>
+<td>done (717 families + 474 subfamilies)</td>
+<td>§5.1-5.2</td>
+</tr>
+<tr class="even">
+<td>Random-Pfam control, split-sample test</td>
+<td>done</td>
+<td>§5.1</td>
+</tr>
+<tr class="odd">
+<td>Quality / artefact diagnostics, deep dives</td>
+<td>done</td>
+<td>§5.3</td>
+</tr>
+<tr class="even">
+<td>Survivor labels, breadth, triage</td>
+<td>done</td>
+<td>§4.1, §3.4</td>
+</tr>
+<tr class="odd">
+<td>Sensitive search of all survivor classes, profile search</td>
+<td>done</td>
+<td>§4.2</td>
+</tr>
+<tr class="even">
+<td>Catalytic-residue (alignment) and architecture analysis</td>
+<td>done for GH18 and S08</td>
+<td>§5.4</td>
+</tr>
+<tr class="odd">
+<td>Lifestyle correlates</td>
+<td>done</td>
+<td>§6</td>
+</tr>
+<tr class="even">
+<td>BGC-backbone proxy, HGT screen, structure pilot</td>
+<td>done as approved substitutes</td>
+<td>§3.4, §4.3, §5.1</td>
+</tr>
+<tr class="odd">
+<td>Species accumulation (E4)</td>
+<td>done (<code>bin/accumulation.py</code>)</td>
+<td>§3.3b</td>
+</tr>
+<tr class="even">
+<td>Lineage expansions and secretome / SSP (E7)</td>
+<td>done (commit bef178f)</td>
+<td>§4.4</td>
+</tr>
+<tr class="odd">
+<td>Parameter sensitivity (E9)</td>
+<td>done (commit 65d0ad0)</td>
+<td>§5.1b</td>
+</tr>
+<tr class="even">
+<td>antiSMASH, phylogeny-based HGT, full structure prediction</td>
+<td>out of scope</td>
+<td>§8</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

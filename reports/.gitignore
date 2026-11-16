@@ -1,3 +1,10 @@
 /.quarto/
 
 **/*.quarto_ipynb
+
+# Content reproduced from the 1KFG/delta-gain repository at a pinned commit by
+# reports/bin/fetch_external.sh. Not ours to keep a second copy of; re-fetch it
+# before re-rendering. The rendered output under docs/reports/ IS committed, so
+# the live site does not depend on this.
+/delta_gain/_external/
+/delta_gain/figures/

@@ -1,0 +1,32 @@
+---
+title: "The enriched-Pfam signal is mostly Y1000+ deposition"
+subtitle: "A companion test to the delta-gain funnel's family-level result"
+date: 2026-11-16
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+::: {.callout-note}
+## What this is
+
+A single targeted test, not a new analysis of the funnel. It asks one question of the
+funnel's largest family-level effect — the enriched Pfam families' +14.6-point excess over
+an order-matched null — and answers it by joining the existing cluster tables against NCBI
+BioProject metadata.
+
+It is a **companion to [the funnel findings](../delta_gain/)**, which reports that effect in
+section 5.1. Read that page's qualification box first if you have not.
+
+The source of truth is
+[`analysis/delta_gain_funnel/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/delta_gain_funnel)
+in this repository — code, tests, SLURM driver and the per-family output tables that the
+numbers below are computed from. This page renders `REPORT.md` from that directory, so the
+two cannot drift.
+
+The report is explicit that it does **not** recompute the +14.6-point figure: doing that
+needs the order-matched null re-run with the Y1000+ genomes moved into the baseline, which
+has not been done. It shows the figure rests on a confound, which is a different claim.
+:::
+
+{{< include ../../analysis/delta_gain_funnel/REPORT.md >}}

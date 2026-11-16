@@ -1,0 +1,56 @@
+---
+title: "Delta Gain: findings synthesis"
+subtitle: "How much new protein-level information newly annotated fungal genomes add"
+date: 2026-11-08
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+::: {.callout-important}
+## One result on this page has since been qualified
+
+Section 5.1 reports that **enriched Pfam families** show new genomes adding far more novelty
+than an order-matched baseline null — **+14.6 to +14.9 points at 70 % identity**, against
+roughly +0.4 to +2.2 for CAZy, MEROPS and random-Pfam controls. It is the largest effect in
+the document.
+
+A later test shows that **most of that excess is where the genomes were deposited, not what
+is in them.** Two UW-Madison Y1000+ BioProjects contribute 1,033 genomes — 5.8 % of the new
+side — and they carry about three quarters of the enriched-family novelty. Their assemblies
+went to GenBank in 2024 but their proteins went to Figshare, so the proteins are public and
+yet absent from the `nr` baseline this analysis screens against. Counting them as known
+turns the enriched families' **+24.8-point excess over the controls into a 23.1-point
+deficit**.
+
+**[Read the test → *The enriched-Pfam signal is mostly Y1000+ deposition*](../y1000_deposition/)**
+
+What that test does **not** do is re-run the order-matched null with those genomes moved into
+the baseline, so the +14.6 figure below has not been recomputed — it has been shown to rest
+on a confound. The other family sets are far less affected: the median family loses 86.6 % of
+its novelty among the enriched families and 0.8 % among the random controls. Sections 3 and 4,
+which are whole-proteome rather than family-level, are not touched by this.
+:::
+
+::: {.callout-note}
+## What this is, and where it comes from
+
+A working analysis, not a finished study. Every result is computational and nothing here has
+been tested at the bench. Section 7 states the limitations and section 8 lists what was
+deliberately not done.
+
+This page **reproduces `docs/FINDINGS.md` from the pipeline repository
+[1KFG/delta-gain](https://github.com/1KFG/delta-gain) verbatim**, at pinned commit
+[`91eb5fe`](https://github.com/1KFG/delta-gain/blob/91eb5fe6be888707fcf9c6953ef68a99bd91d414/docs/FINDINGS.md)
+of 2026-11-08. It is reproduced rather than copied so that there is only one source of
+truth, and both the commit and the file's checksum are pinned in
+[`reports/bin/fetch_external.sh`](https://github.com/1KFG/delta-gain-fungi/blob/main/reports/bin/fetch_external.sh),
+so the text below cannot change without the fetch failing.
+
+The document refers to its own plans, scripts and results directories, which live in that
+repository and on lab storage; those references are left as written. Because it is
+reproduced verbatim, the qualification above appears only here, and not at section 5.1 where
+the affected number sits.
+:::
+
+{{< include _external/FINDINGS.md >}}

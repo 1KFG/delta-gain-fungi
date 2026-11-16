@@ -1,0 +1,31 @@
+---
+title: "Unspecific peroxygenases across 15,137 fungal genomes"
+subtitle: "Census, clade calling, what the model can and cannot predict, and what to assay"
+date: 2026-11-15
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+::: {.callout-note}
+## What this is
+
+A working analysis, not a finished study. Every clade call, site call and candidate here is a
+prediction from sequence and structure; **no enzyme in this report has been expressed or
+assayed by us.** Section 7 states the limitations and section 4 reports the results that came
+out negative, including four attempts to extend the model that failed their own tests.
+
+The report is explicit about where it stops: identifying PF01328 sites is validated (95/95
+against the published structure-based matrix), ranking clade-V-like pockets is reliable for
+ordering candidates, and predicting whether an arbitrary protein is an active peroxygenase
+**is not reliable** (out-of-clade AUC 0.556). Section 3 explains why that is arithmetic rather
+than something reanalysis can fix.
+
+The source of truth is
+[`analysis/enzymes_UPO/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO)
+in the repository; this page renders `REPORT.md` from that directory, so the two cannot drift.
+The 45 documents it synthesizes are listed at the end, and the per-protein table it describes
+is in the repository beside the code that built it.
+:::
+
+{{< include ../../analysis/enzymes_UPO/REPORT.md >}}
