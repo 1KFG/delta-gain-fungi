@@ -6,27 +6,20 @@ title: DeltaGain
 
 **Quantifying the annotation/novelty yield of large-scale fungal genome sequencing.**
 
-This site will host the results of the DeltaGain analysis: how much new
-protein/domain/fold diversity, taxonomic breadth, and gene-family expansion
-the Fungi_BFD genome set contributes beyond what's already in UniProt and
-RefSeq.
+How much new protein, domain and fold diversity, taxonomic breadth and gene-family
+expansion the Fungi_BFD genome set contributes beyond what is already in UniProt and
+RefSeq — and, alongside that, the analyses built on the same genome set.
 
-## Status
+## [Reports →](reports/)
 
-This page is a placeholder — deployed to confirm GitHub Pages, DNS, and (if
-configured) a custom domain are wired up correctly before any real report
-content exists.
+Rendered analyses. Currently one is published: [candidate effectors of two *Mucor*
+strains isolated from *Marchantia*](reports/mucor_secretome.html). The reports index
+lists what exists and what is deliberately not published yet.
 
-- Pipeline code: [github.com/1KFG/delta-gain](https://github.com/1KFG/delta-gain)
-- Reports: [/reports/](reports/)
+## Code
 
-## Reports
+- Analyses and pipeline code: [github.com/1KFG/delta-gain-fungi](https://github.com/1KFG/delta-gain-fungi)
+- Original pipeline: [github.com/1KFG/delta-gain](https://github.com/1KFG/delta-gain)
 
-- [Candidate effectors of two *Mucor* strains isolated from *Marchantia*](reports/mucor_secretome.html)
-  — secretome, predicted folds, and a structure-based interaction screen.
-
-## Roadmap
-
-1. Genome classification (Stage 1) — done, stub-validated
-2. UniProt fungi reference set (Stage 3, reference staging) — in progress
-3. Protein novelty screen, domain/fold annotation, per-axis statistics — planned
+Every result on this site is computational. Nothing has been tested at the bench, and
+each report states its own limitations.

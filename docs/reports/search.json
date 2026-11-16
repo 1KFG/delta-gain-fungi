@@ -2,9 +2,23 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "DeltaGain: Report Overview",
+    "title": "DeltaGain: Reports",
     "section": "",
-    "text": "Placeholder — no pipeline results are rendered here yet.\nOnce Stage 1 (genome classification) and Stage 3 (protein novelty) have real run output under ../results/, this page and its siblings will summarize:\n\nGenome classification counts (redundant strain / novel strain / label mismatch / candidate novel species)\nProtein novelty screen results, per novelty axis (new fold / new domain architecture / new family member / taxonomic breadth / lineage expansion)\nUMAP/embedding-space figures, rarefaction curves, enrichment tables\n\nSee the design doc and project README for the full plan."
+    "text": "Rendered reports from the DeltaGain analyses. Each page is generated from a REPORT.md that lives beside the code that produced it, in analysis/ — the page and the source therefore cannot drift.\nThese are working analyses. Every result is computational; nothing here has been expressed, assayed or otherwise tested at the bench, and each report states its own limitations."
+  },
+  {
+    "objectID": "index.html#available",
+    "href": "index.html#available",
+    "title": "DeltaGain: Reports",
+    "section": "Available",
+    "text": "Available\n\nCandidate effectors of two Mucor strains isolated from Marchantia\nSecretome prediction, structure prediction for the candidate effectors, and an AlphaFold3 interaction screen against a host receptor panel with the call threshold derived from the panel’s own controls. Also records eight silent pipeline failures found while running it, and the upstream reference-data problems the analysis ran into.\nSource: analysis/mucor_secretome/"
+  },
+  {
+    "objectID": "index.html#not-published-here",
+    "href": "index.html#not-published-here",
+    "title": "DeltaGain: Reports",
+    "section": "Not published here",
+    "text": "Not published here\nTwo finished bodies of work are in the repository but have no page on this site:\n\nThe delta-gain funnel itself — the novelty-yield measurement this project is named for. It has run in full; the plan, status log and findings live on lab storage (BFD/DeltaGain/docs/) rather than in this repository, so there is nothing here to render. Publishing it waits on an open question about whether part of the enrichment signal reflects genuine novelty or only where the genomes were deposited.\nThe UPO (unspecific peroxygenase) clade annotation — analysis/enzymes_UPO/, including a findings report on gene-model and annotation problems found in BFD."
   },
   {
     "objectID": "mucor_secretome.html",
