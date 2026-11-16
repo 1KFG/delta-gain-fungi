@@ -130,12 +130,17 @@ class TestFamilyRows(unittest.TestCase):
         r = self.rows("f")["c70"]
         self.assertEqual((r["novel_now"], r["novel_if_y_known"], r["y_only"]), (1, 0, 1))
 
-    def test_a_single_non_y1000_member_keeps_the_cluster_novel(self):
-        # the all-members rule: one genuinely new genome is enough, exactly as for baseline
+    def test_one_y1000_member_is_enough_to_make_a_mixed_cluster_known(self):
+        # The rule has to be the same one the funnel applies to baseline: a cluster is novel
+        # only if NO member is already public. A cluster holding one Y1000+ protein and one
+        # protein from an unrelated new genome is a cluster whose sequence has been public
+        # since Y1000+ released it, so it stops being novel - it does not survive on the
+        # strength of its other member. Asserting the opposite here was the one wrong
+        # expectation in this file, and it would have understated the deposition effect.
         self.make("f", [["r1", "GY1", "new"], ["r2", "GN", "new"]],
                   [["r1", "r1", "r1"], ["r2", "r1", "r1"]])
         r = self.rows("f")["c70"]
-        self.assertEqual((r["novel_now"], r["novel_if_y_known"], r["y_only"]), (1, 1, 0))
+        self.assertEqual((r["novel_now"], r["novel_if_y_known"], r["y_only"]), (1, 0, 1))
 
     def test_tiers_are_reported_separately(self):
         self.make("f", [["r1", "GN", "new"], ["r2", "GN", "new"]],
