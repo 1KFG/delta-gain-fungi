@@ -1,5 +1,10 @@
 # UPO project status
 
+> **`REPORT.md` (2026-11-15) is the synthesis** — census, clade calling, the negatives, the
+> candidate lists, the two BFD errors and the limitations, in one place and with the numbers
+> on this page reconciled against the final tables. This document remains the operational
+> status: what is running, what is decided, and the tooling traps.
+
 > **2026-11-11:** the clade-calling numbers below (78.9 % unassigned, precision 38 % below 55 %) are
 > for the 19-reference caller. The production clade call is now placement on the 187-leaf Zamocky
 > 2022 reference (`upo_place/`, column `place_our_clade`): 42 % of BFD unassigned, and at matched

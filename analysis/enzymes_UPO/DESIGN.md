@@ -1,5 +1,14 @@
 # Design: fungal peroxygenase diversity, substrate prediction, and regulation
 
+> **Read `REPORT.md` first (2026-11-15).** This is the design as written on 2026-11-07, kept
+> for the intent and the decisions; it is not a record of what was found. Three of its
+> premises did not survive measurement, and `REPORT.md` carries the evidence for each:
+> the aliphatic pocket does not predict ring activity (r = +0.176) and barely predicts T1
+> given clade (partial r = +0.129); the structural route was tested on predicted models and
+> made the activity model worse (out-of-clade AUC 0.333); and **decision D1 (Eurotiales
+> sourcing) is moot**, because it rested on the pocket score. The regulation workstream's
+> Phase A motif result stands, its Phase B co-regulation test is negative.
+
 Written 2026-11-07. This document supersedes the project framing in `PLAN.md`, which was written for the
 earlier question ("are there new UPOs in early-diverging fungi?"). That question has been answered and the
 answer was largely negative; see section 1.2. `PLAN.md` remains valid for its census, data paths and the
