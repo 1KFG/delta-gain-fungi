@@ -20,8 +20,16 @@ website:
     left:
       - href: index.qmd
         text: Overview
+      - href: upo_clades/index.qmd
+        text: "UPO clades"
       - href: mucor_secretome.qmd
         text: "Mucor effectors"
+
+# Each report page's title would otherwise render twice: once from the .qmd
+# front matter and again as the included REPORT.md's opening H1. See the
+# filter's own header comment for why it is fixed here and not in either file.
+filters:
+  - _filters/drop-duplicate-title.lua
 
 format:
   html:

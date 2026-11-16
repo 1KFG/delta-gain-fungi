@@ -14,6 +14,19 @@ limitations.
 
 ## Available
 
+### [Unspecific peroxygenases across 15,137 fungal genomes](upo_clades/index.html)
+
+A census of 97,520 PF01328 proteins, phylogenetic placement onto a 187-leaf reference
+tree, and a candidate list for expression. The report is as specific about what the
+model cannot do as about what it can: finding active-site residues is validated 95/95,
+ranking clade-V-like pockets works for ordering candidates, and predicting whether an
+arbitrary protein is an active peroxygenase **is not reliable** — out-of-clade AUC 0.556
+on the 19 characterized enzymes the field has. It also reports four attempts to lift that
+ceiling that failed their own tests, and two errors found in the underlying genome
+database.
+
+Source: [`analysis/enzymes_UPO/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO)
+
 ### [Candidate effectors of two *Mucor* strains isolated from *Marchantia*](mucor_secretome.html)
 
 Secretome prediction, structure prediction for the candidate effectors, and an
@@ -25,13 +38,16 @@ Source: [`analysis/mucor_secretome/`](https://github.com/1KFG/delta-gain-fungi/t
 
 ## Not published here
 
-Two finished bodies of work are in the repository but have no page on this site:
+Work that is in the repository but has no page here:
 
 - **The delta-gain funnel itself** — the novelty-yield measurement this project is named
   for. It has run in full; the plan, status log and findings live on lab storage
-  (`BFD/DeltaGain/docs/`) rather than in this repository, so there is nothing here to
-  render. Publishing it waits on an open question about whether part of the enrichment
-  signal reflects genuine novelty or only where the genomes were deposited.
-- **The UPO (unspecific peroxygenase) clade annotation** —
-  [`analysis/enzymes_UPO/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO),
-  including a findings report on gene-model and annotation problems found in BFD.
+  (`BFD/DeltaGain/docs/`) rather than in this repository. A page is being prepared.
+- **The BFD gene-model and annotation findings** —
+  [`analysis/enzymes_UPO/bfd_findings/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO/bfd_findings).
+  Summarized in §6 of the UPO report above. It has no page of its own because its main
+  result — that the start/stop-codon completeness flags are wrong database-wide — was
+  fixed upstream the same day it was found, so its tables describe a snapshot that is
+  being rebuilt, and its most interesting observation (≈2,265 ascomycete proteins placing
+  in a basidiomycete clade) is explicitly unresolved pending a test the report specifies
+  but does not run.

@@ -99,6 +99,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./upo_clades/index.html"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./mucor_secretome.html"> 
 <span class="menu-text">Mucor effectors</span></a>
   </li>  
@@ -120,6 +124,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#available" id="toc-available" class="nav-link active" data-scroll-target="#available">Available</a>
   <ul class="collapse">
+  <li><a href="#unspecific-peroxygenases-across-15137-fungal-genomes" id="toc-unspecific-peroxygenases-across-15137-fungal-genomes" class="nav-link" data-scroll-target="#unspecific-peroxygenases-across-15137-fungal-genomes">Unspecific peroxygenases across 15,137 fungal genomes</a></li>
   <li><a href="#candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" id="toc-candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" class="nav-link" data-scroll-target="#candidate-effectors-of-two-mucor-strains-isolated-from-marchantia">Candidate effectors of two <em>Mucor</em> strains isolated from <em>Marchantia</em></a></li>
   </ul></li>
   <li><a href="#not-published-here" id="toc-not-published-here" class="nav-link" data-scroll-target="#not-published-here">Not published here</a></li>
@@ -143,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">November 15, 2026</p>
+      <p class="date-modified">November 16, 2026</p>
     </div>
   </div>
     
@@ -158,6 +163,11 @@ ul.task-list li input[type="checkbox"] {
 <p>These are working analyses. Every result is computational; nothing here has been expressed, assayed or otherwise tested at the bench, and each report states its own limitations.</p>
 <section id="available" class="level2">
 <h2 class="anchored" data-anchor-id="available">Available</h2>
+<section id="unspecific-peroxygenases-across-15137-fungal-genomes" class="level3">
+<h3 class="anchored" data-anchor-id="unspecific-peroxygenases-across-15137-fungal-genomes"><a href="upo_clades/index.html">Unspecific peroxygenases across 15,137 fungal genomes</a></h3>
+<p>A census of 97,520 PF01328 proteins, phylogenetic placement onto a 187-leaf reference tree, and a candidate list for expression. The report is as specific about what the model cannot do as about what it can: finding active-site residues is validated 95/95, ranking clade-V-like pockets works for ordering candidates, and predicting whether an arbitrary protein is an active peroxygenase <strong>is not reliable</strong> — out-of-clade AUC 0.556 on the 19 characterized enzymes the field has. It also reports four attempts to lift that ceiling that failed their own tests, and two errors found in the underlying genome database.</p>
+<p>Source: <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO"><code>analysis/enzymes_UPO/</code></a></p>
+</section>
 <section id="candidate-effectors-of-two-mucor-strains-isolated-from-marchantia" class="level3">
 <h3 class="anchored" data-anchor-id="candidate-effectors-of-two-mucor-strains-isolated-from-marchantia"><a href="mucor_secretome.html">Candidate effectors of two <em>Mucor</em> strains isolated from <em>Marchantia</em></a></h3>
 <p>Secretome prediction, structure prediction for the candidate effectors, and an AlphaFold3 interaction screen against a host receptor panel with the call threshold derived from the panel’s own controls. Also records eight silent pipeline failures found while running it, and the upstream reference-data problems the analysis ran into.</p>
@@ -166,10 +176,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="not-published-here" class="level2">
 <h2 class="anchored" data-anchor-id="not-published-here">Not published here</h2>
-<p>Two finished bodies of work are in the repository but have no page on this site:</p>
+<p>Work that is in the repository but has no page here:</p>
 <ul>
-<li><strong>The delta-gain funnel itself</strong> — the novelty-yield measurement this project is named for. It has run in full; the plan, status log and findings live on lab storage (<code>BFD/DeltaGain/docs/</code>) rather than in this repository, so there is nothing here to render. Publishing it waits on an open question about whether part of the enrichment signal reflects genuine novelty or only where the genomes were deposited.</li>
-<li><strong>The UPO (unspecific peroxygenase) clade annotation</strong> — <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO"><code>analysis/enzymes_UPO/</code></a>, including a findings report on gene-model and annotation problems found in BFD.</li>
+<li><strong>The delta-gain funnel itself</strong> — the novelty-yield measurement this project is named for. It has run in full; the plan, status log and findings live on lab storage (<code>BFD/DeltaGain/docs/</code>) rather than in this repository. A page is being prepared.</li>
+<li><strong>The BFD gene-model and annotation findings</strong> — <a href="https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO/bfd_findings"><code>analysis/enzymes_UPO/bfd_findings/</code></a>. Summarized in §6 of the UPO report above. It has no page of its own because its main result — that the start/stop-codon completeness flags are wrong database-wide — was fixed upstream the same day it was found, so its tables describe a snapshot that is being rebuilt, and its most interesting observation (≈2,265 ascomycete proteins placing in a basidiomycete clade) is explicitly unresolved pending a test the report specifies but does not run.</li>
 </ul>
 
 

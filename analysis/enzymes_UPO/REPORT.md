@@ -76,6 +76,15 @@ The production clade call is **phylogenetic placement** (EPA) on a 187-leaf refe
 built in-house from Zamocky et al. 2022, not nearest-neighbour identity to the 19 characterized
 enzymes. It replaced the earlier caller after direct comparison (`RECONCILIATION.md` §1).
 
+![Figure 1. The 187-leaf UPO reference tree.](figures/out/fig1_reference_tree.png)
+
+*Maximum likelihood (IQ-TREE, Q.PFAM+R7), rooted on Mucorales. Coloured sectors are Zamocky
+et al. 2022's lineages; the black arcs outside them are Clades I–V with SH-aLRT/UFBoot support.
+The 19 named tips are every characterized enzyme the field has. Note how few they are, and how
+unevenly they fall — Clades III and V hold most of them, Clades I and II almost none. That
+imbalance is the origin of every limit in this report.
+[PDF](figures/out/fig1_reference_tree.pdf)*
+
 | tier | n | % | meaning |
 |---|---|---|---|
 | `unassigned` | 76,913 | 78.9 | no placement reached the 0.5 likelihood-weight threshold |
@@ -93,6 +102,17 @@ references. This does not show the calls are correct — two methods can agree a
 and both rest on the same 19 enzymes — only that the boundary drawn from reference tests
 reproduces on data.
 
+![Figure 4. Matched-identity validation of both callers on the 19 characterized enzymes.](figures/out/fig4_matched_identity.png)
+
+*Each enzyme is re-called with every reference above an identity ceiling removed, so the test
+asks what happens at a given distance from anything known. Upper panel: precision when the
+caller commits, with exact binomial 95 % CI and correct/committed counts. Lower panel: how
+often it declines. The 187-leaf caller (blue) is 16/16, 13/13, 4/4 and 14/14 — it does not make
+a wrong call at any distance — while the 19-reference caller (orange) falls to 3/8 at 45–55 %
+identity. The intervals are wide because n = 19; this shows the caller abstains rather than
+guesses, not that it is accurate to within a few percent.
+[PDF](figures/out/fig4_matched_identity.pdf)*
+
 ### Reading Table T1 without being misled
 
 `figures/data/table_T1.md` gives per-clade references, support, BFD membership, catalytic core,
@@ -109,6 +129,17 @@ Three caveats travel with that table and should not be separated from it:
   Report it as 121 plus 78 short-pendant others.
 - **Basidiomycetous 1st holds ~2,265 ascomycete proteins that are *not* long-pendant** — see §6.
 - **Family I (short) has low node support** (SH-aLRT/UFBoot 79.4/65); Clades III–V sit inside it.
+
+![Figure 3. What changed when placement replaced nearest-neighbour calling, for all 97,520 proteins.](figures/out/fig3_old_vs_placement.png)
+
+*Flows are coloured by how much the **old** call could be trusted. Calls made inside the
+validated identity range (blue) mostly survive; extrapolated Clade III and V calls (orange)
+largely move to Clade IV or II, or leave Clades I–V altogether. **This figure counts the way
+Table T1 does, not the way the tier table does**: every protein is drawn at its best placement
+regardless of confidence, so "unassigned" here means *placed outside Clades I–V* (41,001) and
+not *below the 0.5 likelihood-weight threshold* (76,913). The two numbers answer different
+questions and the columns sum to 97,520 either way.
+[PDF](figures/out/fig3_old_vs_placement.pdf)*
 
 ### What is reliable, and where it stops
 
@@ -259,6 +290,12 @@ Software: `upo_sites/bin/upo_scan.py` — one command, any proteome → sites + 
 applicability domain. Regression-tested 87/87 against the full BFD pipeline.
 
 ## Figures
+
+All three are shown inline in §3 above, as PNG with a PDF beside each in `figures/out/`.
+They are regenerated end-to-end by `figures/slurm/figures.sh`, which runs
+`figures/bin/prep_figures.py` (tables, tested) and then `figures/bin/plot_figures.R` (plots)
+in a pinned conda environment, so the numbers in the panels come from the same tables as the
+numbers in this text.
 
 | figure | shows |
 |---|---|
