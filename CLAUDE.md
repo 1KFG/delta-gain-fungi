@@ -2,12 +2,16 @@
 
 ## Writing
 
-Reports, published pages and PR bodies follow [`WRITING.md`](WRITING.md). Read it before
-writing or editing an `analysis/<name>/REPORT.md`, a page under `reports/`, or a PR
-description. The short version: the visual style is stock Quarto `cosmo` with no custom CSS,
-and everything that matters is structural — limitations stated up front, every number with
-its bound and denominator, negative results in their own section, reading traps resolved
-rather than passed on, and "not done here" made explicit.
+Reports and published pages here are **Quarto formatted reports** — Markdown with YAML front
+matter, Quarto callout blocks, `{{< include >}}` shortcodes and Quarto figure handling,
+rendered by `quarto render`. They follow [`WRITING.md`](WRITING.md); read it before writing
+or editing an `analysis/<name>/REPORT.md`, a page under `reports/`, or a PR description.
+
+The short version: the visual style is stock Quarto `cosmo` with no custom CSS, and
+everything that matters is structural — limitations stated up front in a callout, every
+number with its bound and denominator, negative results in their own section, figure captions
+that say what the figure is evidence for, reading traps resolved rather than passed on, and
+"not done here" made explicit. The twelve rules are portable; the Quarto idioms are not.
 
 ## Site
 
