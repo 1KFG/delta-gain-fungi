@@ -47,6 +47,25 @@ page is then served at `/reports/<name>/`.
 
 A report with no figures does not need any of this and can stay a flat `<name>.qmd`.
 
+### Reports whose source is another repository
+
+`reports/delta_gain/` publishes `docs/FINDINGS.md` from
+[1KFG/delta-gain](https://github.com/1KFG/delta-gain), which is where the funnel pipeline and
+its narrative live. Copying that file here would create a second copy to keep in step with
+the first, so the page reproduces it at a **pinned commit** instead, fetched by
+
+```sh
+reports/bin/fetch_external.sh      # -> reports/delta_gain/{_external,figures}/, gitignored
+```
+
+Both the commit and each file's sha256 are pinned in that script: if the content behind the
+pinned URL ever differs, the fetch fails and writes nothing, because the page states that it
+reproduces the document verbatim. Re-fetch before re-rendering. The rendered output under
+`docs/reports/` is committed, so the live site never depends on the fetch.
+
+Because the reproduction is verbatim, anything we need to say about that document goes in
+the wrapper's callouts, not into the text — see the qualification box on that page.
+
 ## What does not belong here
 
 - **Data files and analysis output.** `reports/` is not an output directory. Results stay

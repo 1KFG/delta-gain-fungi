@@ -14,6 +14,30 @@ limitations.
 
 ## Available
 
+### [Delta Gain: findings synthesis](delta_gain/index.html)
+
+The novelty-yield measurement this project is named for: how much new protein-level
+information newly annotated fungal genomes add beyond UniProt and RefSeq. Whole-proteome
+funnel, what the surviving clusters are, family-level diversity against an order-matched
+null, and species accumulation across 23,567 genomes. Reproduced verbatim from the pipeline
+repository at a pinned commit.
+
+**One result on it has since been qualified** — see the box at the top of the page, and its
+companion below.
+
+Source: [1KFG/delta-gain](https://github.com/1KFG/delta-gain) @ [`91eb5fe`](https://github.com/1KFG/delta-gain/blob/91eb5fe6be888707fcf9c6953ef68a99bd91d414/docs/FINDINGS.md)
+
+### [The enriched-Pfam signal is mostly Y1000+ deposition](y1000_deposition/index.html)
+
+A companion test to the funnel's largest family-level effect. 1,033 genomes from two
+UW-Madison Y1000+ BioProjects — 5.8 % of the new side — carry about three quarters of the
+enriched families' novelty, because their proteins went to Figshare rather than to the
+protein databases the baseline is built from. Counting them as known inverts the effect.
+The random-Pfam controls barely move, which is what makes it a confound rather than a
+correction to everything.
+
+Source: [`analysis/delta_gain_funnel/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/delta_gain_funnel)
+
 ### [Unspecific peroxygenases across 15,137 fungal genomes](upo_clades/index.html)
 
 A census of 97,520 PF01328 proteins, phylogenetic placement onto a 187-leaf reference
@@ -40,9 +64,6 @@ Source: [`analysis/mucor_secretome/`](https://github.com/1KFG/delta-gain-fungi/t
 
 Work that is in the repository but has no page here:
 
-- **The delta-gain funnel itself** — the novelty-yield measurement this project is named
-  for. It has run in full; the plan, status log and findings live on lab storage
-  (`BFD/DeltaGain/docs/`) rather than in this repository. A page is being prepared.
 - **The BFD gene-model and annotation findings** —
   [`analysis/enzymes_UPO/bfd_findings/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/enzymes_UPO/bfd_findings).
   Summarized in §6 of the UPO report above. It has no page of its own because its main

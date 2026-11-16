@@ -20,6 +20,10 @@ website:
     left:
       - href: index.qmd
         text: Overview
+      - href: delta_gain/index.qmd
+        text: "Delta-gain funnel"
+      - href: y1000_deposition/index.qmd
+        text: "Y1000+ deposition"
       - href: upo_clades/index.qmd
         text: "UPO clades"
       - href: mucor_secretome.qmd
