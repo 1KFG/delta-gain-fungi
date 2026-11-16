@@ -48,3 +48,7 @@ data_external/
 # modified on every run; they are build output, not source.
 __pycache__/
 *.pyc
+
+# Exception: the Y1000+ deposition join's small per-family tables (~60 KB), which are the
+# evidence for analysis/delta_gain_funnel/REPORT.md and belong with it.
+!analysis/delta_gain_funnel/out/
