@@ -40,7 +40,7 @@
 # Reads shared folders read-only; writes analysis/mucor_secretome/out/panels/.
 #SBATCH -p epyc,intel
 #SBATCH --constraint="ryzen|broadwell|cascade|sapphire"
-#SBATCH -c 24
+#SBATCH -c 16
 #SBATCH --mem=64G
 #SBATCH -t 24:00:00
 #SBATCH -J annot_part2
@@ -51,7 +51,7 @@ cd "${SLURM_SUBMIT_DIR:-$PWD}"
 
 A=analysis/mucor_secretome
 PY=/usr/bin/python3.12
-CPU=${SLURM_CPUS_ON_NODE:-24}
+CPU=${SLURM_CPUS_ON_NODE:-16}
 BFD_BIN=${BFD_BIN:-$HOME/projects/Fungi_BFD/nextflow/bin}
 OUT=$A/out/panels; mkdir -p $OUT
 FAA=$OUT/faa
