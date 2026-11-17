@@ -15,8 +15,16 @@
 # DeepLoc is licensed software in a local container and the MorenoLab strains are unpublished:
 # this runs entirely on cluster GPUs and no sequence leaves the machine. There is no hosted
 # DeepLoc endpoint in this pipeline and there must not be.
+#
+# The GPU has to be new enough for the container's torch. A bare --gres=gpu:1 drew a
+# Tesla P100 (sm_60) on gpu05 and DeepLoc died 43 s in with
+#   torch.AcceleratorError: CUDA error: no kernel image is available for execution on the device
+# which is the same class of failure as the ESMFold/a100 problem recorded in HANDOFF.md:
+# the wheel simply carries no kernels for that architecture. The exclusion list is BFD's own
+# (gpu01-03 k80, gpu13-14) plus gpu05, leaving a100 / h100 / ada6000 / blackwell6000.
 #SBATCH -p short_gpu
 #SBATCH --gres=gpu:1
+#SBATCH --exclude=gpu01,gpu02,gpu03,gpu05,gpu13,gpu14
 #SBATCH -c 4
 #SBATCH --mem=32G
 #SBATCH -t 2:00:00
@@ -40,6 +48,16 @@ source /etc/profile.d/modules.sh 2>/dev/null || true
 module load apptainer
 [ -s "$SIF" ] || { echo "[ERROR] DeepLoc SIF not found: $SIF" >&2; exit 1; }
 nvidia-smi --query-gpu=name,compute_cap --format=csv,noheader || true
+
+# Fail here with a readable message rather than 40 s later inside torch. The container's
+# wheels carry no kernels below sm_70, and the error it raises there names neither the card
+# nor the cause.
+CC=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader | head -1 | tr -d '.')
+if [ -n "$CC" ] && [ "$CC" -lt 70 ]; then
+    echo "[ERROR] GPU compute capability ${CC:0:1}.${CC:1} is too old for this container;" >&2
+    echo "        need sm_70+. Widen the --exclude list in this script." >&2
+    exit 1
+fi
 
 LOCUSTAGS="${PANEL_LOCUSTAGS:-JEM1MUCOR JEM2MUCOR MPTAK MPALE}"
 export OMP_NUM_THREADS=${SLURM_CPUS_ON_NODE:-4}
