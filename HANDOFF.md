@@ -1,4 +1,89 @@
-# DeltaGain_Fungi — Handoff / Status (2026-11-12)
+# DeltaGain_Fungi — Handoff / Status (2026-11-17)
+
+## Update 2026-11-17: four reports are published, two upstream database bugs are fixed, the Mucor work has a plan (read this first)
+
+Everything below this section is still accurate about the science. What changed is that the
+work is now **public**, the writing standard is **written down**, and two long-standing
+defects in the underlying database have **fixes in review**.
+
+### The site is live: <https://dgf.fungalgenomes.org>
+
+Four reports, up from one. Each page is a thin Quarto wrapper that `{{< include >}}`s a
+`REPORT.md` living beside the code, so page and source cannot drift.
+
+| page | source | note |
+|---|---|---|
+| `/reports/delta_gain/` | `1KFG/delta-gain` `docs/FINDINGS.md` @ `91eb5fe` | reproduced verbatim at a pinned commit |
+| `/reports/y1000_deposition/` | `analysis/delta_gain_funnel/REPORT.md` | the test that qualifies the above |
+| `/reports/upo_clades/` | `analysis/enzymes_UPO/REPORT.md` | with its three figures inline |
+| `/reports/mucor_secretome.html` | `analysis/mucor_secretome/REPORT.md` | unchanged |
+
+**The funnel page carries a qualification box rather than an edit.** Its §5.1 reports the
+enriched-Pfam families beating an order-matched null by +14.6 to +14.9 points. The Y1000+ test
+shows most of that is deposition: counting those 1,033 genomes as known turns a **+24.8-point
+excess over controls into a 23.1-point deficit**. The correction sits in a callout on the
+wrapper because the body is reproduced verbatim and editing it would make that claim false.
+
+**Still not recomputed:** the +14.6 figure itself. That needs the order-matched null re-run
+with the Y1000+ genomes moved into the baseline — roughly a day — and has not been done. Until
+then the number stands with its confound named, not corrected.
+
+### The writing standard is now a file
+
+`WRITING.md` (+ a short `CLAUDE.md` pointing at it) records how reports here are written. The
+format is named: **Quarto formatted reports**. The visual style is stock `cosmo` with no custom
+CSS anywhere — what matters is editorial, and the twelve rules are portable to a manuscript or
+a PR body. A subagent asked to follow it could not find it, which is how PR #14 came to exist.
+
+### Two upstream database bugs, fixed and in review
+
+Both were found by consumers of BFD, both failed silently, and both are **code-only — the data
+has not been regenerated**:
+
+- **`stajichlab/Fungi_BFD#75` — `is_gpi_anchored` was TRUE for every protein.** The `predgpi`
+  join had no `feature` filter. PredGPI writes a `Chain` row per protein and a `GPI-anchor` row
+  only for anchored ones: **223,938,474 vs 3,299,703**. So the column read TRUE for all 223.9 M
+  proteins instead of the 3.3 M (1.5 %) that are anchored. Test extracts the clause from the
+  shipped script, so it fails if the fix is reverted.
+- **`1KFG/NCBI_fungi#1` — `SUBPHYLUM` and `SUBCLASS` empty in every row ever written.** The
+  rank map had `'s'` twice (`'s': 'SUBPHYLUM'` then `'s': 'SPECIES'`); a dict keeps the last, so
+  the SUBPHYLUM key never existed. SUBCLASS had no key at all. 0 of 24,523 rows populated. The
+  old `taxonkit reformat` has no placeholder for those ranks; `reformat2` does. Verified on
+  3,000 real rows: **every previously-working rank identical, 0 changes**, SUBPHYLUM now 97.5 %,
+  SUBCLASS 89.0 %.
+
+**Until the rebuild:** derive GPI from `predgpi.feature = 'GPI-anchor'`, group by `CLASS`/`ORDER`
+rather than SUBPHYLUM, and do not filter on the start/stop-codon flags (wrong database-wide,
+fixed in `fb1d7cd`, parquet predates it). The rebuild chain is
+`ncbi_accessions_taxonomy.csv` → `samples.csv` → `species.csv.gz` → parquet → DuckDB build.
+That is a pipeline run and **a decision not yet made**.
+
+### Mucor / MorenoLab
+
+- A handoff for the data owners now exists at
+  `/bigdata/stajichlab/shared/projects/MorenoLab/HANDOFF.md` — evidence, confidence, known
+  problems, and what would move it forward.
+- `analysis/mucor_secretome/EFFECTOR_PLAN.md` (1,000 lines, uncommitted) proposes the deeper
+  comparative analysis. **Not executed.**
+- **A ninth silent pipeline failure, verified:** BFD stores versioned Pfam accessions
+  (`PF01476.27`); `annotate_to_tables.py:245` strips the version for JEM1/JEM2 and both
+  *Marchantia* proteomes, while `export.sql:38` copies BFD's unstripped. `build_secretome.py:134`
+  intersects exact strings against unversioned constants, so the chitin tier's Pfam branch **can
+  fire for the focal strains and never for the 292 BFD background genomes** — breaking the
+  equivalence `annotate_panels.sh`'s own header promises. Not yet fixed. Does not affect the
+  JEM counts or any structure/AF3 result.
+- **Four predictors have never been run on JEM1/JEM2 or either *Marchantia* proteome** —
+  DeepLoc, WoLF PSORT, MEROPS, IDP — though they exist for every BFD genome. Being run now.
+- The plan's claim that CotH is **not** Mucorales-restricted (hits reported in
+  Neocallimastigomycota, Mortierellales, Helotiales) is **still being verified**. Treat as
+  unconfirmed until the census completes.
+
+### Open PRs
+
+`1KFG/delta-gain-fungi#14` (WRITING.md), `stajichlab/Fungi_BFD#75`, `1KFG/NCBI_fungi#1`.
+A stale branch `subphylum-fix` sits on NCBI_fungi with a `wip` commit; delete it when #1 merges.
+
+---
 
 ## Update 2026-11-12: the delta-gain funnel is finished — this file was two days stale (read this first)
 
