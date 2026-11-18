@@ -52,11 +52,37 @@ has not been regenerated**:
   3,000 real rows: **every previously-working rank identical, 0 changes**, SUBPHYLUM now 97.5 %,
   SUBCLASS 89.0 %.
 
-**Until the rebuild:** derive GPI from `predgpi.feature = 'GPI-anchor'`, group by `CLASS`/`ORDER`
-rather than SUBPHYLUM, and do not filter on the start/stop-codon flags (wrong database-wide,
-fixed in `fb1d7cd`, parquet predates it). The rebuild chain is
-`ncbi_accessions_taxonomy.csv` → `samples.csv` → `species.csv.gz` → parquet → DuckDB build.
-That is a pipeline run and **a decision not yet made**.
+**The two fixes do NOT share a rebuild path, and an earlier version of this file wrongly implied
+they did.** Verified 2026-11-18 against the live database:
+
+- **GPI — already rebuilt, nothing to do.** `is_gpi_anchored` lives in `v_protein_annotation`,
+  which is a **VIEW**; the whole DuckDB is views over `tables/*.parquet`. PredGPI's raw output was
+  never wrong, so no re-annotation was ever needed — the re-launch is
+  `nextflow/bin/build_BFD_duckDB.sh` alone (it `rm -f`s the DB and recreates the views; minutes,
+  no GPU, no pipeline run). It has already happened. Job 32173571 over the live DB
+  (`BFD_dashboard/db/BFD.duckdb`): **3,299,703 TRUE (1.348 %)**, exactly matching the
+  `GPI-anchor` row count, against 241,513,215 FALSE. The stored view SQL carries
+  `WHERE (feature = 'GPI-anchor')`. `v_secretome_proteins.is_gpi` is a second site and was always
+  correct — which is why the two disagreed and the bug was findable.
+- **SUBPHYLUM — not rebuilt; the guidance below still stands.** That fix *is* upstream of the
+  parquet, and its chain is `ncbi_accessions_taxonomy.csv` → `samples.csv` → `species.csv.gz` →
+  parquet → DuckDB build. **A decision not yet made.**
+
+**Still true until the taxonomy rebuild:** group by `CLASS`/`ORDER` rather than SUBPHYLUM, and do
+not filter on the start/stop-codon flags (wrong database-wide, fixed in `fb1d7cd`, parquet
+predates it).
+
+**New caveat on `is_gpi_anchored`, found while verifying the above.** The column is correct but
+is **not a denominator**. `v_protein_annotation` holds 244,812,918 proteins while PredGPI wrote
+`Chain` rows for only 223,938,474 of them, so **~20.9 M proteins (8.5 % of the corpus) were never
+run through PredGPI** and `COALESCE(gpi.is_gpi, FALSE)` renders them `false` — indistinguishable
+from "tested, not anchored". For a GPI *rate*, restrict to
+`protein_id IN (SELECT protein_id FROM predgpi)`. This is a quieter instance of the original
+failure: a missing row becoming a confident negative.
+
+**`Fungi_BFD_runs/db/BFD.duckdb` is a dangling symlink** → `../BFD_function/db/BFD.duckdb`, which
+does not exist. Anything still pointing there is broken, not stale. The live DB is
+`/bigdata/stajichlab/shared/projects/BFD/BFD_dashboard/db/BFD.duckdb`.
 
 ### Mucor / MorenoLab
 
