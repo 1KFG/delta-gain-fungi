@@ -72,11 +72,28 @@ That is a pipeline run and **a decision not yet made**.
   fire for the focal strains and never for the 292 BFD background genomes** — breaking the
   equivalence `annotate_panels.sh`'s own header promises. Not yet fixed. Does not affect the
   JEM counts or any structure/AF3 result.
-- **Four predictors have never been run on JEM1/JEM2 or either *Marchantia* proteome** —
-  DeepLoc, WoLF PSORT, MEROPS, IDP — though they exist for every BFD genome. Being run now.
-- The plan's claim that CotH is **not** Mucorales-restricted (hits reported in
-  Neocallimastigomycota, Mortierellales, Helotiales) is **still being verified**. Treat as
-  unconfirmed until the census completes.
+- **The four missing predictors have now been run** (2026-11-17) on JEM1, JEM2 and both
+  *Marchantia* proteomes, each invoked exactly as its BFD module invokes it and merged by BFD's
+  own `merge_*.py` / `gather_AIUPred.py`, so the columns match the database by construction.
+  Scripts: `slurm/deeploc_panels.sh` (GPU) and `slurm/annotate_panels_part2.sh` (CPU);
+  outputs in `analysis/mucor_secretome/out/panels/`.
+
+  | table | rows | coverage |
+  |---|---|---|
+  | `deeploc.parquet` | 61,950 | **one row per protein, all four proteomes** |
+  | `wolfpsort.csv` | 61,936 | all but 14 MPTAK proteins of <30 aa, which WoLF PSORT drops |
+  | `merops.csv` | 12,020 | 341 / 327 / 489 / 522 proteins with a protease hit — a hit table |
+  | `idp_summary.csv` | 30,960 | one row per protein *having* an IDP region ≥30 aa, by design |
+
+  **Absence is a zero, not a NULL** in `merops` and `idp_summary` — `gather_AIUPred.py` does
+  `if idp_residue_count == 0: continue`. Proteins with disorder: JEM1 6,159/11,487 (53.6 %),
+  JEM2 6,612/11,485 (57.6 %), MPTAK 10,552/20,412, MPALE 7,637/18,566. The same caveats are
+  recorded in the script header so they are not re-investigated.
+- **CotH is NOT Mucorales-restricted — verified, and my own brief was wrong.** Census of
+  PF08757 at domain i-E < 1e-5 (job 32147087): Mucorales 5,178 proteins in 273/275 genomes
+  (~19 each), but **Neocallimastigales 5,062 in 25/26 genomes (~202 each)** — an order of
+  magnitude more per genome — plus Mortierellales 1,033 in 100/100 and Helotiales 46 in
+  42/374. Any framing of CotH as a Mucorales marker is unsupported.
 
 ### Open PRs
 

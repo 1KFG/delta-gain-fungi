@@ -37,6 +37,22 @@
 #   that matters is Mucor against BFD's fungi, which is unaffected. The per-genome organism
 #   type is recorded in out/panels/wolfpsort_organism.tsv so nobody has to guess later.
 #
+# Expected coverage -- NONE of these tables has one row per protein, and two of the three are
+# meant not to. Checked on the 2026-11-17 run (job 32159681) so nobody re-investigates:
+#   wolfpsort.csv   61936 rows / 61950 proteins. The 14 missing are all MPTAK proteins of
+#                   <30 aa (10-29); WoLF PSORT silently drops them, emitting the
+#                   "uninitialized value within @PsortSeq::seq" warnings seen in the .err.
+#                   JEM1/JEM2/MPALE have no protein under 50 aa, so they are complete. BFD
+#                   genomes lose their own sub-30 aa proteins the same way.
+#   merops.csv      341/327/489/522 proteins with a hit -- a blastp hit table, so only
+#                   proteases are in it by construction.
+#   idp_summary.csv one row per protein THAT HAS a disordered region of >= 30 aa:
+#                   gather_AIUPred.py does `if idp_residue_count == 0: continue`. A protein
+#                   absent from this table has no IDP region; it is not missing data.
+#                   JEM1 6159/11487, JEM2 6612/11485, MPTAK 10552/20412, MPALE 7637/18566.
+# Treat absence as a zero, not a NULL, for merops and idp_summary; for wolfpsort it is a NULL
+# on 14 Marchantia proteins.
+#
 # Reads shared folders read-only; writes analysis/mucor_secretome/out/panels/.
 #SBATCH -p epyc,intel
 #SBATCH --constraint="ryzen|broadwell|cascade|sapphire"
