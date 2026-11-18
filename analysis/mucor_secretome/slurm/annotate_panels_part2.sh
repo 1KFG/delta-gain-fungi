@@ -49,7 +49,10 @@
 #   idp_summary.csv one row per protein THAT HAS a disordered region of >= 30 aa:
 #                   gather_AIUPred.py does `if idp_residue_count == 0: continue`. A protein
 #                   absent from this table has no IDP region; it is not missing data.
-#                   JEM1 6159/11487, JEM2 6612/11485, MPTAK 10552/20412, MPALE 7637/18566.
+#                   JEM1 6159/11487 (0.536), JEM2 6612/11485 (0.576), MPTAK 10552/20412,
+#                   MPALE 7637/18566. Both Mucor values are ordinary: across the 273 Mucorales
+#                   genomes in BFD the same fraction is median 0.509, p10 0.452, p90 0.603
+#                   (job 32162666), so the half-size table is biology, not a truncated run.
 # Treat absence as a zero, not a NULL, for merops and idp_summary; for wolfpsort it is a NULL
 # on 14 Marchantia proteins.
 #

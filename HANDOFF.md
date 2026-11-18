@@ -87,8 +87,13 @@ That is a pipeline run and **a decision not yet made**.
 
   **Absence is a zero, not a NULL** in `merops` and `idp_summary` — `gather_AIUPred.py` does
   `if idp_residue_count == 0: continue`. Proteins with disorder: JEM1 6,159/11,487 (53.6 %),
-  JEM2 6,612/11,485 (57.6 %), MPTAK 10,552/20,412, MPALE 7,637/18,566. The same caveats are
-  recorded in the script header so they are not re-investigated.
+  JEM2 6,612/11,485 (57.6 %), MPTAK 10,552/20,412, MPALE 7,637/18,566. Both Mucor values are
+  **ordinary for the lineage** — across BFD's 273 Mucorales genomes that fraction is median
+  0.509 (p10 0.452, p90 0.603), so the half-size table is biology, not a truncated run, and the
+  agreement is independent evidence the AIUPred run was sane. Column layouts were checked
+  against `idp_summary.parquet` and `wolfpsort.parquet` and match field-for-field, so the panel
+  tables can be `UNION ALL`'d onto the database tables. The caveats are also in the script
+  header so they are not re-investigated.
 - **CotH is NOT Mucorales-restricted — verified, and my own brief was wrong.** Census of
   PF08757 at domain i-E < 1e-5 (job 32147087): Mucorales 5,178 proteins in 273/275 genomes
   (~19 each), but **Neocallimastigales 5,062 in 25/26 genomes (~202 each)** — an order of
