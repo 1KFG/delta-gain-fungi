@@ -60,8 +60,24 @@ mkdir -p "$W"
 
 source /etc/profile.d/modules.sh 2>/dev/null || true
 export CONDA_NO_PLUGINS=true
+# aiupred and wolfpsort are conda environments behind their modulefiles, so their `conda
+# activate` needs the shell hook first. A login shell has it from ~/.bashrc, which is why
+# these modules load fine interactively; a batch shell does not, and the modulefile dies with
+#   conda: error: unrecognized arguments: --stack
+# 20 s in. annotate_panels.sh carries the same preamble for the same reason.
+module load miniconda3
+eval "$(conda shell.bash hook)"
 module load wolfpsort aiupred db-merops/124 apptainer
 BLASTP_SIF=${BLASTP_SIF:-docker://quay.io/biocontainers/blast:2.16.0--h66d330f_5}
+
+# Fail here, with a message naming what is missing, rather than part-way through the first
+# proteome. Each of these comes from a module loaded above.
+for c in runWolfPsortSummary aiupred.py apptainer; do
+    command -v "$c" >/dev/null || { echo "[ERROR] $c not on PATH after module load" >&2; exit 1; }
+done
+[ -n "${MEROPS_DB:-}" ] || { echo "[ERROR] MEROPS_DB unset (db-merops module)" >&2; exit 1; }
+[ -s "$MEROPS_DB/merops_scan.lib.phr" ] || [ -s "$MEROPS_DB/merops_scan.lib.pin" ] || \
+    echo "[warn] $MEROPS_DB/merops_scan.lib blast index not obviously present; continuing"
 
 LOCUSTAGS="${PANEL_LOCUSTAGS:-JEM1MUCOR JEM2MUCOR MPTAK MPALE}"
 
