@@ -229,36 +229,37 @@ def validate_kb(tables: dict[str, pd.DataFrame]) -> list[str]:
     return errs
 
 
-# Organism name aliases used by ``species_key``: cleaned lowercase name -> (key, source).
-# Only names that occur in the curated tables or in the UniProt records behind them are listed.
-# Sources: NCBI Taxonomy records fetched on 2026-11-21 (efetch, db=taxonomy). The key is the name
-# used in the cited papers, which is not always the current NCBI scientific name.
-SPECIES_ALIASES: dict[str, tuple[str, str]] = {
+# Organism name aliases used by ``species_key``: cleaned lowercase name -> (key, taxid, source).
+# RULE: a name may be an alias of a key ONLY when NCBI Taxonomy gives both names the SAME taxon
+# id. Names with different taxids are never merged. Each pair below was checked on 2026-11-21:
+# esearch (db=taxonomy, field All Names) for the alias and for the key returned the one taxid
+# recorded here (stored in tests/data/kb/ncbi_taxonomy_names.tsv; a test compares it with this
+# table). Only names that occur in the curated tables, or in the UniProt records behind them,
+# are listed.
+# Key choice: for taxid 29924 the key is the NCBI scientific name (Mucor lusitanicus), because
+# "Mucor circinelloides" is another taxon (taxid 36080) and "Mucor racemosus" a third (taxid
+# 4841). For taxids 5127, 264483 and 5270 the key is the name used in the cited papers.
+SPECIES_ALIASES: dict[str, tuple[str, int, str]] = {
     "gibberella fujikuroi": (
-        "fusarium fujikuroi",
+        "fusarium fujikuroi", 5127,
         "NCBI Taxonomy taxid 5127: scientific name Fusarium fujikuroi, synonym Gibberella "
-        "fujikuroi; taxid 1279085 (strain IMI 58289) has the equivalent name Gibberella "
-        "fujikuroi IMI 58289"),
+        "fujikuroi"),
     "phaffia rhodozyma": (
-        "xanthophyllomyces dendrorhous",
+        "xanthophyllomyces dendrorhous", 264483,
         "NCBI Taxonomy taxid 264483: scientific name Phaffia rhodozyma, synonym "
-        "Xanthophyllomyces dendrorhous (one taxon; the key is the name used in the papers)"),
+        "Xanthophyllomyces dendrorhous (the key is the name used in the papers)"),
     "mucor circinelloides f. lusitanicus": (
-        "mucor circinelloides",
+        "mucor lusitanicus", 29924,
         "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor "
-        "circinelloides f. lusitanicus (the key is the species name used in the papers)"),
+        "circinelloides f. lusitanicus. Not Mucor circinelloides (taxid 36080)"),
     "mucor racemosus var. lusitanicus": (
-        "mucor circinelloides",
+        "mucor lusitanicus", 29924,
         "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor racemosus "
-        "var. lusitanicus (same taxon as Mucor circinelloides f. lusitanicus)"),
-    "mucor lusitanicus": (
-        "mucor circinelloides",
-        "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor "
-        "circinelloides f. lusitanicus (the key is the species name used in the papers)"),
+        "var. lusitanicus. Not Mucor racemosus (taxid 4841)"),
     "mycosarcoma maydis": (
-        "ustilago maydis",
+        "ustilago maydis", 5270,
         "NCBI Taxonomy taxid 5270: scientific name Mycosarcoma maydis, synonym Ustilago maydis "
-        "(one taxon; the key is the name used in the papers)"),
+        "(the key is the name used in the papers)"),
 }
 
 _BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")
@@ -270,9 +271,11 @@ def species_key(organism: str) -> str:
     Steps: lowercase; drop text in parentheses or square brackets (strain lists); collapse
     whitespace; if the name is, or starts with, an entry of ``SPECIES_ALIASES`` (longest entry
     first), return the alias key; otherwise return the first two words. So strain names,
-    "strain ...", "f. ...", "var. ..." and "subsp. ..." text is dropped. A name of one word, or
-    an empty string, is returned as it is after cleaning. The function knows no taxonomy beyond
-    the alias table.
+    "strain ...", "f. ...", "var. ..." and "subsp. ..." text is dropped, unless the full name
+    is an alias (a forma or variety that NCBI Taxonomy holds as its own taxon is kept apart
+    from the species of its old name). A name of one word, or an empty string, is returned as it
+    is after cleaning. The function knows no taxonomy beyond the alias table: two names with no
+    alias are merged only when their first two words are equal.
     """
     name = " ".join(_BRACKETED.sub(" ", str(organism).lower()).split())
     for alias in sorted(SPECIES_ALIASES, key=len, reverse=True):
@@ -281,7 +284,7 @@ def species_key(organism: str) -> str:
     return " ".join(name.split(" ")[:2])
 
 
-PATH_COLUMNS = ["compound", "min_tier", "steps", "organisms", "single_organism"]
+PATH_COLUMNS = ["compound", "min_tier", "steps", "organisms", "single_organism", "n_equal_paths"]
 
 
 def _add_alternative(front: list[tuple[int, frozenset]], tier: int, orgs: frozenset) -> bool:
@@ -304,8 +307,8 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str],
                   organism: str | None = None) -> pd.DataFrame:
     """Compounds reachable by following ``step_reaction`` links in the given step order.
 
-    Returns DataFrame ``compound, min_tier, steps, organisms, single_organism`` for the
-    compounds made by the LAST step.
+    Returns DataFrame ``compound, min_tier, steps, organisms, single_organism, n_equal_paths``
+    for the compounds made by the LAST step.
 
     READ THIS FIRST. ``min_tier`` is the weakest tier along the best path, and the links of
     that path can belong to different organisms. ``organisms`` lists them (sorted, comma-joined
@@ -329,8 +332,12 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str],
     so a path through a T4 link is excluded. For each compound the function keeps every path
     that no other path beats in both tier and organism set. The best path of a compound is the
     one with the strongest tier; among equal tiers the one with the fewest organisms; then the
-    alphabetically first organism list. ``steps`` is the comma-joined declared order. Raises
-    ValueError for a step_id absent from the ``step`` table.
+    alphabetically first organism list. So the organism list shown is one of
+    ``n_equal_paths`` choices: ``n_equal_paths`` counts the kept organism lists that have the
+    best tier and the smallest number of organisms (the one shown included). It counts
+    organism lists, not routes through the reactions: two reaction paths with the same
+    organisms count once. ``steps`` is the comma-joined declared order. Raises ValueError for
+    a step_id absent from the ``step`` table.
 
     The result holds only compounds that the last step makes. A compound that entered the last
     step and was not made by it is not returned.
@@ -392,6 +399,8 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str],
     rows = []
     for c in sorted(reach or {}):
         tier, orgs = _best(reach[c])
+        n_equal = sum(1 for t, o in reach[c] if t == tier and len(o) == len(orgs))
         rows.append({"compound": c, "min_tier": TIERS[tier], "steps": steps,
-                     "organisms": ",".join(sorted(orgs)), "single_organism": len(orgs) == 1})
+                     "organisms": ",".join(sorted(orgs)), "single_organism": len(orgs) == 1,
+                     "n_equal_paths": n_equal})
     return pd.DataFrame(rows, columns=PATH_COLUMNS)

@@ -142,7 +142,7 @@ def test_formula_mass_garbage():
 
 def test_path_possible_three_steps(tables):
     out = kb.path_possible(tables, ["s1", "s2", "s3"])
-    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism"]
+    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism", "n_equal_paths"]
     assert out["compound"].tolist() == ["CHEBI:D"]
     assert out["min_tier"].tolist() == ["T3"]
     assert out["steps"].tolist() == ["s1,s2,s3"]
@@ -427,10 +427,14 @@ def test_path_first_step_links_keep_their_own_tier_in_any_row_order(tables):
     ("Fusarium fujikuroi IMI 58289", "fusarium fujikuroi"),
     ("Phaffia rhodozyma", "xanthophyllomyces dendrorhous"),
     ("Xanthophyllomyces  dendrorhous", "xanthophyllomyces dendrorhous"),
-    ("Mucor circinelloides f. lusitanicus", "mucor circinelloides"),
-    ("Mucor racemosus var. lusitanicus", "mucor circinelloides"),
-    ("Mucor lusitanicus", "mucor circinelloides"),
-    ("Mucor racemosus", "mucor racemosus"),   # the species itself is not an alias
+    # NCBI taxid 29924 (Mucor lusitanicus) holds these three names
+    ("Mucor circinelloides f. lusitanicus", "mucor lusitanicus"),
+    ("Mucor racemosus var. lusitanicus", "mucor lusitanicus"),
+    ("Mucor lusitanicus", "mucor lusitanicus"),
+    # other taxids: never merged with taxid 29924
+    ("Mucor circinelloides", "mucor circinelloides"),   # taxid 36080
+    ("Mucor circinelloides f. circinelloides", "mucor circinelloides"),
+    ("Mucor racemosus", "mucor racemosus"),             # taxid 4841
     ("Mycosarcoma maydis", "ustilago maydis"),
     ("Ustilago maydis", "ustilago maydis"),
     ("Synthetica one", "synthetica one"),
@@ -440,11 +444,41 @@ def test_species_key(text, want):
     assert kb.species_key(text) == want
 
 
-def test_species_aliases_name_their_source():
-    assert kb.SPECIES_ALIASES["gibberella fujikuroi"][0] == "fusarium fujikuroi"
-    for alias, (target, source) in kb.SPECIES_ALIASES.items():
-        assert alias == alias.lower() and target == target.lower()
-        assert "NCBI Taxonomy" in source and "taxid" in source, alias
+def _taxonomy():
+    """name (lowercase) -> taxid, from NCBI Taxonomy records fetched on 2026-11-21."""
+    df = pd.read_csv(KB / "ncbi_taxonomy_names.tsv", sep="\t", dtype=str, keep_default_na=False)
+    assert list(df.columns) == ["name", "taxid", "ncbi_scientific_name", "rank", "fetched_on"]
+    return {n.lower(): t for n, t in zip(df["name"], df["taxid"])}
+
+
+def test_every_alias_has_a_taxid_shared_by_both_names():
+    """An alias is allowed only when NCBI Taxonomy gives the alias and the key one taxid."""
+    tax = _taxonomy()
+    assert kb.SPECIES_ALIASES
+    for alias, (key, taxid, source) in kb.SPECIES_ALIASES.items():
+        assert alias == alias.lower() and key == key.lower() and alias != key
+        assert isinstance(taxid, int) and taxid > 0, alias
+        assert f"taxid {taxid}" in source and "NCBI Taxonomy" in source, alias
+        assert tax[alias] == str(taxid) == tax[key], (alias, key)
+        assert kb.species_key(alias) == key and kb.species_key(key) == key
+
+
+def test_names_with_different_taxids_are_never_merged():
+    tax = _taxonomy()
+    names = sorted(tax)
+    for a in names:
+        for b in names:
+            same_key = kb.species_key(a) == kb.species_key(b)
+            assert same_key == (tax[a] == tax[b]), (a, b, tax[a], tax[b])
+    # the pair that the first alias table merged wrongly
+    assert tax["mucor circinelloides"] != tax["mucor circinelloides f. lusitanicus"]
+    assert kb.species_key("Mucor circinelloides") != kb.species_key(
+        "Mucor circinelloides f. lusitanicus")
+
+
+def test_synthetic_names_without_alias_are_not_merged():
+    assert kb.species_key("Synthetica one") != kb.species_key("Synthetica two")
+    assert kb.species_key("Synthetica one (strain A)") == kb.species_key("Synthetica one")
 
 
 def test_path_reports_organisms_single(tables):
@@ -464,7 +498,7 @@ def test_path_organism_filter(tables):
     assert out["compound"].tolist() == ["CHEBI:C"] and out["single_organism"].tolist() == [True]
     out = kb.path_possible(tables, ["s1", "s2", "s3"], organism="Synthetica one")
     assert out.empty
-    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism"]
+    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism", "n_equal_paths"]
     assert kb.path_possible(tables, ["s1", "s2", "s3"], organism="Synthetica two").empty
 
 
@@ -505,3 +539,18 @@ def test_path_later_step_can_use_a_weaker_path_with_fewer_organisms(tables):
     out = kb.path_possible(tables, ["s1", "s2", "s3"])
     assert out["min_tier"].tolist() == ["T3"]
     assert out["organisms"].tolist() == ["synthetica one,synthetica two"]
+
+
+def test_path_counts_equal_paths(tables):
+    """n_equal_paths: number of organism lists with the best tier and the smallest size."""
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert out["n_equal_paths"].tolist() == [1]
+    extra = pd.DataFrame([dict(step_id="s1", reaction_id="R1", organism="Synthetica three",
+                               gene_name="geneA3", protein_accession="ACC8", tier="T1a",
+                               assay="in vitro", pmid="4", quote="synthetic quote")])
+    tables["step_reaction"] = pd.concat([tables["step_reaction"], extra], ignore_index=True)
+    _set(tables, "step_reaction", "step_id", "s2", "organism", "Synthetica two")
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert out["organisms"].tolist() == ["synthetica one,synthetica two"]  # alphabetical tie-break
+    assert out["n_equal_paths"].tolist() == [2]
+    assert out["single_organism"].tolist() == [False]

@@ -18,7 +18,7 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 
 - `reaction.direction`: `forward`, `reversible`, `unknown`. It is informational. `path_possible` ignores it.
 - `reaction.curated`: `true` or `false`. A `false` row needs a `rhea_id`.
-- `reaction_participant.role`: `substrate`, `product`, `cofactor`. Store the roles in the direction the step uses (the stored substrates are consumed and the stored products are made by the step). `path_possible` ignores cofactor rows. A reaction of a step is applied only if ALL its non-cofactor substrates are available: products of the previous step, or compounds made earlier inside the same step. Within one step the function takes the closure over all reactions of the step, so one step can run a chain or a grid of reactions. T4 links are never used. The result is the set of compounds made by the last step, with columns `compound, min_tier, steps, organisms, single_organism`. A reaction with zero non-cofactor substrates after the first step is skipped (it can never be reached).
+- `reaction_participant.role`: `substrate`, `product`, `cofactor`. Store the roles in the direction the step uses (the stored substrates are consumed and the stored products are made by the step). `path_possible` ignores cofactor rows. A reaction of a step is applied only if ALL its non-cofactor substrates are available: products of the previous step, or compounds made earlier inside the same step. Within one step the function takes the closure over all reactions of the step, so one step can run a chain or a grid of reactions. T4 links are never used. The result is the set of compounds made by the last step, with columns `compound, min_tier, steps, organisms, single_organism, n_equal_paths`. A reaction with zero non-cofactor substrates after the first step is skipped (it can never be reached).
 - `stoich` is a positive number. `pmid` is digits only when present.
 - Foreign keys: `step_reaction.step_id` is in `step`; `step_reaction.reaction_id` and `reaction_participant.reaction_id` are in `reaction`; `reaction_participant.compound` is in `compound`.
 - Unique keys: compound `chebi_id`; reaction `reaction_id`; step `step_id`; participant (`reaction_id`, `compound`, `role`); step_reaction (`step_id`, `reaction_id`, `organism`, `gene_name`, `protein_accession`, `pmid`). Rows that differ in any of these six fields are distinct evidence.
@@ -36,7 +36,26 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 
 - `min_tier` is the weakest tier along the best path. The links of that path can belong to different organisms.
 - `organisms` lists the species keys of the links on the best path (sorted, comma-joined). `single_organism` is True when the list has one name.
-- **When `single_organism` is False, the tier does NOT hold for any one organism.** Report such a tier only together with the organism list. Example (carotenoid, `core` route): beta-carotene is T1a with *Mucor circinelloides* and *Xanthophyllomyces dendrorhous* links; no single organism reaches T1a.
+- **When `single_organism` is False, the tier does NOT hold for any one organism.** Report such a tier only together with the organism list. Example (carotenoid, `core` route): beta-carotene is T1a with *Mucor lusitanicus* (the UniProt name is Mucor circinelloides f. lusitanicus) and *Xanthophyllomyces dendrorhous* links; no single organism reaches T1a.
 - `path_possible(tables, step_ids, organism="Neurospora crassa")` uses only the links of that organism. The filter is applied before the search. In the carotenoid tables only *Neurospora crassa* completes a route alone (`core` and `neurosporaxanthin`, at T3, because its GGPP synthase link is T3).
 - Best path: strongest tier; among equal tiers the fewest organisms; then the alphabetically first organism list.
-- `species_key(organism)` makes the key: lowercase, text in parentheses or square brackets dropped, first two words, after the alias table `SPECIES_ALIASES` in `kb.py`. Each alias names its source (NCBI Taxonomy record, fetched 2026-11-21): Gibberella fujikuroi = Fusarium fujikuroi (taxid 5127); Phaffia rhodozyma = Xanthophyllomyces dendrorhous (taxid 264483); Mucor circinelloides f. lusitanicus = Mucor racemosus var. lusitanicus = Mucor lusitanicus (taxid 29924, key `mucor circinelloides`); Mycosarcoma maydis = Ustilago maydis (taxid 5270). The key is the name used in the cited papers; it is not always the current NCBI scientific name (NCBI uses Phaffia rhodozyma, Mucor lusitanicus and Mycosarcoma maydis).
+- **Ties are broken alphabetically.** The organism list shown is one of `n_equal_paths` choices with the same tier and the same number of organisms. `n_equal_paths` counts organism lists, not routes through the reactions. Example (carotenoid, `core`): gamma-carotene is T1a with 3 equal lists (Mucor lusitanicus with Neurospora crassa, with Phycomyces blakesleeanus, or with Xanthophyllomyces dendrorhous); the first is shown.
+- `species_key(organism)` makes the key: lowercase, text in parentheses or square brackets dropped, then the alias table `SPECIES_ALIASES` in `kb.py`, else the first two words.
+- **Alias rule: a name is an alias of a key only when NCBI Taxonomy gives both names the same taxon id.** Names with different taxids are never merged. Checked on 2026-11-21 (esearch, db=taxonomy, field All Names; stored in `tests/data/kb/ncbi_taxonomy_names.tsv`; a test compares the table with it):
+
+| Name | NCBI taxid | NCBI scientific name | Key |
+|---|---|---|---|
+| Gibberella fujikuroi | 5127 | Fusarium fujikuroi | `fusarium fujikuroi` |
+| Fusarium fujikuroi | 5127 | Fusarium fujikuroi | `fusarium fujikuroi` |
+| Phaffia rhodozyma | 264483 | Phaffia rhodozyma | `xanthophyllomyces dendrorhous` |
+| Xanthophyllomyces dendrorhous | 264483 | Phaffia rhodozyma | `xanthophyllomyces dendrorhous` |
+| Mucor circinelloides f. lusitanicus | 29924 | Mucor lusitanicus | `mucor lusitanicus` |
+| Mucor racemosus var. lusitanicus | 29924 | Mucor lusitanicus | `mucor lusitanicus` |
+| Mucor lusitanicus | 29924 | Mucor lusitanicus | `mucor lusitanicus` |
+| Mucor circinelloides | 36080 | Mucor circinelloides | `mucor circinelloides` (not merged with 29924) |
+| Mucor racemosus | 4841 | Mucor racemosus | `mucor racemosus` (not merged with 29924) |
+| Mycosarcoma maydis | 5270 | Mycosarcoma maydis | `ustilago maydis` |
+| Ustilago maydis | 5270 | Mycosarcoma maydis | `ustilago maydis` |
+
+- Key choice: for taxid 29924 the key is the NCBI scientific name, because the old names point to two other species. For taxids 264483 and 5270 the key is the name used in the cited papers, not the current NCBI scientific name.
+- Limit: a name without an alias is keyed by its first two words. A forma or variety that NCBI holds as its own taxon is kept apart only if it is in the alias table. Check the taxid before adding organisms from a new pathway.

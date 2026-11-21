@@ -137,25 +137,28 @@ def test_astaxanthin_route_is_a_grid(kb):
 
 
 # Expected final products of every declared route (path_possible over the route's step order):
-# compound -> (weakest tier along the best path, organisms of the links on that path).
+# compound -> (weakest tier along the best path, organisms of the links on that path,
+# number of organism lists with that tier and that size; the list shown is the alphabetically
+# first one).
 # The tier of a route does NOT hold for one organism unless the organism list has one name.
 # An empty dict means: the route cannot be followed in the tables (UNVERIFIED.md, section D).
-MC, NC, XD = "mucor circinelloides", "neurospora crassa", "xanthophyllomyces dendrorhous"
+# Mucor circinelloides f. lusitanicus is NCBI taxid 29924, Mucor lusitanicus
+MC, NC, XD = "mucor lusitanicus", "neurospora crassa", "xanthophyllomyces dendrorhous"
 FF, PB, BT = "fusarium fujikuroi", "phycomyces blakesleeanus", "blakeslea trispora"
 ROUTE_PRODUCTS = {
-    "core": {"CHEBI:27740": ("T1a", [MC, NC]),          # gamma-carotene
-             "CHEBI:17579": ("T1a", [MC, XD]),          # beta-carotene
-             "CHEBI:9638": ("T1b", [MC, NC])},          # torulene
-    "neurosporaxanthin": {"CHEBI:7540": ("T1b", [MC, NC])},
-    "retinal": {"CHEBI:17898": ("T1a", [FF, MC, XD])},
-    "astaxanthin": {"CHEBI:3362": ("T1b", [MC, XD]),    # canthaxanthin
-                    "CHEBI:80216": ("T1b", [MC, XD]),   # phoenicoxanthin
-                    "CHEBI:40968": ("T1b", [MC, XD]),   # astaxanthin
-                    "CHEBI:80215": ("T3", [MC, XD])},   # 3-hydroxyechinenone
+    "core": {"CHEBI:27740": ("T1a", [MC, NC], 3),       # gamma-carotene; also MC+PB, MC+XD
+             "CHEBI:17579": ("T1a", [MC, XD], 1),       # beta-carotene
+             "CHEBI:9638": ("T1b", [MC, NC], 1)},       # torulene
+    "neurosporaxanthin": {"CHEBI:7540": ("T1b", [MC, NC], 1)},
+    "retinal": {"CHEBI:17898": ("T1a", [FF, MC, XD], 2)},   # also MC + Ustilago maydis + XD
+    "astaxanthin": {"CHEBI:3362": ("T1b", [MC, XD], 1),     # canthaxanthin
+                    "CHEBI:80216": ("T1b", [MC, XD], 1),    # phoenicoxanthin
+                    "CHEBI:40968": ("T1b", [MC, XD], 1),    # astaxanthin
+                    "CHEBI:80215": ("T3", [MC, XD], 2)},    # 3-hydroxyechinenone; also NC+XD
     # 13-apo-beta-carotenone; acaA is held at T3. Path: Mucor carG and carRP, Phycomyces carB,
-    # carRA (T1c), carS and acaA. A Neurospora plus Phycomyces path has the same tier and size.
-    "trisporoid": {"CHEBI:53175": ("T3", [MC, PB])},
-    "trisporoid_tsp3": {"CHEBI:53160": ("T3", [BT, NC])},  # 12'-apo-beta-carotenal
+    # carRA (T1c), carS and acaA. The Neurospora plus Phycomyces path is the second equal one.
+    "trisporoid": {"CHEBI:53175": ("T3", [MC, PB], 2)},
+    "trisporoid_tsp3": {"CHEBI:53160": ("T3", [BT, NC], 1)},  # 12'-apo-beta-carotenal
     "trisporoid_late": {},                              # tsp2, tdh: compounds are not in ChEBI
 }
 # Routes that one organism completes alone: Neurospora crassa only, at T3 (al-3 is T3).
@@ -174,9 +177,10 @@ def test_every_declared_route_gives_its_expected_products(kb):
     assert set(routes) == set(ROUTE_PRODUCTS)
     for rid, want in ROUTE_PRODUCTS.items():
         got = path_possible(kb, routes[rid])
-        have = {c: (t, o.split(","), single) for c, t, o, single in
-                zip(got["compound"], got["min_tier"], got["organisms"], got["single_organism"])}
-        assert have == {c: (t, o, len(o) == 1) for c, (t, o) in want.items()}, rid
+        have = {c: (t, o.split(","), single, n) for c, t, o, single, n in
+                zip(got["compound"], got["min_tier"], got["organisms"], got["single_organism"],
+                    got["n_equal_paths"])}
+        assert have == {c: (t, o, len(o) == 1, n) for c, (t, o, n) in want.items()}, rid
         # no route tier of the unfiltered call holds for one organism
         assert not got["single_organism"].any(), rid
 
@@ -193,6 +197,7 @@ def test_only_neurospora_completes_a_route_alone(kb):
             assert dict(zip(got["compound"], got["min_tier"])) == want, (rid, org)
             if want:
                 assert set(got["organisms"]) == {org} and got["single_organism"].all()
+                assert set(got["n_equal_paths"]) == {1}
 
 
 def test_organism_filter_accepts_the_uniprot_organism_string(kb):
