@@ -1,0 +1,24 @@
+step_id	accession	species	pmid	source_database	retrieved_on	verified
+ggpp_synthase	P24322	Neurospora crassa	1826006	UniProtKB/Swiss-Prot (entry v169, sequence v2); PubMed	2026-11-20	true
+ggpp_synthase	Q9P885	Mucor circinelloides f. lusitanicus	12695851	UniProtKB/Swiss-Prot (entry v84, sequence v1); PubMed	2026-11-20	true
+phytoene_synthase	P37295	Neurospora crassa	8163509	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed	2026-11-20	true
+phytoene_synthase	Q8X0Z1	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed	2026-11-20	true
+phytoene_synthase	Q9P854	Phycomyces blakesleeanus	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed	2026-11-20	true
+phytoene_synthase	Q9UUQ6	Mucor circinelloides f. lusitanicus	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed	2026-11-20	true
+phytoene_synthase	Q7Z859	Xanthophyllomyces dendrorhous	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed	2026-11-20	true
+lycopene_cyclase	P37295	Neurospora crassa	11862485	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed	2026-11-20	true
+lycopene_cyclase	Q8X0Z1	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed	2026-11-20	true
+lycopene_cyclase	Q9P854	Phycomyces blakesleeanus	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed	2026-11-20	true
+lycopene_cyclase	Q9UUQ6	Mucor circinelloides f. lusitanicus	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed	2026-11-20	true
+lycopene_cyclase	Q7Z859	Xanthophyllomyces dendrorhous	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed	2026-11-20	true
+phytoene_desaturase	P21334	Neurospora crassa	11017770	UniProtKB/Swiss-Prot (entry v158, sequence v1); PubMed	2026-11-20	true
+phytoene_desaturase	Q8X0Z0	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v106, sequence v2); PubMed	2026-11-20	true
+phytoene_desaturase	P54982	Phycomyces blakesleeanus	9079885	UniProtKB/Swiss-Prot (entry v103, sequence v1); PubMed	2026-11-20	true
+phytoene_desaturase	O13506	Xanthophyllomyces dendrorhous	10397832	UniProtKB/TrEMBL (entry v85, sequence v1); PubMed	2026-11-20	true
+carx	S0ENQ2	Fusarium fujikuroi IMI 58289	17293483	UniProtKB/Swiss-Prot (entry v36, sequence v1); PubMed	2026-11-20	true
+cart	A1KQY3	Fusarium fujikuroi	17493127	UniProtKB/Swiss-Prot (entry v46, sequence v1); PubMed	2026-11-20	true
+cart	A7UXI1	Neurospora crassa	17610084	UniProtKB/Swiss-Prot (entry v70, sequence v1); PubMed	2026-11-20	true
+ylo1	Q1K615	Neurospora crassa	18627463	UniProtKB/Swiss-Prot (entry v71, sequence v1); PubMed	2026-11-20	true
+ylo1	F6IBC7	Fusarium fujikuroi IMI 58289	21749649	UniProtKB/Swiss-Prot (entry v50, sequence v2); PubMed	2026-11-20	true
+astaxanthin_synthase	B5LEC8	Xanthophyllomyces dendrorhous	18769767	UniProtKB/TrEMBL (entry v61, sequence v1); PubMed	2026-11-20	true
+astaxanthin_synthase		Xanthophyllomyces dendrorhous	16416328	PubMed (no linked protein accession found in UniProt or NCBI elink)	2026-11-20	false

@@ -29,3 +29,10 @@ MEASURED 2026-11-20 on the real tables:
 - `has_deposited_proteins` (TSV `protein_file_ok == 1`): True 5,634; False 18,729.
 - `prior_folder_state` (TSV): present 23,690; not_downloaded 673.
 - Crosstab prior_status vs has_proteins=True: baseline_ok 5,535 of 5,625; no_prior_annotation_present 17,834 of 18,055; annotated_folder_missing_protein 10 of 10; no_prior_annotation_not_downloaded 0 of 673.
+
+## Carotenoid definition (Task 3, DRAFT for user review)
+
+- `pathways/carotenoid.yaml`: 8 steps, pathway `verified: false`. User review of the step list is required before any census run (spec 5.8).
+- `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-20), one file per step. Fused PSY/cyclase proteins appear in both step files.
+- `refs/carotenoid/provenance.tsv`: one row per (step, ref) with source and verified flag.
+- `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of open decisions.
