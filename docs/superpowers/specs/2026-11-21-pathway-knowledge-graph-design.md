@@ -1,6 +1,6 @@
 # Design amendment: a pathway knowledge base for fungal carotenoid and melanin biosynthesis (version 2)
 
-Written 2026-11-21 by the BFD-HPCC-master agent. Version 2 revises version 1 after three reviews. Status: **DRAFT, awaiting the user's approval.**
+Written 2026-11-21 by the BFD-HPCC-master agent. Version 2 revises version 1 after three reviews. Status: **APPROVED by the user 2026-11-21** (no second reviewer pass requested).
 Amends and extends `2026-11-20-pathway-census-design.md` (approved 2026-11-20). The census stays as the survey engine. This amendment adds a compound layer, a bounded corpus comparison, and melanin as a second pathway.
 
 Labels: **MEASURED** = I checked it against a database or file on 2026-11-21. **REVIEWED** = an independent reviewer agent checked it against a source (abstract read or database record read); I have not re-checked it. **REPORTED** = copied from the EBC agent's documents. **PROPOSED** = my choice, no data behind it. **UNVERIFIED** = from memory, not checked.
