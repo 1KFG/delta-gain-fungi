@@ -18,6 +18,10 @@ Pair rule (controller ruling). A genome is a pair only if prior_status == "basel
 proteins exist (genome table has_proteins True, and the BFD matrix has the genome with
 has_proteins True), the deposited proteins exist (genome table has_deposited_proteins True) and the
 deposited matrix has the genome with has_proteins True (the deposited file was found and searched).
+A genome flag (has_proteins, has_deposited_proteins) that is NA is treated as not True. NA and False
+share the same reason code. The extra key `unknown_flag` in `n_unpaired` counts how many of those
+non-pairs were caused by an NA flag. It is a subset of the reason counts, not an additional reason, so
+do not add it to their sum.
 Each non-pair is counted once in `n_unpaired` under the FIRST failing reason, in this order:
 not_baseline, no_bfd_proteins, no_deposited_proteins, deposited_file_missing.
 
@@ -30,6 +34,11 @@ summarize_paired: bootstrap over GENOMES. For each (step, provider) group the pe
 resampled with replacement n_boot times (numpy default_rng(seed), integer indices, one draw of
 shape (n_boot, n_genomes)); the CI is the 2.5 and 97.5 percentiles of the resampled means.
 PROPOSED defaults (no measured basis): min_pairs=20, n_boot=2000, seed=20261120.
+Resampling is per step: each step is resampled on its own; steps are NOT resampled jointly, so the
+intervals of different steps are not independent draws of the same genomes.
+Reserved provider names: "ALL" (overall row) and "(missing)" (null provider). A real provider with
+either name raises ValueError.
+`dropped_providers` uses the column name `provider`; the summary uses `annotation_provider`.
 A provider with fewer than min_pairs pairs gets no per-provider row. It is returned in the
 `dropped_providers` frame. It stays in the "ALL" rows. A null provider is labelled "(missing)".
 The CI of a group with all deltas equal collapses to that value (for example 0, 0); that is correct
@@ -45,6 +54,8 @@ import numpy as np
 import pandas as pd
 
 UNPAIRED_REASONS = ("not_baseline", "no_bfd_proteins", "no_deposited_proteins", "deposited_file_missing")
+UNKNOWN_FLAG_KEY = "unknown_flag"  # subset count, NOT an extra reason: see module docstring
+RESERVED_PROVIDERS = ("ALL", "(missing)")
 TABLE_COLUMNS = ["locustag", "step_id", "copy_deposited", "copy_bfd", "delta", "annotation_provider",
                  "busco_complete", "copy_filtered_deposited", "copy_filtered_bfd", "unknown_deposited",
                  "unknown_bfd", "delta_filtered"]
@@ -67,6 +78,11 @@ def deposited_protein_path(deposited_root, asmid: str) -> Path:
     return Path(deposited_root) / accession_from_asmid(asmid) / "protein.faa"
 
 
+def _scalar_true(v) -> bool:
+    """True only for a known True. NA, None and NaN are not True."""
+    return (not pd.isna(v)) and bool(v)
+
+
 def _is_true(series: pd.Series) -> pd.Series:
     return series.astype("boolean").eq(True).fillna(False).astype(bool)
 
@@ -87,6 +103,9 @@ def count_pairs(genomes: pd.DataFrame, deposited_root) -> dict:
          for b, bf, d, a in zip(base, bfd, dep, genomes.asmid)], index=genomes.index)
     reason = np.select([~base, ~bfd, ~dep, ~exists], list(UNPAIRED_REASONS[:4]), default="")
     n_unpaired = {r: int((reason == r).sum()) for r in UNPAIRED_REASONS}
+    na_bfd = genomes.has_proteins.isna() & (reason == "no_bfd_proteins")
+    na_dep = genomes.has_deposited_proteins.isna() & (reason == "no_deposited_proteins")
+    n_unpaired[UNKNOWN_FLAG_KEY] = int((na_bfd | na_dep).sum())
     return dict(n_genomes=len(genomes), n_pairs=int((reason == "").sum()), n_unpaired=n_unpaired,
                 pair_locustags=list(genomes.locustag[reason == ""]))
 
@@ -112,15 +131,18 @@ def paired_table(matrix_deposited: pd.DataFrame, matrix_bfd: pd.DataFrame, genom
     dep_ok, bfd_ok = _per_genome_ok(matrix_deposited), _per_genome_ok(matrix_bfd)
 
     n_unpaired = {r: 0 for r in UNPAIRED_REASONS}
+    n_unpaired[UNKNOWN_FLAG_KEY] = 0
     pairs = []
     for row in genomes.itertuples():
         lt = row.locustag
         if row.prior_status != "baseline_ok":
             n_unpaired["not_baseline"] += 1
-        elif not (bool(pd.Series([row.has_proteins]).astype("boolean").eq(True).iloc[0]) and bfd_ok.get(lt, False)):
+        elif not (_scalar_true(row.has_proteins) and bfd_ok.get(lt, False)):
             n_unpaired["no_bfd_proteins"] += 1
-        elif not pd.Series([row.has_deposited_proteins]).astype("boolean").eq(True).iloc[0]:
+            n_unpaired[UNKNOWN_FLAG_KEY] += int(pd.isna(row.has_proteins))
+        elif not _scalar_true(row.has_deposited_proteins):
             n_unpaired["no_deposited_proteins"] += 1
+            n_unpaired[UNKNOWN_FLAG_KEY] += int(pd.isna(row.has_deposited_proteins))
         elif not dep_ok.get(lt, False):
             n_unpaired["deposited_file_missing"] += 1
         else:
@@ -175,6 +197,9 @@ def summarize_paired(table: pd.DataFrame, min_pairs: int = DEFAULT_MIN_PAIRS,
     if min_pairs < 1 or n_boot < 1:
         raise ValueError("min_pairs and n_boot must be >= 1")
     t = table.copy()
+    bad = sorted(set(t.annotation_provider.dropna()) & set(RESERVED_PROVIDERS))
+    if bad:
+        raise ValueError(f"annotation_provider value(s) {bad} are reserved (overall / null-provider labels)")
     t["annotation_provider"] = t.annotation_provider.fillna("(missing)").replace("", "(missing)")
     steps = list(dict.fromkeys(t.step_id))
     n_by_prov = t.groupby("annotation_provider").locustag.nunique()

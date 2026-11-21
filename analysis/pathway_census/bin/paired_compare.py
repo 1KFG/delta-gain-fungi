@@ -55,6 +55,7 @@ def main():
     ap.add_argument("--min-pairs", type=int, default=DEFAULT_MIN_PAIRS, help="PROPOSED default")
     ap.add_argument("--n-boot", type=int, default=DEFAULT_N_BOOT, help="PROPOSED default")
     ap.add_argument("--seed", type=int, default=DEFAULT_SEED, help="PROPOSED default")
+    ap.add_argument("--busco-bins", type=float, nargs="+", default=[0, 80, 95, 100], help="PROPOSED edges")
     ap.add_argument("--provisional", action="store_true")
     a = ap.parse_args()
     pw = load_pathway(a.pathway)
@@ -71,22 +72,27 @@ def main():
     bfd = read_matrix(a.bfd_matrix)
     t, n_unpaired = paired_table(dep, bfd, gen, return_unpaired=True)
     summ, dropped = summarize_paired(t, a.min_pairs, a.n_boot, a.seed)
-    bus = summarize_paired_by_busco(t)
+    bins = [int(b) if float(b).is_integer() else b for b in a.busco_bins]
+    bus = summarize_paired_by_busco(t, bins=tuple(bins))
     a.out_dir.mkdir(parents=True, exist_ok=True)
     nm = lambda stem, ext: a.out_dir / hits.tagged_name(f"{pw.id}_{stem}", ext, tag)
     tpath = nm("paired_table", "tsv")
-    t.to_csv(tpath, sep="\t", index=False)
+    params = {"min_pairs": a.min_pairs, "n_boot": a.n_boot, "seed": a.seed, "busco_bins": bins}
+    ptxt = ("# params: min_pairs={min_pairs} n_boot={n_boot} seed={seed} busco_bins="
+            + ",".join(str(b) for b in bins) + "\n").format(**params)
+    with open(tpath, "w") as fh:
+        fh.write(ptxt)
+        t.to_csv(fh, sep="\t", index=False)
     subprocess.run(["zstd", "-q", "-f", "-T0", "--rm", str(tpath), "-o", str(tpath) + ".zst"], check=True)
     note = f"# {tag}: pathway '{pw.id}' verified: false; not user-reviewed\n" if tag else ""
-    params = f"# min_pairs={a.min_pairs} n_boot={a.n_boot} seed={a.seed} bootstrap=genomes ci=2.5-97.5\n"
-    for stem, df, hdr in (("paired_summary", summ, params), ("paired_dropped_providers", dropped, ""),
-                          ("paired_by_busco", bus, "")):
+    for stem, df in (("paired_summary", summ), ("paired_dropped_providers", dropped),
+                          ("paired_by_busco", bus)):
         with open(nm(stem, "tsv"), "w") as fh:
-            fh.write(note + hdr)
+            fh.write(note + ptxt)
             df.to_csv(fh, sep="\t", index=False)
     n_pairs = int(t.locustag.nunique())
     nm("paired_unpaired", "json").write_text(json.dumps(
-        dict(n_pairs=n_pairs, n_unpaired=n_unpaired, provisional=bool(tag)), indent=2))
+        dict(n_pairs=n_pairs, n_unpaired=n_unpaired, params=params, provisional=bool(tag)), indent=2))
     print(f"{n_pairs} pairs; unpaired {n_unpaired}; outputs in {a.out_dir}")
 
 

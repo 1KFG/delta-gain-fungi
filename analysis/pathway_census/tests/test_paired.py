@@ -83,7 +83,7 @@ def test_pair_requires_both_sources():
     t, n = paired_table(dep, bfd, g, return_unpaired=True)
     assert set(t.locustag) == {"A0000001"}
     assert n == {"not_baseline": 1, "no_bfd_proteins": 2, "no_deposited_proteins": 1,
-                 "deposited_file_missing": 1}
+                 "deposited_file_missing": 1, "unknown_flag": 0}
     assert t.attrs["n_unpaired"] == n
 
 
@@ -125,9 +125,10 @@ def test_summary_by_provider_drops_providers_below_min_pairs():
     assert (big.frac_bfd_more, big.frac_bfd_less) == (0.75, 0.0)
 
 
-def test_ci_uses_genome_resampling():
-    # One genome of 20 has delta +50. A bootstrap over genomes gives a wide interval (0 up to many
-    # multiples of 2.5). A bootstrap over proteins pooled across genomes would not.
+def test_ci_is_built_from_genome_resampling_and_reflects_outlier():
+    # One genome of 20 has delta +50. This test shows the interval is built by resampling genomes
+    # with a documented scheme (matches independent numpy code) and that the upper bound reflects the
+    # outlier. It does not prove that a protein-level resample would behave differently.
     deltas = [0] * 19 + [50]
     d, b, g = _pairs(deltas)
     t = paired_table(d, b, g)
@@ -145,6 +146,38 @@ def test_ci_uses_genome_resampling():
     # same seed, same answer
     s2, _ = summarize_paired(t, min_pairs=1, n_boot=2000, seed=7)
     pd.testing.assert_frame_equal(s, s2)
+
+
+def test_seed_and_n_boot_are_honoured():
+    d, b, g = _pairs([0, 0, 1, 5, 0, 2, 0, 9, 1, 0])
+    t = paired_table(d, b, g)
+    s1, _ = summarize_paired(t, min_pairs=1, n_boot=300, seed=1)
+    s2, _ = summarize_paired(t, min_pairs=1, n_boot=300, seed=2)
+    s3, _ = summarize_paired(t, min_pairs=1, n_boot=301, seed=1)
+    row = lambda x: x[(x.annotation_provider == "ALL") & (x.step_id == "s1")].iloc[0]
+    assert (row(s1).ci_low, row(s1).ci_high) != (row(s2).ci_low, row(s2).ci_high)
+    assert (row(s1).ci_low, row(s1).ci_high) != (row(s3).ci_low, row(s3).ci_high)
+    x = np.array([0, 0, 1, 5, 0, 2, 0, 9, 1, 0], dtype=float)
+    for ns, sd, r in ((300, 1, row(s1)), (301, 1, row(s3))):
+        means = x[np.random.default_rng(sd).integers(0, 10, size=(ns, 10))].mean(axis=1)
+        assert r.ci_high == pytest.approx(np.percentile(means, 97.5))
+
+
+@pytest.mark.parametrize("name", ["ALL", "(missing)"])
+def test_reserved_provider_names_raise(name):
+    d, b, g = _pairs([1, 1], provider=name)
+    with pytest.raises(ValueError, match="reserved"):
+        summarize_paired(paired_table(d, b, g), min_pairs=1, n_boot=10, seed=0)
+
+
+def test_unknown_flag_counted_separately():
+    g = _genomes([("A0000001", "P", 99.0, "baseline_ok", True, True),
+                  ("B0000002", "P", 99.0, "baseline_ok", True, pd.NA),
+                  ("C0000003", "P", 99.0, "baseline_ok", True, False)])
+    g["has_deposited_proteins"] = g.has_deposited_proteins.astype("boolean")
+    m = _matrix({("A0000001", "s1"): 1, ("B0000002", "s1"): 1, ("C0000003", "s1"): 1})
+    t, n = paired_table(m, m, g, return_unpaired=True)
+    assert n["no_deposited_proteins"] == 2 and n["unknown_flag"] == 1
 
 
 def test_all_zero_step_still_reported():
@@ -204,7 +237,7 @@ def test_count_pairs_on_fixtures(tmp_path):
     r = count_pairs(g, root)
     assert r["n_pairs"] == 1 and r["n_genomes"] == 6
     assert r["n_unpaired"] == {"not_baseline": 2, "no_bfd_proteins": 1, "no_deposited_proteins": 1,
-                               "deposited_file_missing": 1}
+                               "deposited_file_missing": 1, "unknown_flag": 0}
     assert r["pair_locustags"] == ["A0000001"]
 
 
@@ -254,12 +287,20 @@ def test_cli_provisional_writes_outputs(tmp_path):
         assert (o / n).exists(), n
     t = pd.read_csv(io.BytesIO(subprocess.run(
         ["zstd", "-dc", str(o / "carotenoid_paired_table.PROVISIONAL.tsv.zst")], capture_output=True,
-        check=True).stdout), sep="\t")
+        check=True).stdout), sep="\t", comment="#")
     assert t.loc[t.locustag == "AAAAAAAA", "delta"].iloc[0] == 2
     s = pd.read_csv(o / "carotenoid_paired_summary.PROVISIONAL.tsv", sep="\t", comment="#")
     a = s[s.annotation_provider == "ALL"].iloc[0]
     assert a.n_pairs == 2 and a.mean_delta == 1.0
-    assert json.loads((o / "carotenoid_paired_unpaired.PROVISIONAL.json").read_text())["n_pairs"] == 2
+    js = json.loads((o / "carotenoid_paired_unpaired.PROVISIONAL.json").read_text())
+    assert js["n_pairs"] == 2
+    assert js["params"] == {"min_pairs": 1, "n_boot": 50, "seed": 3, "busco_bins": [0, 80, 95, 100]}
+    for n in ("carotenoid_paired_summary.PROVISIONAL.tsv", "carotenoid_paired_dropped_providers.PROVISIONAL.tsv",
+              "carotenoid_paired_by_busco.PROVISIONAL.tsv"):
+        assert "# params: min_pairs=1 n_boot=50 seed=3 busco_bins=0,80,95,100" in (o / n).read_text(), n
+    zt = subprocess.run(["zstd", "-dc", str(o / "carotenoid_paired_table.PROVISIONAL.tsv.zst")],
+                        capture_output=True, text=True, check=True).stdout
+    assert "# params: min_pairs=1 n_boot=50 seed=3 busco_bins=0,80,95,100" in zt
 
 
 def test_cli_rejects_bad_boolean(tmp_path):

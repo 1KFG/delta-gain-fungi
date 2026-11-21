@@ -161,3 +161,21 @@ What it does NOT show: it says nothing about the 18,145 genomes with no prior an
 - `summarize_paired_by_busco`: mean delta per step per BUSCO bin, default edges 0, 80, 95, 100 (PROPOSED), plus an explicit `unknown` bin for null BUSCO. A step with zero copies in both sources appears with mean 0.
 - CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
 - DEFERRED by controller ruling: the real pair count (brief step 1; Fable's earlier figure of 5,625 `baseline_ok` genomes is the genome-table count, not a pair count, and was not re-run) and the real-data run (brief step 6). No real counts or deltas exist.
+
+### DEFERRED follow-up (G6): the deposited arm of the real-data pass
+
+Not implemented. `paired.py` compares two finished matrices only. Building the deposited matrix is open work.
+- Input: `<deposited_root>/<accession>/protein.faa` for each pair genome (deposited root `/bigdata/stajichlab/shared/projects/1KFG/2026/NCBI_fungi/source/NCBI_ASM`; accession = the `GCA_/GCF_` prefix of ASMID, see `paired.accession_from_asmid`). A table `protein_id -> locustag` (the caller supplies it; deposited protein IDs do NOT use the 8-hex BFD prefix).
+- Output: a matrix in `build_matrix` format (same pathway steps, same HMMs and assignment rules as the BFD arm), keyed by the BFD `locustag`, with `has_proteins` set from the deposited-file flag (`has_deposited_proteins` and the file exists).
+- Design choice, to decide in the real-data pass (two options): (a) rewrite deposited protein IDs to `<locustag>_<deposited id>` before assign / quality / matrix; or (b) add a `genome_of` mapping parameter (protein_id -> locustag) to `matrix.build_matrix` and `quality.quality_flags`. Option (a) needs no code change but alters protein IDs in every output; option (b) keeps IDs and changes two functions. Neither is chosen.
+- Change surface (places that assume the 8-hex `LOCUSTAG_` prefix; found by grep on 2026-11-20):
+  - `pathway_census/matrix.py:77` `a["locustag"] = a.protein_id.str.split("_").str[0]`, and the error text at line 28.
+  - `pathway_census/quality.py:104` `{p.split("_")[0] for p in assigned.protein_id}`; also the gene-id rule in the quality.py docstring (line 14: `F77FFF1D_000001-T1` -> `F77FFF1D_000001`, `gene_info` keyed by gene id), which a deposited ID format may not follow.
+  - `pathway_census/assign.py`: no prefix parsing found. `absence.py` and the CLIs `bin/*.py`: no prefix parsing found (grep for `split("_")`, `8-hex`, `[:8]`). UNVERIFIED beyond that grep; the real pass must re-check.
+- `load_genome_table` drops ASMID (the SQL selects it as `asmid`, but the returned columns omit it). The real-data pass must carry or merge an `asmid`/accession column (for example from `species.parquet`) into the genome table, for `count_pairs` and for the deposited path.
+
+### Reserved values, flags and outputs
+- Providers named `ALL` and `(missing)` are reserved. `summarize_paired` raises ValueError if a real provider has either name.
+- A genome flag that is NA counts as not True. NA and False share one reason code. `n_unpaired["unknown_flag"]` counts the NA cases; it is a subset of the reason counts, not an extra reason.
+- Bootstrap resampling is per step, not joint across steps. `dropped_providers` has column `provider`; the summary has `annotation_provider`.
+- Every output file carries `# params: min_pairs=... n_boot=... seed=... busco_bins=...` (the JSON has a `params` key). `--busco-bins` sets the edges.
