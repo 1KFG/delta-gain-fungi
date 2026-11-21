@@ -107,8 +107,8 @@ assert "A biosynthetic gene cluster was identified in the N. friedmannii genome"
 # ---------- references: step -> [(accession, gene_name, reference pmid, verified)] ----------
 REF = {
  "ddgs": [("WEV88679.1", "DDGS", FUNGAL_PMID, False), ("B2J6X9", "Npun_R5600", "20813918", True), ("Q3M6C3", "Ava_3858", "22741921", True)],
- "omt": [("WEV88680.1", "OMT", FUNGAL_PMID, False), ("B2J6X8", "Npun_R5599", "23463784", False)],
- "atp_grasp_ligase": [("WEV88681.1", "ATPG", FUNGAL_PMID, False), ("A0A9Y1GGR7", "ATPG", FUNGAL_PMID, False), ("B2J6X7", "Npun_R5598", "23463784", False)],
+ "omt": [("WEV88680.1", "OMT", FUNGAL_PMID, False), ("B2J6X8", "Npun_R5599", MYS_PMID, False)],
+ "atp_grasp_ligase": [("WEV88681.1", "ATPG", FUNGAL_PMID, False), ("A0A9Y1GGR7", "ATPG", FUNGAL_PMID, False), ("B2J6X7", "Npun_R5598", MYS_PMID, False)],
 }
 REF_NOTE = {
  ("ddgs", "WEV88679.1"): [
@@ -123,16 +123,18 @@ REF_NOTE = {
    "ATCC 29413 (one NCBI taxid, 264691). gene_name is the ordered locus name. Link held at T3."],
  ("omt", "WEV88680.1"): ["GenBank protein of cluster OQ547787; no UniProtKB entry: verified: false (USER DECISION 1 in UNVERIFIED.md)."],
  ("omt", "B2J6X8"): [
-   "Cyanobacterium; never fungal evidence. NpR5599 (mysB) of PMID 21890703. Unreviewed entry: it cites the genome paper",
-   "(pmid 23463784) only and carries EC 2.1.1.104 from automatic annotation: verified: false. 17% identical to the",
-   "Phaffia OMT (MEASURED): the same enzyme family is not shown (UNVERIFIED.md, A4 and B3)."],
+   "Cyanobacterium; never fungal evidence. NpR5599 (mysB) of PMID 21890703 (pmid below; the entry does not cite it).",
+   "Unreviewed entry: its only citation is PMID 23463784, a sugar-transporter paper that UniProt uses for the genome",
+   "sequence; it is not a paper about this step. EC 2.1.1.104 is automatic annotation: verified: false. 17% identical",
+   "to the Phaffia OMT (MEASURED): the same enzyme family is not shown. Link held at T3 (UNVERIFIED.md, B3)."],
  ("atp_grasp_ligase", "WEV88681.1"): ["GenBank protein of cluster OQ547787; no UniProtKB entry: verified: false (USER DECISION 1 in UNVERIFIED.md)."],
  ("atp_grasp_ligase", "A0A9Y1GGR7"): [
    "ATPG of another strain (VOH, mRNA OP021064): 490 of 500 residues equal to WEV88681.1. The entry cites no paper",
    "and the strain is not the assayed one: verified: false, link T3. pmid is the paper of the UCD 67-385 gene."],
  ("atp_grasp_ligase", "B2J6X7"): [
    "Cyanobacterium; never fungal evidence. NpR5598 (mysC) of PMID 21890703: it ligates glycine, not glutaminol.",
-   "Unreviewed entry with no EC and no reaction; it cites the genome paper (pmid 23463784) only: verified: false."],
+   "pmid is that paper; the entry does not cite it. Unreviewed entry with no EC and no reaction; its only citation is",
+   "PMID 23463784 (a sugar-transporter paper used for the genome sequence, not a paper about this step): verified: false."],
 }
 REF_EC = {"ddgs": "4.2.3.154"}
 REF_RHEA = {"ddgs": {"RHEA:49560"}}
@@ -152,7 +154,7 @@ for step, refs in REF.items():
         r = rec(acc)
         assert gene in r["gene_names"], (acc, gene, r["gene_names"])
         assert pubmed_abstract(pmid)["title"]
-        if r["source"] == "UniProtKB" and acc != "A0A9Y1GGR7":
+        if r["source"] == "UniProtKB" and acc not in ("A0A9Y1GGR7", "B2J6X8", "B2J6X7"):
             assert pmid in r["pmids"], (acc, pmid, r["pmids"])
         # verified: true only for a UniProt entry with a gene name that cites the paper and carries the EC and Rhea id of the step
         ok = (r["source"] == "UniProtKB" and pmid in r["pmids"] and step in REF_EC and REF_EC[step] in r["ec"] and REF_RHEA[step] <= r["rhea"])
@@ -160,6 +162,8 @@ for step, refs in REF.items():
         assert set(DOMAINS[step]) & family_ids(acc) or not DOMAINS[step], (step, acc)
         recs.append(f">{r['header']}\n{wrap(r['sequence'])}\n")
         src = r["srcdb"] + ("; PubMed (paper cited by the GenBank record)" if is_genbank(acc) else "; PubMed" + (" (cited by the entry)" if pmid in r["pmids"] else " (not cited by the entry)"))
+        if acc in ("B2J6X8", "B2J6X7"):
+            src += "; the only citation of the entry, PMID 23463784, is a sugar-transporter paper used for the genome sequence"
         prov.append([step, acc, r["species"], gene, "", pmid, src, TODAY, str(ver).lower()])
     (REFS / f"{step}.faa").write_text("".join(recs), encoding="utf-8")
 tsv(REFS / "provenance.tsv", ["step_id", "accession", "species", "gene_name", "region", "pmid", "source_database", "retrieved_on", "verified"], prov)
@@ -172,6 +176,23 @@ for acc in ("B2J6X9", "Q3M6C3", "B2J6X8", "B2J6X7"):
     assert uniprot_entry(acc)["gene_names"] == [] and len(ordered_locus_names(acc)) == 1, acc
 assert rec("B2J6X9")["reviewed"] and rec("Q3M6C3")["reviewed"] and "22741921" in rec("B2J6X9")["pmids"]
 assert MYS_PMID not in rec("B2J6X9")["pmids"] + rec("B2J6X8")["pmids"] + rec("B2J6X7")["pmids"]
+# the only citation of the two unreviewed Nostoc entries is a sugar-transporter paper (genome sequence), not a paper about the step
+assert rec("B2J6X8")["pmids"] == ["23463784"] == rec("B2J6X7")["pmids"] and "sugar transporter" in pubmed_abstract("23463784")["title"]
+def ca_evidence(acc):
+    return [(e["evidenceCode"], e.get("id")) for c in full(acc).get("comments", []) if c["commentType"] == "CATALYTIC ACTIVITY" for e in (c["reaction"].get("evidences") or [])]
+# B2J6X9: experimental evidence (ECO:0000269) for RHEA:49560 from two papers; B2J6X8: no catalytic activity record, existence by homology
+assert ca_evidence("B2J6X9") == [("ECO:0000269", "20813918"), ("ECO:0000269", "22741921")]
+assert ca_evidence("B2J6X8") == [] and full("B2J6X8")["proteinExistence"].startswith("3: Inferred from homology")
+# O42898: the catalytic activity has no evidence code; 'Probable' in the protein name
+assert ca_evidence("O42898") == [] and "RHEA:17877" in rec("O42898")["rhea"]
+assert full("O42898")["proteinDescription"]["recommendedName"]["fullName"]["value"] == "Probable catechol O-methyltransferase 1"
+# Ascochyta fabae: a mycosporin glucosyltransferase activity (abstract read; no sequence)
+GT_PMID = "24258137"
+ag = ab(GT_PMID)
+assert pubmed_abstract(GT_PMID)["title"].startswith("Soluble uridine diphospho-D-glucose: mycosporin glucosyltransferase from spores of Ascochyta fabae")
+for frag in ("uridine 5'-diphosphate (UDP) glucose: mycosporin-2 glucosyltransferase from spores of Ascochyta fabae", "(the amide form being the best acceptor)", "pH of about 8.5", "divalent cations"):
+    assert frag in ag, frag
+assert "glutaminol" not in ag   # the abstract does not say that mycosporin-2 is mycosporine-glutaminol
 assert rec("B2J6X8")["ec"] == ["2.1.1.104"] and not rec("B2J6X8")["rhea"] and rec("B2J6X7")["ec"] == [] and not rec("B2J6X7")["rhea"]
 assert "(PubMed:22741921)" in function_text("Q3M6C3")
 # bacterial genes that are neither references nor decoys
@@ -193,7 +214,7 @@ DECOY = {
   ("Q9S5E2", "btrC", None, SPC + "2-deoxy-scyllo-inosose synthase of butirosin biosynthesis (EC 4.2.3.124, RHEA:33071); another substrate. annotation only: no abstract was read for this entry", ["4.2.3.124"], ["RHEA:33071"], True),
  ],
  "omt": [
-  ("O42898", "SPBC119.03", None, OMTF + "probable catechol O-methyltransferase 1 of Schizosaccharomyces pombe (EC 2.1.1.6, RHEA:17877). annotation only ('Probable' in UniProt); not assayed with demethyl-4-deoxygadusol. 30% identical to the Phaffia OMT (MEASURED), closer than the bacterial reference", ["2.1.1.6"], ["RHEA:17877"], True),
+  ("O42898", "SPBC119.03", None, OMTF + "probable catechol O-methyltransferase 1 of Schizosaccharomyces pombe (EC 2.1.1.6, RHEA:17877). annotation only: the name says 'Probable' and the catalytic activity has no evidence code in UniProt; not assayed with demethyl-4-deoxygadusol. It is not excluded as a true member of the step: it is 30% identical to the Phaffia OMT (MEASURED), closer than MysB (17%), and no assay of this protein was read. The step needs tree placement; do not count a hit to this protein as a negative (USER DECISION 7)", ["2.1.1.6"], ["RHEA:17877"], True),
   ("B8NI24", "imqG", None, OMTF + "O-methyltransferase of imizoquin biosynthesis in Aspergillus flavus (EC 2.1.1.-, no Rhea reaction on the entry). annotation only; not assayed with demethyl-4-deoxygadusol", ["2.1.1.-"], [], True),
   ("A0A397HK53", "ankF", None, OMTF + "O-methyltransferase of NK13650 biosynthesis in Aspergillus thermomutatus (EC 2.1.1.-, RHEA:80259). annotation only: no abstract was read for this entry; not assayed with demethyl-4-deoxygadusol", ["2.1.1.-"], ["RHEA:80259"], True),
   ("P21964", "COMT", None, OMTF + "human catechol O-methyltransferase (EC 2.1.1.6, RHEA:17877, RHEA:53108, RHEA:53104, RHEA:53100, RHEA:53096, RHEA:53092, RHEA:53088). annotation only: no abstract was read for this entry; not assayed with demethyl-4-deoxygadusol. 29% identical to the Phaffia OMT (MEASURED)", ["2.1.1.6"], ["RHEA:17877", "RHEA:53108", "RHEA:53104", "RHEA:53100", "RHEA:53096", "RHEA:53092", "RHEA:53088"], True),
@@ -232,6 +253,10 @@ for step, ds in DECOY.items():
         recs.append(f">{r['header']}\n{wrap(r['sequence'])}\n")
         dprov.append([step, acc, r["species"], gene, pmid or "", func + SUFFIX[step], r["srcdb"] + ("; PubMed" if pmid else ""), TODAY, str(ver).lower()])
     (DEC / f"{step}.faa").write_text("".join(recs), encoding="utf-8")
+import hashlib
+tsv(ROOT / "tests" / "data" / "kb" / f"{PW}_sequences.tsv", ["accession", "source", "length", "sha256"],
+    sorted({(a, rec(a)["source"], str(rec(a)["length"]), hashlib.sha256(rec(a)["sequence"].encode()).hexdigest())
+            for a in ALL_REF | {d[0] for ds in DECOY.values() for d in ds}}))
 tsv(DEC / "provenance.tsv", ["step_id", "accession", "species", "gene_name", "pmid", "reason", "source_database", "retrieved_on", "verified"], dprov)
 assert "4.2.3.4" in [e["value"] for c in full("P07547")["comments"] if c["commentType"] == "CATALYTIC ACTIVITY" for e in [{"value": c["reaction"].get("ecNumber")}]]
 assert ordered_locus_names("C6WFL3") == ["Amir_2000"] and "22741921" in rec("C6WFL3")["pmids"]
@@ -304,7 +329,7 @@ RX = [  # id, ec, note, substrates, products
  (C + "ddg_o_methylation", "", f"Curated: O-methylation of demethyl-4-deoxygadusol to 4-deoxygadusol with S-adenosylmethionine. Rhea has no reaction for it (searches for gadusol, deoxygadusol and mycosporine on 2026-11-21 found RHEA:49560, RHEA:50220 and the vertebrate gadusol reactions RHEA:78171 and RHEA:78167 only). {NODG} So the reaction has a substrate and no product in the table. {SM}", [("132137", 1)], []),
  (C + "mycosporine_glutaminol_formation", "", f"Curated: ATP-dependent ligation of 4-deoxygadusol with glutaminol to mycosporine-glutaminol (the fungal ATP-grasp ligase, PMID 36983003; the full text names glutaminol as the amine). {NODG} Glutaminol has no ChEBI entry that was found. So the reaction has a product and no substrate in the table, and path_possible reaches it only as the first step of a call. {SM}", [], [("144275", 1)]),
  (C + "mycosporine_glycine_formation", "", f"Curated, bacterial: ATP-dependent ligation of 4-deoxygadusol with glycine to mycosporine-glycine (MysC of cyanobacteria, PMID 21890703). No fungal protein is linked to this reaction. {NODG} Mycosporine-glycine has no ChEBI entry (PubChem CID 14444485). The reaction has no participant in the table.", [], []),
- (C + "mg_glucosylation", "", "Curated, hypothesis for the enzyme: glucosylation of mycosporine-glutaminol to mycosporine-glutaminol-glucoside. The compound is made by Phaffia rhodozyma and by strain CBS 6938 after integration of the cluster (PMID 36983003), and not by Saccharomyces cerevisiae with the three genes; the gene is not identified (T4). Mycosporine-glutaminol-glucoside has no ChEBI entry (PubChem CID 171990409), so no product is listed.", [("144275", 1)], []),
+ (C + "mg_glucosylation", "", "Curated: glucosylation of mycosporine-glutaminol to mycosporine-glutaminol-glucoside. The gene is not identified in any fungus (T4). An enzyme activity is reported for Ascochyta fabae spores: a soluble glucosyltransferase that moves glucose from UDP-glucose to mycosporin-2, the amide form being the best acceptor (PMID 24258137, abstract). Whether mycosporin-2 (amide form) is mycosporine-glutaminol is UNVERIFIED. The compound is made by Phaffia rhodozyma and by strain CBS 6938 after integration of the cluster (PMID 36983003), and not by Saccharomyces cerevisiae with the three genes; the gene is not identified (T4). Mycosporine-glutaminol-glucoside has no ChEBI entry (PubChem CID 171990409), so no product is listed.", [("144275", 1)], []),
  (C + "mycosporine_glutamicol_formation", "", "Curated, hypothesis: formation of mycosporine-glutamicol, the compound with a carboxyl group where mycosporine-glutaminol has the amide. No paper that was read gives the enzyme or the precursor (ligation of another amine to 4-deoxygadusol, or hydrolysis of the amide of mycosporine-glutaminol). T4. No substrate is listed. The glucoside (mycosporine-glutamicol-glucoside, PMID 12717761, 30182254) has no ChEBI entry (PubChem CID 171990350).", [], [("144274", 1)]),
  (C + "shinorine_formation", "", "Curated, bacterial context, no step: attachment of serine to mycosporine-glycine gives the iminomycosporine shinorine (NpF5597 / MysD of Nostoc punctiforme, PMID 21890703; an NRPS-like enzyme in Anabaena variabilis, full text of PMID 20813918; actinomycete clusters, PMID 24907338). There is no fungal enzyme and no fungal report of the compound in the papers that were read. Mycosporine-glycine has no ChEBI entry, so no substrate is listed.", [], [("131712", 1)]),
  (C + "porphyra334_formation", "", "Curated, bacterial context, no step: attachment of threonine to mycosporine-glycine gives porphyra-334 (a minor product of NpF5597 / MysD of Nostoc punctiforme, PMID 21890703). There is no fungal enzyme and no fungal report of the compound in the papers that were read. Mycosporine-glycine has no ChEBI entry, so no substrate is listed.", [], [("35671", 1)]),
@@ -337,16 +362,19 @@ link("ddgs", "RHEA:49560", "WEV88679.1", "T1c",
      "after expression of DDGS together with OMT in Saccharomyces cerevisiae. USER DECISION: T1a if that co-expression product is accepted as the assay of DDGS. " + ID.format("WEV88679.1"), FUNGAL_PMID, "del")
 link("ddgs", "RHEA:49560", "B2J6X9", "T2",
      "another organism (cyanobacterium Nostoc punctiforme ATCC 29133): expression of NpR5600, NpR5599 and NpR5598 in Escherichia coli gives mycosporine-glycine. " + SHORT.format("NpR5600 (mysA)", "Npun_R5600", "B2J6X9") +
-     " UniProt B2J6X9 (reviewed) carries EC 4.2.3.154 and RHEA:49560 and cites PMID 20813918 and 22741921 for the catalytic activity.", MYS_PMID, "mys")
+     " The sentence names the gene; the product in it is that of the three genes together. The activity of this protein alone rests on a record: UniProt B2J6X9 (reviewed) gives EC 4.2.3.154 and RHEA:49560 "
+     "with experimental evidence (ECO:0000269) from PMID 20813918 and 22741921.", MYS_PMID, "mys")
 link("ddgs", "RHEA:49560", "Q3M6C3", "T3",
      "Held at T3. Another organism (cyanobacterium Anabaena variabilis ATCC 29413, UniProt name Trichormus variabilis). The quoted sentence names the enzyme class and does not name the protein Ava_3858. "
      "UniProt Q3M6C3 (reviewed) cites the paper for the catalytic activity (EC 4.2.3.154, RHEA:49560), and the full text (read) reports the activity of Ava_3858. Raise to T2 if the user accepts the UniProt record as the tie.", "22741921", "cmp")
 link("omt", C + "ddg_o_methylation", "WEV88680.1", "T1a",
      "heterologous co-expression of the DDGS and OMT cDNAs of Phaffia rhodozyma in Saccharomyces cerevisiae gives 4-deoxygadusol, the product of this reaction. It is a co-expression: the abstract reports no expression of OMT alone, "
-     "so the order of the two enzymes rests on the homology of DDGS. " + ID.format("WEV88680.1"), FUNGAL_PMID, "het")
-link("omt", C + "ddg_o_methylation", "B2J6X8", "T2",
-     "another organism (cyanobacterium Nostoc punctiforme ATCC 29133): expression of NpR5600, NpR5599 and NpR5598 in Escherichia coli gives mycosporine-glycine. " + SHORT.format("NpR5599 (mysB)", "Npun_R5599", "B2J6X8") +
-     " The full text of PMID 20813918 (read) reports 4-deoxygadusol from sedoheptulose 7-phosphate with NpR5600 and NpR5599 in vitro. The same enzyme family is not shown: this protein is 17% identical to the Phaffia OMT (MEASURED) "
+     "and the full text has no strain with DDGS alone, so the order of the two enzymes rests on the homology of DDGS. The DDGS link rests on the same experiment and is held at T1c for that reason (USER DECISION 3). " + ID.format("WEV88680.1"), FUNGAL_PMID, "het")
+link("omt", C + "ddg_o_methylation", "B2J6X8", "T3",
+     "Held at T3. Another organism (cyanobacterium Nostoc punctiforme ATCC 29133): expression of NpR5600, NpR5599 and NpR5598 in Escherichia coli gives mycosporine-glycine. " + SHORT.format("NpR5599 (mysB)", "Npun_R5599", "B2J6X8") +
+     " The sentence names the gene and does not state the product of the methylation, and no database record supports the activity: UniProt B2J6X8 is unreviewed, has no catalytic activity record with evidence "
+     "(EC 2.1.1.104 is automatic annotation) and exists 'by homology'. A sentence of the full text of PMID 20813918 (found by word search) reports 4-deoxygadusol from sedoheptulose 7-phosphate with NpR5600 and NpR5599 together in vitro; "
+     "it is not an abstract sentence and it does not test NpR5599 alone. The same enzyme family is not shown: this protein is 17% identical to the Phaffia OMT (MEASURED) "
      "and has Pfam PF01596 where the Phaffia OMT has PF13578 at the gathering cutoff.", MYS_PMID, "mys")
 link("atp_grasp_ligase", C + "mycosporine_glutaminol_formation", "WEV88681.1", "T1a",
      "heterologous co-expression of the DDGS, OMT and ATPG cDNAs of Phaffia rhodozyma in Saccharomyces cerevisiae gives mycosporine-glutaminol (MG); without ATPG the product is 4-deoxygadusol. "
@@ -371,7 +399,7 @@ for step, rid, acc, tier, assay, pmid, q in L:
     assert (acc in FUNGAL_ACC) == (species_key(rec(acc)["species"]) == "xanthophyllomyces dendrorhous"), acc
     srows.append([step, rid, rec(acc)["species"], acc_gene[(step, acc)], acc, tier, assay, pmid, qt])
 # the gene named in each T1 / T2 sentence
-for acc, word in (("WEV88679.1", "Δddgs"), ("WEV88680.1", "OMT"), ("WEV88681.1", "ATPG"), ("B2J6X9", "NpR5600"), ("B2J6X8", "NpR5599"), ("B2J6X7", "NpR5598")):
+for acc, word in (("WEV88679.1", "Δddgs"), ("WEV88680.1", "OMT"), ("WEV88681.1", "ATPG"), ("B2J6X9", "NpR5600"), ("B2J6X7", "NpR5598")):
     row = [r for r in srows if r[4] == acc][0]
     assert word in row[8] and row[5] != "T3", acc
 assert "4-deoxygadusol or MG production" in Q["het"] and "Ava_3858" not in Q["cmp"]
@@ -379,7 +407,9 @@ assert set(Q.values()) == {r[8] for r in srows if r[8]}
 # T4: no gene identified. The steps are in the YAML with refs: [] so that the route variants can be declared.
 NO_ENZYME = "not assigned (no enzyme identified)"
 T4 = [("mg_glucosyltransferase", C + "mg_glucosylation",
-       "hypothesis for the enzyme; the compound is observed. The full text of PMID 36983003 assigns the glucosylation to a gene that is not part of the cluster and is absent from Saccharomyces cerevisiae; the gene is not identified"),
+       "hypothesis for the gene only; no sequence is known, so no protein link is possible. An enzyme activity is published for one fungus: a soluble UDP-glucose:mycosporin-2 glucosyltransferase from spores of Ascochyta fabae "
+       "(PMID 24258137, abstract read: the amide form is the best acceptor; pH optimum about 8.5; divalent cations needed). UNVERIFIED: whether 'mycosporin-2, amide form' is mycosporine-glutaminol, the aglycone of mycosporine-glutaminol-glucoside. "
+       "The full text of PMID 36983003 assigns the glucosylation in Phaffia rhodozyma to a gene that is not part of the cluster and is absent from Saccharomyces cerevisiae; the gene is not identified"),
       ("glutamicol_formation", C + "mycosporine_glutamicol_formation",
        "hypothesis; no paper that was read gives an enzyme or a precursor for mycosporine-glutamicol in fungi")]
 for sid, rid, assay in T4:
@@ -392,7 +422,7 @@ tsv(ROOT / "tests" / "data" / "kb" / f"{PW}_quotes.tsv", ["step_id", "reaction_i
 MGG, MGL, MGOH, MGOHG = "mycosporine-glutaminol-glucoside", "mycosporine-glutaminol", "mycosporine-glutamicol", "mycosporine-glutamicol-glucoside"
 LIN = [
  ("Phaffia rhodozyma", "basidiomycetous yeast (Cystofilobasidiales)", MGG, "20955516", "abstract", "48 wild and collection strains were positive; the paper says Xanthophyllomyces dendrorhous", ["Xanthophyllomyces dendrorhous (Phaffia rhodozyma)", "The 48 wild and collection strains screened were positive", "mycosporine-glutaminol-glucoside (MGG)"]),
- ("Phaffia rhodozyma", "basidiomycetous yeast", MGL, FUNGAL_PMID, "abstract", "strain UCD 67-385; made in Saccharomyces cerevisiae with DDGS, OMT and ATPG", ["mycosporine glutaminol (MG)", "UCD 67-385"]),
+ ("Phaffia rhodozyma", "basidiomycetous yeast", MGL, FUNGAL_PMID, "full text", "wild-type strain UCD 67-385 (peak 1 of Figure 3B in the full text); the abstract shows MG only in Saccharomyces cerevisiae with DDGS, OMT and ATPG and in strain CBS 6938 with the cluster", ["with peak 1 corresponding to MG and peak 2 corresponding to MGG"]),
  ("Phaffia rhodozyma", "basidiomycetous yeast", MGG, FUNGAL_PMID, "abstract", "strain CBS 6938 with the integrated cluster makes MG and MGG", ["produced MG and mycosporine glutaminol glucoside"]),
  ("Phaffia rhodozyma (strain CBS 6938)", "basidiomycetous yeast", "none detected", FUNGAL_PMID, "abstract", "negative report: the wild-type strain makes no mycosporine and lacks the cluster (full text)", ["non-mycosporine-producing CBS 6938 wild-type strain"]),
  ("Phaffia rhodozyma", "basidiomycetous yeast", MGG, "38329645", "abstract", "", ["Phaffia rhodozyma is a basidiomycetous yeast", "mycosporine-glutaminol-glucoside (MGG)"]),
@@ -410,7 +440,8 @@ LIN = [
  ("rock-inhabiting microcolonial fungi (species not named in the abstract)", "microcolonial ascomycetes", MGG, "12717761", "abstract", "", ["both mycosporine-glutamicol-glucoside and mycosporine-glutaminol-glucoside"]),
  ("Hortaea werneckii", "melanized ascomycetous fungus", MGG, "18048939", "abstract", "stationary-phase cells", ["Hortaea werneckii", "stationary-phase cells also contained mycosporine-glutaminol-glucoside"]),
  ("Colletotrichum graminicola", "filamentous fungus", "mycosporine-glutamine", "31550526", "abstract", "germination self-inhibitor of falcate conidia; absent from oval conidia cultures", ["Colletotrichum graminicola", "self-inhibitor mycosporine-glutamine"]),
- ("Ascochyta fabae", "filamentous fungus", MGG, FUNGAL_PMID, "full text", "stated in the introduction of PMID 36983003 with two citations that were not read", []),
+ ("Ascochyta fabae", "filamentous fungus", MGG, FUNGAL_PMID, "full text", "stated in the introduction of PMID 36983003 with two citations; one is REPORTED by the review to be PMID 24258137 (next row), the other was not read", []),
+ ("Ascochyta fabae", "Fungi imperfecti (spores)", "mycosporin-2 (acceptor of a spore glucosyltransferase)", GT_PMID, "abstract", "enzyme activity, not a compound report: UDP-glucose:mycosporin-2 glucosyltransferase, amide form the best acceptor; UNVERIFIED whether mycosporin-2 (amide form) is mycosporine-glutaminol", ["mycosporin-2 glucosyltransferase from spores of Ascochyta fabae Speg. (Fungi imperfecti)", "the amide form being the best acceptor"]),
  ("Dermatocarpon luridum var. luridum", "chlorolichen (Verrucariaceae, Ascomycota)", MGOH, "30893758", "abstract", "lichen thallus: the producing partner is not stated in the abstract", ["Dermatocarpon luridum var. luridum", "(mycosporine glutamicol, mycosporine glutaminol)"]),
  ("Dermatocarpon luridum var. luridum", "chlorolichen (Verrucariaceae, Ascomycota)", MGL, "30893758", "abstract", "lichen thallus: the producing partner is not stated in the abstract", ["(mycosporine glutamicol, mycosporine glutaminol)"]),
  ("Cladonia arbuscula subsp. squarrosa", "lichen", MGOH, "35888756", "abstract", "lichen thallus: the abstract says that the partner that makes the compound is not identified", ["Cladonia arbuscula", "Mycosporine-glutamicol", "identification of a lichen partner actively involved"]),
@@ -423,7 +454,7 @@ LIN = [
 lrows = []
 for org, group, cpd, pmid, ev, note, frags in LIN:
     for f in frags:
-        assert f in ab(pmid), (pmid, f)
+        assert f in (ab(pmid) if ev == "abstract" else ft), (pmid, f)
     assert ev == "abstract" or (pmid == FUNGAL_PMID and org.split(" (")[0] in ft), org
     lrows.append([org, group, cpd, pmid, ev, note])
 tsv(REFS / "fungal_lineages.tsv", ["organism", "group", "compound", "pmid", "evidence", "note"], lrows)
@@ -443,7 +474,7 @@ STEPS = [  # id, name, ec, copy, role, optional, route, ko, lineage_note, family
   "Second step: O-methylation of demethyl-4-deoxygadusol to 4-deoxygadusol. Rhea has no reaction and no EC is assigned; 4-deoxygadusol has no ChEBI entry. Fungal evidence: OMT of Phaffia rhodozyma UCD 67-385 (GenBank WEV88680.1, PMID 36983003), T1a: "
   "co-expression with DDGS in Saccharomyces cerevisiae gives 4-deoxygadusol. The fungal enzyme is not shown to be an ortholog of the cyanobacterial one: the Phaffia OMT is 17% identical to Npun_R5599 (mysB) of Nostoc punctiforme and 19% to Ava_3857, "
   "and 29 to 30% identical to catechol O-methyltransferases of fission yeast and human, which are decoys (MEASURED 2026-11-21, global alignment). The Phaffia protein has Pfam PF13578 at the gathering cutoff and PF01596 below it (hmmscan, Pfam 38.2); "
-  "the cyanobacterial proteins have PF01596. So the cyanobacterial link is T2 for the reaction and not for the family, it is never fungal evidence, and the decoys are closer to the fungal reference than the bacterial reference is. "
+  "the cyanobacterial proteins have PF01596. So the cyanobacterial link is held at T3, not T2 (no record supports the methylation by Npun_R5599 alone, and the same family is not shown), it is never fungal evidence, and the decoys are closer to the fungal reference than the bacterial reference is. The decoy O42898 (probable catechol O-methyltransferase of fission yeast, no evidence code on its activity) is not excluded as a true member. "
   "A step call needs the Phaffia protein as the query and tree placement with the decoys. Gene names: OMT (Phaffia rhodozyma); mysB, NpR5599, Npun_R5599 (Nostoc punctiforme). " + ORG,
   "class I S-adenosylmethionine-dependent O-methyltransferase"),
  ("atp_grasp_ligase", "ATP-grasp ligase (ATPG of Phaffia rhodozyma; 4-deoxygadusol and glutaminol to mycosporine-glutaminol)", None, "single", "catalytic", True, None, "",
@@ -455,7 +486,9 @@ STEPS = [  # id, name, ec, copy, role, optional, route, ko, lineage_note, family
   "A step call needs the Phaffia protein as the query and tree placement. Gene names: ATPG (Phaffia rhodozyma); mysC, NpR5598, Npun_R5598 (Nostoc punctiforme). " + ORG,
   "ATP-grasp ligase"),
  ("mg_glucosyltransferase", "glucosylation of mycosporine-glutaminol (gene not identified)", None, "single", "catalytic", True, "mycosporine_glutaminol_glucoside", "",
-  "T4: the gene is not identified. Mycosporine-glutaminol-glucoside is the main mycosporine of the yeasts in the lineage table. The full text of PMID 36983003 states that the glucosylation is done by a gene that is not part of the cluster "
+  "T4: the gene is not identified. Mycosporine-glutaminol-glucoside is the main mycosporine of the yeasts in the lineage table. The enzyme activity is shown in one fungus and no sequence is known: a soluble UDP-glucose:mycosporin-2 glucosyltransferase from spores of Ascochyta fabae, "
+  "with the amide form as the best acceptor, a pH optimum of about 8.5 and a need for divalent cations (PMID 24258137, abstract read). UNVERIFIED: whether 'mycosporin-2, amide form' is mycosporine-glutaminol, the aglycone of mycosporine-glutaminol-glucoside. "
+  "UDP-glucose as the donor is a lead for the enzyme family (a UDP-glycosyltransferase), not a reference. The full text of PMID 36983003 states that the glucosylation is done by a gene that is not part of the cluster "
   "and whose function is absent from Saccharomyces cerevisiae; strain CBS 6938 with the integrated cluster makes the glucoside. No reference protein, no decoy, no domain. The cyanobacterial glycosyltransferase MysG1 (PMID 39247679) acts on a palythine and is not evidence for this step.",
   "unknown (no fungal enzyme identified)"),
  ("glutamicol_formation", "formation of mycosporine-glutamicol (enzyme and precursor not identified)", None, "single", "catalytic", True, "mycosporine_glutamicol", "",
@@ -517,6 +550,8 @@ out = [textwrap.dedent('''\
     #   name (Npun_R5600), the only gene identifier that UniProt gives. It is valid only with species.
     # - pmid of a ref: for a UniProt entry a paper cited by the entry; for a GenBank protein the paper
     #   cited by the GenBank record. The papers that show each reaction are in step_reaction.tsv.
+    #   Exception: B2J6X8 and B2J6X7 carry PMID 21890703, which names their genes and which the
+    #   entries do not cite (their only citation, PMID 23463784, is a sugar-transporter paper).
     # - domains_any: Pfam ids. For the Phaffia proteins they come from hmmscan (Pfam 38.2, gathering
     #   cutoff), because the proteins have no UniProt cross-references. atp_grasp_ligase has none.
     # - reactions: ids of kb/mycosporine/reaction.tsv. The tier of each (protein, reaction) link is

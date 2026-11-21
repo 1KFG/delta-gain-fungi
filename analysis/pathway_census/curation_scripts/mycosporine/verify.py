@@ -44,7 +44,7 @@ for st in p.steps:
             cites = "by title and DOI" if any(t.rstrip(".") == pubmed_abstract(r.pmid)["title"].rstrip(".") for t, *_ in e["refs"]) else "NO"
         else:
             cites = "yes" if r.pmid in e["pmids"] else "no"
-        if not (org and gene and seq and pm) or cites == "NO":
+        if not (org and gene and seq and pm) or cites == "NO":  # a reference pmid need not be cited by the entry
             bad.append(("ref", st.id, r.accession))
         print(f"| {st.id} | {r.accession} | {e['source']} | {yn(org)} ({e['species']}) | {yn(gene)} ({r.gene_name}) | {yn(seq)} ({e['length']} aa) | {yn(pm)} ({r.pmid}) | {cites} | {'yes' if e['reviewed'] else 'no'} | {str(r.verified).lower()} |")
 

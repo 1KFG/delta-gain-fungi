@@ -1,6 +1,6 @@
 organism	group	compound	pmid	evidence	note
 Phaffia rhodozyma	basidiomycetous yeast (Cystofilobasidiales)	mycosporine-glutaminol-glucoside	20955516	abstract	48 wild and collection strains were positive; the paper says Xanthophyllomyces dendrorhous
-Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol	36983003	abstract	strain UCD 67-385; made in Saccharomyces cerevisiae with DDGS, OMT and ATPG
+Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol	36983003	full text	wild-type strain UCD 67-385 (peak 1 of Figure 3B in the full text); the abstract shows MG only in Saccharomyces cerevisiae with DDGS, OMT and ATPG and in strain CBS 6938 with the cluster
 Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol-glucoside	36983003	abstract	strain CBS 6938 with the integrated cluster makes MG and MGG
 Phaffia rhodozyma (strain CBS 6938)	basidiomycetous yeast	none detected	36983003	abstract	negative report: the wild-type strain makes no mycosporine and lacks the cluster (full text)
 Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol-glucoside	38329645	abstract	
@@ -18,7 +18,8 @@ rock-inhabiting microcolonial fungi (species not named in the abstract)	microcol
 rock-inhabiting microcolonial fungi (species not named in the abstract)	microcolonial ascomycetes	mycosporine-glutaminol-glucoside	12717761	abstract	
 Hortaea werneckii	melanized ascomycetous fungus	mycosporine-glutaminol-glucoside	18048939	abstract	stationary-phase cells
 Colletotrichum graminicola	filamentous fungus	mycosporine-glutamine	31550526	abstract	germination self-inhibitor of falcate conidia; absent from oval conidia cultures
-Ascochyta fabae	filamentous fungus	mycosporine-glutaminol-glucoside	36983003	full text	stated in the introduction of PMID 36983003 with two citations that were not read
+Ascochyta fabae	filamentous fungus	mycosporine-glutaminol-glucoside	36983003	full text	stated in the introduction of PMID 36983003 with two citations; one is REPORTED by the review to be PMID 24258137 (next row), the other was not read
+Ascochyta fabae	Fungi imperfecti (spores)	mycosporin-2 (acceptor of a spore glucosyltransferase)	24258137	abstract	enzyme activity, not a compound report: UDP-glucose:mycosporin-2 glucosyltransferase, amide form the best acceptor; UNVERIFIED whether mycosporin-2 (amide form) is mycosporine-glutaminol
 Dermatocarpon luridum var. luridum	chlorolichen (Verrucariaceae, Ascomycota)	mycosporine-glutamicol	30893758	abstract	lichen thallus: the producing partner is not stated in the abstract
 Dermatocarpon luridum var. luridum	chlorolichen (Verrucariaceae, Ascomycota)	mycosporine-glutaminol	30893758	abstract	lichen thallus: the producing partner is not stated in the abstract
 Cladonia arbuscula subsp. squarrosa	lichen	mycosporine-glutamicol	35888756	abstract	lichen thallus: the abstract says that the partner that makes the compound is not identified

@@ -1,4 +1,5 @@
 """Tests for the mycosporine flat knowledge tables (stage 1, task S6)."""
+import hashlib
 import re
 from pathlib import Path
 
@@ -62,7 +63,7 @@ def test_tables_validate(kb):
 def test_every_t1_t2_link_has_pmid_quote_and_assay(kb):
     sr = kb["step_reaction"]
     ev = sr[sr["tier"].isin(EVIDENCE_TIERS)]
-    assert len(ev) == 6
+    assert len(ev) == 5
     for _, r in ev.iterrows():
         assert r["pmid"].strip().isdigit() and r["quote"].strip() and r["assay"].strip()
     assert set(sr["tier"]) == {"T1a", "T1c", "T2", "T3", "T4"}
@@ -86,7 +87,7 @@ def test_links_are_the_expected_set(kb):
         ("RHEA:49560", "Q3M6C3", "22741921"): "T3"}
     assert _links(kb, "omt") == {
         (C + "ddg_o_methylation", "WEV88680.1", FUNGAL_PMID): "T1a",
-        (C + "ddg_o_methylation", "B2J6X8", "21890703"): "T2"}
+        (C + "ddg_o_methylation", "B2J6X8", "21890703"): "T3"}   # fix round 1 (I3)
     assert _links(kb, "atp_grasp_ligase") == {
         (C + "mycosporine_glutaminol_formation", "WEV88681.1", FUNGAL_PMID): "T1a",
         (C + "mycosporine_glutaminol_formation", "A0A9Y1GGR7", ""): "T3",
@@ -108,12 +109,12 @@ def test_no_t1_link_without_a_fungal_protein_and_a_fungal_paper(kb):
         assert r["pmid"] == FUNGAL_PMID
         assert r["protein_accession"] in {"WEV88679.1", "WEV88680.1", "WEV88681.1"}
     t2 = sr[sr["tier"] == "T2"]
-    assert set(t2["protein_accession"]) == {"B2J6X9", "B2J6X8", "B2J6X7"}
+    assert set(t2["protein_accession"]) == {"B2J6X9", "B2J6X7"}
     for _, r in t2.iterrows():
         assert species_key(r["organism"]) == "nostoc punctiforme"
         assert r["pmid"] == "21890703" and r["quote"] == S_MYS
     bact = sr[sr["organism"].str.startswith(("Nostoc", "Trichormus"))]
-    assert set(bact["tier"]) == {"T2", "T3"} and len(bact) == 4
+    assert dict(bact["tier"].value_counts()) == {"T2": 2, "T3": 2}
 
 
 def test_no_step_has_only_bacterial_t2_references_presented_as_fungal(kb):
@@ -137,7 +138,7 @@ def test_no_step_has_only_bacterial_t2_references_presented_as_fungal(kb):
 # Binding rule 1: a T1 or T2 link needs a quoted sentence that names the gene of its protein.
 NAMED = {"WEV88679.1": ("Δddgs", S_DEL), "WEV88680.1": ("OMT", S_HET),
          "WEV88681.1": ("ATPG", S_HET), "B2J6X9": ("NpR5600", S_MYS),
-         "B2J6X8": ("NpR5599", S_MYS), "B2J6X7": ("NpR5598", S_MYS)}
+         "B2J6X7": ("NpR5598", S_MYS)}
 
 
 def test_every_t1_t2_quote_names_the_protein_of_its_link(kb):
@@ -162,7 +163,16 @@ def test_every_t1_t2_quote_names_the_protein_of_its_link(kb):
 def test_held_links_say_why(kb):
     sr = kb["step_reaction"]
     t3 = sr[sr["tier"] == "T3"].set_index("protein_accession")
-    assert set(t3.index) == {"Q3M6C3", "A0A9Y1GGR7"}
+    assert set(t3.index) == {"Q3M6C3", "A0A9Y1GGR7", "B2J6X8"}
+    # mysB: the gene is named, the product of the methylation is not, and no record supports it
+    assert t3.loc["B2J6X8", "assay"].startswith("Held at T3.") and t3.loc["B2J6X8", "quote"] == S_MYS
+    assert "no database record supports the activity" in t3.loc["B2J6X8", "assay"]
+    # mysA stays T2 on the experimental evidence of the reviewed UniProt entry
+    mysa = sr[sr["protein_accession"] == "B2J6X9"].iloc[0]
+    assert mysa["tier"] == "T2" and "ECO:0000269" in mysa["assay"] and "20813918" in mysa["assay"]
+    # OMT T1a and DDGS T1c rest on one experiment (I2)
+    omt = sr[sr["protein_accession"] == "WEV88680.1"].iloc[0]
+    assert "no strain with DDGS alone" in omt["assay"] and "USER DECISION 3" in omt["assay"]
     assert t3.loc["Q3M6C3", "assay"].startswith("Held at T3.")
     assert "does not name" in t3.loc["Q3M6C3", "assay"]
     assert "desmethyl-4-deoxygadusol synthases (DDGS)" in t3.loc["Q3M6C3", "quote"]
@@ -173,6 +183,10 @@ def test_held_links_say_why(kb):
     assert set(t4["organism"]) == {NO_ENZYME} and set(t4["gene_name"]) == {"unidentified"}
     for a in t4["assay"]:
         assert a.startswith("hypothesis")
+    # the glucosyltransferase activity of Ascochyta fabae is recorded; the link stays T4 (no sequence)
+    gt = t4[t4["step_id"] == "mg_glucosyltransferase"].iloc[0]["assay"]
+    for word in ("24258137", "Ascochyta fabae", "UDP-glucose", "no sequence is known", "UNVERIFIED"):
+        assert word in gt, word
 
 
 def test_every_link_names_organism_gene_and_accession_of_a_yaml_ref(kb):
@@ -316,3 +330,26 @@ def test_readme_documents_the_mycosporine_conventions():
                  "ordered locus name", "fungal_evidence", "mycosporine_quotes.tsv",
                  "fungal_lineages.tsv", "refs: []"):
         assert word in sec, word
+
+
+def test_fasta_sequences_equal_the_fetched_records():
+    """tests/data/kb/mycosporine_sequences.tsv holds the length and SHA-256 of each sequence as
+    fetched from UniProt or GenBank by build.py. Every FASTA record must equal it."""
+    fx = pd.read_csv(ROOT / "tests" / "data" / "kb" / "mycosporine_sequences.tsv", sep="\t",
+                     dtype=str, keep_default_na=False).set_index("accession")
+    assert len(fx) == 24 and set(fx["source"]) == {"UniProtKB", "GenBank"}
+    seen = set()
+    refs = ROOT / "refs" / "mycosporine"
+    for path in sorted(refs.glob("*.faa")) + sorted((refs / "decoys").glob("*.faa")):
+        name, seqs = None, {}
+        for ln in path.read_text(encoding="utf-8").splitlines():
+            if ln.startswith(">"):
+                name = ln[1:].split()[0]
+                seqs[name] = ""
+            else:
+                seqs[name] += ln.strip()
+        for acc, seq in seqs.items():
+            assert str(len(seq)) == fx.loc[acc, "length"], (path.name, acc)
+            assert hashlib.sha256(seq.encode()).hexdigest() == fx.loc[acc, "sha256"], (path.name, acc)
+            seen.add(acc)
+    assert seen == set(fx.index)

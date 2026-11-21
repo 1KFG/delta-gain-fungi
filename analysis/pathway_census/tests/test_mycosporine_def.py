@@ -140,6 +140,9 @@ def test_t4_steps_have_no_reference_and_say_that_the_gene_is_unknown():
         assert "T4" in st.lineage_note and "not identified" in st.lineage_note, sid
         assert not (REFS / f"{sid}.faa").exists(), sid
     assert "36983003" in s["mg_glucosyltransferase"].lineage_note
+    # the enzyme activity of Ascochyta fabae is recorded; whether mycosporin-2 is the aglycone is not
+    for word in ("24258137", "Ascochyta fabae", "UDP-glucose", "no sequence is known", "UNVERIFIED"):
+        assert word in s["mg_glucosyltransferase"].lineage_note, word
     assert "not part of the" in s["mg_glucosyltransferase"].lineage_note
     text = UNVERIFIED.read_text(encoding="utf-8")
     for sid in T4_STEPS:
@@ -229,6 +232,11 @@ def test_decoy_reasons_state_the_annotation_and_what_is_not_shown():
     assert "RHEA:21968" in by[("ddgs", "P07547")] and "AROM" in by[("ddgs", "P07547")]
     # MysD does another reaction; it is the one decoy that is not verified
     assert "21890703" in by[("atp_grasp_ligase", "B2J6X6")]
+    # I4: the probable catechol O-methyltransferase is not excluded as a true member
+    o = by[("omt", "O42898")]
+    for word in ("not excluded as a true member", "no evidence code", "closer than MysB", "tree placement"):
+        assert word in o, word
+    assert "USER DECISION 7" in UNVERIFIED.read_text(encoding="utf-8")
     d = {x.accession: x for x in _steps()["atp_grasp_ligase"].decoys}
     assert d["B2J6X6"].verified is False
     assert sum(not x.verified for st in _steps().values() for x in st.decoys) == 1
@@ -288,13 +296,22 @@ def test_verified_flags_follow_binding_rule_3():
 def test_user_decisions_and_context_are_written_down():
     text = UNVERIFIED.read_text(encoding="utf-8")
     assert text.count("USER DECISION") >= 5
+    for n in range(1, 8):
+        assert f"USER DECISION {n}" in text, n
+    # I2: the OMT and DDGS tiers rest on one sentence and one experiment
+    assert "decide the pair together" in text and "no strain with DDGS alone" in text
+    # I5: the decoy with an ordered locus name is part of the decision
+    assert "C6WFL3 (Amir_2000)" in text
+    # M1: the sugar-transporter paper is not a paper about the step
+    assert "sugar transporter" in text
     # compounds without a ChEBI id are never invented
     for name in ("4-deoxygadusol", "mycosporine-glycine", "mycosporine-glutaminol-glucoside",
                  "mycosporine-glutamicol-glucoside", "asterina-330"):
         assert name in text, name
     assert "no ChEBI" in text
     # the EBC report is context only
-    for word in ("36/87", "16.9", "0 of 82", "REPORTED", "context only", "not evidence"):
+    for word in ("36/87", "16.9", "0 of 82", "176 corpus accessions", "32 of 88", "14.5",
+                 "REPORTED", "context only", "not evidence"):
         assert word in text, word
     # what was read
     assert "full text" in text and "abstract only" in text
@@ -304,13 +321,14 @@ def test_user_decisions_and_context_are_written_down():
 
 def test_fungal_lineage_table():
     rows = _rows(LINEAGES, LINEAGE_COLS)
-    assert len(rows) >= 12
+    assert len(rows) == 29
     for r in rows:
         assert r["organism"].strip() and r["compound"].strip() and r["pmid"].isdigit(), r
         assert r["evidence"] in ("abstract", "full text"), r
     got = {(r["organism"], r["compound"], r["pmid"]) for r in rows}
     for want in [("Phaffia rhodozyma", "mycosporine-glutaminol-glucoside", "20955516"),
                  ("Phaffia rhodozyma", "mycosporine-glutaminol", "36983003"),
+                 ("Ascochyta fabae", "mycosporin-2 (acceptor of a spore glucosyltransferase)", "24258137"),
                  ("Naganishia friedmannii", "mycosporine-glutaminol-glucoside", "40036870"),
                  ("Rhodotorula minuta", "mycosporine-glutaminol-glucoside", "15484286"),
                  ("Cystobasidium keelungensis", "mycosporine-glutamicol-glucoside", "30182254"),
@@ -340,3 +358,21 @@ def test_curation_scripts_are_committed_with_a_readme():
         assert f.name in text, f.name
         src = f.read_text(encoding="utf-8")
         assert "/bigdata/" not in src and "/rhome/" not in src, f.name
+
+
+def test_reference_pmids_and_lineage_evidence_after_fix_round_1():
+    refs = {r.accession: r for st in _steps().values() for r in st.refs}
+    # M1: PMID 23463784 (a sugar-transporter paper) is not the pmid of any reference
+    assert "23463784" not in {r.pmid for r in refs.values()}
+    assert refs["B2J6X8"].pmid == refs["B2J6X7"].pmid == "21890703"
+    src = {r["accession"]: r["source_database"] for r in _rows(PROV, PROV_COLS)}
+    for acc in ("B2J6X8", "B2J6X7"):
+        assert "not cited by the entry" in src[acc] and "23463784" in src[acc], acc
+    # M4: mycosporine-glutaminol in wild-type Phaffia is from the full text
+    row = [r for r in _rows(LINEAGES, LINEAGE_COLS)
+           if (r["organism"], r["compound"], r["pmid"]) == (
+               "Phaffia rhodozyma", "mycosporine-glutaminol", "36983003")]
+    assert len(row) == 1 and row[0]["evidence"] == "full text"
+    text = UNVERIFIED.read_text(encoding="utf-8")
+    for word in ("24258137", "the amide form is the best acceptor", "It is UNVERIFIED whether"):
+        assert word in text, word
