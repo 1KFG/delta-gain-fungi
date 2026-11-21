@@ -107,3 +107,15 @@ Reference counts per step (MEASURED, `refs/carotenoid/*.faa`): largest is 5 (phy
 
 ### Deferred
 Running on real candidates (brief step 6) is deferred until the user reviews `carotenoid.yaml`. No counts of assigned, unassigned or fused proteins exist.
+
+## Quality, contamination and haplotype flags (Task 6)
+
+`pathway_census.quality.quality_flags(...)` returns `protein_id, step_id, domain_ok, motif_ok, truncated, contam_suspect, hap_dup_suspect`. Rules and PROPOSED thresholds are in the module docstring. Flags are nullable booleans. `<NA>` means the needed input was not supplied. The unit tests use small synthetic fixtures. No real-data run has been done.
+
+What is NOT implemented, and what a later run needs:
+- No per-gene taxonomy. BFD `tables/` (listed 2026-11-20) has no per-gene taxonomy or lineage table. `swissprot_subject.parquet` has `ncbi_taxid` per SwissProt entry, and `swissprot_best.parquet` has a best hit per protein. A fungal vs non-fungal call from them needs a taxid-to-lineage map that is not in BFD. Also, the memory notes call the SwissProt table "old format". UNVERIFIED whether it is usable. It was not used.
+- Contamination uses a caller-supplied `best_hits` table (`protein_id, taxon_class` = fungal / non_fungal). A later run must make it: search proteins of the scaffold neighbourhoods (not only the pathway genes) against a reference set labelled fungal vs bacterial/algal. That reference set does not exist yet. The search is not run by this module.
+- The haplotype flag needs a caller-supplied `pair_identity` table (`protein_a, protein_b, pident, qcov`, fractions) from an all-vs-all search inside each genome, covering neighbour genes. It is not produced here. It judges gene neighbourhood duplication only. It does not align scaffolds.
+- `motif_ok` is `<NA>` unless `motif_hits` is supplied. The carotenoid definition has no catalytic motifs yet.
+- `gene_info` must be joined with protein `length` from `gene_proteins.parquet`. Without it `truncated` is `<NA>`.
+- `domain_ok` needs `expected_domains` (step_id -> hmm names). It matches `hmm_name` in the `domains` frame, so the domain search must be run with the matching HMM library (for example Pfam ids from `pathways/carotenoid.yaml`).
