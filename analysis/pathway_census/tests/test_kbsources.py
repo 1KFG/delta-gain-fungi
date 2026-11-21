@@ -143,3 +143,149 @@ def test_default_fetch_sets_user_agent(monkeypatch):
     ks.RateLimiter(1000)  # constructing must not hit the network
     assert ks.default_fetch("https://example.invalid/x") == b"{}"
     assert seen["ua"] == ks.USER_AGENT
+
+
+# ---- fix round 1 -------------------------------------------------------------------------
+import os  # noqa: E402
+import urllib.error  # noqa: E402
+
+
+def _bytes(s):
+    return s.encode()
+
+
+def test_truncated_cache_is_a_miss(tmp_path):
+    f = Fake({"Q3HR17.json": "uniprot_Q3HR17.json"})
+    p = tmp_path / "uniprot" / "Q3HR17.json"
+    p.parent.mkdir(parents=True)
+    p.write_text('{"_v": 1, "da')
+    r = ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    assert r["length"] == 557
+    assert len(f.urls) == 1
+    assert json.loads(p.read_text())["data"]["length"] == 557  # rewritten whole
+
+
+def test_wrong_shape_cache_is_a_miss(tmp_path):
+    f = Fake({"Q3HR17.json": "uniprot_Q3HR17.json"})
+    p = tmp_path / "uniprot" / "Q3HR17.json"
+    p.parent.mkdir(parents=True)
+    p.write_text("[1, 2]")
+    assert ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)["length"] == 557
+
+
+def test_cache_version_mismatch_is_a_miss(tmp_path):
+    f = Fake({"Q3HR17.json": "uniprot_Q3HR17.json"})
+    ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    p = tmp_path / "uniprot" / "Q3HR17.json"
+    e = json.loads(p.read_text())
+    e["_v"] = -1
+    p.write_text(json.dumps(e))
+    ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    assert len(f.urls) == 2
+
+
+def test_cache_url_mismatch_is_a_miss(tmp_path):
+    f = Fake({"Q3HR17.json": "uniprot_Q3HR17.json"})
+    ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    p = tmp_path / "uniprot" / "Q3HR17.json"
+    e = json.loads(p.read_text())
+    e["_url"] = "https://old.example/x"
+    p.write_text(json.dumps(e))
+    ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    assert len(f.urls) == 2
+
+
+def test_cache_write_is_atomic(tmp_path, monkeypatch):
+    calls = []
+    real = os.replace
+    monkeypatch.setattr(ks.os, "replace", lambda a, b: (calls.append((a, b)), real(a, b))[1])
+    f = Fake({"Q3HR17.json": "uniprot_Q3HR17.json"})
+    ks.uniprot_entry("Q3HR17", fetch=f, cache_dir=tmp_path)
+    assert len(calls) == 1
+    src, dst = calls[0]
+    assert Path(src).parent == Path(dst).parent and Path(src) != Path(dst)
+    assert [p.name for p in (tmp_path / "uniprot").iterdir()] == ["Q3HR17.json"]  # no temp left
+
+
+def _empty_cache(tmp_path):
+    return not list(tmp_path.rglob("*.json"))
+
+
+def test_chebi_missing_inchikey_raises_and_not_cached(tmp_path):
+    body = _bytes('{"id": 1, "name": "x", "chemical_data": {"formula": "C"}, "default_structure": {}}')
+    with pytest.raises(ks.KbFetchError, match=r"CHEBI:40968.*inchikey"):
+        ks.chebi_compound("40968", fetch=lambda u: body, cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_chebi_missing_formula_raises(tmp_path):
+    body = _bytes('{"id": 1, "name": "x", "chemical_data": {}, "default_structure": {"standard_inchi_key": "K"}}')
+    with pytest.raises(ks.KbFetchError, match=r"CHEBI:40968.*formula"):
+        ks.chebi_compound("40968", fetch=lambda u: body, cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_chebi_error_json_raises(tmp_path):
+    with pytest.raises(ks.KbFetchError, match="CHEBI:1"):
+        ks.chebi_compound("1", fetch=lambda u: b'{"detail": "Not found"}', cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_pubchem_fault_not_cached(tmp_path):
+    body = b'{"Fault": {"Code": "PUGREST.NotFound"}}'
+    with pytest.raises(ks.KbFetchError, match="AAAA"):
+        ks.pubchem_by_inchikey("AAAA", fetch=lambda u: body, cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_uniprot_error_not_cached(tmp_path):
+    with pytest.raises(ks.KbFetchError, match="Q00000"):
+        ks.uniprot_entry("Q00000", fetch=lambda u: b'{"messages": ["not found"]}', cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_uniprot_length_mismatch_not_cached(tmp_path):
+    d = json.loads((KB / "uniprot_Q3HR17.json").read_text())
+    d["sequence"]["length"] = 5
+    with pytest.raises(ks.KbFetchError, match="Q3HR17"):
+        ks.uniprot_entry("Q3HR17", fetch=lambda u: json.dumps(d), cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_pubmed_empty_set_not_cached(tmp_path):
+    body = b"<?xml version='1.0'?><PubmedArticleSet></PubmedArticleSet>"
+    with pytest.raises(ks.KbFetchError, match="99"):
+        ks.pubmed_abstract("99", fetch=lambda u: body, cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_pubmed_garbage_xml_not_cached(tmp_path):
+    with pytest.raises(ks.KbFetchError, match="99"):
+        ks.pubmed_abstract("99", fetch=lambda u: b"<html>", cache_dir=tmp_path)
+    assert _empty_cache(tmp_path)
+
+
+def test_default_fetch_wraps_http_error(monkeypatch):
+    def boom(req, timeout=None):
+        raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(ks.urllib.request, "urlopen", boom)
+    with pytest.raises(ks.KbFetchError, match="https://example.invalid/y") as ei:
+        ks.default_fetch("https://example.invalid/y")
+    assert isinstance(ei.value.__cause__, urllib.error.HTTPError)
+
+
+def test_default_fetch_wraps_url_error(monkeypatch):
+    def boom(req, timeout=None):
+        raise urllib.error.URLError("refused")
+
+    monkeypatch.setattr(ks.urllib.request, "urlopen", boom)
+    with pytest.raises(ks.KbFetchError, match="https://example.invalid/z") as ei:
+        ks.default_fetch("https://example.invalid/z")
+    assert isinstance(ei.value.__cause__, urllib.error.URLError)
+
+
+def test_rate_limiter_has_lock():
+    import threading
+    assert isinstance(ks.RateLimiter(3).lock, type(threading.Lock()))
+    assert "per process" in ks.RateLimiter.__doc__

@@ -15,3 +15,8 @@ Captured once on 2026-11-21 from the HPCC login node with curl, User-Agent `path
 ## Synthetic (invented for validator tests, not chemistry)
 
 `compound.tsv`, `reaction.tsv`, `reaction_participant.tsv`, `step.tsv`, `step_reaction.tsv` form a small valid knowledge base. Compound ids, InChIKeys, SMILES, organisms, genes, accessions and quotes are placeholders. Formulas and masses are real values for the stated formulas. The tests copy these tables and break one rule at a time.
+
+## Added in fix round 1 (captured 2026-11-21)
+
+- `chebi_26078.json` (phosphoric acid), `chebi_26836.json` (sulfuric acid), `chebi_32588.json` (potassium chloride), `chebi_30672.json` (ferrocene): raw ChEBI public API responses, used as an independent check of `formula_mass`.
+- `chebi_smiles_charge.json`: SMILES of L-dopa zwitterion (CHEBI:57504) and nitrobenzene (CHEBI:27798) copied from the ChEBI `es_search` API.

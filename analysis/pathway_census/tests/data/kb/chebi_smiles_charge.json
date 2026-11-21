@@ -1,0 +1,5 @@
+{
+ "_note": "SMILES copied from ChEBI search API (es_search), captured 2026-11-21, https://www.ebi.ac.uk/chebi/backend/api/public/es_search/",
+ "CHEBI:57504": {"name": "L-dopa zwitterion", "formula": "C9H11NO4", "smiles": "[NH3+][C@@H](Cc1ccc(O)c(O)c1)C(=O)[O-]"},
+ "CHEBI:27798": {"name": "nitrobenzene", "formula": "C6H5NO2", "smiles": "O=[N+]([O-])c1ccccc1"}
+}
