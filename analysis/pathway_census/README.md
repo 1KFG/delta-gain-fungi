@@ -126,6 +126,6 @@ Task 7 must filter with `quality.clean_mask(flags)` and never `fillna(False)`: `
 
 Code: `pathway_census/matrix.py`, `bin/build_matrix.py`. Columns and rules are in the `matrix.py` docstring.
 - Full genome x step cross product, zeros included. `has_proteins=False` genomes get zero rows and are excluded from `n_genomes`.
-- `copy_raw` = assigned rows. `copy_filtered` = assigned rows known False for every `require` flag (default truncated, contam_suspect). `copy_unknown` = assigned rows with a required flag NA. `hap_dup_suspect` is counted in `n_hap_suspect` / `n_hap_unknown` only.
+- `copy_raw` = assigned rows. Mutually exclusive buckets, priority flagged > unknown > filtered: `copy_flagged` = any required flag known True; `copy_unknown` = no flag True and some required flag NA; `copy_filtered` = all required flags known False (default require: truncated, contam_suspect). `copy_filtered + copy_unknown + copy_flagged = copy_raw` per row. `hap_dup_suspect` is counted in `n_hap_suspect` / `n_hap_unknown` only.
 - `phylum_summary` uses `copy_filtered` by default (`count_col="copy_raw"` for the unfiltered table). `n_unknown` = genomes with unevaluated copies.
 - The real-data run (brief step 5) is deferred. Do not read PROVISIONAL outputs as results.

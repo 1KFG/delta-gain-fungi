@@ -11,9 +11,12 @@ copy_raw        number of `assigned` rows for (genome, step). `unassigned` rows 
                 counted once in each step.
 copy_filtered   `assigned` rows where clean_mask(flags, require) is True, i.e. every required flag
                 is known False. Default require = ("truncated", "contam_suspect").
-copy_unknown    `assigned` rows where a required flag is NA (not evaluated). A missing flags row
-                counts as not evaluated (all flags NA). Invariant:
-                copy_filtered + copy_unknown + (rows with a required flag True) = copy_raw.
+copy_unknown    `assigned` rows with no required flag known True and at least one required flag NA
+                (not evaluated). A missing flags row counts as not evaluated (all flags NA).
+copy_flagged    `assigned` rows with ANY required flag known True (excluded for a known reason),
+                even if another required flag is NA.
+                The three buckets are mutually exclusive (priority: flagged, then unknown, then
+                filtered), so copy_filtered + copy_unknown + copy_flagged == copy_raw for every row.
 n_hap_suspect / n_hap_unknown   count of assigned rows with hap_dup_suspect True / NA. These enter
                 copy_filtered only if the caller puts "hap_dup_suspect" in `require`.
 n_proteins_distinct   distinct proteins with any assigned row in the genome (repeated on each of the
@@ -28,15 +31,38 @@ genome with has_proteins False.
 """
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 from .quality import clean_mask
 
 DEFAULT_REQUIRE = ("truncated", "contam_suspect")
-MATRIX_COLUMNS = ["locustag", "step_id", "copy_raw", "copy_filtered", "copy_unknown", "n_hap_suspect",
-                  "n_hap_unknown", "n_proteins_distinct", "has_proteins", "genome_flags"]
+MATRIX_COLUMNS = ["locustag", "step_id", "copy_raw", "copy_filtered", "copy_unknown", "copy_flagged",
+                  "n_hap_suspect", "n_hap_unknown", "n_proteins_distinct", "has_proteins", "genome_flags"]
 SUMMARY_COLUMNS = ["phylum", "step_id", "n_genomes", "n_with_step", "median_copy", "max_copy",
                    "frac_with_step", "n_unknown"]
+
+
+def parse_bool_col(series: pd.Series, name: str, allow_na: bool) -> pd.Series:
+    """Strict boolean parse. Accepts bool values and the strings "True" / "False" (exact).
+
+    Empty string, None and NaN become NA if allow_na, else ValueError. Any other value
+    (for example "1", "yes", "nan", "true", "FALSE ") raises ValueError naming the column and value.
+    Returns the pandas nullable boolean dtype.
+    """
+    out = []
+    for v in series:
+        if isinstance(v, (bool, np.bool_)):
+            out.append(bool(v))
+        elif v is None or v is pd.NA or (isinstance(v, float) and np.isnan(v)) or (isinstance(v, str) and v == ""):
+            if not allow_na:
+                raise ValueError(f"column '{name}': missing value not allowed")
+            out.append(pd.NA)
+        elif isinstance(v, str) and v in ("True", "False"):
+            out.append(v == "True")
+        else:
+            raise ValueError(f"column '{name}': invalid boolean value {v!r}")
+    return pd.Series(out, index=series.index, dtype="boolean")
 
 
 def build_matrix(assigned: pd.DataFrame, flags: pd.DataFrame, genomes: pd.DataFrame, pathway,
@@ -70,19 +96,23 @@ def build_matrix(assigned: pd.DataFrame, flags: pd.DataFrame, genomes: pd.DataFr
     for c in cols:
         a[c] = a[c].astype("boolean")
     a["is_clean"] = clean_mask(a, require=require)
-    a["is_unknown"] = a[list(require)].isna().any(axis=1) if require else False
+    any_true = a[list(require)].eq(True).any(axis=1).fillna(False).astype(bool) if require else \
+        pd.Series(False, index=a.index)
+    any_na = a[list(require)].isna().any(axis=1) if require else pd.Series(False, index=a.index)
+    a["is_flagged"] = any_true
+    a["is_unknown"] = any_na & ~any_true
     a["hap_true"] = a.hap_dup_suspect.eq(True).fillna(False).astype(bool)
     a["hap_na"] = a.hap_dup_suspect.isna()
 
     per = a.groupby(["locustag", "step_id"]).agg(
         copy_raw=("protein_id", "size"), copy_filtered=("is_clean", "sum"),
-        copy_unknown=("is_unknown", "sum"), n_hap_suspect=("hap_true", "sum"),
+        copy_unknown=("is_unknown", "sum"), copy_flagged=("is_flagged", "sum"), n_hap_suspect=("hap_true", "sum"),
         n_hap_unknown=("hap_na", "sum")).reset_index()
     distinct = a.groupby("locustag").protein_id.nunique().rename("n_proteins_distinct").reset_index()
 
     grid = g.merge(pd.DataFrame({"step_id": steps}), how="cross")
     m = grid.merge(per, on=["locustag", "step_id"], how="left").merge(distinct, on="locustag", how="left")
-    count_cols = ["copy_raw", "copy_filtered", "copy_unknown", "n_hap_suspect", "n_hap_unknown",
+    count_cols = ["copy_raw", "copy_filtered", "copy_unknown", "copy_flagged", "n_hap_suspect", "n_hap_unknown",
                   "n_proteins_distinct"]
     m[count_cols] = m[count_cols].fillna(0).astype(int)  # fills genome x step pairs with no assigned row
     m["genome_flags"] = [

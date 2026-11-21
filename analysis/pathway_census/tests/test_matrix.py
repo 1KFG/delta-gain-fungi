@@ -2,7 +2,11 @@ import pandas as pd
 import pytest
 
 from pathway_census.defs import Pathway, Step
-from pathway_census.matrix import build_matrix, phylum_summary
+import subprocess
+import sys
+from pathlib import Path
+
+from pathway_census.matrix import build_matrix, parse_bool_col, phylum_summary
 
 A, B, C, D = "AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD"
 
@@ -98,8 +102,8 @@ def test_filtered_excludes_truncated_and_contam_and_invariant():
     assert _get(m, A, "s1", "copy_unknown") == 1
     assert _get(m, A, "s1", "n_hap_suspect") == 1
     assert _get(m, A, "s1", "n_hap_unknown") == 0
-    flagged_true = 2  # truncated, contam
-    assert 2 + 1 + flagged_true == 5
+    assert _get(m, A, "s1", "copy_flagged") == 2
+    assert _get(m, A, "s1", "genome_flags") == "unknown_flags"
     m2 = _m(asg, fl, require=("truncated", "contam_suspect", "hap_dup_suspect"))
     assert _get(m2, A, "s1", "copy_filtered") == 1
 
@@ -154,3 +158,103 @@ def test_genome_flags_column():
     m = _m(_asg([(f"{A}_000001-T1", "s1", "assigned")]))
     assert "no_proteins" in _get(m, D, "s1", "genome_flags")
     assert _get(m, A, "s1", "genome_flags") == ""
+
+
+def test_buckets_are_mutually_exclusive_for_every_row():
+    ps = [f"{A}_00000{i}-T1" for i in range(1, 8)]
+    asg = _asg([(p, "s1", "assigned") for p in ps])
+    fl = _flags([(ps[0], "s1", False, False, False),   # all clean
+                 (ps[1], "s1", True, pd.NA, pd.NA),    # mixed: True + NA -> flagged
+                 (ps[2], "s1", pd.NA, False, False),   # NA + False -> unknown
+                 (ps[3], "s1", True, True, False),     # both True -> flagged
+                 (ps[4], "s1", pd.NA, pd.NA, pd.NA)])  # both NA -> unknown
+    # ps[5] and ps[6]: missing flags rows -> unknown
+    m = _m(asg, fl)
+    assert (m.copy_filtered + m.copy_unknown + m.copy_flagged == m.copy_raw).all()
+    r = m[(m.locustag == A) & (m.step_id == "s1")].iloc[0]
+    assert (r.copy_raw, r.copy_filtered, r.copy_unknown, r.copy_flagged) == (7, 1, 4, 2)
+    assert r.n_hap_unknown == 4  # ps1, ps4, ps5, ps6
+    assert r.genome_flags == "unknown_flags"
+    # mixed row alone
+    m1 = _m(_asg([(ps[1], "s1", "assigned")]), _flags([(ps[1], "s1", True, pd.NA, pd.NA)]))
+    r = m1[(m1.locustag == A) & (m1.step_id == "s1")].iloc[0]
+    assert (r.copy_filtered, r.copy_unknown, r.copy_flagged, r.genome_flags) == (0, 0, 1, "")
+    # other steps and genomes: all zero, flag-free
+    z = m[(m.locustag == B)]
+    assert (z.copy_flagged == 0).all() and (z.genome_flags == "").all()
+
+
+def test_hap_unknown_and_missing_flags_row_counts():
+    p1, p2 = f"{A}_000001-T1", f"{A}_000002-T1"
+    m = _m(_asg([(p1, "s1", "assigned"), (p2, "s1", "assigned")]),
+           _flags([(p1, "s1", False, False, pd.NA)]))
+    r = m[(m.locustag == A) & (m.step_id == "s1")].iloc[0]
+    assert (r.copy_filtered, r.copy_unknown, r.n_hap_unknown, r.n_hap_suspect) == (1, 1, 2, 0)
+    assert r.genome_flags == "unknown_flags"
+
+
+def test_parse_bool_col():
+    s = parse_bool_col(pd.Series(["True", "False", "", None]), "f", allow_na=True)
+    assert s.tolist()[:2] == [True, False] and s.isna().tolist() == [False, False, True, True]
+    assert str(s.dtype) == "boolean"
+    assert parse_bool_col(pd.Series([True, False]), "f", allow_na=False).tolist() == [True, False]
+    assert parse_bool_col(pd.Series([True, None], dtype="object"), "f", allow_na=True).isna().tolist() == [False, True]
+    for bad in ("1", "yes", "nan", "FALSE ", "true"):
+        with pytest.raises(ValueError, match=r"flagcol.*" + repr(bad).replace(" ", r"\ ")):
+            parse_bool_col(pd.Series(["True", bad]), "flagcol", allow_na=True)
+    with pytest.raises(ValueError, match="has_proteins"):
+        parse_bool_col(pd.Series(["True", ""]), "has_proteins", allow_na=False)
+    with pytest.raises(ValueError, match="has_proteins"):
+        parse_bool_col(pd.Series([True, float("nan")]), "has_proteins", allow_na=False)
+
+
+CLI = Path(__file__).resolve().parents[1] / "bin" / "build_matrix.py"
+PW_YAML = Path(__file__).resolve().parents[1] / "pathways" / "carotenoid.yaml"
+
+
+def _cli(tmp_path, *extra, flags_text=None):
+    (tmp_path / "a.tsv").write_text(
+        "protein_id\tstep_id\tsupport\tlabel\tfusion_candidate\n"
+        f"{A}_000001-T1\tggpp_synthase\t0.9\tassigned\tFalse\n"
+        f"{A}_000002-T1\tggpp_synthase\t0.9\tassigned\tFalse\n")
+    (tmp_path / "f.tsv").write_text(flags_text or (
+        "protein_id\tstep_id\tdomain_ok\tmotif_ok\ttruncated\tcontam_suspect\thap_dup_suspect\n"
+        f"{A}_000001-T1\tggpp_synthase\t\t\tFalse\tFalse\tFalse\n"
+        f"{A}_000002-T1\tggpp_synthase\t\t\tTrue\t\t\n"))
+    (tmp_path / "g.tsv").write_text(
+        f"locustag\tphylum\thas_proteins\n{A}\tAsco\tTrue\n{B}\tAsco\tFalse\n")
+    return subprocess.run(
+        ["/usr/bin/python3.12", str(CLI), "--pathway", str(PW_YAML),
+         "--assigned", str(tmp_path / "a.tsv"), "--flags", str(tmp_path / "f.tsv"),
+         "--genomes", str(tmp_path / "g.tsv"), "--out-dir", str(tmp_path / "o"), *extra],
+        capture_output=True, text=True)
+
+
+def test_cli_refuses_unverified_without_provisional(tmp_path):
+    r = _cli(tmp_path)
+    assert r.returncode != 0 and "verified: false" in r.stderr
+    assert not (tmp_path / "o").exists()
+
+
+def test_cli_provisional_writes_outputs(tmp_path):
+    r = _cli(tmp_path, "--provisional")
+    assert r.returncode == 0, r.stderr
+    mp = tmp_path / "o" / "carotenoid_matrix.PROVISIONAL.tsv.zst"
+    sp = tmp_path / "o" / "carotenoid_phylum_summary.PROVISIONAL.tsv"
+    assert mp.exists() and sp.exists()
+    import io
+    m = pd.read_csv(io.BytesIO(subprocess.run(["zstd", "-dc", str(mp)], capture_output=True, check=True).stdout),
+                    sep="\t")
+    assert len(m) == 2 * 8
+    row = m[(m.locustag == A) & (m.step_id == "ggpp_synthase")].iloc[0]
+    assert (row.copy_raw, row.copy_filtered, row.copy_flagged, row.copy_unknown) == (2, 1, 1, 0)
+    s = pd.read_csv(sp, sep="\t", comment="#")
+    g = s[(s.phylum == "Asco") & (s.step_id == "ggpp_synthase")].iloc[0]
+    assert (g.n_genomes, g.n_with_step, g.max_copy) == (1, 1, 1)
+
+
+def test_cli_rejects_bad_flag_value(tmp_path):
+    r = _cli(tmp_path, "--provisional", flags_text=(
+        "protein_id\tstep_id\tdomain_ok\tmotif_ok\ttruncated\tcontam_suspect\thap_dup_suspect\n"
+        f"{A}_000001-T1\tggpp_synthase\t\t\tyes\tFalse\tFalse\n"))
+    assert r.returncode != 0 and "truncated" in r.stderr and "yes" in r.stderr

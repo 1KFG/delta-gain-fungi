@@ -7,6 +7,7 @@ Outputs: <out-dir>/<pathway>_matrix.tsv.zst and <out-dir>/<pathway>_phylum_summa
 Refuses a verified: false pathway unless --provisional.
 """
 import argparse
+import io
 import subprocess
 import sys
 from pathlib import Path
@@ -16,17 +17,13 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pathway_census import hits  # noqa: E402
 from pathway_census.defs import load_pathway  # noqa: E402
-from pathway_census.matrix import DEFAULT_REQUIRE, build_matrix, phylum_summary  # noqa: E402
+from pathway_census.matrix import DEFAULT_REQUIRE, build_matrix, parse_bool_col, phylum_summary  # noqa: E402
 
-BOOL = {"True": True, "False": False}
-
-
-def read_tsv(path: Path) -> pd.DataFrame:
+def read_tsv(path: Path, **kw) -> pd.DataFrame:
     if str(path).endswith(".zst"):
         out = subprocess.run(["zstd", "-dc", str(path)], check=True, capture_output=True).stdout
-        import io
-        return pd.read_csv(io.BytesIO(out), sep="\t", comment="#", low_memory=False)
-    return pd.read_csv(path, sep="\t", comment="#", low_memory=False)
+        return pd.read_csv(io.BytesIO(out), sep="\t", comment="#", low_memory=False, **kw)
+    return pd.read_csv(path, sep="\t", comment="#", low_memory=False, **kw)
 
 
 def main():
@@ -45,12 +42,12 @@ def main():
     except hits.UnverifiedPathwayError as e:
         sys.exit(f"ERROR: {e}")
     asg = read_tsv(a.assigned)
-    fl = read_tsv(a.flags)
+    fl = read_tsv(a.flags, dtype=str, keep_default_na=False)  # strict: parse_bool_col decides
     for c in ("domain_ok", "motif_ok", "truncated", "contam_suspect", "hap_dup_suspect"):
         if c in fl.columns:
-            fl[c] = fl[c].map(lambda v: BOOL.get(str(v), pd.NA)).astype("boolean")  # empty/NA stays NA
+            fl[c] = parse_bool_col(fl[c], c, allow_na=True)
     gen = read_tsv(a.genomes)
-    gen["has_proteins"] = gen.has_proteins.map(lambda v: BOOL.get(str(v), v)).astype(bool)
+    gen["has_proteins"] = parse_bool_col(gen.has_proteins, "has_proteins", allow_na=False).astype(bool)
     m = build_matrix(asg, fl, gen, pw, require=tuple(a.require))
     a.out_dir.mkdir(parents=True, exist_ok=True)
     mpath = a.out_dir / hits.tagged_name(f"{pw.id}_matrix", "tsv", tag)
