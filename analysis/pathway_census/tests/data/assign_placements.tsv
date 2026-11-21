@@ -1,0 +1,5 @@
+protein_id	step_id	clade	support
+soloA	ggpp_synthase	cladeI	0.95
+lowB	phytoene_desaturase	cladeI	0.30
+outC	carx		0.90
+fusP	phytoene_synthase	cladeI	0.9

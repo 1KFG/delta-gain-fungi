@@ -1,0 +1,27 @@
+id: carotenoid
+verified: false
+steps:
+  - id: crtYB
+    name: bifunctional phytoene synthase / lycopene cyclase
+    ec: "2.5.1.32"
+    refs:
+      - accession: Q7Z859
+        species: Xanthophyllomyces dendrorhous
+        pmid: "12345678"
+        verified: false
+    domains: [PF00494, PF04240]
+    copy_expect: single
+    role: catalytic
+    fused_with: [crtY]
+    optional: false
+  - id: crtY
+    name: lycopene cyclase
+    refs:
+      - accession: P0000X
+        species: Neurospora crassa
+        verified: false
+    domains: [PF04240]
+    copy_expect: single
+    role: catalytic
+    fused_with: [crtYB]
+    optional: true

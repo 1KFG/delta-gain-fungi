@@ -1,0 +1,11 @@
+id: carotenoid
+verified: false
+steps:
+  - id: stepA
+    name: some step
+    refs:
+      - species: Neurospora crassa
+        verified: false
+    domains: []
+    copy_expect: single
+    role: catalytic

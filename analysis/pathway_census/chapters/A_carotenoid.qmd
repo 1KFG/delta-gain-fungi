@@ -1,0 +1,334 @@
+---
+title: "Chapter A: carotenoid pathway census (DRAFT SCAFFOLD)"
+subtitle: "Pilot for the pathway-census pipeline"
+date: 2026-11-20
+date-modified: today
+toc: true
+toc-depth: 3
+format:
+  html:
+    theme: cosmo
+    embed-resources: true
+execute:
+  echo: false
+  warning: false
+engine: knitr
+---
+
+::: {.callout-warning}
+## Status: draft scaffold, no results
+
+No real census, paired comparison, absence check or triage has been run. The code was tested on
+synthetic fixtures only. This chapter loads every results table and figure from a file in the
+results directory. When a file is missing, the section shows `NOT YET RUN: <file>` instead of a
+table. No count, copy number or finding in this chapter comes from data, except the numbers
+labelled MEASURED in the text, each with its source.
+
+Labels: MEASURED = read from a database or file on 2026-11-20. PROPOSED = a builder's choice
+with no data behind it. UNVERIFIED = not checked.
+:::
+
+```{r setup}
+# Results directory. Default is ../results (relative to this file).
+# Override with the environment variable PC_RESULTS_DIR (the render test points it to an empty directory).
+res_dir  <- Sys.getenv("PC_RESULTS_DIR", unset = "../results")
+pw_dir   <- Sys.getenv("PC_PATHWAY_DIR", unset = "..")   # holds pathways/ and refs/
+pw_id    <- "carotenoid"
+
+placeholder <- function(file) {
+  cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong></p></div>\n\n', file))
+}
+
+# Outputs written with a PROVISIONAL tag are not results. A canonical file name is required, and
+# its leading '#' lines must not contain PROVISIONAL. If only a PROVISIONAL file exists, or the
+# canonical file has a PROVISIONAL header line, say so and do not load it.
+# A name may also exist as <name>.zst (bin/triage.py and paired_compare.py can write zstd files).
+find_file <- function(name) {
+  for (cand in c(name, paste0(name, ".zst"))) {
+    p <- file.path(res_dir, cand)
+    if (file.exists(p)) return(p)
+  }
+  NULL
+}
+
+# Leading '#' lines of a file (plain or .zst). Reads at most 50 lines.
+leading_hash_lines <- function(path) {
+  con <- if (grepl("\\.zst$", path)) pipe(paste("zstd -dc", shQuote(path))) else file(path)
+  lines <- tryCatch(readLines(con, n = 50, warn = FALSE), finally = close(con))
+  n <- 0
+  while (n < length(lines) && startsWith(lines[n + 1], "#")) n <- n + 1
+  lines[seq_len(n)]
+}
+
+read_result <- function(name) {
+  path <- find_file(name)
+  if (!is.null(path) && any(grepl("PROVISIONAL", leading_hash_lines(path), fixed = TRUE))) {
+    # A canonical name is not enough: a PROVISIONAL header line means the file is not a result.
+    cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong> (the file has a PROVISIONAL header line; provisional outputs are not shown as results)</p></div>\n\n', name))
+    return(NULL)
+  }
+  if (!is.null(path)) {
+    # Outputs carry a '# params:' first line (and maybe a PROVISIONAL line): skip '#' lines.
+    # Risk: comment.char = "#" also cuts any data field that contains '#'. UNVERIFIED that no
+    # real field (for example a species name) contains '#'. Check this when real files exist.
+    src <- if (grepl("\\.zst$", path)) pipe(paste("zstd -dc", shQuote(path))) else path
+    return(read.delim(src, comment.char = "#", stringsAsFactors = FALSE, check.names = FALSE))
+  }
+  prov <- sub("(\\.[^.]+)$", ".PROVISIONAL\\1", name)
+  if (!is.null(find_file(prov))) {
+    cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong> (only a PROVISIONAL file %s exists; provisional outputs are not shown as results)</p></div>\n\n', name, prov))
+  } else {
+    placeholder(name)
+  }
+  NULL
+}
+
+show_table <- function(df, caption) {
+  print(knitr::kable(df, format = "html", caption = caption, row.names = FALSE,
+                     table.attr = 'class="table table-sm"'))
+}
+```
+
+## Aim and scope {#sec-aim}
+
+This chapter reports a census of carotenoid biosynthesis genes across the BFD fungal genomes. It
+is the pilot for a shared pathway-census pipeline (`analysis/pathway_census/`). The design is in
+`docs/superpowers/specs/2026-11-20-pathway-census-design.md`.
+
+BFD scope (MEASURED, `analysis/pathway_census/README.md`, genome table run 2026-11-20, Task 2
+report): 24,363 genomes in `species.parquet`. Of these, 23,379 have a BFD protein file
+(`has_proteins` True) and 984 do not. Genomes per `prior_status` in BFD (MEASURED, same source):
+`baseline_ok` 5,625; `no_prior_annotation_present` 18,055; `no_prior_annotation_not_downloaded` 673;
+`annotated_folder_missing_protein` 10. The prior-annotation TSV has 27,401 rows (MEASURED, same
+source). The counts in spec section 3 are TSV-wide, so they differ from these BFD-scoped counts.
+
+## Data files this chapter reads {#sec-data}
+
+All files are read from the results directory (`../results`, or `PC_RESULTS_DIR`). A name may also
+exist with a `.zst` suffix. A file with a `.PROVISIONAL` name, or with a `PROVISIONAL` line among its
+leading `#` lines, is never shown as a result.
+
+- `carotenoid_phylum_summary.tsv`: written by `bin/build_matrix.py` (name set by the CLI).
+- `carotenoid_paired_summary.tsv`, `carotenoid_paired_dropped_providers.tsv`,
+  `carotenoid_paired_by_busco.tsv`, `carotenoid_paired_unpaired.json`: written by
+  `bin/paired_compare.py` (names set by the CLI).
+- `carotenoid_triage.tsv`: written by `bin/triage.py` (name set by the caller through `--out`; the
+  name is PROPOSED here).
+- `carotenoid_absence_summary.tsv`: the merged chunk files of `bin/absence_check.py`, written by
+  `bin/merge_absence.py --out results/carotenoid_absence_summary.tsv <chunks>`. The name is PROPOSED.
+  The script refuses mixed provisional and non-provisional chunks and tags a provisional merge.
+
+Reading notes. TSV outputs start with `# ` lines (`# params:`, sometimes `# PROVISIONAL`). The
+reader skips them with `comment.char = "#"`. That setting also truncates any field that contains
+`#` (UNVERIFIED that none does).
+
+## Pathway steps and reference provenance {#sec-pathway}
+
+The step list comes from `pathways/carotenoid.yaml`. The reference provenance comes from
+`refs/carotenoid/provenance.tsv`. The pathway is `verified: false` until the user reviews it.
+
+```{r pathway-steps, results='asis'}
+ypath <- file.path(pw_dir, "pathways", paste0(pw_id, ".yaml"))
+if (file.exists(ypath)) {
+  y <- yaml::read_yaml(ypath)
+  cat(sprintf("Pathway `%s`, pathway-level verified: **%s**.\n\n", y$id, tolower(as.character(y$verified))))
+  steps <- do.call(rbind, lapply(y$steps, function(s) {
+    refs <- s$refs
+    nver <- sum(vapply(refs, function(r) isTRUE(r$verified), logical(1)))
+    data.frame(step = s$id, name = s$name, EC = if (is.null(s$ec)) "" else s$ec,
+               role = if (is.null(s$role)) "" else s$role,
+               copy_expect_PROPOSED = if (is.null(s$copy_expect)) "" else s$copy_expect,
+               domains = paste(unlist(s$domains), collapse = ", "),
+               n_refs = length(refs), n_refs_verified = nver, stringsAsFactors = FALSE)
+  }))
+  div_open <- '<div id="pathway-definition">'
+  cat(div_open, "\n")
+  show_table(steps, "Pathway steps (from pathways/carotenoid.yaml)")
+  cat("</div>\n\n")
+} else {
+  placeholder(file.path("pathways", paste0(pw_id, ".yaml")))
+}
+```
+
+```{r provenance, results='asis'}
+ppath <- file.path(pw_dir, "refs", pw_id, "provenance.tsv")
+if (file.exists(ppath)) {
+  pv <- read.delim(ppath, stringsAsFactors = FALSE, colClasses = "character")
+  cat(sprintf("Reference provenance rows: %d. Verified: %d. Unverified: %d.\n\n",
+              nrow(pv), sum(pv$verified == "true"), sum(pv$verified != "true")))
+  cat('<div id="reference-provenance">\n')
+  show_table(pv, "Reference provenance (from refs/carotenoid/provenance.tsv)")
+  cat("</div>\n\n")
+} else {
+  placeholder(file.path("refs", pw_id, "provenance.tsv"))
+}
+```
+
+MEASURED (Task 3; `refs/carotenoid/UNVERIFIED.md` and the reference curation record in
+`docs/superpowers/plans/2026-11-20-pilot-lessons.md`): 23 curated references,
+22 verified against UniProt and PubMed on 2026-11-20, 1 unverified (PMID 16416328, Ojima 2006, no
+protein accession). The pathway stays `verified: false`.
+
+## Species tree and lineage context {#sec-tree}
+
+::: {.callout-note}
+## Placeholder: the tree plan is separate
+
+The species tree, the genus-level sampling rule and the gene-family trees are not part of this
+pilot plan. They belong to a separate tree plan (spec section 5.7). No tree figure is shown here.
+Antarctolithica has 8 genomes (MEASURED, genome table, 2026-11-20); its BUSCO-based inclusion
+rule applies to the tree tips and is handled in the tree plan.
+:::
+
+## Phylum by step copy number {#sec-phylum}
+
+Source: `results/carotenoid_phylum_summary.tsv` (from `bin/build_matrix.py`). The summary uses
+`copy_filtered` by default. The contamination flag is NA (unknown) for every copy until the
+contamination table exists. `contam_suspect` is a default required flag, so every copy then lands in
+`copy_unknown`, and `copy_filtered` is 0 everywhere (final review, reviewer MEASURED on a synthetic
+case: `copy_raw` 1, `copy_filtered` 0, `frac_with_step` 0.0). Read `n_unknown` and
+`copy_unknown_total` with every count. The raw and filtered copy totals are shown side by side below.
+Raw per-phylum fractions are not corrected for uneven sampling across lineages (spec section 2
+anti-goal "Phylogeny read as biology").
+
+```{r phylum, results='asis'}
+f <- "carotenoid_phylum_summary.tsv"
+d <- read_result(f)
+if (!is.null(d)) {
+  show_table(d, "Copy number per phylum and step")
+  if (all(c("phylum", "step_id", "copy_raw_total", "copy_filtered_total") %in% names(d))) {
+    cat("Note: filtered = 0 until the contamination table exists (every copy is then `copy_unknown`).\n\n")
+    for (col in c("copy_raw_total", "copy_filtered_total")) {
+      w <- tapply(d[[col]], list(d$phylum, d$step_id), function(x) x[1])
+      w <- data.frame(phylum = rownames(w), as.data.frame.matrix(w), check.names = FALSE)
+      cat(sprintf('\n<div id="%s">\n', if (col == "copy_raw_total") "phylum-raw" else "phylum-filtered"))
+      show_table(w, sprintf("%s per phylum (rows) and step (columns)", col))
+      cat("</div>\n\n")
+    }
+  }
+  if (all(c("phylum", "step_id", "frac_with_step") %in% names(d))) {
+    m <- tapply(d$frac_with_step, list(d$phylum, d$step_id), function(x) x[1])
+    cat('\n<div id="phylum-figure">\n')
+    op <- par(mar = c(8, 12, 2, 2))
+    plot(NA, xlim = c(0, 1), ylim = c(0, 1), axes = FALSE, xlab = "", ylab = "",
+         main = "Fraction of genomes with the step (grey cell = NA: no genomes or no row)")
+    usr <- par("usr"); rect(usr[1], usr[3], usr[2], usr[4], col = "grey80", border = NA)
+    image(t(m[nrow(m):1, , drop = FALSE]), axes = FALSE, add = TRUE, zlim = c(0, 1),
+          col = hcl.colors(20, "Blues 3", rev = TRUE))
+    axis(1, at = seq(0, 1, length.out = ncol(m)), labels = colnames(m), las = 2, cex.axis = 0.7)
+    axis(2, at = seq(0, 1, length.out = nrow(m)), labels = rev(rownames(m)), las = 1, cex.axis = 0.7)
+    par(op)
+    cat("</div>\n\n")
+  }
+}
+```
+
+## Paired deposited versus BFD comparison {#sec-paired}
+
+Sources: `results/carotenoid_paired_summary.tsv`, `results/carotenoid_paired_dropped_providers.tsv`,
+`results/carotenoid_paired_by_busco.tsv`, `results/carotenoid_paired_unpaired.json`. Each TSV has a
+`# params:` first line that is skipped on reading.
+
+What the test shows: for assemblies with both a deposited annotation and a BFD annotation, the
+difference in copies per step. The assembly is the same in both arms, so the difference is the
+effect of the annotation. What it does not show: anything about the genomes with no prior
+annotation (BFD: 18,055 `no_prior_annotation_present` and 673 `no_prior_annotation_not_downloaded`,
+MEASURED, Task 2 report; spec section 5.6), which annotation is correct, or absence of a gene. A difference is a
+finding only if it has the same sign across annotation providers and survives the BUSCO control.
+Otherwise report it as not established.
+
+The deposited-arm pipeline is not built (see Limitations).
+
+```{r paired, results='asis'}
+for (f in c("carotenoid_paired_summary.tsv", "carotenoid_paired_dropped_providers.tsv",
+            "carotenoid_paired_by_busco.tsv")) {
+  d <- read_result(f)
+  if (!is.null(d)) show_table(d, f)
+}
+f <- "carotenoid_paired_unpaired.json"
+if (file.exists(file.path(res_dir, f))) {
+  j <- jsonlite::read_json(file.path(res_dir, f))
+  cat("\n```\n", jsonlite::toJSON(j, auto_unbox = TRUE, pretty = TRUE), "\n```\n\n", sep = "")
+} else {
+  placeholder(f)
+}
+```
+
+## Absence check {#sec-absence}
+
+Source: `results/carotenoid_absence_summary.tsv`. This file is the merged chunk output of
+`bin/absence_check.py` (`carotenoid_absence.chunk<ID>.tsv`), merged by `bin/merge_absence.py`. The
+name is PROPOSED. Expected columns:
+`locustag, step_id, outcome, reason`. Outcomes: `present_unannotated`, `fragmented`, `absent`,
+`unconfirmed`. `unconfirmed` means no BFD FASTA, not proven absence.
+
+```{r absence, results='asis'}
+f <- "carotenoid_absence_summary.tsv"
+d <- read_result(f)
+if (!is.null(d)) {
+  if ("outcome" %in% names(d)) {
+    tb <- as.data.frame(table(step_id = d$step_id, outcome = d$outcome), stringsAsFactors = FALSE)
+    names(tb)[3] <- "n"
+    show_table(tb, "Absence-check outcome counts per step")
+  } else {
+    show_table(head(d, 50), "First 50 rows (no outcome column found)")
+  }
+}
+```
+
+## Triage list {#sec-triage}
+
+Source: `results/carotenoid_triage.tsv` (from `bin/triage.py`). The bins are triage. They are not a
+ranking and not an activity prediction (spec section 5.5). All thresholds are PROPOSED.
+
+```{r triage, results='asis'}
+f <- "carotenoid_triage.tsv"
+d <- read_result(f)
+if (!is.null(d)) {
+  if ("bin" %in% names(d)) {
+    tb <- as.data.frame(table(step_id = d$step_id, bin = d$bin), stringsAsFactors = FALSE)
+    names(tb)[3] <- "n"
+    show_table(tb, "Triage bin counts per step")
+  }
+  show_table(head(d, 100), "First 100 triage rows")
+}
+```
+
+## Limitations {#sec-limitations}
+
+1. **The pathway definition is not reviewed.** `pathways/carotenoid.yaml` has `verified: false`
+   until the user reviews the step list (spec section 5.8). Every output from an unverified pathway
+   carries a `PROVISIONAL` tag.
+2. **One reference is unverified.** PMID 16416328 (Ojima 2006, astaxanthin synthase of
+   *Xanthophyllomyces dendrorhous*) has no protein accession. 22 of 23 references are verified.
+3. **Contamination and haplotype flags are NA.** BFD has no per-gene taxonomy table. The
+   contamination flag needs a best-hit table (fungal versus non-fungal reference set) that is not
+   built. The haplotype flag needs a pair-identity table that is not built. Until then these flags
+   are NA (unknown). With the default `require` (truncated, contam_suspect), every copy is then
+   `copy_unknown` and `copy_filtered` is 0 everywhere. Use `copy_raw` with `copy_unknown` until the
+   contamination table exists. NA is not treated as clean.
+4. **The deposited-arm pipeline is not built.** The paired test needs a copy matrix from the
+   deposited proteins. Deposited protein IDs do not start with the BFD LOCUSTAG prefix, so a prefix rewrite or a
+   `genome_of` mapping is needed first.
+5. **What the paired test does and does not show.** It compares annotations on the same assemblies.
+   It does not cover the genomes without a prior annotation (18,055 plus 673 in BFD, MEASURED, Task 2
+   report), does not show which annotation
+   is correct, and does not show absence of a gene (spec section 5.6).
+6. **Thresholds are PROPOSED.** Examples: `min_score` rule, dereplication at 90% identity above
+   50,000 proteins, fusion overlap 50%, `min_bitscore` 50, `min_query_cover` 0.7, `min_pairs` 20,
+   triage tier minimums, `window_bp` 20,000. None has a measured basis.
+7. **Real-data runs are deferred.** The census, paired comparison, absence check and triage ran on
+   synthetic fixtures only. No placement tool is wired up, so step assignment has no real input.
+8. **No per-gene taxonomy in BFD** (see item 3). The SwissProt tables may support a fungal call
+   with a taxid-to-lineage map. This is UNVERIFIED and was not used.
+9. **`downloaded` False is not proven absence.** It means no BFD genome FASTA. A copy may exist
+   elsewhere. The absence check reports these as `unconfirmed`.
+
+## Reproducibility {#sec-repro}
+
+Render: `module load quarto/1.7.31` then
+`quarto render analysis/pathway_census/chapters/A_carotenoid.qmd`. Engine: knitr with R, because
+the Python 3.12 interpreter has no jupyter. R packages used: `knitr`, `rmarkdown`, `yaml` and
+`jsonlite` (all present on 2026-11-20: knitr 1.50, rmarkdown 2.30; `yaml` and `jsonlite` loaded
+without error, versions not recorded). `zstd` must be on PATH to read `.zst` files. The pilot lessons are in
+`docs/superpowers/plans/2026-11-20-pilot-lessons.md`.
