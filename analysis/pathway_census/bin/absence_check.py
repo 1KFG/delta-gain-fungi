@@ -16,6 +16,7 @@ Chunk ID: --chunk-id, else the --locustags file basename stem; it keeps chunk jo
 Optional --locustags FILE restricts the run to listed genomes (for chunking into SLURM jobs).
 """
 import argparse
+import gzip
 import io
 import subprocess
 import sys
@@ -34,10 +35,12 @@ from pathway_census.matrix import parse_bool_col  # noqa: E402
 
 
 def read_tsv(path: Path, **kw) -> pd.DataFrame:
-    """Read a TSV (plain or .zst). Only LEADING lines starting with "#" are skipped (stamps);
+    """Read a TSV (plain, .gz or .zst). Only LEADING lines starting with "#" are skipped (stamps);
     "#" inside a field is kept."""
     if str(path).endswith(".zst"):
         raw = subprocess.run(["zstd", "-dc", str(path)], check=True, capture_output=True).stdout
+    elif str(path).endswith(".gz"):
+        raw = gzip.open(path, "rb").read()
     else:
         raw = Path(path).read_bytes()
     lines = raw.splitlines(keepends=True)

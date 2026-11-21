@@ -232,3 +232,42 @@ def test_cli_downloaded_false_is_unconfirmed_no_bfd_fasta(tmp_path):
                           "AAAAAAAA\tggpp_synthase\tunconfirmed\tno_bfd_fasta"]
     un = (tmp_path / "o" / "carotenoid_unevaluated_genomes.chunk3.PROVISIONAL.tsv").read_text().splitlines()
     assert un[-2:] == ["locustag", "DDDDDDDD"]
+
+
+# ---- read_tsv compression, chunk id with dots ------------------------------
+def _load_cli():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("absence_check_cli", CLI)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+TSV = b"# stamp line\nlocustag\tgenus\nAAAAAAAA\tX#1\n"
+
+
+def test_read_tsv_plain_and_gz(tmp_path):
+    cli = _load_cli()
+    (tmp_path / "a.tsv").write_bytes(TSV)
+    with gzip.open(tmp_path / "a.tsv.gz", "wb") as fh:
+        fh.write(TSV)
+    for name in ("a.tsv", "a.tsv.gz"):
+        df = cli.read_tsv(tmp_path / name)
+        assert df.columns.tolist() == ["locustag", "genus"]
+        assert df.values.tolist() == [["AAAAAAAA", "X#1"]]
+
+
+@pytest.mark.skipif(__import__("shutil").which("zstd") is None, reason="zstd binary not on PATH")
+def test_read_tsv_zst(tmp_path):
+    cli = _load_cli()
+    (tmp_path / "a.tsv").write_bytes(TSV)
+    subprocess.run(["zstd", "-q", str(tmp_path / "a.tsv"), "-o", str(tmp_path / "a.tsv.zst")], check=True)
+    df = cli.read_tsv(tmp_path / "a.tsv.zst")
+    assert df.columns.tolist() == ["locustag", "genus"]
+    assert df.values.tolist() == [["AAAAAAAA", "X#1"]]
+
+
+def test_chunk_id_dotted_basenames_differ():
+    a, b = chunk_id("", "/x/chunk.001.txt"), chunk_id("", "/x/chunk.002.txt")
+    assert (a, b) == ("chunk_001", "chunk_002")
+    assert chunk_id("", "/x/list.txt") == "list"

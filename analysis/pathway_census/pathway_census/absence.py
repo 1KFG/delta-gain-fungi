@@ -94,9 +94,9 @@ def unevaluated_genomes(matrix: pd.DataFrame) -> list[str]:
 
 def chunk_id(explicit: str | None, locustags_path: Path | str | None) -> str:
     """Chunk id for output names. Explicit id (for example SLURM_ARRAY_TASK_ID) wins; else the
-    basename stem of the --locustags file; else "". Characters outside [A-Za-z0-9_-] become "_"."""
+    basename of the --locustags file minus its last suffix (chunk.001.txt -> chunk_001); else "". Characters outside [A-Za-z0-9_-] become "_"."""
     import re
-    raw = explicit or (Path(locustags_path).name.split(".")[0] if locustags_path else "")
+    raw = explicit or (Path(locustags_path).stem if locustags_path else "")
     return re.sub(r"[^A-Za-z0-9_-]", "_", raw)
 
 

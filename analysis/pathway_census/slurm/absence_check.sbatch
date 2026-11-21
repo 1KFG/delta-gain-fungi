@@ -15,7 +15,7 @@
 #               PC_PROVISIONAL=1.
 # Sizing: UNVERIFIED. Aim for 1-1.5 h of real runtime per job (chunk genomes with PC_LOCUSTAGS). No job has
 # run yet, so the genomes-per-chunk number is unknown. Measure one real job, then set the chunk size.
-# Output names carry .chunk<ID> (SLURM_ARRAY_TASK_ID, else the PC_LOCUSTAGS basename stem), so chunks do not overwrite.
+# Output names carry .chunk<ID> (SLURM_ARRAY_TASK_ID, else the PC_LOCUSTAGS basename minus its last suffix), so chunks do not overwrite.
 # Genome FASTA .gz files are streamed into $SCRATCH by the library and removed after each search.
 set -euo pipefail
 : "${PC_ROOT:?}" "${PC_PATHWAY:?}" "${PC_MATRIX:?}" "${PC_GENOMES:?}" "${PC_SEQDB_GENOMES:?}" \

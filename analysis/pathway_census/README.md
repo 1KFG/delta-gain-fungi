@@ -134,13 +134,13 @@ Code: `pathway_census/matrix.py`, `bin/build_matrix.py`. Columns and rules are i
 
 Code: `pathway_census/absence.py`, `bin/absence_check.py`, `slurm/absence_check.sbatch`. Tests: `tests/test_absence.py`; fixtures from the seeded `tests/data/make_absence_fixtures.py`.
 Tool: `tblastn` from `module load ncbi-blast/2.17.0+` (BLAST 2.17.0+, build Jul 1 2025; MEASURED with `tblastn -version`, 2026-11-20). Real tblastn is used in tests; nothing is mocked.
-- `select_absences(matrix, genomes, relatives)`: copy_raw == 0, has_proteins True, and at least one listed relative with copy_raw > 0. `has_proteins` False genomes are not selected (their zero is not evidence). `unevaluated_genomes` lists them.
+- `select_absences(matrix, relatives)`: copy_raw == 0, has_proteins True, and at least one listed relative with copy_raw > 0. `has_proteins` False genomes are not selected (their zero is not evidence). `unevaluated_genomes(matrix)` lists them.
 - `same_genus_relatives(genomes)`: groups by genus only where `genus_source != "unresolved"`; never self; single-genome genus gives `[]`.
 - `check_absence(genome_fna, step_refs, min_bitscore, min_query_cover=0.7)` returns `present_unannotated | fragmented | absent | unconfirmed`. Rules and out-of-scope cases (stop codon in frame) are in the module docstring.
 - PROPOSED, no measured data: `min_query_cover = 0.7`, `min_bitscore = 50`.
 - `downloaded == False` gives `unconfirmed`, reason `no_bfd_fasta`. The CLI does not look for a FASTA elsewhere (for example NCBI_ASM). The FASTA path comes from `genomes.scaffolds_path` applied to the proteins path in `seqdb/genomes.tsv`.
 - CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
 - SLURM sizing is UNVERIFIED (target 1-1.5 h per job; no job has run). Chunk with `PC_LOCUSTAGS`.
-- Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename stem. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > all_absence.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
+- Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename minus its last suffix. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > all_absence.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
 - `evalue` (tblastn, default 1e-3) is PROPOSED. In-frame stop: one synthetic case MEASURED as present_unannotated (see module docstring).
 - Real-data run (brief step 5) is DEFERRED by controller ruling. No counts per outcome exist.
