@@ -189,3 +189,6 @@ The rules are written in the docstring of `pathway_census/bins.py`, and they wer
 - Four boolean terms: `divergent`, `lineage_expansion`, `in_cluster`, `expressible`. tier1 = at least `tier1_min` true, tier2 = at least `tier2_min`, else tier3.
 - `hap_dup_suspect` True demotes tier1 to tier2 with a reason. NA does nothing and is shown.
 - All parameters are PROPOSED (no data basis). `window_bp=20000` is UNVERIFIED against the known cluster span in the reference species.
+- CLI `bin/triage.py --pathway P.yaml --copies copies.tsv[.gz|.zst] --out triage.tsv`. Refuses `verified: false` without `--provisional` (output then gets `.PROVISIONAL`). Booleans are strict (`True`/`False`/empty). Output has `# params:` as its first line (then a PROVISIONAL line if tagged): read it with `pd.read_csv(..., sep="\t", comment="#")`. A `.zst` out name is compressed.
+- Input is an already-joined frame (columns in the `bins.py` docstring). `signalp` is positives only: the caller passes `signal_peptide=False` for proteins absent from the table (ASSUMPTION, unverified). `soluble_steps` is a parameter because the pathway YAML has no soluble flag.
+- DEFERRED by controller ruling: the real-data run (brief step 6). No real bin counts exist.

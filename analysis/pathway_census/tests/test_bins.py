@@ -149,12 +149,6 @@ def _run(tmp_path, *extra, pathway=None):
                           capture_output=True, text=True)
 
 
-def _verified(tmp_path):
-    p = tmp_path / "pw.yaml"
-    p.write_text(PW.read_text().replace("verified: false", "verified: true", 1))
-    return p
-
-
 def test_cli_refuses_unverified_pathway(tmp_path):
     txt = PW.read_text()
     if "verified: true" in txt.split("steps:")[0]:

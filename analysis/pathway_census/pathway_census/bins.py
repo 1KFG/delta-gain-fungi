@@ -67,5 +67,76 @@ import pandas as pd
 DEFAULT_REQUIRE = ("truncated", "contam_suspect", "domain_ok", "motif_ok")
 
 
-def triage(copies: pd.DataFrame, window_bp: int = 20000, **params) -> pd.DataFrame:
-    raise NotImplementedError("rules fixed first; implementation follows in a later commit")
+TERMS = ("divergent", "lineage_expansion", "in_cluster", "expressible")
+_BAD = {"truncated": (True, "truncated"), "contam_suspect": (True, "contam_suspect"),
+        "domain_ok": (False, "domain_not_ok"), "motif_ok": (False, "motif_not_ok")}
+_EXCL_ORDER = ("truncated", "contam_suspect", "domain_ok", "motif_ok")
+_NEEDED = ("protein_id", "step_id", "label", "ref_identity", "copy_filtered", "chrom", "start", "end",
+           "length", "signal_peptide", "tm_helices", "hap_dup_suspect")
+
+
+def _in_cluster(df: pd.DataFrame, window_bp: int) -> list[bool]:
+    genome = df.protein_id.str.split("_").str[0].tolist()
+    chrom, step = df.chrom.tolist(), df.step_id.tolist()
+    start, end = df.start.tolist(), df.end.tolist()
+    by_scaf: dict = {}
+    for i, key in enumerate(zip(genome, chrom)):
+        by_scaf.setdefault(key, []).append(i)
+    out = [False] * len(df)
+    for idx in by_scaf.values():
+        for i in idx:
+            for j in idx:
+                if step[j] == step[i]:
+                    continue
+                gap = max(start[i], start[j]) - min(end[i], end[j])
+                if gap <= window_bp:
+                    out[i] = True
+                    break
+    return out
+
+
+def triage(copies: pd.DataFrame, window_bp: int = 20000, *, tier1_min: int = 3, tier2_min: int = 2,
+           divergent_max_identity: float = 0.5, expansion_min: int = 2, min_length: int = 100,
+           max_length: int = 1500, tm_max: int = 1, soluble_steps=(),
+           require=DEFAULT_REQUIRE) -> pd.DataFrame:
+    """Bin assigned copies. See the module docstring for the rules. All parameters are PROPOSED."""
+    missing = [c for c in _NEEDED + tuple(require) if c not in copies.columns]
+    if missing:
+        raise ValueError(f"triage input is missing columns: {missing}")
+    if tier2_min > tier1_min:
+        raise ValueError("tier2_min must be <= tier1_min")
+    df = copies[copies.label == "assigned"].reset_index(drop=True)
+    n = len(df)
+    soluble = set(soluble_steps)
+    cluster = _in_cluster(df, window_bp)
+    rows = []
+    for i in range(n):
+        r = df.iloc[i]
+        bad = [_BAD[c][1] for c in _EXCL_ORDER
+               if c in require and r[c] is not pd.NA and bool(r[c]) is _BAD[c][0]]
+        unev = [f"unevaluated:{c}" for c in require if r[c] is pd.NA]
+        ident, ncopy, tm = r.ref_identity, r.copy_filtered, r.tm_helices
+        div = bool(pd.notna(ident) and ident < divergent_max_identity)
+        exp = bool(pd.notna(ncopy) and ncopy >= expansion_min)
+        expr = bool(pd.notna(r.length) and min_length <= r.length <= max_length)
+        if expr and r.step_id in soluble:
+            expr = bool(pd.notna(tm) and not bool(r.signal_peptide) and tm <= tm_max)
+        terms = dict(divergent=div, lineage_expansion=exp, in_cluster=cluster[i], expressible=expr)
+        reasons: list[str] = []
+        if bad:
+            bin_, reasons = "excluded", bad
+        elif unev:
+            bin_, reasons = "unknown", unev
+        else:
+            k = sum(terms.values())
+            bin_ = "tier1" if k >= tier1_min else "tier2" if k >= tier2_min else "tier3"
+            reasons = [t for t in TERMS if terms[t]]
+            hap = r.hap_dup_suspect
+            if hap is pd.NA:
+                reasons.append("hap_dup_unevaluated")
+            elif bool(hap) and bin_ == "tier1":
+                bin_ = "tier2"
+                reasons.append("hap_dup_suspect_demoted")
+        rows.append(dict(protein_id=r.protein_id, step_id=r.step_id, bin=bin_, reasons=";".join(reasons), **terms))
+    cols = ["protein_id", "step_id", "bin", "reasons", *TERMS]
+    return pd.DataFrame(rows, columns=cols)
