@@ -1,6 +1,6 @@
 # Exploration log (pathway knowledge base and the EBC metabolomics side)
 
-Kept by the BFD-HPCC-master agent. Last updated 2026-11-21 11:30 local. Newest status first within each section. Labels: **MEASURED** = I ran or fetched it; **REPORTED** = from an EBC agent message (named); **PROPOSED**; **UNVERIFIED**. Nothing here is a biological finding.
+Kept by the BFD-HPCC-master agent. Last updated 2026-11-21 (evening; Tasks 1-5 closed, Task 6 running, branch pushed). Newest status first within each section. Labels: **MEASURED** = I ran or fetched it; **REPORTED** = from an EBC agent message (named); **PROPOSED**; **UNVERIFIED**. Nothing here is a biological finding.
 
 ## 1. Where each exploration stands
 
@@ -8,10 +8,11 @@ Kept by the BFD-HPCC-master agent. Last updated 2026-11-21 11:30 local. Newest s
 |---|---|---|---|
 | Carotenoids (genome side) | Stage 1 curation in progress | Step set v2 curated: 29 verified references, 61 decoy rows, 36 evidence links; under independent review | plan `2026-11-21-stage1-verified-step-sets.md`, Task 3 report |
 | Carotenoids (corpus comparison) | Closed as "not testable" | 0 of 84 fungal-reference accessions show beta-carotene, zeaxanthin or canthaxanthin; astaxanthin 1, retinal 2, torulene 0 | REPORTED, `ebc-006` |
-| DHN-melanin, L-DOPA melanin (genome side) | Not started (Tasks 4 and 5) | Step sets corrected after review (see spec 6.3) | spec v2 |
+| DHN-melanin (genome side) | Task 4 closed | Review found the two DHN reductases swapped in the pathway review (Q9HFV6 = 4HNR, Q12634 = 3HNR); 6 user decisions in `refs/melanin_dhn/UNVERIFIED.md` | Task 4 report, ledger |
+| L-DOPA and other melanins (genome side) | Task 5 closed | 15 refs, 29 links: 2 T1a, 3 T1b, 2 T1c, 20 T3, 2 T4 after review applied the quote-names-the-protein rule; melB reference is A0A1S9DK56 (PDB 3W6W), not Q2UP46; tyrosinase_dopa T1c in Neurospora crassa only | Task 5 report, review, re-review |
 | Melanin (corpus comparison) | Closed as "not testable" | Five of seven library names have zero hits; L-DOPA 0 fungal-reference groups; formulas are background (10-35% of groups) | REPORTED, `ebc-006` |
 | Fucose | Dropped (weak target) | Free fucose and rhamnose: 17 library features in 13 accessions; none in fungal-reference or milk accessions; positive controls mostly fail | REPORTED, `ebc-008`, `ebc-012` |
-| Mycosporines and MAAs (genome side) | Added; curation is Task 6, not started | Leads only: PMID 36983003, 40036870; cyanobacterial DDGS entries Q3M6C3, B2J6X9 | spec addendum 2.1 |
+| Mycosporines and MAAs (genome side) | Task 6 running (Fable implementer) | Leads only: PMID 36983003, 40036870; cyanobacterial DDGS entries Q3M6C3, B2J6X9 | spec addendum 2.1 |
 | MAAs (corpus) | Done by EBC | A real marine positive control; no fungal signal (below) | REPORTED, `ebc-010`, `ebc-013` |
 | Amphibians | Done by EBC (census only) | No skin, mucus, gland or swab samples in the corpus; compound panel not run | REPORTED, `ebc-011`, `ebc-014` |
 | SIRIUS on the 734 EBC features | Running (4 serial container jobs) | Container pilot clean; chunk 1 running | MEASURED |
@@ -61,3 +62,11 @@ These counts say a genome exists. They say nothing about pathway genes. Whether 
 - SIRIUS chain: jobs 32355517 to 32355520 (serial, `afterany`); run folder `/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi/analysis/ms_comparison/sirius_full/` (project output in `outputs_v2/`); container image `/bigdata/stajichlab/shared/singularity/sirius-6.3.12-linux-x64.sif`. Two empty folders from a failed first attempt (`outputs/orbitrap_pos_a`, `outputs/orbitrap_pos_b`) await manual removal.
 - Collab repo: `stajichlab/EBC-KT`, folder `collab/`; local clone in the session scratchpad; guarded sync script `sync_collab.sh` there. Sign as BFD-HPCC-master agent.
 - Branch `pathway-census-realdata` (worktree `DeltaGain_Fungi_wt_realdata`), not pushed.
+
+## 9. Decisions and lessons recorded 2026-11-21 (evening)
+- Branch `pathway-census-realdata` pushed to origin on the user's instruction (Stage 1 through Task 5, commit e1e82da). Not merged; merging is the owner's call.
+- Rule applied from review of Task 5: a quote that does not name the link's own protein and a substrate or product gives T3 (T1c for a colour phenotype naming the protein). A "substrate class" reading was tried and withdrawn.
+- Review lesson: a UniProt accession can be the right locus but not the assayed sequence (Q2UP46 vs A0A1S9DK56). Check sequence against the deposited structure.
+- Review lesson: reviewer-recalled accessions and PMIDs are leads only; each is re-fetched.
+- Seven Task 5 decisions for the user are in the ledger and `refs/melanin_ldopa/UNVERIFIED.md` (Q2TL94, melB ORF-name reference, P00440 tie, LAC1 T1c without substrate, TyrP T3, no asp_melanin product, ORF-name-only rule).
+- Next: Task 6 review, Task 7 verifier, Task 8 packet, then the user review gate before any real-data run.
