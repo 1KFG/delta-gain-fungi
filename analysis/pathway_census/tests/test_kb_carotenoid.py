@@ -136,6 +136,75 @@ def test_astaxanthin_route_is_a_grid(kb):
     assert set(ast["protein_accession"]) == {"Q3HR17"}
 
 
+# Expected final products of every declared route (path_possible over the route's step order).
+# Values are the weakest tier along the best path. An empty dict means: the route cannot be
+# followed in the tables (reason in refs/carotenoid/UNVERIFIED.md, section D).
+ROUTE_PRODUCTS = {
+    # gamma-carotene, beta-carotene, torulene
+    "core": {"CHEBI:27740": "T1a", "CHEBI:17579": "T1a", "CHEBI:9638": "T1b"},
+    "neurosporaxanthin": {"CHEBI:7540": "T1b"},
+    "retinal": {"CHEBI:17898": "T1a"},
+    # canthaxanthin, phoenicoxanthin, astaxanthin, 3-hydroxyechinenone
+    "astaxanthin": {"CHEBI:3362": "T1b", "CHEBI:80216": "T1b", "CHEBI:40968": "T1b",
+                    "CHEBI:80215": "T3"},
+    "trisporoid": {"CHEBI:53175": "T1a"},        # 13-apo-beta-carotenone
+    "trisporoid_tsp3": {"CHEBI:53160": "T3"},    # 12'-apo-beta-carotenal
+    "trisporoid_late": {},                       # tsp2, tdh: compounds are not in ChEBI
+}
+
+
+def test_every_declared_route_gives_its_expected_products(kb):
+    routes = {r.id: r for r in load_pathway(YAML).routes}
+    assert set(routes) == set(ROUTE_PRODUCTS)
+    for rid, want in ROUTE_PRODUCTS.items():
+        got = path_possible(kb, routes[rid].step_ids)
+        assert dict(zip(got["compound"], got["min_tier"])) == want, rid
+
+
+def test_tsp3_is_an_alternative_of_cars_not_a_successor_of_acaa():
+    routes = {r.id: r.step_ids for r in load_pathway(YAML).routes}
+    assert "tsp3" not in routes["trisporoid"]
+    assert routes["trisporoid"][-2:] == ["cars", "acaa"]
+    assert routes["trisporoid_tsp3"][-1] == "tsp3"
+    assert not ({"cars", "acaa"} & set(routes["trisporoid_tsp3"]))
+
+
+def test_t1a_needs_assay_or_product_in_the_abstract(kb):
+    """The abstracts of PMID 18931040 (tsp2) and 8828234 (tdh) report purification and cloning
+    but state no assay result and no product. The links are held at T3. al-3 stays T3."""
+    sr = kb["step_reaction"]
+    for acc in ("B9DR41", "Q01213", "P24322"):
+        assert set(sr[sr["protein_accession"] == acc]["tier"]) == {"T3"}, acc
+
+
+QUOTES = ROOT / "tests" / "data" / "kb" / "carotenoid_quotes.tsv"
+
+
+def test_quotes_are_single_sentences_of_limited_length(kb):
+    import re
+    for _, r in kb["step_reaction"].iterrows():
+        q = r["quote"]
+        if not q:
+            continue
+        assert len(q) <= 400, (r["pmid"], len(q))
+        assert q == q.strip() and q.endswith("."), r["pmid"]
+        assert not re.search(r"[.!?] [A-Z]", q[:-1]), r["pmid"]
+
+
+def test_quotes_equal_the_committed_fixture(kb):
+    """Change detector: any edit of a quote (or of the links that carry one) fails here.
+    The fixture is not a check against PubMed; Task 7 does that."""
+    import pandas as pd
+    cols = ["step_id", "reaction_id", "protein_accession", "pmid", "quote"]
+    fix = pd.read_csv(QUOTES, sep="\t", dtype=str, keep_default_na=False, encoding="utf-8",
+                      quoting=3)
+    assert list(fix.columns) == cols
+    sr = kb["step_reaction"]
+    cur = sr[sr["tier"].isin(["T1a", "T1b", "T1c", "T2", "T3"])][cols].reset_index(drop=True)
+    assert len(cur) > 0 and (fix["quote"] != "").sum() >= 30
+    assert cur.to_dict("records") == fix.to_dict("records")
+
+
 def test_crtr_links_are_separate(kb):
     sr = kb["step_reaction"]
     assert len(sr[sr["step_id"] == "crtr"]) >= 1

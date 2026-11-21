@@ -50,12 +50,20 @@ routes:
     step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, carx]
   - id: astaxanthin
     name: "beta-carotene to astaxanthin (Xanthophyllomyces dendrorhous)"
-    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, astaxanthin_synthase, crtr]
-    note: "A grid of ketolation and hydroxylation reactions by one P450 with its reductase."
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, crtr, astaxanthin_synthase]
+    note: "A grid of ketolation and hydroxylation reactions by one P450 with its reductase. crtr comes first in the step order because its link is the first ketolation (beta-carotene to echinenone), which needs the reductase."
   - id: trisporoid
-    name: "beta-carotene to trisporoid precursors (Mucorales, mating)"
-    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, cars, acaa, tsp3, tsp2, tdh]
-    note: "Only two cleavage steps and two dehydrogenase steps have enzymes. Later oxidations are excluded (T4)."
+    name: "beta-carotene to beta-apo-13-carotenone by CarS then AcaA (Phycomyces, mating)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, cars, acaa]
+    note: "Two cleavage steps."
+  - id: trisporoid_tsp3
+    name: "beta-carotene cleavage by tsp3 (Blakeslea, Rhizopus; mating)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, tsp3]
+    note: "tsp3 is an alternative of cars, not a successor of acaa. Its product is not identified in the abstract (T3)."
+  - id: trisporoid_late
+    name: "trisporoid dehydrogenases tsp2 and tdh (Mucor mucedo, mating)"
+    step_ids: [tsp2, tdh]
+    note: "Not a chain. The substrates and products are not in ChEBI, so the tables cannot join these steps to the cleavage steps or to each other. Later oxidations are excluded (T4)."
 steps:
   - id: ggpp_synthase
     name: "geranylgeranyl diphosphate synthase (al-3, carG, crtE)"
@@ -290,6 +298,7 @@ steps:
         gene_name: "carX"
         pmid: "17293483"
         verified: true
+      # verified: false. No UniProt accession could be tied to Ustilago maydis cco1 (see UNVERIFIED.md A1).
       - accession: null
         species: "Ustilago maydis"
         gene_name: "cco1"
@@ -445,10 +454,14 @@ steps:
     ec: null
     route: astaxanthin
     refs:
+      # pmid 25504221: cited by the UniProt entry; expression in Mucor circinelloides (T1a for ketolation).
+      # Functional paper in X. dendrorhous: PMID 16416328. UniProt does not cite it for Q3HR17. The link rests
+      # on sequence identity (557 of 557) with NCBI CAC16261.1, the patent sequence AX034665.1, and on shared
+      # authors (Hoshino, Ojima, Setoguchi on the patent record).
       - accession: Q3HR17
         species: "Phaffia rhodozyma"
         gene_name: "crtS"
-        pmid: "16416328"
+        pmid: "25504221"
         verified: true
       - accession: B5LEC8
         species: "Phaffia rhodozyma"
@@ -495,7 +508,7 @@ steps:
       - "CUR:carotenoid:3_hydroxyechinenone_4p_ketolation"
       - "CUR:carotenoid:torulene_4_ketolation"
       - "CUR:carotenoid:4_ketotorulene_3_hydroxylation"
-    lineage_note: "Shown in Xanthophyllomyces dendrorhous (UniProt organism name: Phaffia rhodozyma). Needs the P450 reductase step crtr. The route is a reaction grid, not a line."
+    lineage_note: "Shown in Xanthophyllomyces dendrorhous (UniProt organism name: Phaffia rhodozyma). Needs the P450 reductase step crtr. The route is a reaction grid, not a line. Functional paper in the fungus: PMID 16416328; its link to Q3HR17 rests on sequence identity with the patent sequence CAC16261.1 (AX034665.1) and shared authors."
 
   - id: crtr
     name: "cytochrome P450 reductase, electron donor of astaxanthin synthase (crtR)"
@@ -523,11 +536,6 @@ steps:
         gene_name: "MET10"
         pmid: null
         verified: true
-      - accession: Q9Y8G7
-        species: "Fusarium oxysporum"
-        gene_name: "CYP505"
-        pmid: null
-        verified: true
     domains_any: [PF00667, PF00258, PF00175]
     copy_expect: single
     role: auxiliary
@@ -542,10 +550,12 @@ steps:
     ec: null
     route: trisporoid
     refs:
+      # pmid 22445959: cited by GenBank ADU04395.1, which is identical to G8Z9M3 (628 of 628). UniProt cites no
+      # paper for G8Z9M3. The product (beta-apo-12'-carotenal) is shown in PMID 21854466.
       - accession: G8Z9M3
         species: "Phycomyces blakesleeanus"
         gene_name: "carS"
-        pmid: "21854466"
+        pmid: "22445959"
         verified: true
     decoys:
       - accession: Q7S860
@@ -585,18 +595,20 @@ steps:
     optional: true
     reactions:
       - "CUR:carotenoid:beta_carotene_11p12p_cleavage"
-    lineage_note: "Mucorales, sexual signalling. The name carS belongs to Phycomyces blakesleeanus here. In Fusarium fujikuroi carS names a different gene (a regulator, per the pathway review); that gene is not a reference of this step."
+    lineage_note: "Mucorales, sexual signalling. Gene: PMID 22445959; product beta-apo-12'-carotenal: PMID 21854466. The name carS belongs to Phycomyces blakesleeanus here. In Fusarium fujikuroi carS names a different gene (a regulator, per the pathway review); that gene is not a reference of this step."
 
   - id: acaa
     name: "beta-apo-12'-carotenal C13-C14 cleaving oxygenase (acaA of Phycomyces)"
     ec: null
     route: trisporoid
     refs:
+      # verified: false. The gene name acaA on this entry comes from a 2024 genome annotation (EMBL
+      # JBCLYO010000008, KAL0086242.1). No record ties the sequence to the protein assayed in PMID 21854466.
       - accession: A0ABR3AZC2
         species: "Phycomyces blakesleeanus"
         gene_name: "acaA"
         pmid: "21854466"
-        verified: true
+        verified: false
     decoys:
       - accession: Q7S860
         species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
@@ -640,7 +652,7 @@ steps:
   - id: tsp3
     name: "carotene oxygenase induced by trisporic acid (tsp3 of Blakeslea trispora)"
     ec: null
-    route: trisporoid
+    route: trisporoid_tsp3
     refs:
       - accession: A5HXP5
         species: "Blakeslea trispora"
@@ -690,7 +702,7 @@ steps:
   - id: tsp2
     name: "4-dihydrotrisporin dehydrogenase (tsp2 of Mucor mucedo)"
     ec: null
-    route: trisporoid
+    route: trisporoid_late
     refs:
       - accession: B9DR41
         species: "Mucor mucedo"
@@ -715,7 +727,7 @@ steps:
   - id: tdh
     name: "4-dihydromethyltrisporate dehydrogenase (tdh of Mucor mucedo)"
     ec: null
-    route: trisporoid
+    route: trisporoid_late
     refs:
       - accession: Q01213
         species: "Mucor mucedo"

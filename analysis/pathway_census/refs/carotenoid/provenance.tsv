@@ -20,11 +20,11 @@ cart	A1KQY3	Fusarium fujikuroi	carT		17493127	UniProtKB/Swiss-Prot (entry v46, s
 cart	A7UXI1	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	cao-2		17610084	UniProtKB/Swiss-Prot (entry v70, sequence v1); PubMed	2026-11-21	true
 ylo1	Q1K615	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	ylo-1		18627463	UniProtKB/Swiss-Prot (entry v71, sequence v1); PubMed	2026-11-21	true
 ylo1	F6IBC7	Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)	carD		21749649	UniProtKB/Swiss-Prot (entry v50, sequence v2); PubMed	2026-11-21	true
-astaxanthin_synthase	Q3HR17	Phaffia rhodozyma	crtS		16416328	UniProtKB/TrEMBL (entry v97, sequence v1); PubMed	2026-11-21	true
+astaxanthin_synthase	Q3HR17	Phaffia rhodozyma	crtS		25504221	UniProtKB/TrEMBL (entry v97, sequence v1); PubMed	2026-11-21	true
 astaxanthin_synthase	B5LEC8	Phaffia rhodozyma	crtS		18769767	UniProtKB/TrEMBL (entry v61, sequence v1); PubMed	2026-11-21	true
 crtr	B6D970	Phaffia rhodozyma	crtR		18837978	UniProtKB/TrEMBL (entry v76, sequence v1); PubMed	2026-11-21	true
-cars	G8Z9M3	Phycomyces blakesleeanus	carS		21854466	UniProtKB/TrEMBL (entry v42, sequence v1); PubMed	2026-11-21	true
-acaa	A0ABR3AZC2	Phycomyces blakesleeanus	acaA		21854466	UniProtKB/TrEMBL (entry v5, sequence v1); PubMed	2026-11-21	true
+cars	G8Z9M3	Phycomyces blakesleeanus	carS		22445959	UniProtKB/TrEMBL (entry v42, sequence v1); PubMed	2026-11-21	true
+acaa	A0ABR3AZC2	Phycomyces blakesleeanus	acaA		21854466	UniProtKB/TrEMBL (entry v5, sequence v1); PubMed	2026-11-21	false
 tsp3	A5HXP5	Blakeslea trispora	tsp3		17822929	UniProtKB/TrEMBL (entry v45, sequence v1); PubMed	2026-11-21	true
 tsp2	B9DR41	Mucor mucedo	tsp2		18931040	UniProtKB/TrEMBL (entry v46, sequence v1); PubMed	2026-11-21	true
 tdh	Q01213	Mucor mucedo	tdh		8828234	UniProtKB/Swiss-Prot (entry v88, sequence v1); PubMed	2026-11-21	true

@@ -232,21 +232,31 @@ def validate_kb(tables: dict[str, pd.DataFrame]) -> list[str]:
 def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.DataFrame:
     """Compounds reachable by following ``step_reaction`` links in the given step order.
 
-    Returns DataFrame ``compound, min_tier, steps`` for the products of the LAST step.
-    A link (step, reaction) of step k+1 is usable when ALL non-cofactor substrates of its reaction
-    are products of the previous step's usable links (``reaction_participant``). Cofactor rows are
-    ignored on both sides. A reaction with zero non-cofactor substrates after the first step is
-    skipped (it can never be reached). ``min_tier`` is the weakest tier along the path (order
-    T1a < T1b < T1c < T2 < T3 < T4, weakest = highest index; across the substrates of one link
-    the weakest also counts). Links with tier T4 are dropped, so a path through a T4 link is
-    excluded. When several links give the same product, the strongest weakest-tier is kept.
-    ``steps`` is the comma-joined declared order. Raises ValueError for a step_id absent from the
-    ``step`` table.
+    Returns DataFrame ``compound, min_tier, steps`` for the compounds made by the LAST step.
 
-    Simplifications: only the declared step order is followed (no branching enumeration, no
-    skipping of optional steps, no loops). Roles must be stored in the direction the step uses;
-    ``direction`` is informational and ignored here. The starting compounds are the substrates
-    of the first step's reactions, with no requirement on them.
+    Within one step the function takes the closure over ALL reactions of the step: a link
+    (step, reaction) is applied when ALL non-cofactor substrates of its reaction are available,
+    and its products become available to the other reactions of the same step. This repeats
+    until nothing new is reached. "Available" means: a product of the previous step, or a
+    compound made earlier inside this step. So one step can run a chain or a grid of reactions
+    (for example a multifunctional enzyme). Cofactor rows are ignored on both sides. A reaction
+    with zero non-cofactor substrates after the first step is skipped (it can never be reached).
+
+    ``min_tier`` is the weakest tier of the links used to reach the compound (order
+    T1a < T1b < T1c < T2 < T3 < T4, weakest = highest index), including the links of earlier
+    steps and of earlier reactions in the same step. Links with tier T4 are dropped, so a path
+    through a T4 link is excluded. When several paths give the same compound, the path with the
+    strongest weakest-tier is kept. ``steps`` is the comma-joined declared order. Raises
+    ValueError for a step_id absent from the ``step`` table.
+
+    The result holds only compounds that the last step makes. A compound that entered the last
+    step and was not made by it is not returned.
+
+    Simplifications: only the declared step order is followed (no skipping of optional steps,
+    no branching over step orders). Roles must be stored in the direction the step uses;
+    ``direction`` is informational and ignored here. In the first step every non-T4 link is
+    applied with no requirement on its substrates (they are the starting compounds). The
+    function does not filter by organism: links of different organisms can join in one path.
     """
     known = set(tables["step"]["step_id"])
     for sid in step_ids:
@@ -263,20 +273,29 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.Da
 
     reach: dict[str, int] | None = None  # compound -> weakest tier index so far
     for sid in step_ids:
-        nxt: dict[str, int] = {}
-        for _, l in sr[sr["step_id"] == sid].iterrows():
-            if l["tier"] not in TIERS or l["tier"] == "T4":
-                continue
-            base = TIERS.index(l["tier"])
-            rid = l["reaction_id"]
-            if reach is not None:
+        links = [(TIERS.index(l["tier"]), l["reaction_id"])
+                 for _, l in sr[sr["step_id"] == sid].iterrows()
+                 if l["tier"] in TIERS and l["tier"] != "T4"]
+        avail: dict[str, int] = dict(reach or {})  # usable as substrate inside this step
+        nxt: dict[str, int] = {}                   # made by this step
+        changed = True
+        while changed:  # closure; ends because a tier index can only go down
+            changed = False
+            for tier, rid in links:
                 need = subs.get(rid, set())
-                if not need or not need <= reach.keys():
+                if reach is None:
+                    base = tier  # first step: starting compounds carry no requirement
+                elif not need or not need <= avail.keys():
                     continue
-                base = max([base] + [reach[c] for c in need])
-            for p in prods.get(rid, ()):
-                if p not in nxt or base < nxt[p]:
-                    nxt[p] = base
+                else:
+                    base = max([tier] + [avail[c] for c in need])
+                for p in prods.get(rid, ()):
+                    if p not in nxt or base < nxt[p]:
+                        nxt[p] = base
+                        changed = True
+                    if p not in avail or base < avail[p]:
+                        avail[p] = base
+                        changed = True
         reach = nxt
         if not reach:
             break

@@ -167,7 +167,8 @@ def test_unverified_refs_are_listed_in_unverified_md():
 def test_routes_declared():
     p = load_pathway(YAML)
     ids = {r.id for r in p.routes}
-    assert {"neurosporaxanthin", "astaxanthin", "retinal", "trisporoid"} <= ids
+    assert ids == {"core", "neurosporaxanthin", "astaxanthin", "retinal", "trisporoid",
+                   "trisporoid_tsp3", "trisporoid_late"}
     ast = next(r for r in p.routes if r.id == "astaxanthin")
     assert {"astaxanthin_synthase", "crtr"} <= set(ast.step_ids)
 
@@ -280,3 +281,33 @@ def test_provenance_gene_and_species_match_yaml():
                 assert bool(row["region"]) == (r.region is not None), (st.id, r.accession)
                 assert row["gene_name"] == r.gene_name
                 assert row["species"] == r.species
+
+
+# ---- fix round 1 ----
+
+def test_p450_reductase_fusion_is_not_a_crtr_decoy():
+    """Q9Y8G7 carries a NADPH--P450 reductase domain that does the reference reaction of crtr.
+    It stays a decoy of astaxanthin_synthase only (P450 family, another function)."""
+    s = _steps()
+    assert "Q9Y8G7" not in {d.accession for d in s["crtr"].decoys}
+    assert "Q9Y8G7" in {d.accession for d in s["astaxanthin_synthase"].decoys}
+    rows = {(r["step_id"], r["accession"]): r for r in _decoy_rows()}
+    assert ("crtr", "Q9Y8G7") not in rows
+    assert "PF00067" in rows[("astaxanthin_synthase", "Q9Y8G7")]["reason"]
+
+
+def test_reference_pmids_follow_the_database_links():
+    s = _steps()
+    cars = {r.accession: r for r in s["cars"].refs}
+    assert cars["G8Z9M3"].pmid == "22445959" and cars["G8Z9M3"].verified is True
+    ast = {r.accession: r for r in s["astaxanthin_synthase"].refs}
+    assert ast["Q3HR17"].pmid == "25504221" and ast["Q3HR17"].verified is True
+    acaa = {r.accession: r for r in s["acaa"].refs}
+    assert acaa["A0ABR3AZC2"].verified is False
+
+
+def test_curation_scripts_are_committed_with_a_readme():
+    d = ROOT / "curation_scripts" / "carotenoid"
+    assert (d / "README.md").exists() and (d / "build.py").exists() and (d / "verify.py").exists()
+    text = (d / "README.md").read_text(encoding="utf-8")
+    assert "not run by the tests" in text and "Task 7" in text

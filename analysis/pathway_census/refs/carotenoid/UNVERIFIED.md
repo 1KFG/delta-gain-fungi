@@ -3,13 +3,14 @@
 - Source: `pathways/carotenoid.yaml`
 - Pathway-level `verified`: **false**
 - `validate()` errors: 0
-- Refs: 30 total, 29 verified, 1 unverified.
+- Refs: 30 total, 28 verified, 2 unverified.
 
 ## Refs with verified: false
 
 | step | accession | species | pmid |
 |---|---|---|---|
 | carx | - | Ustilago maydis | 19584000 |
+| acaa | A0ABR3AZC2 | Phycomyces blakesleeanus | 21854466 |
 
 ## Refs missing an accession or a PMID
 
@@ -17,7 +18,7 @@
 
 ## Steps with no verified ref
 
-None.
+- acaa (optional=true)
 
 ---
 
@@ -31,8 +32,10 @@ The curator read PubMed abstracts only. No full text was read.
 ### A. References that are not verified, or verified with a gap
 
 1. **`carx`, *Ustilago maydis* Cco1 (PMID 19584000): no accession.** The abstract shows the reaction (MEASURED). No UniProt entry could be tied to the gene name: the UniProt search `gene:cco1 AND taxonomy_id:5270` returned 0 entries and `lit_pubmed:19584000` returned 0 entries (MEASURED). UniProt has two PF03055 proteins for this species: A0A0D1E6L2 (RCO1, reviewed, resveratrol cleavage) and A0A0D1E9J4 (ORF name UMAG_00965 only, unreviewed, "Carotenoid cleavage dioxygenase 1", 787 residues, cites only the genome paper PMID 17080091). A0A0D1E9J4 is a candidate for Cco1. The gene name does not match, so it is not used and `carx.faa` has no *Ustilago* sequence. A person must confirm the locus from the full text.
-2. **`cars` G8Z9M3 and `acaa` A0ABR3AZC2 (*Phycomyces blakesleeanus*).** Both UniProt entries are unreviewed and cite no PubMed paper (MEASURED). `verified: true` rests on organism and gene name (carS, acaA) and on the abstract of PMID 21854466. Identity of these sequences with the proteins assayed in the paper is UNVERIFIED.
-3. **`astaxanthin_synthase` Q3HR17 and PMID 16416328.** UniProt Q3HR17 cites PMID 25504221 only (MEASURED). Q3HR17 is identical to NCBI CAC16261.1 over 557 of 557 residues (MEASURED, sequence comparison). CAC16261.1 is coded by AX034665.1:33..1706, patent EP 1035206-A1, authors Hoshino, Ojima and Setoguchi (MEASURED, GenPept record). That AX034665 is the cDNA of PMID 16416328 is REVIEWED (full text); the abstract gives no accession. B5LEC8 differs from Q3HR17 at residue 60 (G in Q3HR17, D in B5LEC8; MEASURED).
+2. **`cars` G8Z9M3 and `acaa` A0ABR3AZC2 (*Phycomyces blakesleeanus*).** Both UniProt entries are unreviewed and cite no paper on the gene (MEASURED; the one citation is a 2024 genome paper).
+   - G8Z9M3 (carS): `verified: true`. GenBank ADU04395.1 ("carotene dioxygenase", source GU339225.1) is identical to G8Z9M3 over 628 of 628 residues and cites PMID 22445959 (MEASURED, GenPept record and sequence comparison). The reference `pmid` is 22445959. The product (beta-apo-12'-carotenal) is shown in PMID 21854466.
+   - A0ABR3AZC2 (acaA): `verified: false`. The gene name comes from a 2024 genome annotation (EMBL JBCLYO010000008, protein KAL0086242.1; MEASURED). No record ties the sequence to the protein assayed in PMID 21854466. The sequence is in `acaa.faa`. The link keeps T1a for *Phycomyces* AcaA as named in the paper. The user decides at the review gate.
+3. **`astaxanthin_synthase` Q3HR17.** The reference `pmid` is 25504221, the paper that UniProt cites for the entry and the T1a paper (MEASURED). The functional paper in the fungus is PMID 16416328; UniProt does not cite it for Q3HR17. Its link rests on sequence identity and shared authors: Q3HR17 is identical to NCBI CAC16261.1 over 557 of 557 residues (MEASURED); CAC16261.1 is coded by AX034665.1:33..1706, patent EP 1035206-A1, authors Hoshino, Ojima and Setoguchi (MEASURED, GenPept record). That AX034665 is the cDNA of PMID 16416328 is REVIEWED (full text); the abstract gives no accession. B5LEC8 differs from Q3HR17 at residue 60 (G in Q3HR17, D in B5LEC8; MEASURED).
 4. **`tsp3` A5HXP5 (*Blakeslea trispora*).** The abstract of PMID 17822929 does not say which species' tsp3 was expressed in *E. coli* (*B. trispora* or *Rhizopus oryzae*) and names no product. The link to the CarS reaction is T3.
 5. **`phytoene_desaturase` Q8X0Z0 (*Fusarium fujikuroi* carB).** The abstract of PMID 12172798 gives 541 residues; UniProt Q8X0Z0 has 570 residues at sequence version 2 (MEASURED). The difference was not investigated.
 6. **UniProt EC of P54982.** UniProt gives EC 1.3.99.30 (five-step) for *Phycomyces* carB. The abstract of PMID 9079885 reports four dehydrogenations to lycopene (MEASURED). The step keeps `ec: null`.
@@ -46,6 +49,9 @@ The curator read PubMed abstracts only. No full text was read.
 4. `lycopene_cyclase`, *Fusarium* carRA (Q8X0Z1), all three reactions: T3. The disruptants make no phytoene, so the abstract does not show the cyclase function separately.
 5. `lycopene_cyclase`, 3,4-didehydrolycopene to torulene: T1b for *Neurospora* al-2 (cyclase-domain mutants, PMID 11862485; the accumulated carotenoid was not identified), T3 for *Fusarium* carRA and *X. dendrorhous* crtYB.
 6. `phytoene_synthase` and `lycopene_cyclase`, *Phycomyces* carRA (Q9P854): T1c. The abstract of PMID 11172012 reports mutant sequences and colour phenotypes.
+7. `tsp2`, *Mucor mucedo* tsp2 (B9DR41): T3. Raise to T1 on full-text check. The abstract of PMID 18931040 reports purification of the native enzyme, peptide sequencing and cloning; it states no assay result and no product.
+8. `tdh`, *Mucor mucedo* tdh (Q01213): T3. Raise to T1 on full-text check. The abstract of PMID 8828234 reports purification of the native enzyme, peptide sequencing and cloning; it states no assay result and no product.
+9. Rule used: a link is T1a only when the abstract that was read states the assay or the product.
 
 ### C. Astaxanthin route: what the abstract supports and what it does not
 
@@ -64,6 +70,7 @@ The curator read PubMed abstracts only. No full text was read.
 5. `ko`, `kegg_rn` and `np_class` are empty: not looked up in this task.
 6. The `family` column of `kb/carotenoid/step.tsv` holds the curator's descriptive labels, not database names (PROPOSED).
 7. The curated cyclisation of 3,4-didehydrolycopene to torulene has no Rhea reaction (Rhea search "torulene", MEASURED). The order (fifth desaturation before cyclisation) is from the abstract of PMID 11017770.
+8. **Routes that `path_possible` cannot follow.** `trisporoid_late` (`tsp2`, `tdh`) gives no product: the reactions have no participants (item 1), so the tables cannot join these steps to the cleavage steps or to each other. The other six routes give products (tested in `tests/test_kb_carotenoid.py`): `core` ends at gamma-carotene, beta-carotene and torulene; `astaxanthin` reaches astaxanthin at T1b; `trisporoid` ends at beta-apo-13-carotenone; `trisporoid_tsp3` ends at beta-apo-12'-carotenal at T3. `path_possible` does not filter by organism, so a route tier can join links of different organisms.
 
 ### E. Hypothesis-level (T4) and excluded steps
 
@@ -76,9 +83,9 @@ The curator read PubMed abstracts only. No full text was read.
 
 1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
 2. `lycopene_cyclase`: no decoy. A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). All are carotenoid cyclases (fungal fused proteins, *Halobacterium* CrtY, *Dietzia* C50 cyclase subunits). No characterised member with another function was found.
-3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has four.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
 4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
-5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. A census hit to this step does not indicate astaxanthin synthesis.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
 6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
 
 ### G. Schema and file layout
@@ -88,4 +95,5 @@ The curator read PubMed abstracts only. No full text was read.
 3. Steps with one reference sequence: `carx`, `crtr`, `cars`, `acaa`, `tsp3`, `tsp2`, `tdh`. A profile HMM from one sequence is weak. Whether this is enough for the census is UNVERIFIED.
 4. Reference coverage by lineage: Ascomycota (*Neurospora*, *Fusarium*), Mucoromycota (*Phycomyces*, *Mucor*, *Blakeslea*) and Basidiomycota (*Xanthophyllomyces*). No Pucciniomycotina, chytrid or Dothideomycete reference. *Blakeslea trispora* carRA (Q67GH9, reviewed) was fetched but not added.
 5. `copy_expect`, `optional` and `role` are PROPOSED. No census data exists.
-6. `crtr` is linked to RHEA:55660 (the first CrtS reaction; the crtR deletion accumulates beta-carotene). This is a modelling choice (PROPOSED).
+6. `crtr` is linked to RHEA:55660 (the first CrtS reaction; the crtR deletion accumulates beta-carotene). In the `astaxanthin` route `crtr` comes before `astaxanthin_synthase`, so the route is a valid chain. This is a modelling choice (PROPOSED).
+7. The Mucorales steps are in three routes: `trisporoid` (`cars`, `acaa`), `trisporoid_tsp3` (`tsp3`, an alternative of `cars`) and `trisporoid_late` (`tsp2`, `tdh`).

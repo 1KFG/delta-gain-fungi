@@ -10,7 +10,7 @@ astaxanthin_synthase	astaxanthin		PF00067	cytochrome P450 family	true
 crtr	astaxanthin		PF00667;PF00258;PF00175	diflavin reductase family	true
 cars	trisporoid		PF03055	carotenoid cleavage oxygenase family	true
 acaa	trisporoid		PF03055	carotenoid cleavage oxygenase family	true
-tsp3	trisporoid		PF03055	carotenoid cleavage oxygenase family	true
-tsp2	trisporoid		PF00106	short-chain dehydrogenase family	true
-tdh	trisporoid		PF00248	aldo/keto reductase family	true
+tsp3	trisporoid_tsp3		PF03055	carotenoid cleavage oxygenase family	true
+tsp2	trisporoid_late		PF00106	short-chain dehydrogenase family	true
+tdh	trisporoid_late		PF00248	aldo/keto reductase family	true
 torularhodin_formation				unknown (no enzyme identified)	true

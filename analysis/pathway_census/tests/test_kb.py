@@ -361,3 +361,55 @@ def test_path_skips_reaction_with_no_noncofactor_substrate_after_first_step(tabl
     tables["reaction_participant"] = p.reset_index(drop=True)
     _add_part(tables, "R2", "CHEBI:A", "cofactor")
     assert kb.path_possible(tables, ["s1", "s2"]).empty
+
+
+# ---- closure over the reactions of one step (carotenoid fix round 1) ---------------------
+def _move_r3_into_s2(tables, tier="T3"):
+    """Step s2 then holds two chained reactions: R2 (B -> C, T1c) and R3 (C -> D)."""
+    sr = tables["step_reaction"].copy()
+    sr.loc[sr["reaction_id"] == "R3", ["step_id", "tier"]] = ["s2", tier]
+    tables["step_reaction"] = sr
+    return tables
+
+
+def test_path_closure_within_one_step(tables):
+    _move_r3_into_s2(tables)
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert dict(zip(out["compound"], out["min_tier"])) == {"CHEBI:C": "T1c", "CHEBI:D": "T3"}
+
+
+def test_path_closure_takes_weakest_tier_along_the_chain(tables):
+    _move_r3_into_s2(tables, tier="T1a")  # R3 is strong, but it is reached through R2 (T1c)
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert dict(zip(out["compound"], out["min_tier"])) == {"CHEBI:C": "T1c", "CHEBI:D": "T1c"}
+
+
+def test_path_closure_excludes_t4_link_inside_the_chain(tables):
+    _move_r3_into_s2(tables, tier="T4")
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert out["compound"].tolist() == ["CHEBI:C"]
+
+
+def test_path_closure_does_not_carry_over_previous_products(tables):
+    """The result holds only compounds made by the last step, not what entered it."""
+    _move_r3_into_s2(tables)
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert "CHEBI:B" not in out["compound"].tolist()
+
+
+def test_path_closure_row_order_does_not_matter(tables):
+    _move_r3_into_s2(tables)
+    tables["step_reaction"] = tables["step_reaction"].iloc[::-1].reset_index(drop=True)
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert dict(zip(out["compound"], out["min_tier"])) == {"CHEBI:C": "T1c", "CHEBI:D": "T3"}
+
+
+def test_path_first_step_links_keep_their_own_tier_in_any_row_order(tables):
+    """In the first step no link has a requirement, so a chained reaction keeps its own tier."""
+    _move_r3_into_s2(tables, tier="T1a")
+    want = {"CHEBI:C": "T1c", "CHEBI:D": "T1a"}
+    out = kb.path_possible(tables, ["s2"])
+    assert dict(zip(out["compound"], out["min_tier"])) == want
+    tables["step_reaction"] = tables["step_reaction"].iloc[::-1].reset_index(drop=True)
+    out = kb.path_possible(tables, ["s2"])
+    assert dict(zip(out["compound"], out["min_tier"])) == want
