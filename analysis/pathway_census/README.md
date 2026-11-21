@@ -119,3 +119,5 @@ What is NOT implemented, and what a later run needs:
 - `motif_ok` is `<NA>` unless `motif_hits` is supplied. The carotenoid definition has no catalytic motifs yet.
 - `gene_info` must be joined with protein `length` from `gene_proteins.parquet`. Without it `truncated` is `<NA>`.
 - `domain_ok` needs `expected_domains` (step_id -> hmm names). It matches `hmm_name` in the `domains` frame, so the domain search must be run with the matching HMM library (for example Pfam ids from `pathways/carotenoid.yaml`).
+
+Task 7 must filter with `quality.clean_mask(flags)` and never `fillna(False)`: `<NA>` means unknown, not clean. Task 7 must also report `quality.unknown_counts(flags)` in its output. Contamination is `<NA>` when fewer than `min_neighbours_with_hits` neighbours have a best hit.

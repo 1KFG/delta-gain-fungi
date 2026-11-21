@@ -1,7 +1,7 @@
 import pandas as pd
 import pytest
 
-from pathway_census.quality import quality_flags
+from pathway_census.quality import clean_mask, quality_flags, unknown_counts
 
 REFS_LEN = {"psy": (300, 500), "ggpp": (300, 400)}
 EXPECTED = {"psy": ["PF00494"], "ggpp": ["PF00348"]}
@@ -106,7 +106,7 @@ def test_contam_not_judged_with_too_few_neighbour_hits_and_without_table():
     d = _dom([(4, "PF00494", 1e-30)])
     h = _hits([(3, "non_fungal"), (5, "non_fungal")])  # only 2 neighbours with hits
     f = _flags(a, d, gi, best_hits=h, neighbour_window=3, min_neighbours_with_hits=3)
-    assert bool(f.iloc[0].contam_suspect) is False
+    assert pd.isna(f.iloc[0].contam_suspect)  # insufficient evidence: unknown, not False
     f = _flags(a, d, gi)  # no best-hit table: not evaluated
     assert pd.isna(f.iloc[0].contam_suspect)
 
@@ -160,3 +160,43 @@ def test_unknown_locustag_raises():
     gi, a, d = _hap_fixture()
     with pytest.raises(ValueError):
         quality_flags(a, d, gi, REFS_LEN, pd.DataFrame({"locustag": ["ZZZZZZZZ"]}), expected_domains=EXPECTED)
+
+
+def test_clean_mask_and_unknown_counts_exact():
+    fl = pd.DataFrame({
+        "protein_id": list("abcde"), "step_id": ["s"] * 5,
+        "domain_ok": pd.array([True, True, True, True, True], dtype="boolean"),
+        "motif_ok": pd.array([pd.NA] * 5, dtype="boolean"),
+        "truncated": pd.array([False, False, True, False, False], dtype="boolean"),
+        "contam_suspect": pd.array([False, pd.NA, False, False, False], dtype="boolean"),
+        "hap_dup_suspect": pd.array([False, False, False, True, pd.NA], dtype="boolean")})
+    assert clean_mask(fl).tolist() == [True, False, False, False, False]
+    assert clean_mask(fl, require=("truncated",)).tolist() == [True, True, False, True, True]
+    assert clean_mask(fl, require=("contam_suspect", "hap_dup_suspect")).tolist() == \
+        [True, False, True, False, False]
+    u = unknown_counts(fl)
+    assert u.to_dict() == {"domain_ok": 0, "motif_ok": 5, "truncated": 0, "contam_suspect": 1,
+                           "hap_dup_suspect": 1}
+
+
+def test_na_when_inputs_missing_for_truncated_domain_and_hap():
+    gi = _gi([(1, "s1", 1000, 400), (2, "s1", 5000, pd.NA)])
+    a = _assigned([(1, "nostep"), (2, "psy")])
+    d = _dom([(1, "PF00494", 1e-30)])
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(), expected_domains=EXPECTED).set_index("protein_id")
+    r1, r2 = out.loc[f"{LT}_000001-T1"], out.loc[f"{LT}_000002-T1"]
+    assert pd.isna(r1.truncated)      # step has no refs_len entry
+    assert pd.isna(r1.domain_ok)      # step absent from expected_domains
+    assert pd.isna(r2.truncated)      # length missing
+    assert bool(r2.domain_ok) is False
+    assert out.hap_dup_suspect.isna().all()  # no pair_identity table
+
+
+def test_hap_na_when_gene_missing_from_gene_info():
+    gi = _gi([(1, "s1", 1000, 400)])
+    a = _assigned([(1, "psy"), (9, "psy")])  # gene 9 not in gene_info
+    d = _dom([(1, "PF00494", 1e-30)])
+    p = _pairs([(1, 9, 0.99, 1.0)])
+    f = _flags(a, d, gi, pair_identity=p)
+    assert bool(f.loc[(f"{LT}_000001-T1", "psy"), "hap_dup_suspect"]) is False
+    assert pd.isna(f.loc[(f"{LT}_000009-T1", "psy"), "hap_dup_suspect"])

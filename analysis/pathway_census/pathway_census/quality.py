@@ -40,8 +40,8 @@ contam_suspect
     genes of the focal gene on each side, ordered by start (PROPOSED 10), excluding the focal gene.
     Let n be the neighbours that have a best hit. If n >= min_neighbours_with_hits (PROPOSED 3) and
     the fraction of those n that are "non_fungal" >= non_fungal_fraction (PROPOSED 0.5), the flag is
-    True. Fewer than min_neighbours_with_hits: False (not enough evidence to call). No `best_hits`
-    table: <NA>. The focal gene's own best hit is NOT used. A true carotenoid gene from a lichen
+    True. Fewer than min_neighbours_with_hits: <NA> (insufficient evidence, unknown, NOT clean).
+    No `best_hits` table, or focal gene not in gene_info: <NA>. The focal gene's own best hit is NOT used. A true carotenoid gene from a lichen
     or algal partner would hit the foreign class itself, so the scaffold context decides.
 
 hap_dup_suspect
@@ -54,7 +54,7 @@ hap_dup_suspect
     other around the pair: at least min_shared_neighbours (PROPOSED 3) genes within
     `neighbour_window` genes of one member have a near-identical partner (same two thresholds)
     within `neighbour_window` genes of the other member. Same-scaffold near-identical pairs are
-    tandem copies and are not flagged. No `pair_identity` table: <NA>.
+    tandem copies and are not flagged. No `pair_identity` table, or gene not in gene_info: <NA>.
 """
 from __future__ import annotations
 
@@ -131,11 +131,10 @@ def quality_flags(assigned: pd.DataFrame, domains: pd.DataFrame, gene_info: pd.D
         for other in partners.get(gid, ()):
             if other not in by_step[step] or other not in info.index or gid not in info.index:
                 continue
-            if info.at[other, "chrom"] == info.at[gid, "chrom"] and \
-                    info.at[other, "LOCUSTAG"] == info.at[gid, "LOCUSTAG"]:
-                continue  # same scaffold: tandem copy
             if info.at[other, "LOCUSTAG"] != info.at[gid, "LOCUSTAG"]:
-                continue
+                continue  # different genome
+            if info.at[other, "chrom"] == info.at[gid, "chrom"]:
+                continue  # same scaffold: tandem copy
             other_nb = set(nbrs.get(other, ()))
             shared = sum(1 for n in nbrs.get(gid, ()) if partners.get(n, set()) & other_nb)
             if shared >= min_shared_neighbours:
@@ -157,13 +156,36 @@ def quality_flags(assigned: pd.DataFrame, domains: pd.DataFrame, gene_info: pd.D
             contam.append(pd.NA)
         else:
             c = [cls[n] for n in nbrs[gid] if n in cls]
-            contam.append(bool(len(c) >= min_neighbours_with_hits and
-                               sum(x == "non_fungal" for x in c) / len(c) >= non_fungal_fraction))
+            if len(c) < min_neighbours_with_hits:
+                contam.append(pd.NA)  # insufficient evidence: unknown, not clean
+            else:
+                contam.append(bool(sum(x == "non_fungal" for x in c) / len(c) >= non_fungal_fraction))
 
-        hapf.append(pd.NA if pair_identity is None else hap(gid, step))
+        hapf.append(pd.NA if pair_identity is None or gid not in info.index else hap(gid, step))
 
     return pd.DataFrame({
         "protein_id": assigned.protein_id.values, "step_id": assigned.step_id.values,
         "domain_ok": _bool_series(dom_ok), "motif_ok": _bool_series(mot_ok),
         "truncated": _bool_series(trunc), "contam_suspect": _bool_series(contam),
         "hap_dup_suspect": _bool_series(hapf)})[OUT_COLUMNS]
+
+
+FLAG_COLUMNS = ["domain_ok", "motif_ok", "truncated", "contam_suspect", "hap_dup_suspect"]
+
+
+def clean_mask(flags: pd.DataFrame,
+               require: tuple[str, ...] = ("truncated", "contam_suspect", "hap_dup_suspect")) -> pd.Series:
+    """True only where every required flag is known False. NA or True gives False.
+
+    Use this to filter. Never use fillna(False): that treats unknown as clean.
+    """
+    ok = pd.Series(True, index=flags.index)
+    for col in require:
+        ok &= flags[col].eq(False).fillna(False).astype(bool)
+    return ok
+
+
+def unknown_counts(flags: pd.DataFrame) -> pd.Series:
+    """Per flag column, the number of NA (not evaluated) rows."""
+    cols = [c for c in FLAG_COLUMNS if c in flags.columns]
+    return flags[cols].isna().sum().astype(int)
