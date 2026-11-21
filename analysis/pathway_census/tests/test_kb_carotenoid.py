@@ -136,33 +136,85 @@ def test_astaxanthin_route_is_a_grid(kb):
     assert set(ast["protein_accession"]) == {"Q3HR17"}
 
 
-# Expected final products of every declared route (path_possible over the route's step order).
-# Values are the weakest tier along the best path. An empty dict means: the route cannot be
-# followed in the tables (reason in refs/carotenoid/UNVERIFIED.md, section D).
+# Expected final products of every declared route (path_possible over the route's step order):
+# compound -> (weakest tier along the best path, organisms of the links on that path).
+# The tier of a route does NOT hold for one organism unless the organism list has one name.
+# An empty dict means: the route cannot be followed in the tables (UNVERIFIED.md, section D).
+MC, NC, XD = "mucor circinelloides", "neurospora crassa", "xanthophyllomyces dendrorhous"
+FF, PB, BT = "fusarium fujikuroi", "phycomyces blakesleeanus", "blakeslea trispora"
 ROUTE_PRODUCTS = {
-    # gamma-carotene, beta-carotene, torulene
-    "core": {"CHEBI:27740": "T1a", "CHEBI:17579": "T1a", "CHEBI:9638": "T1b"},
-    "neurosporaxanthin": {"CHEBI:7540": "T1b"},
-    "retinal": {"CHEBI:17898": "T1a"},
-    # canthaxanthin, phoenicoxanthin, astaxanthin, 3-hydroxyechinenone
-    "astaxanthin": {"CHEBI:3362": "T1b", "CHEBI:80216": "T1b", "CHEBI:40968": "T1b",
-                    "CHEBI:80215": "T3"},
-    "trisporoid": {"CHEBI:53175": "T1a"},        # 13-apo-beta-carotenone
-    "trisporoid_tsp3": {"CHEBI:53160": "T3"},    # 12'-apo-beta-carotenal
-    "trisporoid_late": {},                       # tsp2, tdh: compounds are not in ChEBI
+    "core": {"CHEBI:27740": ("T1a", [MC, NC]),          # gamma-carotene
+             "CHEBI:17579": ("T1a", [MC, XD]),          # beta-carotene
+             "CHEBI:9638": ("T1b", [MC, NC])},          # torulene
+    "neurosporaxanthin": {"CHEBI:7540": ("T1b", [MC, NC])},
+    "retinal": {"CHEBI:17898": ("T1a", [FF, MC, XD])},
+    "astaxanthin": {"CHEBI:3362": ("T1b", [MC, XD]),    # canthaxanthin
+                    "CHEBI:80216": ("T1b", [MC, XD]),   # phoenicoxanthin
+                    "CHEBI:40968": ("T1b", [MC, XD]),   # astaxanthin
+                    "CHEBI:80215": ("T3", [MC, XD])},   # 3-hydroxyechinenone
+    # 13-apo-beta-carotenone; acaA is held at T3. Path: Mucor carG and carRP, Phycomyces carB,
+    # carRA (T1c), carS and acaA. A Neurospora plus Phycomyces path has the same tier and size.
+    "trisporoid": {"CHEBI:53175": ("T3", [MC, PB])},
+    "trisporoid_tsp3": {"CHEBI:53160": ("T3", [BT, NC])},  # 12'-apo-beta-carotenal
+    "trisporoid_late": {},                              # tsp2, tdh: compounds are not in ChEBI
+}
+# Routes that one organism completes alone: Neurospora crassa only, at T3 (al-3 is T3).
+SINGLE_ORGANISM = {
+    ("core", NC): {"CHEBI:27740": "T3", "CHEBI:17579": "T3", "CHEBI:9638": "T3"},
+    ("neurosporaxanthin", NC): {"CHEBI:7540": "T3"},
 }
 
 
+def _routes():
+    return {r.id: r.step_ids for r in load_pathway(YAML).routes}
+
+
 def test_every_declared_route_gives_its_expected_products(kb):
-    routes = {r.id: r for r in load_pathway(YAML).routes}
+    routes = _routes()
     assert set(routes) == set(ROUTE_PRODUCTS)
     for rid, want in ROUTE_PRODUCTS.items():
-        got = path_possible(kb, routes[rid].step_ids)
-        assert dict(zip(got["compound"], got["min_tier"])) == want, rid
+        got = path_possible(kb, routes[rid])
+        have = {c: (t, o.split(","), single) for c, t, o, single in
+                zip(got["compound"], got["min_tier"], got["organisms"], got["single_organism"])}
+        assert have == {c: (t, o, len(o) == 1) for c, (t, o) in want.items()}, rid
+        # no route tier of the unfiltered call holds for one organism
+        assert not got["single_organism"].any(), rid
+
+
+def test_only_neurospora_completes_a_route_alone(kb):
+    from pathway_census.kb import species_key
+    routes = _routes()
+    organisms = sorted({species_key(o) for o in kb["step_reaction"]["organism"]})
+    assert NC in organisms and len(organisms) >= 9
+    for rid, steps in routes.items():
+        for org in organisms:
+            got = path_possible(kb, steps, organism=org)
+            want = SINGLE_ORGANISM.get((rid, org), {})
+            assert dict(zip(got["compound"], got["min_tier"])) == want, (rid, org)
+            if want:
+                assert set(got["organisms"]) == {org} and got["single_organism"].all()
+
+
+def test_organism_filter_accepts_the_uniprot_organism_string(kb):
+    routes = _routes()
+    got = path_possible(kb, routes["neurosporaxanthin"], organism=(
+        "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"))
+    assert dict(zip(got["compound"], got["min_tier"])) == {"CHEBI:7540": "T3"}
+    # X. dendrorhous has no GGPP synthase reference, so it does not complete its own route
+    for name in ("Phaffia rhodozyma", "Xanthophyllomyces dendrorhous"):
+        assert path_possible(kb, routes["astaxanthin"], organism=name).empty
+    assert path_possible(kb, routes["retinal"], organism="Fusarium fujikuroi").empty
+
+
+def test_acaa_link_is_held_at_t3_with_its_note(kb):
+    sr = kb["step_reaction"]
+    row = sr[sr["protein_accession"] == "A0ABR3AZC2"]
+    assert list(row["tier"]) == ["T3"]
+    assert "PHYBLDRAFT_180852" in row["assay"].iloc[0] and "OAD75744" in row["assay"].iloc[0]
 
 
 def test_tsp3_is_an_alternative_of_cars_not_a_successor_of_acaa():
-    routes = {r.id: r.step_ids for r in load_pathway(YAML).routes}
+    routes = _routes()
     assert "tsp3" not in routes["trisporoid"]
     assert routes["trisporoid"][-2:] == ["cars", "acaa"]
     assert routes["trisporoid_tsp3"][-1] == "tsp3"
@@ -195,7 +247,7 @@ def test_quotes_equal_the_committed_fixture(kb):
     """Change detector: any edit of a quote (or of the links that carry one) fails here.
     The fixture is not a check against PubMed; Task 7 does that."""
     import pandas as pd
-    cols = ["step_id", "reaction_id", "protein_accession", "pmid", "quote"]
+    cols = ["step_id", "reaction_id", "protein_accession", "tier", "assay", "pmid", "quote"]
     fix = pd.read_csv(QUOTES, sep="\t", dtype=str, keep_default_na=False, encoding="utf-8",
                       quoting=3)
     assert list(fix.columns) == cols

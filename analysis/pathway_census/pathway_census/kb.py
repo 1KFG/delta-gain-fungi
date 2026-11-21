@@ -229,10 +229,91 @@ def validate_kb(tables: dict[str, pd.DataFrame]) -> list[str]:
     return errs
 
 
-def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.DataFrame:
+# Organism name aliases used by ``species_key``: cleaned lowercase name -> (key, source).
+# Only names that occur in the curated tables or in the UniProt records behind them are listed.
+# Sources: NCBI Taxonomy records fetched on 2026-11-21 (efetch, db=taxonomy). The key is the name
+# used in the cited papers, which is not always the current NCBI scientific name.
+SPECIES_ALIASES: dict[str, tuple[str, str]] = {
+    "gibberella fujikuroi": (
+        "fusarium fujikuroi",
+        "NCBI Taxonomy taxid 5127: scientific name Fusarium fujikuroi, synonym Gibberella "
+        "fujikuroi; taxid 1279085 (strain IMI 58289) has the equivalent name Gibberella "
+        "fujikuroi IMI 58289"),
+    "phaffia rhodozyma": (
+        "xanthophyllomyces dendrorhous",
+        "NCBI Taxonomy taxid 264483: scientific name Phaffia rhodozyma, synonym "
+        "Xanthophyllomyces dendrorhous (one taxon; the key is the name used in the papers)"),
+    "mucor circinelloides f. lusitanicus": (
+        "mucor circinelloides",
+        "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor "
+        "circinelloides f. lusitanicus (the key is the species name used in the papers)"),
+    "mucor racemosus var. lusitanicus": (
+        "mucor circinelloides",
+        "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor racemosus "
+        "var. lusitanicus (same taxon as Mucor circinelloides f. lusitanicus)"),
+    "mucor lusitanicus": (
+        "mucor circinelloides",
+        "NCBI Taxonomy taxid 29924: scientific name Mucor lusitanicus, synonym Mucor "
+        "circinelloides f. lusitanicus (the key is the species name used in the papers)"),
+    "mycosarcoma maydis": (
+        "ustilago maydis",
+        "NCBI Taxonomy taxid 5270: scientific name Mycosarcoma maydis, synonym Ustilago maydis "
+        "(one taxon; the key is the name used in the papers)"),
+}
+
+_BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")
+
+
+def species_key(organism: str) -> str:
+    """Key that joins the organism names of one species: lowercase ``genus species``.
+
+    Steps: lowercase; drop text in parentheses or square brackets (strain lists); collapse
+    whitespace; if the name is, or starts with, an entry of ``SPECIES_ALIASES`` (longest entry
+    first), return the alias key; otherwise return the first two words. So strain names,
+    "strain ...", "f. ...", "var. ..." and "subsp. ..." text is dropped. A name of one word, or
+    an empty string, is returned as it is after cleaning. The function knows no taxonomy beyond
+    the alias table.
+    """
+    name = " ".join(_BRACKETED.sub(" ", str(organism).lower()).split())
+    for alias in sorted(SPECIES_ALIASES, key=len, reverse=True):
+        if name == alias or name.startswith(alias + " "):
+            return SPECIES_ALIASES[alias][0]
+    return " ".join(name.split(" ")[:2])
+
+
+PATH_COLUMNS = ["compound", "min_tier", "steps", "organisms", "single_organism"]
+
+
+def _add_alternative(front: list[tuple[int, frozenset]], tier: int, orgs: frozenset) -> bool:
+    """Add (tier, organisms) to a list of alternatives unless one of them is at least as good
+    (tier not weaker and organisms a subset). Drop the alternatives that the new one beats.
+    Returns True when the list changed."""
+    if any(t <= tier and o <= orgs for t, o in front):
+        return False
+    front[:] = [(t, o) for t, o in front if not (tier <= t and orgs <= o)]
+    front.append((tier, orgs))
+    return True
+
+
+def _best(front: list[tuple[int, frozenset]]) -> tuple[int, frozenset]:
+    """Strongest tier first, then fewest organisms, then alphabetical organism list."""
+    return min(front, key=lambda a: (a[0], len(a[1]), sorted(a[1])))
+
+
+def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str],
+                  organism: str | None = None) -> pd.DataFrame:
     """Compounds reachable by following ``step_reaction`` links in the given step order.
 
-    Returns DataFrame ``compound, min_tier, steps`` for the compounds made by the LAST step.
+    Returns DataFrame ``compound, min_tier, steps, organisms, single_organism`` for the
+    compounds made by the LAST step.
+
+    READ THIS FIRST. ``min_tier`` is the weakest tier along the best path, and the links of
+    that path can belong to different organisms. ``organisms`` lists them (sorted, comma-joined
+    ``species_key`` values) and ``single_organism`` is True when the list has one name. When
+    ``single_organism`` is False the tier does NOT hold for any one organism: report it only
+    together with the organism list. To ask what one organism can do with its own curated
+    links, pass ``organism=``: only links whose ``species_key(organism)`` equals
+    ``species_key(argument)`` are used, and the filter is applied before anything else.
 
     Within one step the function takes the closure over ALL reactions of the step: a link
     (step, reaction) is applied when ALL non-cofactor substrates of its reaction are available,
@@ -242,11 +323,13 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.Da
     (for example a multifunctional enzyme). Cofactor rows are ignored on both sides. A reaction
     with zero non-cofactor substrates after the first step is skipped (it can never be reached).
 
-    ``min_tier`` is the weakest tier of the links used to reach the compound (order
-    T1a < T1b < T1c < T2 < T3 < T4, weakest = highest index), including the links of earlier
-    steps and of earlier reactions in the same step. Links with tier T4 are dropped, so a path
-    through a T4 link is excluded. When several paths give the same compound, the path with the
-    strongest weakest-tier is kept. ``steps`` is the comma-joined declared order. Raises
+    A path has a tier (the weakest tier of its links; order T1a < T1b < T1c < T2 < T3 < T4,
+    weakest = highest index) and an organism set (the species keys of its links), counted over
+    all steps and over the earlier reactions in the same step. Links with tier T4 are dropped,
+    so a path through a T4 link is excluded. For each compound the function keeps every path
+    that no other path beats in both tier and organism set. The best path of a compound is the
+    one with the strongest tier; among equal tiers the one with the fewest organisms; then the
+    alphabetically first organism list. ``steps`` is the comma-joined declared order. Raises
     ValueError for a step_id absent from the ``step`` table.
 
     The result holds only compounds that the last step makes. A compound that entered the last
@@ -255,14 +338,18 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.Da
     Simplifications: only the declared step order is followed (no skipping of optional steps,
     no branching over step orders). Roles must be stored in the direction the step uses;
     ``direction`` is informational and ignored here. In the first step every non-T4 link is
-    applied with no requirement on its substrates (they are the starting compounds). The
-    function does not filter by organism: links of different organisms can join in one path.
+    applied with no requirement on its substrates (they are the starting compounds). A link
+    with several substrates combines every kept path of each substrate, which is fast for the
+    small curated tables and can be slow for large ones.
     """
     known = set(tables["step"]["step_id"])
     for sid in step_ids:
         if sid not in known:
             raise ValueError(f"unknown step_id {sid!r}")
     sr, part = tables["step_reaction"], tables["reaction_participant"]
+    if organism is not None:
+        want = species_key(organism)
+        sr = sr[sr["organism"].map(species_key) == want]
     subs: dict[str, set[str]] = {}
     prods: dict[str, set[str]] = {}
     for _, r in part.iterrows():
@@ -271,35 +358,40 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.Da
         elif r["role"] == "product":
             prods.setdefault(r["reaction_id"], set()).add(r["compound"])
 
-    reach: dict[str, int] | None = None  # compound -> weakest tier index so far
+    Front = dict[str, list[tuple[int, frozenset]]]  # compound -> kept (tier index, organisms)
+    reach: Front | None = None
     for sid in step_ids:
-        links = [(TIERS.index(l["tier"]), l["reaction_id"])
+        links = [(TIERS.index(l["tier"]), l["reaction_id"], species_key(l["organism"]))
                  for _, l in sr[sr["step_id"] == sid].iterrows()
                  if l["tier"] in TIERS and l["tier"] != "T4"]
-        avail: dict[str, int] = dict(reach or {})  # usable as substrate inside this step
-        nxt: dict[str, int] = {}                   # made by this step
+        avail: Front = {c: list(f) for c, f in (reach or {}).items()}  # usable as substrate
+        nxt: Front = {}                                                # made by this step
         changed = True
-        while changed:  # closure; ends because a tier index can only go down
+        while changed:  # closure; ends because the sets of kept paths are finite
             changed = False
-            for tier, rid in links:
-                need = subs.get(rid, set())
+            for tier, rid, org in links:
+                need = sorted(subs.get(rid, set()))
                 if reach is None:
-                    base = tier  # first step: starting compounds carry no requirement
-                elif not need or not need <= avail.keys():
+                    combos = [(tier, frozenset([org]))]  # first step: no requirement
+                elif not need or not all(c in avail for c in need):
                     continue
                 else:
-                    base = max([tier] + [avail[c] for c in need])
-                for p in prods.get(rid, ()):
-                    if p not in nxt or base < nxt[p]:
-                        nxt[p] = base
-                        changed = True
-                    if p not in avail or base < avail[p]:
-                        avail[p] = base
-                        changed = True
-        reach = nxt
+                    combos = [(tier, frozenset([org]))]
+                    for c in need:
+                        combos = [(max(t, t2), o | o2) for t, o in combos for t2, o2 in avail[c]]
+                for t, o in combos:
+                    for p in prods.get(rid, ()):
+                        if _add_alternative(nxt.setdefault(p, []), t, o):
+                            changed = True
+                        if _add_alternative(avail.setdefault(p, []), t, o):
+                            changed = True
+        reach = {c: f for c, f in nxt.items() if f}
         if not reach:
             break
     steps = ",".join(step_ids)
-    rows = [{"compound": c, "min_tier": TIERS[ti], "steps": steps}
-            for c, ti in sorted((reach or {}).items())]
-    return pd.DataFrame(rows, columns=["compound", "min_tier", "steps"])
+    rows = []
+    for c in sorted(reach or {}):
+        tier, orgs = _best(reach[c])
+        rows.append({"compound": c, "min_tier": TIERS[tier], "steps": steps,
+                     "organisms": ",".join(sorted(orgs)), "single_organism": len(orgs) == 1})
+    return pd.DataFrame(rows, columns=PATH_COLUMNS)

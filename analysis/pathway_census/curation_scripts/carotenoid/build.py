@@ -103,7 +103,9 @@ REF_NOTE = {
    "paper for G8Z9M3. The product (beta-apo-12'-carotenal) is shown in PMID 21854466."],
  ("acaa", "A0ABR3AZC2"): [
    "verified: false. The gene name acaA on this entry comes from a 2024 genome annotation (EMBL",
-   "JBCLYO010000008, KAL0086242.1). No record ties the sequence to the protein assayed in PMID 21854466."],
+   "JBCLYO010000008, KAL0086242.1). No record ties the sequence to the protein assayed in PMID 21854466.",
+   "GenBank OAD75744.1 (PHYBLDRAFT_180852, strain NRRL 1555(-)) has the identical sequence (602 of 602).",
+   "The link in step_reaction.tsv is held at T3 until the protein id in the paper is compared."],
  ("carx", None): [
    "verified: false. No UniProt accession could be tied to Ustilago maydis cco1 (see UNVERIFIED.md A1)."],
 }
@@ -167,6 +169,10 @@ assert "PUBMED   22445959" in _gp
 _gp = raw("ncbi_protein", "CAC16261_gp", "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=CAC16261&rettype=gp&retmode=text", as_json=False)
 assert re.sub(r"[^a-z]", "", _gp.split("ORIGIN")[1].split("//")[0]).upper() == uniprot_entry("Q3HR17")["sequence"]
 assert "AX034665.1" in _gp
+_gp = raw("ncbi_protein", "OAD75744_gp", "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=OAD75744&rettype=gp&retmode=text", as_json=False)
+assert re.sub(r"[^a-z]", "", _gp.split("ORIGIN")[1].split("//")[0]).upper() == uniprot_entry("A0ABR3AZC2")["sequence"]
+assert "PHYBLDRAFT_180852" in _gp
+assert "activity is found exclusively in the (-) mating type" in pubmed_abstract("18931040")["abstract"]
 
 # ---------- regions of the fused proteins ----------
 REGION = {"phytoene_synthase": {}, "lycopene_cyclase": {}}
@@ -358,10 +364,10 @@ for r in ("echinenone_3_hydroxylation", "3_hydroxyechinenone_4p_ketolation", "to
 link("crtr", "RHEA:55660", "B6D970", "T1b", "crtR deletion in the fungus; beta-carotene accumulates and astaxanthin is absent; CrtR is the electron donor of CrtS, not the catalyst", "18837978")
 link("cars", C + "beta_carotene_11p12p_cleavage", "G8Z9M3", "T1a", "carS expressed in beta-carotene-producing Escherichia coli; beta-apo-12'-carotenal formed", "21854466")
 link("cars", C + "beta_carotene_11p12p_cleavage", "G8Z9M3", "T1b", "carS mutants of the fungus accumulate beta-carotene", "22445959")
-link("acaa", C + "apo12p_carotenal_13_14_cleavage", "A0ABR3AZC2", "T1a", "in vitro assay; joint expression with carS in Escherichia coli gave beta-apo-13-carotenone. The tier holds for Phycomyces AcaA; the accession A0ABR3AZC2 is not tied to the assayed protein (reference verified: false)", "21854466")
+link("acaa", C + "apo12p_carotenal_13_14_cleavage", "A0ABR3AZC2", "T3", "The abstract shows the reaction for Phycomyces AcaA (in vitro assay; joint expression with carS in Escherichia coli gave beta-apo-13-carotenone). No record ties the accession A0ABR3AZC2 to the assayed protein (reference verified: false), so the link is held at T3. Raise to T1a on a full-text check of PMID 21854466: compare the protein id given there with PHYBLDRAFT_180852 (identical sequence to A0ABR3AZC2, record OAD75744).", "21854466")
 link("tsp3", C + "beta_carotene_11p12p_cleavage", "A5HXP5", "T3", "Loss of carotene in a carotene-producing Escherichia coli strain; the abstract names no product and does not say which species' tsp3 was expressed. The product is inferred from Phycomyces CarS.", "17822929")
-link("tsp2", C + "4_dihydrotrisporin_oxidation", "B9DR41", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It states no assay result and no product. Tier held at T3; raise to T1 on a full-text check.", "18931040")
-link("tdh", C + "4_dihydromethyltrisporate_oxidation", "Q01213", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It states no assay result and no product. Tier held at T3; raise to T1 on a full-text check.", "8828234")
+link("tsp2", C + "4_dihydrotrisporin_oxidation", "B9DR41", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It also states that enzyme activity is found only in the (-) mating type. It names no assay and no product. Tier held at T3; raise to T1 on a full-text check.", "18931040")
+link("tdh", C + "4_dihydromethyltrisporate_oxidation", "Q01213", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It names no assay and no product. Tier held at T3; raise to T1 on a full-text check.", "8828234")
 ref_of = {(s, a): (g, pm) for s, rs in REF.items() for a, g, pm, v in rs}
 srows = []
 for step, rid, acc, tier, assay, pmid, q in L:
@@ -377,8 +383,8 @@ srows.append(["torularhodin_formation", C + "torulene_to_torularhodin", "not ass
               "hypothesis; a Rhea search and the pathway review found no enzyme", "", ""])
 tsv(KB / "step_reaction.tsv", COLUMNS["step_reaction"], srows)
 # change-detector fixture for the tests (quotes of all T1-T3 links)
-tsv(ROOT / "tests" / "data" / "kb" / "carotenoid_quotes.tsv", ["step_id", "reaction_id", "protein_accession", "pmid", "quote"],
-    [[r[0], r[1], r[4], r[7], r[8]] for r in srows if r[5] != "T4"])
+tsv(ROOT / "tests" / "data" / "kb" / "carotenoid_quotes.tsv", ["step_id", "reaction_id", "protein_accession", "tier", "assay", "pmid", "quote"],
+    [[r[0], r[1], r[4], r[5], r[6], r[7], r[8]] for r in srows if r[5] != "T4"])
 for r in srows:
     assert len(r[8]) <= 400, (r[7], len(r[8]))
 assert all(k in {r[7] for r in srows} for k in Q), [k for k in Q if k not in {r[7] for r in srows}]

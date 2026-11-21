@@ -142,7 +142,7 @@ def test_formula_mass_garbage():
 
 def test_path_possible_three_steps(tables):
     out = kb.path_possible(tables, ["s1", "s2", "s3"])
-    assert list(out.columns) == ["compound", "min_tier", "steps"]
+    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism"]
     assert out["compound"].tolist() == ["CHEBI:D"]
     assert out["min_tier"].tolist() == ["T3"]
     assert out["steps"].tolist() == ["s1,s2,s3"]
@@ -413,3 +413,95 @@ def test_path_first_step_links_keep_their_own_tier_in_any_row_order(tables):
     tables["step_reaction"] = tables["step_reaction"].iloc[::-1].reset_index(drop=True)
     out = kb.path_possible(tables, ["s2"])
     assert dict(zip(out["compound"], out["min_tier"])) == want
+
+
+# ---- organisms on the path (carotenoid fix round 2) --------------------------------------
+@pytest.mark.parametrize("text,want", [
+    ("Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)",
+     "neurospora crassa"),
+    ("Neurospora crassa", "neurospora crassa"),
+    ("  Neurospora   crassa  ", "neurospora crassa"),
+    ("Aspergillus fumigatus [strain Af293]", "aspergillus fumigatus"),
+    ("Phycomyces blakesleeanus strain NRRL 1555", "phycomyces blakesleeanus"),
+    ("Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)", "fusarium fujikuroi"),
+    ("Fusarium fujikuroi IMI 58289", "fusarium fujikuroi"),
+    ("Phaffia rhodozyma", "xanthophyllomyces dendrorhous"),
+    ("Xanthophyllomyces  dendrorhous", "xanthophyllomyces dendrorhous"),
+    ("Mucor circinelloides f. lusitanicus", "mucor circinelloides"),
+    ("Mucor racemosus var. lusitanicus", "mucor circinelloides"),
+    ("Mucor lusitanicus", "mucor circinelloides"),
+    ("Mucor racemosus", "mucor racemosus"),   # the species itself is not an alias
+    ("Mycosarcoma maydis", "ustilago maydis"),
+    ("Ustilago maydis", "ustilago maydis"),
+    ("Synthetica one", "synthetica one"),
+    ("", ""),
+])
+def test_species_key(text, want):
+    assert kb.species_key(text) == want
+
+
+def test_species_aliases_name_their_source():
+    assert kb.SPECIES_ALIASES["gibberella fujikuroi"][0] == "fusarium fujikuroi"
+    for alias, (target, source) in kb.SPECIES_ALIASES.items():
+        assert alias == alias.lower() and target == target.lower()
+        assert "NCBI Taxonomy" in source and "taxid" in source, alias
+
+
+def test_path_reports_organisms_single(tables):
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert out["organisms"].tolist() == ["synthetica one"]
+    assert out["single_organism"].tolist() == [True]
+
+
+def test_path_reports_organisms_mixed(tables):
+    out = kb.path_possible(tables, ["s1", "s2", "s3"])
+    assert out["organisms"].tolist() == ["synthetica one,synthetica two"]
+    assert out["single_organism"].tolist() == [False]
+
+
+def test_path_organism_filter(tables):
+    out = kb.path_possible(tables, ["s1", "s2"], organism="Synthetica one (strain X1)")
+    assert out["compound"].tolist() == ["CHEBI:C"] and out["single_organism"].tolist() == [True]
+    out = kb.path_possible(tables, ["s1", "s2", "s3"], organism="Synthetica one")
+    assert out.empty
+    assert list(out.columns) == ["compound", "min_tier", "steps", "organisms", "single_organism"]
+    assert kb.path_possible(tables, ["s1", "s2", "s3"], organism="Synthetica two").empty
+
+
+def test_path_prefers_fewer_organisms_at_equal_tier(tables):
+    extra = pd.DataFrame([dict(step_id="s2", reaction_id="R2", organism="Synthetica three",
+                               gene_name="geneB2", protein_accession="ACC9", tier="T1c",
+                               assay="in vivo", pmid="3", quote="synthetic quote")])
+    for order in (False, True):
+        t = dict(tables)
+        t["step_reaction"] = pd.concat([extra, tables["step_reaction"]] if order
+                                       else [tables["step_reaction"], extra], ignore_index=True)
+        out = kb.path_possible(t, ["s1", "s2"])
+        assert out["min_tier"].tolist() == ["T1c"]
+        assert out["organisms"].tolist() == ["synthetica one"]
+
+
+def test_path_stronger_tier_wins_over_fewer_organisms(tables):
+    extra = pd.DataFrame([dict(step_id="s2", reaction_id="R2", organism="Synthetica three",
+                               gene_name="geneB2", protein_accession="ACC9", tier="T1a",
+                               assay="in vitro", pmid="3", quote="synthetic quote")])
+    tables["step_reaction"] = pd.concat([tables["step_reaction"], extra], ignore_index=True)
+    out = kb.path_possible(tables, ["s1", "s2"])
+    assert out["min_tier"].tolist() == ["T1a"]
+    assert out["organisms"].tolist() == ["synthetica one,synthetica three"]
+    assert out["single_organism"].tolist() == [False]
+    # the weaker single-organism path is still found when asked for
+    one = kb.path_possible(tables, ["s1", "s2"], organism="synthetica one")
+    assert one["min_tier"].tolist() == ["T1c"] and one["single_organism"].tolist() == [True]
+
+
+def test_path_later_step_can_use_a_weaker_path_with_fewer_organisms(tables):
+    """s2 has a T1a link of another organism. s3 (T3) ends at T3 either way, so the path
+    with fewer organisms is reported."""
+    extra = pd.DataFrame([dict(step_id="s2", reaction_id="R2", organism="Synthetica three",
+                               gene_name="geneB2", protein_accession="ACC9", tier="T1a",
+                               assay="in vitro", pmid="3", quote="synthetic quote")])
+    tables["step_reaction"] = pd.concat([tables["step_reaction"], extra], ignore_index=True)
+    out = kb.path_possible(tables, ["s1", "s2", "s3"])
+    assert out["min_tier"].tolist() == ["T3"]
+    assert out["organisms"].tolist() == ["synthetica one,synthetica two"]

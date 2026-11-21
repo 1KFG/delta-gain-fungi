@@ -604,6 +604,8 @@ steps:
     refs:
       # verified: false. The gene name acaA on this entry comes from a 2024 genome annotation (EMBL
       # JBCLYO010000008, KAL0086242.1). No record ties the sequence to the protein assayed in PMID 21854466.
+      # GenBank OAD75744.1 (PHYBLDRAFT_180852, strain NRRL 1555(-)) has the identical sequence (602 of 602).
+      # The link in step_reaction.tsv is held at T3 until the protein id in the paper is compared.
       - accession: A0ABR3AZC2
         species: "Phycomyces blakesleeanus"
         gene_name: "acaA"
