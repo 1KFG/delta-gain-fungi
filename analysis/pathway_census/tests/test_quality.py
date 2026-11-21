@@ -221,3 +221,22 @@ def test_domain_ok_na_when_expected_list_empty():
     d = _dom([(1, "PF00494", 1e-30)])
     out = quality_flags(a, d, gi, REFS_LEN, _genomes(), expected_domains={"psy": []})
     assert out.domain_ok.isna().all()
+
+
+def test_domain_match_normalises_case_and_pfam_version():
+    gi = _gi([(1, "s1", 1000, 400), (2, "s1", 5000, 400)])
+    a = _assigned([(1, "psy"), (2, "psy")])
+    d = _dom([(1, "PF00494.22", 1e-30), (2, "pf00494", 1e-30)])
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(),
+                        expected_domains={"psy": ["PF00494"]})
+    assert out.domain_ok.tolist() == [True, True]
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(),
+                        expected_domains={"psy": ["pf00494.3"]})
+    assert out.domain_ok.tolist() == [True, True]
+
+
+def test_expected_domains_string_entry_raises():
+    gi = _gi([(1, "s1", 1000, 400)])
+    with pytest.raises(ValueError, match="must be a list"):
+        quality_flags(_assigned([(1, "psy")]), _dom([(1, "PF00494", 1e-30)]), gi, REFS_LEN,
+                      _genomes(), expected_domains={"psy": "PF00494"})

@@ -52,6 +52,8 @@ class Pathway:
     steps: list[Step]
     verified: bool
     routes: list[Route] = field(default_factory=list)
+    # Directory with <step id>.faa reference files. Set by load_pathway. None: no region check.
+    refs_dir: Path | None = None
 
 
 def _check_keys(d: dict, allowed: set[str], where: str) -> None:
@@ -174,24 +176,48 @@ def _load_route(d: dict, i: int) -> Route:
                  note=_str_or_none(d.get("note")))
 
 
-def _check_regions(p: Pathway, refs_dir: Path) -> None:
-    """Reject a ref region that runs past the sequence. Skip when no FASTA is found."""
+def _region_errors(p: Pathway) -> list[str]:
+    """Check ref regions against the reference FASTA files.
+
+    No refs directory (None or absent): skip. Directory present: a ref with a region needs an
+    accession, a FASTA file for the step and the accession in it, and the region must end
+    inside the sequence.
+    """
+    if p.refs_dir is None or not Path(p.refs_dir).is_dir():
+        return []
+    errs: list[str] = []
     for s in p.steps:
-        faa = refs_dir / f"{s.id}.faa"
-        if not faa.exists():
-            continue
-        lengths = _fasta_lengths(faa)
+        lengths: dict[str, int] | None = None
         for r in s.refs:
-            if r.region is None or r.accession not in lengths:
+            if r.region is None:
                 continue
-            if r.region[1] > lengths[r.accession]:
-                raise ValueError(
-                    f"step '{s.id}' ref '{r.accession}': region {list(r.region)} lies "
-                    f"outside the sequence (length {lengths[r.accession]})")
+            if not r.accession:
+                errs.append(f"step '{s.id}': region needs an accession")
+                continue
+            if lengths is None:
+                faa = Path(p.refs_dir) / f"{s.id}.faa"
+                lengths = _fasta_lengths(faa) if faa.exists() else {}
+                have_file = faa.exists()
+            if not have_file:
+                errs.append(f"step '{s.id}' ref '{r.accession}': region cannot be checked, "
+                            f"no FASTA file {s.id}.faa in the refs directory")
+            elif r.accession not in lengths:
+                errs.append(f"step '{s.id}' ref '{r.accession}': region cannot be checked, "
+                            f"accession not found in {s.id}.faa")
+            elif r.region[1] > lengths[r.accession]:
+                errs.append(f"step '{s.id}' ref '{r.accession}': region {list(r.region)} "
+                            f"lies outside the sequence (length {lengths[r.accession]})")
+    return errs
 
 
 def load_pathway(path: Path, refs_dir: Path | None = None) -> Pathway:
-    """Load a pathway YAML. `refs_dir` defaults to <yaml dir>/../refs/<pathway id>."""
+    """Load a pathway YAML.
+
+    `refs_dir` defaults to <yaml dir>/../refs/<pathway id>. This assumes the YAML sits in
+    `<root>/pathways/` and the references in `<root>/refs/<id>/`. Pass `refs_dir` for any
+    other layout. The directory is stored on the Pathway and used by `validate` for the
+    region check; if it does not exist the region check is skipped.
+    """
     path = Path(path)
     with open(path, encoding="utf-8") as fh:
         d = yaml.safe_load(fh)
@@ -202,8 +228,7 @@ def load_pathway(path: Path, refs_dir: Path | None = None) -> Pathway:
     routes = [_load_route(r, i) for i, r in enumerate(d.get("routes") or [])]
     p = Pathway(id=str(d["id"]), steps=steps,
                 verified=_bool(d, "verified", False, "pathway"), routes=routes)
-    _check_regions(p, refs_dir if refs_dir is not None
-                   else path.parent.parent / "refs" / p.id)
+    p.refs_dir = Path(refs_dir) if refs_dir is not None else path.parent.parent / "refs" / p.id
     return p
 
 
@@ -240,11 +265,19 @@ def validate(p: Pathway) -> list[str]:
     for s in p.steps:
         if s.route is not None and s.route not in route_ids:
             errs.append(f"step '{s.id}': route '{s.route}' is not declared")
+        elif s.route is not None and not any(
+                r.id == s.route and s.id in r.step_ids for r in p.routes):
+            errs.append(f"step '{s.id}': route '{s.route}' does not list the step "
+                        f"in its step_ids")
         for rx in sorted({x for x in s.reactions if s.reactions.count(x) > 1}):
             errs.append(f"step '{s.id}': duplicate reaction id '{rx}'")
         ref_acc = {r.accession for r in s.refs if r.accession}
+        dacc = [dc.accession for dc in s.decoys if dc.accession]
+        for a in sorted({x for x in dacc if dacc.count(x) > 1}):
+            errs.append(f"step '{s.id}': duplicate decoy accession '{a}'")
         for dc in s.decoys:
             if dc.accession and dc.accession in ref_acc:
                 errs.append(f"step '{s.id}': decoy accession '{dc.accession}' is also "
                             f"a reference of the step")
+    errs.extend(_region_errors(p))
     return errs
