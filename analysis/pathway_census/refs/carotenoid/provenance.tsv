@@ -1,24 +1,30 @@
-step_id	accession	species	pmid	source_database	retrieved_on	verified
-ggpp_synthase	P24322	Neurospora crassa	1826006	UniProtKB/Swiss-Prot (entry v169, sequence v2); PubMed	2026-11-20	true
-ggpp_synthase	Q9P885	Mucor circinelloides f. lusitanicus	12695851	UniProtKB/Swiss-Prot (entry v84, sequence v1); PubMed	2026-11-20	true
-phytoene_synthase	P37295	Neurospora crassa	8163509	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed	2026-11-20	true
-phytoene_synthase	Q8X0Z1	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed	2026-11-20	true
-phytoene_synthase	Q9P854	Phycomyces blakesleeanus	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed	2026-11-20	true
-phytoene_synthase	Q9UUQ6	Mucor circinelloides f. lusitanicus	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed	2026-11-20	true
-phytoene_synthase	Q7Z859	Xanthophyllomyces dendrorhous	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed	2026-11-20	true
-lycopene_cyclase	P37295	Neurospora crassa	11862485	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed	2026-11-20	true
-lycopene_cyclase	Q8X0Z1	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed	2026-11-20	true
-lycopene_cyclase	Q9P854	Phycomyces blakesleeanus	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed	2026-11-20	true
-lycopene_cyclase	Q9UUQ6	Mucor circinelloides f. lusitanicus	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed	2026-11-20	true
-lycopene_cyclase	Q7Z859	Xanthophyllomyces dendrorhous	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed	2026-11-20	true
-phytoene_desaturase	P21334	Neurospora crassa	11017770	UniProtKB/Swiss-Prot (entry v158, sequence v1); PubMed	2026-11-20	true
-phytoene_desaturase	Q8X0Z0	Fusarium fujikuroi	12172798	UniProtKB/Swiss-Prot (entry v106, sequence v2); PubMed	2026-11-20	true
-phytoene_desaturase	P54982	Phycomyces blakesleeanus	9079885	UniProtKB/Swiss-Prot (entry v103, sequence v1); PubMed	2026-11-20	true
-phytoene_desaturase	O13506	Xanthophyllomyces dendrorhous	10397832	UniProtKB/TrEMBL (entry v85, sequence v1); PubMed	2026-11-20	true
-carx	S0ENQ2	Fusarium fujikuroi IMI 58289	17293483	UniProtKB/Swiss-Prot (entry v36, sequence v1); PubMed	2026-11-20	true
-cart	A1KQY3	Fusarium fujikuroi	17493127	UniProtKB/Swiss-Prot (entry v46, sequence v1); PubMed	2026-11-20	true
-cart	A7UXI1	Neurospora crassa	17610084	UniProtKB/Swiss-Prot (entry v70, sequence v1); PubMed	2026-11-20	true
-ylo1	Q1K615	Neurospora crassa	18627463	UniProtKB/Swiss-Prot (entry v71, sequence v1); PubMed	2026-11-20	true
-ylo1	F6IBC7	Fusarium fujikuroi IMI 58289	21749649	UniProtKB/Swiss-Prot (entry v50, sequence v2); PubMed	2026-11-20	true
-astaxanthin_synthase	B5LEC8	Xanthophyllomyces dendrorhous	18769767	UniProtKB/TrEMBL (entry v61, sequence v1); PubMed	2026-11-20	true
-astaxanthin_synthase		Xanthophyllomyces dendrorhous	16416328	PubMed (no linked protein accession found in UniProt or NCBI elink)	2026-11-20	false
+step_id	accession	species	gene_name	region	pmid	source_database	retrieved_on	verified
+ggpp_synthase	P24322	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	al-3		1826006	UniProtKB/Swiss-Prot (entry v169, sequence v2); PubMed	2026-11-21	true
+ggpp_synthase	Q9P885	Mucor circinelloides f. lusitanicus	carG		12695851	UniProtKB/Swiss-Prot (entry v84, sequence v1); PubMed	2026-11-21	true
+phytoene_synthase	P37295	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	al-2	248-602	8163509	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed; region = UniProt feature Region 'Phytoene synthase'; it contains Pfam PF00494 at 292-590 (InterPro)	2026-11-21	true
+phytoene_synthase	Q8X0Z1	Fusarium fujikuroi	carRA	275-612	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed; region = UniProt feature Region 'Phytoene synthase'; it contains Pfam PF00494 at 318-601 (InterPro)	2026-11-21	true
+phytoene_synthase	Q9P854	Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)	carRA	245-602	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed; region = UniProt feature Region 'Phytoene synthase'; it contains Pfam PF00494 at 291-569 (InterPro)	2026-11-21	true
+phytoene_synthase	Q9UUQ6	Mucor circinelloides f. lusitanicus	CARRP	246-614	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed; region = UniProt feature Region 'Phytoene synthase'; it contains Pfam PF00494 at 296-574 (InterPro)	2026-11-21	true
+phytoene_synthase	Q7Z859	Phaffia rhodozyma	crtYB	258-673	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed; region = UniProt feature Region 'Phytoene synthase'; it contains Pfam PF00494 at 306-545 (InterPro)	2026-11-21	true
+lycopene_cyclase	P37295	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	al-2	1-241	11862485	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed; region = UniProt feature Region 'Lycopene beta-cyclase'; it contains NCBIfam TIGR03462 at 2-93,145-235 (InterPro); Pfam PF18916 at 11-94	2026-11-21	true
+lycopene_cyclase	Q8X0Z1	Fusarium fujikuroi	carRA	1-268	12172798	UniProtKB/Swiss-Prot (entry v76, sequence v1); PubMed; region = UniProt feature Region 'Lycopene beta-cyclase'; it contains NCBIfam TIGR03462 at 80-126,172-262 (InterPro); no Pfam PF18916 match in InterPro	2026-11-21	true
+lycopene_cyclase	Q9P854	Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)	carRA	1-238	11172012	UniProtKB/Swiss-Prot (entry v86, sequence v1); PubMed; region = UniProt feature Region 'Lycopene beta-cyclase'; it contains NCBIfam TIGR03462 at 2-91,143-231 (InterPro); no Pfam PF18916 match in InterPro	2026-11-21	true
+lycopene_cyclase	Q9UUQ6	Mucor circinelloides f. lusitanicus	CARRP	1-239	10951210	UniProtKB/Swiss-Prot (entry v96, sequence v1); PubMed; region = UniProt feature Region 'Lycopene beta-cyclase'; it contains NCBIfam TIGR03462 at 3-92,144-233 (InterPro); no Pfam PF18916 match in InterPro	2026-11-21	true
+lycopene_cyclase	Q7Z859	Phaffia rhodozyma	crtYB	1-251	10589832	UniProtKB/Swiss-Prot (entry v85, sequence v1); PubMed; region = UniProt feature Region 'Lycopene beta-cyclase'; it contains NCBIfam TIGR03462 at 5-98,151-246 (InterPro); no Pfam PF18916 match in InterPro	2026-11-21	true
+phytoene_desaturase	P21334	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	al-1		11017770	UniProtKB/Swiss-Prot (entry v158, sequence v1); PubMed	2026-11-21	true
+phytoene_desaturase	Q8X0Z0	Fusarium fujikuroi	carB		12172798	UniProtKB/Swiss-Prot (entry v106, sequence v2); PubMed	2026-11-21	true
+phytoene_desaturase	P54982	Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)	carB		9079885	UniProtKB/Swiss-Prot (entry v103, sequence v1); PubMed	2026-11-21	true
+phytoene_desaturase	O13506	Phaffia rhodozyma	crtI		10397832	UniProtKB/TrEMBL (entry v85, sequence v1); PubMed	2026-11-21	true
+carx	S0ENQ2	Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)	carX		17293483	UniProtKB/Swiss-Prot (entry v36, sequence v1); PubMed	2026-11-21	true
+cart	A1KQY3	Fusarium fujikuroi	carT		17493127	UniProtKB/Swiss-Prot (entry v46, sequence v1); PubMed	2026-11-21	true
+cart	A7UXI1	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	cao-2		17610084	UniProtKB/Swiss-Prot (entry v70, sequence v1); PubMed	2026-11-21	true
+ylo1	Q1K615	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	ylo-1		18627463	UniProtKB/Swiss-Prot (entry v71, sequence v1); PubMed	2026-11-21	true
+ylo1	F6IBC7	Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)	carD		21749649	UniProtKB/Swiss-Prot (entry v50, sequence v2); PubMed	2026-11-21	true
+astaxanthin_synthase	Q3HR17	Phaffia rhodozyma	crtS		16416328	UniProtKB/TrEMBL (entry v97, sequence v1); PubMed	2026-11-21	true
+astaxanthin_synthase	B5LEC8	Phaffia rhodozyma	crtS		18769767	UniProtKB/TrEMBL (entry v61, sequence v1); PubMed	2026-11-21	true
+crtr	B6D970	Phaffia rhodozyma	crtR		18837978	UniProtKB/TrEMBL (entry v76, sequence v1); PubMed	2026-11-21	true
+cars	G8Z9M3	Phycomyces blakesleeanus	carS		21854466	UniProtKB/TrEMBL (entry v42, sequence v1); PubMed	2026-11-21	true
+acaa	A0ABR3AZC2	Phycomyces blakesleeanus	acaA		21854466	UniProtKB/TrEMBL (entry v5, sequence v1); PubMed	2026-11-21	true
+tsp3	A5HXP5	Blakeslea trispora	tsp3		17822929	UniProtKB/TrEMBL (entry v45, sequence v1); PubMed	2026-11-21	true
+tsp2	B9DR41	Mucor mucedo	tsp2		18931040	UniProtKB/TrEMBL (entry v46, sequence v1); PubMed	2026-11-21	true
+tdh	Q01213	Mucor mucedo	tdh		8828234	UniProtKB/Swiss-Prot (entry v88, sequence v1); PubMed	2026-11-21	true

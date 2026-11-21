@@ -246,7 +246,9 @@ def test_cli_provisional_writes_outputs(tmp_path):
     import io
     m = pd.read_csv(io.BytesIO(subprocess.run(["zstd", "-dc", str(mp)], capture_output=True, check=True).stdout),
                     sep="\t")
-    assert len(m) == 2 * 8
+    from pathway_census.defs import load_pathway
+    n_steps = len(load_pathway(PW_YAML).steps)  # 14 in step set v2; was 8 in the first draft
+    assert n_steps >= 8 and len(m) == 2 * n_steps
     row = m[(m.locustag == A) & (m.step_id == "ggpp_synthase")].iloc[0]
     assert (row.copy_raw, row.copy_filtered, row.copy_flagged, row.copy_unknown) == (2, 1, 1, 0)
     s = pd.read_csv(sp, sep="\t", comment="#")

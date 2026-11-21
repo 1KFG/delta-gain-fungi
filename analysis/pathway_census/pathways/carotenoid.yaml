@@ -1,218 +1,748 @@
-# Carotenoid pathway definition (Task 3 draft, 2026-11-20).
+# Carotenoid pathway definition, step set v2 (stage 1, task S3, 2026-11-21).
 #
-# Status: DRAFT for user review (spec section 5.8). Pathway-level verified: false.
+# Status: DRAFT for user review. Pathway-level verified: false.
 # Do not run a census against this file until the user has reviewed the step list.
 #
-# Reference checks: see refs/carotenoid/provenance.tsv and the reference curation
-# record in docs/superpowers/plans/2026-11-20-pilot-lessons.md.
-# A ref has verified: true only when (1) the UniProt entry was fetched on
-# 2026-11-20 and its gene name, organism and length matched, (2) the UniProt
-# entry cites the PMID, and (3) the PubMed record (title/abstract) describes the
-# function of that gene for this step.
+# Reference checks: refs/carotenoid/provenance.tsv, refs/carotenoid/decoys/provenance.tsv and
+# refs/carotenoid/UNVERIFIED.md. Evidence tiers, quotes and reactions: kb/carotenoid/*.tsv.
+#
+# A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
+# organism and gene name matched, (2) the UniProt entry or the PubMed abstract supports the
+# reaction of the step, and (3) the PMID exists in PubMed. It never means a person reviewed it.
+# A decoy has verified: true when the UniProt entry was fetched on 2026-11-21, its organism and
+# gene name matched, it carries the Pfam family of the step, and its reviewed UniProt record
+# states a function that is not the function of the step. A decoy pmid is given only when the
+# abstract was read.
 #
 # Field notes:
-# - domains_any: Pfam / NCBIfam IDs taken from the UniProt cross-references of the
-#   reference proteins (MEASURED from UniProt, not from an hmmscan run here).
-#   These families are broader than the step. A step call needs HMM plus tree
-#   placement (spec anti-goals). Do not count bare Pfam hits as steps.
+# - species: the organism name of the UniProt entry, copied exactly. UniProt names
+#   Xanthophyllomyces dendrorhous "Phaffia rhodozyma", Fusarium fujikuroi IMI 58289
+#   "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)" and Ustilago maydis
+#   "Mycosarcoma maydis".
+# - gene_name: a gene name of the UniProt entry. It is valid only together with species.
+# - region: [start, end], 1-based inclusive, in coordinates of the FASTA record of the step.
+#   For the fused phytoene synthase / lycopene cyclase proteins the FASTA record is already cut
+#   to the domain, so region covers the whole record. The coordinates on the full UniProt
+#   sequence are in the comment above each region and in the `region` column of
+#   refs/carotenoid/provenance.tsv. Reason: defs.validate checks region against the record in
+#   <step>.faa, so full-protein coordinates of a cut C-terminal domain do not validate.
+#   Full sequences: refs/carotenoid/full_length/fused.faa.
+# - domains_any: Pfam / NCBIfam ids from the UniProt cross-references of the references. The
+#   families are broader than the steps. A step call needs HMM plus tree placement with decoys.
+# - reactions: ids of kb/carotenoid/reaction.tsv. The tier of each (protein, reaction) link is
+#   in kb/carotenoid/step_reaction.tsv, not here.
 # - copy_expect, optional and role are PROPOSED values. No census data exists yet.
-# - Fused genes: phytoene synthase and lycopene cyclase are one protein in the
-#   reference fungi (al-2, carRA, carRP, crtYB). The same accessions are refs of
-#   both steps. Place the two domains on separate trees (Fable review item 7).
+# - Hypothesis-level steps (T4) with no reference protein are not steps here. They are listed in
+#   refs/carotenoid/UNVERIFIED.md; torulene to torularhodin also has a T4 row in the tables.
 id: carotenoid
 verified: false
+routes:
+  - id: core
+    name: "GGPP to beta-carotene and torulene"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase]
+    note: "Shared by all routes. Torulene needs the five-step desaturase."
+  - id: neurosporaxanthin
+    name: "torulene to neurosporaxanthin (Neurospora, Fusarium)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, cart, ylo1]
+    note: "The order of cyclisation, cleavage and oxidation differs between Neurospora and Fusarium (PMID 21749649)."
+  - id: retinal
+    name: "beta-carotene to retinal (Fusarium CarX, Ustilago Cco1)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, carx]
+  - id: astaxanthin
+    name: "beta-carotene to astaxanthin (Xanthophyllomyces dendrorhous)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, astaxanthin_synthase, crtr]
+    note: "A grid of ketolation and hydroxylation reactions by one P450 with its reductase."
+  - id: trisporoid
+    name: "beta-carotene to trisporoid precursors (Mucorales, mating)"
+    step_ids: [ggpp_synthase, phytoene_synthase, phytoene_desaturase, lycopene_cyclase, cars, acaa, tsp3, tsp2, tdh]
+    note: "Only two cleavage steps and two dehydrogenase steps have enzymes. Later oxidations are excluded (T4)."
 steps:
   - id: ggpp_synthase
-    name: geranylgeranyl diphosphate synthase (al-3, carG, crtE)
+    name: "geranylgeranyl diphosphate synthase (al-3, carG, crtE)"
     ec: "2.5.1.29"
-    # PROPOSED multi: PF00348 is also used for prenylation and terpenoid
-    # clusters (Fable review item 5). The carotenoid-specific clade is not defined.
     refs:
       - accession: P24322
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "al-3"
         pmid: "1826006"
         verified: true
       - accession: Q9P885
-        species: Mucor circinelloides f. lusitanicus
+        species: "Mucor circinelloides f. lusitanicus"
+        gene_name: "carG"
         pmid: "12695851"
+        verified: true
+    decoys:
+      - accession: P08524
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ERG20"
+        pmid: null
+        verified: true
+      - accession: O14230
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "fps1"
+        pmid: null
+        verified: true
+      - accession: A0A1D8PH78
+        species: "Candida albicans (strain SC5314 / ATCC MYA-2876)"
+        gene_name: "ERG20"
+        pmid: null
+        verified: true
+      - accession: P18900
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "COQ1"
+        pmid: null
         verified: true
     domains_any: [PF00348]
     copy_expect: multi
     role: catalytic
     fused_with: []
     optional: false
+    reactions:
+      - "RHEA:17653"
+    lineage_note: "GGPP synthases also serve protein prenylation and other terpenoid pathways. Yeasts without carotenoids carry one (the pathway review names S. cerevisiae BTS1, Q12051). Presence of this step alone says nothing about carotenoids."
 
   - id: phytoene_synthase
-    name: phytoene synthase (C-terminal domain of al-2 / carRA / carRP / crtYB)
+    name: "phytoene synthase (C-terminal domain of al-2 / carRA / carRP / crtYB)"
     ec: "2.5.1.32"
-    # PF00494 (SQS_PSY) also contains squalene synthase (ERG9), present in
-    # nearly all fungi. The phytoene synthase clade must be separated by tree.
     refs:
       - accession: P37295
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "al-2"
         pmid: "8163509"
         verified: true
+        # FASTA record = residues 248-602 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 355]
       - accession: Q8X0Z1
-        species: Fusarium fujikuroi
+        species: "Fusarium fujikuroi"
+        gene_name: "carRA"
         pmid: "12172798"
         verified: true
+        # FASTA record = residues 275-612 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 338]
       - accession: Q9P854
-        species: Phycomyces blakesleeanus
+        species: "Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)"
+        gene_name: "carRA"
         pmid: "11172012"
         verified: true
+        # FASTA record = residues 245-602 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 358]
       - accession: Q9UUQ6
-        species: Mucor circinelloides f. lusitanicus
+        species: "Mucor circinelloides f. lusitanicus"
+        gene_name: "CARRP"
         pmid: "10951210"
         verified: true
+        # FASTA record = residues 246-614 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 369]
       - accession: Q7Z859
-        species: Xanthophyllomyces dendrorhous
+        species: "Phaffia rhodozyma"
+        gene_name: "crtYB"
         pmid: "10589832"
+        verified: true
+        # FASTA record = residues 258-673 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 416]
+    decoys:
+      - accession: P29704
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ERG9"
+        pmid: null
+        verified: true
+      - accession: P36596
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "erg9"
+        pmid: null
+        verified: true
+      - accession: Q92459
+        species: "Mycosarcoma maydis"
+        gene_name: "ERG9"
+        pmid: null
+        verified: true
+      - accession: Q4WAG4
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "erg9"
+        pmid: null
         verified: true
     domains_any: [PF00494]
     copy_expect: single
     role: catalytic
     fused_with: [lycopene_cyclase]
     optional: false
+    reactions:
+      - "RHEA:34475"
+    lineage_note: "One protein with lycopene_cyclase in the reference fungi. References are cut to the phytoene synthase region. PF00494 also holds squalene synthase (ERG9), present in nearly all fungi (decoys)."
 
   - id: lycopene_cyclase
-    name: lycopene beta-cyclase (N-terminal CarR domain of al-2 / carRA / carRP / crtYB)
+    name: "lycopene beta-cyclase (N-terminal domain of al-2 / carRA / carRP / crtYB)"
     ec: "5.5.1.19"
-    # TIGR03462 (NCBIfam CarR_dom_SF, InterPro IPR017825) is on all five refs in
-    # UniProt. Pfam PF18916 (Lycopene_cyc) is cross-referenced only on P37295.
-    # Whether PF18916 detects the other fungal cyclase domains is UNVERIFIED
-    # (Fable review item 5). Prefer TIGR03462 for the prefilter.
-    # A standalone bacterial-type crtY hit in a fungal assembly is a
-    # contamination suspect (Fable review items 6 and 8).
     refs:
       - accession: P37295
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "al-2"
         pmid: "11862485"
         verified: true
+        # FASTA record = residues 1-241 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 241]
       - accession: Q8X0Z1
-        species: Fusarium fujikuroi
+        species: "Fusarium fujikuroi"
+        gene_name: "carRA"
         pmid: "12172798"
         verified: true
+        # FASTA record = residues 1-268 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 268]
       - accession: Q9P854
-        species: Phycomyces blakesleeanus
+        species: "Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)"
+        gene_name: "carRA"
         pmid: "11172012"
         verified: true
+        # FASTA record = residues 1-238 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 238]
       - accession: Q9UUQ6
-        species: Mucor circinelloides f. lusitanicus
+        species: "Mucor circinelloides f. lusitanicus"
+        gene_name: "CARRP"
         pmid: "10951210"
         verified: true
+        # FASTA record = residues 1-239 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 239]
       - accession: Q7Z859
-        species: Xanthophyllomyces dendrorhous
+        species: "Phaffia rhodozyma"
+        gene_name: "crtYB"
         pmid: "10589832"
         verified: true
+        # FASTA record = residues 1-251 of the full UniProt sequence (UniProt feature Region)
+        region: [1, 251]
     domains_any: [TIGR03462, PF18916]
     copy_expect: single
     role: catalytic
     fused_with: [phytoene_synthase]
     optional: false
+    reactions:
+      - "RHEA:32219"
+      - "RHEA:32239"
+      - "CUR:carotenoid:didehydrolycopene_to_torulene"
+    lineage_note: "References are cut to the cyclase region. InterPro places Pfam PF18916 on P37295 only among the five references; NCBIfam TIGR03462 is on all five. Neurospora AL-2 preferentially does single cyclisations (PMID 16928467)."
 
   - id: phytoene_desaturase
-    name: phytoene desaturase (al-1, carB, crtI)
-    # EC from UniProt P54982. P21334 and Q8X0Z0 carry EC 1.3.99.- in UniProt.
-    ec: "1.3.99.30"
-    # PF01593 (Amino_oxidase) is a very broad family. Tree placement required.
+    name: "phytoene desaturase (al-1, carB, crtI)"
+    ec: null
     refs:
       - accession: P21334
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "al-1"
         pmid: "11017770"
         verified: true
       - accession: Q8X0Z0
-        species: Fusarium fujikuroi
+        species: "Fusarium fujikuroi"
+        gene_name: "carB"
         pmid: "12172798"
         verified: true
       - accession: P54982
-        species: Phycomyces blakesleeanus
+        species: "Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359 / FGSC 10004 / NBRC 33097 / NRRL 1555)"
+        gene_name: "carB"
         pmid: "9079885"
         verified: true
       - accession: O13506
-        species: Xanthophyllomyces dendrorhous
+        species: "Phaffia rhodozyma"
+        gene_name: "crtI"
         pmid: "10397832"
+        verified: true
+    decoys:
+      - accession: P50264
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "FMS1"
+        pmid: null
+        verified: true
+      - accession: P46882
+        species: "Aspergillus niger"
+        gene_name: "maoN"
+        pmid: null
+        verified: true
+      - accession: Q10062
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "hem14"
+        pmid: null
+        verified: true
+      - accession: P23623
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "lox"
+        pmid: null
+        verified: true
+      - accession: B8NI10
+        species: "Aspergillus flavus (strain ATCC 200026 / FGSC A1120 / IAM 13836 / NRRL 3357 / JCM 12722 / SRRC 167)"
+        gene_name: "cpaO"
+        pmid: null
         verified: true
     domains_any: [PF01593]
     copy_expect: single
     role: catalytic
     fused_with: []
     optional: false
+    reactions:
+      - "RHEA:30975"
+      - "RHEA:15585"
+    lineage_note: "Two reactions. The number of desaturations cannot be read from the sequence family: four steps to lycopene are shown for Phycomyces carB (PMID 9079885) and X. dendrorhous crtI (PMID 10397832); five steps to 3,4-didehydrolycopene are shown for Neurospora AL-1 (PMID 11017770, with lycopene as the second major product) and Fusarium carB (PMID 19645721). Only the five-step enzyme gives torulene and neurosporaxanthin. A tier holds for the named organism and protein only."
 
   - id: carx
-    name: beta-carotene cleaving oxygenase, retinal-forming (CarX)
+    name: "beta-carotene cleaving oxygenase, retinal-forming (CarX, Cco1)"
     ec: "1.13.11.63"
-    # Not required for neurosporaxanthin synthesis (PMID 17293483). Off the
-    # main route; PROPOSED optional.
+    route: retinal
     refs:
       - accession: S0ENQ2
-        species: Fusarium fujikuroi IMI 58289
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "carX"
         pmid: "17293483"
+        verified: true
+      - accession: null
+        species: "Ustilago maydis"
+        gene_name: "cco1"
+        pmid: "19584000"
+        verified: false
+    decoys:
+      - accession: Q7S860
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-1"
+        pmid: "23893079"
+        verified: true
+      - accession: A0A0D1E6L2
+        species: "Mycosarcoma maydis"
+        gene_name: "RCO1"
+        pmid: null
+        verified: true
+      - accession: A0A384JIP2
+        species: "Botrytis cinerea (strain B05.10)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: Q4W9H1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: G2QIL8
+        species: "Thermothelomyces thermophilus (strain ATCC 42464 / BCRC 31852 / DSM 1799)"
+        gene_name: "MYCTH_2309496"
+        pmid: null
+        verified: true
+      - accession: Q52008
+        species: "Sphingomonas paucimobilis"
+        gene_name: "lsdB"
+        pmid: null
         verified: true
     domains_any: [PF03055]
     copy_expect: single
     role: catalytic
     fused_with: []
     optional: true
+    reactions:
+      - "RHEA:32887"
+    lineage_note: "Linked to opsins. Not needed for neurosporaxanthin (PMID 17293483). carX and carT are close relatives with different substrates."
 
   - id: cart
-    name: torulene cleaving oxygenase (CarT; cao-2 in Neurospora)
+    name: "torulene cleaving oxygenase (CarT; cao-2 in Neurospora)"
     ec: "1.13.11.59"
-    # cao-2 is kept as a ref of this step, not as a separate step: PMID 17610084
-    # shows CAO-2 cleaves torulene to beta-apo-4'-carotenal, the CarT reaction.
-    # Same RPE65 family as carx; carx and cart need separate reference clades.
+    route: neurosporaxanthin
     refs:
       - accession: A1KQY3
-        species: Fusarium fujikuroi
+        species: "Fusarium fujikuroi"
+        gene_name: "carT"
         pmid: "17493127"
         verified: true
       - accession: A7UXI1
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-2"
         pmid: "17610084"
+        verified: true
+    decoys:
+      - accession: Q7S860
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-1"
+        pmid: "23893079"
+        verified: true
+      - accession: A0A0D1E6L2
+        species: "Mycosarcoma maydis"
+        gene_name: "RCO1"
+        pmid: null
+        verified: true
+      - accession: A0A384JIP2
+        species: "Botrytis cinerea (strain B05.10)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: Q4W9H1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: G2QIL8
+        species: "Thermothelomyces thermophilus (strain ATCC 42464 / BCRC 31852 / DSM 1799)"
+        gene_name: "MYCTH_2309496"
+        pmid: null
+        verified: true
+      - accession: Q52008
+        species: "Sphingomonas paucimobilis"
+        gene_name: "lsdB"
+        pmid: null
         verified: true
     domains_any: [PF03055]
     copy_expect: single
     role: catalytic
     fused_with: []
     optional: true
+    reactions:
+      - "RHEA:31519"
+    lineage_note: "Shown in Neurospora and Fusarium. The order of cyclisation, cleavage and oxidation differs between the two (abstract of PMID 21749649)."
 
   - id: ylo1
-    name: beta-apo-4'-carotenal dehydrogenase (ylo-1, carD)
+    name: "beta-apo-4'-carotenal dehydrogenase (ylo-1, carD)"
     ec: "1.2.1.82"
-    # Last step of neurosporaxanthin synthesis. PF00171 (Aldedh) is very broad.
+    route: neurosporaxanthin
     refs:
       - accession: Q1K615
-        species: Neurospora crassa
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "ylo-1"
         pmid: "18627463"
         verified: true
       - accession: F6IBC7
-        species: Fusarium fujikuroi IMI 58289
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "carD"
         pmid: "21749649"
+        verified: true
+    decoys:
+      - accession: P54115
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ALD6"
+        pmid: null
+        verified: true
+      - accession: P46367
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ALD4"
+        pmid: null
+        verified: true
+      - accession: P08157
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "aldA"
+        pmid: null
+        verified: true
+      - accession: Q04458
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "HFD1"
+        pmid: null
+        verified: true
+      - accession: P38067
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "UGA2"
+        pmid: null
         verified: true
     domains_any: [PF00171]
     copy_expect: single
     role: catalytic
     fused_with: []
     optional: true
+    reactions:
+      - "RHEA:31515"
+    lineage_note: "Shown in Neurospora and Fusarium."
 
   - id: astaxanthin_synthase
-    name: astaxanthin synthase, cytochrome P450 (crtS / asy)
+    name: "astaxanthin synthase, cytochrome P450 (crtS / asy)"
     ec: null
-    # Needs the P450 reductase crtR as electron donor (PMID 18837978). crtR is a
-    # general CPR and is not listed as a step (weak marker; Fable review item 6).
-    # PF00067 (p450) is one of the largest fungal families. Tree placement required.
+    route: astaxanthin
     refs:
+      - accession: Q3HR17
+        species: "Phaffia rhodozyma"
+        gene_name: "crtS"
+        pmid: "16416328"
+        verified: true
       - accession: B5LEC8
-        species: Xanthophyllomyces dendrorhous
+        species: "Phaffia rhodozyma"
+        gene_name: "crtS"
         pmid: "18769767"
         verified: true
-      # Functional characterisation paper. PubMed checked. No protein accession
-      # is linked to this PMID in UniProt or NCBI elink, so it stays unverified.
-      - accession: null
-        species: Xanthophyllomyces dendrorhous
-        pmid: "16416328"
-        verified: false
+    decoys:
+      - accession: P10614
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ERG11"
+        pmid: null
+        verified: true
+      - accession: P54781
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ERG5"
+        pmid: null
+        verified: true
+      - accession: P23295
+        species: "Fusarium oxysporum"
+        gene_name: "CYP55A1"
+        pmid: null
+        verified: true
+      - accession: P21595
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "DIT2"
+        pmid: null
+        verified: true
+      - accession: Q9Y8G7
+        species: "Fusarium oxysporum"
+        gene_name: "CYP505"
+        pmid: null
+        verified: true
     domains_any: [PF00067]
     copy_expect: single
     role: catalytic
     fused_with: []
     optional: true
+    reactions:
+      - "RHEA:55660"
+      - "RHEA:55664"
+      - "CUR:carotenoid:canthaxanthin_3_hydroxylation"
+      - "CUR:carotenoid:phoenicoxanthin_3p_hydroxylation"
+      - "CUR:carotenoid:echinenone_3_hydroxylation"
+      - "CUR:carotenoid:3_hydroxyechinenone_4p_ketolation"
+      - "CUR:carotenoid:torulene_4_ketolation"
+      - "CUR:carotenoid:4_ketotorulene_3_hydroxylation"
+    lineage_note: "Shown in Xanthophyllomyces dendrorhous (UniProt organism name: Phaffia rhodozyma). Needs the P450 reductase step crtr. The route is a reaction grid, not a line."
+
+  - id: crtr
+    name: "cytochrome P450 reductase, electron donor of astaxanthin synthase (crtR)"
+    ec: "1.6.2.4"
+    route: astaxanthin
+    refs:
+      - accession: B6D970
+        species: "Phaffia rhodozyma"
+        gene_name: "crtR"
+        pmid: "18837978"
+        verified: true
+    decoys:
+      - accession: Q12181
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "TAH18"
+        pmid: null
+        verified: true
+      - accession: O94613
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "tah18"
+        pmid: null
+        verified: true
+      - accession: P39692
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "MET10"
+        pmid: null
+        verified: true
+      - accession: Q9Y8G7
+        species: "Fusarium oxysporum"
+        gene_name: "CYP505"
+        pmid: null
+        verified: true
+    domains_any: [PF00667, PF00258, PF00175]
+    copy_expect: single
+    role: auxiliary
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:55660"
+    lineage_note: "A general cytochrome P450 reductase. Most fungi carry one, so it is a weak marker; it is needed for the reactions of astaxanthin_synthase."
+
+  - id: cars
+    name: "beta-carotene C11'-C12' cleaving oxygenase (carS of Phycomyces)"
+    ec: null
+    route: trisporoid
+    refs:
+      - accession: G8Z9M3
+        species: "Phycomyces blakesleeanus"
+        gene_name: "carS"
+        pmid: "21854466"
+        verified: true
+    decoys:
+      - accession: Q7S860
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-1"
+        pmid: "23893079"
+        verified: true
+      - accession: A0A0D1E6L2
+        species: "Mycosarcoma maydis"
+        gene_name: "RCO1"
+        pmid: null
+        verified: true
+      - accession: A0A384JIP2
+        species: "Botrytis cinerea (strain B05.10)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: Q4W9H1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: G2QIL8
+        species: "Thermothelomyces thermophilus (strain ATCC 42464 / BCRC 31852 / DSM 1799)"
+        gene_name: "MYCTH_2309496"
+        pmid: null
+        verified: true
+      - accession: Q52008
+        species: "Sphingomonas paucimobilis"
+        gene_name: "lsdB"
+        pmid: null
+        verified: true
+    domains_any: [PF03055]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:carotenoid:beta_carotene_11p12p_cleavage"
+    lineage_note: "Mucorales, sexual signalling. The name carS belongs to Phycomyces blakesleeanus here. In Fusarium fujikuroi carS names a different gene (a regulator, per the pathway review); that gene is not a reference of this step."
+
+  - id: acaa
+    name: "beta-apo-12'-carotenal C13-C14 cleaving oxygenase (acaA of Phycomyces)"
+    ec: null
+    route: trisporoid
+    refs:
+      - accession: A0ABR3AZC2
+        species: "Phycomyces blakesleeanus"
+        gene_name: "acaA"
+        pmid: "21854466"
+        verified: true
+    decoys:
+      - accession: Q7S860
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-1"
+        pmid: "23893079"
+        verified: true
+      - accession: A0A0D1E6L2
+        species: "Mycosarcoma maydis"
+        gene_name: "RCO1"
+        pmid: null
+        verified: true
+      - accession: A0A384JIP2
+        species: "Botrytis cinerea (strain B05.10)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: Q4W9H1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: G2QIL8
+        species: "Thermothelomyces thermophilus (strain ATCC 42464 / BCRC 31852 / DSM 1799)"
+        gene_name: "MYCTH_2309496"
+        pmid: null
+        verified: true
+      - accession: Q52008
+        species: "Sphingomonas paucimobilis"
+        gene_name: "lsdB"
+        pmid: null
+        verified: true
+    domains_any: [PF03055]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:carotenoid:apo12p_carotenal_13_14_cleavage"
+    lineage_note: "Mucorales, sexual signalling."
+
+  - id: tsp3
+    name: "carotene oxygenase induced by trisporic acid (tsp3 of Blakeslea trispora)"
+    ec: null
+    route: trisporoid
+    refs:
+      - accession: A5HXP5
+        species: "Blakeslea trispora"
+        gene_name: "tsp3"
+        pmid: "17822929"
+        verified: true
+    decoys:
+      - accession: Q7S860
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "cao-1"
+        pmid: "23893079"
+        verified: true
+      - accession: A0A0D1E6L2
+        species: "Mycosarcoma maydis"
+        gene_name: "RCO1"
+        pmid: null
+        verified: true
+      - accession: A0A384JIP2
+        species: "Botrytis cinerea (strain B05.10)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: Q4W9H1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "rco1"
+        pmid: null
+        verified: true
+      - accession: G2QIL8
+        species: "Thermothelomyces thermophilus (strain ATCC 42464 / BCRC 31852 / DSM 1799)"
+        gene_name: "MYCTH_2309496"
+        pmid: null
+        verified: true
+      - accession: Q52008
+        species: "Sphingomonas paucimobilis"
+        gene_name: "lsdB"
+        pmid: null
+        verified: true
+    domains_any: [PF03055]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:carotenoid:beta_carotene_11p12p_cleavage"
+    lineage_note: "Mucorales, sexual signalling. The product is not identified in the abstract; the link to the CarS reaction is T3."
+
+  - id: tsp2
+    name: "4-dihydrotrisporin dehydrogenase (tsp2 of Mucor mucedo)"
+    ec: null
+    route: trisporoid
+    refs:
+      - accession: B9DR41
+        species: "Mucor mucedo"
+        gene_name: "tsp2"
+        pmid: "18931040"
+        verified: true
+    decoys:
+      - accession: P21158
+        species: "Myxococcus xanthus"
+        gene_name: "csgA"
+        pmid: null
+        verified: true
+    domains_any: [PF00106]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:carotenoid:4_dihydrotrisporin_oxidation"
+    lineage_note: "Mucorales, sexual signalling. Enzyme activity is found only in the (-) mating type although the protein is in both (PMID 18931040)."
+
+  - id: tdh
+    name: "4-dihydromethyltrisporate dehydrogenase (tdh of Mucor mucedo)"
+    ec: null
+    route: trisporoid
+    refs:
+      - accession: Q01213
+        species: "Mucor mucedo"
+        gene_name: "tdh"
+        pmid: "8828234"
+        verified: true
+    decoys:
+      - accession: P38715
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "GRE3"
+        pmid: null
+        verified: true
+      - accession: Q12458
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "YPR1"
+        pmid: null
+        verified: true
+      - accession: P14065
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "GCY1"
+        pmid: null
+        verified: true
+    domains_any: [PF00248]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:carotenoid:4_dihydromethyltrisporate_oxidation"
+    lineage_note: "Mucorales, sexual signalling. Protein purified from the (-) mating type."

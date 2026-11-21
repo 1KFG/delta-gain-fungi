@@ -50,10 +50,13 @@ MEASURED 2026-11-20 on the real tables:
 ## Carotenoid definition (Task 3, DRAFT for user review)
 
 - Schema v2 (`pathway_census.defs`): `domains` is renamed `domains_any` (any-of; the loader rejects `domains` with "use domains_any"). New optional step keys: `route`, `reactions`, `decoys` (same fields as a ref), `lineage_note`. New optional ref keys: `gene_name`, `region` (`[start, end]`, 1-based inclusive; checked by `validate` against `refs/<id>/<step>.faa`; skipped only when the refs directory does not exist; with a refs directory, a region without an accession, a missing FASTA or an accession absent from it is an error; `load_pathway` assumes the YAML is in `<root>/pathways/` and takes `refs_dir` otherwise). New top-level `routes` list (`id`, `name`, `step_ids`, `note`). `validate` reports unknown route steps, a step whose `route` does not list it in `step_ids` (`Route.step_ids` is the membership; a step may be in several routes and may have no `route`), duplicate decoy accessions, undeclared step routes, duplicate reaction ids in a step, and a decoy accession that is also a ref of the same step.
-- `pathways/carotenoid.yaml`: 8 steps, pathway `verified: false`. User review of the step list is required before any census run (spec 5.8).
-- `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-20), one file per step. Fused PSY/cyclase proteins appear in both step files.
-- `refs/carotenoid/provenance.tsv`: one row per (step, ref) with source and verified flag.
-- `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of open decisions.
+- `pathways/carotenoid.yaml` (step set v2, 2026-11-21): 14 steps in 5 routes (`core`, `neurosporaxanthin`, `retinal`, `astaxanthin`, `trisporoid`), pathway `verified: false`. User review of the step list is required before any census run (spec 5.8).
+- `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-21), one file per step. The five fused phytoene synthase / lycopene cyclase proteins are cut per domain at the UniProt "Region" features: `phytoene_synthase.faa` holds the synthase regions and `lycopene_cyclase.faa` the cyclase regions. Full sequences: `refs/carotenoid/full_length/fused.faa`.
+- `region` in the YAML is in coordinates of the FASTA record (`defs.validate` checks it against `<step>.faa`). For the cut records it covers the whole record; the coordinates on the full protein are in the `region` column of `provenance.tsv`.
+- `refs/carotenoid/provenance.tsv`: one row per (step, ref) with gene name, region on the full protein, source and verified flag.
+- `refs/carotenoid/decoys/<step>.faa` and `decoys/provenance.tsv`: proteins of the same family with another function, with the reason for each. They are outgroups for tree placement, not references.
+- `kb/carotenoid/*.tsv`: compounds, reactions, participants, steps and the (protein, reaction) links with evidence tier, PMID and one quoted sentence (see `kb/README.md`).
+- `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of gaps, held tiers, excluded (T4) steps and open decisions.
 
 ## Candidate retrieval (Task 4)
 
