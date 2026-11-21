@@ -1,0 +1,8 @@
+protein_id	step_id	hmm_name	score	evalue	ali_from	ali_to	hmm_from	hmm_to
+fusP	phytoene_synthase	psy	300	1e-80	300	600	1	290
+fusP	lycopene_cyclase	lyc	250	1e-60	10	280	1	270
+soloA	ggpp_synthase	ggpps	200	1e-50	5	300	1	290
+overlapQ	phytoene_synthase	psy	200	1e-50	10	300	1	290
+overlapQ	lycopene_cyclase	lyc	150	1e-40	20	290	1	270
+lowB	phytoene_desaturase	pds	120	1e-30	5	400	1	390
+outC	carx	carx	110	1e-25	5	300	1	290
