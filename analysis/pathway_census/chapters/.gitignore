@@ -1,0 +1,6 @@
+# Quarto render output and cache (the chapter source is the .qmd)
+*.html
+*_files/
+.quarto/
+
+/.quarto/
