@@ -125,3 +125,40 @@ def test_one_row_per_protein_step():
     cand, plc = _load()
     out = assign_steps(cand, plc, _pw(), 0.5)
     assert not out.duplicated(["protein_id", "step_id"]).any()
+
+
+# ---- CLI provisional gate (final-review I1) ----
+import subprocess  # noqa: E402
+
+ROOT = Path(__file__).resolve().parents[1]
+CLI = ROOT / "bin" / "assign_steps.py"
+PW_YAML = ROOT / "pathways" / "carotenoid.yaml"
+
+
+def _cli(tmp_path, *extra):
+    return subprocess.run(
+        ["/usr/bin/python3.12", str(CLI), "--pathway", str(PW_YAML), "--candidates", str(D / "assign_hits.tsv"),
+         "--placements", str(D / "assign_placements.tsv"), "--min-support", "0.5",
+         "--out", str(tmp_path / "o" / "assigned.tsv"), *extra],
+        capture_output=True, text=True)
+
+
+def test_cli_refuses_unverified_without_provisional(tmp_path):
+    (tmp_path / "o").mkdir()
+    r = _cli(tmp_path)
+    assert r.returncode != 0
+    assert "verified: false" in r.stderr and "--provisional" in r.stderr
+    assert not any((tmp_path / "o").iterdir())
+
+
+def test_cli_provisional_stamps_name_and_first_line(tmp_path):
+    (tmp_path / "o").mkdir()
+    r = _cli(tmp_path, "--provisional")
+    assert r.returncode == 0, r.stderr
+    assert not (tmp_path / "o" / "assigned.tsv").exists()
+    out = tmp_path / "o" / "assigned.PROVISIONAL.tsv"
+    assert out.exists()
+    assert out.read_text().startswith("# PROVISIONAL")
+    df = pd.read_csv(out, sep="\t", comment="#")
+    assert list(df.columns) == ["protein_id", "step_id", "support", "label", "fusion_candidate"]
+    assert ("soloA", "ggpp_synthase", "assigned") in set(zip(df.protein_id, df.step_id, df.label))

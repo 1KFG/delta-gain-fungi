@@ -16,8 +16,11 @@ synthetic fixtures only. Nothing in this note is a biological finding.
   were committed in docs-only commit 47529a4, before code commit 6a97602 (controller `git show` check).
 - Real tools in tests, no mocked searches: hmmer 3.4, mafft 7.505, mmseqs2 17-b804f (Task 4) and
   ncbi-blast 2.17.0+ (Task 8) ran in the unit tests.
-- The `verified` gate worked. Every CLI refuses a `verified: false` pathway without `--provisional`,
-  and provisional outputs carry a `.PROVISIONAL` name or header (Tasks 4, 8, 9, 10).
+- The `verified` gate worked. Seven CLIs refuse a `verified: false` pathway without `--provisional`:
+  `build_step_hmms.py`, `search_step.py`, `assign_steps.py`, `build_matrix.py`, `absence_check.py`,
+  `paired_compare.py` and `triage.py`. Their provisional outputs carry a `.PROVISIONAL` name or header
+  (Tasks 4, 7, 8, 9, 10; `assign_steps.py` got the gate in the final-review fix I1).
+  `list_unverified_refs.py` only lists unverified references and has no gate.
 - Reference curation: 23 refs, 22 verified against UniProt and PubMed (MEASURED, Task 3). A reviewer
   re-checked 6 of them (Task 3 review) (accession, PMID, sequence): all matched.
 - Nullable-boolean flags with explicit NA semantics (Tasks 6, 7) stopped unknown values from being

@@ -97,6 +97,7 @@ Plan (PROPOSED): per step, build tree with iqtree/raxml-ng on the step reference
 - `candidates`: Task 4 candidate tables concatenated, with an added `step_id` column (the step whose HMM gave the row). Only this table supplies domain hits.
 - Build `candidates` by concatenating per-step outputs: `pd.concat([candidates_for_step(d, min_score).assign(step_id=sid) ...])`. A missing `step_id` column raises ValueError.
 - Output columns `protein_id, step_id, support, label, fusion_candidate`. One row per (protein, step).
+- CLI `bin/assign_steps.py` refuses `verified: false` without `--provisional`; with it, `--out X.tsv` becomes `X.PROVISIONAL.tsv` and the file starts with a `# PROVISIONAL` line.
 - Label rule: `assigned` only if the (protein, step) pair is in `candidates` (HMM evidence) AND a placement row for it has a clade and support >= `min_support` (inclusive; NaN fails). Otherwise `unassigned`.
 - Fusion: HMM hits to step A and step B with B in `A.fused_with` (or reverse) and alignments overlapping < 50% of the shorter (PROPOSED threshold, no data) set `fusion_candidate = True` on both rows. Fusion only decides which steps a protein may carry. A fused protein is `assigned` for a step only with its own qualifying placement; with none it stays `unassigned` for those steps and keeps its rows. A protein with qualifying placements for both steps counts once toward each.
 - A placement for a pair not in `candidates` is kept as `unassigned` (documented choice; no HMM evidence).
