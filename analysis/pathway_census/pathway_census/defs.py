@@ -51,13 +51,35 @@ def _str_or_none(v):
     return None if v is None else str(v)
 
 
+def _bool(d: dict, key: str, default: bool, where: str) -> bool:
+    """Return d[key] as a bool. Only a real YAML bool is accepted.
+
+    A string such as "false" or "no" would be truthy under bool(); reject it.
+    """
+    v = d.get(key, default)
+    if not isinstance(v, bool):
+        raise ValueError(f"{where}: '{key}' must be a YAML bool (true/false), "
+                         f"got {type(v).__name__} {v!r}")
+    return v
+
+
+def _str_list(d: dict, key: str, where: str) -> list[str]:
+    """Return d[key] as a list of strings. A scalar is an error, not split into chars."""
+    v = d.get(key)
+    if v is None:
+        return []
+    if not isinstance(v, list):
+        raise ValueError(f"{where}: '{key}' must be a list, got {type(v).__name__} {v!r}")
+    return [str(x) for x in v]
+
+
 def _load_ref(d: dict, where: str) -> Ref:
     _check_keys(d, {"accession", "species", "pmid", "verified"}, where)
     return Ref(
         accession=_str_or_none(d.get("accession")),
         species=str(d.get("species", "")),
         pmid=_str_or_none(d.get("pmid")),
-        verified=bool(d.get("verified", False)),
+        verified=_bool(d, "verified", False, where),
     )
 
 
@@ -65,7 +87,7 @@ def _load_step(d: dict, i: int) -> Step:
     where = f"step[{i}]"
     _check_keys(d, {"id", "name", "ec", "refs", "domains", "copy_expect",
                     "role", "fused_with", "optional"}, where)
-    for req in ("id", "name"):
+    for req in ("id", "name", "copy_expect", "role"):
         if req not in d:
             raise ValueError(f"{where}: missing required key '{req}'")
     where = f"step '{d['id']}'"
@@ -75,22 +97,23 @@ def _load_step(d: dict, i: int) -> Step:
         name=str(d["name"]),
         ec=_str_or_none(d.get("ec")),
         refs=refs,
-        domains=[str(x) for x in d.get("domains") or []],
-        copy_expect=d.get("copy_expect", "single"),
-        role=d.get("role", "catalytic"),
-        fused_with=[str(x) for x in d.get("fused_with") or []],
-        optional=bool(d.get("optional", False)),
+        domains=_str_list(d, "domains", where),
+        copy_expect=d["copy_expect"],
+        role=d["role"],
+        fused_with=_str_list(d, "fused_with", where),
+        optional=_bool(d, "optional", False, where),
     )
 
 
 def load_pathway(path: Path) -> Pathway:
-    with open(path) as fh:
+    with open(path, encoding="utf-8") as fh:
         d = yaml.safe_load(fh)
     _check_keys(d, {"id", "verified", "steps"}, "pathway")
     if "id" not in d:
         raise ValueError("pathway: missing required key 'id'")
     steps = [_load_step(s, i) for i, s in enumerate(d.get("steps") or [])]
-    return Pathway(id=str(d["id"]), steps=steps, verified=bool(d.get("verified", False)))
+    return Pathway(id=str(d["id"]), steps=steps,
+                   verified=_bool(d, "verified", False, "pathway"))
 
 
 def validate(p: Pathway) -> list[str]:
@@ -104,6 +127,9 @@ def validate(p: Pathway) -> list[str]:
             errs.append(f"step '{s.id}': invalid copy_expect '{s.copy_expect}'")
         if s.role not in ROLES:
             errs.append(f"step '{s.id}': invalid role '{s.role}'")
+        if p.verified and not s.optional and not s.refs:
+            errs.append(f"step '{s.id}': pathway verified=true but non-optional "
+                        f"step has no refs")
         for r in s.refs:
             if not r.accession and not r.pmid:
                 errs.append(f"step '{s.id}': ref has neither accession nor pmid")
