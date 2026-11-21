@@ -110,6 +110,96 @@ Decision numbers: `DC` carotenoid, `DD` melanin_dhn, `DL` melanin_ldopa, `DM` my
 
 ## Pathway `carotenoid`
 
+### Items for the owner (carotenoid, hand-written sections A, B, C, D, E, F, G, not numbered decisions)
+
+Copied character for character from `refs/carotenoid/UNVERIFIED.md`, block 'Items for a person to check'. The sections with a decision marker in their heading are in the numbered decisions below. An item that holds a marker appears in both places.
+
+::: {.verbatim}
+### A. References that are not verified, or verified with a gap
+
+1. **`carx`, *Ustilago maydis* Cco1 (PMID 19584000): no accession.** The abstract shows the reaction (MEASURED). No UniProt entry could be tied to the gene name: the UniProt search `gene:cco1 AND taxonomy_id:5270` returned 0 entries and `lit_pubmed:19584000` returned 0 entries (MEASURED). UniProt has two PF03055 proteins for this species: A0A0D1E6L2 (RCO1, reviewed, resveratrol cleavage) and A0A0D1E9J4 (ORF name UMAG_00965 only, unreviewed, "Carotenoid cleavage dioxygenase 1", 787 residues, cites only the genome paper PMID 17080091). A0A0D1E9J4 is a candidate for Cco1. The gene name does not match, so it is not used and `carx.faa` has no *Ustilago* sequence. A person must confirm the locus from the full text.
+2. **`cars` G8Z9M3 and `acaa` A0ABR3AZC2 (*Phycomyces blakesleeanus*).** Both UniProt entries are unreviewed and cite no paper on the gene (MEASURED; the one citation is a 2024 genome paper).
+   - G8Z9M3 (carS): `verified: true`. GenBank ADU04395.1 ("carotene dioxygenase", source GU339225.1) is identical to G8Z9M3 over 628 of 628 residues and cites PMID 22445959 (MEASURED, GenPept record and sequence comparison). The reference `pmid` is 22445959. The product (beta-apo-12'-carotenal) is shown in PMID 21854466.
+   - A0ABR3AZC2 (acaA): `verified: false`. The gene name comes from a 2024 genome annotation (EMBL JBCLYO010000008, protein KAL0086242.1; MEASURED). No record ties the sequence to the protein assayed in PMID 21854466. GenBank OAD75744.1 (locus tag PHYBLDRAFT_180852, strain NRRL 1555(-), a genome record with no paper on the gene) is identical to A0ABR3AZC2 over 602 of 602 residues (MEASURED). The sequence is in `acaa.faa`. The link is held at T3 (section B10). The user decides at the review gate.
+3. **`astaxanthin_synthase` Q3HR17.** The reference `pmid` is 25504221, the paper that UniProt cites for the entry and the T1a paper (MEASURED). The functional paper in the fungus is PMID 16416328; UniProt does not cite it for Q3HR17. Its link rests on sequence identity and shared authors: Q3HR17 is identical to NCBI CAC16261.1 over 557 of 557 residues (MEASURED); CAC16261.1 is coded by AX034665.1:33..1706, patent EP 1035206-A1, authors Hoshino, Ojima and Setoguchi (MEASURED, GenPept record). That AX034665 is the cDNA of PMID 16416328 is REVIEWED (full text); the abstract gives no accession. B5LEC8 differs from Q3HR17 at residue 60 (G in Q3HR17, D in B5LEC8; MEASURED).
+4. **`tsp3` A5HXP5 (*Blakeslea trispora*).** The abstract of PMID 17822929 does not say which species' tsp3 was expressed in *E. coli* (*B. trispora* or *Rhizopus oryzae*) and names no product. The link to the CarS reaction is T3.
+5. **`phytoene_desaturase` Q8X0Z0 (*Fusarium fujikuroi* carB).** The abstract of PMID 12172798 gives 541 residues; UniProt Q8X0Z0 has 570 residues at sequence version 2 (MEASURED). The difference was not investigated.
+6. **UniProt EC of P54982.** UniProt gives EC 1.3.99.30 (five-step) for *Phycomyces* carB. The abstract of PMID 9079885 reports four dehydrogenations to lycopene (MEASURED). The step keeps `ec: null`.
+7. **Organism names.** `species` is the UniProt organism name. UniProt uses "Phaffia rhodozyma" for *Xanthophyllomyces dendrorhous*, "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)" for *Fusarium fujikuroi* IMI 58289 and "Mycosarcoma maydis" for *Ustilago maydis*. The Cco1 reference has no accession and keeps the name used in the paper.
+:::
+
+::: {.verbatim}
+### B. Tiers held low because the abstract does not show the evidence
+
+1. `ggpp_synthase`, *Neurospora* al-3 (P24322): T3. The abstract of PMID 7929398 reports GGPP synthase activity kept in a deletion mutant, but not how it was measured. The abstract of PMID 1826006 reports sequence and expression only. The tier may be T1b after a full-text check.
+2. `lycopene_cyclase`, *Neurospora* al-2 (P37295), gamma-carotene to beta-carotene: T3. The abstract of PMID 16928467 states that single cyclisations are preferred.
+3. `lycopene_cyclase`, *Mucor* carRP (Q9UUQ6), gamma-carotene to beta-carotene: T3. The abstract of PMID 10951210 states lycopene cyclase activity and names no product.
+4. `lycopene_cyclase`, *Fusarium* carRA (Q8X0Z1), all three reactions: T3. The disruptants make no phytoene, so the abstract does not show the cyclase function separately.
+5. `lycopene_cyclase`, 3,4-didehydrolycopene to torulene: T1b for *Neurospora* al-2 (cyclase-domain mutants, PMID 11862485; the accumulated carotenoid was not identified), T3 for *Fusarium* carRA and *X. dendrorhous* crtYB.
+6. `phytoene_synthase` and `lycopene_cyclase`, *Phycomyces* carRA (Q9P854): T1c. The abstract of PMID 11172012 reports mutant sequences and colour phenotypes.
+7. `tsp2`, *Mucor mucedo* tsp2 (B9DR41): T3. Raise to T1 on full-text check. The abstract of PMID 18931040 reports purification of the native enzyme, peptide sequencing and cloning. It also states that enzyme activity is found only in the (-) mating type. It names no assay and no product.
+8. `tdh`, *Mucor mucedo* tdh (Q01213): T3. Raise to T1 on full-text check. The abstract of PMID 8828234 reports purification of the native enzyme, peptide sequencing and cloning; it names no assay and no product.
+9. Rule used: a link is T1a only when the abstract that was read states the assay or the product.
+10. `acaa`, *Phycomyces* acaA (A0ABR3AZC2): T3. The abstract of PMID 21854466 shows the reaction for AcaA (in vitro assay), but no record ties this accession to the assayed protein. Raise to T1a on a full-text check of PMID 21854466: compare the protein id given there with PHYBLDRAFT_180852 (identical sequence to A0ABR3AZC2, record OAD75744).
+:::
+
+::: {.verbatim}
+### C. Astaxanthin route: what the abstract supports and what it does not
+
+1. The abstract of PMID 16416328 states: one P450 does all steps from beta-carotene to astaxanthin, shown by genetics in the fungus, and "The reaction sequence is first 4-ketolation of beta-carotene followed by 3-hydroxylation" (MEASURED). It does not mention *E. coli*, canthaxanthin, 3-hydroxyechinenone, phoenicoxanthin or torulene.
+2. T1a for the two ketolation reactions (RHEA:55660, RHEA:55664) comes from PMID 25504221 (crtS expressed in *Mucor circinelloides*; echinenone and canthaxanthin found; MEASURED, abstract). The review's source for T1a (canthaxanthin in *E. coli*, full text of PMID 16416328) is REVIEWED only.
+3. The hydroxylation-first branch (echinenone to 3-hydroxyechinenone to phoenicoxanthin) and the torulene side route (torulene to 4-ketotorulene to 3-hydroxy-4-ketotorulene) are REVIEWED only. They are in the tables at T3 with no quote.
+4. ChEBI has two isomers: CHEBI:80215 (3-hydroxyechinenone) and CHEBI:80214 (3'-hydroxyechinenone). CHEBI:80215 is used, following the name in the review. Which isomer the paper reports is UNVERIFIED.
+5. The 3-hydroxylation reactions of the main line (canthaxanthin to phoenicoxanthin to astaxanthin) are T1b. The intermediate phoenicoxanthin is not named in the abstract.
+:::
+
+::: {.verbatim}
+### D. Compounds and reactions with gaps
+
+1. No ChEBI entry found (ChEBI text search, 2026-11-21, MEASURED as "no hit"): 4-ketotorulene, 3-hydroxy-4-ketotorulene, trisporin, 4-dihydrotrisporin, methyltrisporate, 4-dihydromethyltrisporate. ChEBI has only the generic "trisporic acid" (CHEBI:91017, formula with R groups), which cannot have a mass. The reactions of `tsp2`, `tdh` and the torulene side route therefore have no or incomplete participants.
+2. The second fragment of each cleavage by CarS and AcaA is not named in the abstract and is not in the tables.
+3. Small molecules (O2, H2O, acceptor, NAD(P), diphosphate) are not listed as reaction participants.
+4. `kegg_id` values are the KEGG COMPOUND cross-references of the ChEBI records (MEASURED in ChEBI; not checked in KEGG, except C08607). ChEBI CHEBI:211238 (torularhodin) lists KEGG C08607, but KEGG C08607 is neurosporaxanthin (MEASURED, one KEGG record read). The torularhodin `kegg_id` is empty. CHEBI:53157, CHEBI:53160 and CHEBI:53175 have no KEGG cross-reference in ChEBI.
+5. `ko`, `kegg_rn` and `np_class` are empty: not looked up in this task.
+6. The `family` column of `kb/carotenoid/step.tsv` holds the curator's descriptive labels, not database names (PROPOSED).
+7. The curated cyclisation of 3,4-didehydrolycopene to torulene has no Rhea reaction (Rhea search "torulene", MEASURED). The order (fifth desaturation before cyclisation) is from the abstract of PMID 11017770.
+8. **Routes that `path_possible` cannot follow.** `trisporoid_late` (`tsp2`, `tdh`) gives no product: the reactions have no participants (item 1), so the tables cannot join these steps to the cleavage steps or to each other. The other six routes give products (tested in `tests/test_kb_carotenoid.py`): `core` ends at gamma-carotene, beta-carotene and torulene; `astaxanthin` reaches astaxanthin at T1b; `trisporoid` ends at beta-apo-13-carotenone at T3 (the acaA link is held at T3); `trisporoid_tsp3` ends at beta-apo-12'-carotenal at T3.
+9. **No route tier of the unfiltered `path_possible` holds for one organism.** Every best path joins links of two or three organisms (MEASURED by the test; the organism list is in the `organisms` column). Ties between equal paths are broken alphabetically; `n_equal_paths` gives the number of equal organism lists (3 for gamma-carotene in `core`, 2 for retinal, 2 for 3-hydroxyechinenone, 2 for `trisporoid`, 1 elsewhere). With `organism=`, only *Neurospora crassa* completes a route alone: `core` and `neurosporaxanthin`, both at T3, because the al-3 link is T3. No other organism has a reference for every step of a route (for example *X. dendrorhous* has no GGPP synthase reference, *Mucor* has no desaturase reference).
+10. **Organism key of the *Mucor* references.** UniProt names Q9P885 and Q9UUQ6 "Mucor circinelloides f. lusitanicus". NCBI Taxonomy holds this name under taxid 29924, scientific name Mucor lusitanicus; Mucor circinelloides is taxid 36080 (MEASURED). `path_possible` therefore reports these links as `mucor lusitanicus` and does not merge them with a link named plain "Mucor circinelloides". The papers (PMID 12695851, 10951210) say Mucor circinelloides. The PMID 25504221 host is also named Mucor circinelloides in its abstract; it is not an organism of a link (the link organism is X. dendrorhous). This is a limit of the reference set, not a statement about the organisms.
+:::
+
+::: {.verbatim}
+### E. Hypothesis-level (T4) and excluded steps
+
+1. **Torulene to torularhodin: T4.** No enzyme is identified (REVIEWED: the reviewer's PubMed queries found none; the curator ran no literature search because the fetchers have no search function). Rhea has no torularhodin reaction (MEASURED). The step is not in the YAML. The tables have the step `torularhodin_formation` with one T4 link, so torularhodin (CHEBI:211238) is in the compound table and `path_possible` never reports it.
+2. **Carotenoid glycosylation or esterification: excluded.** No native fungal enzyme is known to the reviewer (REVIEWED, recalled). Not in the YAML and not in the tables.
+3. **Later trisporoid oxidations (from the C18 ketone to trisporic acid, other than `tsp2` and `tdh`): excluded, T4.** No gene is known to the reviewer (REVIEWED, recalled). Not in the YAML and not in the tables.
+4. *Fusarium fujikuroi* carS (a regulator, REVIEWED from titles) and carO (an opsin) are not steps.
+:::
+
+::: {.verbatim}
+### F. Decoys
+
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: no decoy. A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). All are carotenoid cyclases (fungal fused proteins, *Halobacterium* CrtY, *Dietzia* C50 cyclase subunits). No characterised member with another function was found.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+::: {.verbatim}
+### G. Schema and file layout
+
+1. **Region coordinates (work-around for a limit of `defs.validate`).** `validate` checks a reference `region` against the record in `<step>.faa`. The records of the five fused proteins are cut to the domain, so full-protein coordinates of the C-terminal domain fail that check. The YAML `region` is therefore in record coordinates and covers the whole record. The coordinates on the full protein are in a YAML comment and in the `region` column of `provenance.tsv`. Full sequences are in `full_length/fused.faa`.
+2. Cut points are the UniProt feature "Region" ("Lycopene beta-cyclase", "Phytoene synthase") of each entry (MEASURED). For all five entries the Pfam PF00494 match lies inside the phytoene synthase region and both NCBIfam TIGR03462 matches lie inside the cyclase region (MEASURED, InterPro). Pfam PF18916 matches only P37295 (residues 11-94) among the five.
+3. Steps with one reference sequence: `carx`, `crtr`, `cars`, `acaa`, `tsp3`, `tsp2`, `tdh`. A profile HMM from one sequence is weak. Whether this is enough for the census is UNVERIFIED.
+4. Reference coverage by lineage: Ascomycota (*Neurospora*, *Fusarium*), Mucoromycota (*Phycomyces*, *Mucor*, *Blakeslea*) and Basidiomycota (*Xanthophyllomyces*). No Pucciniomycotina, chytrid or Dothideomycete reference. *Blakeslea trispora* carRA (Q67GH9, reviewed) was fetched but not added.
+5. `copy_expect`, `optional` and `role` are PROPOSED. No census data exists.
+6. `crtr` is linked to RHEA:55660 (the first CrtS reaction; the crtR deletion accumulates beta-carotene). In the `astaxanthin` route `crtr` comes before `astaxanthin_synthase`, so the route is a valid chain. This is a modelling choice (PROPOSED).
+7. The Mucorales steps are in three routes: `trisporoid` (`cars`, `acaa`), `trisporoid_tsp3` (`tsp3`, an alternative of `cars`) and `trisporoid_late` (`tsp2`, `tdh`).
+:::
+
 ### Decisions for the owner
 
 Each item is copied character for character from `refs/carotenoid/UNVERIFIED.md`. The number is `DC` plus the position in the file.
@@ -428,6 +518,86 @@ The report gives pass counts per check for all pathways together only. It gives 
 
 ## Pathway `melanin_dhn`
 
+### Items for the owner (melanin_dhn, hand-written sections A, B, C, D, E, F, not numbered decisions)
+
+Copied character for character from `refs/melanin_dhn/UNVERIFIED.md`, block 'Items for a person to check'. The sections with a decision marker in their heading are in the numbered decisions below. An item that holds a marker appears in both places.
+
+::: {.verbatim}
+### A. References with a gap (the user decides)
+
+1. **`t4hn_reductase` Q9HFV6 (4HNR): `verified: false` since fix round 1.** See the note under "Refs with verified: false" above. The UniProt entry has no gene name; the identity is not in doubt.
+2. **`t3hn_reductase` Q12634: ORF name only (`MGG_02252`), and the UniProt name conflicts with the papers.** UniProt names Q12634 "Tetrahydroxynaphthalene reductase", EC 1.1.1.252. The pathway review used it as 4HNR. It is the trihydroxynaphthalene reductase (3HNR): it cites PMID 8112349 (the 1994 reductase cDNA) and two crystal-structure papers of 1,3,8-trihydroxynaphthalene reductase (PMID 8939741, 11342131; PDB 1YBV), and it does not cite PMID 10956664 (MEASURED). Q9HFV6 and Q12634 are 45.3% identical in a global alignment (MEASURED); the abstract of PMID 10956664 gives 46% for 4HNR against 3HNR. The abstract of PMID 10956664 names no accession. The UniProt organism of Q12634 is Pyricularia oryzae strain 70-15; that of Q9HFV6 is Pyricularia grisea. NCBI holds them as two species (taxid 318829 and 148305), so the tables do not merge them, although the paper calls both enzymes Magnaporthe grisea.
+3. **Aspergillus niger A2QUI2, A2R3S8, A2R3T0 (PMID 21277986).** The UniProt entries do not cite the paper. The tie is the locus tag in the abstract: An09g05730 (FwnA), An14g05350 (OlvA), An14g05370 (BrnA) (MEASURED). A2R3S8 and A2R3T0 are unreviewed and have the ORF name only; `gene_name` is the ORF name. A2QUI2 is reviewed as `albA`; UniProt ties it to aurasperone B (a naphthopyrone) through PMID 31067027 (not read). A2R3T0 carries an automatic EC 1.16.3.1 (ferroxidase).
+4. **`thn_synthase` P79068.** Unreviewed. The UniProt organism name is "Glomerella lagenarium" with taxid 5462; NCBI Taxonomy names taxid 5462 Colletotrichum lagenaria and has no name "Glomerella lagenarium" or "Colletotrichum lagenarium" (esearch returned nothing; MEASURED). The other Colletotrichum references (P87025, Q00455, F8WTI4) are Colletotrichum orbiculare (taxid 5465, strain 104-T taxid 1213857). The papers call all of them Colletotrichum lagenarium, and PMID 8672814 names the wild type 104-T. The species keys are NOT merged (different taxids). Effect: the tables do not let one Colletotrichum complete route `pks_thn`. The user decides whether P79068 belongs to Colletotrichum orbiculare. Keys in the tables: the P79068 links have the key `glomerella lagenarium` (first two words of the UniProt name). `species_key("Colletotrichum lagenarium")`, the name in the papers, gives a third key, `colletotrichum lagenarium`. NCBI Taxonomy gives neither "Glomerella lagenarium" nor "Colletotrichum lagenarium" a taxid hit (esearch, field All Names, 2026-11-21; MEASURED), so no alias is allowed under the taxid rule. An organism filter with the paper name finds no link. The entry cites PMID 7500937 only; the product papers (PMID 10501004, 23261597) are tied by gene name, organism name and the length 2187 (MEASURED in the abstract of PMID 7500937 and in the entry).
+5. **`hexaketide_pks` Q9Y7A7 and `ayg1` Q6BCB5.** Both unreviewed. UniProt organism Exophiala dermatitidis; the papers say Wangiella dermatitidis (one NCBI taxid, 5970; alias added). The UniProt gene name of Q6BCB5 is `yg1` (paper: WdYG1).
+6. **`t4hn_reductase` F8WTI4 (T4HR1, Colletotrichum orbiculare).** Unreviewed. The entry cites PMID 12967213 for the sequence. The abstract deduces a T4HN-specific reductase and does not name T4HR1. Link tier T3.
+7. **Sordaria macrospora A7DWM4 (teh), A7DWM6 (tih), A7DWM5 (sdh).** Unreviewed; the entries cite PMID 17681008; the abstract reports homology only (and RNA interference of sdh without a stated phenotype). All links T3. The Sordaria pks (A7DWM3) is not a reference: the abstract does not say which of the three PKS routes it uses.
+:::
+
+::: {.verbatim}
+### B. Tiers: where they differ from the pathway review, and why
+
+Quote rule since fix round 1: at most one quoted sentence per link (the plan's rule); a paper may give different sentences to different links. Rule used for tiers: a link is T1a only when the abstract that was read states the assay or the product. Deletion with intermediate analysis is T1b. Deletion with colour phenotype only is T1c.
+
+1. **4HNR and 3HNR accessions swapped against the review.** See A2. T4HN to scytalone T1a is on Q9HFV6, T3HN to vermelone T1a is on Q12634 (PMID 10956664).
+2. **WdPKS1 (Q9Y7A7), hexaketide synthesis: T1c, review T1b.** The abstract of PMID 11179356 shows an albino disruptant. The hexaketide is shown in the WdYG1 deletion mutant (PMID 18676950), not as the product of the PKS.
+3. **Alb1 (Q4WZA8): T1a from PMID 11040426** (product identified in Aspergillus oryzae). The review gave "T1a/T1b" from PMID 11350964.
+4. **SCD1 (Q00455), scytalone dehydration: T1c, review T1b.** The abstract of PMID 8953707 reports complementation of a melanin-deficient mutant to the wild phenotype and no intermediate.
+5. **SDH1 (P56221), scytalone dehydration: T1a from PMID 9466792** (review: assay papers RECALLED). The abstract reports a kinetic assay of scytalone dehydratase of "Magnaporthea grisea" with scytalone.
+6. **DECISION FOR THE USER. Vermelone dehydration: T3 for P56221 since the rule 1 harmonisation round (section G); the text of this item describes the first version, T1a for P56221 from PMID 10320327; T3 for Q00455, O14434, A7DWM5** (review: T3, RECALLED T1a). Both complete routes (`pks_thn`, `pks_heptaketide`) take their end-product tier T1a from this single link. What the abstract states: an assay with vermelone for the named enzyme, scytalone dehydratase ("the two physiological substrates, scytalone and veremelone", relative substrate specificities, wild type and a Ser129 mutant). What the abstract does not state: the organism, and the product (1,8-dihydroxynaphthalene). What ties the paper to the Magnaporthe enzyme: UniProt P56221 (Pyricularia oryzae) cites this PMID as evidence for its function and catalytic activity and for the mutagenesis of Tyr-30, Asp-31, Tyr-50, His-85, His-110, Ser-129 and Asn-131, the residues of the abstract; the abstract cites the 1994 crystal structure paper of Lundqvist and others, which is PMID 7866745, "Crystal structure of scytalone dehydratase--a disease determinant of the rice pathogen, Magnaporthe grisea", also cited by P56221 (MEASURED). If the user applies the strict reading (organism and product must be in the abstract), this link is T3 and both routes end at T3.
+7. **THR1 (P87025), T3HN to vermelone: T1b** as in the review. The abstract of PMID 8672814 states the metabolic defect of the complemented mutant; it reports no intermediate measurement of its own. A stricter reading gives T1c.
+8. **Arp2 (E9QUT3), T3HN to vermelone: T3** as in the review. Not shown in the abstracts.
+9. **PfmaG (W3XAA0): T1a, not in the review's tier table.** Scytalone identified after expression of the PKS and PfmaG in Aspergillus nidulans (PMID 28517364). The reductase was not assayed alone.
+10. **Aspergillus niger FwnA, OlvA, BrnA: T1c.** Colour mutants complemented and genes disrupted (PMID 21277986). The abstract names no enzyme product. Whether the Aspergillus niger conidial pigment is DHN-melanin is UNVERIFIED.
+11. **Abr1 (Q4WZB4): T3, review T1c (fix round 1).** Rule since fix round 1: one quoted sentence per link, so PMID 10515939 gives two sentences. The arp1 and arp2 links (T1b) keep the sentence on the intermediates. The abr1 link has its own sentence: "Involvement of the six genes ... disruption of each gene in A. fumigatus." This sentence does not name abr1; the abstract names abr1 as one of the six genes in two other sentences (MEASURED, abstract fetched again without the cache). By the coordinator's ruling the link is held at T3 with the sentence as context. The user may raise it to T1c. No route result changes (the `polymerisation` route has no product).
+12. **4HNR (Q9HFV6) on T3HN and 3HNR (Q12634) on T4HN: T1a side-activity links.** The competition experiment of PMID 10956664 shows both enzymes accept both substrates (310-fold and 4.2-fold preference). These links record the substrate overlap. They do not change any route result.
+:::
+
+::: {.verbatim}
+### C. Leads that are not in the tables
+
+1. **BUF1 and BRM2.** The step name "3HNR/THR1/BUF1/BRM2 type" comes from the spec. No reference carries these gene names. Alternaria alternata Brm2 is UniProt Q76K49 (250 residues, unreviewed); its only citation, PMID 15099381, has no abstract in PubMed. PMID 8392512 (ALM, BRM1, BRM2 cluster; abstract read) shows complementation and disruption with colour phenotypes; no UniProt entry cites it. BUF1: a UniProt search `gene:BUF1` in fungi returned only a yeast replication protein (MEASURED).
+2. **Botrytis cinerea** (PMID 26514268): bcpks12, bcpks13, bcygh1, bcbrn1, bcbrn2, bcscd1. UniProt has Q6RKI8 (PKS12) and Q6RKI7 (PKS13), both unreviewed, citing PMID 14676319 (not read). No entry cites PMID 26514268. Not used. The lineage restriction is in `lineage_note`.
+3. **Pestalotiopsis fici PfmaE (W3X7U2, reviewed), Verticillium dahliae PKS1 (G2WRK7), Zymoseptoria tritici PKS1 (F9XMW3).** Melanin PKS with reviewed entries. The abstracts read do not show which PKS route they use, so they are not references of a PKS step. MEASURED: PfmaE is 71% identical to P79068 (THN synthase) and 44 to 45% to the references of the other two PKS steps.
+4. **Pestalotiopsis fici PfmaD (W3X7K0) and Verticillium dahliae LAC1 (G2WRK6).** Reviewed "multicopper oxidase" entries of DHN-melanin clusters. MEASURED: 34 to 37% identical to Abr1 and BrnA, 22 to 23% to Abr2. Not used (abstracts not read for the oxidase function). Note the gene name: LAC1 of Verticillium dahliae is a DHN-melanin cluster oxidase; LAC1 of Cryptococcus (decoy Q55P57) is the diphenol laccase. Same name, different roles.
+5. **Second reductase in Aspergillus fumigatus.** Not checked. The cluster has arp2 only.
+6. **KEGG.** K17739 is a cross-reference of `t4hn_reductase`, K17740 of `scytalone_dehydratase` (names read from KEGG `list`; no KEGG reaction content copied). KEGG has one KO for the naphthol reductases; which paralogue type its members are was not checked. K19580 (rppA) is bacterial and is not used.
+7. **Gene names arp1 and arp2.** In Aspergillus fumigatus they name the scytalone dehydratase and the reductase. In Saccharomyces cerevisiae ARP1 and ARP2 name actin-related proteins (UniProt P38696, P32381; MEASURED). A gene name is valid only with its organism.
+:::
+
+::: {.verbatim}
+### D. Routes that the tables cannot follow, and single organisms
+
+1. **USER DECISION (a). `pks_hexaketide`: no product in `path_possible`.** 2-acetyl-1,3,6,8-tetrahydroxynaphthalene (AT4HN) has no ChEBI entry (four name searches and one InChIKey search returned nothing; MEASURED). PubChem has it: CID 86018477, C12H10O5, InChIKey FYPSLERIHMOYRN-UHFFFAOYSA-N (MEASURED). The compound table is keyed by ChEBI id, so the PKS reaction and the Yg1 reaction have no AT4HN participant, and `path_possible` stops after the PKS step. From the Yg1 step onwards the steps reach 1,8-dihydroxynaphthalene (test `test_tail_of_the_hexaketide_route_reaches_dhn`). Options: (i) a curated id scheme for compounds without a ChEBI entry (for example an id built from the PubChem CID or the InChIKey), which needs a rule in `kb/README.md` and in the validator; (ii) leave route (b) untestable in the tables. The step set and the references of route (b) do not depend on this.
+2. **USER DECISION (b). `polymerisation`: no product compound.** DHN-melanin is a polymer; ChEBI:167605 is a class entry without a formula, so it cannot be a row of the compound table. The route lists the two oxidase steps and cannot be tested by `path_possible`. Options: accept this, or allow a compound row without formula and mass.
+3. **No organism completes a PKS route with its own links.** `pks_thn` and `pks_heptaketide` reach 1,8-dihydroxynaphthalene at T3 with links of two organisms (`single_organism` False) since the rule 1 harmonisation round (section G); before it, at T1a with links of three organisms. Aspergillus fumigatus completes 4 of 6 steps of `pks_heptaketide` (1,3,8-trihydroxynaphthalene, T1b) and has no reference in `t3hn_reductase`. Colletotrichum orbiculare and Sordaria macrospora complete the steps from T4HN to 1,8-dihydroxynaphthalene at T3 and have no PKS reference under the same species key (see A4, A7).
+4. **3-acetylflaviolin** (PMID 18676950) has no ChEBI entry found and no PubChem compound under that name (MEASURED). Not in the table.
+:::
+
+::: {.verbatim}
+### E. Compounds
+
+1. **Flaviolin (CHEBI:42646): the PubChem cross-check fails.** PubChem has no compound with the ChEBI InChIKey RROPNRTUMVVUED-UHFFFAOYSA-N (HTTP 404). The PubChem compound named flaviolin is CID 160478, 4,5,7-trihydroxynaphthalene-1,2-dione, InChIKey XNPCAGMCQDGQKK-UHFFFAOYSA-N: same formula C10H6O5 and mass, another first block (a tautomer; ChEBI draws 2,5,7-trihydroxy-1,4-naphthoquinone) (MEASURED). The table keeps the ChEBI key. A match on the first block of the InChIKey will miss flaviolin in a resource that uses the PubChem structure.
+2. **Vermelone (CHEBI:9957)** is a 2-star ChEBI entry without stereochemistry. ChEBI also has (+)-vermelone (CHEBI:198683). UniProt Q12634 writes (-)-vermelone. The first block is the same.
+3. **Scytalone.** ChEBI and PubChem (CID 3477029) agree on the full key RTWVXIIKUFSDJB-UHFFFAOYSA-N (no stereochemistry) (MEASURED). The spec's statement that the full keys differ was not reproduced for this ChEBI entry.
+4. **KEGG ids** are the KEGG cross-references of the ChEBI records: C00779, C04033, C01173, C01624, C18012, C00024, C00083, C00164 (MEASURED). YWA1 and naphthalene-1,8-diol have none in ChEBI.
+5. ChEBI and PubChem licences are UNVERIFIED (spec section 3).
+6. `np_class` is empty for all compounds.
+:::
+
+::: {.verbatim}
+### F. Decoys
+
+1. **wA (Q03149) is a decoy of `thn_synthase` and `hexaketide_pks` only.** It makes YWA1 (RHEA:62652), the reference reaction of `heptaketide_pks`, so it cannot be a decoy there. The brief named it for "the PKS clades". Consequence: a hit in the heptaketide clade (Alb1, FwnA, wA; 68 to 70% identical to each other, MEASURED) does not show DHN-melanin.
+2. `ayg1`: no decoy. The brief names no decoy family. PMID 38491909 (abstract read) describes a bacterial polyketide-trimming hydrolase (PlAntI) related in function; no fungal non-melanin member of PF06500 was looked for.
+3. `scytalone_dehydratase`: no decoy. The brief names no decoy family. No member of PF02982 with another function was looked for.
+4. **Versicolorin reductase decoys are close to the 3HNR type.** MEASURED (global alignment, BLOSUM62): P50161, Q00791 and Q8TFD5 are 59 to 63% identical to Q12634, P87025 and A7DWM6, and 44 to 49% to the 4HNR-type references. The 4HNR-type references are 43 to 50% identical to the 3HNR-type references. A hit cannot be assigned by identity alone.
+5. **Arp2 and Sordaria teh are not close to 4HNR.** MEASURED: E9QUT3 is 52% identical to Q9HFV6, 44 to 48% to the 3HNR type and 46 to 48% to the versicolorin reductases. A7DWM4 is 45 to 52% to every group. Q9HFV6, W3XAA0 and F8WTI4 are 65 to 75% identical to each other. Whether Arp2 and teh belong to the 4HNR clade needs the tree.
+6. **yA (P17489) is the nearest characterised relative of Abr2** (39% identical; all other pairs with Abr2 are 19 to 25%; MEASURED). It is a decoy because its record states another pigment (the wA product). That Aspergillus nidulans makes no DHN-melanin from it is REVIEWED (RECALLED there), not checked here.
+7. Decoy functions were read from the UniProt record (name, EC, Rhea). One decoy abstract was read per pmid given (Q03149: PMID 11251292; P17489: PMID 2659435). P50161: the UniProt function text starts with "Cytochrome P450 monooxygenase"; its name, EC and Rhea reaction are those of versicolorin reductase.
+8. Identity threshold: none proposed. The decoy data above show that identity does not separate the reductase groups.
+:::
+
 ### Decisions for the owner
 
 Each item is copied character for character from `refs/melanin_dhn/UNVERIFIED.md`. The number is `DD` plus the position in the file.
@@ -657,6 +827,97 @@ The report gives pass counts per check for all pathways together only. It gives 
 
 ## Pathway `melanin_ldopa`
 
+### Items for the owner (melanin_ldopa, hand-written sections A, B, C, D, E, F, not numbered decisions)
+
+Copied character for character from `refs/melanin_ldopa/UNVERIFIED.md`, block 'Items for a person to check'. The sections with a decision marker in their heading are in the numbered decisions below. An item that holds a marker appears in both places.
+
+::: {.verbatim}
+### A. References with a gap (the user decides)
+
+1. **`tyrosinase` Q2TL94: `verified: false`.** See the note above. No gene name in UniProt.
+2. **`tyrosinase` A0A1S9DK56 is the melB reference since fix round 1; Q2UP46 was removed.** The first version used Q2UP46 (RIB40 gene model, ORF name AO090001000117, 638 residues). Q2UP46 is not the assayed sequence (found by the reviewer, checked again here; MEASURED): the polymer sequence of PDB 3W6W (RCSB title "Crystal structure of melB holo-protyrosinase", 620 residues = a 4-residue tag and 616 residues) is identical to A0A1S9DK56 at 615 of 616 positions (the difference is residue 1) and to Q2UP46 at fewer than 600 positions. The residues named in the abstracts (Phe513, Cys522, Cys525 in PMID 23749993; Glu458 and Ala616 in PMID 22213164) are F, C, C, E, A in A0A1S9DK56 and L, A, E, D, E in Q2UP46. A0A1S9DK56 has 616 residues, the length that PMID 16233650 gives for melB. Gaps that stay: A0A1S9DK56 is unreviewed; it has the ORF name `OAory_01107480` only (the name melB is not in the entry); its one cited paper (PMID 32356371, crystal structures "with substrate l-tyrosine") does not name melB or Aspergillus oryzae in the abstract; UniProt maps PDB 3W6W to Q2UP46, not to A0A1S9DK56. So the tie of A0A1S9DK56 to melB is the sequence identity with the PDB record. It is `verified: true` under the rule that an ORF name counts as a gene name (same open rule as for Q12634 in `melanin_dhn`). Choice made: Q2UP46 is dropped, not kept as `verified: false`, because every reference needs a link and a second copy of the same locus adds nothing. USER DECISION: accept A0A1S9DK56 as melB with an ORF name only. Both melB links are T3 (section B).
+3. **`tyrosinase` P00440 (Neurospora crassa T).** The entry cites no assay paper. The T1c link rests on PMID 2147580, which the entry does not cite. Since fix round 1 this link sets the tier of route `tyrosinase_dopa`, so the user should confirm it. The tie is the organism, the word protyrosinase, and the shared first and last author with the gene paper PMID 2529259 that the entry cites (Kupper, Lerch; MEASURED from PubMed). PMID 3037257 ("Monophenol monooxygenase from Neurospora crassa") has no abstract in PubMed.
+4. **`tyrosinase` C7FF05 (Agaricus bisporus PPO4).** The entry does not cite PMID 28500345. The tie is the name: the abstract says "tyrosinase 4 from Agaricus bisporus" and the title says AbPPO4; UniProt names C7FF05 PPO4 with the alternative name "Tyrosinase 4" (MEASURED). The paper the entry cites (PMID 20676921) reports that the Escherichia coli product had no PPO activity.
+5. **`laccase_diphenol` J9VY90 (LAC1) and J9VQZ4 (LAC2) of Cryptococcus neoformans H99.** UniProt gives both functions "by similarity". Neither entry cites PMID 15643074, the paper of their links. The tie is the gene name and the organism; for LAC2 also the position: the abstract says LAC2 is adjacent to LAC1, and the ORF names are CNAG_03464 and CNAG_03465 (MEASURED). The abstract does not name the strain. If the strain of the paper is serotype D, the proteins are those of another taxon (Cryptococcus deneoformans). The strain could not be confirmed from a fetched record: a fetch of the full text from Europe PMC (PMC544166) failed with HTTP 500 on 2026-11-21. So both links are held at T3 since fix round 1.
+6. **`laccase_diphenol` Q55P57 (LAC1).** UniProt organism: Cryptococcus deneoformans strain B-3501A (serotype D). The papers (PMID 8300520, 8760791) say Cryptococcus neoformans. NCBI gives "Cryptococcus neoformans var. neoformans" the taxid of Cryptococcus deneoformans (40410), and "Cryptococcus neoformans" and "Cryptococcus neoformans var. grubii" the taxid 5207 (MEASURED). The two species keys are not merged. So `species_key("Cryptococcus neoformans")`, the name in the papers, selects the H99 links and not the Q55P57 links.
+7. **`tyrosinase` A7BHQ9 (Pholiota microspora tyr1), Q00234 (Aspergillus oryzae melO), C7FF04 (Agaricus bisporus PPO3).** Verified references; all their links are T3 (section B). UniProt organism of A7BHQ9: Pholiota microspora; the paper says Pholiota nameko (one NCBI taxid, 1538424; alias added).
+8. **`asp_melanin_tyrosinase` Q0CRX0 and `aspulvinone_e_synthase` Q0CRX1.** Reviewed entries of Aspergillus terreus NIH 2624. UniProt also has A0A336U966 (TyrP of another Aspergillus terreus strain); not used.
+:::
+
+::: {.verbatim}
+### B. Tiers: where they differ from the pathway review, and why
+
+Rule (binding rule 1, applied as written since fix round 1, by the coordinator's ruling): a link is T1a only when the quoted sentence names the protein of the link and states the assay or the product for the reaction. Deletion with intermediate analysis, in a sentence that names the protein, is T1b. A colour phenotype in a sentence that names the protein is T1c. A sentence that does not name the protein, or that names no substrate or product of the reaction, gives T3; the sentence stays as context and the `assay` text starts with "Held at T3.". One quoted sentence per link.
+The "substrate class" rule of the first version is withdrawn. It gave T1a to sentences that state an assay on monophenols or diphenols; it was looser than the binding rule.
+
+1. **Tyrosinase: the review gave T1a (RECALLED) for Neurospora crassa T, Aspergillus oryzae melB and Agaricus bisporus. The tables give no tyrosinase link above T1c.** No abstract that was read names a reference protein and L-tyrosine or L-DOPA in one sentence.
+   - T1c: P00440, RHEA:18117. An overexpression strain forms melanin on L-tyrosine (PMID 2147580; the sentence says "a transformant with high constitutive tyrosinase levels"). This is a colour phenotype of a gain-of-function strain, not a deletion; T1c is the nearest tier (PROPOSED). USER DECISION: confirm T1c; it sets the tier of route `tyrosinase_dopa`.
+   - T3 with a sentence as context (demoted from T1a in fix round 1): melB A0A1S9DK56 on RHEA:18117 (PMID 23053534: "the acid-treated tyrosinase", "phenolase activity"); PPO4 C7FF05 on both reactions (PMID 28500345: "the proteolytically activated mushroom tyrosinase", "mono- and diphenols"); Q2TL94 on both reactions (PMID 16151802: "monophenolase and diphenolase").
+   - T3 with a sentence as context (as in the first version): melB on RHEA:34287 (PMID 22213164), Q00234 melO (PMID 7893753), C7FF04 PPO3 (PMID 21598903), A7BHQ9 (PMID 17617709). T3 without a paper: P00440 on RHEA:34287.
+   - Lead: PMID 16939623 states that TYR2 of Trichoderma reesei "was active on both l-tyrosine and l-dopa". That sentence names the protein and both substrates. No UniProt entry cites the paper and no entry has the gene name tyr2 (two unreviewed Trichoderma reesei tyrosinases, G0RFJ8 and G0RRF5, were found by name search), so the protein could not be tied to an accession. Not used. It is the best candidate for a T1a tyrosinase link.
+2. **LAC1 (Q55P57), dopamine to decarboxy dopachrome: T3 (review: T1a).** The quoted sentence of PMID 8300520 states the assay and the product ("Dopamine was shown by mass spectroscopy to be oxidized to decarboxy dopachrome, an intermediate of melanin synthesis.") and does not name the enzyme. Held at T3 by the ruling. The abstract is about one purified enzyme and its gene (CNLAC1), and UniProt Q55P57 cites the paper for function and catalytic activity (MEASURED). The user may raise the link.
+3. **LAC1 (Q55P57) on L-DOPA: T1c (review: T1a from PMID 8300520).** The abstract of PMID 8300520 does not mention L-DOPA. The link rests on a colour phenotype: disruption of CNLAC1 gives a Mel- mutant (PMID 8760791; the sentence names CNLAC1). PMID 8760791 states the oxidation of L-dopa to quinones as background, not as a result.
+4. **LAC1 (J9VY90) and LAC2 (J9VQZ4) of strain H99 on L-DOPA: T3 (first version: T1c).** The sentences of PMID 15643074 name lac1 and lac2 and state colour phenotypes. The abstract names no strain, the entries do not cite the paper, and the strain could not be confirmed from a fetched record (section A5). Held at T3 by the ruling. PMID 15643075 states "Both laccases contribute to melanin production using L-dopa as a substrate"; the sentence names neither gene, so it was not used.
+5. **Laccase and homogentisic acid: T3 for both LAC1 references** (review: V-abs, no tier). PMID 17098915 states that melanisation from homogentisic acid is laccase dependent; it names no laccase gene and no strain.
+6. **HppD and HmgA of Aspergillus fumigatus: T1b**, as in the review (PMID 19028908; one sentence for each gene, each names the gene). **HmgA of Aspergillus nidulans (Q00667): T1b** (first version: T1a), not in the review. The sentence that names HmgA states the disruption and the accumulation of homogentisate (PMID 7673153). The sentence on the activity of the purified fusion protein does not name HmgA, so it is not the quote.
+7. **MelA (Q0CRX1): T1a** (review: T1a/T1b). PMID 27133313 names MelA and its product; PMID 28791090 names atmelA, heterologous expression and the product. Q0CRX1 does not cite PMID 28791090; the tie is the gene name. These are the only two T1a links of the pathway.
+8. **USER DECISION. TyrP (Q0CRX0): T3 for RHEA:74195 and RHEA:74199 (review: T1a/T1b).** The abstract of PMID 27133313 states that aspulvinone E "is activated for polymerization by TyrP". It states no assay and no product of TyrP. UniProt Q0CRX0 cites the paper for catalytic activity and biophysicochemical properties and gives the two Rhea reactions (MEASURED). The user may raise the links to T1a on the strength of the UniProt record. No route result changes (the route has no product, section D).
+9. **Dopaquinone onward: T4**, as in the review. Two T4 links of the step `dopachrome_onward` (in `kb/melanin_ldopa/step.tsv` only): L-dopaquinone to L-dopachrome (curated) and L-dopachrome to 5,6-dihydroxyindole-2-carboxylic acid (RHEA:13041, EC 5.3.3.12). UniProt has no reviewed fungal entry with EC 5.3.3.12; the unreviewed fungal entries with this EC are automatic annotations (MEASURED). One PubMed query ("fungal dopachrome tautomerase") returned no fungal enzyme. This is not a full literature search.
+10. **Effect of fix round 1 on the routes.** `tyrosinase_dopa`: L-dopaquinone T1c, Neurospora crassa only (first version: T1a for three organisms). `laccase_exogenous`: L-dopaquinone T1c, Cryptococcus deneoformans only (first version: two organisms); dopaminechrome T3 (first version: T1a). `pyomelanin`, `tyrosine_degradation` and `asp_melanin` do not change.
+:::
+
+::: {.verbatim}
+### C. Leads that are not in the tables
+
+1. **Other tyrosinases with reviewed UniProt entries:** Agaricus bisporus PPO1 (Q00024) and PPO2 (O42713), Aspergillus fumigatus tyr1 (Q8J130), Podospora anserina TYR (Q92396). Their cited papers report sequences only (PMID 12743763, abstract read) or have no PMID. Not used.
+2. **Commercial mushroom tyrosinase.** PMID 10552675 reports kinetics with gamma-L-glutaminyl-4-hydroxybenzene, L-tyrosine and L-DOPA; it does not name the isoform, so no link uses it. GHB-melanin of Agaricus bisporus (review, section 3.8) is not in the tables: gamma-L-glutaminyl-4-hydroxybenzene was not looked up in ChEBI.
+3. **Tyrosinases of secondary metabolism.** UniProt gives EC 1.14.18.1 to ustQ of ustiloxin biosynthesis (B8NM74, Aspergillus flavus, with RHEA:18117 and RHEA:34287; A0A8E5HUS5, Ustilaginoidea virens, EC read from a search result). The abstract of PMID 24841822 does not show tyrosinase activity of UstQ. These entries are neither references nor decoys. A census hit close to them is not a melanin tyrosinase.
+4. **Zymoseptoria tritici HPPD (O42764, reviewed).** PMID 9570125: expression in Escherichia coli gives a brown pigment, prevented by an HPPD inhibitor. The product is inferred from the colour; no tier fits well, so it is not a reference.
+5. **Tyrosine aminotransferase** (L-tyrosine to 4-hydroxyphenylpyruvate) and **HmgX / HmgR** of Aspergillus fumigatus (PMID 22046314) are not steps.
+6. **Catechol melanin and the Ustilago maydis teliospore pigment** (review, section 3.8: RECALLED or title only). Not curated.
+7. **Aspergillus fumigatus conidial extract oxidises L-DOPA** ("laccase-type activity", PMID 14970241, abstract read). The abstract names no protein. It shows the substrate range of laccases; it is not a link.
+8. **KEGG.** K00505 (TYR; tyrosinase), K00421 (lccA; laccase), K05909 (laccase), K00457 (HPD, hppD) and K00451 (HGD, hmgA) are cross-references in `step.tsv` (names read from KEGG `list` on 2026-11-21; no KEGG reaction content copied). KEGG has two laccase KOs; which one holds the fungal laccases was not checked.
+:::
+
+::: {.verbatim}
+### D. Routes that the tables cannot follow, and the exogenous-substrate flag
+
+1. **USER DECISION. `asp_melanin`: no product in `path_possible`.** The two TyrP products of Rhea have charged ChEBI entries only: CHEBI:193114 (C17H11O7, charge -1) and CHEBI:193115 (C17H9O6, charge -1). The ChEBI records have no conjugate-acid relation, and a search with the first block of each InChIKey found the anion only (MEASURED). The compound table holds neutral parents keyed by ChEBI id, so the TyrP reactions have no product participant, and the route stops after aspulvinone E (T1a, Aspergillus terreus, first step alone). Options: (i) a curated id scheme for compounds without a neutral ChEBI entry, the same open question as for `melanin_dhn` route (b); (ii) leave the route without a product. The products are unstable according to UniProt ("highly unstable"), so they are poor targets in any case.
+2. **USER DECISION. `exogenous_substrate` is text, not a schema field.** The schema (`defs.py`) has no field for it and was not changed. Each route note starts with `exogenous_substrate: true` or `exogenous_substrate: false`; only `laccase_exogenous` is true. The `lineage_note` of step `laccase_diphenol` carries the same flag. Tests check the text. If later code must read the flag, a schema field is safer.
+3. **`path_possible` does not know that a substrate is exogenous.** In the first step of a route every link is applied with no requirement on its substrates. So `laccase_exogenous` returns L-dopaquinone (T1c) and dopaminechrome (T3) as "possible". This means: possible if L-DOPA or dopamine is supplied. A capability table must carry the flag next to this route.
+4. **`pyomelanin` and `tyrosine_degradation` share the step `hppd`.** `tyrosine_degradation` is not a pigment route; it is declared so that `hmga` is counted against pyomelanin. Aspergillus fumigatus completes both with its own links (T1b). The census cannot tell pigment production from tyrosine catabolism (REVIEWED).
+5. **Polymers.** L-DOPA melanin, pyomelanin, the homogentisic acid pigment of Cryptococcus and Asp-melanin have no formula. The reactions that end in a polymer have no product participant.
+6. **Free L-DOPA is not a product of any reaction of the table** (Rhea writes L-tyrosine to L-dopaquinone as one reaction; review, O7). A model that needs L-DOPA as an analyte has no step that makes it.
+:::
+
+::: {.verbatim}
+### E. Compounds
+
+1. **Dopaminechrome (CHEBI:189002).** The abstract of PMID 8300520 says "decarboxy dopachrome". The curator mapped this name to ChEBI "dopaminechrome (keto form)", C8H7NO2, which is the formula of L-dopachrome (C9H7NO4) minus CO2 (MEASURED for the formulas; the mapping of the name is PROPOSED). ChEBI also has an enol form (CHEBI:188999), not used.
+2. **Rhea species and neutral parents.** Rhea lists zwitterions for L-tyrosine, L-DOPA and L-dopaquinone (CHEBI:58315, 57504, 57924; charge 0, charged atoms in the SMILES) and anions for the acids. The table holds CHEBI:17895, 15765, 16852, 15772, 2003, 15999, 44747, 47904 and 17704. For each pair the atoms other than H and the first InChIKey block are equal (MEASURED).
+3. **PubChem cross-check.** For all 11 compounds PubChem has a compound with the ChEBI InChIKey, and the exact mass agrees with the formula mass within 0.0005 (MEASURED).
+4. **Isomers.** L-dopachrome and 5,6-dihydroxyindole-2-carboxylic acid are both C9H7NO4 (193.0375). 4-hydroxyphenylpyruvic acid (C9H8O4) and homogentisic acid (C8H8O4) differ.
+5. **KEGG ids** are the KEGG cross-references of the ChEBI records: C00082, C00355, C00822, C01693, C04185, C03758, C01179, C00544, C01036, C02006 (MEASURED). Dopaminechrome has none in ChEBI.
+6. Dopaquinone and dopachrome may be unstable analytes (spec section 6.7, UNVERIFIED).
+7. ChEBI and PubChem licences are UNVERIFIED (spec section 3). `np_class` is empty for all compounds.
+:::
+
+::: {.verbatim}
+### F. Decoys
+
+1. **What separates tyrosinase and laccase.** They are not related in sequence (type-3 copper family, Pfam PF00264; multicopper oxidase family, Pfam PF07732, PF00394, PF07731), so neither is a sequence decoy of the other. They are near neighbours in function: both oxidise L-DOPA to the quinone. The annotation that separates them: tyrosinase is EC 1.14.18.1 with RHEA:18117 and RHEA:34287; laccase is EC 1.10.3.2 with the generic RHEA:11276. UniProt states for LAC1 (Q55P57) that it does not oxidise monophenols such as tyrosine (from PMID 8300520). The laccase reactions of the table are curated reactions with EC 1.10.3.2; no laccase is linked to RHEA:18117 or RHEA:34287.
+2. **Rule for a decoy (checked by `build.py` for every decoy):** the entry carries the Pfam ids of the step; it carries neither the EC of the step nor a Rhea reaction of the step; its own EC and Rhea ids are those in the reason text. This is a check of the annotation. An assay that excludes both reference substrates exists for two decoys only: ivoB (Q5BGU9: "not tyrosine, 3,4-dihydroxyphenylalanine", PMID 2126551) and AoCO4 (Q2UNF9: no activity on L-tyrosine and on L-dopa, PMID 19798497). **Two decoys are not shown to lack diphenol oxidation (fix round 1, I4).** GriF (B1VTI5, bacterial) has no monophenolase activity, so it is excluded from the monophenolase reaction (RHEA:18117) only; the abstract of PMID 16282322 says it oxidises o-aminophenols "as preferable substrates rather than catechol-type substrates", so it accepts catechol-type substrates, and the abstract does not name L-DOPA. abr1 (Q4WZB4): its UniProt entry cites PMID 14970241, which reports "a laccase-type activity in conidial extracts" with L-DOPA and names no protein; the record does not show that abr1 lacks L-DOPA oxidation. Both stay decoys on the annotation check; no tier depends on them. For orsC, phomQ1, gedJ, phlC and the ascorbate oxidase, activity with L-DOPA was not excluded by an assay that was read. The reason text of GriF lists all three Rhea ids of the entry (RHEA:41420, RHEA:41424, RHEA:40963).
+3. **Entries that are not decoys because they carry the EC of the step:** ustQ (B8NM74, EC 1.14.18.1) for `tyrosinase`; the laccases yA of Aspergillus nidulans (P17489), lacc of Neurospora crassa (P06811) and LAC1 of Melanocarpus albomyces (Q70KY3), all EC 1.10.3.2, for `laccase_diphenol`. Consequence: the laccase step is not specific to melanin. Any laccase may oxidise a supplied diphenol.
+4. **Q2UNF9 (AoCO4) is an unreviewed entry** with the ORF name AO090001000383, no EC and the protein name "DNA, SC001". It is the Aspergillus oryzae catechol oxidase: the entry cites three crystal-structure papers of that enzyme (PMID 24043469 read; the abstract names AoCO4), and it has 408 residues, the length that PMID 19798497 gives for AoCO4 (MEASURED). PMID 19798497 is not cited by the entry.
+5. **The tyrosinase decoys are far from the references.** MEASURED (global alignment, BLOSUM62, identical columns / alignment columns): the seven references (with A0A1S9DK56 as melB) are 20 to 55% identical to each other; the five decoys and TyrP are 12 to 18% identical to the references and 20 to 45% to each other (TyrP and ivoB 45%). No reviewed non-tyrosinase entry inside the long-tyrosinase group was found. So the decoys test the family border; they do not test the border between a melanin tyrosinase and another long tyrosinase.
+6. **TyrP (Q0CRX0) is not a decoy of `tyrosinase`.** It is a reference of `asp_melanin_tyrosinase`. Whether it oxidises L-tyrosine or L-DOPA is not stated in the records that were read.
+7. **The laccase decoys** are 22 to 29% identical to the three references (MEASURED). abr1 (Q4WZB4) is a reference of `mco_abr1` in pathway `melanin_dhn`. The bilirubin oxidase Q12737 was not used: UniProt gives it no gene name.
+8. `hppd`: no decoy. The brief names no decoy family. No member of TIGR01263 with another function was looked for.
+9. `hmga`: no decoy. The brief names no decoy family. No member of TIGR01015 with another function was looked for.
+10. `aspulvinone_e_synthase`: no decoy. apvA (Q0CWD0, 65% identical to melA) does the same reaction, so it cannot be a decoy. Other NRPS-like enzymes of Aspergillus terreus with other products exist (PMID 29305695, abstract read: atromentin from ATEG_03090); no UniProt entry was tied to them here.
+11. Identity threshold: none proposed.
+:::
+
 ### Decisions for the owner
 
 Each item is copied character for character from `refs/melanin_ldopa/UNVERIFIED.md`. The number is `DL` plus the position in the file.
@@ -872,6 +1133,111 @@ Failures in this pathway: 3. Every failure row is in the verification section at
 The report gives pass counts per check for all pathways together only. It gives no pass count per check per pathway. This packet does not recompute them.
 
 ## Pathway `mycosporine`
+
+### Items for the owner (mycosporine, hand-written sections A, B, C, D, E, F, G, not numbered decisions)
+
+Copied character for character from `refs/mycosporine/UNVERIFIED.md`, block 'Items for a person to check'. The sections with a decision marker in their heading are in the numbered decisions below. An item that holds a marker appears in both places.
+
+::: {.verbatim}
+### A. The fungal genes: what is known and what is not
+
+1. **The fungal genes are known for one species.** One paper (PMID 36983003) shows three genes of one 7873 bp cluster in the yeast Phaffia rhodozyma UCD 67-385: DDGS, OMT and ATPG. Deletion of each gene stops mycosporine production; the atpg deletion accumulates 4-deoxygadusol; the three cDNAs in Saccharomyces cerevisiae give mycosporine-glutaminol (MEASURED, abstract).
+2. **The fungal genes of these steps are unknown:** the glucosylation of mycosporine-glutaminol (`mg_glucosyltransferase`) and the formation of mycosporine-glutamicol (`glutamicol_formation`). Both steps have `refs: []` and tier T4. For the glucosylation the full text of PMID 36983003 states that the gene is not part of the cluster and that its function is absent from Saccharomyces cerevisiae. **An enzyme activity is published for the glucosylation, without a sequence** (PMID 24258137, Planta 1983, abstract read; missed in the first version and found by the review): a soluble UDP-glucose:mycosporin-2 glucosyltransferase from spores of Ascochyta fabae; the amide form is the best acceptor; pH optimum about 8.5; divalent cations are needed (Mn2+ more efficient than Ca2+ or Mg2+); the reaction was not reversible. The protein link stays T4, because no sequence is known and a link needs a protein. It is UNVERIFIED whether "mycosporin-2, amide form" is mycosporine-glutaminol, the aglycone of mycosporine-glutaminol-glucoside: the abstract does not say it. UDP-glucose as the donor is a lead for the enzyme family. For mycosporine-glutamicol no paper that was read gives a gene, an enzyme or a precursor.
+3. **No other fungus has an assayed gene.** PMID 40036870 reports a gene cluster in Naganishia friedmannii that is induced by UV radiation (RT-PCR). The abstract names no gene and no accession, so the paper gives no reference and no link. The full text of PMID 36983003 states that the Phaffia genes were found with homologues from Pyrenophora tritici-repentis, Parastagonospora nodorum, Aspergillus clavatus and Magnaporthe oryzae (EDU45310, EAT88778, EAW13536, EDK03437, EDU45308, EAT88781); these are predicted proteins without an assay and are not references. UniProt has unreviewed fungal entries with the name "Demethyl-4-deoxygadusol synthase" (for example A0A484F947 of Colletotrichum orbiculare); they are automatic names and are not references.
+4. **The step set is not a copy of the cyanobacterial gene list.** Cyanobacteria: MysA (DDGS), MysB (O-methyltransferase), MysC (ATP-grasp ligase, glycine), then MysD (D-Ala-D-Ala ligase-like) or an NRPS-like enzyme for the second amino acid (PMID 20813918, 21890703). The fungal route differs in three points (MEASURED):
+   - The fungal ATP-grasp ligase adds glutaminol, not glycine. The product is mycosporine-glutaminol, not mycosporine-glycine.
+   - There is no second-amine step. No paper that was read reports an iminomycosporine (shinorine, porphyra-334, palythine) from a fungus. MysD and the NRPS-like enzyme are not steps.
+   - The fungal O-methyltransferase is not shown to be an ortholog of MysB: 17% identity to Npun_R5599 and 19% to Ava_3857, against 29 to 30% to catechol O-methyltransferases (global alignment). The Phaffia OMT has Pfam PF13578 at the gathering cutoff; MysB has PF01596.
+   - The glucoside is the main fungal compound, and its gene is unknown.
+5. **USER DECISION 2: bacterial references.** Four cyanobacterial proteins are references for tree placement (B2J6X9, Q3M6C3, B2J6X8, B2J6X7). They are never fungal evidence. Decide whether to keep them as references or to move them to a separate file.
+
+Bacterial genes by organism (MEASURED from the abstracts and the UniProt records; "full text" where marked):
+
+| Organism | Gene (paper name) | UniProt | Role | In the tables |
+|---|---|---|---|---|
+| Nostoc punctiforme ATCC 29133 | NpR5600, mysA (Npun_R5600) | B2J6X9 (reviewed) | DDGS, EC 4.2.3.154 | reference of `ddgs`, T2 |
+| Nostoc punctiforme ATCC 29133 | NpR5599, mysB (Npun_R5599) | B2J6X8 | O-methyltransferase | reference of `omt`, T2 |
+| Nostoc punctiforme ATCC 29133 | NpR5598, mysC (Npun_R5598) | B2J6X7 | ATP-grasp ligase, glycine | reference of `atp_grasp_ligase`, T2 on the glycine reaction |
+| Nostoc punctiforme ATCC 29133 | NpF5597, mysD (Npun_F5597) | B2J6X6 | D-Ala-D-Ala ligase-like, second amino acid | decoy of `atp_grasp_ligase` |
+| Anabaena variabilis ATCC 29413 | Ava_3858 | Q3M6C3 (reviewed) | DDGS, EC 4.2.3.154 | reference of `ddgs`, T3 |
+| Anabaena variabilis ATCC 29413 | Ava_3857 | Q3M6C4 | O-methyltransferase (full text of PMID 20813918) | not in the tables |
+| Anabaena variabilis ATCC 29413 | Ava_3856 | Q3M6C5 | ATP-grasp homolog (full text of PMID 20813918) | not in the tables |
+| Anabaena variabilis ATCC 29413 | Ava_3855 | Q3M6C6 | NRPS-like enzyme (full text of PMID 20813918) | not in the tables: another fold, no fungal step |
+| Actinosynnema mirum DSM 43827, Pseudonocardia sp. P1 | cluster (no gene named in the abstract) | none | shinorine in Streptomyces avermitilis (PMID 24907338) | not in the tables |
+:::
+
+::: {.verbatim}
+### B. Tiers (binding rule 1, applied as written)
+
+A T1 or T2 link needs a quoted abstract sentence that names the gene of the protein. T1a also needs the assay or the product of that reaction in the sentence. A bacterial protein is T2 at most.
+
+1. **DDGS of Phaffia, T1c, and OMT of Phaffia, T1a. USER DECISION 3 (decide the pair together).** The two tiers rest on the same sentence and the same experiment: the co-expression of DDGS and OMT in Saccharomyces cerevisiae gives 4-deoxygadusol. The full text has no strain with DDGS alone and none with OMT alone, so no control shows which enzyme does which step; the order rests on homology. The omt deletion has no reported intermediate. OMT is T1a because the rule as written is met (the sentence names OMT and the product of its reaction). DDGS is held at T1c because its own product is not named. The two consistent choices are: both T1a (the pair makes 4-deoxygadusol), or OMT at T1c like DDGS. No route result changes with either choice. Detail for DDGS: The sentence with the heterologous expression names DDGS, and the product in it is 4-deoxygadusol, which is the product of the next reaction. The product of DDGS (demethyl-4-deoxygadusol) is not named in the abstract. So the link uses the deletion sentence and is T1c (no mycosporine; no intermediate for this gene). T1a is the other reading: the co-expression of DDGS and OMT gives 4-deoxygadusol, which needs both enzymes.
+2. **OMT and ATPG of Phaffia, T1a.** The sentence names each gene and the product of its reaction. Limits (MEASURED, full text): the assays are co-expressions, not single enzymes; the products were identified by HPLC retention time and absorption spectrum with co-elution, and the full text reports no mass spectrometry.
+3. **B2J6X8 (mysB), held at T3 since fix round 1. USER DECISION 4.** The sentence names NpR5599 and states the product of the three genes together, not the product of the methylation. No fetched database record supports the activity of this protein: the UniProt entry is unreviewed, has no catalytic activity record with evidence, and exists "by homology". A sentence of the full text of PMID 20813918 (word search) reports 4-deoxygadusol from NpR5600 and NpR5599 together in vitro; it is not an abstract sentence. The same enzyme family as the fungal OMT is not shown (A4). T2 is the other reading. **B2J6X9 (mysA) stays T2:** the same sentence names NpR5600, and the reviewed UniProt entry gives RHEA:49560 with experimental evidence (ECO:0000269) from PMID 20813918 and 22741921. The mysC link (glycine) is T2: the sentence states the product of its reaction.
+4. **Q3M6C3 (Ava_3858), held at T3.** The abstract sentence of PMID 22741921 names the enzyme class and does not name the protein. The reviewed UniProt entry cites the paper for the catalytic activity, and the full text reports the activity of Ava_3858. Raise to T2 if the UniProt record is accepted as the tie.
+5. **Short gene labels.** The abstract of PMID 21890703 writes NpR5600, NpR5599, NpR5598 and NpF5597. UniProt writes Npun_R5600, Npun_R5599, Npun_R5598 and Npun_F5597. The curator reads them as the same genes (PROPOSED; same organism, same strain, same number).
+6. **Ordered locus names.** UniProt gives the four cyanobacterial entries an ordered locus name and no other gene name. `kbsources.uniprot_entry` does not read ordered locus names, so it returns no gene name for them. The curation scripts read the ordered locus name from the full UniProt record. `kbsources.py` is not changed. **USER DECISION 5:** accept an ordered locus name as a gene name (as an ORF name was accepted in Task 5). If no, three entries become `verified: false`: the references B2J6X9 and Q3M6C3 and the decoy C6WFL3 (Amir_2000). Six entries of this pathway have an ordered locus name only (B2J6X9, Q3M6C3, B2J6X8, B2J6X7, B2J6X6, C6WFL3). If yes, the Task 7 verifier must read `orderedLocusNames`, or its gene-name check fails for these six.
+:::
+
+::: {.verbatim}
+### C. Routes
+
+- No declared route gives a product in the tables (D1). The route prefix `ddgs` gives demethyl-4-deoxygadusol at T1c for Phaffia rhodozyma. The step `atp_grasp_ligase` alone gives mycosporine-glutaminol at T1a for Phaffia rhodozyma.
+- `mycosporine_glutaminol_glucoside` and `mycosporine_glutamicol` end in a T4 step. A path with a T4 step is never reported as possible.
+- `mycosporine_glutamicol` lists `ddgs` and `omt` as its first steps. That is an assumption from the shared 4-deoxygadusol core (PROPOSED). It is not shown in a glutamicol-producing fungus.
+- The T4 steps are in the YAML with `refs: []`. The carotenoid and melanin tables keep T4 steps in `step.tsv` only. Here the route variants need the step ids (PROPOSED).
+:::
+
+::: {.verbatim}
+### D. Compounds
+
+1. **USER DECISION 6: compounds with no ChEBI id.** A ChEBI search by name, by InChIKey and by the first InChIKey block found no ChEBI entry for these compounds (MEASURED). No id is invented, and the compounds are not in `compound.tsv`:
+
+| Compound | Formula (PubChem) | PubChem CID | Effect |
+|---|---|---|---|
+| 4-deoxygadusol | C8H12O5 | 85926716 | the product of `omt` and the substrate of `atp_grasp_ligase` are missing: no route gives a product |
+| mycosporine-glycine | C10H15NO6 | 14444485 | the bacterial reaction has no participant |
+| mycosporine-glutaminol-glucoside | C19H32N2O11 | 171990409 | the main fungal compound is not in the tables |
+| mycosporine-glutamicol-glucoside | C19H31NO12 | 171990350 | not in the tables |
+| asterina-330 | not found in PubChem by this name | none | not in the tables |
+| mycosporine-alanine | C11H17NO6 | 101450154 | not in the tables |
+| mycosporine-glutamine | not found in PubChem by this name | none | not in the tables (reported in Colletotrichum graminicola) |
+| glutaminol | not resolved (PubChem returns L-glutamic acid for the name) | none | not listed as a substrate |
+
+2. ChEBI has gadusol(1-) (CHEBI:228248) and demethylgadusol(1-) (CHEBI:228249) as anions only under those names. Neutral gadusol is CHEBI:172445 under a systematic name (same InChIKey as PubChem "gadusol", MEASURED). Neutral demethylgadusol was not found, so KEGG C22843 has no compound row.
+3. **PubChem check.** For shinorine (CHEBI:131712) and porphyra-334 (CHEBI:35671) PubChem has no compound with the ChEBI InChIKey, and the PubChem compounds of those names have another first block (the imine is drawn on the other nitrogen). Palythine (CHEBI:182637) has the same first block as PubChem "palythine". The three are in `compound.tsv` with the ChEBI structure (PROPOSED). PubChem "shinorine" has the first block of CHEBI:175245 (Mytilin A).
+4. **KEGG.** C05382 and C10607 are KEGG cross-references of the ChEBI records. C21281 (demethyl-4-deoxygadusol) and C22846 (gadusol) are matched by KEGG name and formula, because neither database links the other (PROPOSED). KEGG C21281 has no stereo centre in its name; the table uses the (R) form of RHEA:49560. KEGG ids are cross-reference columns only.
+5. CHEBI:7039 has the name "Mycosporine". Its InChIKey is that of PubChem "mycosporine serinol" (MEASURED). Gadusol, mycosporine-serinol and palythine are context compounds: no reaction of the table makes them.
+6. Rhea: RHEA:49560 is the only reaction of the fungal route in Rhea. Searches for gadusol, deoxygadusol, mycosporine, shinorine and valiolone found no other reaction of the route. The other reactions have curated ids.
+:::
+
+::: {.verbatim}
+### E. Decoys
+
+- The check is a check of the UniProt annotation: family id on the entry, no EC and no Rhea reaction of the step. For `omt` and `atp_grasp_ligase` the step has no EC and no Rhea reaction, so the check is only that the decoy carries another annotation.
+- Assay read (abstract): C6WFL3 (2-epi-valiolone synthase, PMID 22741921) and B2J6X6 (MysD, PMID 21890703). All other decoys: annotation only. No decoy was assayed with the substrate of the fungal step, so no decoy is shown to lack the reference reaction.
+- `omt`: the Phaffia OMT is 29 to 30% identical to the decoys O42898 and P21964 and 17% to the bacterial reference (MEASURED). The decoys carry PF01596; the Phaffia OMT has PF01596 below the gathering cutoff only.
+- **USER DECISION 7: decoy O42898 is not excluded as a true member of the `omt` step.** It is "Probable catechol O-methyltransferase 1" of Schizosaccharomyces pombe. Its catalytic activity in UniProt has no evidence code (MEASURED), and no assay of it was read. It is closer to the Phaffia OMT (30%) than MysB is (17%). MysB, the bacterial enzyme of this reaction, has the Pfam family of the decoys (PF01596). So a census must not count a hit to O42898 as a negative; the `omt` step needs tree placement. Keep O42898 as a decoy, or drop it. Whether Schizosaccharomyces pombe makes a mycosporine was not checked (UNVERIFIED). P21964 (human COMT) has an annotated function on catechols and was not assayed with demethyl-4-deoxygadusol.
+- `atp_grasp_ligase`: the family id of the decoys is the PROSITE profile PS50975. It is on the UniProt entry of the strain VOH protein (A0A9Y1GGR7) and of MysC (B2J6X7). It was not computed for WEV88681.1.
+- `mg_glucosyltransferase`: no decoy (no reference). `glutamicol_formation`: no decoy (no reference).
+- Not decoys and not references: the NRPS-like enzyme Q3M6C6 (another fold); the fish 2-epi-5-epi-valiolone synthase of gadusol biosynthesis (PMID 25965179; no accession was fetched).
+:::
+
+::: {.verbatim}
+### F. Lineages (`fungal_lineages.tsv`)
+
+- 29 rows: organism, compound, PMID, and whether the abstract or the full text was read. The table is a list of reports. It is not generalised to the kingdom.
+- The reports are yeasts of the Basidiomycota (Phaffia, Naganishia, Rhodotorula, Cryptococcus, Cystobasidium, Pucciniomycotina), a few ascomycetes (Hortaea werneckii, rock-inhabiting microcolonial fungi, Colletotrichum graminicola, Ascochyta fabae) and lichen thalli. For the lichens the abstracts do not say which partner makes the compound.
+- Negative reports are kept: Phaffia rhodozyma CBS 6938 (no cluster, no mycosporine) and Metarhizium anisopliae conidia.
+- Organism names are the names in the abstracts. They were not checked against NCBI Taxonomy, except Phaffia rhodozyma and Naganishia friedmannii. Current names may differ (UNVERIFIED).
+- The list is not complete. The older literature on filamentous fungi was not searched in full.
+:::
+
+::: {.verbatim}
+### G. Context from the EBC agent (context only, not evidence for the pathway)
+
+REPORTED by the EBC agent (`IDEA_environment_host_signatures.md`), not checked here: names of mycosporine-like amino acids occur in marine accessions (36/87, odds ratio 16.9) and in 0 of 82 fungal-reference accessions. The task brief gives other numbers for the same report (176 corpus accessions; 32 of 88 marine accessions, odds ratio 14.5). Both sets are REPORTED. This is context only. It is not evidence for or against any step, tier or route of this pathway. The compounds that the fungal literature reports (mycosporine-glutaminol-glucoside and its relatives) are not the iminomycosporines of marine algae and cyanobacteria (shinorine, porphyra-334, palythine). Whether the EBC names include the fungal compounds is not known here.
+:::
 
 ### Decisions for the owner
 

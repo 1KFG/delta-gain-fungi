@@ -170,6 +170,27 @@ def section_blocks(text: str, pattern: str) -> list[dict]:
     return out
 
 
+def owner_sections(text: str) -> list[dict]:
+    """Subsections (###) of the hand-written 'Items for a person to check' block, in file order,
+    except those whose heading holds a decision marker (those are numbered decisions)."""
+    lines = text.split("\n")
+    start = next(i for i, ln in enumerate(lines) if ln.startswith("## Items for a person to check"))
+    end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
+    out = []
+    i = start + 1
+    while i < end:
+        if lines[i].startswith("### "):
+            j = i + 1
+            while j < end and not (HEAD_RE.match(lines[j]) and len(HEAD_RE.match(lines[j]).group(1)) <= 3):
+                j += 1
+            if not any(k in lines[i] for k in MARKERS):
+                out.append(_block(lines, i, j, "section"))
+            i = j
+        else:
+            i += 1
+    return out
+
+
 def context_numbers(text: str) -> str:
     """The route-tier lines of the decision section that give the context reading. Copied
     verbatim: the table after 'Route tiers, MEASURED' (carotenoid) or the numbered item that
@@ -436,6 +457,17 @@ def link_counts_section(ctx: Ctx, name: str, d: dict) -> list[str]:
     return ["### Links per tier", ""] + table(["pathway", "tier", "links"], rows) + [""]
 
 
+def owner_items_section(ctx: Ctx, name: str, secs: list[dict]) -> list[str]:
+    letters = ", ".join(s["text"].split("\n", 1)[0][4:].split(".")[0] for s in secs)
+    out = [f"### Items for the owner ({name}, hand-written sections {letters}, not numbered decisions)", "",
+           f"Copied character for character from `refs/{name}/UNVERIFIED.md`, block 'Items for a person to check'. "
+           "The sections with a decision marker in their heading are in the numbered decisions below. "
+           "An item that holds a marker appears in both places.", ""]
+    for s in secs:
+        out += [ctx.verbatim(s["text"]), ""]
+    return out
+
+
 def decisions_section(ctx: Ctx, name: str, blocks: list[dict]) -> list[str]:
     L = LETTER[name]
     out = ["### Decisions for the owner", "",
@@ -558,6 +590,7 @@ def build_packet(root: Path = PKG) -> tuple[str, dict]:
     for n in PATHWAYS:
         d = data[n]
         out += [f"## Pathway `{n}`", ""]
+        out += owner_items_section(ctx, n, owner_sections(d["unv"]))
         out += decisions_section(ctx, n, blocks[n])
         rows, none = route_rows(ctx, n, d)
         out += ["### Routes", "", "From `path_possible` on the committed tables.", ""]

@@ -172,3 +172,75 @@ def test_numbers_in_text_are_sourced(built):
     missing = sorted(toks - set(numbers))
     assert not missing, missing
     assert len(numbers) > 50
+
+
+@pytest.mark.parametrize("name", PATHWAYS)
+def test_every_owner_subsection_heading_is_in_the_packet(packet, name):
+    text = (ROOT / "refs" / name / "UNVERIFIED.md").read_text(encoding="utf-8")
+    block = text.split("\n## Items for a person to check", 1)[1].split("\n## ", 1)[0]
+    heads = re.findall(r"^### .*$", block, flags=re.M)
+    assert len(heads) >= 6, name
+    for h in heads:
+        assert h in packet, (name, h)
+    assert f"### Items for the owner ({name}, hand-written sections" in packet
+
+
+def _strict_rows(packet_rows):
+    """route -> (tier set, organism set) from the packet route rows."""
+    out = {}
+    for ln in packet_rows:
+        c = [x.strip() for x in ln.strip("|").split("|")]
+        if len(c) != 7:
+            continue
+        route = c[0].strip("`")
+        t, o = out.setdefault(route, (set(), set()))
+        t.add(c[3])
+        o.update(c[4].strip("`").split(","))
+    return out
+
+
+def _decision_text(name):
+    text = (ROOT / "refs" / name / "UNVERIFIED.md").read_text(encoding="utf-8")
+    sec = text.split("USER DECISION: strict or context reading of rule 1")[1]
+    return sec
+
+
+def _packet_routes(packet, name):
+    sec = packet.split(f"## Pathway `{name}`")[1].split("### Routes")[1].split("### Steps and links")[0]
+    return _strict_rows([ln for ln in sec.splitlines() if ln.startswith("| `")])
+
+
+def test_strict_tiers_equal_carotenoid_decision_text(packet):
+    sec = _decision_text("carotenoid").split("Route tiers, MEASURED")[1]
+    rows = [ln for ln in sec.splitlines() if ln.startswith("| ") and not ln.startswith("| Route") and "---" not in ln]
+    assert len(rows) == 5
+    got = _packet_routes(packet, "carotenoid")
+    for ln in rows:
+        route_cell, strict = [x.strip() for x in ln.strip("|").split("|")][:2]
+        tiers = set(re.findall(r"T\d[abc]?", strict))
+        orgs = {o.lower() for o in re.findall(r"[A-Z][a-z]+ [a-z]+", strict) if o.split()[0] in
+                {"Neurospora", "Fusarium", "Mucor", "Xanthophyllomyces"}}
+        for route in [r.strip() for r in route_cell.split(",")]:
+            assert got[route][0] == tiers, (route, got[route], tiers)
+            if orgs:
+                assert got[route][1] == orgs, (route, got[route], orgs)
+
+
+def test_strict_tiers_equal_melanin_dhn_decision_text(packet):
+    sec = _decision_text("melanin_dhn")
+    line = next(ln for ln in sec.splitlines() if ln.startswith("4. **Route tiers"))
+    strict = line.split("Strict reading (tables):")[1].split("Context reading")[0]
+    got = _packet_routes(packet, "melanin_dhn")
+    for route, orgs in (("pks_thn", {"colletotrichum orbiculare", "glomerella lagenarium"}),
+                        ("pks_heptaketide", {"aspergillus fumigatus", "colletotrichum orbiculare"})):
+        assert f"`{route}`" in strict
+        assert got[route] == ({"T3"}, orgs)
+    assert "T3" in strict
+    for m in re.findall(r"([A-Z][a-z]+ [a-z]+) with ([A-Z][a-z]+ [a-z]+)", strict):
+        assert {x.lower() for x in m} in [got["pks_thn"][1], got["pks_heptaketide"][1]]
+    ns = [int(x) for x in re.findall(r"(\d+) equal lists", strict)]
+    from pathway_census.kb import load_kb, path_possible
+    kb = load_kb(ROOT / "kb" / "melanin_dhn")
+    d = yaml.safe_load((ROOT / "pathways" / "melanin_dhn.yaml").read_text(encoding="utf-8"))
+    steps = {r["id"]: r["step_ids"] for r in d["routes"]}
+    assert ns == [int(path_possible(kb, steps[r]).n_equal_paths.iloc[0]) for r in ("pks_thn", "pks_heptaketide")]
