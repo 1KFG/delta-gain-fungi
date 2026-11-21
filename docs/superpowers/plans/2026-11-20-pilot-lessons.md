@@ -19,7 +19,7 @@ synthetic fixtures only. Nothing in this note is a biological finding.
 - The `verified` gate worked. Every CLI refuses a `verified: false` pathway without `--provisional`,
   and provisional outputs carry a `.PROVISIONAL` name or header (Tasks 4, 8, 9, 10).
 - Reference curation: 23 refs, 22 verified against UniProt and PubMed (MEASURED, Task 3). A reviewer
-  re-checked 6 of them (accession, PMID, sequence): all matched.
+  re-checked 6 of them (Task 3 review) (accession, PMID, sequence): all matched.
 - Nullable-boolean flags with explicit NA semantics (Tasks 6, 7) stopped unknown values from being
   counted as clean.
 - Per-task review plus fix rounds caught Important issues in Tasks 2, 5, 6, 7, 8, 9, 10 before merge.
@@ -58,22 +58,28 @@ synthetic fixtures only. Nothing in this note is a biological finding.
 
 1. **Spec section 3 genome counts were TSV-wide.** BFD-scoped counts differ: `baseline_ok` is 5,625 in
    BFD against 5,703 TSV-wide (MEASURED, Task 2). The TSV has 27,401 rows and 3,038 of them are not in
-   `species.parquet`. The spec text is not yet updated (deferred spec fix).
+   `species.parquet` (MEASURED, README, Task 2). The spec text is not yet updated (deferred spec fix).
 2. **`has_proteins` semantics.** It means "BFD `proteins.fa.gz` exists", not "the genome was annotated".
    `has_deposited_proteins` is the TSV flag (5,634 True, MEASURED). A zero copy count in a genome with
    `has_proteins` False is not evidence of absence.
-3. **NA semantics for flags.** The spec treated flags as true/false. The data forced three states.
-   `fillna(False)` is forbidden. Use `clean_mask` and `unknown_counts`.
-4. **Fusion needs placement evidence.** The spec implied that a fused protein counts for both steps. The
-   rule now is: a fused protein is `assigned` for a step only with its own qualifying placement. The
-   50% domain-overlap fusion threshold is PROPOSED.
+3. **Flags are nullable booleans, not true/false (Task 6 ruling, ledger).** `NA` = not evaluated.
+   `fillna(False)` is forbidden. Use `clean_mask` and `unknown_counts`. (No spec text was found that
+   says flags are plain booleans, so no failed spec assumption is claimed here.)
+4. **Fusion needs placement evidence (Task 5 ruling, ledger).** Spec section 5 line 114 says "A fused
+   gene must count toward both steps", and section 5 step 3 (line 130) says "Fused genes get multiple
+   step labels". Task 5 ruling: a step label is `assigned` only with HMM evidence AND a tree placement
+   (clade and support >= `min_support`). Fusion only sets `fusion_candidate`. A fused protein without a
+   placement for a step stays `unassigned` for it. The 50% domain-overlap threshold is PROPOSED.
 5. **Fused self-neighbour.** A protein assigned to two steps could count as its own cluster neighbour in
    the triage `in_cluster` term. Fixed by the rule "different protein_id AND different step_id" (Task 10).
 6. **Paired design limits.** The paired test covers only assemblies with both annotations. It says
-   nothing about the 18,145 genomes without a prior annotation, which annotation is correct, or absence
-   (spec section 5.6). Fable's 5,625 figure is the genome-table `baseline_ok` count, not a pair count.
-7. **No per-gene taxonomy in BFD.** The spec assumed a contamination call from existing data. It needs a
-   new best-hit table and a reference set labelled fungal / non-fungal. UNVERIFIED whether
+   nothing about the genomes without a prior annotation (BFD-scoped: 18,055 `no_prior_annotation_present`
+   plus 673 `no_prior_annotation_not_downloaded`, MEASURED, Task 2 report), which annotation is correct,
+   or absence (spec section 5.6). The Fable review says "The 5,625 baseline genomes allow this test
+   directly" (`2026-11-20-pathway-census-REVIEW_FABLE.md` line 49). 5,625 is the BFD genome-table
+   `baseline_ok` count (MEASURED, Task 2), not a pair count: a pair also needs BFD proteins, deposited
+   proteins and an existing `protein.faa` (Task 9 pair rule). The real pair count is not run.
+7. **No per-gene taxonomy in BFD.** Spec section 2 (line 61) says "The pipeline checks contamination before counting a copy". Task 6 found (MEASURED) that BFD has no per-gene taxonomy table, so the check needs a new best-hit table and a reference set labelled fungal / non-fungal. UNVERIFIED whether
    `swissprot_best.parquet` plus a taxid-to-lineage map is usable (memory notes call it "old format").
 8. **Tree placement tool.** `upo_place` does not run unchanged on carotenoid steps. Only its `assign`
    subcommand is reusable (`--clades`, `--min-lwr`). Each step needs its own reference tree and
@@ -81,34 +87,45 @@ synthetic fixtures only. Nothing in this note is a biological finding.
 9. **Reference purity.** B5LEC8 (astaxanthin synthase) cites PMID 18769767, a genome-organisation paper,
    not a catalysis paper (Task 3 minor). One ref (PMID 16416328) has no accession.
 
-## 4. Still deferred: ordered checklist for the real-data pass
+## 4. Still deferred: dependency-ordered checklist for the real-data pass
+
+Each item names what it needs from earlier items.
 
 1. [ ] User reviews `analysis/pathway_census/pathways/carotenoid.yaml` and `refs/carotenoid/UNVERIFIED.md`
-       (spec section 5.8). Decide on `ylo1`, `cao2`, B5LEC8 and PMID 16416328. Set `verified: true` only after that.
-2. [ ] Build the contamination best-hit table (`protein_id, taxon_class`) from a search of scaffold
-       neighbourhoods against a fungal / non-fungal reference set. The reference set does not exist.
-3. [ ] Build the haplotype `pair_identity` table (`protein_a, protein_b, pident, qcov`) from an all-vs-all
-       search inside each genome.
-4. [ ] Build the deposited-arm pipeline: choose option (a) rewrite deposited IDs to `<locustag>_<id>` or
-       option (b) a `genome_of` mapping in `matrix.build_matrix` and `quality.quality_flags` (change surface:
-       `matrix.py:77`, `matrix.py:28`, `quality.py:104`, `quality.py:14` docstring). Carry `asmid` into the
-       genome table (`load_genome_table` drops it).
-5. [ ] Count real pairs (`paired.count_pairs`). The 5,625 figure is not a pair count.
-6. [ ] Real HMM build and BFD search (`build_step_hmms.py`, `search_step.py`). Set `min_score` per step
+       (spec section 5.8). Decide on `ylo1`, `cao2`, B5LEC8 and PMID 16416328. Set `verified: true` only
+       after that. Needs: nothing. Gates all later items (no `--provisional` real run before this).
+2. [ ] Build real step HMMs (`build_step_hmms.py`). Needs: 1.
+3. [ ] BFD search (`search_step.py`, `slurm/search_step.sbatch`) and dereplication. Set `min_score` per step
        (PROPOSED rule: lowest reference score; leave-one-out check open). Apply the dereplication rule
-       (PROPOSED: >50,000 proteins at 90% identity) after counting the real family size.
-7. [ ] Wire a placement tool (epa-ng via pixi, as `upo_place` does, or another) and build per-step reference
-       trees and `clade_members.tsv`.
-8. [ ] Run the real census (`assign_steps.py`, `build_matrix.py`) and write `results/carotenoid_phylum_summary.tsv`.
-9. [ ] Run the absence check on SLURM (job size UNVERIFIED; target 1-1.5 h), merge chunk files, and write
-       `results/carotenoid_absence_summary.tsv` (no script makes this name yet).
-10. [ ] Run the paired comparison and the triage (`paired_compare.py`, `triage.py`). The triage glue that
-        joins signalp, tmhmm, coordinates, `ref_identity`, `length` and `copy_filtered` is not written.
-11. [ ] Drop the `--provisional` tag only after item 1. Re-render Chapter A with real numbers:
+       (PROPOSED: >50,000 proteins at 90% identity) after counting the real family size. Needs: 2.
+4. [ ] Wire a placement tool and run placement for the candidates. `epa-ng` and `pplacer` are not installed
+       as modules; iqtree, fasttree and raxml exist (MEASURED, Task 5). Build per-step reference trees and
+       `clade_members.tsv`; output the placements TSV (`protein_id, step_id, clade, support`). Needs: 3.
+5. [ ] `assign_steps.py`. Needs: 3 (candidates with `step_id`) and 4 (placements).
+6. [ ] Build the contamination best-hit table (`protein_id, taxon_class`) and the haplotype
+       `pair_identity` table (`protein_a, protein_b, pident, qcov`) for the ASSIGNED proteins and their
+       scaffold neighbours. The fungal / non-fungal reference set does not exist yet. Needs: 5.
+7. [ ] Run `quality_flags`; this produces the flags table that `build_matrix` consumes. Needs: 5 and 6
+       (also `gene_info` joined with protein length, and `expected_domains`).
+8. [ ] `build_matrix.py` and the phylum summary on BFD proteins; writes
+       `results/carotenoid_phylum_summary.tsv`. Needs: 5 and 7.
+9. [ ] Deposited arm. First carry `asmid` into the genome table (`load_genome_table` drops it) and run the
+       real pair count (`paired.count_pairs`). Decide the ID mapping: option (a) rewrite deposited IDs to
+       `<locustag>_<id>`, or option (b) a `genome_of` parameter in `matrix.build_matrix` and
+       `quality.quality_flags` (change surface: `matrix.py:77`, `matrix.py:28`, `quality.py:104`,
+       `quality.py:14` docstring). Then run items 3-8 on the deposited proteins of the pair genomes. Needs:
+       the designs of 1-8 (same HMMs, placement and assignment rules), plus `asmid`.
+10. [ ] `paired_compare.py`. Needs: 8 (BFD matrix) and 9 (deposited matrix).
+11. [ ] Absence check on SLURM (job size UNVERIFIED; target 1-1.5 h per job, from the user's HPCC guidance),
+        merge chunk files into `results/carotenoid_absence_summary.tsv` (PROPOSED name; no script makes it).
+        Needs: 8.
+12. [ ] Triage glue and `triage.py`. The glue joins signalp, tmhmm, wolfpsort, `gene_info` coordinates,
+        `ref_identity`, `length` and `copy_filtered`. Check the real tmhmm / signalp / wolfpsort column
+        names first (UNVERIFIED). Needs: 5, 7 and 8.
+13. [ ] Re-render Chapter A with real numbers:
         `module load quarto/1.7.31; quarto render analysis/pathway_census/chapters/A_carotenoid.qmd`.
-        The phylum figure code and the absence/triage summaries were exercised only on a synthetic fixture
-        (phylum table, triage); the paired and absence loaders were not run on a file.
-12. [ ] Update spec section 3 with BFD-scoped counts.
+        Needs: 8, 10, 11, 12. Also check that no real data field contains `#` (the chapter reader skips
+        `#` as a comment character), and update spec section 3 with BFD-scoped counts.
 
 ## 5. Deferred Minor findings by task (copied from the ledger)
 
@@ -178,6 +195,6 @@ Change:
 - Decide the contamination reference set and the haplotype pair-identity method before the matrix step.
 - Pick a placement tool and test it before writing the assignment step.
 - Hold the user review of the pathway YAML before Tasks 4-10, not in parallel with them. Fix the SLURM
-  sizing with a real timing run (target 1-1.5 h per job).
+  sizing with a real timing run (target 1-1.5 h per job, from the user's HPCC guidance in CLAUDE.md).
 - Define a soluble flag in the YAML if a signal/TM check is wanted. Merge shared io helpers early.
 - Name the final result files in the plan so the chapter and the CLIs agree.

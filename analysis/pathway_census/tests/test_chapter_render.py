@@ -15,6 +15,7 @@ away when files exist. Those numbers are never written to the repository.
 
 Both tests skip, with a reason, if quarto cannot be loaded.
 """
+import os
 import re
 import shutil
 import subprocess
@@ -44,7 +45,7 @@ def _render(tmp_path, results_dir):
     out = tmp_path / "out"
     cmd = f"{QUARTO} render {QMD} --output-dir {out}"
     r = subprocess.run(["bash", "-lc", cmd], capture_output=True, text=True, cwd=ROOT,
-                       env={**__import__("os").environ, "PC_RESULTS_DIR": str(results_dir)})
+                       env={**os.environ, "PC_RESULTS_DIR": str(results_dir)})
     return r, out / "A_carotenoid.html"
 
 
@@ -79,3 +80,69 @@ def test_renders_with_synthetic_results_and_drops_placeholders(tmp_path):
     assert "PhylA" in text and "P1" in text
     assert "FIXTUREPARAMS" not in text  # comment lines were skipped on reading
     assert re.search(r'id="phylum-figure"', text)
+
+
+def _sec(text, name):
+    """HTML of one level-2 section (from its <section id=...> to the next section)."""
+    start = text.index(f'<section id="sec-{name}"')
+    nxt = text.find('<section id="sec-', start + 10)
+    return text[start:nxt if nxt > 0 else len(text)]
+
+
+def _text_for(tmp_path, files):
+    """Render with the given {name: text} results files; return the HTML text."""
+    res = tmp_path / "res"
+    res.mkdir()
+    for name, body in files.items():
+        (res / name).write_text(body)
+    r, html = _render(tmp_path, res)
+    assert r.returncode == 0, r.stderr[-2000:]
+    return html.read_text()
+
+
+def test_paired_loader_reads_params_line_and_columns(tmp_path):
+    # Fixture mimics bin/paired_compare.py: a "# params:" first line, then SUMMARY_COLUMNS.
+    # Values are invented for this test only.
+    text = _text_for(tmp_path, {"carotenoid_paired_summary.tsv":
+        "# params: min_pairs=20 n_boot=2000 seed=1 busco_bins=0,80,95,100\n"
+        "step_id\tannotation_provider\tn_pairs\tmean_delta\tci_low\tci_high\tfrac_bfd_more\tfrac_bfd_less\n"
+        "carx\tProvX\t30\t0.5\t0.1\t0.9\t0.6\t0.2\n"})
+    assert "ProvX" in text and "ci_low" in text and "frac_bfd_less" in text
+    assert "min_pairs=20" not in _sec(text, "paired").split("<table")[1]
+    assert text.count('class="not-yet-run"') == N_RESULT_FILES - 1
+
+
+def test_absence_loader_skips_hash_lines_and_counts_outcomes(tmp_path):
+    text = _text_for(tmp_path, {"carotenoid_absence_summary.tsv":
+        "# min_bitscore=50 min_query_cover=0.7\nlocustag\tstep_id\toutcome\treason\n"
+        "AAAA0001\tcarx\tabsent\t\nAAAA0002\tcarx\tunconfirmed\tno_bfd_fasta\n"})
+    sec = _sec(text, "absence")
+    assert "absent" in sec and "unconfirmed" in sec
+    assert "min_bitscore=50" not in sec
+    assert "NOT YET RUN" not in sec
+
+
+def test_provisional_only_file_is_not_shown_as_result(tmp_path):
+    text = _text_for(tmp_path, {"carotenoid_absence_summary.PROVISIONAL.tsv":
+        "# PROVISIONAL: pathway 'carotenoid' verified: false\n"
+        "locustag\tstep_id\toutcome\treason\nPROVROW\tcarx\tabsent\t\n"})
+    sec = _sec(text, "absence")
+    assert "only a PROVISIONAL file" in sec
+    assert "PROVROW" not in text
+
+
+@pytest.mark.skipif(shutil.which("zstd") is None, reason="zstd not on PATH")
+def test_triage_loader_accepts_zst(tmp_path):
+    res = tmp_path / "res"
+    res.mkdir()
+    plain = res / "carotenoid_triage.tsv"
+    plain.write_text("# params: x\nprotein_id\tstep_id\tbin\treasons\nZSTROW\tcarx\ttier3\t\n")
+    subprocess.run(["zstd", "-q", "--rm", str(plain), "-o", str(plain) + ".zst"], check=True)
+    r, html = _render(tmp_path, res)
+    assert r.returncode == 0, r.stderr[-2000:]
+    assert "ZSTROW" in html.read_text()
+
+
+def test_readme_merge_recipe_uses_chapter_absence_name():
+    assert "carotenoid_absence_summary.tsv" in (ROOT / "README.md").read_text()
+    assert "carotenoid_absence_summary.tsv" in QMD.read_text()

@@ -141,7 +141,7 @@ Tool: `tblastn` from `module load ncbi-blast/2.17.0+` (BLAST 2.17.0+, build Jul 
 - `downloaded == False` gives `unconfirmed`, reason `no_bfd_fasta`. The CLI does not look for a FASTA elsewhere (for example NCBI_ASM). The FASTA path comes from `genomes.scaffolds_path` applied to the proteins path in `seqdb/genomes.tsv`.
 - CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
 - SLURM sizing is UNVERIFIED (target 1-1.5 h per job; no job has run). Chunk with `PC_LOCUSTAGS`.
-- Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename minus its last suffix. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > all_absence.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
+- Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename minus its last suffix. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), (output name PROPOSED; Chapter A reads it) e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > results/carotenoid_absence_summary.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
 - `evalue` (tblastn, default 1e-3) is PROPOSED. In-frame stop: one synthetic case MEASURED as present_unannotated (see module docstring).
 - Real-data run (brief step 5) is DEFERRED by controller ruling. No counts per outcome exist.
 
@@ -151,7 +151,7 @@ Code: `pathway_census/paired.py`, `bin/paired_compare.py`. Tests: `tests/test_pa
 
 What the paired test shows: for assemblies that have both a deposited annotation and a BFD annotation, it shows how many more or fewer copies of each pathway step the BFD annotation gives. The assembly is the same in both arms. So the difference is the effect of the annotation.
 
-What it does NOT show: it says nothing about the 18,145 genomes with no prior annotation (spec 5.6). It does not show which annotation is correct. It does not show absence of a gene. A real-data difference counts as a finding only if it has the same sign across annotation providers and survives the BUSCO control. Otherwise report it as not established.
+What it does NOT show: it says nothing about the genomes with no prior annotation (BFD-scoped MEASURED, Task 2: 18,055 `no_prior_annotation_present` and 673 `no_prior_annotation_not_downloaded`; spec 5.6 gives the TSV-wide 18,145). It does not show which annotation is correct. It does not show absence of a gene. A real-data difference counts as a finding only if it has the same sign across annotation providers and survives the BUSCO control. Otherwise report it as not established.
 
 - Pair rule: `prior_status == baseline_ok`, BFD proteins exist, deposited proteins flag true, deposited `protein.faa` exists and was searched. Other genomes are counted in `n_unpaired` under the first failing reason: `not_baseline`, `no_bfd_proteins`, `no_deposited_proteins`, `deposited_file_missing`.
 - Keys: both matrices use the caller-supplied `locustag`. Deposited protein IDs are not parsed. Counts are kept per source and never merged by protein ID.

@@ -41,14 +41,26 @@ placeholder <- function(file) {
 
 # Outputs written with a PROVISIONAL tag are not results. A canonical file name is required.
 # If only a PROVISIONAL file exists, say so and do not load it.
+# A name may also exist as <name>.zst (bin/triage.py and paired_compare.py can write zstd files).
+find_file <- function(name) {
+  for (cand in c(name, paste0(name, ".zst"))) {
+    p <- file.path(res_dir, cand)
+    if (file.exists(p)) return(p)
+  }
+  NULL
+}
+
 read_result <- function(name) {
-  path <- file.path(res_dir, name)
-  if (file.exists(path)) {
+  path <- find_file(name)
+  if (!is.null(path)) {
     # Outputs carry a '# params:' first line (and maybe a PROVISIONAL line): skip '#' lines.
-    return(read.delim(path, comment.char = "#", stringsAsFactors = FALSE, check.names = FALSE))
+    # Risk: comment.char = "#" also cuts any data field that contains '#'. UNVERIFIED that no
+    # real field (for example a species name) contains '#'. Check this when real files exist.
+    src <- if (grepl("\\.zst$", path)) pipe(paste("zstd -dc", shQuote(path))) else path
+    return(read.delim(src, comment.char = "#", stringsAsFactors = FALSE, check.names = FALSE))
   }
   prov <- sub("(\\.[^.]+)$", ".PROVISIONAL\\1", name)
-  if (file.exists(file.path(res_dir, prov))) {
+  if (!is.null(find_file(prov))) {
     cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong> (only a PROVISIONAL file %s exists; provisional outputs are not shown as results)</p></div>\n\n', name, prov))
   } else {
     placeholder(name)
@@ -68,10 +80,30 @@ This chapter reports a census of carotenoid biosynthesis genes across the BFD fu
 is the pilot for a shared pathway-census pipeline (`analysis/pathway_census/`). The design is in
 `docs/superpowers/specs/2026-11-20-pathway-census-design.md`.
 
-BFD scope (MEASURED, `analysis/pathway_census/README.md`, genome table run 2026-11-20): 24,363
-genomes in `species.parquet`. Of these, 23,379 have a BFD protein file (`has_proteins` True) and
-984 do not. The prior-annotation TSV has 27,401 rows. The spec section 3 counts were TSV-wide,
-so they differ from these BFD-scoped counts.
+BFD scope (MEASURED, `analysis/pathway_census/README.md`, genome table run 2026-11-20, Task 2
+report): 24,363 genomes in `species.parquet`. Of these, 23,379 have a BFD protein file
+(`has_proteins` True) and 984 do not. Genomes per `prior_status` in BFD (MEASURED, same source):
+`baseline_ok` 5,625; `no_prior_annotation_present` 18,055; `no_prior_annotation_not_downloaded` 673;
+`annotated_folder_missing_protein` 10. The prior-annotation TSV has 27,401 rows (MEASURED, same
+source). The counts in spec section 3 are TSV-wide, so they differ from these BFD-scoped counts.
+
+## Data files this chapter reads {#sec-data}
+
+All files are read from the results directory (`../results`, or `PC_RESULTS_DIR`). A name may also
+exist with a `.zst` suffix. A file with a `.PROVISIONAL` name is never shown as a result.
+
+- `carotenoid_phylum_summary.tsv`: written by `bin/build_matrix.py` (name set by the CLI).
+- `carotenoid_paired_summary.tsv`, `carotenoid_paired_dropped_providers.tsv`,
+  `carotenoid_paired_by_busco.tsv`, `carotenoid_paired_unpaired.json`: written by
+  `bin/paired_compare.py` (names set by the CLI).
+- `carotenoid_triage.tsv`: written by `bin/triage.py` (name set by the caller through `--out`; the
+  name is PROPOSED here).
+- `carotenoid_absence_summary.tsv`: the merged chunk files of `bin/absence_check.py`. The name is
+  PROPOSED (the README merge recipe writes the same name). No script produces it.
+
+Reading notes. TSV outputs start with `# ` lines (`# params:`, sometimes `# PROVISIONAL`). The
+reader skips them with `comment.char = "#"`. That setting also truncates any field that contains
+`#` (UNVERIFIED that none does).
 
 ## Pathway steps and reference provenance {#sec-pathway}
 
@@ -145,8 +177,11 @@ if (!is.null(d)) {
     m <- tapply(d$frac_with_step, list(d$phylum, d$step_id), function(x) x[1])
     cat('\n<div id="phylum-figure">\n')
     op <- par(mar = c(8, 12, 2, 2))
-    image(t(m[nrow(m):1, , drop = FALSE]), axes = FALSE, col = hcl.colors(20, "Blues 3", rev = TRUE),
-          main = "Fraction of genomes with the step (grey = no data)")
+    plot(NA, xlim = c(0, 1), ylim = c(0, 1), axes = FALSE, xlab = "", ylab = "",
+         main = "Fraction of genomes with the step (grey cell = NA: no genomes or no row)")
+    usr <- par("usr"); rect(usr[1], usr[3], usr[2], usr[4], col = "grey80", border = NA)
+    image(t(m[nrow(m):1, , drop = FALSE]), axes = FALSE, add = TRUE, zlim = c(0, 1),
+          col = hcl.colors(20, "Blues 3", rev = TRUE))
     axis(1, at = seq(0, 1, length.out = ncol(m)), labels = colnames(m), las = 2, cex.axis = 0.7)
     axis(2, at = seq(0, 1, length.out = nrow(m)), labels = rev(rownames(m)), las = 1, cex.axis = 0.7)
     par(op)
@@ -163,8 +198,9 @@ Sources: `results/carotenoid_paired_summary.tsv`, `results/carotenoid_paired_dro
 
 What the test shows: for assemblies with both a deposited annotation and a BFD annotation, the
 difference in copies per step. The assembly is the same in both arms, so the difference is the
-effect of the annotation. What it does not show: anything about the 18,145 genomes with no prior
-annotation (spec section 5.6), which annotation is correct, or absence of a gene. A difference is a
+effect of the annotation. What it does not show: anything about the genomes with no prior
+annotation (BFD: 18,055 `no_prior_annotation_present` and 673 `no_prior_annotation_not_downloaded`,
+MEASURED, Task 2 report; spec section 5.6), which annotation is correct, or absence of a gene. A difference is a
 finding only if it has the same sign across annotation providers and survives the BUSCO control.
 Otherwise report it as not established.
 
@@ -189,7 +225,7 @@ if (file.exists(file.path(res_dir, f))) {
 
 Source: `results/carotenoid_absence_summary.tsv`. This file is the merged chunk output of
 `bin/absence_check.py` (`carotenoid_absence.chunk<ID>.tsv`, merge recipe in the README). The merge
-step is a manual step and no script produces the `_absence_summary` name yet. Expected columns:
+step is manual and no script produces the `_absence_summary` name. The name is PROPOSED. Expected columns:
 `locustag, step_id, outcome, reason`. Outcomes: `present_unannotated`, `fragmented`, `absent`,
 `unconfirmed`. `unconfirmed` means no BFD FASTA, not proven absence.
 
@@ -240,7 +276,8 @@ if (!is.null(d)) {
    deposited proteins. Deposited protein IDs lack the 8-hex BFD prefix, so a prefix rewrite or a
    `genome_of` mapping is needed first.
 5. **What the paired test does and does not show.** It compares annotations on the same assemblies.
-   It does not cover the 18,145 genomes without a prior annotation, does not show which annotation
+   It does not cover the genomes without a prior annotation (18,055 plus 673 in BFD, MEASURED, Task 2
+   report), does not show which annotation
    is correct, and does not show absence of a gene (spec section 5.6).
 6. **Thresholds are PROPOSED.** Examples: `min_score` rule, dereplication at 90% identity above
    50,000 proteins, fusion overlap 50%, `min_bitscore` 50, `min_query_cover` 0.7, `min_pairs` 20,
@@ -256,5 +293,7 @@ if (!is.null(d)) {
 
 Render: `module load quarto/1.7.31` then
 `quarto render analysis/pathway_census/chapters/A_carotenoid.qmd`. Engine: knitr with R, because
-the Python 3.12 interpreter has no jupyter. The pilot lessons are in
+the Python 3.12 interpreter has no jupyter. R packages used: `knitr`, `rmarkdown`, `yaml` and
+`jsonlite` (all present on 2026-11-20: knitr 1.50, rmarkdown 2.30; `yaml` and `jsonlite` loaded
+without error, versions not recorded). `zstd` must be on PATH to read `.zst` files. The pilot lessons are in
 `docs/superpowers/plans/2026-11-20-pilot-lessons.md`.
