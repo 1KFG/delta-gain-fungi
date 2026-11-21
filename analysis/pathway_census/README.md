@@ -141,4 +141,6 @@ Tool: `tblastn` from `module load ncbi-blast/2.17.0+` (BLAST 2.17.0+, build Jul 
 - `downloaded == False` gives `unconfirmed`, reason `no_bfd_fasta`. The CLI does not look for a FASTA elsewhere (for example NCBI_ASM). The FASTA path comes from `genomes.scaffolds_path` applied to the proteins path in `seqdb/genomes.tsv`.
 - CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
 - SLURM sizing is UNVERIFIED (target 1-1.5 h per job; no job has run). Chunk with `PC_LOCUSTAGS`.
+- Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename stem. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > all_absence.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
+- `evalue` (tblastn, default 1e-3) is PROPOSED. In-frame stop: one synthetic case MEASURED as present_unannotated (see module docstring).
 - Real-data run (brief step 5) is DEFERRED by controller ruling. No counts per outcome exist.

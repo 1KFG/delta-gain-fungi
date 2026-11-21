@@ -15,14 +15,17 @@ fragmented           hits reach min_bitscore for some reference, but no referenc
 absent               no HSP reaches min_bitscore.
 unconfirmed          genome_fna is None: no BFD genome FASTA (see genomes.downloaded). This is not
                      evidence of absence, and it is not evidence of presence either.
-Out of scope: a hit that covers the query but has a stop codon in frame (pseudogene). tblastn
-translates all six frames and reports such a hit as covering, so it returns present_unannotated.
-A pseudogene call needs a separate gene-structure check.
+Out of scope: a hit that covers the query but has a stop codon in frame (pseudogene). MEASURED
+2026-11-20 on tests/data/mini_genome_stop.fna (refA, TAA inserted after residue 75): tblastn reports one
+HSP over query 1-150 with bitscore 310, so the result is present_unannotated. (One synthetic case only.
+Behaviour on real pseudogenes is UNVERIFIED.) A pseudogene call needs a separate gene-structure check.
 
 PROPOSED thresholds (no measured data behind them; set after the first real run):
   min_query_cover = 0.7   min_bitscore = 50 (tblastn bitscore; chance hits are far below this for
                           the 150-aa test queries, MEASURED only on the synthetic fixtures).
 `min_bitscore` has no default. `min_query_cover` defaults to the PROPOSED 0.7.
+`evalue` (tblastn -evalue, default 1e-3) is PROPOSED, with no measured basis. HSPs must pass both the
+e-value and min_bitscore. A nonexistent genome_fna raises FileNotFoundError (never "absent").
 
 Selection (`select_absences`) uses relatives supplied by the caller. The species tree is a separate
 plan. For the pilot use `same_genus_relatives`. Genomes with has_proteins False are NOT selected:
@@ -63,14 +66,13 @@ def blast_available() -> bool:
     return r.returncode == 0 and "tblastn" in r.stdout
 
 
-def select_absences(matrix: pd.DataFrame, genomes: pd.DataFrame | None,
-                    relatives: dict[str, list[str]]) -> pd.DataFrame:
+def select_absences(matrix: pd.DataFrame, relatives: dict[str, list[str]]) -> pd.DataFrame:
     """(locustag, step_id) pairs where the genome has copy_raw == 0, has_proteins is True, and at
     least one listed relative has copy_raw > 0 for the step.
 
     copy_raw is used: a copy that is only flagged is not an absence, and a relative whose only copy
-    is flagged still carries the step. `genomes` is accepted for interface symmetry and is unused
-    (has_proteins comes from the matrix). Relatives absent from the matrix count as no copy.
+    is flagged still carries the step. has_proteins comes from the matrix (same source as
+    `unevaluated_genomes`). Relatives absent from the matrix count as no copy.
     """
     cols = ["locustag", "step_id"]
     m = matrix[["locustag", "step_id", "copy_raw", "has_proteins"]]
@@ -83,11 +85,24 @@ def select_absences(matrix: pd.DataFrame, genomes: pd.DataFrame | None,
     return cand.loc[keep, cols].sort_values(cols).reset_index(drop=True)
 
 
-def unevaluated_genomes(matrix: pd.DataFrame, genomes: pd.DataFrame) -> list[str]:
-    """Sorted locustags with has_proteins False. Their zero copies are not evidence of absence,
-    so `select_absences` skips them. Report them separately."""
-    g = genomes[~genomes.has_proteins.astype(bool)]
-    return sorted(g.locustag)
+def unevaluated_genomes(matrix: pd.DataFrame) -> list[str]:
+    """Sorted locustags with has_proteins False in the matrix (the column `select_absences` uses).
+    Their zero copies are not evidence of absence, so selection skips them. Report them separately."""
+    g = matrix.loc[~matrix.has_proteins.astype(bool), "locustag"]
+    return sorted(set(g))
+
+
+def chunk_id(explicit: str | None, locustags_path: Path | str | None) -> str:
+    """Chunk id for output names. Explicit id (for example SLURM_ARRAY_TASK_ID) wins; else the
+    basename stem of the --locustags file; else "". Characters outside [A-Za-z0-9_-] become "_"."""
+    import re
+    raw = explicit or (Path(locustags_path).name.split(".")[0] if locustags_path else "")
+    return re.sub(r"[^A-Za-z0-9_-]", "_", raw)
+
+
+def chunk_stem(stem: str, chunk: str) -> str:
+    """"carotenoid_absence" + "7" -> "carotenoid_absence.chunk7"; empty chunk leaves the stem."""
+    return f"{stem}.chunk{chunk}" if chunk else stem
 
 
 def same_genus_relatives(genomes: pd.DataFrame) -> dict[str, list[str]]:
@@ -115,13 +130,15 @@ def _covered(intervals: list[tuple[int, int]]) -> int:
 
 def check_absence(genome_fna: Path | None, step_refs: Path, min_bitscore: float,
                   min_query_cover: float = DEFAULT_MIN_QUERY_COVER,
-                  scratch_dir: Path | None = None, cpus: int = 1) -> str:
+                  scratch_dir: Path | None = None, cpus: int = 1, evalue: float = 1e-3) -> str:
     """Search genome_fna with the step reference proteins (tblastn). See module docstring."""
     if not 0.0 < min_query_cover <= 1.0:
         raise ValueError(f"min_query_cover must be in (0, 1], got {min_query_cover}")
     if genome_fna is None:
         return "unconfirmed"
     genome_fna, step_refs = Path(genome_fna), Path(step_refs)
+    if not genome_fna.is_file():
+        raise FileNotFoundError(f"genome FASTA not found: {genome_fna}")
     base = scratch_dir or os.environ.get("SCRATCH") or None
     with tempfile.TemporaryDirectory(dir=base) as td:
         subject = genome_fna
@@ -131,7 +148,7 @@ def check_absence(genome_fna: Path | None, step_refs: Path, min_bitscore: float,
                 shutil.copyfileobj(src, dst, 1 << 20)
         out = Path(td) / "hits.tsv"
         cmd = ["tblastn", "-query", str(step_refs), "-subject", str(subject),
-               "-evalue", "1e-3", "-num_threads", str(cpus), "-out", str(out),
+               "-evalue", str(evalue), "-num_threads", str(cpus), "-out", str(out),
                "-outfmt", "6 qseqid sseqid bitscore qstart qend qlen"]
         r = subprocess.run(_blast_cmd(cmd), capture_output=True, text=True)
         if r.returncode != 0:

@@ -6,6 +6,9 @@ Writes:
   mini_genome.fna              2 contigs; refA back-translated (full length) planted mid-contig
   mini_genome_fragment.fna     refB back-translated, first 45 aa only (30% of the query), planted
   mini_genome_nohit.fna        random sequence only
+  mini_genome_decoy.fna        refA back-translated after 55% of positions are substituted (diverged ORF)
+  mini_genome_overlap.fna      refB[0:70] and refB[50:100] planted at two loci (overlapping query ranges)
+  mini_genome_stop.fna         refA back-translated with a TAA stop codon inserted after residue 75
 Proteins and flanks are random, not real. Back-translation uses one fixed codon per amino acid.
 """
 import random
@@ -48,6 +51,15 @@ def main(d):
     frag = rdna(rng, 1500) + backtranslate(ref_b[:45]) + rdna(rng, 1500)
     (d / "mini_genome_fragment.fna").write_text(fa([("contig1", frag)]))
     (d / "mini_genome_nohit.fna").write_text(fa([("contig1", rdna(rng, 3000)), ("contig2", rdna(rng, 3000))]))
+
+    # Added after the fixtures above so their random draws are unchanged.
+    div = [rng.choice(AA) if rng.random() < 0.55 else a for a in ref_a]
+    (d / "mini_genome_decoy.fna").write_text(fa([("contig1", rdna(rng, 1500) + backtranslate("".join(div)) + rdna(rng, 1500))]))
+    ov = (rdna(rng, 800) + backtranslate(ref_b[0:70]) + rdna(rng, 1500)
+          + backtranslate(ref_b[50:100]) + rdna(rng, 800))
+    (d / "mini_genome_overlap.fna").write_text(fa([("contig1", ov)]))
+    stop = rdna(rng, 1500) + backtranslate(ref_a[:75]) + "TAA" + backtranslate(ref_a[75:]) + rdna(rng, 1500)
+    (d / "mini_genome_stop.fna").write_text(fa([("contig1", stop)]))
 
 
 if __name__ == "__main__":

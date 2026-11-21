@@ -8,10 +8,11 @@ A genome with downloaded == False has no BFD FASTA. It gets outcome "unconfirmed
 "no_bfd_fasta". The CLI does not look for a FASTA anywhere else.
 Genome FASTA path = genomes.scaffolds_path(proteins path from seqdb/genomes.tsv).
 Inputs (plain, .gz or .zst TSV): --matrix (build_matrix output), --genomes (genome table).
-Output: <out-dir>/<pathway>_absence.tsv (columns locustag, step_id, outcome, reason); names carry
+Output: <out-dir>/<pathway>_absence[.chunk<ID>].tsv (columns locustag, step_id, outcome, reason); names carry
 .PROVISIONAL, and the file starts with a "# PROVISIONAL" line, when the pathway is verified: false and
 --provisional is given. Refuses a verified: false pathway without --provisional.
 --min-bitscore has no default. --min-query-cover default 0.7 is PROPOSED.
+Chunk ID: --chunk-id, else the --locustags file basename stem; it keeps chunk jobs from overwriting each other.
 Optional --locustags FILE restricts the run to listed genomes (for chunking into SLURM jobs).
 """
 import argparse
@@ -24,18 +25,26 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pathway_census import hits  # noqa: E402
-from pathway_census.absence import (DEFAULT_MIN_QUERY_COVER, check_absence,  # noqa: E402
-                                    same_genus_relatives, select_absences, unevaluated_genomes)
+from pathway_census.absence import (DEFAULT_MIN_QUERY_COVER, check_absence, chunk_id,  # noqa: E402
+                                    chunk_stem, same_genus_relatives, select_absences,
+                                    unevaluated_genomes)
 from pathway_census.defs import load_pathway  # noqa: E402
 from pathway_census.genomes import scaffolds_path  # noqa: E402
 from pathway_census.matrix import parse_bool_col  # noqa: E402
 
 
 def read_tsv(path: Path, **kw) -> pd.DataFrame:
+    """Read a TSV (plain or .zst). Only LEADING lines starting with "#" are skipped (stamps);
+    "#" inside a field is kept."""
     if str(path).endswith(".zst"):
-        out = subprocess.run(["zstd", "-dc", str(path)], check=True, capture_output=True).stdout
-        return pd.read_csv(io.BytesIO(out), sep="\t", comment="#", low_memory=False, **kw)
-    return pd.read_csv(path, sep="\t", comment="#", low_memory=False, **kw)
+        raw = subprocess.run(["zstd", "-dc", str(path)], check=True, capture_output=True).stdout
+    else:
+        raw = Path(path).read_bytes()
+    lines = raw.splitlines(keepends=True)
+    n = 0
+    while n < len(lines) and lines[n].startswith(b"#"):
+        n += 1
+    return pd.read_csv(io.BytesIO(b"".join(lines[n:])), sep="\t", low_memory=False, **kw)
 
 
 def main():
@@ -49,6 +58,8 @@ def main():
     ap.add_argument("--min-bitscore", type=float, required=True)
     ap.add_argument("--min-query-cover", type=float, default=DEFAULT_MIN_QUERY_COVER)
     ap.add_argument("--locustags", type=Path, default=None)
+    ap.add_argument("--chunk-id", default="", help="suffix for output names (sbatch passes SLURM_ARRAY_TASK_ID)")
+    ap.add_argument("--evalue", type=float, default=1e-3, help="tblastn -evalue (PROPOSED)")
     ap.add_argument("--cpus", type=int, default=1)
     ap.add_argument("--provisional", action="store_true")
     a = ap.parse_args()
@@ -67,7 +78,7 @@ def main():
     fasta = {lt: scaffolds_path(p) for lt, p in zip(seqdb.locustag, seqdb.proteins)}
     dl = dict(zip(gen.locustag, gen.downloaded))
 
-    sel = select_absences(m, gen, same_genus_relatives(gen))
+    sel = select_absences(m, same_genus_relatives(gen))
     if a.locustags:
         keep = set(a.locustags.read_text().split())
         sel = sel[sel.locustag.isin(keep)]
@@ -79,20 +90,21 @@ def main():
         if path is None:
             rows.append((lt, sid, "unconfirmed", "no_bfd_fasta"))
             continue
-        outcome = check_absence(Path(path), refs[sid], a.min_bitscore, a.min_query_cover, cpus=a.cpus)
+        outcome = check_absence(Path(path), refs[sid], a.min_bitscore, a.min_query_cover, cpus=a.cpus, evalue=a.evalue)
         rows.append((lt, sid, outcome, ""))
     res = pd.DataFrame(rows, columns=["locustag", "step_id", "outcome", "reason"])
-    out = a.out_dir / hits.tagged_name(f"{pw.id}_absence", "tsv", tag)
+    chunk = chunk_id(a.chunk_id, a.locustags)
+    out = a.out_dir / hits.tagged_name(chunk_stem(f"{pw.id}_absence", chunk), "tsv", tag)
     with open(out, "w") as fh:
         if tag:
             fh.write(f"# {tag}: pathway '{pw.id}' verified: false; not user-reviewed\n")
         fh.write(f"# min_bitscore={a.min_bitscore} min_query_cover={a.min_query_cover}\n")
         res.to_csv(fh, sep="\t", index=False)
-    uneval = a.out_dir / hits.tagged_name(f"{pw.id}_unevaluated_genomes", "tsv", tag)
+    uneval = a.out_dir / hits.tagged_name(chunk_stem(f"{pw.id}_unevaluated_genomes", chunk), "tsv", tag)
     with open(uneval, "w") as fh:
         if tag:
             fh.write(f"# {tag}: pathway '{pw.id}' verified: false; not user-reviewed\n")
-        fh.write("locustag\n" + "".join(f"{x}\n" for x in unevaluated_genomes(m, gen)))
+        fh.write("locustag\n" + "".join(f"{x}\n" for x in unevaluated_genomes(m)))
     print(f"{len(res)} pairs -> {out}; outcomes {res.outcome.value_counts().to_dict()}")
 
 

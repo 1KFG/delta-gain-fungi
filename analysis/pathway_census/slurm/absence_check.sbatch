@@ -15,6 +15,7 @@
 #               PC_PROVISIONAL=1.
 # Sizing: UNVERIFIED. Aim for 1-1.5 h of real runtime per job (chunk genomes with PC_LOCUSTAGS). No job has
 # run yet, so the genomes-per-chunk number is unknown. Measure one real job, then set the chunk size.
+# Output names carry .chunk<ID> (SLURM_ARRAY_TASK_ID, else the PC_LOCUSTAGS basename stem), so chunks do not overwrite.
 # Genome FASTA .gz files are streamed into $SCRATCH by the library and removed after each search.
 set -euo pipefail
 : "${PC_ROOT:?}" "${PC_PATHWAY:?}" "${PC_MATRIX:?}" "${PC_GENOMES:?}" "${PC_SEQDB_GENOMES:?}" \
@@ -27,6 +28,6 @@ EXTRA=()
 /usr/bin/python3.12 "$PC_ROOT/bin/absence_check.py" --pathway "$PC_PATHWAY" --matrix "$PC_MATRIX" \
   --genomes "$PC_GENOMES" --seqdb-genomes "$PC_SEQDB_GENOMES" --refs-dir "$PC_REFS_DIR" \
   --out-dir "$SCR/out" --min-bitscore "$PC_MIN_BITSCORE" \
-  --min-query-cover "${PC_MIN_QUERY_COVER:-0.7}" --cpus "${SLURM_CPUS_PER_TASK:-8}" "${EXTRA[@]}"
+  --chunk-id "${SLURM_ARRAY_TASK_ID:-}" --min-query-cover "${PC_MIN_QUERY_COVER:-0.7}" --cpus "${SLURM_CPUS_PER_TASK:-8}" "${EXTRA[@]}"
 mkdir -p "$PC_OUT_DIR"
 cp "$SCR"/out/* "$PC_OUT_DIR"/
