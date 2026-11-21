@@ -129,3 +129,16 @@ Code: `pathway_census/matrix.py`, `bin/build_matrix.py`. Columns and rules are i
 - `copy_raw` = assigned rows. Mutually exclusive buckets, priority flagged > unknown > filtered: `copy_flagged` = any required flag known True; `copy_unknown` = no flag True and some required flag NA; `copy_filtered` = all required flags known False (default require: truncated, contam_suspect). `copy_filtered + copy_unknown + copy_flagged = copy_raw` per row. `hap_dup_suspect` is counted in `n_hap_suspect` / `n_hap_unknown` only.
 - `phylum_summary` uses `copy_filtered` by default (`count_col="copy_raw"` for the unfiltered table). `n_unknown` = genomes with unevaluated copies.
 - The real-data run (brief step 5) is deferred. Do not read PROVISIONAL outputs as results.
+
+## Absence check (Task 8)
+
+Code: `pathway_census/absence.py`, `bin/absence_check.py`, `slurm/absence_check.sbatch`. Tests: `tests/test_absence.py`; fixtures from the seeded `tests/data/make_absence_fixtures.py`.
+Tool: `tblastn` from `module load ncbi-blast/2.17.0+` (BLAST 2.17.0+, build Jul 1 2025; MEASURED with `tblastn -version`, 2026-11-20). Real tblastn is used in tests; nothing is mocked.
+- `select_absences(matrix, genomes, relatives)`: copy_raw == 0, has_proteins True, and at least one listed relative with copy_raw > 0. `has_proteins` False genomes are not selected (their zero is not evidence). `unevaluated_genomes` lists them.
+- `same_genus_relatives(genomes)`: groups by genus only where `genus_source != "unresolved"`; never self; single-genome genus gives `[]`.
+- `check_absence(genome_fna, step_refs, min_bitscore, min_query_cover=0.7)` returns `present_unannotated | fragmented | absent | unconfirmed`. Rules and out-of-scope cases (stop codon in frame) are in the module docstring.
+- PROPOSED, no measured data: `min_query_cover = 0.7`, `min_bitscore = 50`.
+- `downloaded == False` gives `unconfirmed`, reason `no_bfd_fasta`. The CLI does not look for a FASTA elsewhere (for example NCBI_ASM). The FASTA path comes from `genomes.scaffolds_path` applied to the proteins path in `seqdb/genomes.tsv`.
+- CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
+- SLURM sizing is UNVERIFIED (target 1-1.5 h per job; no job has run). Chunk with `PC_LOCUSTAGS`.
+- Real-data run (brief step 5) is DEFERRED by controller ruling. No counts per outcome exist.

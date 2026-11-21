@@ -71,6 +71,13 @@ def unresolved_label(species, phylum):
     return f"unresolved_{phylum or 'unknown'}"
 
 
+def scaffolds_path(proteins_path):
+    """BFD genome FASTA path for a BFD proteins path (same predict_results folder), or None."""
+    if not isinstance(proteins_path, str):
+        return None
+    return proteins_path.replace(".proteins.fa.gz", ".scaffolds.fa.gz")
+
+
 def _exists_many(paths, workers=32):
     from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(workers) as ex:
@@ -120,8 +127,7 @@ def load_genome_table(tables_dir, prior_status_tsv, seqdb_genomes_tsv=None):
     df["has_deposited_proteins"] = pd.array(
         [None if pd.isna(v) else (v == "1") for v in df["protein_file_ok"]], dtype="boolean")
     prot = df["bfd_proteins_path"].where(df["bfd_proteins_path"].notna(), None)
-    scaf = [q.replace(".proteins.fa.gz", ".scaffolds.fa.gz") if isinstance(q, str) else None
-            for q in prot]
+    scaf = [scaffolds_path(q) for q in prot]
     df["has_proteins"] = _exists_many(list(prot))
     df["downloaded"] = _exists_many(scaf)
     cols = ["locustag", "species", "phylum", "class_", "genus", "genus_source", "prior_status",
