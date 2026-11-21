@@ -1,0 +1,121 @@
+"""Copy matrix and phylum summary (spec 5.4 step 5, anti-goals).
+
+build_matrix: long table, one row per (genome, step): the FULL cross product of genome table x
+pathway steps, zeros included.
+
+Columns
+-------
+locustag, step_id
+copy_raw        number of `assigned` rows for (genome, step). `unassigned` rows never count (a bare
+                HMM hit is not a copy). A protein with a fused-step pair has one row per step and is
+                counted once in each step.
+copy_filtered   `assigned` rows where clean_mask(flags, require) is True, i.e. every required flag
+                is known False. Default require = ("truncated", "contam_suspect").
+copy_unknown    `assigned` rows where a required flag is NA (not evaluated). A missing flags row
+                counts as not evaluated (all flags NA). Invariant:
+                copy_filtered + copy_unknown + (rows with a required flag True) = copy_raw.
+n_hap_suspect / n_hap_unknown   count of assigned rows with hap_dup_suspect True / NA. These enter
+                copy_filtered only if the caller puts "hap_dup_suspect" in `require`.
+n_proteins_distinct   distinct proteins with any assigned row in the genome (repeated on each of the
+                genome's rows). A fused protein counts once here.
+has_proteins    from the genome table. False means no proteome was searched: counts are 0 but this
+                is NOT evidence of absence. phylum_summary excludes such genomes from n_genomes.
+genome_flags    ";"-joined tokens: no_proteins; unknown_flags (copy_unknown > 0).
+
+Errors (ValueError): assigned protein whose 8-hex LOCUSTAG prefix is not in the genome table;
+step_id not in the pathway; duplicate (protein_id, step_id) among assigned rows; assigned rows in a
+genome with has_proteins False.
+"""
+from __future__ import annotations
+
+import pandas as pd
+
+from .quality import clean_mask
+
+DEFAULT_REQUIRE = ("truncated", "contam_suspect")
+MATRIX_COLUMNS = ["locustag", "step_id", "copy_raw", "copy_filtered", "copy_unknown", "n_hap_suspect",
+                  "n_hap_unknown", "n_proteins_distinct", "has_proteins", "genome_flags"]
+SUMMARY_COLUMNS = ["phylum", "step_id", "n_genomes", "n_with_step", "median_copy", "max_copy",
+                   "frac_with_step", "n_unknown"]
+
+
+def build_matrix(assigned: pd.DataFrame, flags: pd.DataFrame, genomes: pd.DataFrame, pathway,
+                 require: tuple[str, ...] = DEFAULT_REQUIRE) -> pd.DataFrame:
+    steps = [s.id for s in pathway.steps]
+    g = genomes[["locustag", "has_proteins"]].copy()
+    if g.locustag.duplicated().any():
+        raise ValueError("duplicate locustag in genome table")
+    g["has_proteins"] = g.has_proteins.astype(bool)
+
+    a = assigned[assigned.label == "assigned"][["protein_id", "step_id"]].copy()
+    a["locustag"] = a.protein_id.str.split("_").str[0]
+    bad = sorted(set(a.locustag) - set(g.locustag))
+    if bad:
+        raise ValueError(f"protein LOCUSTAG(s) not in genomes table: {bad[:5]}")
+    bad = sorted(set(a.step_id) - set(steps))
+    if bad:
+        raise ValueError(f"step_id not in pathway: {bad[:5]}")
+    if a.duplicated(["protein_id", "step_id"]).any():
+        raise ValueError("duplicate (protein_id, step_id) among assigned rows")
+    noprot = set(g.locustag[~g.has_proteins]) & set(a.locustag)
+    if noprot:
+        raise ValueError(f"assigned rows in genome(s) with has_proteins False: {sorted(noprot)[:5]}")
+
+    # attach flags; a missing flags row means not evaluated (NA), never clean
+    cols = list(dict.fromkeys(list(require) + ["hap_dup_suspect"]))
+    f = flags[["protein_id", "step_id"] + cols]
+    if f.duplicated(["protein_id", "step_id"]).any():
+        raise ValueError("duplicate (protein_id, step_id) in flags")
+    a = a.merge(f, on=["protein_id", "step_id"], how="left")
+    for c in cols:
+        a[c] = a[c].astype("boolean")
+    a["is_clean"] = clean_mask(a, require=require)
+    a["is_unknown"] = a[list(require)].isna().any(axis=1) if require else False
+    a["hap_true"] = a.hap_dup_suspect.eq(True).fillna(False).astype(bool)
+    a["hap_na"] = a.hap_dup_suspect.isna()
+
+    per = a.groupby(["locustag", "step_id"]).agg(
+        copy_raw=("protein_id", "size"), copy_filtered=("is_clean", "sum"),
+        copy_unknown=("is_unknown", "sum"), n_hap_suspect=("hap_true", "sum"),
+        n_hap_unknown=("hap_na", "sum")).reset_index()
+    distinct = a.groupby("locustag").protein_id.nunique().rename("n_proteins_distinct").reset_index()
+
+    grid = g.merge(pd.DataFrame({"step_id": steps}), how="cross")
+    m = grid.merge(per, on=["locustag", "step_id"], how="left").merge(distinct, on="locustag", how="left")
+    count_cols = ["copy_raw", "copy_filtered", "copy_unknown", "n_hap_suspect", "n_hap_unknown",
+                  "n_proteins_distinct"]
+    m[count_cols] = m[count_cols].fillna(0).astype(int)  # fills genome x step pairs with no assigned row
+    m["genome_flags"] = [
+        ";".join(t for t, on in (("no_proteins", not hp), ("unknown_flags", cu > 0)) if on)
+        for hp, cu in zip(m.has_proteins, m.copy_unknown)]
+    order = {s: i for i, s in enumerate(steps)}
+    m = m.sort_values(["locustag", "step_id"], key=lambda c: c.map(order) if c.name == "step_id" else c,
+                      kind="stable").reset_index(drop=True)
+    return m[MATRIX_COLUMNS]
+
+
+def phylum_summary(matrix: pd.DataFrame, genomes: pd.DataFrame, count_col: str = "copy_filtered") -> pd.DataFrame:
+    """Per (phylum, step). median_copy, max_copy and frac_with_step use `count_col`
+    (default copy_filtered; pass "copy_raw" for the unfiltered summary).
+
+    n_genomes counts genomes with has_proteins True only. n_with_step = genomes with count > 0.
+    n_unknown = genomes with copy_unknown > 0 for the step (copies with unevaluated flags).
+    A phylum with no included genome gets n_genomes 0 and NaN median/frac.
+    """
+    ph = genomes[["locustag", "phylum"]].copy()
+    ph["phylum"] = ph.phylum.fillna("(missing)")
+    m = matrix.merge(ph, on="locustag", how="left", validate="many_to_one")
+    steps = list(dict.fromkeys(matrix.step_id))
+    inc = m[m.has_proteins.astype(bool)]
+    rows = []
+    for p in sorted(set(ph.phylum)):
+        for s in steps:
+            x = inc[(inc.phylum == p) & (inc.step_id == s)]
+            n = len(x)
+            w = int((x[count_col] > 0).sum())
+            rows.append(dict(phylum=p, step_id=s, n_genomes=n, n_with_step=w,
+                             median_copy=float(x[count_col].median()) if n else float("nan"),
+                             max_copy=int(x[count_col].max()) if n else 0,
+                             frac_with_step=w / n if n else float("nan"),
+                             n_unknown=int((x.copy_unknown > 0).sum())))
+    return pd.DataFrame(rows, columns=SUMMARY_COLUMNS)
