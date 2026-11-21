@@ -104,7 +104,8 @@ def read_fasta(path: Path) -> dict[str, str] | None:
 
 def not_found(exc: KbFetchError) -> bool:
     m = str(exc)
-    return "HTTP Error 404" in m or "HTTP Error 400" in m or "unusable response" in m
+    return ("HTTP Error 404" in m or "HTTP Error 400" in m or "no PubMed article" in m
+            or "record version is" in m)
 
 
 class Verifier:
@@ -152,9 +153,8 @@ class Verifier:
             pn: list[str] = []
             pdesc = d.get("proteinDescription", {})
             for n in [pdesc.get("recommendedName")] + pdesc.get("alternativeNames", []) + pdesc.get("submissionNames", []):
-                for key in ("fullName",):
-                    if n and n.get(key, {}).get("value"):
-                        pn.append(n[key]["value"])
+                if n and n.get("fullName", {}).get("value"):
+                    pn.append(n["fullName"]["value"])
                 for s in (n or {}).get("shortNames", []):
                     pn.append(s["value"])
             seq = d["sequence"]["value"]
@@ -252,11 +252,15 @@ class Verifier:
             if fs == rs:
                 self.add(f"{prefix}_sequence", subject, f"sha256 {sha(rs)[:12]}",
                          f"equal, {len(rs)} aa, sha256 {sha(fs)[:12]}", "pass")
-            elif region and fs in rs:
-                i = rs.index(fs) + 1
-                self.add(f"{prefix}_sequence", subject, f"FASTA equals record or its cut domain",
-                         f"FASTA record is positions {i}-{i + len(fs) - 1} of the {len(rs)} aa record "
-                         f"(YAML region {list(region)})", "pass")
+            elif region and fs == rs[region[0] - 1:region[1]]:
+                self.add(f"{prefix}_sequence", subject, f"record positions {region[0]}-{region[1]}",
+                         f"FASTA equals the fetched sequence at the YAML region {list(region)} "
+                         f"({len(fs)} of {len(rs)} aa)", "pass")
+            elif region:
+                where = f"; FASTA is a substring at {rs.index(fs) + 1}" if fs in rs else ""
+                self.add(f"{prefix}_sequence", subject, f"record positions {region[0]}-{region[1]} "
+                         f"(sha256 {sha(rs[region[0] - 1:region[1]])[:12]})",
+                         f"FASTA sha256 {sha(fs)[:12]} ({len(fs)} aa) differs from the region slice{where}", "fail")
             else:
                 self.add(f"{prefix}_sequence", subject, f"sha256 {sha(rs)[:12]} ({len(rs)} aa)",
                          f"FASTA sha256 {sha(fs)[:12]} ({len(fs)} aa)", "fail")
@@ -281,17 +285,21 @@ class Verifier:
                  "no GenBank REFERENCE title equals the PubMed title '%s'" % a["title"], "fail")
 
     def names_quote(self, rec, gene, quote):
+        """First candidate name found in the quote as a whole token. Names of 3 or more characters
+        match case-insensitively (a hyphen may be a space or absent); 1-2 characters match
+        case-sensitively."""
         cands = {gene} if gene else set()
         if rec:
             cands |= {n for _, n in rec["names"]} | set(rec["protein_names"])
-        flat = re.sub(r"[^a-z0-9]", "", quote.lower())
         for c in sorted(cands, key=len, reverse=True):
             if not c:
                 continue
-            if re.search(r"(?<![A-Za-z0-9])" + re.escape(c) + r"(?![A-Za-z0-9])", quote, flags=re.I):
-                return c
-            cf = re.sub(r"[^a-z0-9]", "", c.lower())
-            if len(cf) >= 4 and cf in flat:
+            if len(c) < 3:
+                pat, fl = r"(?<![A-Za-z0-9])" + re.escape(c) + r"(?![A-Za-z0-9])", 0
+            else:
+                pat = r"(?<![A-Za-z0-9])" + r"[-\s]?".join(re.escape(x) for x in c.split("-")) + r"(?![A-Za-z0-9])"
+                fl = re.I
+            if re.search(pat, quote, flags=fl):
                 return c
         return None
 
@@ -315,6 +323,9 @@ class Verifier:
         elif tier != "T4":
             self.add("link_record", subj, "protein accession", f"no protein accession in step_reaction.tsv (tier {tier})", "unchecked")
         pmid, quote = r["pmid"], r["quote"]
+        if tier in ("T1a", "T1b", "T1c", "T2") and not (pmid and quote):
+            miss = " and ".join(n for n, x in (("PMID", pmid), ("quote", quote)) if not x)
+            self.add("link_evidence_present", subj, f"PMID and quote for tier {tier}", f"missing {miss}", "fail")
         if not pmid:
             return
         a = self.check_pmid_exists("link_pmid_exists", subj, pmid)
@@ -355,14 +366,18 @@ class Verifier:
             self.add("chebi_inchikey", cid, "InChIKey", f"compound.tsv has no InChIKey; ChEBI has {c['inchikey']}", "unchecked")
         else:
             self.add("chebi_inchikey", cid, ik, c["inchikey"], "pass" if c["inchikey"] == ik else "fail")
+        qk = ik or c["inchikey"]
         try:
-            pc = ks.pubchem_by_inchikey(c["inchikey"], fetch=self.fetch, cache_dir=self.cache_dir)
+            pc = ks.pubchem_by_inchikey(qk, fetch=self.fetch, cache_dir=self.cache_dir)
         except KbFetchError as e:
             why = ("PubChem has no compound with this InChIKey" if not_found(e) else "PubChem not read")
-            self.add("pubchem_block1", cid, c["inchikey"][:14], f"{why}: {str(e)[:120]}", "unchecked")
+            self.add("pubchem_block1", cid, qk[:14], f"{why}: {str(e)[:120]}", "unchecked")
+            self.add("pubchem_formula", cid, r["formula"], f"{why}: {str(e)[:120]}", "unchecked")
             return
-        ok = pc["inchikey"][:14] == c["inchikey"][:14]
-        self.add("pubchem_block1", cid, c["inchikey"][:14], f"PubChem CID {pc['cid']}, {pc['inchikey'][:14]}", "pass" if ok else "fail")
+        ok = pc["inchikey"][:14] == qk[:14]
+        self.add("pubchem_block1", cid, qk[:14], f"PubChem CID {pc['cid']}, {pc['inchikey'][:14]}", "pass" if ok else "fail")
+        self.add("pubchem_formula", cid, r["formula"], f"PubChem CID {pc['cid']}, {pc['formula']}",
+                 "pass" if pc["formula"] == r["formula"] else "fail")
 
 
 def verify_pathway(yaml_path: Path, kb_dir: Path, *, fetch=None, refs_dir: Path | None = None,
@@ -430,6 +445,8 @@ def render_report(results: dict[str, pd.DataFrame]) -> str:
            "- `unchecked` means no source was read. Each reason is listed below. None of them is a pass.",
            "- `quote does not name protein` is a fail for tier T1a and an unchecked review flag for T1b and T1c.",
            "- Gene names also match ORF names and ordered locus names. The kind that matched is in the `found` column.",
+           "- The protein-name match uses UniProt protein names. A generic name (for example `Polyketide synthase`) matches any quote that contains it, so a T1 quote about a different enzyme of the same kind can pass. Known limit.",
+           "- `pubchem_block1` and `pubchem_formula` compare compound.tsv with the PubChem compound found by the same InChIKey. They show that PubChem has that compound and agrees on the first block and the formula.",
            "- Tiers, quotes and step sets were not changed by this check.", ":::", "",
            "## Counts per pathway", "", "| pathway | checks | pass | fail | unchecked |", "|---|---|---|---|---|"]
     tot = [0, 0, 0, 0]
@@ -448,6 +465,16 @@ def render_report(results: dict[str, pd.DataFrame]) -> str:
 
     def md(s):
         return str(s).replace("|", "\\|").replace("\n", " ")
+
+    out += ["", "## Gene-name passes by kind", "",
+            "| pathway | gene name | gene name (synonym) | ORF name | ordered locus name |", "|---|---|---|---|---|"]
+    kinds = ["gene name", "gene name (synonym)", "ORF name", "ordered locus name"]
+    for name, df in results.items():
+        g = df[df.check.isin(["ref_gene", "link_gene", "decoy_gene"]) & (df.status == "pass")]
+        k = g.found.str.split(" '").str[0].value_counts()
+        out.append(f"| {name} | " + " | ".join(str(int(k.get(x, 0))) for x in kinds) + " |")
+    out.append("")
+    out.append("Rows are ref_gene, link_gene and decoy_gene passes together.")
 
     fails = allr[allr.status == "fail"] if len(allr) else allr
     out += ["", f"## Failures ({len(fails)})", ""]

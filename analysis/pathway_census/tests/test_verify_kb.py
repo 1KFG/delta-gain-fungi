@@ -279,10 +279,101 @@ def test_link_organism_must_match_record(tmp_path):
     assert row(df, "link_organism").status == "fail"
 
 
-def test_report_counts(tmp_path):
-    df = run(tmp_path)
+def test_link_gene_mismatch_fails(tmp_path):
+    df = run(tmp_path, link={"gene_name": "zzz"})
+    assert row(df, "link_gene").status == "fail"
+
+
+def test_decoy_gene_mismatch_fails(tmp_path):
+    df = run(tmp_path, decoys=[{"accession": "P21334", "species": "Neurospora crassa", "gene_name": "zzz"}])
+    assert row(df, "decoy_gene", "P21334").status == "fail"
+
+
+def test_chebi_inchikey_mismatch_fails(tmp_path):
+    df = run(tmp_path, compound={"inchikey": "AAAAAAAAAAAAAA-UWFIBFSHSA-N", "inchikey_block1": "AAAAAAAAAAAAAA"})
+    assert row(df, "chebi_inchikey").status == "fail"
+
+
+def test_pubchem_block_mismatch_fails(tmp_path):
+    df = run(tmp_path, compound={"inchikey": "AAAAAAAAAAAAAA-UWFIBFSHSA-N", "inchikey_block1": "AAAAAAAAAAAAAA"})
+    assert row(df, "pubchem_block1").status == "fail"
+
+
+def test_pubchem_formula_mismatch_fails(tmp_path):
+    df = run(tmp_path, compound={"formula": "C40H52O5"})
+    assert row(df, "pubchem_formula").status == "fail"
+    assert row(df, "pubchem_block1").status == "pass"
+
+
+def test_pubchem_formula_passes(tmp_path):
+    assert row(run(tmp_path), "pubchem_formula").status == "pass"
+
+
+def test_t1a_without_quote_fails(tmp_path):
+    df = run(tmp_path, link={"quote": ""})
+    r = row(df, "link_evidence_present")
+    assert r.status == "fail" and "quote" in r.found
+
+
+def test_t1a_without_pmid_fails(tmp_path):
+    df = run(tmp_path, link={"pmid": ""})
+    assert row(df, "link_evidence_present").status == "fail"
+
+
+def test_t3_without_pmid_and_quote_passes_silently(tmp_path):
+    df = run(tmp_path, link={"tier": "T3", "pmid": "", "quote": ""})
+    assert (df.check == "link_evidence_present").sum() == 0
+    assert not (df[df.check.str.startswith("link_")].status == "fail").any()
+
+
+def test_region_slice_passes(tmp_path):
+    s = seq_of("Q3HR17")
+    df = run(tmp_path, ref={"region": [11, 60]}, fasta=s[10:60])
+    assert row(df, "ref_sequence").status == "pass"
+
+
+def test_region_wrong_position_fails(tmp_path):
+    s = seq_of("Q3HR17")
+    df = run(tmp_path, ref={"region": [1, 50]}, fasta=s[10:60])
+    r = row(df, "ref_sequence")
+    assert r.status == "fail" and "substring at 11" in r.found
+
+
+def test_substring_without_region_fails(tmp_path):
+    s = seq_of("Q3HR17")
+    assert row(run(tmp_path, fasta=s[10:60]), "ref_sequence").status == "fail"
+
+
+def test_short_names_match_case_sensitively():
+    v = vk.Verifier()
+    rec = {"names": [], "protein_names": []}
+    assert v.names_quote(rec, "T", "the t was low") is None
+    assert v.names_quote(rec, "T", "the T gene was low") == "T"
+    assert v.names_quote(rec, "tdh", "the TDH gene") == "tdh"
+    assert v.names_quote(rec, "tdh", "the tdhx gene") is None
+    assert v.names_quote(rec, "al-3", "the al3 mutant") == "al-3"
+
+
+def test_unusable_response_is_unchecked(tmp_path):
+    fake = Fake({}, errors={"db=pubmed": KbFetchError("pubmed 1: unusable response from u (ValueError('x'))")})
+    assert row(run(tmp_path, fake=fake), "ref_pmid_exists").status == "unchecked"
+
+
+def test_genbank_version_mismatch_fails(tmp_path):
+    fake = Fake({"36983003": pubmed_xml()})
+    df = run(tmp_path, fake=fake, ref={"accession": "WEV88679.2", "species": "Phaffia rhodozyma",
+                                       "gene_name": "DDGS", "pmid": "36983003"}, link={"tier": "T3", "quote": ""})
+    assert row(df, "ref_exists").status == "fail"
+
+
+def test_report_counts_exact():
+    df = pd.DataFrame([
+        ["ref_gene", "a", "x", "ORF name 'n'", "pass"], ["ref_gene", "b", "x", "gene name 'g'", "pass"],
+        ["ref_organism", "c", "x", "y", "fail"], ["chebi_formula", "d", "x", "reason one", "unchecked"]], columns=vk.COLS)
     md = vk.render_report({"tp": df})
-    assert "| tp |" in md and "pass" in md
-    df2 = run(tmp_path / "x", ref={"species": "Neurospora crassa"}) if (tmp_path / "x").mkdir() is None else None
-    md2 = vk.render_report({"tp": df2})
-    assert "ref_organism" in md2 and "Failures" in md2
+    assert "| tp | 4 | 2 | 1 | 1 |" in md
+    assert "| all | 4 | 2 | 1 | 1 |" in md
+    assert "## Failures (1)" in md and "## Unchecked (1)" in md
+    assert "| tp | 1 | 0 | 1 | 0 |" in md          # gene-name passes by kind
+    assert "| ref_organism | 0 | 1 | 0 |" in md
+    assert "| tp | ref_organism | c | x | y |" in md and "| tp | chebi_formula | d | reason one |" in md
