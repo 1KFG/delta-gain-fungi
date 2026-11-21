@@ -179,3 +179,13 @@ Not implemented. `paired.py` compares two finished matrices only. Building the d
 - A genome flag that is NA counts as not True. NA and False share one reason code. `n_unpaired["unknown_flag"]` counts the NA cases; it is a subset of the reason counts, not an extra reason.
 - Bootstrap resampling is per step, not joint across steps. `dropped_providers` has column `provider`; the summary has `annotation_provider`.
 - Every output file carries `# params: min_pairs=... n_boot=... seed=... busco_bins=...` (the JSON has a `params` key). `--busco-bins` sets the edges.
+
+## Triage bins (Task 10)
+
+The bins are triage. They are not a ranking. They are not an activity prediction (spec 5.5). No weights are fitted and there is no additive score.
+The rules are written in the docstring of `pathway_census/bins.py`, and they were fixed before any real data was binned. Summary:
+- Bins: `tier1`, `tier2`, `tier3`, `excluded`, `unknown`.
+- `excluded`: a required flag is known bad (truncated True, contam_suspect True, domain_ok False, motif_ok False). `unknown`: no flag known bad, at least one required flag NA.
+- Four boolean terms: `divergent`, `lineage_expansion`, `in_cluster`, `expressible`. tier1 = at least `tier1_min` true, tier2 = at least `tier2_min`, else tier3.
+- `hap_dup_suspect` True demotes tier1 to tier2 with a reason. NA does nothing and is shown.
+- All parameters are PROPOSED (no data basis). `window_bp=20000` is UNVERIFIED against the known cluster span in the reference species.
