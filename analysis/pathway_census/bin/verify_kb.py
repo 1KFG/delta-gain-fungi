@@ -224,7 +224,7 @@ class Verifier:
                 return kind, n
         return None
 
-    def check_record(self, prefix, subject, acc, species, gene, fasta, region=None, step_fa=""):
+    def check_record(self, prefix, subject, acc, species, gene, fasta, region=None, step_fa="", prov_region=None):
         """exists, organism, gene, sequence checks for one accession. Returns the record or None."""
         try:
             rec = self.record(acc)
@@ -252,18 +252,26 @@ class Verifier:
             if fs == rs:
                 self.add(f"{prefix}_sequence", subject, f"sha256 {sha(rs)[:12]}",
                          f"equal, {len(rs)} aa, sha256 {sha(fs)[:12]}", "pass")
-            elif region and fs == rs[region[0] - 1:region[1]]:
-                self.add(f"{prefix}_sequence", subject, f"record positions {region[0]}-{region[1]}",
-                         f"FASTA equals the fetched sequence at the YAML region {list(region)} "
-                         f"({len(fs)} of {len(rs)} aa)", "pass")
+            elif region and prov_region is None:
+                self.add(f"{prefix}_sequence", subject, "source coordinates in provenance.tsv",
+                         f"region in YAML but not in provenance (YAML region {list(region)})", "fail")
             elif region:
-                where = f"; FASTA is a substring at {rs.index(fs) + 1}" if fs in rs else ""
-                self.add(f"{prefix}_sequence", subject, f"record positions {region[0]}-{region[1]} "
-                         f"(sha256 {sha(rs[region[0] - 1:region[1]])[:12]})",
-                         f"FASTA sha256 {sha(fs)[:12]} ({len(fs)} aa) differs from the region slice{where}", "fail")
+                a, b = prov_region
+                sl = rs[a - 1:b]
+                if fs == sl:
+                    self.add(f"{prefix}_sequence", subject, f"source record positions {a}-{b}",
+                             f"FASTA equals the fetched sequence at the provenance region {a}-{b} ({len(fs)} of {len(rs)} aa)", "pass")
+                else:
+                    where = f"; FASTA is a substring at {rs.index(fs) + 1}" if fs in rs else ""
+                    self.add(f"{prefix}_sequence", subject, f"source record positions {a}-{b} (sha256 {sha(sl)[:12]})",
+                             f"FASTA sha256 {sha(fs)[:12]} ({len(fs)} aa) differs from the provenance-region slice{where}", "fail")
             else:
                 self.add(f"{prefix}_sequence", subject, f"sha256 {sha(rs)[:12]} ({len(rs)} aa)",
                          f"FASTA sha256 {sha(fs)[:12]} ({len(fs)} aa)", "fail")
+        if region and fasta is not None and acc in fasta:
+            n = len(norm_seq(fasta[acc]))
+            self.add(f"{prefix}_region", subject, f"YAML region [1, {n}] (FASTA coordinates)", f"YAML region {list(region)}",
+                     "pass" if list(region) == [1, n] else "fail")
         return rec
 
     def check_genbank_cites(self, subject, rec, pmid):
@@ -388,12 +396,20 @@ def verify_pathway(yaml_path: Path, kb_dir: Path, *, fetch=None, refs_dir: Path 
     refs = Path(p.refs_dir)
     kb = load_kb(Path(kb_dir))
     v = Verifier(fetch, cache_dir)
+    prov: dict[tuple[str, str], tuple[int, int]] = {}
+    pf = refs / "provenance.tsv"
+    if pf.is_file():
+        for _, pr in pd.read_csv(pf, sep="\t", dtype=str, keep_default_na=False).iterrows():
+            m = re.fullmatch(r"(\d+)-(\d+)", pr.get("region", "").strip())
+            if m:
+                prov[(pr["step_id"], pr["accession"])] = (int(m.group(1)), int(m.group(2)))
     for s in p.steps:
         fa = read_fasta(refs / f"{s.id}.faa")
         for r in s.refs:
             subj = f"{s.id}|{r.accession or '-'}|{r.species}"
             if r.accession:
-                rec = v.check_record("ref", subj, r.accession, r.species, r.gene_name, fa, r.region, f"{s.id}.faa")
+                rec = v.check_record("ref", subj, r.accession, r.species, r.gene_name, fa, r.region, f"{s.id}.faa",
+                                 prov.get((s.id, r.accession)))
                 if rec and rec["kind"] == "GenBank":
                     v.check_genbank_cites(subj, rec, r.pmid)
             else:

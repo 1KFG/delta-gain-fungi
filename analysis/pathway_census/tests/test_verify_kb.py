@@ -68,7 +68,7 @@ def gp_seq():
     return re.sub(r"[^a-z]", "", t.split("ORIGIN")[1].split("//")[0]).upper()
 
 
-def world(tmp_path, ref=None, link=None, decoys=None, fasta=None, compound=None):
+def world(tmp_path, ref=None, link=None, decoys=None, fasta=None, compound=None, prov_region=None):
     """Write a one-step pathway 'tp' (yaml, refs, kb tables) and return (yaml, kb_dir, cache)."""
     ref = {"accession": "Q3HR17", "species": "Phaffia rhodozyma", "gene_name": "Ast",
            "pmid": "16416328", "verified": True, **(ref or {})}
@@ -84,6 +84,8 @@ def world(tmp_path, ref=None, link=None, decoys=None, fasta=None, compound=None)
     acc = ref["accession"]
     seq = fasta if fasta is not None else (gp_seq() if acc.startswith("WEV") else seq_of(acc))
     (refs / "s1.faa").write_text(f">{acc} test\n{seq}\n")
+    if prov_region is not None:
+        (refs / "provenance.tsv").write_text(f"step_id\taccession\tregion\ns1\t{acc}\t{prov_region}\n")
     for d in decoys or []:
         (refs / "decoys" / "s1.faa").write_text(f">{d['accession']} x\n{seq_of(d['accession'])}\n")
     kbd = tmp_path / "kb" / "tp"
@@ -328,15 +330,30 @@ def test_t3_without_pmid_and_quote_passes_silently(tmp_path):
 
 def test_region_slice_passes(tmp_path):
     s = seq_of("Q3HR17")
-    df = run(tmp_path, ref={"region": [11, 60]}, fasta=s[10:60])
+    df = run(tmp_path, ref={"region": [1, 50]}, fasta=s[10:60], prov_region="11-60")
     assert row(df, "ref_sequence").status == "pass"
+    assert row(df, "ref_region").status == "pass"
 
 
 def test_region_wrong_position_fails(tmp_path):
     s = seq_of("Q3HR17")
-    df = run(tmp_path, ref={"region": [1, 50]}, fasta=s[10:60])
+    df = run(tmp_path, ref={"region": [1, 50]}, fasta=s[10:60], prov_region="1-50")
     r = row(df, "ref_sequence")
     assert r.status == "fail" and "substring at 11" in r.found
+
+
+def test_yaml_region_not_matching_fasta_length_fails(tmp_path):
+    s = seq_of("Q3HR17")
+    df = run(tmp_path, ref={"region": [11, 60]}, fasta=s[10:60], prov_region="11-60")
+    assert row(df, "ref_sequence").status == "pass"
+    assert row(df, "ref_region").status == "fail"
+
+
+def test_region_in_yaml_not_in_provenance_fails(tmp_path):
+    s = seq_of("Q3HR17")
+    df = run(tmp_path, ref={"region": [1, 50]}, fasta=s[10:60])
+    r = row(df, "ref_sequence")
+    assert r.status == "fail" and "region in YAML but not in provenance" in r.found
 
 
 def test_substring_without_region_fails(tmp_path):
