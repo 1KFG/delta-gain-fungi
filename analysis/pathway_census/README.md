@@ -54,6 +54,7 @@ Tool modules found on UCR HPCC (`module avail`, 2026-11-20).
 Domtbl parsing: `score` is the per-domain score (domtbl column 14), `evalue` is the domain i-Evalue (column 13).
 `candidates_for_step` returns one row per protein (its best-scoring domain) with score >= `min_score`. `min_score` has no default.
 A zero-hit search returns an empty DataFrame with all eight columns.
+`bin/search_step.py` adds a `step_id` column (the searched step) to the candidates TSV, so the file feeds `assign_steps` directly (final-review fix I4, part). `candidates_for_step` itself is unchanged. Output names still carry the step only, not the genome: see the lessons-note checklist (step 3) before a real run.
 
 ### Provisional mode
 `build_step_hmms.py` and `search_step.py` refuse a pathway with `verified: false` (exit non-zero) unless `--provisional` is passed.

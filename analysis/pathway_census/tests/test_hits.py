@@ -166,3 +166,27 @@ def test_cli_provisional_stamps_filenames(tmp_path):
     assert cand.read_text().startswith("# PROVISIONAL")
     df = pd.read_csv(cand, sep="\t", comment="#")
     assert "homologue" in set(df.protein_id)
+
+
+@needs_hmmer
+def test_search_cli_candidates_carry_step_id(tmp_path):
+    # final-review I4 (part): assign_steps needs step_id; the CLI writes it.
+    refs = tmp_path / "refs"
+    refs.mkdir()
+    shutil.copy(DATA / "tiny_refs.faa", refs / "ggpp_synthase.faa")
+    hmms = tmp_path / "hmms"
+    r = _run_cli([BIN / "build_step_hmms.py", "--pathway", YAML, "--refs-dir", refs, "--out-dir", hmms,
+                  "--provisional", "--steps", "ggpp_synthase"])
+    assert r.returncode == 0, r.stderr
+    res = tmp_path / "res"
+    r = _run_cli([BIN / "search_step.py", "--pathway", YAML, "--step", "ggpp_synthase", "--hmm-dir", hmms,
+                  "--proteins", DATA / "tiny_proteome.faa", "--out-dir", res, "--min-score", "10", "--provisional"])
+    assert r.returncode == 0, r.stderr
+    df = pd.read_csv(res / "ggpp_synthase.PROVISIONAL.candidates.tsv", sep="\t", comment="#")
+    assert list(df.columns) == hits.COLUMNS + ["step_id"]
+    assert len(df) > 0 and set(df.step_id) == {"ggpp_synthase"}
+    from pathway_census.assign import assign_steps
+    from pathway_census.defs import load_pathway
+    plc = pd.DataFrame(columns=["protein_id", "step_id", "clade", "support"])
+    out = assign_steps(df, plc, load_pathway(YAML), 0.5)  # must not raise for a missing step_id
+    assert set(out.step_id) == {"ggpp_synthase"}

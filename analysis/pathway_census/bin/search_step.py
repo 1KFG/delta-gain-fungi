@@ -4,6 +4,8 @@
 Refuses a pathway with verified: false unless --provisional is given. With --provisional the output
 names carry ".PROVISIONAL" and the candidate TSV starts with a "# PROVISIONAL" line.
 --min-score has no default: the pilot derives it from the reference proteins' own scores (README).
+The candidate TSV has the 8 hits.COLUMNS plus `step_id` (the searched step), the input that
+bin/assign_steps.py needs. Outputs are named by step only: one run per proteome per out-dir.
 """
 import argparse
 import sys
@@ -38,7 +40,7 @@ def main():
     a.out_dir.mkdir(parents=True, exist_ok=True)
     dom = a.out_dir / hits.tagged_name(a.step, "domtbl", tag)
     hits.search_step(hmm, a.proteins, dom, a.cpus)
-    cand = hits.candidates_for_step(hits.parse_domtbl(dom), a.min_score)
+    cand = hits.candidates_for_step(hits.parse_domtbl(dom), a.min_score).assign(step_id=a.step)
     out = a.out_dir / hits.tagged_name(a.step, "candidates.tsv", tag)
     with open(out, "w") as fh:
         if tag:
