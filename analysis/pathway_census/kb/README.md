@@ -1,6 +1,6 @@
 # Flat knowledge tables
 
-One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid` and `melanin_dhn` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
+One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid`, `melanin_dhn` and `melanin_ldopa` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
 
 | File | Columns |
 |---|---|
@@ -64,6 +64,13 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 | Pyricularia grisea | 148305 | Pyricularia grisea | `pyricularia grisea` (not merged with 318829) |
 | Colletotrichum lagenaria | 5462 | Colletotrichum lagenaria | `colletotrichum lagenaria` (not merged with 5465) |
 | Colletotrichum orbiculare | 5465 | Colletotrichum orbiculare | `colletotrichum orbiculare` |
+| Cryptococcus neoformans | 5207 | Cryptococcus neoformans | `cryptococcus neoformans` |
+| Cryptococcus neoformans var. grubii | 5207 | Cryptococcus neoformans | `cryptococcus neoformans` (first two words; no alias needed) |
+| Cryptococcus deneoformans | 40410 | Cryptococcus deneoformans | `cryptococcus deneoformans` (not merged with 5207) |
+| Cryptococcus neoformans var. neoformans | 40410 | Cryptococcus deneoformans | `cryptococcus deneoformans` (alias) |
+| Pholiota microspora | 1538424 | Pholiota microspora | `pholiota microspora` |
+| Pholiota nameko | 1538424 | Pholiota microspora | `pholiota microspora` (alias) |
+| Trametes sanguinea | 158606 | Trametes sanguinea | `trametes sanguinea` |
 
 - Key choice: for taxid 29924 the key is the NCBI scientific name, because the old names point to two other species. For taxids 264483 and 5270 the key is the name used in the cited papers, not the current NCBI scientific name.
 - Limit: a name without an alias is keyed by its first two words. A forma or variety that NCBI holds as its own taxon is kept apart only if it is in the alias table. Check the taxid before adding organisms from a new pathway.
@@ -78,3 +85,18 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 - Organism key of the P79068 links (`thn_synthase`): `glomerella lagenarium`, the first two words of the UniProt organism name "Glomerella lagenarium" (UniProt taxid 5462). `species_key("Colletotrichum lagenarium")`, the name in the papers, gives a third key, `colletotrichum lagenarium`. NCBI Taxonomy gives neither "Glomerella lagenarium" nor "Colletotrichum lagenarium" a taxid hit (esearch, All Names, 2026-11-21), so no alias is allowed under the taxid rule. The row `Colletotrichum lagenaria` (taxid 5462) in the table above is the NCBI scientific name of the UniProt taxid; no link has the key `colletotrichum lagenaria`. None of these is merged with Colletotrichum orbiculare (taxid 5465).
 - Quotes: at most one quoted sentence per link. One paper may give different sentences to different links (PMID 10515939: one sentence for the arp1 and arp2 links, another for the abr1 link). A T3 link may carry a sentence as context (abr1).
 - No organism completes a DHN-melanin route with its own links. Route tiers hold only together with the organism list.
+
+## Conventions used by the L-DOPA / other melanin tables (`kb/melanin_ldopa/`)
+
+- Five routes, all alternatives: `tyrosinase_dopa`, `laccase_exogenous`, `pyomelanin`, `tyrosine_degradation`, `asp_melanin`. Tyrosinase (EC 1.14.18.1) and laccase (EC 1.10.3.2) are separate steps in separate routes.
+- **`exogenous_substrate`.** The schema has no field for a substrate that the organism does not make. The flag is text: each route `note` in `pathways/melanin_ldopa.yaml` starts with `exogenous_substrate: true` or `exogenous_substrate: false`, and the `lineage_note` of step `laccase_diphenol` carries `exogenous_substrate: true`. Only `laccase_exogenous` is true (Cryptococcus neoformans makes melanin only from exogenous substrates, PMID 17098915). `path_possible` does not read the flag: in the first step of a route it applies every link with no requirement on the substrates. So the products of `laccase_exogenous` mean "possible if the diphenol is supplied".
+- The laccase reactions are curated (`CUR:melanin_ldopa:ldopa_oxidation_laccase`, `dopamine_oxidation_laccase`, `hga_oxidation_laccase`) with EC 1.10.3.2. Rhea has only the generic laccase reaction RHEA:11276. No laccase link points to a tyrosinase reaction (RHEA:18117, RHEA:34287), and no laccase reaction has L-tyrosine as a participant.
+- Free L-DOPA is a substrate only. Rhea writes L-tyrosine to L-dopaquinone as one reaction, so no reaction of the table makes L-DOPA.
+- Dopaquinone onward is non-enzymatic in the table. The step `dopachrome_onward` is in `step.tsv` only (no reference protein) and has two T4 links (`CUR:melanin_ldopa:dopaquinone_cyclisation`, RHEA:13041) with the organism text `not assigned (no enzyme identified)`. `path_possible` never uses a T4 link. Exclude T4 rows before listing organisms.
+- Reactions that end in a polymer have no product participant (`hga_oxidation_laccase`, `hga_autooxidation`). `hga_autooxidation` has no step link.
+- `asp_melanin` gives no product: the TyrP products have charged ChEBI entries only (CHEBI:193114, CHEBI:193115). The first step alone gives aspulvinone E. `refs/melanin_ldopa/UNVERIFIED.md`, section D.
+- `tyrosine_degradation` is not a pigment route. It is declared so that `hmga` (removal of homogentisic acid) is counted against `pyomelanin`.
+- Tier rule for the tyrosinase step: T1a needs a quoted sentence with an activity assay on the substrate class of the reaction (monophenol or L-tyrosine; diphenol or L-DOPA). "Tyrosinase activity" alone is held at T3 with the sentence as context (the `assay` text starts with `Held at T3.`).
+- Every link is in `tests/data/kb/melanin_ldopa_quotes.tsv` (change detector; columns step_id, reaction_id, protein_accession, pmid, quote, tier, assay).
+- Organism keys: serotype D references have the key `cryptococcus deneoformans` (NCBI taxid 40410; alias `cryptococcus neoformans var. neoformans`), serotype A references `cryptococcus neoformans` (taxid 5207). The papers call both Cryptococcus neoformans; the keys are not merged. `Pycnoporus sanguineus` (the name in PMID 16151802) has no NCBI taxid hit, so it is not an alias of `trametes sanguinea`.
+- Every route result of this pathway holds for one organism (`single_organism` True).

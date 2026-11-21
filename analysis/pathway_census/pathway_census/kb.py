@@ -273,6 +273,16 @@ SPECIES_ALIASES: dict[str, tuple[str, int, str]] = {
         "pyricularia grisea", 148305,
         "NCBI Taxonomy taxid 148305: scientific name Pyricularia grisea, synonym Magnaporthe "
         "grisea. Not Pyricularia oryzae (taxid 318829)"),
+    # L-DOPA / other melanin tables (Task 5). The key is the UniProt organism name of the references.
+    "cryptococcus neoformans var. neoformans": (
+        "cryptococcus deneoformans", 40410,
+        "NCBI Taxonomy taxid 40410: scientific name Cryptococcus deneoformans, synonym "
+        "Cryptococcus neoformans var. neoformans (serotype D). Not Cryptococcus neoformans "
+        "(taxid 5207, which includes var. grubii, serotype A)"),
+    "pholiota nameko": (
+        "pholiota microspora", 1538424,
+        "NCBI Taxonomy taxid 1538424: scientific name Pholiota microspora, synonym Pholiota "
+        "nameko (the name used in the papers)"),
 }
 
 _BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")

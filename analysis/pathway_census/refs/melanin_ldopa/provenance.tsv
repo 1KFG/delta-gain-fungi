@@ -1,0 +1,16 @@
+step_id	accession	species	gene_name	region	pmid	source_database	retrieved_on	verified
+tyrosinase	P00440	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	T		2529259	UniProtKB/Swiss-Prot (entry v145, sequence v5); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	Q2UP46	Aspergillus oryzae (strain ATCC 42149 / RIB 40)	AO090001000117		23749993	UniProtKB/TrEMBL (entry v108, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	Q00234	Aspergillus oryzae (strain ATCC 42149 / RIB 40)	melO		7893753	UniProtKB/Swiss-Prot (entry v124, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	C7FF05	Agaricus bisporus	PPO4		20676921	UniProtKB/Swiss-Prot (entry v44, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	C7FF04	Agaricus bisporus	PPO3		21598903	UniProtKB/Swiss-Prot (entry v43, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	A7BHQ9	Pholiota microspora	tyr1		17617709	UniProtKB/Swiss-Prot (entry v51, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	Q2TL94	Trametes sanguinea	tyrosinase		16151802	UniProtKB/TrEMBL (entry v65, sequence v1); PubMed (cited by the entry)	2026-11-21	false
+laccase_diphenol	Q55P57	Cryptococcus deneoformans (strain B-3501A)	LAC1		8300520	UniProtKB/Swiss-Prot (entry v101, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+laccase_diphenol	J9VY90	Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)	LAC1		12581355	UniProtKB/Swiss-Prot (entry v61, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+laccase_diphenol	J9VQZ4	Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)	LAC2		24743168	UniProtKB/Swiss-Prot (entry v53, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+hppd	Q4WHU1	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	hppD		19028908	UniProtKB/Swiss-Prot (entry v115, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+hmga	Q4WHT9	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	hmgA		19028908	UniProtKB/Swiss-Prot (entry v103, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+hmga	Q00667	Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)	hmgA		7673153	UniProtKB/Swiss-Prot (entry v143, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+aspulvinone_e_synthase	Q0CRX1	Aspergillus terreus (strain NIH 2624 / FGSC A1156)	melA		27133313	UniProtKB/Swiss-Prot (entry v92, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+asp_melanin_tyrosinase	Q0CRX0	Aspergillus terreus (strain NIH 2624 / FGSC A1156)	tyrP		27133313	UniProtKB/Swiss-Prot (entry v82, sequence v2); PubMed (cited by the entry)	2026-11-21	true
