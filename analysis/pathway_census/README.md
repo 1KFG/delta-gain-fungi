@@ -36,3 +36,41 @@ MEASURED 2026-11-20 on the real tables:
 - `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-20), one file per step. Fused PSY/cyclase proteins appear in both step files.
 - `refs/carotenoid/provenance.tsv`: one row per (step, ref) with source and verified flag.
 - `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of open decisions.
+
+## Candidate retrieval (Task 4)
+
+Code: `pathway_census/hits.py`, `bin/build_step_hmms.py`, `bin/search_step.py`, `slurm/search_step.sbatch`.
+
+Tool modules found on UCR HPCC (`module avail`, 2026-11-20).
+- hmmer: 3.3.2, 3.4 (default), plus -mpi builds and old 1.8.5 / 2.3.2. Used: `hmmer/3.4` (HMMER 3.4, Aug 2023).
+- mafft: 7.490, 7.505. Used: `mafft/7.505`.
+- ncbi-blast: 2.2.22+ through 2.17.0+ (not used in Task 4; recorded as requested).
+- mmseqs2: `mmseqs2/17-b804f` (also 13-45111, 15-6f452). Used for dereplication.
+- cd-hit: 4.8.1 (available, not used).
+`hits.run_tool` runs a tool from PATH, or under `bash -lc 'module load hmmer/3.4 mafft/7.505 mmseqs2/17-b804f && ...'`
+(override with `PATHWAY_CENSUS_MODULES`). Tests that need these tools skip with a reason if they cannot be loaded. They never mock a search.
+
+Domtbl parsing: `score` is the per-domain score (domtbl column 14), `evalue` is the domain i-Evalue (column 13).
+`candidates_for_step` returns one row per protein (its best-scoring domain) with score >= `min_score`. `min_score` has no default.
+A zero-hit search returns an empty DataFrame with all eight columns.
+
+### Provisional mode
+`build_step_hmms.py` and `search_step.py` refuse a pathway with `verified: false` (exit non-zero) unless `--provisional` is passed.
+With `--provisional`, output names contain `.PROVISIONAL` (e.g. `ggpp_synthase.PROVISIONAL.hmm`, `.domtbl`, `.candidates.tsv`),
+the HMM directory gets `PROVISIONAL.txt`, and the candidates TSV begins with a `# PROVISIONAL` line.
+The carotenoid pathway is `verified: false` until the user reviews it (spec 5.8), so no real HMMs or searches were run in Task 4.
+
+### min_score rule (PROPOSED, not decided)
+For each step, the pilot will score the step's own reference proteins against the step HMM and set `min_score`
+to the lowest reference score (so every reference is retrievable). The value is then recorded per step. Task 7 sets it.
+Open: refs are the HMM's training set, so their scores are optimistic. A leave-one-out check may be needed. No data yet.
+
+### Dereplication (PROPOSED values)
+`hits.dereplicate(fasta_in, fasta_out, identity, coverage=0.8)` runs `mmseqs easy-cluster` (`--min-seq-id identity -c coverage --cov-mode 0`) and writes one representative per cluster.
+Rule (PROPOSED): a family whose protein set has more than 50,000 proteins is dereplicated at 90% identity before the HMM search.
+Smaller families are searched against the full BFD protein set without dereplication or a Pfam prefilter (spec 5.4 step 2).
+Both numbers are proposals with no measured data behind them. Revisit after the first real family size is counted.
+The rule is not enforced in code; the caller applies it.
+
+### SLURM
+`slurm/search_step.sbatch` takes all paths from environment variables (`PC_ROOT`, `PC_PATHWAY`, `PC_STEP`, `PC_HMM_DIR`, `PC_PROTEINS`, `PC_OUT_DIR`, `PC_MIN_SCORE`, optional `PC_PROVISIONAL=1`). It stages proteins in `$SCRATCH` and copies results to `PC_OUT_DIR`. Not yet submitted.
