@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Produce verified, route-aware step sets for carotenoid, DHN-melanin and L-DOPA/other melanin pathways, with per-domain references, decoys, and flat knowledge tables (compounds, reactions, steps, evidence), and hand the user a review packet before any real-data run.
+**Goal:** Produce verified, route-aware step sets for carotenoid, DHN-melanin, L-DOPA/other melanin and mycosporine pathways, with per-domain references, decoys, and flat knowledge tables (compounds, reactions, steps, evidence), and hand the user a review packet before any real-data run.
 
-**Architecture:** Extend the pathway definition schema (routes, any-of domains, organism-keyed references, nullable EC). Add a flat-table module with validators and cached public-database fetchers (ChEBI, PubChem, UniProt, PubMed). Curate each pathway into YAML plus TSV tables. Verify every accession and PMID against its source. End with a review packet.
+**Architecture:** Extend the pathway definition schema (routes, any-of domains, organism-keyed references, nullable EC). Add a flat-table module with validators and cached public-database fetchers (ChEBI, PubChem, UniProt, PubMed). Curate each pathway (carotenoid, DHN-melanin, L-DOPA/other melanin, mycosporines) into YAML plus TSV tables. Verify every accession and PMID against its source. End with a review packet.
 
 **Tech Stack:** Python 3.12 (`/usr/bin/python3.12`), pandas, pyyaml, pytest, the `pathway_census` package on `main`, UniProt/ChEBI/PubChem/PubMed/Rhea REST (read-only, cached).
 
@@ -29,11 +29,11 @@
 
 ## Review Focus
 
-1. **A reference verified against the wrong protein** (accession belongs to another gene or species). Task S6 re-fetches every accession and compares organism and gene name.
+1. **A reference verified against the wrong protein** (accession belongs to another gene or species). Task S7 re-fetches every accession and compares organism and gene name.
 2. **A tier that travels between orthologues.** Validators reject a tier without organism and gene name.
 3. **A charged or non-neutral species in the compound table.** Validators check formula, mass and charge.
 4. **A route variant collapsed into one linear list** (DHN-melanin). Schema tests require routes.
-5. **A curated quote that is not in the cited abstract.** S6 checks quote text against the fetched PubMed abstract.
+5. **A curated quote that is not in the cited abstract.** S7 checks quote text against the fetched PubMed abstract.
 
 ---
 
@@ -158,7 +158,31 @@
 
 ---
 
-### Task 6 (S6): Independent reference verification
+### Task 6 (S6): Mycosporines and mycosporine-like amino acids (model: curation tier)
+
+Added 2026-11-21 at the user's request (the idea came from the EBC agent's operator note). Treat everything below as leads: the biosynthetic genes of fungal mycosporines are not known to me (UNVERIFIED), so this task starts with a literature search, not a gene list.
+
+**Files:**
+- Create: `analysis/pathway_census/pathways/mycosporine.yaml`, `refs/mycosporine/*.faa`, `refs/mycosporine/provenance.tsv`, `refs/mycosporine/decoys/`, `refs/mycosporine/UNVERIFIED.md`, `analysis/pathway_census/kb/mycosporine/` TSVs
+- Test: `tests/test_mycosporine_def.py`, `tests/test_kb_mycosporine.py`
+
+**Leads (verify each; do not copy conclusions):**
+1. Starting papers found by a PubMed search on 2026-11-21: PMID 36983003 ("Unraveling the Molecular Basis of Mycosporine Biosynthesis in Fungi", 2023) and PMID 40036870 (mycosporine-glutaminol-glucoside in the yeast *Naganishia friedmannii*, 2025). Read their abstracts and any available full text, then follow their references to the fungal biosynthetic genes. Also search for the cyanobacterial and actinomycete routes (MysA/DDGS, an O-methyltransferase, an ATP-grasp ligase, an NRPS-like enzyme; PMID 24907338 for actinomycete MAA genes) so that T2 evidence and decoys are correct. Record the genes by organism.
+2. UniProt reviewed cyanobacterial demethyl-4-deoxygadusol synthase (EC 4.2.3.154): Q3M6C3 (*Trichormus variabilis*) and B2J6X9 (*Nostoc punctiforme*). These are T2 for any fungal ortholog until a fungal paper shows the reaction.
+3. KEGG has compounds Mycosporine (C10607), demethyl-4-deoxygadusol (C21281) and demethylgadusol (C22843) (MEASURED 2026-11-21). KEGG ids are cross-reference columns only. A Rhea search for "mycosporine" returned no reaction on 2026-11-21 (MEASURED once; retry with other terms such as "gadusol" and "demethyl-4-deoxygadusol"). Curated reaction ids are allowed where Rhea has none.
+4. Compounds to include where ChEBI has an entry: demethyl-4-deoxygadusol, 4-deoxygadusol, gadusol, mycosporine-glycine, mycosporine-glutaminol, mycosporine-glutamicol, their glucosides, shinorine, porphyra-334, palythine, asterina-330. Neutral parents only; masses computed from formulas.
+5. The EBC agent reports mycosporine-like amino acids in 176 corpus accessions, enriched in marine accessions (32 of 88, OR 14.5) and absent from the fungal reference groups (REPORTED, `IDEA_environment_host_signatures.md`). Record this in `UNVERIFIED.md` as context, not as evidence for the pathway.
+6. Fungal lineages: record which fungi are reported to make which mycosporine (organism, compound, PMID). Do not generalise to the kingdom.
+
+**Requirements:** route variants where the literature gives them (for example direct and glutaminol/glutamicol-glucoside routes); a fungal T1a/T1b/T1c tier only where a paper shows it; decoys for any synthase family (sugar phosphate cyclases of the DHQ synthase fold, other methyltransferases); organism-keyed gene names; `verified: false` until the user's review.
+
+- [ ] **Step 1: Write failing tests**: the schema validates; every reference accession and PMID is in provenance; flat tables validate; every T1/T2 link has a PMID and quote; no reaction is assigned T1 to a fungus without a fungal paper; the step set is not a copy of the cyanobacterial gene list.
+- [ ] **Step 2: Run; expect FAIL. Step 3: Search and curate (network via the cached fetchers); list unknowns in `UNVERIFIED.md`. Step 4: Run the full suite; expect pass.**
+- [ ] **Step 5: Commit** `feat(pathway_census): mycosporine and MAA step set`.
+
+---
+
+### Task 7 (S7): Independent reference verification
 
 **Files:**
 - Create: `analysis/pathway_census/bin/verify_kb.py`, `analysis/pathway_census/kb/VERIFICATION_REPORT.md` (generated, committed)
@@ -175,7 +199,7 @@
 
 ---
 
-### Task 7 (S7): Review packet for the user
+### Task 8 (S8): Review packet for the user
 
 **Files:**
 - Create: `docs/superpowers/plans/2026-11-21-stage1-review-packet.md`

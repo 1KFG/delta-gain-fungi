@@ -195,6 +195,12 @@ The rules in `EBC-KT/collab/README.md` apply. The BFD side signs as `BFD-HPCC-ma
 ### 6.9 Review status
 Done: Fable (methods), Fable (pathways), EBC agent (comparison design, from the summary). Pending: the user's approval of this version. A second pass on the revised step sets by the same reviewers is optional.
 
+## Addendum 2.1 (2026-11-21, at the user's request): mycosporines and mycosporine-like amino acids (MAAs)
+- **Added as a fourth pathway** for the knowledge tables and the census. The idea came from the EBC agent's operator note (`EBC-KT`, `IDEA_environment_host_signatures.md`).
+- **Starting point is the literature, not a gene list.** The fungal biosynthetic genes are not known to me (UNVERIFIED). A PubMed search on 2026-11-21 returned PMID 36983003 (fungal mycosporine biosynthesis, 2023) and PMID 40036870 (mycosporine-glutaminol-glucoside in *Naganishia friedmannii*, 2025) as leads. UniProt has reviewed cyanobacterial demethyl-4-deoxygadusol synthases (Q3M6C3, B2J6X9; EC 4.2.3.154), which are T2 for any fungal ortholog. KEGG has compounds C10607, C21281 and C22843 (MEASURED).
+- **Detectability (REPORTED by the EBC agent):** MAAs appear in 176 corpus accessions, strongly marine-enriched (32 of 88 marine, 3 of 27 insect accessions) and absent from the fungal reference groups. By the pre-set gate (6.6) the capability-against-observation test is therefore unlikely to pass for fungi. The census and tables go ahead regardless; the comparison is reported as the gate says. Whether non-fungal MAA producers could be used needs genomes outside BFD, which this project does not have.
+- **Same rules as the other pathways:** organism-keyed gene names, tiers bound to the organism and protein, neutral compounds, decoys, `verified: false` until the user's review, and a verification pass.
+
 ## 7. Order of work (PROPOSED)
 1. D0: the EBC counts, including the plant and algae positive control and the melanin detectability check. Nothing else in the comparison runs before this answers.
 2. Stage 1: verified step sets and references for all three pathways, with decoys (the corrections in 6.3), and the flat tables.
