@@ -17,11 +17,12 @@ gene_id, LOCUSTAG, chrom, start, end, plus `length` (protein length in aa, from 
 `gene_proteins.parquet`, joined by the caller).
 
 domain_ok
-    True if every expected domain of the step (`expected_domains[step_id]`, hmm names such as Pfam
-    ids) occurs in the `domains` frame for that protein with evalue <= domain_evalue
-    (PROPOSED 1e-5). Counting is at domain level, one hit table row per domain. A fused gene is
-    judged per step: it needs the domains of that step only, not the domains of its fusion partner.
-    <NA> if `expected_domains` has no entry for the step.
+    Any-of rule. True if at least one expected domain of the step (`expected_domains[step_id]`,
+    hmm names such as Pfam ids, from `domains_any` in the pathway YAML) occurs in the `domains`
+    frame for that protein with evalue <= domain_evalue (PROPOSED 1e-5). False if none occurs.
+    Counting is at domain level, one hit table row per domain. A fused gene is judged per step: it
+    needs a domain of that step only, not a domain of its fusion partner.
+    <NA> if `expected_domains` has no entry for the step or the entry is an empty list.
 
 motif_ok
     The reference definition gives no catalytic motif yet. The value comes from `motif_hits`
@@ -146,7 +147,7 @@ def quality_flags(assigned: pd.DataFrame, domains: pd.DataFrame, gene_info: pd.D
     for r in assigned.itertuples():
         pid, step, gid = r.protein_id, r.step_id, _gid(r.protein_id)
         exp = (expected_domains or {}).get(step)
-        dom_ok.append(pd.NA if exp is None else all((pid, d) in dom_have for d in exp))
+        dom_ok.append(pd.NA if not exp else any((pid, d) in dom_have for d in exp))
         mot_ok.append(motif.get((pid, step), pd.NA))
 
         length = info.at[gid, "length"] if gid in info.index and "length" in info.columns else pd.NA

@@ -12,7 +12,7 @@ A, B, C, D = "AAAAAAAA", "BBBBBBBB", "CCCCCCCC", "DDDDDDDD"
 
 
 def _step(i):
-    return Step(id=i, name=i, ec=None, refs=[], domains=[], copy_expect="single", role="catalytic")
+    return Step(id=i, name=i, ec=None, refs=[], domains_any=[], copy_expect="single", role="catalytic")
 
 
 PW = Pathway(id="t", verified=False, steps=[_step("s1"), _step("s2"), _step("s3")])

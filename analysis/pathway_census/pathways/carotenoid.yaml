@@ -11,7 +11,7 @@
 # function of that gene for this step.
 #
 # Field notes:
-# - domains: Pfam / NCBIfam IDs taken from the UniProt cross-references of the
+# - domains_any: Pfam / NCBIfam IDs taken from the UniProt cross-references of the
 #   reference proteins (MEASURED from UniProt, not from an hmmscan run here).
 #   These families are broader than the step. A step call needs HMM plus tree
 #   placement (spec anti-goals). Do not count bare Pfam hits as steps.
@@ -36,7 +36,7 @@ steps:
         species: Mucor circinelloides f. lusitanicus
         pmid: "12695851"
         verified: true
-    domains: [PF00348]
+    domains_any: [PF00348]
     copy_expect: multi
     role: catalytic
     fused_with: []
@@ -68,7 +68,7 @@ steps:
         species: Xanthophyllomyces dendrorhous
         pmid: "10589832"
         verified: true
-    domains: [PF00494]
+    domains_any: [PF00494]
     copy_expect: single
     role: catalytic
     fused_with: [lycopene_cyclase]
@@ -104,7 +104,7 @@ steps:
         species: Xanthophyllomyces dendrorhous
         pmid: "10589832"
         verified: true
-    domains: [TIGR03462, PF18916]
+    domains_any: [TIGR03462, PF18916]
     copy_expect: single
     role: catalytic
     fused_with: [phytoene_synthase]
@@ -132,7 +132,7 @@ steps:
         species: Xanthophyllomyces dendrorhous
         pmid: "10397832"
         verified: true
-    domains: [PF01593]
+    domains_any: [PF01593]
     copy_expect: single
     role: catalytic
     fused_with: []
@@ -148,7 +148,7 @@ steps:
         species: Fusarium fujikuroi IMI 58289
         pmid: "17293483"
         verified: true
-    domains: [PF03055]
+    domains_any: [PF03055]
     copy_expect: single
     role: catalytic
     fused_with: []
@@ -169,7 +169,7 @@ steps:
         species: Neurospora crassa
         pmid: "17610084"
         verified: true
-    domains: [PF03055]
+    domains_any: [PF03055]
     copy_expect: single
     role: catalytic
     fused_with: []
@@ -188,7 +188,7 @@ steps:
         species: Fusarium fujikuroi IMI 58289
         pmid: "21749649"
         verified: true
-    domains: [PF00171]
+    domains_any: [PF00171]
     copy_expect: single
     role: catalytic
     fused_with: []
@@ -211,7 +211,7 @@ steps:
         species: Xanthophyllomyces dendrorhous
         pmid: "16416328"
         verified: false
-    domains: [PF00067]
+    domains_any: [PF00067]
     copy_expect: single
     role: catalytic
     fused_with: []

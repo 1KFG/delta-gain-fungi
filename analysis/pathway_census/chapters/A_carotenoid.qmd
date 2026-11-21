@@ -138,7 +138,7 @@ if (file.exists(ypath)) {
     data.frame(step = s$id, name = s$name, EC = if (is.null(s$ec)) "" else s$ec,
                role = if (is.null(s$role)) "" else s$role,
                copy_expect_PROPOSED = if (is.null(s$copy_expect)) "" else s$copy_expect,
-               domains = paste(unlist(s$domains), collapse = ", "),
+               domains_any = paste(unlist(s$domains_any), collapse = ", "),
                n_refs = length(refs), n_refs_verified = nver, stringsAsFactors = FALSE)
   }))
   div_open <- '<div id="pathway-definition">'

@@ -9,7 +9,7 @@ steps:
         species: Xanthophyllomyces dendrorhous
         pmid: "12345678"
         verified: false
-    domains: [PF00494, PF04240]
+    domains_any: [PF00494, PF04240]
     copy_expect: single
     role: catalytic
     fused_with: [crtY]
@@ -20,7 +20,7 @@ steps:
       - accession: P0000X
         species: Neurospora crassa
         verified: false
-    domains: [PF04240]
+    domains_any: [PF04240]
     copy_expect: single
     role: catalytic
     fused_with: [crtYB]
