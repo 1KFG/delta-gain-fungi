@@ -39,8 +39,9 @@ placeholder <- function(file) {
   cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong></p></div>\n\n', file))
 }
 
-# Outputs written with a PROVISIONAL tag are not results. A canonical file name is required.
-# If only a PROVISIONAL file exists, say so and do not load it.
+# Outputs written with a PROVISIONAL tag are not results. A canonical file name is required, and
+# its leading '#' lines must not contain PROVISIONAL. If only a PROVISIONAL file exists, or the
+# canonical file has a PROVISIONAL header line, say so and do not load it.
 # A name may also exist as <name>.zst (bin/triage.py and paired_compare.py can write zstd files).
 find_file <- function(name) {
   for (cand in c(name, paste0(name, ".zst"))) {
@@ -50,8 +51,22 @@ find_file <- function(name) {
   NULL
 }
 
+# Leading '#' lines of a file (plain or .zst). Reads at most 50 lines.
+leading_hash_lines <- function(path) {
+  con <- if (grepl("\\.zst$", path)) pipe(paste("zstd -dc", shQuote(path))) else file(path)
+  lines <- tryCatch(readLines(con, n = 50, warn = FALSE), finally = close(con))
+  n <- 0
+  while (n < length(lines) && startsWith(lines[n + 1], "#")) n <- n + 1
+  lines[seq_len(n)]
+}
+
 read_result <- function(name) {
   path <- find_file(name)
+  if (!is.null(path) && any(grepl("PROVISIONAL", leading_hash_lines(path), fixed = TRUE))) {
+    # A canonical name is not enough: a PROVISIONAL header line means the file is not a result.
+    cat(sprintf('\n<div class="not-yet-run"><p><strong>NOT YET RUN: %s</strong> (the file has a PROVISIONAL header line; provisional outputs are not shown as results)</p></div>\n\n', name))
+    return(NULL)
+  }
   if (!is.null(path)) {
     # Outputs carry a '# params:' first line (and maybe a PROVISIONAL line): skip '#' lines.
     # Risk: comment.char = "#" also cuts any data field that contains '#'. UNVERIFIED that no
@@ -90,7 +105,8 @@ source). The counts in spec section 3 are TSV-wide, so they differ from these BF
 ## Data files this chapter reads {#sec-data}
 
 All files are read from the results directory (`../results`, or `PC_RESULTS_DIR`). A name may also
-exist with a `.zst` suffix. A file with a `.PROVISIONAL` name is never shown as a result.
+exist with a `.zst` suffix. A file with a `.PROVISIONAL` name, or with a `PROVISIONAL` line among its
+leading `#` lines, is never shown as a result.
 
 - `carotenoid_phylum_summary.tsv`: written by `bin/build_matrix.py` (name set by the CLI).
 - `carotenoid_paired_summary.tsv`, `carotenoid_paired_dropped_providers.tsv`,
@@ -98,8 +114,9 @@ exist with a `.zst` suffix. A file with a `.PROVISIONAL` name is never shown as 
   `bin/paired_compare.py` (names set by the CLI).
 - `carotenoid_triage.tsv`: written by `bin/triage.py` (name set by the caller through `--out`; the
   name is PROPOSED here).
-- `carotenoid_absence_summary.tsv`: the merged chunk files of `bin/absence_check.py`. The name is
-  PROPOSED (the README merge recipe writes the same name). No script produces it.
+- `carotenoid_absence_summary.tsv`: the merged chunk files of `bin/absence_check.py`, written by
+  `bin/merge_absence.py --out results/carotenoid_absence_summary.tsv <chunks>`. The name is PROPOSED.
+  The script refuses mixed provisional and non-provisional chunks and tags a provisional merge.
 
 Reading notes. TSV outputs start with `# ` lines (`# params:`, sometimes `# PROVISIONAL`). The
 reader skips them with `comment.char = "#"`. That setting also truncates any field that contains
@@ -239,8 +256,8 @@ if (file.exists(file.path(res_dir, f))) {
 ## Absence check {#sec-absence}
 
 Source: `results/carotenoid_absence_summary.tsv`. This file is the merged chunk output of
-`bin/absence_check.py` (`carotenoid_absence.chunk<ID>.tsv`, merge recipe in the README). The merge
-step is manual and no script produces the `_absence_summary` name. The name is PROPOSED. Expected columns:
+`bin/absence_check.py` (`carotenoid_absence.chunk<ID>.tsv`), merged by `bin/merge_absence.py`. The
+name is PROPOSED. Expected columns:
 `locustag, step_id, outcome, reason`. Outcomes: `present_unannotated`, `fragmented`, `absent`,
 `unconfirmed`. `unconfirmed` means no BFD FASTA, not proven absence.
 

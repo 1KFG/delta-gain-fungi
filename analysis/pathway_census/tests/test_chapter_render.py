@@ -72,13 +72,17 @@ def test_renders_with_synthetic_results_and_drops_placeholders(tmp_path):
         "\tcopy_raw_total\tcopy_filtered_total\tcopy_unknown_total\tcopy_flagged_total\n"
         "PhylA\tggpp_synthase\t4\t2\t1\t2\t0.5\t0\t3\t3\t0\t0\nPhylA\tcarx\t4\t1\t0\t1\t0.25\t0\t1\t1\t0\t0\n"
         "PhylB\tggpp_synthase\t3\t3\t1\t1\t1.0\t0\t3\t3\t0\t0\nPhylB\tcarx\t3\t0\t0\t0\t0.0\t0\t0\t0\t0\t0\n")
+    # final-review I2: a canonical file name whose leading '#' lines contain PROVISIONAL is refused
+    # (notice, not the table). Triage writes '# params:' first and then the PROVISIONAL line.
     (res / "carotenoid_triage.tsv").write_text(
         "# params: test\n# PROVISIONAL x\nprotein_id\tstep_id\tbin\treasons\nP1\tcarx\ttier2\tdivergent\n")
     r, html = _render(tmp_path, res)
     assert r.returncode == 0, r.stderr[-2000:]
     text = html.read_text()
-    assert text.count('class="not-yet-run"') == N_RESULT_FILES - 2
-    assert "PhylA" in text and "P1" in text
+    assert text.count('class="not-yet-run"') == N_RESULT_FILES - 1
+    assert "PhylA" in text
+    assert "P1" not in _sec(text, "triage")
+    assert "PROVISIONAL header" in _sec(text, "triage")
     assert "FIXTUREPARAMS" not in text  # comment lines were skipped on reading
     assert re.search(r'id="phylum-figure"', text)
     # final-review I9(c): raw and filtered copy totals side by side, with the filtered = 0 note
@@ -152,3 +156,20 @@ def test_triage_loader_accepts_zst(tmp_path):
 def test_readme_merge_recipe_uses_chapter_absence_name():
     assert "carotenoid_absence_summary.tsv" in (ROOT / "README.md").read_text()
     assert "carotenoid_absence_summary.tsv" in QMD.read_text()
+
+
+def test_canonical_absence_summary_with_provisional_header_is_refused(tmp_path):
+    # The bug fixed by I2: a provisional merge written under the canonical name.
+    text = _text_for(tmp_path, {"carotenoid_absence_summary.tsv":
+        "# PROVISIONAL: pathway 'carotenoid' verified: false; not user-reviewed\n"
+        "# min_bitscore=50.0 min_query_cover=0.7\nlocustag\tstep_id\toutcome\treason\nPROVROW2\tcarx\tabsent\t\n"})
+    sec = _sec(text, "absence")
+    assert "PROVROW2" not in text
+    assert "PROVISIONAL header" in sec and "NOT YET RUN" in sec
+    assert "<table" not in sec
+
+
+def test_readme_uses_merge_script():
+    readme = (ROOT / "README.md").read_text()
+    assert "bin/merge_absence.py" in readme
+    assert "grep -v '^#'" not in readme
