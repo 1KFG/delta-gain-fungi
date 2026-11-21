@@ -30,19 +30,70 @@ def _load():
     return cand, plc
 
 
-def test_fused_protein_gets_two_step_rows():
+def test_fused_protein_assigned_only_where_placed():
     cand, plc = _load()
     out = assign_steps(cand, plc, _pw(), 0.5)
+    r = out[out.protein_id == "fusP"].set_index("step_id")
+    assert sorted(r.index) == ["lycopene_cyclase", "phytoene_synthase"]
+    assert r.loc["phytoene_synthase", "label"] == "assigned"
+    assert r.loc["lycopene_cyclase", "label"] == "unassigned"
+    assert r.fusion_candidate.all()
+
+
+def test_fused_protein_with_both_placements_counts_once_each():
+    cand, plc = _load()
+    plc = pd.concat([plc, pd.DataFrame([dict(protein_id="fusP", step_id="lycopene_cyclase",
+                                             clade="cladeII", support=0.8)])])
+    out = assign_steps(cand, plc, _pw(), 0.5)
     r = out[out.protein_id == "fusP"]
-    assert sorted(r.step_id) == ["lycopene_cyclase", "phytoene_synthase"]
-    assert (r.label == "assigned").all()
+    assert len(r) == 2 and (r.label == "assigned").all()
 
 
 def test_overlapping_domains_are_not_fusion():
     cand, plc = _load()
     out = assign_steps(cand, plc, _pw(), 0.5)
     r = out[out.protein_id == "overlapQ"]
-    assert (r.label == "unassigned").all()
+    assert len(r) == 2 and (r.label == "unassigned").all() and not r.fusion_candidate.any()
+
+
+def test_mixed_case_candidate_without_placement_gets_row():
+    cand, plc = _load()
+    cand = pd.concat([cand, pd.DataFrame([dict(protein_id="soloA", step_id="carx", hmm_name="c",
+                      score=100.0, evalue=1e-20, ali_from=1, ali_to=100, hmm_from=1, hmm_to=100)])])
+    out = assign_steps(cand, plc, _pw(), 0.5).set_index(["protein_id", "step_id"])
+    assert out.loc[("soloA", "ggpp_synthase"), "label"] == "assigned"
+    assert out.loc[("soloA", "carx"), "label"] == "unassigned"
+
+
+def test_placement_without_candidate_is_unassigned():
+    cand, plc = _load()
+    plc = pd.concat([plc, pd.DataFrame([dict(protein_id="ghost", step_id="carx",
+                                             clade="cladeI", support=0.99)])])
+    out = assign_steps(cand, plc, _pw(), 0.5)
+    r = out[out.protein_id == "ghost"]
+    assert len(r) == 1 and r.label.iloc[0] == "unassigned"
+
+
+def test_candidates_without_step_id_raises():
+    cand, plc = _load()
+    with pytest.raises(ValueError, match="step_id"):
+        assign_steps(cand.drop(columns="step_id"), plc, _pw(), 0.5)
+
+
+def test_min_support_boundary_is_inclusive():
+    cand, plc = _load()
+    out = assign_steps(cand, plc, _pw(), 0.95)
+    assert out[out.protein_id == "soloA"].label.iloc[0] == "assigned"
+    out = assign_steps(cand, plc, _pw(), 0.951)
+    assert out[out.protein_id == "soloA"].label.iloc[0] == "unassigned"
+
+
+def test_nan_support_is_unassigned():
+    cand, plc = _load()
+    plc.loc[plc.protein_id == "soloA", "support"] = float("nan")
+    out = assign_steps(cand, plc, _pw(), 0.5)
+    r = out[out.protein_id == "soloA"]
+    assert len(r) == 1 and r.label.iloc[0] == "unassigned"
 
 
 def test_outside_every_clade_is_unassigned_not_dropped():
@@ -50,6 +101,7 @@ def test_outside_every_clade_is_unassigned_not_dropped():
     out = assign_steps(cand, plc, _pw(), 0.5)
     r = out[out.protein_id == "outC"]
     assert len(r) == 1 and r.label.iloc[0] == "unassigned"
+    assert r.support.iloc[0] == pytest.approx(0.90)
 
 
 def test_low_support_is_unassigned():
@@ -57,7 +109,9 @@ def test_low_support_is_unassigned():
     out = assign_steps(cand, plc, _pw(), 0.5)
     r = out[out.protein_id == "lowB"]
     assert len(r) == 1 and r.label.iloc[0] == "unassigned"
-    assert out[out.protein_id == "soloA"].label.iloc[0] == "assigned"
+    assert r.support.iloc[0] == pytest.approx(0.30)
+    a = out[out.protein_id == "soloA"]
+    assert len(a) == 1 and a.label.iloc[0] == "assigned" and a.support.iloc[0] == pytest.approx(0.95)
 
 
 def test_assigned_only_to_declared_steps():

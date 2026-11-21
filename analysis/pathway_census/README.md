@@ -81,11 +81,11 @@ Code: `pathway_census/assign.py` (`assign_steps`), `bin/assign_steps.py`. Tests:
 
 ### upo_place decision (read 2026-11-20)
 `analysis/enzymes_UPO/upo_place` does NOT fit as is. Evidence (from its README and `bin/upo_place.py`):
-- Input: PF01328 proteins, one fixed reference tree (187 leaves, `data/refset_zamocky2022/tree/`), one HMM built from one 224-column alignment, and a `clade_members.tsv` of UPO clade names (Clades I-V, Zamocky Figure 1).
-- Subcommands (argparse): `match-cols`, `prune`, `assign`, and a fourth that takes `assigned` files (leave-one-out summary; name not checked). There is no argument that selects a reference set. Paths are fixed to the UPO data directory.
-- Output: per-protein clade calls (LWR sum inside a named clade >= 0.5 else `unassigned`) and a `long_pendant` flag.
-- It handles one family tree. It has no concept of per-step reference trees or a step table.
-The method is reusable: `hmmalign` to match columns, `epa-ng` placement, LWR sum inside named clades. A new per-step reference set (alignment, tree, `clade_members.tsv`) would be needed for each carotenoid step.
+- Input: PF01328 proteins, one fixed 187-leaf reference tree (`data/refset_zamocky2022/tree/`), one HMM from a 224-column alignment, and `clade_members.tsv` (Clades I-V, Zamocky Figure 1).
+- Four subcommands (argparse in `bin/upo_place.py`): `match-cols`, `prune`, `assign`, `loo`.
+- `assign` takes `--clades` and `--min-lwr` and reads any jplace file. It is reusable per step with a new `clade_members.tsv`. Output: clade call (LWR sum inside a named clade >= `--min-lwr`, default 0.5, else `unassigned`) and a `long_pendant` flag.
+- UPO-specific parts: `match-cols` (224-column trimming) and the fixed reference paths in the slurm scripts. There is no step table and no per-step reference selection, so the pipeline as a whole does not run unchanged on carotenoid steps.
+The reusable method: `hmmalign` to match columns, `epa-ng` placement, `assign`. Each carotenoid step needs its own reference alignment, tree and `clade_members.tsv`.
 
 ### Replacement tool (follow-up, not implemented)
 `module avail epa-ng pplacer iqtree fasttree raxml` on 2026-11-20 found: iqtree 1.6.12, 2.1.1, 2.1.3, 2.2.0-2.2.2.6, 3.0.1; fasttree 2.1.11; raxml 8.2.12; raxml-ng 1.1.0, 1.2.0, 2.0.2 (also RAxML_NG 1.1.0-2.0.2). No `epa-ng` or `pplacer` module. `upo_place` gets epa-ng through `pixi exec` (pinned in its `slurm/env.sh`); that route was not tested here.
@@ -94,10 +94,13 @@ Plan (PROPOSED): per step, build tree with iqtree/raxml-ng on the step reference
 ### Interfaces
 - `placements` TSV columns: `protein_id, step_id, clade, support` (support = LWR sum in the clade). Empty clade = outside every clade.
 - `candidates`: Task 4 candidate tables concatenated, with an added `step_id` column (the step whose HMM gave the row). Only this table supplies domain hits.
-- Output columns `protein_id, step_id, support, label` (`assigned` / `unassigned`), one row per (protein, step).
-- Fusion: domain hits to step A and step B with B in `A.fused_with` (or reverse) and alignments overlapping < 50% of the shorter (PROPOSED threshold, no data). Both rows are `assigned`. Fusion does not depend on tree placement.
+- Build `candidates` by concatenating per-step outputs: `pd.concat([candidates_for_step(d, min_score).assign(step_id=sid) ...])`. A missing `step_id` column raises ValueError.
+- Output columns `protein_id, step_id, support, label, fusion_candidate`. One row per (protein, step).
+- Label rule: `assigned` only if the (protein, step) pair is in `candidates` (HMM evidence) AND a placement row for it has a clade and support >= `min_support` (inclusive; NaN fails). Otherwise `unassigned`.
+- Fusion: HMM hits to step A and step B with B in `A.fused_with` (or reverse) and alignments overlapping < 50% of the shorter (PROPOSED threshold, no data) set `fusion_candidate = True` on both rows. Fusion only decides which steps a protein may carry. A fused protein is `assigned` for a step only with its own qualifying placement; with none it stays `unassigned` for those steps and keeps its rows. A protein with qualifying placements for both steps counts once toward each.
+- A placement for a pair not in `candidates` is kept as `unassigned` (documented choice; no HMM evidence).
 - A step not in the pathway (placements or candidates) raises `ValueError`. Support below `min_support` gives `unassigned` (kept). `min_support` has no default.
-- A candidate protein with no placement row gets `unassigned` rows (kept). Assumption: this is a pipeline gap, not a rejection.
+- Every candidate (protein, step) pair without a qualifying placement gets an `unassigned` row (support NaN if no placement). Rows are never dropped.
 
 ### Family size
 Reference counts per step (MEASURED, `refs/carotenoid/*.faa`): largest is 5 (phytoene_synthase, lycopene_cyclase). BFD family sizes are UNVERIFIED: no search has been run (pathway `verified: false`).
