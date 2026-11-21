@@ -258,3 +258,37 @@ def test_cli_rejects_bad_flag_value(tmp_path):
         "protein_id\tstep_id\tdomain_ok\tmotif_ok\ttruncated\tcontam_suspect\thap_dup_suspect\n"
         f"{A}_000001-T1\tggpp_synthase\t\t\tyes\tFalse\tFalse\n"))
     assert r.returncode != 0 and "truncated" in r.stderr and "yes" in r.stderr
+
+
+# ---- I3: has_proteins given as strings must parse strictly ----
+def _genomes_str():
+    g = _genomes()
+    g["has_proteins"] = g.has_proteins.map({True: "True", False: "False"})
+    return g
+
+
+def test_build_matrix_parses_string_has_proteins_strictly():
+    asg = _asg([(f"{A}_000001-T1", "s1", "assigned")])
+    fl = _flags([(f"{A}_000001-T1", "s1", False, False, False)])
+    real = build_matrix(asg, fl, _genomes(), PW)
+    strs = build_matrix(asg, fl, _genomes_str(), PW)
+    pd.testing.assert_frame_equal(real, strs)
+    assert (strs[strs.locustag == D].has_proteins == False).all()  # noqa: E712
+    assert "no_proteins" in _get(strs, D, "s1", "genome_flags")
+    bad = _genomes()
+    bad["has_proteins"] = ["True", "yes", "True", "False"]
+    with pytest.raises(ValueError, match="has_proteins"):
+        build_matrix(asg, fl, bad, PW)
+
+
+def test_phylum_summary_parses_string_has_proteins_strictly():
+    m = _m(_asg([(f"{A}_000001-T1", "s1", "assigned")]))
+    real = phylum_summary(m, _genomes())
+    ms = m.copy()
+    ms["has_proteins"] = ms.has_proteins.map({True: "True", False: "False"})
+    pd.testing.assert_frame_equal(real, phylum_summary(ms, _genomes()))
+    basid = phylum_summary(ms, _genomes()).set_index(["phylum", "step_id"])
+    assert basid.loc[("Basidio", "s1"), "n_genomes"] == 1  # D (no proteins) excluded
+    ms["has_proteins"] = "1"
+    with pytest.raises(ValueError, match="has_proteins"):
+        phylum_summary(ms, _genomes())

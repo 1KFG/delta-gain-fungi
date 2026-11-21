@@ -271,3 +271,36 @@ def test_chunk_id_dotted_basenames_differ():
     a, b = chunk_id("", "/x/chunk.001.txt"), chunk_id("", "/x/chunk.002.txt")
     assert (a, b) == ("chunk_001", "chunk_002")
     assert chunk_id("", "/x/list.txt") == "list"
+
+
+# ---- I3: has_proteins given as strings must parse strictly ----
+def _probe_matrix(as_str):
+    m = pd.DataFrame([
+        _row("A", "s1", 0), _row("A", "s2", 0),
+        _row("B", "s1", 2), _row("B", "s2", 1),
+        _row("C", "s1", 0, has=False), _row("C", "s2", 0, has=False),
+    ])
+    if as_str:
+        m["has_proteins"] = m.has_proteins.map({True: "True", False: "False"})
+    return m
+
+
+def test_select_absences_parses_string_has_proteins_strictly():
+    rel = {"A": ["B"], "C": ["B"]}
+    real = select_absences(_probe_matrix(False), rel)
+    strs = select_absences(_probe_matrix(True), rel)
+    assert real.values.tolist() == [["A", "s1"], ["A", "s2"]]
+    pd.testing.assert_frame_equal(real, strs)
+    bad = _probe_matrix(True)
+    bad.loc[0, "has_proteins"] = "nan"
+    with pytest.raises(ValueError, match="has_proteins"):
+        select_absences(bad, rel)
+
+
+def test_unevaluated_genomes_parses_string_has_proteins_strictly():
+    assert unevaluated_genomes(_probe_matrix(False)) == ["C"]
+    assert unevaluated_genomes(_probe_matrix(True)) == ["C"]
+    bad = _probe_matrix(True)
+    bad.loc[0, "has_proteins"] = "true"
+    with pytest.raises(ValueError, match="has_proteins"):
+        unevaluated_genomes(bad)

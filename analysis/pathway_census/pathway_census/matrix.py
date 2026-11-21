@@ -23,6 +23,8 @@ n_proteins_distinct   distinct proteins with any assigned row in the genome (rep
                 genome's rows). A fused protein counts once here.
 has_proteins    from the genome table. False means no proteome was searched: counts are 0 but this
                 is NOT evidence of absence. phylum_summary excludes such genomes from n_genomes.
+                Parsed with parse_bool_col(allow_na=False) in build_matrix and phylum_summary: real
+                booleans or the exact strings "True"/"False"; anything else raises ValueError.
 genome_flags    ";"-joined tokens: no_proteins; unknown_flags (copy_unknown > 0).
 
 Errors (ValueError): assigned protein whose 8-hex LOCUSTAG prefix is not in the genome table;
@@ -71,7 +73,7 @@ def build_matrix(assigned: pd.DataFrame, flags: pd.DataFrame, genomes: pd.DataFr
     g = genomes[["locustag", "has_proteins"]].copy()
     if g.locustag.duplicated().any():
         raise ValueError("duplicate locustag in genome table")
-    g["has_proteins"] = g.has_proteins.astype(bool)
+    g["has_proteins"] = parse_bool_col(g.has_proteins, "has_proteins", allow_na=False).astype(bool)
 
     a = assigned[assigned.label == "assigned"][["protein_id", "step_id"]].copy()
     a["locustag"] = a.protein_id.str.split("_").str[0]
@@ -136,7 +138,7 @@ def phylum_summary(matrix: pd.DataFrame, genomes: pd.DataFrame, count_col: str =
     ph["phylum"] = ph.phylum.fillna("(missing)")
     m = matrix.merge(ph, on="locustag", how="left", validate="many_to_one")
     steps = list(dict.fromkeys(matrix.step_id))
-    inc = m[m.has_proteins.astype(bool)]
+    inc = m[parse_bool_col(m.has_proteins, "has_proteins", allow_na=False).astype(bool)]
     rows = []
     for p in sorted(set(ph.phylum)):
         for s in steps:

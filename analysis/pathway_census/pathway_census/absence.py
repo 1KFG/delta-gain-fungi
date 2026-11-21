@@ -45,6 +45,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from .matrix import parse_bool_col
+
 BLAST_MODULE = "ncbi-blast/2.17.0+"
 DEFAULT_MIN_QUERY_COVER = 0.7  # PROPOSED
 OUTCOMES = ("present_unannotated", "fragmented", "absent", "unconfirmed")
@@ -72,12 +74,14 @@ def select_absences(matrix: pd.DataFrame, relatives: dict[str, list[str]]) -> pd
 
     copy_raw is used: a copy that is only flagged is not an absence, and a relative whose only copy
     is flagged still carries the step. has_proteins comes from the matrix (same source as
-    `unevaluated_genomes`). Relatives absent from the matrix count as no copy.
+    `unevaluated_genomes`) and is parsed strictly (matrix.parse_bool_col, allow_na=False): a string
+    other than "True"/"False" raises ValueError. Relatives absent from the matrix count as no copy.
     """
     cols = ["locustag", "step_id"]
     m = matrix[["locustag", "step_id", "copy_raw", "has_proteins"]]
     carriers = m[m.copy_raw > 0].groupby("step_id")["locustag"].agg(set).to_dict()
-    cand = m[(m.copy_raw == 0) & (m.has_proteins.astype(bool))]
+    has = parse_bool_col(m.has_proteins, "has_proteins", allow_na=False).astype(bool)
+    cand = m[(m.copy_raw == 0) & has]
     keep = [
         any(r in carriers.get(sid, ()) for r in relatives.get(lt, ()))
         for lt, sid in zip(cand.locustag, cand.step_id)
@@ -88,7 +92,8 @@ def select_absences(matrix: pd.DataFrame, relatives: dict[str, list[str]]) -> pd
 def unevaluated_genomes(matrix: pd.DataFrame) -> list[str]:
     """Sorted locustags with has_proteins False in the matrix (the column `select_absences` uses).
     Their zero copies are not evidence of absence, so selection skips them. Report them separately."""
-    g = matrix.loc[~matrix.has_proteins.astype(bool), "locustag"]
+    has = parse_bool_col(matrix.has_proteins, "has_proteins", allow_na=False).astype(bool)
+    g = matrix.loc[~has, "locustag"]
     return sorted(set(g))
 
 
