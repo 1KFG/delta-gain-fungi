@@ -72,13 +72,15 @@ def main():
                      soluble_steps=tuple(a.soluble_steps), require=tuple(a.require))
     except ValueError as e:
         sys.exit(f"ERROR: {e}")
+    if not a.soluble_steps:
+        print("NOTE: --soluble-steps is empty; signal/TM check OFF", file=sys.stderr)
     zst = str(a.out).endswith(".zst")
     plain = Path(str(a.out)[:-4]) if zst else a.out
     plain = plain.with_name(hits.tagged_name(plain.stem, plain.suffix.lstrip(".") or "tsv", tag))
     params = (f"window_bp={a.window_bp} tier1_min={a.tier1_min} tier2_min={a.tier2_min} "
               f"divergent_max_identity={a.divergent_max_identity} expansion_min={a.expansion_min} "
               f"min_length={a.min_length} max_length={a.max_length} tm_max={a.tm_max} "
-              f"soluble_steps={','.join(a.soluble_steps)} require={','.join(a.require)} "
+              f"soluble_steps={','.join(a.soluble_steps) or 'NONE (signal/TM check OFF)'} require={','.join(a.require)} "
               f"pathway={pw.id} (all PROPOSED)")
     plain.parent.mkdir(parents=True, exist_ok=True)
     with open(plain, "w") as fh:

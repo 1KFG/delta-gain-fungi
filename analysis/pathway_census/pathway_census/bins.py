@@ -75,6 +75,7 @@ PROPOSED defaults (no data basis):
 """
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 DEFAULT_REQUIRE = ("truncated", "contam_suspect", "domain_ok", "motif_ok")
@@ -88,24 +89,48 @@ _NEEDED = ("protein_id", "step_id", "label", "ref_identity", "copy_filtered", "c
            "length", "signal_peptide", "tm_helices", "hap_dup_suspect")
 
 
-def _in_cluster(df: pd.DataFrame, window_bp: int) -> list[bool]:
+def _na(v) -> bool:
+    return v is None or v is pd.NA or (isinstance(v, float) and v != v)
+
+
+def _check_flag_col(df: pd.DataFrame, col: str) -> None:
+    s = df[col]
+    if str(s.dtype) in ("boolean", "bool"):
+        return
+    if s.dtype == object:
+        for v in s:
+            if v is None or v is pd.NA or isinstance(v, (bool, np.bool_)):
+                continue
+            raise ValueError(f"column '{col}': invalid value {v!r} (need True/False/pd.NA/None)")
+        return
+    raise ValueError(f"column '{col}': dtype {s.dtype} is not boolean or object of True/False/NA")
+
+
+def _known(v):
+    """None if NA, else bool."""
+    return None if _na(v) else bool(v)
+
+
+def _in_cluster(df: pd.DataFrame, window_bp: int) -> tuple[list[bool], list[bool]]:
+    """Return (in_cluster, evaluated). A gene never neighbours itself (same protein_id)."""
     genome = df.protein_id.str.split("_").str[0].tolist()
-    chrom, step = df.chrom.tolist(), df.step_id.tolist()
-    start, end = df.start.tolist(), df.end.tolist()
+    pid, step = df.protein_id.tolist(), df.step_id.tolist()
+    chrom, start, end = df.chrom.tolist(), df.start.tolist(), df.end.tolist()
+    ok = [not (_na(chrom[i]) or chrom[i] == "" or _na(start[i]) or _na(end[i])) for i in range(len(df))]
     by_scaf: dict = {}
-    for i, key in enumerate(zip(genome, chrom)):
-        by_scaf.setdefault(key, []).append(i)
+    for i in range(len(df)):
+        if ok[i]:
+            by_scaf.setdefault((genome[i], chrom[i]), []).append(i)
     out = [False] * len(df)
     for idx in by_scaf.values():
         for i in idx:
             for j in idx:
-                if step[j] == step[i]:
+                if step[j] == step[i] or pid[j] == pid[i]:
                     continue
-                gap = max(start[i], start[j]) - min(end[i], end[j])
-                if gap <= window_bp:
+                if max(start[i], start[j]) - min(end[i], end[j]) <= window_bp:
                     out[i] = True
                     break
-    return out
+    return out, ok
 
 
 def triage(copies: pd.DataFrame, window_bp: int = 20000, *, tier1_min: int = 3, tier2_min: int = 2,
@@ -118,24 +143,37 @@ def triage(copies: pd.DataFrame, window_bp: int = 20000, *, tier1_min: int = 3, 
         raise ValueError(f"triage input is missing columns: {missing}")
     if tier2_min > tier1_min:
         raise ValueError("tier2_min must be <= tier1_min")
-    df = copies[copies.label == "assigned"].reset_index(drop=True)
+    for c in dict.fromkeys(tuple(require) + ("hap_dup_suspect",)):
+        _check_flag_col(copies, c)
+    df = copies[copies.label == "assigned"]
+    dup = df[df.duplicated(["protein_id", "step_id"], keep=False)]
+    if len(dup):
+        raise ValueError(f"duplicate (protein_id, step_id) rows: {dup[['protein_id', 'step_id']].drop_duplicates().values.tolist()[:5]}")
+    df = df.sort_values(["protein_id", "step_id"], kind="mergesort").reset_index(drop=True)
     n = len(df)
     soluble = set(soluble_steps)
-    cluster = _in_cluster(df, window_bp)
+    cluster, cl_ok = _in_cluster(df, window_bp)
     rows = []
     for i in range(n):
         r = df.iloc[i]
-        bad = [_BAD[c][1] for c in _EXCL_ORDER
-               if c in require and r[c] is not pd.NA and bool(r[c]) is _BAD[c][0]]
-        unev = [f"unevaluated:{c}" for c in require if r[c] is pd.NA]
-        ident, ncopy, tm = r.ref_identity, r.copy_filtered, r.tm_helices
-        div = bool(pd.notna(ident) and ident < divergent_max_identity)
-        exp = bool(pd.notna(ncopy) and ncopy >= expansion_min)
-        expr = bool(pd.notna(r.length) and min_length <= r.length <= max_length)
-        if expr and r.step_id in soluble:
-            expr = bool(pd.notna(tm) and not bool(r.signal_peptide) and tm <= tm_max)
+        flags = {c: _known(r[c]) for c in require}
+        bad = [_BAD[c][1] for c in _EXCL_ORDER if c in flags and flags[c] is _BAD[c][0]]
+        unev = [f"unevaluated:{c}" for c in require if flags[c] is None]
+        ident, ncopy, tm, ln = r.ref_identity, r.copy_filtered, r.tm_helices, r.length
+        div = bool(not _na(ident) and ident < divergent_max_identity)
+        exp = bool(not _na(ncopy) and ncopy >= expansion_min)
+        expr = bool(not _na(ln) and min_length <= ln <= max_length)
+        expr_ok = not _na(ln)
+        if r.step_id in soluble:
+            if _na(tm) or _na(r.signal_peptide):
+                expr_ok = False
+                expr = False
+            elif expr:
+                expr = (not bool(r.signal_peptide)) and tm <= tm_max
         terms = dict(divergent=div, lineage_expansion=exp, in_cluster=cluster[i], expressible=expr)
-        reasons: list[str] = []
+        evald = dict(divergent=not _na(ident), lineage_expansion=not _na(ncopy), in_cluster=cl_ok[i],
+                     expressible=expr_ok)
+        n_unev = 0
         if bad:
             bin_, reasons = "excluded", bad
         elif unev:
@@ -144,12 +182,16 @@ def triage(copies: pd.DataFrame, window_bp: int = 20000, *, tier1_min: int = 3, 
             k = sum(terms.values())
             bin_ = "tier1" if k >= tier1_min else "tier2" if k >= tier2_min else "tier3"
             reasons = [t for t in TERMS if terms[t]]
-            hap = r.hap_dup_suspect
-            if hap is pd.NA:
+            un = [t for t in TERMS if not evald[t]]
+            n_unev = len(un)
+            reasons += [f"unevaluated:{t}" for t in un]
+            hap = _known(r.hap_dup_suspect)
+            if hap is None:
                 reasons.append("hap_dup_unevaluated")
-            elif bool(hap) and bin_ == "tier1":
+            elif hap and bin_ == "tier1":
                 bin_ = "tier2"
                 reasons.append("hap_dup_suspect_demoted")
-        rows.append(dict(protein_id=r.protein_id, step_id=r.step_id, bin=bin_, reasons=";".join(reasons), **terms))
-    cols = ["protein_id", "step_id", "bin", "reasons", *TERMS]
+        rows.append(dict(protein_id=r.protein_id, step_id=r.step_id, bin=bin_, reasons=";".join(reasons),
+                         **terms, n_terms_unevaluated=n_unev))
+    cols = ["protein_id", "step_id", "bin", "reasons", *TERMS, "n_terms_unevaluated"]
     return pd.DataFrame(rows, columns=cols)

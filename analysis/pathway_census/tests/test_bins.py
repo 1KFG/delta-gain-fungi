@@ -72,9 +72,12 @@ def test_reasons_lists_every_term_that_fired():
 
 def test_same_input_same_bin():
     d = _df([_row("AAAAAAAA_1", "a", ref_identity=0.3), _row("AAAAAAAA_2", "b", start=3000, end=4000),
-             _row("BBBBBBBB_1", "a", truncated=True)])
-    pd.testing.assert_frame_equal(triage(d, window_bp=5000), triage(d.copy(), window_bp=5000))
-    pd.testing.assert_frame_equal(triage(d), triage(d.iloc[::-1].iloc[::-1]))
+             _row("BBBBBBBB_1", "a", truncated=True), _row("BBBBBBBB_2", "c", motif_ok=B)])
+    base = triage(d, window_bp=5000)
+    pd.testing.assert_frame_equal(base, triage(d.copy(), window_bp=5000))
+    sh = d.sample(frac=1, random_state=7)
+    assert list(sh.protein_id) != list(d.protein_id)
+    pd.testing.assert_frame_equal(base, triage(sh, window_bp=5000))
 
 
 def test_na_required_flag_gives_unknown():
@@ -136,6 +139,110 @@ def test_soluble_step_needs_no_signal_or_tm():
     assert triage(d).expressible.all()
 
 
+def test_fused_protein_is_not_its_own_neighbour():
+    d = _df([_row("AAAAAAAA_1", "a"), _row("AAAAAAAA_1", "b")])
+    assert not triage(d).in_cluster.any()
+
+
+def test_two_proteins_different_steps_in_window_cluster():
+    d = _df([_row("AAAAAAAA_1", "a"), _row("AAAAAAAA_2", "b", start=5000, end=6000)])
+    assert triage(d, window_bp=20000).in_cluster.all()
+
+
+def test_gap_equal_to_window_is_inclusive():
+    d = _df([_row("AAAAAAAA_1", "a", start=1, end=100), _row("AAAAAAAA_2", "b", start=1100, end=1200)])
+    assert triage(d, window_bp=1000).in_cluster.all()  # gap = 1100-100 = 1000
+    assert not triage(d, window_bp=999).in_cluster.any()
+
+
+@pytest.mark.parametrize("bad", ["", None, B])
+def test_empty_or_na_chrom_never_neighbours(bad):
+    d = _df([_row("AAAAAAAA_1", "a", chrom=bad), _row("AAAAAAAA_2", "b", chrom=bad)])
+    out = triage(d)
+    assert not out.in_cluster.any()
+    assert all("unevaluated:in_cluster" in r for r in out.reasons)
+
+
+def test_unevaluated_divergent():
+    r = triage(_df([_row("AAAAAAAA_1", "a", ref_identity=B)])).iloc[0]
+    assert "unevaluated:divergent" in r.reasons and r.n_terms_unevaluated == 1
+    assert not r.divergent
+
+
+def test_unevaluated_lineage_expansion():
+    r = triage(_df([_row("AAAAAAAA_1", "a", copy_filtered=B)])).iloc[0]
+    assert "unevaluated:lineage_expansion" in r.reasons
+
+
+def test_unevaluated_expressible_na_length():
+    r = triage(_df([_row("AAAAAAAA_1", "a", length=B)])).iloc[0]
+    assert "unevaluated:expressible" in r.reasons and not r.expressible
+
+
+def test_unevaluated_expressible_soluble_na_tm_or_signal():
+    d = _df([_row("AAAAAAAA_1", "a", tm_helices=B), _row("AAAAAAAA_2", "b", signal_peptide=B)])
+    out = triage(d, soluble_steps=("a", "b"))
+    assert all("unevaluated:expressible" in r for r in out.reasons)
+    assert not out.expressible.any()
+    out2 = triage(d)  # not soluble: NA tm/signal irrelevant
+    assert out2.expressible.all()
+    assert not any("unevaluated" in r for r in out2.reasons)
+
+
+def test_unevaluated_reasons_order_and_count():
+    d = _df([_row("AAAAAAAA_1", "a", ref_identity=B, copy_filtered=3, hap_dup_suspect=B)])
+    r = triage(d).iloc[0]
+    assert r.reasons == "lineage_expansion;expressible;unevaluated:divergent;hap_dup_unevaluated"
+    assert r.n_terms_unevaluated == r.reasons.count("unevaluated:")
+
+
+def test_excluded_and_unknown_have_zero_unevaluated():
+    out = triage(_df([_row("AAAAAAAA_1", "a", truncated=True, ref_identity=B),
+                      _row("AAAAAAAA_2", "b", motif_ok=B, ref_identity=B)]))
+    assert (out.n_terms_unevaluated == 0).all()
+
+
+def test_exactly_tier2_min_terms_is_tier2():
+    d = _df([_row("AAAAAAAA_1", "a", ref_identity=0.3, copy_filtered=1, length=5)])
+    d2 = _df([_row("AAAAAAAA_1", "a", ref_identity=0.3, copy_filtered=3, length=5)])
+    assert triage(d).iloc[0].bin == "tier3"  # 1 term
+    r = triage(d2).iloc[0]
+    assert r.bin == "tier2"  # exactly 2 terms
+
+
+def test_hap_dup_true_does_not_demote_tier2_or_tier3():
+    t2 = _df([_row("AAAAAAAA_1", "a", ref_identity=0.3, copy_filtered=3, length=5, hap_dup_suspect=True)])
+    t3 = _df([_row("AAAAAAAA_1", "a", length=5, hap_dup_suspect=True)])
+    assert triage(t2).iloc[0].bin == "tier2" and "demoted" not in triage(t2).iloc[0].reasons
+    assert triage(t3).iloc[0].bin == "tier3" and "demoted" not in triage(t3).iloc[0].reasons
+
+
+def test_np_nan_in_object_flag_column_raises():
+    d = _df([_row("AAAAAAAA_1", "a")])
+    d["truncated"] = pd.Series([float("nan")], dtype=object)
+    with pytest.raises(ValueError, match="truncated"):
+        triage(d)
+
+
+def test_bad_values_in_flag_column_raise():
+    for bad in ("yes", 1):
+        d = _df([_row("AAAAAAAA_1", "a")])
+        d["domain_ok"] = pd.Series([bad], dtype=object)
+        with pytest.raises(ValueError, match="domain_ok"):
+            triage(d)
+
+
+def test_object_flag_column_with_none_is_unknown():
+    d = _df([_row("AAAAAAAA_1", "a")])
+    d["motif_ok"] = pd.Series([None], dtype=object)
+    assert triage(d).iloc[0].bin == "unknown"
+
+
+def test_duplicate_protein_step_raises():
+    with pytest.raises(ValueError, match="duplicate"):
+        triage(_df([_row("AAAAAAAA_1", "a"), _row("AAAAAAAA_1", "a")]))
+
+
 CLI = Path(__file__).resolve().parents[1] / "bin" / "triage.py"
 PW = Path(__file__).parent / "data" / "pathway_ok.yaml"
 
@@ -176,3 +283,11 @@ def test_cli_rejects_bad_boolean(tmp_path):
     r = subprocess.run(["/usr/bin/python3.12", str(CLI), "--pathway", str(PW), "--copies", str(inp),
                         "--out", str(tmp_path / "o.tsv"), "--provisional"], capture_output=True, text=True)
     assert r.returncode != 0 and "truncated" in r.stderr
+
+
+def test_cli_soluble_none_is_visible(tmp_path):
+    r = _run(tmp_path, "--provisional")
+    assert "signal/TM check OFF" in r.stderr
+    assert "soluble_steps=NONE (signal/TM check OFF)" in (tmp_path / "o.PROVISIONAL.tsv").read_text().splitlines()[0]
+    r2 = _run(tmp_path, "--provisional", "--soluble-steps", "a")
+    assert "OFF" not in r2.stderr
