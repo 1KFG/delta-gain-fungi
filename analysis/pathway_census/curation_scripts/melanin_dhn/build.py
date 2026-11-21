@@ -68,6 +68,8 @@ Q = {
  "18676950": quote("18676950", "Chemical analyses of mutant cultures demonstrated", "in the culture media."),
  "10956664": quote("10956664", "Substrate competition experiments indicate", "by a factor of 4.2."),
  "10515939": quote("10515939", "The presence of a DHN-melanin pathway in A. fumigatus was supported", "in the arp2 deletants."),
+ # second sentence of PMID 10515939, for the abr1 link (one sentence per link, fix round 1)
+ "10515939:abr1": quote("10515939", "Involvement of the six genes in conidial pigmentation", "disruption of each gene in A. fumigatus."),
  "28517364": quote("28517364", "Combining genetic deletion and combinatorial gene expression", "synthesis of scytalone."),
  "8672814": quote("8672814", "A melanin deficient mutant 9141 (Thr-) has a defect", "melanin biosynthetic pathway."),
  "12967213": quote("12967213", "However melanin production by the double mutant was restored by THR1", "in vivo."),
@@ -87,7 +89,7 @@ REF = {
  "hexaketide_pks": [("Q9Y7A7", "PKS1", "11179356", True)],
  "heptaketide_pks": [("Q4WZA8", "alb1", "11040426", True), ("A2QUI2", "albA", "21277986", True)],
  "ayg1": [("Q4WZB3", "ayg1", "15310761", True), ("Q6BCB5", "yg1", "18676950", True), ("A2R3S8", "An14g05350", "21277986", True)],
- "t4hn_reductase": [("Q9HFV6", "4HNR", "10956664", True), ("E9QUT3", "arp2", "10515939", True), ("W3XAA0", "PfmaG", "28517364", True),
+ "t4hn_reductase": [("Q9HFV6", "4HNR", "10956664", False), ("E9QUT3", "arp2", "10515939", True), ("W3XAA0", "PfmaG", "28517364", True),
                     ("F8WTI4", "T4HR1", "12967213", True), ("A7DWM4", "teh", "17681008", True)],
  "t3hn_reductase": [("Q12634", "MGG_02252", "8112349", True), ("P87025", "THR1", "8672814", True), ("A7DWM6", "tih", "17681008", True)],
  "scytalone_dehydratase": [("Q00455", "SCD1", "8953707", True), ("O14434", "arp1", "9383199", True), ("P56221", "SDH1", "9571787", True),
@@ -116,9 +118,11 @@ REF_NOTE = {
    "OlvA of PMID 21277986: the abstract gives the locus tag An14g05350. The entry has this ORF name only",
    "and does not cite the paper."],
  ("t4hn_reductase", "Q9HFV6"): [
-   "The UniProt entry has NO gene name. gene_name is the protein abbreviation 4HNR used in PMID 11467929.",
-   "The entry cites PMID 10956664 and 11467929 (PDB 1JA9). UniProt organism: Pyricularia grisea",
-   "(taxid 148305); the papers say Magnaporthe grisea."],
+   "verified: false, for one reason only: the UniProt entry has NO gene name, so the gene-name rule cannot",
+   "be met. gene_name below is NOT a UniProt gene name; it is the protein abbreviation 4HNR of the paper",
+   "(PMID 11467929). The identity is not in doubt: the entry cites PMID 10956664 and 11467929 (PDB 1JA9)",
+   "and is 45.3% identical to the 3HNR Q12634. UniProt organism: Pyricularia grisea (taxid 148305); the",
+   "papers say Magnaporthe grisea. The user decides at the review gate (UNVERIFIED.md)."],
  ("t4hn_reductase", "F8WTI4"): [
    "The entry cites PMID 12967213 for the sequence. The abstract deduces a T4HN-specific reductase and",
    "does not name T4HR1. Link tier T3."],
@@ -350,7 +354,7 @@ link("scytalone_dehydratase", C + "vermelone_dehydration", "O14434", "T3", "Infe
 link("scytalone_dehydratase", C + "vermelone_dehydration", "P56221", "T1a", "steady-state kinetics with the two physiological substrates scytalone and vermelone (wild type and Ser129 mutant). The abstract names the enzyme and not the organism; UniProt P56221 cites this paper for catalytic activity and for the mutagenesis of the residues named in the abstract. The abstract does not name the product", "10320327")
 link("scytalone_dehydratase", C + "vermelone_dehydration", "A7DWM5", "T3", SORD + " (sdh).", "17681008", False)
 link("laccase_abr2", C + "dhn_polymerisation", "E9RBR0", "T1c", "gene deletion in the fungus; conidial colour changes from gray-green to brown. The abstract does not show the substrate of the laccase", "16988817")
-link("mco_abr1", C + "dhn_polymerisation", "Q4WZB4", "T1c", "gene disruption in the fungus; altered conidial colour (the abstract states this for each of the six cluster genes in another sentence; one sentence per paper is quoted, and the quoted sentence is the one on arp1 and arp2). The abstract does not show the substrate of the oxidase", "10515939")
+link("mco_abr1", C + "dhn_polymerisation", "Q4WZB4", "T3", "Held at T3. The quoted sentence reports altered conidial colour after disruption of each of the six cluster genes; it does not name abr1 (the abstract names abr1 as one of the six genes in other sentences). Raise to T1c if the user accepts the sentence for abr1. The abstract does not show the substrate of the oxidase.", "10515939", "10515939:abr1")
 link("mco_abr1", C + "dhn_polymerisation", "A2R3T0", "T1c", NIGER + " (BrnA, An14g05370)", "21277986")
 
 acc_gene = {(s, a): g for s, refs in REF.items() for a, g, *_ in refs}
@@ -362,10 +366,11 @@ for step, rid, acc, tier, assay, pmid, q in L:
     assert rid in {r[0] for r in RX} and (step, acc) in acc_gene, (step, rid, acc)
     if pmid:
         assert pubmed_abstract(pmid)["title"]
-    qt = Q[pmid] if q else ""
-    assert (tier in ("T1a", "T1b", "T1c", "T2")) == bool(qt), (step, acc, tier)
+    qt = Q[q] if isinstance(q, str) else (Q[pmid] if q else "")  # q: True = sentence of the paper, str = key of another sentence
+    assert qt or tier not in ("T1a", "T1b", "T1c", "T2"), (step, acc, tier)
+    assert not qt or norm(qt) in norm(pubmed_abstract(pmid)["abstract"]), (step, acc, pmid)
     srows.append([step, rid, species(acc), acc_gene[(step, acc)], acc, tier, assay, pmid, qt])
-assert all(k in {r[7] for r in srows if r[8]} for k in Q), [k for k in Q if k not in {r[7] for r in srows if r[8]}]
+assert set(Q.values()) == {r[8] for r in srows if r[8]}
 tsv(KB / "step_reaction.tsv", COLUMNS["step_reaction"], srows)
 # change-detector fixture for the tests (all links)
 tsv(ROOT / "tests" / "data" / "kb" / "melanin_dhn_quotes.tsv", ["step_id", "reaction_id", "protein_accession", "tier", "assay", "pmid", "quote"],
@@ -416,7 +421,7 @@ STEPS = [  # id, name, ec, domains, copy, role, optional, route, ko, lineage_not
   "(39% identity, MEASURED 2026-11-21), which acts on the wA pigment and is a decoy. One reference only. Described for the Aspergillus fumigatus cluster; the range in other lineages is not checked, so absence is not a defect.",
   "multicopper oxidase family (laccase, Abr2 type)"),
  ("mco_abr1", "multicopper oxidase of the DHN-melanin cluster, Abr1 type (abr1 of Aspergillus fumigatus, brnA of Aspergillus niger)", None, ["PF07732", "PF00394", "PF07731"], "single", "catalytic", True, "polymerisation", "",
-  "Evidence is a colour phenotype only (T1c); the substrate and the order of the two oxidases are not shown. Abr1 and BrnA are 43% identical (MEASURED 2026-11-21) and 28 to 31% identical to the iron transport ferroxidase FET3 (decoy); "
+  "Evidence is a colour phenotype only: T1c for BrnA of Aspergillus niger; the Abr1 link is held at T3 because the quoted sentence of PMID 10515939 does not name abr1. The substrate and the order of the two oxidases are not shown. Abr1 and BrnA are 43% identical (MEASURED 2026-11-21) and 28 to 31% identical to the iron transport ferroxidase FET3 (decoy); "
   "the unreviewed Aspergillus niger entry carries an automatic ferroxidase EC. Described for Aspergillus fumigatus and Aspergillus niger; the range in other lineages is not checked, so absence is not a defect.",
   "multicopper oxidase family (Fet3-like, Abr1 type)"),
 ]
@@ -430,7 +435,7 @@ ROUTES = [
  ("pks_heptaketide", "(c) heptaketide PKS plus Ayg1 route (Aspergillus fumigatus Alb1, Ayg1) to 1,8-dihydroxynaphthalene", ["heptaketide_pks", "ayg1"] + TAIL,
   "The PKS releases the naphthopyrone YWA1; Ayg1 shortens it to T4HN." + TAILNOTE),
  ("polymerisation", "oxidases of the polymerisation of 1,8-dihydroxynaphthalene (Aspergillus fumigatus Abr2 and Abr1)", ["laccase_abr2", "mco_abr1"],
-  "Not a chain: two oxidase families with phenotype evidence only (T1c). The order is not settled and the polymer is not a compound of the table. It follows each of the three PKS routes."),
+  "Not a chain: two oxidase families with colour-phenotype evidence only (T1c; the Abr1 link is held at T3). The order is not settled and the polymer is not a compound of the table. It follows each of the three PKS routes."),
 ]
 step_rx = {}
 for r in srows:
@@ -451,7 +456,7 @@ out = [textwrap.dedent('''\
     # A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
     # organism and gene name matched, (2) the UniProt entry or the PubMed abstract supports the
     # reaction of the step, and (3) the PMID exists in PubMed. It never means a person reviewed it.
-    # Exception written down in UNVERIFIED.md (A1): Q9HFV6 has no gene name in UniProt.
+    # Q9HFV6 is verified: false because UniProt gives the entry no gene name (UNVERIFIED.md).
     # A decoy has verified: true when the reviewed UniProt entry was fetched on 2026-11-21, its
     # organism and gene name matched, it carries the family ids of the step, it does not carry the
     # Rhea reaction of the step, and its record states a function that is not the function of the

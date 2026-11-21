@@ -16,4 +16,4 @@ Run from any directory with `/usr/bin/python3.12 analysis/pathway_census/curatio
 | `a5.py` | Pairwise global identity between references and decoys (arguments: accessions). Source of the MEASURED identities in `UNVERIFIED.md`. |
 | `b1.py` | NCBI Taxonomy taxid of the organism names. With `--write` it appends new rows to `tests/data/kb/ncbi_taxonomy_names.tsv` (the source of `kb.SPECIES_ALIASES`). |
 
-Quotes: `build.py` cuts each quoted sentence out of the fetched abstract by a start and an end fragment, so the quote text is never typed by hand. One paper gives one sentence.
+Quotes: `build.py` cuts each quoted sentence out of the fetched abstract by a start and an end fragment, so the quote text is never typed by hand. A link has at most one sentence; a paper can give a second sentence to another link (key `<pmid>:<name>` in `Q`).

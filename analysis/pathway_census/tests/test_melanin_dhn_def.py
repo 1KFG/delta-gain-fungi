@@ -269,6 +269,30 @@ def test_unverified_refs_are_listed_in_unverified_md():
                 assert r.accession in text, (st.id, r.accession)
 
 
+def test_q9hfv6_is_not_verified_because_uniprot_gives_no_gene_name():
+    refs = {r.accession: r for r in _steps()["t4hn_reductase"].refs}
+    assert refs["Q9HFV6"].verified is False and refs["Q9HFV6"].gene_name == "4HNR"
+    assert sum(not r.verified for st in load_pathway(YAML).steps for r in st.refs) == 1
+    row = [r for r in _rows(PROV, PROV_COLS) if r["accession"] == "Q9HFV6"][0]
+    assert row["verified"] == "false"
+    text = UNVERIFIED.read_text(encoding="utf-8")
+    table = text.split("## Refs with verified: false")[1].split("## Refs missing")[0]
+    assert "Q9HFV6" in table
+    for word in ("identity is not in doubt", "1JA9", "10956664", "45.3%", "no gene name"):
+        assert word in table, word
+    assert "abbreviation" in YAML.read_text(encoding="utf-8").split("accession: Q9HFV6")[0][-400:]
+
+
+def test_user_decisions_are_written_down():
+    text = UNVERIFIED.read_text(encoding="utf-8")
+    assert "DECISION FOR THE USER" in text and "10320327" in text
+    assert text.count("USER DECISION") >= 2
+    assert "86018477" in text and "curated id scheme" in text
+    assert "Glomerella lagenarium" in text and "Colletotrichum lagenarium" in text
+    readme = (ROOT / "kb" / "README.md").read_text(encoding="utf-8")
+    assert "`glomerella lagenarium`" in readme and "`colletotrichum lagenarium`" in readme
+
+
 def test_references_with_a_gap_are_listed_in_unverified_md():
     """Q9HFV6 has no gene name in UniProt; Q12634 and the A. niger entries have only an ORF
     name. The gap is written down for the user."""

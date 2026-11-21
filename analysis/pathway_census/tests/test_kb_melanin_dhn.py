@@ -55,11 +55,25 @@ def test_no_t4_and_no_t2_links(kb):
     assert set(kb["step_reaction"]["tier"]) <= {"T1a", "T1b", "T1c", "T3"}
 
 
-def test_one_quoted_sentence_per_paper(kb):
+def test_one_quoted_sentence_per_link(kb):
+    """The plan's rule: at most one quoted sentence per link. A paper may give different
+    sentences to different links when the links rest on different statements."""
     sr = kb["step_reaction"]
-    sr = sr[sr["quote"].str.strip() != ""]
-    for pmid, g in sr.groupby("pmid"):
-        assert g["quote"].nunique() == 1, pmid
+    assert not sr.duplicated(["step_id", "reaction_id", "protein_accession", "pmid"]).any()
+    for _, r in sr.iterrows():
+        q = r["quote"]
+        if q:
+            assert r["pmid"], (r["step_id"], r["protein_accession"])
+            assert len(q) <= 400 and q.endswith(".")
+            assert not re.search(r"[.!?] [A-Z]", q[:-1]), (r["pmid"], q)
+    # PMID 10515939 gives two sentences: intermediates (arp1, arp2) and colour (abr1)
+    by = sr[sr["pmid"] == "10515939"]
+    quotes = dict(zip(by["protein_accession"], by["quote"]))
+    assert quotes["E9QUT3"] == quotes["O14434"] != quotes["Q4WZB4"]
+    assert "scytalone and flaviolin in the arp1 deletant" in quotes["O14434"]
+    assert quotes["Q4WZB4"] == (
+        "Involvement of the six genes in conidial pigmentation was confirmed by the altered "
+        "conidial color phenotypes that resulted from disruption of each gene in A. fumigatus.")
 
 
 def test_every_link_names_organism_gene_and_accession_of_a_yaml_ref(kb):
@@ -169,8 +183,9 @@ def test_vermelone_dehydration_is_a_separate_curated_reaction_with_its_own_evide
     # tier T3, or a paper whose abstract shows the reaction (with its quote)
     for _, r in links.iterrows():
         if r["tier"] != "T3":
-            assert r["tier"] in EVIDENCE_TIERS and r["pmid"] and "vermelone" in r["quote"].lower() \
-                or "veremelone" in r["quote"].lower(), r["protein_accession"]
+            assert r["tier"] in EVIDENCE_TIERS and r["pmid"] and (
+                "vermelone" in r["quote"].lower() or "veremelone" in r["quote"].lower()), \
+                r["protein_accession"]
     tiers = dict(zip(links["protein_accession"], links["tier"]))
     assert tiers == {"Q00455": "T3", "O14434": "T3", "P56221": "T1a", "A7DWM5": "T3"}
     row = links[links["protein_accession"] == "P56221"].iloc[0]
@@ -191,7 +206,13 @@ def test_oxidase_links_are_phenotype_only(kb):
     sr = kb["step_reaction"]
     ox = sr[sr["step_id"].isin(["laccase_abr2", "mco_abr1"])]
     assert set(ox["reaction_id"]) == {C + "dhn_polymerisation"}
-    assert set(ox["tier"]) == {"T1c"}
+    # The quoted sentence of PMID 10515939 speaks of "the six genes" and does not name abr1,
+    # so the abr1 link is held at T3 with that sentence as context (fix round 1).
+    assert dict(zip(ox["protein_accession"], ox["tier"])) == {
+        "E9RBR0": "T1c", "Q4WZB4": "T3", "A2R3T0": "T1c"}
+    abr1 = ox[ox["protein_accession"] == "Q4WZB4"].iloc[0]
+    assert "abr1" not in abr1["quote"] and "disruption of each gene" in abr1["quote"]
+    assert "does not name abr1" in abr1["assay"]
     assert dict(zip(ox["protein_accession"], ox["pmid"])) == {
         "E9RBR0": "16988817", "Q4WZB4": "10515939", "A2R3T0": "21277986"}
     assert _parts(kb, C + "dhn_polymerisation", "substrate") == {DHN}

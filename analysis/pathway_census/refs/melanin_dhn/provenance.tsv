@@ -6,7 +6,7 @@ heptaketide_pks	A2QUI2	Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FG
 ayg1	Q4WZB3	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	ayg1		15310761	UniProtKB/Swiss-Prot (entry v95, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 ayg1	Q6BCB5	Exophiala dermatitidis	yg1		18676950	UniProtKB/TrEMBL (entry v56, sequence v2); PubMed (cited by the entry)	2026-11-21	true
 ayg1	A2R3S8	Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)	An14g05350		21277986	UniProtKB/TrEMBL (entry v74, sequence v1); PubMed (abstract gives the locus tag An14g05350 for OlvA; the entry does not cite the paper)	2026-11-21	true
-t4hn_reductase	Q9HFV6	Pyricularia grisea	4HNR		10956664	UniProtKB/TrEMBL (entry v151, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+t4hn_reductase	Q9HFV6	Pyricularia grisea	4HNR		10956664	UniProtKB/TrEMBL (entry v151, sequence v2); PubMed (cited by the entry)	2026-11-21	false
 t4hn_reductase	E9QUT3	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	arp2		10515939	UniProtKB/Swiss-Prot (entry v83, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 t4hn_reductase	W3XAA0	Pestalotiopsis fici (strain W106-1 / CGMCC3.15140)	PfmaG		28517364	UniProtKB/Swiss-Prot (entry v46, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 t4hn_reductase	F8WTI4	Colletotrichum orbiculare	T4HR1		12967213	UniProtKB/TrEMBL (entry v40, sequence v1); PubMed (cited by the entry)	2026-11-21	true

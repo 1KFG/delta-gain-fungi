@@ -9,7 +9,7 @@
 # A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
 # organism and gene name matched, (2) the UniProt entry or the PubMed abstract supports the
 # reaction of the step, and (3) the PMID exists in PubMed. It never means a person reviewed it.
-# Exception written down in UNVERIFIED.md (A1): Q9HFV6 has no gene name in UniProt.
+# Q9HFV6 is verified: false because UniProt gives the entry no gene name (UNVERIFIED.md).
 # A decoy has verified: true when the reviewed UniProt entry was fetched on 2026-11-21, its
 # organism and gene name matched, it carries the family ids of the step, it does not carry the
 # Rhea reaction of the step, and its record states a function that is not the function of the
@@ -52,7 +52,7 @@ routes:
   - id: polymerisation
     name: "oxidases of the polymerisation of 1,8-dihydroxynaphthalene (Aspergillus fumigatus Abr2 and Abr1)"
     step_ids: [laccase_abr2, mco_abr1]
-    note: "Not a chain: two oxidase families with phenotype evidence only (T1c). The order is not settled and the polymer is not a compound of the table. It follows each of the three PKS routes."
+    note: "Not a chain: two oxidase families with colour-phenotype evidence only (T1c; the Abr1 link is held at T3). The order is not settled and the polymer is not a compound of the table. It follows each of the three PKS routes."
 steps:
   - id: thn_synthase
     name: "1,3,6,8-tetrahydroxynaphthalene synthase, non-reducing PKS (PKS1 of Colletotrichum lagenarium)"
@@ -231,14 +231,16 @@ steps:
     name: "tetrahydroxynaphthalene reductase, 4HNR/Arp2 type (T4HN to scytalone)"
     ec: "1.1.1.252"
     refs:
-      # The UniProt entry has NO gene name. gene_name is the protein abbreviation 4HNR used in PMID 11467929.
-      # The entry cites PMID 10956664 and 11467929 (PDB 1JA9). UniProt organism: Pyricularia grisea
-      # (taxid 148305); the papers say Magnaporthe grisea.
+      # verified: false, for one reason only: the UniProt entry has NO gene name, so the gene-name rule cannot
+      # be met. gene_name below is NOT a UniProt gene name; it is the protein abbreviation 4HNR of the paper
+      # (PMID 11467929). The identity is not in doubt: the entry cites PMID 10956664 and 11467929 (PDB 1JA9)
+      # and is 45.3% identical to the 3HNR Q12634. UniProt organism: Pyricularia grisea (taxid 148305); the
+      # papers say Magnaporthe grisea. The user decides at the review gate (UNVERIFIED.md).
       - accession: Q9HFV6
         species: "Pyricularia grisea"
         gene_name: "4HNR"
         pmid: "10956664"
-        verified: true
+        verified: false
       - accession: E9QUT3
         species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
         gene_name: "arp2"
@@ -471,4 +473,4 @@ steps:
     optional: true
     reactions:
       - "CUR:melanin_dhn:dhn_polymerisation"
-    lineage_note: "Evidence is a colour phenotype only (T1c); the substrate and the order of the two oxidases are not shown. Abr1 and BrnA are 43% identical (MEASURED 2026-11-21) and 28 to 31% identical to the iron transport ferroxidase FET3 (decoy); the unreviewed Aspergillus niger entry carries an automatic ferroxidase EC. Described for Aspergillus fumigatus and Aspergillus niger; the range in other lineages is not checked, so absence is not a defect."
+    lineage_note: "Evidence is a colour phenotype only: T1c for BrnA of Aspergillus niger; the Abr1 link is held at T3 because the quoted sentence of PMID 10515939 does not name abr1. The substrate and the order of the two oxidases are not shown. Abr1 and BrnA are 43% identical (MEASURED 2026-11-21) and 28 to 31% identical to the iron transport ferroxidase FET3 (decoy); the unreviewed Aspergillus niger entry carries an automatic ferroxidase EC. Described for Aspergillus fumigatus and Aspergillus niger; the range in other lineages is not checked, so absence is not a defect."
