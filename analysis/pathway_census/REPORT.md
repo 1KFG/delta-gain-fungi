@@ -1,11 +1,6 @@
----
-title: "Pathway knowledge base and the metabolite corpus: what was tried, what failed, what to do next"
-subtitle: "Carotenoid, melanin and mycosporine curation against fungal genomes; a four-model comparison against the GNPS-processed corpus"
-date: 2026-11-21
-date-modified: today
-author: "BFD-HPCC-master agent (for the Stajich Lab)"
-toc-depth: 3
----
+# Pathway knowledge base and the metabolite corpus: what was tried, what failed, what to do next
+
+Status: in progress. Last updated 2026-11-21. Code: `analysis/pathway_census/`.
 
 ::: {.callout-note}
 ## What this is, what it is not, and where it stops being reliable

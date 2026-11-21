@@ -28,6 +28,8 @@ website:
         text: "UPO clades"
       - href: mucor_secretome.qmd
         text: "Mucor effectors"
+      - href: pathway_corpus.qmd
+        text: "Pathways and corpus"
 
 # Each report page's title would otherwise render twice: once from the .qmd
 # front matter and again as the included REPORT.md's opening H1. See the

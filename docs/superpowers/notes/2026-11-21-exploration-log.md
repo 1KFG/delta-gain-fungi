@@ -70,3 +70,4 @@ These counts say a genome exists. They say nothing about pathway genes. Whether 
 - Review lesson: reviewer-recalled accessions and PMIDs are leads only; each is re-fetched.
 - Seven Task 5 decisions for the user are in the ledger and `refs/melanin_ldopa/UNVERIFIED.md` (Q2TL94, melB ORF-name reference, P00440 tie, LAC1 T1c without substrate, TyrP T3, no asp_melanin product, ORF-name-only rule).
 - Next: Task 6 review, Task 7 verifier, Task 8 packet, then the user review gate before any real-data run.
+- The shareable synthesis lives at `analysis/pathway_census/REPORT.md` (page `reports/pathway_corpus.qmd`, linked from the reports index). Update it when Task 6 closes or the gate counts change.

@@ -60,6 +60,19 @@ while running it, and the upstream reference-data problems the analysis ran into
 
 Source: [`analysis/mucor_secretome/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/mucor_secretome)
 
+### [Pathway knowledge base and the metabolite corpus](pathway_corpus.html)
+
+A record of what was tried when carotenoid, melanin and mycosporine pathways were curated
+as evidence-tiered tables and compared with the GNPS-processed metabolite corpus. The
+comparison was **not run**: the pre-set detectability gate failed for carotenoids,
+melanin, fucose and fungal MAAs (0 of 84 fungal-reference accessions show the main
+carotenoids). The page lists the failed design (mass shifts), the data errors that review
+caught, hypothesis status, and twelve rules for connecting the corpus to other data.
+Curation is unfinished and no step set has had owner review; corpus counts are reported by
+the EBC agent, not re-measured here.
+
+Source: [`analysis/pathway_census/REPORT.md`](https://github.com/1KFG/delta-gain-fungi/blob/main/analysis/pathway_census/REPORT.md)
+
 ## Not published here
 
 Work that is in the repository but has no page here:
