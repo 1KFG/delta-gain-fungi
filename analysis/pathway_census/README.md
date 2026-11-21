@@ -23,5 +23,9 @@ MEASURED 2026-11-20 on the real tables:
 - Rows: 24,363 (= `species.parquet`; 24,363 unique LOCUSTAG). `busco_genome` has 23,582 rows and `asm_stats` 23,584; 814 genomes have null `busco_complete` and `n50`.
 - Rows per `prior_status` (4 of the 5 TSV statuses occur among BFD genomes): no_prior_annotation_present 18,055; baseline_ok 5,625; no_prior_annotation_not_downloaded 673; annotated_folder_missing_protein 10; annotated_NOT_downloaded 0; unknown 0.
   The TSV has 27,401 rows; 3,038 of them are not in `species.parquet`.
-- Empty GENUS: 349 rows. 49 parsed from SPECIES (`parsed_species`; includes 8 Antarctolithica). 300 left with null genus (SPECIES is a higher rank, e.g. "Ascomycota sp.").
-- `has_proteins` = TSV `protein_file_ok == 1` (prior-annotation protein file). It does not mean BFD lacks proteins.
+- Empty GENUS: 349 rows. genus_source counts: genus_field 24,014; parsed_species 49 (includes 8 Antarctolithica); unresolved 300. Unresolved rows get a non-null label "<first token> sp." (e.g. "Ascomycota sp."). Genus is never null.
+- `has_proteins` = LOCUSTAG in `seqdb/genomes.tsv` and the BFD `proteins.fa.gz` exists on disk: True 23,379; False 984. Checked: 23,379 of the 24,363 species LOCUSTAGs are in seqdb/genomes.tsv (23,412 rows) and in `gene_info`; all 23,379 protein files exist.
+- `downloaded` = BFD genome FASTA (`<out>.scaffolds.fa.gz` beside the proteins file) exists on disk: True 23,379; False 984 (the same genomes as has_proteins=False). Genome FASTA availability is derived from this file path, not from the prior-annotation TSV. Genomes outside seqdb have no BFD FASTA path in the tables; a copy may exist elsewhere (e.g. NCBI_ASM). That was not checked.
+- `has_deposited_proteins` (TSV `protein_file_ok == 1`): True 5,634; False 18,729.
+- `prior_folder_state` (TSV): present 23,690; not_downloaded 673.
+- Crosstab prior_status vs has_proteins=True: baseline_ok 5,535 of 5,625; no_prior_annotation_present 17,834 of 18,055; annotated_folder_missing_protein 10 of 10; no_prior_annotation_not_downloaded 0 of 673.

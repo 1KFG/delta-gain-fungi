@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pytest
@@ -7,14 +8,37 @@ from pathway_census.genomes import load_genome_table, parse_genus
 DATA = Path(__file__).parent / "data"
 
 
+# seqdb layout per locustag: (has proteins file, has scaffolds file); absent key = not in genomes.tsv
+SEQDB = {
+    "AAAAAAA1": (True, True),
+    "AAAAAAA2": (True, True),
+    "AAAAAAA3": (True, True),
+    "AAAAAAA4": (True, False),
+    "AAAAAAA5": (False, False),
+    "AAAAAAA7": (True, True),
+}
+
+
 @pytest.fixture(scope="module")
-def df():
-    # fixture dir needs species.parquet etc.; build a tables dir of symlinks
-    import tempfile, os
-    d = Path(tempfile.mkdtemp())
+def df(tmp_path_factory):
+    root = tmp_path_factory.mktemp("bfd")
+    tables = root / "tables"
+    tables.mkdir()
     for real, link in [("species_mini", "species"), ("busco_mini", "busco_genome"), ("asm_stats_mini", "asm_stats")]:
-        os.symlink(DATA / f"{real}.parquet", d / f"{link}.parquet")
-    return load_genome_table(d, DATA / "prior_status_mini.tsv").set_index("locustag")
+        os.symlink(DATA / f"{real}.parquet", tables / f"{link}.parquet")
+    (root / "seqdb").mkdir()
+    lines = []
+    for lt, (prot, scaf) in SEQDB.items():
+        d = root / "ga" / lt / "predict_results"
+        d.mkdir(parents=True)
+        pp = d / f"{lt}.proteins.fa.gz"
+        if prot:
+            pp.write_text("x")
+        if scaf:
+            (d / f"{lt}.scaffolds.fa.gz").write_text("x")
+        lines.append(f"{lt}\t{lt}\t{pp}\t{d / (lt + '.cds-transcripts.fa.gz')}")
+    (root / "seqdb" / "genomes.tsv").write_text("\n".join(lines) + "\n")
+    return load_genome_table(tables, DATA / "prior_status_mini.tsv").set_index("locustag")
 
 
 def test_empty_genus_is_parsed_from_species(df):
@@ -36,9 +60,17 @@ def test_parse_genus_rules():
     assert parse_genus("Tulasnella sp. JGI-2019a") == "Tulasnella"
 
 
-def test_unresolvable_genus_is_none(df):
-    assert df.loc["AAAAAAA6", "genus"] is None
-    assert df.loc["AAAAAAA6", "genus_source"] is None
+def test_unresolvable_genus_gets_label(df):
+    assert df.loc["AAAAAAA6", "genus"] == "Saccharomycetaceae sp."
+    assert df.loc["AAAAAAA6", "genus_source"] == "unresolved"
+    assert df.loc["AAAAAAA5", "genus"] == "Mucor"  # GENUS field present
+    assert df.loc["AAAAAAA8", "genus_source"] == "genus_field"
+
+
+def test_genus_never_null(df):
+    assert df["genus"].notna().all()
+    assert (df["genus"].str.len() > 0).all()
+    assert set(df["genus_source"]) <= {"genus_field", "parsed_species", "unresolved"}
 
 
 def test_status_mapping(df):
@@ -50,17 +82,24 @@ def test_status_mapping(df):
     assert df.loc["AAAAAAA1", "annotation_provider"] == "NCBI"
 
 
-def test_not_downloaded_has_downloaded_false(df):
-    assert not df.loc["AAAAAAA3", "downloaded"]
-    assert not df.loc["AAAAAAA5", "downloaded"]
+def test_downloaded_means_bfd_genome_fasta_exists(df):
+    # prior state "not downloaded" must not force downloaded=False
+    assert df.loc["AAAAAAA3", "prior_folder_state"] == "not_downloaded"
+    assert df.loc["AAAAAAA3", "downloaded"]
     assert df.loc["AAAAAAA1", "downloaded"]
-    assert df.loc["AAAAAAA4", "downloaded"]
+    assert not df.loc["AAAAAAA4", "downloaded"]  # proteins but no scaffolds file
+    assert not df.loc["AAAAAAA5", "downloaded"]
+    assert not df.loc["AAAAAAA6", "downloaded"]  # not in seqdb
 
 
-def test_no_protein_row_has_has_proteins_false(df):
-    assert not df.loc["AAAAAAA4", "has_proteins"]
-    assert not df.loc["AAAAAAA2", "has_proteins"]
-    assert df.loc["AAAAAAA1", "has_proteins"]
+def test_has_proteins_means_bfd_proteins_exist(df):
+    # no prior annotation, but BFD re-annotated: has_proteins True, deposited False
+    assert df.loc["AAAAAAA2", "has_proteins"]
+    assert not df.loc["AAAAAAA2", "has_deposited_proteins"]
+    assert df.loc["AAAAAAA1", "has_proteins"] and df.loc["AAAAAAA1", "has_deposited_proteins"]
+    assert not df.loc["AAAAAAA5", "has_proteins"]  # listed in seqdb, file missing
+    assert not df.loc["AAAAAAA8", "has_proteins"]  # not in seqdb
+    assert df.loc["AAAAAAA4", "has_proteins"] and not df.loc["AAAAAAA4", "has_deposited_proteins"]
 
 
 def test_row_count_equals_species_rows(df):
