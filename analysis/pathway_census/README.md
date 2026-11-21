@@ -144,3 +144,20 @@ Tool: `tblastn` from `module load ncbi-blast/2.17.0+` (BLAST 2.17.0+, build Jul 
 - Chunk outputs are named `<pathway>_absence.chunk<ID>[.PROVISIONAL].tsv` and `<pathway>_unevaluated_genomes.chunk<ID>...tsv`; ID = `SLURM_ARRAY_TASK_ID`, else the `PC_LOCUSTAGS` basename minus its last suffix. Merge with: header from one file, then `tail -q -n +2` of the rest (skip the leading `#` lines first), e.g. `for f in *_absence.chunk*.tsv; do grep -v '^#' "$f"; done | awk 'NR==1||$1!="locustag"' > all_absence.tsv`. `unevaluated_genomes` is the same list in every chunk (it is not chunked): keep one copy.
 - `evalue` (tblastn, default 1e-3) is PROPOSED. In-frame stop: one synthetic case MEASURED as present_unannotated (see module docstring).
 - Real-data run (brief step 5) is DEFERRED by controller ruling. No counts per outcome exist.
+
+## Paired deposited-versus-BFD comparison (Task 9)
+
+Code: `pathway_census/paired.py`, `bin/paired_compare.py`. Tests: `tests/test_paired.py`. Details are in the `paired.py` docstring.
+
+What the paired test shows: for assemblies that have both a deposited annotation and a BFD annotation, it shows how many more or fewer copies of each pathway step the BFD annotation gives. The assembly is the same in both arms. So the difference is the effect of the annotation.
+
+What it does NOT show: it says nothing about the 18,145 genomes with no prior annotation (spec 5.6). It does not show which annotation is correct. It does not show absence of a gene. A real-data difference counts as a finding only if it has the same sign across annotation providers and survives the BUSCO control. Otherwise report it as not established.
+
+- Pair rule: `prior_status == baseline_ok`, BFD proteins exist, deposited proteins flag true, deposited `protein.faa` exists and was searched. Other genomes are counted in `n_unpaired` under the first failing reason: `not_baseline`, `no_bfd_proteins`, `no_deposited_proteins`, `deposited_file_missing`.
+- Keys: both matrices use the caller-supplied `locustag`. Deposited protein IDs are not parsed. Counts are kept per source and never merged by protein ID.
+- Run the same HMMs and the same assignment on both sources. Build the deposited matrix with a genome table copy where `has_proteins` = the deposited-file flag. The deposited file path is `<root>/<accession>/protein.faa`; `count_pairs(genomes, deposited_root)` needs an `asmid` column (load_genome_table drops it; merge it from `species.parquet`).
+- `paired_table`: `delta = copy_bfd - copy_deposited` (copy_raw). `delta_filtered` is set only when both unknown counts are 0, else NA. Unknown counts are kept in `unknown_deposited` / `unknown_bfd`.
+- `summarize_paired`: bootstrap over genomes (resample genomes with replacement), 95% interval from the 2.5 and 97.5 percentiles. Rows per (step, provider) plus one `ALL` row per step. Providers below `min_pairs` are returned in `dropped_providers`, not removed silently. PROPOSED defaults, no measured basis: `min_pairs=20`, `n_boot=2000`, `seed=20261120`.
+- `summarize_paired_by_busco`: mean delta per step per BUSCO bin, default edges 0, 80, 95, 100 (PROPOSED), plus an explicit `unknown` bin for null BUSCO. A step with zero copies in both sources appears with mean 0.
+- CLI refuses `verified: false` without `--provisional`; outputs then carry `.PROVISIONAL`.
+- DEFERRED by controller ruling: the real pair count (brief step 1; Fable's earlier figure of 5,625 `baseline_ok` genomes is the genome-table count, not a pair count, and was not re-run) and the real-data run (brief step 6). No real counts or deltas exist.
