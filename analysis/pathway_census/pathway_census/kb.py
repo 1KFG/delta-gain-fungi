@@ -260,6 +260,19 @@ SPECIES_ALIASES: dict[str, tuple[str, int, str]] = {
         "ustilago maydis", 5270,
         "NCBI Taxonomy taxid 5270: scientific name Mycosarcoma maydis, synonym Ustilago maydis "
         "(the key is the name used in the papers)"),
+    # DHN-melanin tables (Task 4). The key is the UniProt organism name of the references.
+    "wangiella dermatitidis": (
+        "exophiala dermatitidis", 5970,
+        "NCBI Taxonomy taxid 5970: scientific name Exophiala dermatitidis, synonym Wangiella "
+        "dermatitidis (the name used in the papers)"),
+    "magnaporthe oryzae": (
+        "pyricularia oryzae", 318829,
+        "NCBI Taxonomy taxid 318829: scientific name Pyricularia oryzae, synonym Magnaporthe "
+        "oryzae. Not Pyricularia grisea (taxid 148305)"),
+    "magnaporthe grisea": (
+        "pyricularia grisea", 148305,
+        "NCBI Taxonomy taxid 148305: scientific name Pyricularia grisea, synonym Magnaporthe "
+        "grisea. Not Pyricularia oryzae (taxid 318829)"),
 }
 
 _BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")

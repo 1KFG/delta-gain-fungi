@@ -1,6 +1,6 @@
 # Flat knowledge tables
 
-One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
+One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid` and `melanin_dhn` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
 
 | File | Columns |
 |---|---|
@@ -56,6 +56,24 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 | Mucor racemosus | 4841 | Mucor racemosus | `mucor racemosus` (not merged with 29924) |
 | Mycosarcoma maydis | 5270 | Mycosarcoma maydis | `ustilago maydis` |
 | Ustilago maydis | 5270 | Mycosarcoma maydis | `ustilago maydis` |
+| Wangiella dermatitidis | 5970 | Exophiala dermatitidis | `exophiala dermatitidis` |
+| Exophiala dermatitidis | 5970 | Exophiala dermatitidis | `exophiala dermatitidis` |
+| Magnaporthe oryzae | 318829 | Pyricularia oryzae | `pyricularia oryzae` |
+| Pyricularia oryzae | 318829 | Pyricularia oryzae | `pyricularia oryzae` |
+| Magnaporthe grisea | 148305 | Pyricularia grisea | `pyricularia grisea` (not merged with 318829) |
+| Pyricularia grisea | 148305 | Pyricularia grisea | `pyricularia grisea` (not merged with 318829) |
+| Colletotrichum lagenaria | 5462 | Colletotrichum lagenaria | `colletotrichum lagenaria` (not merged with 5465) |
+| Colletotrichum orbiculare | 5465 | Colletotrichum orbiculare | `colletotrichum orbiculare` |
 
 - Key choice: for taxid 29924 the key is the NCBI scientific name, because the old names point to two other species. For taxids 264483 and 5270 the key is the name used in the cited papers, not the current NCBI scientific name.
 - Limit: a name without an alias is keyed by its first two words. A forma or variety that NCBI holds as its own taxon is kept apart only if it is in the alias table. Check the taxid before adding organisms from a new pathway.
+
+## Conventions used by the DHN-melanin tables (`kb/melanin_dhn/`)
+
+- Three PKS routes (`pks_thn`, `pks_hexaketide`, `pks_heptaketide`) share the steps from 1,3,6,8-tetrahydroxynaphthalene to 1,8-dihydroxynaphthalene. `scytalone_dehydratase` is listed twice in each route (scytalone, then vermelone). The oxidases are in the route `polymerisation`, which has no product compound.
+- The two reductase steps each hold the main reaction of their type and the side reaction of the other type (substrate overlap, PMID 10956664, 12967213). The reference sets of the two steps are disjoint.
+- Every link is in `tests/data/kb/melanin_dhn_quotes.tsv` (change detector), T3 links included.
+- A reaction with no step link is allowed (`CUR:melanin_dhn:t4hn_autooxidation`, the flaviolin shunt).
+- `pks_hexaketide` gives no product: 2-acetyl-1,3,6,8-tetrahydroxynaphthalene has no ChEBI entry. `refs/melanin_dhn/UNVERIFIED.md`, section D.
+- The UniProt organism name of P79068 is "Glomerella lagenarium" (UniProt taxid 5462). NCBI Taxonomy has no such name, so it has no alias and its key is `glomerella lagenarium`. It is not merged with Colletotrichum orbiculare (taxid 5465).
+- No organism completes a DHN-melanin route with its own links. Route tiers hold only together with the organism list.

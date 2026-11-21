@@ -1,0 +1,10 @@
+step_id	route	ko	hmm_id	family	optional
+thn_synthase	pks_thn		TIGR04532;PF16073	non-reducing iterative type I polyketide synthase	true
+hexaketide_pks	pks_hexaketide		TIGR04532;PF16073	non-reducing iterative type I polyketide synthase	true
+heptaketide_pks	pks_heptaketide		TIGR04532;PF16073	non-reducing iterative type I polyketide synthase	true
+ayg1			PF06500	FrsA-like alpha/beta hydrolase family	true
+t4hn_reductase		K17739	PF13561	short-chain dehydrogenase/reductase family (naphthol reductase, 4HNR type)	false
+t3hn_reductase			PF13561	short-chain dehydrogenase/reductase family (naphthol reductase, 3HNR type)	false
+scytalone_dehydratase		K17740	PF02982	scytalone dehydratase family	false
+laccase_abr2	polymerisation		PF07732;PF00394;PF07731	multicopper oxidase family (laccase, Abr2 type)	true
+mco_abr1	polymerisation		PF07732;PF00394;PF07731	multicopper oxidase family (Fet3-like, Abr1 type)	true

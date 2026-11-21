@@ -1,0 +1,474 @@
+# DHN-melanin pathway definition, step set v2 (stage 1, task S4, 2026-11-21).
+#
+# Status: DRAFT for user review. Pathway-level verified: false.
+# Do not run a census against this file until the user has reviewed the step list.
+#
+# Reference checks: refs/melanin_dhn/provenance.tsv, refs/melanin_dhn/decoys/provenance.tsv and
+# refs/melanin_dhn/UNVERIFIED.md. Evidence tiers, quotes and reactions: kb/melanin_dhn/*.tsv.
+#
+# A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
+# organism and gene name matched, (2) the UniProt entry or the PubMed abstract supports the
+# reaction of the step, and (3) the PMID exists in PubMed. It never means a person reviewed it.
+# Exception written down in UNVERIFIED.md (A1): Q9HFV6 has no gene name in UniProt.
+# A decoy has verified: true when the reviewed UniProt entry was fetched on 2026-11-21, its
+# organism and gene name matched, it carries the family ids of the step, it does not carry the
+# Rhea reaction of the step, and its record states a function that is not the function of the
+# step. A decoy pmid is given only when the abstract was read.
+#
+# Field notes:
+# - Routes: the three PKS routes (a), (b), (c) differ in the first one or two steps and share
+#   the steps from T4HN to 1,8-dihydroxynaphthalene. The Ayg1/Yg1 step is in routes (b) and
+#   (c) only. The PKS steps are alternatives; they are never consecutive steps of one route.
+# - species: the organism name of the UniProt entry, copied exactly. UniProt names
+#   Colletotrichum lagenarium PKS1 "Glomerella lagenarium", the other Colletotrichum
+#   references "Colletotrichum orbiculare", Wangiella dermatitidis "Exophiala dermatitidis",
+#   and the rice blast fungus "Pyricularia oryzae" (70-15) or "Pyricularia grisea".
+# - gene_name: a gene name of the UniProt entry (an ORF name where the entry has no other
+#   name). It is valid only together with species.
+# - pmid of a ref: a paper tied to the entry (cited by the UniProt entry, or the abstract
+#   gives the locus tag). The papers that show each reaction are in step_reaction.tsv.
+# - domains_any: Pfam / NCBIfam ids from the UniProt cross-references of the references. The
+#   families are broader than the steps. A step call needs HMM plus tree placement with decoys.
+# - reactions: ids of kb/melanin_dhn/reaction.tsv. The tier of each (protein, reaction) link is
+#   in kb/melanin_dhn/step_reaction.tsv, not here.
+# - copy_expect, optional and role are PROPOSED values. No census data exists yet.
+# - KEGG: K17739 and K17740 are cross-references in kb/melanin_dhn/step.tsv only. K19580
+#   (rppA) is a bacterial enzyme and is not used.
+id: melanin_dhn
+verified: false
+routes:
+  - id: pks_thn
+    name: "(a) THN synthase route (Colletotrichum lagenarium PKS1) to 1,8-dihydroxynaphthalene"
+    step_ids: [thn_synthase, t4hn_reductase, scytalone_dehydratase, t3hn_reductase, scytalone_dehydratase]
+    note: "The PKS releases T4HN directly. No Ayg1/Yg1 step. Then T4HN to scytalone, 1,3,8-trihydroxynaphthalene, vermelone and 1,8-dihydroxynaphthalene. scytalone_dehydratase is listed twice (two dehydrations). The route ends at the monomer; the oxidases are in route polymerisation."
+  - id: pks_hexaketide
+    name: "(b) hexaketide PKS plus Yg1 route (Exophiala dermatitidis WdPKS1, WdYg1) to 1,8-dihydroxynaphthalene"
+    step_ids: [hexaketide_pks, ayg1, t4hn_reductase, scytalone_dehydratase, t3hn_reductase, scytalone_dehydratase]
+    note: "The PKS releases 2-acetyl-T4HN; Yg1 deacetylates it to T4HN. Then T4HN to scytalone, 1,3,8-trihydroxynaphthalene, vermelone and 1,8-dihydroxynaphthalene. scytalone_dehydratase is listed twice (two dehydrations). The route ends at the monomer; the oxidases are in route polymerisation. The hexaketide has no ChEBI entry, so the tables cannot follow this route past the PKS step."
+  - id: pks_heptaketide
+    name: "(c) heptaketide PKS plus Ayg1 route (Aspergillus fumigatus Alb1, Ayg1) to 1,8-dihydroxynaphthalene"
+    step_ids: [heptaketide_pks, ayg1, t4hn_reductase, scytalone_dehydratase, t3hn_reductase, scytalone_dehydratase]
+    note: "The PKS releases the naphthopyrone YWA1; Ayg1 shortens it to T4HN. Then T4HN to scytalone, 1,3,8-trihydroxynaphthalene, vermelone and 1,8-dihydroxynaphthalene. scytalone_dehydratase is listed twice (two dehydrations). The route ends at the monomer; the oxidases are in route polymerisation."
+  - id: polymerisation
+    name: "oxidases of the polymerisation of 1,8-dihydroxynaphthalene (Aspergillus fumigatus Abr2 and Abr1)"
+    step_ids: [laccase_abr2, mco_abr1]
+    note: "Not a chain: two oxidase families with phenotype evidence only (T1c). The order is not settled and the polymer is not a compound of the table. It follows each of the three PKS routes."
+steps:
+  - id: thn_synthase
+    name: "1,3,6,8-tetrahydroxynaphthalene synthase, non-reducing PKS (PKS1 of Colletotrichum lagenarium)"
+    ec: null
+    route: pks_thn
+    refs:
+      # UniProt organism name: Glomerella lagenarium (UniProt taxid 5462; NCBI scientific name Colletotrichum
+      # lagenaria). The papers say Colletotrichum lagenarium. pmid 7500937 is the paper cited by the entry
+      # (PKS1, 2187 residues; the entry has 2187 residues). Product papers: PMID 10501004, 23261597 (links).
+      - accession: P79068
+        species: "Glomerella lagenarium"
+        gene_name: "PKS1"
+        pmid: "7500937"
+        verified: true
+    decoys:
+      - accession: Q03149
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "wA"
+        pmid: "11251292"
+        verified: true
+      - accession: Q12053
+        species: "Aspergillus parasiticus (strain ATCC 56775 / NRRL 5862 / SRRC 143 / SU-1)"
+        gene_name: "aflC"
+        pmid: null
+        verified: true
+      - accession: Q12397
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "stcA"
+        pmid: null
+        verified: true
+      - accession: Q6DQW3
+        species: "Cercospora nicotianae"
+        gene_name: "CTB1"
+        pmid: null
+        verified: true
+      - accession: S0DZM7
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "bik1"
+        pmid: null
+        verified: true
+    domains_any: [TIGR04532, PF16073]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:melanin_dhn:t4hn_synthesis"
+    lineage_note: "Three PKS routes give 1,3,6,8-tetrahydroxynaphthalene (T4HN): a true THN synthase (this route needs no Ayg1), a hexaketide PKS plus Yg1, and a heptaketide PKS plus Ayg1. All are non-reducing iterative type I PKS; the product chain length cannot be read from a domain hit, so the call needs tree placement with the references and decoys of all three PKS steps. The same gene name PKS1 is used for two enzymes: PKS1 of Colletotrichum lagenarium is a THN synthase, PKS1 (WdPKS1) of Exophiala (Wangiella) dermatitidis is the hexaketide synthase. A gene name is valid only with its organism. The UniProt organism name of P79068 is Glomerella lagenarium (UniProt taxid 5462); the other Colletotrichum references are Colletotrichum orbiculare (NCBI taxid 5465). The two names are not merged. Lineage restrictions: Aspergillus terreus lacks the genes for DHN-melanin and makes Asp-melanin (MelA, TyrP; PMID 27133313), so absence there is not a defect. Botrytis cinerea and other Leotiomycetes carry two melanin PKS (bcpks12 for sclerotia, bcpks13 for conidia; PMID 26514268); BcYGH1 converts the BcPKS13 product."
+
+  - id: hexaketide_pks
+    name: "hexaketide synthase, non-reducing PKS (WdPKS1 of Exophiala dermatitidis)"
+    ec: null
+    route: pks_hexaketide
+    refs:
+      # UniProt organism name: Exophiala dermatitidis. The papers say Wangiella dermatitidis (WdPKS1).
+      - accession: Q9Y7A7
+        species: "Exophiala dermatitidis"
+        gene_name: "PKS1"
+        pmid: "11179356"
+        verified: true
+    decoys:
+      - accession: Q03149
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "wA"
+        pmid: "11251292"
+        verified: true
+      - accession: Q12053
+        species: "Aspergillus parasiticus (strain ATCC 56775 / NRRL 5862 / SRRC 143 / SU-1)"
+        gene_name: "aflC"
+        pmid: null
+        verified: true
+      - accession: Q12397
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "stcA"
+        pmid: null
+        verified: true
+      - accession: Q6DQW3
+        species: "Cercospora nicotianae"
+        gene_name: "CTB1"
+        pmid: null
+        verified: true
+      - accession: S0DZM7
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "bik1"
+        pmid: null
+        verified: true
+    domains_any: [TIGR04532, PF16073]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:melanin_dhn:at4hn_synthesis"
+    lineage_note: "Three PKS routes give 1,3,6,8-tetrahydroxynaphthalene (T4HN): a true THN synthase (this route needs no Ayg1), a hexaketide PKS plus Yg1, and a heptaketide PKS plus Ayg1. All are non-reducing iterative type I PKS; the product chain length cannot be read from a domain hit, so the call needs tree placement with the references and decoys of all three PKS steps. The same gene name PKS1 is used for two enzymes: PKS1 of Colletotrichum lagenarium is a THN synthase, PKS1 (WdPKS1) of Exophiala (Wangiella) dermatitidis is the hexaketide synthase. A gene name is valid only with its organism. The product 2-acetyl-1,3,6,8-tetrahydroxynaphthalene is shown in the WdYG1 deletion mutant (PMID 18676950), not for the PKS itself. Lineage restrictions: Aspergillus terreus lacks the genes for DHN-melanin and makes Asp-melanin (MelA, TyrP; PMID 27133313), so absence there is not a defect. Botrytis cinerea and other Leotiomycetes carry two melanin PKS (bcpks12 for sclerotia, bcpks13 for conidia; PMID 26514268); BcYGH1 converts the BcPKS13 product."
+
+  - id: heptaketide_pks
+    name: "heptaketide naphthopyrone YWA1 synthase, non-reducing PKS (alb1/pksP of Aspergillus fumigatus)"
+    ec: null
+    route: pks_heptaketide
+    refs:
+      - accession: Q4WZA8
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "alb1"
+        pmid: "11040426"
+        verified: true
+      # FwnA of PMID 21277986: the abstract gives the locus tag An09g05730, a gene name of this entry.
+      # UniProt names the gene albA and does not cite PMID 21277986.
+      - accession: A2QUI2
+        species: "Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)"
+        gene_name: "albA"
+        pmid: "21277986"
+        verified: true
+    decoys:
+      - accession: Q12053
+        species: "Aspergillus parasiticus (strain ATCC 56775 / NRRL 5862 / SRRC 143 / SU-1)"
+        gene_name: "aflC"
+        pmid: null
+        verified: true
+      - accession: Q12397
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "stcA"
+        pmid: null
+        verified: true
+      - accession: Q6DQW3
+        species: "Cercospora nicotianae"
+        gene_name: "CTB1"
+        pmid: null
+        verified: true
+      - accession: S0DZM7
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "bik1"
+        pmid: null
+        verified: true
+    domains_any: [TIGR04532, PF16073]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:62652"
+    lineage_note: "Three PKS routes give 1,3,6,8-tetrahydroxynaphthalene (T4HN): a true THN synthase (this route needs no Ayg1), a hexaketide PKS plus Yg1, and a heptaketide PKS plus Ayg1. All are non-reducing iterative type I PKS; the product chain length cannot be read from a domain hit, so the call needs tree placement with the references and decoys of all three PKS steps. Aspergillus nidulans wA (Q03149) does the same reaction (YWA1) for a pigment that is not DHN-melanin, so a hit in this clade does not show DHN-melanin without Ayg1 and the downstream steps. The gene is named alb1 or pksP in Aspergillus fumigatus and albA or fwnA in Aspergillus niger; UniProt ties albA of Aspergillus niger to aurasperone (naphthopyrone) biosynthesis. Lineage restrictions: Aspergillus terreus lacks the genes for DHN-melanin and makes Asp-melanin (MelA, TyrP; PMID 27133313), so absence there is not a defect. Botrytis cinerea and other Leotiomycetes carry two melanin PKS (bcpks12 for sclerotia, bcpks13 for conidia; PMID 26514268); BcYGH1 converts the BcPKS13 product."
+
+  - id: ayg1
+    name: "polyketide chain-shortening hydrolase (ayg1 of Aspergillus fumigatus, yg1 of Exophiala dermatitidis)"
+    ec: null
+    refs:
+      - accession: Q4WZB3
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "ayg1"
+        pmid: "15310761"
+        verified: true
+      # WdYG1 of PMID 18676950 (UniProt gene name: yg1).
+      - accession: Q6BCB5
+        species: "Exophiala dermatitidis"
+        gene_name: "yg1"
+        pmid: "18676950"
+        verified: true
+      # OlvA of PMID 21277986: the abstract gives the locus tag An14g05350. The entry has this ORF name only
+      # and does not cite the paper.
+      - accession: A2R3S8
+        species: "Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)"
+        gene_name: "An14g05350"
+        pmid: "21277986"
+        verified: true
+    domains_any: [PF06500]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:62700"
+      - "CUR:melanin_dhn:at4hn_deacetylation"
+    lineage_note: "Needed only where the PKS releases a heptaketide (YWA1, Aspergillus fumigatus) or a hexaketide (2-acetyl-T4HN, Exophiala dermatitidis). Not needed with a true THN synthase (Colletotrichum lagenarium PKS1), so absence on route pks_thn is not a defect. Botrytis cinerea BcYGH1 converts the BcPKS13 product (PMID 26514268; no UniProt entry was tied to it). The two reference reactions differ: Ayg1 releases acetoacetic acid from YWA1, Yg1 removes an acetyl group."
+
+  - id: t4hn_reductase
+    name: "tetrahydroxynaphthalene reductase, 4HNR/Arp2 type (T4HN to scytalone)"
+    ec: "1.1.1.252"
+    refs:
+      # The UniProt entry has NO gene name. gene_name is the protein abbreviation 4HNR used in PMID 11467929.
+      # The entry cites PMID 10956664 and 11467929 (PDB 1JA9). UniProt organism: Pyricularia grisea
+      # (taxid 148305); the papers say Magnaporthe grisea.
+      - accession: Q9HFV6
+        species: "Pyricularia grisea"
+        gene_name: "4HNR"
+        pmid: "10956664"
+        verified: true
+      - accession: E9QUT3
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "arp2"
+        pmid: "10515939"
+        verified: true
+      - accession: W3XAA0
+        species: "Pestalotiopsis fici (strain W106-1 / CGMCC3.15140)"
+        gene_name: "PfmaG"
+        pmid: "28517364"
+        verified: true
+      # The entry cites PMID 12967213 for the sequence. The abstract deduces a T4HN-specific reductase and
+      # does not name T4HR1. Link tier T3.
+      - accession: F8WTI4
+        species: "Colletotrichum orbiculare"
+        gene_name: "T4HR1"
+        pmid: "12967213"
+        verified: true
+      - accession: A7DWM4
+        species: "Sordaria macrospora"
+        gene_name: "teh"
+        pmid: "17681008"
+        verified: true
+    decoys:
+      - accession: P50161
+        species: "Aspergillus parasiticus (strain ATCC 56775 / NRRL 5862 / SRRC 143 / SU-1)"
+        gene_name: "aflM"
+        pmid: null
+        verified: true
+      - accession: Q00791
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "stcU"
+        pmid: null
+        verified: true
+      - accession: Q8TFD5
+        species: "Dothistroma septosporum"
+        gene_name: "ver1"
+        pmid: null
+        verified: true
+      - accession: P87219
+        species: "Candida albicans (strain SC5314 / ATCC MYA-2876)"
+        gene_name: "SOU1"
+        pmid: null
+        verified: true
+    domains_any: [PF13561]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: false
+    reactions:
+      - "RHEA:21908"
+      - "CUR:melanin_dhn:t3hn_reduction"
+    lineage_note: "The two naphthol reductase types are paralogues of one short-chain dehydrogenase family with real substrate overlap (PMID 10956664, 12967213). One paralogue present does not mean the other reaction is absent, and one paralogue absent does not mean the step is absent: the 3HNR type also reduces T4HN (Pyricularia oryzae 3HNR, Colletotrichum THR1), and the Aspergillus fumigatus cluster has one reductase (arp2). Versicolorin reductases of aflatoxin-type pathways are in the same family (decoys). MEASURED on 2026-11-21 (global alignment): 4HNR Q9HFV6 is 45% identical to 3HNR Q12634; Arp2 E9QUT3 is 52% identical to Q9HFV6 and 44% to Q12634. KEGG has one KO (K17739) for tetrahydroxynaphthalene reductase; which paralogue type its members belong to was not checked."
+
+  - id: t3hn_reductase
+    name: "trihydroxynaphthalene reductase, 3HNR/THR1/BUF1/BRM2 type (T3HN to vermelone)"
+    ec: null
+    refs:
+      # The UniProt entry has an ORF name only (MGG_02252). UniProt names it tetrahydroxynaphthalene
+      # reductase (EC 1.1.1.252). It is the trihydroxynaphthalene reductase (3HNR) of PMID 10956664: it cites
+      # PMID 8112349 and the 3HNR crystal structures (PMID 8939741, 11342131), and it is 45% identical to
+      # Q9HFV6 (the abstract of PMID 10956664 gives 46% between 4HNR and 3HNR).
+      - accession: Q12634
+        species: "Pyricularia oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958)"
+        gene_name: "MGG_02252"
+        pmid: "8112349"
+        verified: true
+      - accession: P87025
+        species: "Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422)"
+        gene_name: "THR1"
+        pmid: "8672814"
+        verified: true
+      - accession: A7DWM6
+        species: "Sordaria macrospora"
+        gene_name: "tih"
+        pmid: "17681008"
+        verified: true
+    decoys:
+      - accession: P50161
+        species: "Aspergillus parasiticus (strain ATCC 56775 / NRRL 5862 / SRRC 143 / SU-1)"
+        gene_name: "aflM"
+        pmid: null
+        verified: true
+      - accession: Q00791
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "stcU"
+        pmid: null
+        verified: true
+      - accession: Q8TFD5
+        species: "Dothistroma septosporum"
+        gene_name: "ver1"
+        pmid: null
+        verified: true
+      - accession: P87219
+        species: "Candida albicans (strain SC5314 / ATCC MYA-2876)"
+        gene_name: "SOU1"
+        pmid: null
+        verified: true
+    domains_any: [PF13561]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: false
+    reactions:
+      - "CUR:melanin_dhn:t3hn_reduction"
+      - "RHEA:21908"
+    lineage_note: "The two naphthol reductase types are paralogues of one short-chain dehydrogenase family with real substrate overlap (PMID 10956664, 12967213). One paralogue present does not mean the other reaction is absent, and one paralogue absent does not mean the step is absent: the 3HNR type reduces T4HN as well (4.2-fold preference for T3HN in Pyricularia oryzae), and the 4HNR type accepts T3HN weakly (310-fold preference for T4HN). UniProt names Q12634 tetrahydroxynaphthalene reductase with EC 1.1.1.252; it is the 3HNR of the papers. The names BUF1 and BRM2 are not gene names of a reference here (no UniProt entry was tied to them). MEASURED on 2026-11-21: the versicolorin reductase decoys are 59 to 63% identical to the 3HNR references, more than the 4HNR references are (43 to 50%)."
+
+  - id: scytalone_dehydratase
+    name: "scytalone dehydratase (SCD1, arp1, SDH1)"
+    ec: "4.2.1.94"
+    refs:
+      - accession: Q00455
+        species: "Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422)"
+        gene_name: "SCD1"
+        pmid: "8953707"
+        verified: true
+      - accession: O14434
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "arp1"
+        pmid: "9383199"
+        verified: true
+      # Enzyme assay papers cited by the entry: PMID 9466792 (scytalone), 10320327 (vermelone).
+      - accession: P56221
+        species: "Pyricularia oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958)"
+        gene_name: "SDH1"
+        pmid: "9571787"
+        verified: true
+      - accession: A7DWM5
+        species: "Sordaria macrospora"
+        gene_name: "sdh"
+        pmid: "17681008"
+        verified: true
+    domains_any: [PF02982]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: false
+    reactions:
+      - "RHEA:24396"
+      - "CUR:melanin_dhn:vermelone_dehydration"
+    lineage_note: "Two reactions with separate evidence: scytalone to 1,3,8-trihydroxynaphthalene (RHEA:24396) and vermelone to 1,8-dihydroxynaphthalene (curated). The step is listed twice in each PKS route for this reason. Vermelone dehydration is shown for the Pyricularia oryzae enzyme only (PMID 10320327); for the other references it is inferred (T3), and for Aspergillus fumigatus the acting enzyme is not settled. The gene names differ by organism: SCD1 (Colletotrichum), arp1 (Aspergillus fumigatus), SDH1 (Pyricularia oryzae), sdh (Sordaria macrospora). sdh and SDH1 also name succinate dehydrogenase genes in other organisms (not checked here)."
+
+  - id: laccase_abr2
+    name: "laccase of the DHN-melanin cluster, Abr2 type (abr2 of Aspergillus fumigatus)"
+    ec: null
+    route: polymerisation
+    refs:
+      - accession: E9RBR0
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "abr2"
+        pmid: "16988817"
+        verified: true
+    decoys:
+      - accession: P17489
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "yA"
+        pmid: "2659435"
+        verified: true
+      - accession: Q55P57
+        species: "Cryptococcus deneoformans (strain B-3501A)"
+        gene_name: "LAC1"
+        pmid: null
+        verified: true
+      - accession: P06811
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "lacc"
+        pmid: null
+        verified: true
+      - accession: Q70KY3
+        species: "Melanocarpus albomyces"
+        gene_name: "LAC1"
+        pmid: null
+        verified: true
+      - accession: P38993
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "FET3"
+        pmid: null
+        verified: true
+    domains_any: [PF07732, PF00394, PF07731]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:melanin_dhn:dhn_polymerisation"
+    lineage_note: "Evidence is a colour phenotype only (T1c); the substrate and the order of the two oxidases are not shown. Laccases are a large family with many functions; the nearest characterised relative of Abr2 is the Aspergillus nidulans conidial laccase yA (39% identity, MEASURED 2026-11-21), which acts on the wA pigment and is a decoy. One reference only. Described for the Aspergillus fumigatus cluster; the range in other lineages is not checked, so absence is not a defect."
+
+  - id: mco_abr1
+    name: "multicopper oxidase of the DHN-melanin cluster, Abr1 type (abr1 of Aspergillus fumigatus, brnA of Aspergillus niger)"
+    ec: null
+    route: polymerisation
+    refs:
+      - accession: Q4WZB4
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "abr1"
+        pmid: "10515939"
+        verified: true
+      # BrnA of PMID 21277986: the abstract gives the locus tag An14g05370. The entry has this ORF name only,
+      # does not cite the paper, and carries an automatic EC 1.16.3.1 (ferroxidase).
+      - accession: A2R3T0
+        species: "Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)"
+        gene_name: "An14g05370"
+        pmid: "21277986"
+        verified: true
+    decoys:
+      - accession: P38993
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "FET3"
+        pmid: null
+        verified: true
+      - accession: P17489
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "yA"
+        pmid: "2659435"
+        verified: true
+      - accession: Q55P57
+        species: "Cryptococcus deneoformans (strain B-3501A)"
+        gene_name: "LAC1"
+        pmid: null
+        verified: true
+      - accession: P06811
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "lacc"
+        pmid: null
+        verified: true
+    domains_any: [PF07732, PF00394, PF07731]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:melanin_dhn:dhn_polymerisation"
+    lineage_note: "Evidence is a colour phenotype only (T1c); the substrate and the order of the two oxidases are not shown. Abr1 and BrnA are 43% identical (MEASURED 2026-11-21) and 28 to 31% identical to the iron transport ferroxidase FET3 (decoy); the unreviewed Aspergillus niger entry carries an automatic ferroxidase EC. Described for Aspergillus fumigatus and Aspergillus niger; the range in other lineages is not checked, so absence is not a defect."
