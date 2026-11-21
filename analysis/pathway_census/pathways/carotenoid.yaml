@@ -286,7 +286,7 @@ steps:
     reactions:
       - "RHEA:30975"
       - "RHEA:15585"
-    lineage_note: "Two reactions. The number of desaturations cannot be read from the sequence family: four steps to lycopene are shown for Phycomyces carB (PMID 9079885) and X. dendrorhous crtI (PMID 10397832); five steps to 3,4-didehydrolycopene are shown for Neurospora AL-1 (PMID 11017770, with lycopene as the second major product) and Fusarium carB (PMID 19645721). Only the five-step enzyme gives torulene and neurosporaxanthin. A tier holds for the named organism and protein only."
+    lineage_note: "Two reactions. The number of desaturations cannot be read from the sequence family: four steps to lycopene are reported for Phycomyces carB (PMID 9079885) and X. dendrorhous crtI (PMID 10397832), in sentences that do not name the protein with the product, so these two links are held at T3 under the strict reading of rule 1; five steps to 3,4-didehydrolycopene are shown for Neurospora AL-1 (PMID 11017770, T1a, with lycopene as the second major product) and Fusarium carB (PMID 19645721). Only the five-step enzyme gives torulene and neurosporaxanthin. A tier holds for the named organism and protein only."
 
   - id: carx
     name: "beta-carotene cleaving oxygenase, retinal-forming (CarX, Cco1)"

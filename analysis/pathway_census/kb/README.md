@@ -25,6 +25,14 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 - Charge: `formula` may not contain `+` or `-`. SMILES may contain charged atoms (zwitterions, nitro) only when the net charge is 0.
 - Fetchers raise `KbFetchError` on an HTTP error or an incomplete response, and cache only complete responses. Each cache entry carries a version tag and the request URL; a mismatch is a miss. The 3 requests per second limit is per process.
 
+## Rule 1, strict reading (all pathways, harmonisation round 2026-11-21)
+
+- A T1 link needs a quoted sentence that itself names the protein of the link and states an assay or a product (T1a), a deletion with an intermediate (T1b) or a colour phenotype (T1c). A sentence whose subject is "the enzyme", "the encoded protein" or "the purified enzyme" does not name the protein, even when the sentence before it does. Such a link is held at T3; the sentence stays in `quote` as context and the `assay` text starts with `Held at T3`.
+- The alternative ("context reading": the protein is named in the abstract text before the quote) is recorded for the owner in each `refs/<pathway>/UNVERIFIED.md` as a USER DECISION. It is not used in the tables.
+- Held under the strict reading: carotenoid Q9P885, P37295 (two links), P54982, O13506, A7UXI1; melanin_dhn P56221 (vermelone); melanin_ldopa Q00667 was moved to another sentence (T1b) and Q55P57 (dopamine) is T3.
+- Route effect (MEASURED with `path_possible`): every carotenoid route with a product is T3 (before: T1a or T1b), because both GGPP synthase links are T3. `pks_thn` and `pks_heptaketide` of melanin_dhn are T3 (before: T1a), because no vermelone dehydration link is above T3.
+- 11 T1a links are flagged by `bin/verify_kb.py` for the form of the name only (for example "Ayg1p", "crt YB", "atmelA", "the second reductase"). Their data are unchanged; a per-link alias file is planned.
+
 ## Conventions used by the carotenoid tables
 
 - `reaction_id` is the Rhea master id (`RHEA:<n>`) or a curated id `CUR:<pathway>:<name>` where Rhea has no reaction.
@@ -36,10 +44,10 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 
 - `min_tier` is the weakest tier along the best path. The links of that path can belong to different organisms.
 - `organisms` lists the species keys of the links on the best path (sorted, comma-joined). `single_organism` is True when the list has one name.
-- **When `single_organism` is False, the tier does NOT hold for any one organism.** Report such a tier only together with the organism list. Example (carotenoid, `core` route): beta-carotene is T1a with *Mucor lusitanicus* (the UniProt name is Mucor circinelloides f. lusitanicus) and *Xanthophyllomyces dendrorhous* links; no single organism reaches T1a.
-- `path_possible(tables, step_ids, organism="Neurospora crassa")` uses only the links of that organism. The filter is applied before the search. In the carotenoid tables only *Neurospora crassa* completes a route alone (`core` and `neurosporaxanthin`, at T3, because its GGPP synthase link is T3).
+- **When `single_organism` is False, the tier does NOT hold for any one organism.** Report such a tier only together with the organism list. Example (carotenoid, `astaxanthin` route): astaxanthin is T3 with *Mucor lusitanicus* (the UniProt name is Mucor circinelloides f. lusitanicus) and *Xanthophyllomyces dendrorhous* links; neither organism reaches it alone.
+- `path_possible(tables, step_ids, organism="Neurospora crassa")` uses only the links of that organism. The filter is applied before the search. In the carotenoid tables only *Neurospora crassa* completes a route alone (`core` and `neurosporaxanthin`, at T3, because its GGPP synthase link is T3). Since the rule 1 harmonisation round every carotenoid route with a product is T3 (both GGPP synthase links are T3), so the unfiltered call also returns *Neurospora crassa* alone for these two routes (fewest organisms at T3).
 - Best path: strongest tier; among equal tiers the fewest organisms; then the alphabetically first organism list.
-- **Ties are broken alphabetically.** The organism list shown is one of `n_equal_paths` choices with the same tier and the same number of organisms. `n_equal_paths` counts organism lists, not routes through the reactions. Example (carotenoid, `core`): gamma-carotene is T1a with 3 equal lists (Mucor lusitanicus with Neurospora crassa, with Phycomyces blakesleeanus, or with Xanthophyllomyces dendrorhous); the first is shown.
+- **Ties are broken alphabetically.** The organism list shown is one of `n_equal_paths` choices with the same tier and the same number of organisms. `n_equal_paths` counts organism lists, not routes through the reactions. Example (carotenoid, `retinal`): retinal is T3 with 2 equal lists (Fusarium fujikuroi with Neurospora crassa is shown).
 - `species_key(organism)` makes the key: lowercase, text in parentheses or square brackets dropped, then the alias table `SPECIES_ALIASES` in `kb.py`, else the first two words.
 - **Alias rule: a name is an alias of a key only when NCBI Taxonomy gives both names the same taxon id.** Names with different taxids are never merged. Checked on 2026-11-21 (esearch, db=taxonomy, field All Names; stored in `tests/data/kb/ncbi_taxonomy_names.tsv`; a test compares the table with it):
 
@@ -87,7 +95,7 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 - `pks_hexaketide` gives no product: 2-acetyl-1,3,6,8-tetrahydroxynaphthalene has no ChEBI entry. `refs/melanin_dhn/UNVERIFIED.md`, section D.
 - Organism key of the P79068 links (`thn_synthase`): `glomerella lagenarium`, the first two words of the UniProt organism name "Glomerella lagenarium" (UniProt taxid 5462). `species_key("Colletotrichum lagenarium")`, the name in the papers, gives a third key, `colletotrichum lagenarium`. NCBI Taxonomy gives neither "Glomerella lagenarium" nor "Colletotrichum lagenarium" a taxid hit (esearch, All Names, 2026-11-21), so no alias is allowed under the taxid rule. The row `Colletotrichum lagenaria` (taxid 5462) in the table above is the NCBI scientific name of the UniProt taxid; no link has the key `colletotrichum lagenaria`. None of these is merged with Colletotrichum orbiculare (taxid 5465).
 - Quotes: at most one quoted sentence per link. One paper may give different sentences to different links (PMID 10515939: one sentence for the arp1 and arp2 links, another for the abr1 link). A T3 link may carry a sentence as context (abr1).
-- No organism completes a DHN-melanin route with its own links. Route tiers hold only together with the organism list.
+- No organism completes a DHN-melanin route with its own links. Route tiers hold only together with the organism list. Since the rule 1 harmonisation round `pks_thn` and `pks_heptaketide` reach 1,8-dihydroxynaphthalene at T3 (two organisms each), not at T1a.
 
 ## Conventions used by the L-DOPA / other melanin tables (`kb/melanin_ldopa/`)
 

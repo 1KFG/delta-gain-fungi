@@ -187,7 +187,16 @@ def test_vermelone_dehydration_is_a_separate_curated_reaction_with_its_own_evide
                 "vermelone" in r["quote"].lower() or "veremelone" in r["quote"].lower()), \
                 r["protein_accession"]
     tiers = dict(zip(links["protein_accession"], links["tier"]))
-    assert tiers == {"Q00455": "T3", "O14434": "T3", "P56221": "T1a", "A7DWM5": "T3"}
+    # Rule 1 harmonisation round: the sentence of PMID 10320327 names no enzyme and no product,
+    # so the P56221 link is held at T3 (context reading: T1a). No link of this reaction is
+    # above T3.
+    assert tiers == {"Q00455": "T3", "O14434": "T3", "P56221": "T3", "A7DWM5": "T3"}
+    held = links[links["protein_accession"] == "P56221"].iloc[0]
+    assert held["assay"].startswith("Held at T3 (rule 1, strict reading") and "veremelone" in held["quote"]
+    p79068 = sr[(sr["protein_accession"] == "P79068") & (sr["pmid"] == "10501004")].iloc[0]
+    assert p79068["tier"] == "T1a" and p79068["quote"] == (
+        "The production of T4HN by the PKS1 transformant unambiguously identified the gene to "
+        "encode a PKS of pentaketide T4HN.")
     row = links[links["protein_accession"] == "P56221"].iloc[0]
     assert row["pmid"] == "10320327"
     # the evidence record is not a copy of the scytalone edge
@@ -259,9 +268,10 @@ AF, PF = "aspergillus fumigatus", "pestalotiopsis fici"
 PO, PG = "pyricularia oryzae", "pyricularia grisea"
 GL, CO = "glomerella lagenarium", "colletotrichum orbiculare"
 ROUTE_PRODUCTS = {
-    # 1,8-DHN. The second equal list has Pyricularia grisea in place of Pestalotiopsis fici.
-    "pks_thn": {DHN: ("T1a", [GL, PF, PO], 2)},
-    "pks_heptaketide": {DHN: ("T1a", [AF, PF, PO], 2)},
+    # 1,8-DHN. Rule 1 harmonisation round: the vermelone dehydration link of P56221 is held at
+    # T3, so both routes fall from T1a (three organisms) to T3 (two organisms).
+    "pks_thn": {DHN: ("T3", [CO, GL], 2)},
+    "pks_heptaketide": {DHN: ("T3", [AF, CO], 5)},
     # the hexaketide 2-acetyl-1,3,6,8-tetrahydroxynaphthalene has no ChEBI entry
     "pks_hexaketide": {},
     # the polymer is not a compound of the table

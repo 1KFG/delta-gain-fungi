@@ -381,7 +381,7 @@ steps:
     reactions:
       - "RHEA:24396"
       - "CUR:melanin_dhn:vermelone_dehydration"
-    lineage_note: "Two reactions with separate evidence: scytalone to 1,3,8-trihydroxynaphthalene (RHEA:24396) and vermelone to 1,8-dihydroxynaphthalene (curated). The step is listed twice in each PKS route for this reason. Vermelone dehydration is shown for the Pyricularia oryzae enzyme only (PMID 10320327); for the other references it is inferred (T3), and for Aspergillus fumigatus the acting enzyme is not settled. The gene names differ by organism: SCD1 (Colletotrichum), arp1 (Aspergillus fumigatus), SDH1 (Pyricularia oryzae), sdh (Sordaria macrospora). sdh and SDH1 also name succinate dehydrogenase genes in other organisms (not checked here)."
+    lineage_note: "Two reactions with separate evidence: scytalone to 1,3,8-trihydroxynaphthalene (RHEA:24396) and vermelone to 1,8-dihydroxynaphthalene (curated). The step is listed twice in each PKS route for this reason. The abstract of PMID 10320327 reports kinetics of scytalone dehydratase with scytalone and vermelone, in a sentence that names no enzyme, so the vermelone link of the Pyricularia oryzae enzyme is held at T3 under the strict reading of rule 1 (T1a under the context reading); for the other references the reaction is inferred (T3), and for Aspergillus fumigatus the acting enzyme is not settled. The gene names differ by organism: SCD1 (Colletotrichum), arp1 (Aspergillus fumigatus), SDH1 (Pyricularia oryzae), sdh (Sordaria macrospora). sdh and SDH1 also name succinate dehydrogenase genes in other organisms (not checked here)."
 
   - id: laccase_abr2
     name: "laccase of the DHN-melanin cluster, Abr2 type (abr2 of Aspergillus fumigatus)"

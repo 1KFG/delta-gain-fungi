@@ -100,3 +100,35 @@ The curator read PubMed abstracts only. No full text was read.
 5. `copy_expect`, `optional` and `role` are PROPOSED. No census data exists.
 6. `crtr` is linked to RHEA:55660 (the first CrtS reaction; the crtR deletion accumulates beta-carotene). In the `astaxanthin` route `crtr` comes before `astaxanthin_synthase`, so the route is a valid chain. This is a modelling choice (PROPOSED).
 7. The Mucorales steps are in three routes: `trisporoid` (`cars`, `acaa`), `trisporoid_tsp3` (`tsp3`, an alternative of `cars`) and `trisporoid_late` (`tsp2`, `tdh`).
+
+### H. USER DECISION: strict or context reading of rule 1 (harmonisation round, 2026-11-21)
+
+Rule 1 says: a link is T1a only when the quoted sentence states the assay or the product for the named protein. The independent verifier (`bin/verify_kb.py`) flagged T1a links whose quote does not name its own protein, and each was adjudicated against the fetched abstract. By the controller's ruling the tables use the **strict reading**: the quoted sentence itself must name the protein of the link and state an assay or a product. The **context reading** accepts a sentence whose subject ("the enzyme", "the encoded protein") is named in the abstract text before it. The owner decides between them.
+
+Held at T3 under the strict reading (the sentence stays in `quote` as context; the `assay` text starts with "Held at T3"):
+
+| Link | PMID | Why | Context reading |
+|---|---|---|---|
+| Q9P885 (carG), `ggpp_synthase`, RHEA:17653 | 12695851 | The sentence says "the encoded protein". Sentence 1 names carG and states no assay. | T1a |
+| P37295 (al-2), `phytoene_synthase`, RHEA:34475 | 16928467 | The sentence starts "The enzyme". Sentence 1 names al-2 and states no reaction. | T1a |
+| P37295 (al-2), `lycopene_cyclase`, RHEA:32219 | 16928467 | Same sentence. | T1a |
+| P54982 (carB), `phytoene_desaturase`, RHEA:15585 | 9079885 | The sentence says "the Phycomyces gene". Sentence 1 names carB and states no assay. | T1a |
+| A7UXI1 (cao-2), `cart`, RHEA:31519 | 17610084 | The sentence says "the purified enzyme"; the abstract names CAO-1 and CAO-2. | T1a |
+| O13506 (crtI), `phytoene_desaturase`, RHEA:15585 | 10397832 | The quote was changed to the sentence that names the phytoene desaturase cDNA of X. dendrorhous and the assay set-up. The result (lycopene) is in the next sentence only. | T1a is possible only with two sentences |
+
+Better sentence, T1a stays (the new quote names the protein; each is an exact substring of the fetched abstract, checked by `build.py`): P21334 (al-1, both reactions, PMID 11017770: "Phytoene desaturase Al-1 from Neurospora crassa was expressed in Escherichia coli ..."); S0ENQ2 (carX, PMID 17293483: "... purified CarX ..."); G8Z9M3 (carS, PMID 21854466: "The transcripts of carS ... led to the formation of β-apo-12'-carotenal ..."). The acaA link keeps the former sentence of PMID 21854466, which names AcaA, so this paper now gives two sentences to two links.
+
+Unchanged (flagged for the form of the name only): Q7Z859 crtYB, three links (the abstract writes "crt YB").
+
+Route tiers, MEASURED with `path_possible`:
+
+| Route | Strict reading (tables) | Context reading (before this round) |
+|---|---|---|
+| core | gamma-carotene, beta-carotene, torulene: T3, Neurospora crassa alone | T1a, T1a, T1b (two organisms each) |
+| neurosporaxanthin | T3, Neurospora crassa alone | T1b (Mucor lusitanicus with Neurospora crassa) |
+| retinal | T3 (Fusarium fujikuroi with Neurospora crassa; 2 equal lists) | T1a (three organisms) |
+| astaxanthin | T3 for all four compounds (Mucor lusitanicus with Xanthophyllomyces dendrorhous) | T1b for three compounds, T3 for 3-hydroxyechinenone |
+| trisporoid, trisporoid_tsp3 | T3 | T3 |
+
+One link causes all carotenoid tier changes: Q9P885. It was the only GGPP synthase link above T3 (the other, al-3 P24322, is T3). The other five held links change organism lists only.
+In `melanin_ldopa` the same strict reading was applied in fix round 1: Q00667 (hmgA) was moved to the sentence that names HmgA (T1b), and the LAC1 dopamine link (Q55P57) is held at T3. If the owner accepts the context reading here, those two links need the same reading.

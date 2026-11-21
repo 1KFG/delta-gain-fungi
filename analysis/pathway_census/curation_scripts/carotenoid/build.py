@@ -51,11 +51,11 @@ Q = {
  "10951210": quote("10951210", "Using functional analyses in Escherichia coli and Mucor circinelloides", "other than fungi."),
  "10589832": quote("10589832", "Expression studies in different carotenogenic", "to beta-carotene."),
  "11862485": quote("11862485", "The mutants lack neurosporaxanthin", "and HPLC."),
- "11017770": quote("11017770", "The major reaction products were", "and lycopene."),
+ "11017770": quote("11017770", "Phytoene desaturase Al-1 from Neurospora crassa was expressed", "into the substrate phytoene."),
  "9079885": quote("9079885", "Heterologous expression of the Phycomyces gene", "phytoene to lycopene."),
- "10397832": quote("10397832", "We conclude that in X. dendrorhous", "single gene product."),
+ "10397832": quote("10397832", "A plasmid containing the geranylgeranyl diphosphate synthase", "cDNA from X. dendrorhous."),
  "19645721": quote("19645721", "HPLC analyses indicated a specific impairment", "four-step desaturation."),
- "17293483": quote("17293483", "The expression of the enzyme in beta-carotene-accumulating", "chromophore retinal."),
+ "17293483": quote("17293483", "Subsequent in vitro assays with heterologously expressed and purified CarX", "beta-apo-8'-carotenal."),
  "19584000": quote("19584000", "Heterologous overexpression and in vitro analyses", "two molecules of retinal."),
  "17493127": quote("17493127", "The purified CarT enzyme efficiently cleaved torulene", "synthetic substrates."),
  "17610084": quote("17610084", "The biological function was confirmed by in vitro assays", "aldehyde of neurosporaxanthin."),
@@ -64,7 +64,9 @@ Q = {
  "25504221": quote("25504221", "Introduction of the crtS on autonomously replicating plasmid", "was verified."),
  "16416328": quote("16416328", "Functional characterization of the enzyme by genetic modification", "carbon 3 and 4."),
  "18837978": quote("18837978", "CBSTr forms yellow colonies", "accumulating beta-carotene."),
- "21854466": quote("21854466", "According to these and other results", "by AcaA."),
+ "21854466": quote("21854466", "The transcripts of carS became more abundant", "cleavage product of β-carotene."),
+ # second sentence of PMID 21854466, for the acaA link (it names AcaA; one sentence per link)
+ "21854466:acaa": quote("21854466", "According to these and other results", "by AcaA."),
  "22445959": quote("22445959", "Phycomyces mutants in gene carS accumulate", "sexual process."),
  "17822929": quote("17822929", "The functionality of the tsp3 gene product", "tsp3 expression."),
  "18931040": quote("18931040", "The NADP-dependent 4-dihydrotrisporin-dehydrogenase is", "to trisporic acid."),
@@ -317,17 +319,19 @@ tsv(KB / "reaction_participant.tsv", COLUMNS["reaction_participant"],
 
 # ---------- step_reaction links ----------
 E_COLI = "heterologous expression in Escherichia coli; product identified"
+STRICT = ("Held at T3 (rule 1, strict reading, harmonisation round): the quoted sentence states the assay or the product and does not name the protein of the link ({}). "
+          "Under the context reading (the sentence before it names the protein) the link is T1a. Evidence in the abstract: {}")
 L = []  # step, reaction, accession, gene, tier, assay, pmid, with_quote
 def link(step, rid, acc, tier, assay, pmid, q=True):
     L.append((step, rid, acc, tier, assay, pmid, q))
 link("ggpp_synthase", "RHEA:17653", "P24322", "T3", "The abstract of PMID 7929398 reports GGPP synthase activity kept in an al-3 deletion mutant; it does not say how the activity was measured. Tier held at T3 until the full text is read.", "7929398", False)
-link("ggpp_synthase", "RHEA:17653", "Q9P885", "T1a", "functional analysis in Escherichia coli: GGPP synthase activity", "12695851")
-link("phytoene_synthase", "RHEA:34475", "P37295", "T1a", "al-2 cDNA cloned, expressed and functionally characterised; the sentence names no expression host", "16928467")
+link("ggpp_synthase", "RHEA:17653", "Q9P885", "T3", STRICT.format("it says 'the encoded protein'", "functional analysis in Escherichia coli: GGPP synthase activity. UniProt Q9P885 cites the paper for catalytic activity."), "12695851")
+link("phytoene_synthase", "RHEA:34475", "P37295", "T3", STRICT.format("it says 'The enzyme'", "al-2 cDNA cloned, expressed and functionally characterised; the sentence names no expression host."), "16928467")
 link("phytoene_synthase", "RHEA:34475", "Q8X0Z1", "T1b", "gene disruption in the fungus; mutants no longer produce phytoene", "12172798")
 link("phytoene_synthase", "RHEA:34475", "Q9P854", "T1c", "mutant sequences correlated with colour phenotypes (white, red)", "11172012")
 link("phytoene_synthase", "RHEA:34475", "Q9UUQ6", "T1a", "functional analyses in Escherichia coli and in Mucor circinelloides", "10951210")
 link("phytoene_synthase", "RHEA:34475", "Q7Z859", "T1a", "expression in carotenogenic Escherichia coli strains", "10589832")
-link("lycopene_cyclase", "RHEA:32219", "P37295", "T1a", "al-2 cDNA cloned, expressed and functionally characterised; the sentence names no expression host; the same abstract states that single cyclisations were preferentially catalysed", "16928467")
+link("lycopene_cyclase", "RHEA:32219", "P37295", "T3", STRICT.format("it says 'The enzyme'", "al-2 cDNA cloned, expressed and functionally characterised; the sentence names no expression host; the same abstract states that single cyclisations were preferentially catalysed."), "16928467")
 link("lycopene_cyclase", "RHEA:32239", "P37295", "T3", "The abstract of PMID 16928467 states that AL-2 preferentially does single cyclisations; formation of beta-carotene by AL-2 is not stated.", "16928467", False)
 link("lycopene_cyclase", C + "didehydrolycopene_to_torulene", "P37295", "T1b", "mutants in the cyclase domain of al-2, complemented by wild-type al-2; carotenoids analysed by column chromatography and HPLC; the accumulated carotenoid was not identified", "11862485")
 link("lycopene_cyclase", "RHEA:32219", "Q8X0Z1", "T3", "carRA disruptants are albino (no phytoene), so the cyclase function is not shown separately in the abstract", "12172798", False)
@@ -340,15 +344,15 @@ link("lycopene_cyclase", "RHEA:32239", "Q9UUQ6", "T3", "The abstract of PMID 109
 link("lycopene_cyclase", "RHEA:32219", "Q7Z859", "T1a", "expression in carotenogenic Escherichia coli strains: lycopene to beta-carotene", "10589832")
 link("lycopene_cyclase", "RHEA:32239", "Q7Z859", "T1a", "expression in carotenogenic Escherichia coli strains: lycopene to beta-carotene", "10589832")
 link("lycopene_cyclase", C + "didehydrolycopene_to_torulene", "Q7Z859", "T3", "inferred; not shown in the abstract", "10589832", False)
-link("phytoene_desaturase", "RHEA:30975", "P21334", "T1a", "AL-1 expressed in Escherichia coli; active enzyme isolated; products identified in vitro", "11017770")
-link("phytoene_desaturase", "RHEA:15585", "P21334", "T1a", "AL-1 expressed in Escherichia coli; active enzyme isolated; lycopene is one of the two major products", "11017770")
-link("phytoene_desaturase", "RHEA:15585", "P54982", "T1a", E_COLI + " (lycopene)", "9079885")
-link("phytoene_desaturase", "RHEA:15585", "O13506", "T1a", "crtI cDNA expressed in Escherichia coli with Erwinia uredovora GGPP synthase and phytoene synthase genes; lycopene accumulated", "10397832")
+link("phytoene_desaturase", "RHEA:30975", "P21334", "T1a", "AL-1 expressed in Escherichia coli; active enzyme isolated; up to five double bonds introduced into phytoene. The next sentence of the abstract names the major products 3,4-didehydrolycopene and lycopene", "11017770")
+link("phytoene_desaturase", "RHEA:15585", "P21334", "T1a", "AL-1 expressed in Escherichia coli; active enzyme isolated; up to five double bonds introduced into phytoene, which includes the four steps to lycopene. The next sentence of the abstract names lycopene as one of the two major products", "11017770")
+link("phytoene_desaturase", "RHEA:15585", "P54982", "T3", STRICT.format("it says 'the Phycomyces gene'", E_COLI + " (lycopene)."), "9079885")
+link("phytoene_desaturase", "RHEA:15585", "O13506", "T3", "Held at T3 (rule 1, strict reading, harmonisation round): the quoted sentence names the enzyme (the phytoene desaturase encoding cDNA from X. dendrorhous) and the assay set-up in Escherichia coli; it does not state the result. The next sentence of the abstract states that lycopene accumulated. No single sentence has the name and the product.", "10397832")
 link("phytoene_desaturase", "RHEA:30975", "Q8X0Z0", "T1b", "mutant carB allele (SF21) in the fungus with HPLC analysis; targeted allele replacement; expression of the mutant allele in Escherichia coli", "19645721")
-link("carx", "RHEA:32887", "S0ENQ2", "T1a", E_COLI + " (retinal, HPLC and GC-MS); in vitro assay with purified enzyme", "17293483")
+link("carx", "RHEA:32887", "S0ENQ2", "T1a", "in vitro assay with heterologously expressed and purified CarX: beta-carotene cleaved, retinal produced; the same abstract reports expression in beta-carotene-accumulating Escherichia coli", "17293483")
 link("carx", "RHEA:32887", None, "T1a", "heterologous overexpression; in vitro assay with purified enzyme; deletion and over-expression strains", "19584000")
 link("cart", "RHEA:31519", "A1KQY3", "T1a", "in vitro assay with purified enzyme", "17493127")
-link("cart", "RHEA:31519", "A7UXI1", "T1a", "in vitro assay with purified enzyme; targeted disruption", "17610084")
+link("cart", "RHEA:31519", "A7UXI1", "T3", STRICT.format("it says 'the purified enzyme'; the abstract names CAO-1 and CAO-2", "in vitro assay with purified enzyme; targeted disruption of cao-2."), "17610084")
 link("ylo1", "RHEA:31515", "Q1K615", "T1a", "in vitro assay with purified enzyme", "18627463")
 link("ylo1", "RHEA:31515", "F6IBC7", "T1a", "in vitro assay with heterologously expressed protein; expression in an Escherichia coli strain that makes beta-apo-4'-carotenal; targeted disruption", "21749649")
 HET = "crtS expressed in Mucor circinelloides (heterologous fungal host); echinenone and canthaxanthin detected"
@@ -364,7 +368,7 @@ for r in ("echinenone_3_hydroxylation", "3_hydroxyechinenone_4p_ketolation", "to
 link("crtr", "RHEA:55660", "B6D970", "T1b", "crtR deletion in the fungus; beta-carotene accumulates and astaxanthin is absent; CrtR is the electron donor of CrtS, not the catalyst", "18837978")
 link("cars", C + "beta_carotene_11p12p_cleavage", "G8Z9M3", "T1a", "carS expressed in beta-carotene-producing Escherichia coli; beta-apo-12'-carotenal formed", "21854466")
 link("cars", C + "beta_carotene_11p12p_cleavage", "G8Z9M3", "T1b", "carS mutants of the fungus accumulate beta-carotene", "22445959")
-link("acaa", C + "apo12p_carotenal_13_14_cleavage", "A0ABR3AZC2", "T3", "The abstract shows the reaction for Phycomyces AcaA (in vitro assay; joint expression with carS in Escherichia coli gave beta-apo-13-carotenone). No record ties the accession A0ABR3AZC2 to the assayed protein (reference verified: false), so the link is held at T3. Raise to T1a on a full-text check of PMID 21854466: compare the protein id given there with PHYBLDRAFT_180852 (identical sequence to A0ABR3AZC2, record OAD75744).", "21854466")
+link("acaa", C + "apo12p_carotenal_13_14_cleavage", "A0ABR3AZC2", "T3", "The abstract shows the reaction for Phycomyces AcaA (in vitro assay; joint expression with carS in Escherichia coli gave beta-apo-13-carotenone). No record ties the accession A0ABR3AZC2 to the assayed protein (reference verified: false), so the link is held at T3. Raise to T1a on a full-text check of PMID 21854466: compare the protein id given there with PHYBLDRAFT_180852 (identical sequence to A0ABR3AZC2, record OAD75744).", "21854466", "21854466:acaa")
 link("tsp3", C + "beta_carotene_11p12p_cleavage", "A5HXP5", "T3", "Loss of carotene in a carotene-producing Escherichia coli strain; the abstract names no product and does not say which species' tsp3 was expressed. The product is inferred from Phycomyces CarS.", "17822929")
 link("tsp2", C + "4_dihydrotrisporin_oxidation", "B9DR41", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It also states that enzyme activity is found only in the (-) mating type. It names no assay and no product. Tier held at T3; raise to T1 on a full-text check.", "18931040")
 link("tdh", C + "4_dihydromethyltrisporate_oxidation", "Q01213", "T3", "The abstract reports purification of the native enzyme from the (-) mating type, peptide sequencing and cloning of the gene. It names no assay and no product. Tier held at T3; raise to T1 on a full-text check.", "8828234")
@@ -376,7 +380,7 @@ for step, rid, acc, tier, assay, pmid, q in L:
     assert pubmed_abstract(pmid)["title"]
     if acc and pmid != _ :
         pass
-    qt = Q[pmid] if q else ""
+    qt = Q[q] if isinstance(q, str) else (Q[pmid] if q else "")  # q: True = sentence of the paper, str = key of another sentence
     assert tier in ("T3",) or qt, (step, rid)
     srows.append([step, rid, org, gene, acc or "", tier, assay, pmid, qt])
 srows.append(["torularhodin_formation", C + "torulene_to_torularhodin", "not assigned (no enzyme identified)", "unidentified", "", "T4",
@@ -387,7 +391,7 @@ tsv(ROOT / "tests" / "data" / "kb" / "carotenoid_quotes.tsv", ["step_id", "react
     [[r[0], r[1], r[4], r[5], r[6], r[7], r[8]] for r in srows if r[5] != "T4"])
 for r in srows:
     assert len(r[8]) <= 400, (r[7], len(r[8]))
-assert all(k in {r[7] for r in srows} for k in Q), [k for k in Q if k not in {r[7] for r in srows}]
+assert set(Q.values()) <= {r[8] for r in srows}, [k for k in Q if Q[k] not in {r[8] for r in srows}]
 
 # ---------- steps ----------
 STEPS = [  # id, name, ec, domains, copy, role, fused, optional, route, lineage_note, comment
@@ -398,7 +402,7 @@ STEPS = [  # id, name, ec, domains, copy, role, fused, optional, route, lineage_
  ("lycopene_cyclase", "lycopene beta-cyclase (N-terminal domain of al-2 / carRA / carRP / crtYB)", "5.5.1.19", ["TIGR03462", "PF18916"], "single", "catalytic", ["phytoene_synthase"], False, None,
   "References are cut to the cyclase region. InterPro places Pfam PF18916 on P37295 only among the five references; NCBIfam TIGR03462 is on all five. Neurospora AL-2 preferentially does single cyclisations (PMID 16928467).", "CarR-type lycopene cyclase domain"),
  ("phytoene_desaturase", "phytoene desaturase (al-1, carB, crtI)", None, ["PF01593"], "single", "catalytic", [], False, None,
-  "Two reactions. The number of desaturations cannot be read from the sequence family: four steps to lycopene are shown for Phycomyces carB (PMID 9079885) and X. dendrorhous crtI (PMID 10397832); five steps to 3,4-didehydrolycopene are shown for Neurospora AL-1 (PMID 11017770, with lycopene as the second major product) and Fusarium carB (PMID 19645721). Only the five-step enzyme gives torulene and neurosporaxanthin. A tier holds for the named organism and protein only.", "FAD-dependent amine oxidase family (CrtI type)"),
+  "Two reactions. The number of desaturations cannot be read from the sequence family: four steps to lycopene are reported for Phycomyces carB (PMID 9079885) and X. dendrorhous crtI (PMID 10397832), in sentences that do not name the protein with the product, so these two links are held at T3 under the strict reading of rule 1; five steps to 3,4-didehydrolycopene are shown for Neurospora AL-1 (PMID 11017770, T1a, with lycopene as the second major product) and Fusarium carB (PMID 19645721). Only the five-step enzyme gives torulene and neurosporaxanthin. A tier holds for the named organism and protein only.", "FAD-dependent amine oxidase family (CrtI type)"),
  ("carx", "beta-carotene cleaving oxygenase, retinal-forming (CarX, Cco1)", "1.13.11.63", ["PF03055"], "single", "catalytic", [], True, "retinal",
   "Linked to opsins. Not needed for neurosporaxanthin (PMID 17293483). carX and carT are close relatives with different substrates.", "carotenoid cleavage oxygenase family"),
  ("cart", "torulene cleaving oxygenase (CarT; cao-2 in Neurospora)", "1.13.11.59", ["PF03055"], "single", "catalytic", [], True, "neurosporaxanthin",

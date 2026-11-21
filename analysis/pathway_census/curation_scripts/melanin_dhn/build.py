@@ -58,7 +58,7 @@ def quote(pmid, start, end):
     return q
 
 Q = {
- "10501004": quote("10501004", "The main compound produced by an A. oryzae transformant", "as its tetraacetate."),
+ "10501004": quote("10501004", "The production of T4HN by the PKS1 transformant", "pentaketide T4HN."),
  "23261597": quote("23261597", "Here, in vitro characterization of Pks1", "hexaketide substrate."),
  "11179356": quote("11179356", "The resulting wdpks1Delta disruptants", "wild-type parent."),
  "11040426": quote("11040426", "The Alb1p PKS product in this heterologous expression system", "pentaketide T4HN."),
@@ -323,7 +323,7 @@ def link(step, rid, acc, tier, assay, pmid, q=True):
     L.append((step, rid, acc, tier, assay, pmid, q))
 NIGER = "complementation of the colour mutant and targeted disruption in the fungus; colour phenotype. The abstract does not name the product of the enzyme"
 SORD = "homology only: the abstract of PMID 17681008 reports isolation of the gene and its homology to DHN-melanin genes"
-link("thn_synthase", C + "t4hn_synthesis", "P79068", "T1a", "heterologous expression in Aspergillus oryzae; product isolated and identified as T4HN (tetraacetate)", "10501004")
+link("thn_synthase", C + "t4hn_synthesis", "P79068", "T1a", "heterologous expression in Aspergillus oryzae (host named in the first sentence of the abstract); the PKS1 transformant produces T4HN, isolated and identified as its tetraacetate", "10501004")
 link("thn_synthase", C + "t4hn_synthesis", "P79068", "T1a", "in vitro characterisation of Pks1; the thioesterase domain cyclises and deacetylates an enzyme-bound hexaketide", "23261597")
 link("hexaketide_pks", C + "at4hn_synthesis", "Q9Y7A7", "T1c", "gene disruption in the fungus; albino phenotype. The abstract does not show the product of WdPks1p; the hexaketide AT4HN is shown in the WdYG1 deletion mutant (PMID 18676950)", "11179356")
 link("heptaketide_pks", "RHEA:62652", "Q4WZA8", "T1a", "heterologous expression in Aspergillus oryzae; product identified as the heptaketide naphthopyrone", "11040426")
@@ -351,7 +351,7 @@ link("scytalone_dehydratase", "RHEA:24396", "P56221", "T1a", "continuous multiwa
 link("scytalone_dehydratase", "RHEA:24396", "A7DWM5", "T3", SORD + " (sdh). The same abstract reports RNA interference of sdh; it states no phenotype and no intermediate.", "17681008", False)
 link("scytalone_dehydratase", C + "vermelone_dehydration", "Q00455", "T3", "Inferred. UniProt Q00455 states dehydration of vermelone and cites PMID 8953707; the abstract of that paper does not show it.", "8953707", False)
 link("scytalone_dehydratase", C + "vermelone_dehydration", "O14434", "T3", "Inferred. Which enzyme dehydrates vermelone in Aspergillus fumigatus is not settled by the abstracts that were read (pathway review, O4).", "", False)
-link("scytalone_dehydratase", C + "vermelone_dehydration", "P56221", "T1a", "steady-state kinetics with the two physiological substrates scytalone and vermelone (wild type and Ser129 mutant). The abstract names the enzyme and not the organism; UniProt P56221 cites this paper for catalytic activity and for the mutagenesis of the residues named in the abstract. The abstract does not name the product", "10320327")
+link("scytalone_dehydratase", C + "vermelone_dehydration", "P56221", "T3", "Held at T3 (rule 1, strict reading, harmonisation round): the quoted sentence states steady-state kinetics with the two physiological substrates scytalone and vermelone (wild type and Ser129 mutant); it names no enzyme, no organism and no product. Only the first sentence of the abstract says scytalone dehydratase. UniProt P56221 cites this paper for catalytic activity and for the mutagenesis of the residues named in the abstract. Under the context reading the link is T1a.", "10320327")
 link("scytalone_dehydratase", C + "vermelone_dehydration", "A7DWM5", "T3", SORD + " (sdh).", "17681008", False)
 link("laccase_abr2", C + "dhn_polymerisation", "E9RBR0", "T1c", "gene deletion in the fungus; conidial colour changes from gray-green to brown. The abstract does not show the substrate of the laccase", "16988817")
 link("mco_abr1", C + "dhn_polymerisation", "Q4WZB4", "T3", "Held at T3. The quoted sentence reports altered conidial colour after disruption of each of the six cluster genes; it does not name abr1 (the abstract names abr1 as one of the six genes in other sentences). Raise to T1c if the user accepts the sentence for abr1. The abstract does not show the substrate of the oxidase.", "10515939", "10515939:abr1")
@@ -413,7 +413,7 @@ STEPS = [  # id, name, ec, domains, copy, role, optional, route, ko, lineage_not
   "short-chain dehydrogenase/reductase family (naphthol reductase, 3HNR type)"),
  ("scytalone_dehydratase", "scytalone dehydratase (SCD1, arp1, SDH1)", "4.2.1.94", ["PF02982"], "single", "catalytic", False, None, "K17740",
   "Two reactions with separate evidence: scytalone to 1,3,8-trihydroxynaphthalene (RHEA:24396) and vermelone to 1,8-dihydroxynaphthalene (curated). The step is listed twice in each PKS route for this reason. "
-  "Vermelone dehydration is shown for the Pyricularia oryzae enzyme only (PMID 10320327); for the other references it is inferred (T3), and for Aspergillus fumigatus the acting enzyme is not settled. "
+  "The abstract of PMID 10320327 reports kinetics of scytalone dehydratase with scytalone and vermelone, in a sentence that names no enzyme, so the vermelone link of the Pyricularia oryzae enzyme is held at T3 under the strict reading of rule 1 (T1a under the context reading); for the other references the reaction is inferred (T3), and for Aspergillus fumigatus the acting enzyme is not settled. "
   "The gene names differ by organism: SCD1 (Colletotrichum), arp1 (Aspergillus fumigatus), SDH1 (Pyricularia oryzae), sdh (Sordaria macrospora). sdh and SDH1 also name succinate dehydrogenase genes in other organisms (not checked here).",
   "scytalone dehydratase family"),
  ("laccase_abr2", "laccase of the DHN-melanin cluster, Abr2 type (abr2 of Aspergillus fumigatus)", None, ["PF07732", "PF00394", "PF07731"], "single", "catalytic", True, "polymerisation", "",

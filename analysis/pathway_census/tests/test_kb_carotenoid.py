@@ -51,7 +51,43 @@ def test_one_quoted_sentence_per_paper(kb):
     sr = kb["step_reaction"]
     sr = sr[sr["quote"].str.strip() != ""]
     for pmid, g in sr.groupby("pmid"):
-        assert g["quote"].nunique() == 1, pmid
+        # PMID 21854466 gives one sentence to the carS link and another to the acaA link
+        # (each names its own protein; rule 1 harmonisation round)
+        assert g["quote"].nunique() == (2 if pmid == "21854466" else 1), pmid
+    assert not sr.duplicated(["step_id", "reaction_id", "protein_accession", "pmid"]).any()
+    two = sr[sr["pmid"] == "21854466"].set_index("protein_accession")["quote"]
+    assert "carS" in two["G8Z9M3"] and "β-apo-12'-carotenal" in two["G8Z9M3"]
+    assert "AcaA" in two["A0ABR3AZC2"]
+
+
+# Rule 1, strict reading (harmonisation round): the quoted sentence itself must name the protein
+# of the link and state an assay or a product. Six carotenoid links whose sentence does not do
+# both are held at T3 with the sentence as context. Under the context reading they are T1a.
+HELD = {("ggpp_synthase", "RHEA:17653", "Q9P885"), ("phytoene_synthase", "RHEA:34475", "P37295"),
+        ("lycopene_cyclase", "RHEA:32219", "P37295"), ("phytoene_desaturase", "RHEA:15585", "P54982"),
+        ("phytoene_desaturase", "RHEA:15585", "O13506"), ("cart", "RHEA:31519", "A7UXI1")}
+
+
+def test_rule_1_strict_reading_held_links_and_better_sentences(kb):
+    sr = kb["step_reaction"]
+    for step, rid, acc in HELD:
+        row = sr[(sr["step_id"] == step) & (sr["reaction_id"] == rid)
+                 & (sr["protein_accession"] == acc)]
+        assert list(row["tier"]) == ["T3"], acc
+        assert row["assay"].iloc[0].startswith("Held at T3 (rule 1, strict reading"), acc
+        assert row["quote"].iloc[0], acc          # the sentence stays as context
+    # better sentences: the quote names the protein, the tier stays T1a
+    want = {("P21334", "RHEA:30975"): "Phytoene desaturase Al-1 from Neurospora crassa",
+            ("P21334", "RHEA:15585"): "Phytoene desaturase Al-1 from Neurospora crassa",
+            ("S0ENQ2", "RHEA:32887"): "purified CarX",
+            ("G8Z9M3", "CUR:carotenoid:beta_carotene_11p12p_cleavage"): "transcripts of carS"}
+    for (acc, rid), words in want.items():
+        row = sr[(sr["protein_accession"] == acc) & (sr["reaction_id"] == rid)
+                 & (sr["tier"] == "T1a")]
+        assert len(row) == 1 and words in row["quote"].iloc[0], acc
+    assert dict(sr["tier"].value_counts()) == {"T3": 21, "T1a": 15, "T1b": 9, "T1c": 3, "T4": 1}
+    # the only GGPP synthase links are T3, so no route with a product is above T3
+    assert set(sr[sr["step_id"] == "ggpp_synthase"]["tier"]) == {"T3"}
 
 
 def test_every_link_names_organism_gene_and_accession_of_a_yaml_ref(kb):
@@ -87,9 +123,10 @@ def test_masses_are_computed_from_formulas(kb):
 
 
 def test_phytoene_desaturase_two_reactions_with_organism_bound_tiers(kb):
-    """Each tier is bound to one protein and one paper. The five-step reaction is T1a for
-    Neurospora AL-1 only. The four-step reaction is T1a for Phycomyces carB; the abstracts read
-    on 2026-11-21 also show lycopene for X. dendrorhous crtI and as a major product of AL-1."""
+    """Each tier is bound to one protein and one paper. Both reactions are T1a for Neurospora
+    AL-1 only (the sentence names Al-1 and up to five desaturations). Phycomyces carB and
+    X. dendrorhous crtI are held at T3 under the strict reading of rule 1: their abstracts show
+    lycopene, in sentences that do not name the protein together with the product."""
     sr = kb["step_reaction"]
     pds = sr[sr["step_id"] == "phytoene_desaturase"]
     assert set(pds["reaction_id"]) == {"RHEA:15585", "RHEA:30975"}
@@ -97,8 +134,11 @@ def test_phytoene_desaturase_two_reactions_with_organism_bound_tiers(kb):
     assert list(five["protein_accession"]) == ["P21334"]
     assert list(five["pmid"]) == ["11017770"]
     four = pds[(pds["reaction_id"] == "RHEA:15585") & (pds["tier"] == "T1a")]
-    assert dict(zip(four["protein_accession"], four["pmid"])) == {
-        "P54982": "9079885", "O13506": "10397832", "P21334": "11017770"}
+    assert dict(zip(four["protein_accession"], four["pmid"])) == {"P21334": "11017770"}
+    held = pds[(pds["reaction_id"] == "RHEA:15585") & (pds["tier"] == "T3")
+               & pds["assay"].str.startswith("Held at T3")]
+    assert dict(zip(held["protein_accession"], held["pmid"])) == {
+        "P54982": "9079885", "O13506": "10397832"}
     # every desaturase link names its own protein and paper; no tier is shared by orthology
     assert not pds.duplicated(["reaction_id", "protein_accession"]).any()
     assert (pds["pmid"] != "").all()
@@ -146,15 +186,19 @@ def test_astaxanthin_route_is_a_grid(kb):
 MC, NC, XD = "mucor lusitanicus", "neurospora crassa", "xanthophyllomyces dendrorhous"
 FF, PB, BT = "fusarium fujikuroi", "phycomyces blakesleeanus", "blakeslea trispora"
 ROUTE_PRODUCTS = {
-    "core": {"CHEBI:27740": ("T1a", [MC, NC], 3),       # gamma-carotene; also MC+PB, MC+XD
-             "CHEBI:17579": ("T1a", [MC, XD], 1),       # beta-carotene
-             "CHEBI:9638": ("T1b", [MC, NC], 1)},       # torulene
-    "neurosporaxanthin": {"CHEBI:7540": ("T1b", [MC, NC], 1)},
-    "retinal": {"CHEBI:17898": ("T1a", [FF, MC, XD], 2)},   # also MC + Ustilago maydis + XD
-    "astaxanthin": {"CHEBI:3362": ("T1b", [MC, XD], 1),     # canthaxanthin
-                    "CHEBI:80216": ("T1b", [MC, XD], 1),    # phoenicoxanthin
-                    "CHEBI:40968": ("T1b", [MC, XD], 1),    # astaxanthin
-                    "CHEBI:80215": ("T3", [MC, XD], 2)},    # 3-hydroxyechinenone; also NC+XD
+    # Rule 1 harmonisation round: both GGPP synthase links are T3 (Q9P885 is held), so every
+    # route with a product is T3. Before the round: core T1a/T1a/T1b, neurosporaxanthin T1b,
+    # retinal T1a, astaxanthin T1b (one compound T3). Neurospora crassa alone is now the best
+    # path of core and neurosporaxanthin (fewest organisms at T3).
+    "core": {"CHEBI:27740": ("T3", [NC], 1),            # gamma-carotene
+             "CHEBI:17579": ("T3", [NC], 1),            # beta-carotene
+             "CHEBI:9638": ("T3", [NC], 1)},            # torulene
+    "neurosporaxanthin": {"CHEBI:7540": ("T3", [NC], 1)},
+    "retinal": {"CHEBI:17898": ("T3", [FF, NC], 2)},
+    "astaxanthin": {"CHEBI:3362": ("T3", [MC, XD], 2),      # canthaxanthin
+                    "CHEBI:80216": ("T3", [MC, XD], 2),     # phoenicoxanthin
+                    "CHEBI:40968": ("T3", [MC, XD], 2),     # astaxanthin
+                    "CHEBI:80215": ("T3", [MC, XD], 2)},    # 3-hydroxyechinenone
     # 13-apo-beta-carotenone; acaA is held at T3. Path: Mucor carG and carRP, Phycomyces carB,
     # carRA (T1c), carS and acaA. The Neurospora plus Phycomyces path is the second equal one.
     "trisporoid": {"CHEBI:53175": ("T3", [MC, PB], 2)},
@@ -181,8 +225,9 @@ def test_every_declared_route_gives_its_expected_products(kb):
                 zip(got["compound"], got["min_tier"], got["organisms"], got["single_organism"],
                     got["n_equal_paths"])}
         assert have == {c: (t, o, len(o) == 1, n) for c, (t, o, n) in want.items()}, rid
-        # no route tier of the unfiltered call holds for one organism
-        assert not got["single_organism"].any(), rid
+        # only core and neurosporaxanthin hold for one organism (Neurospora crassa, T3)
+        assert set(got["single_organism"]) <= {rid in ("core", "neurosporaxanthin")}, rid
+        assert set(got["min_tier"]) <= {"T3"}, rid
 
 
 def test_only_neurospora_completes_a_route_alone(kb):
