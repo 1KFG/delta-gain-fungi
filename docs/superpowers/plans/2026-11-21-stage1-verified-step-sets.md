@@ -37,7 +37,7 @@
 
 ---
 
-### Task S1: Schema v2 for pathway definitions
+### Task 1 (S1): Schema v2 for pathway definitions
 
 **Files:**
 - Modify: `analysis/pathway_census/pathway_census/defs.py`, `analysis/pathway_census/pathway_census/quality.py` (only the any-of handling), `analysis/pathway_census/pathways/carotenoid.yaml` (rename keys only)
@@ -59,7 +59,7 @@
 
 ---
 
-### Task S2: Flat knowledge tables and public-database fetchers
+### Task 2 (S2): Flat knowledge tables and public-database fetchers
 
 **Files:**
 - Create: `analysis/pathway_census/pathway_census/kb.py`, `analysis/pathway_census/pathway_census/kbsources.py`, `analysis/pathway_census/kb/README.md`
@@ -92,7 +92,7 @@
 
 ---
 
-### Task S3: Carotenoid curation (model: curation tier)
+### Task 3 (S3): Carotenoid curation (model: curation tier)
 
 **Files:**
 - Modify: `analysis/pathway_census/pathways/carotenoid.yaml`; `refs/carotenoid/*.faa`; `refs/carotenoid/provenance.tsv`; `refs/carotenoid/UNVERIFIED.md`
@@ -117,7 +117,7 @@
 
 ---
 
-### Task S4: DHN-melanin curation (model: curation tier)
+### Task 4 (S4): DHN-melanin curation (model: curation tier)
 
 **Files:**
 - Create: `analysis/pathway_census/pathways/melanin_dhn.yaml`, `analysis/pathway_census/refs/melanin_dhn/*.faa`, `refs/melanin_dhn/provenance.tsv`, `refs/melanin_dhn/decoys/`, `refs/melanin_dhn/UNVERIFIED.md`, `analysis/pathway_census/kb/melanin_dhn/` TSVs
@@ -139,7 +139,7 @@
 
 ---
 
-### Task S5: L-DOPA melanin and other melanin routes (model: curation tier)
+### Task 5 (S5): L-DOPA melanin and other melanin routes (model: curation tier)
 
 **Files:**
 - Create: `analysis/pathway_census/pathways/melanin_ldopa.yaml`, `refs/melanin_ldopa/`, `kb/melanin_ldopa/`
@@ -158,7 +158,7 @@
 
 ---
 
-### Task S6: Independent reference verification
+### Task 6 (S6): Independent reference verification
 
 **Files:**
 - Create: `analysis/pathway_census/bin/verify_kb.py`, `analysis/pathway_census/kb/VERIFICATION_REPORT.md` (generated, committed)
@@ -175,7 +175,7 @@
 
 ---
 
-### Task S7: Review packet for the user
+### Task 7 (S7): Review packet for the user
 
 **Files:**
 - Create: `docs/superpowers/plans/2026-11-21-stage1-review-packet.md`
