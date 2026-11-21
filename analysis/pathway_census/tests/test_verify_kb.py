@@ -103,10 +103,17 @@ def world(tmp_path, ref=None, link=None, decoys=None, fasta=None, compound=None,
     return ypath, kbd, tmp_path / "cache"
 
 
-def run(tmp_path, fake=None, **kw):
+def run(tmp_path, fake=None, aliases=None, **kw):
     y, k, c = world(tmp_path, **kw)
     fake = fake or Fake({"16416328": pubmed_xml()})
-    return vk.verify_pathway(y, k, fetch=fake, cache_dir=c)
+    af = None
+    if aliases is not None:
+        af = tmp_path / "aliases.tsv"
+        cols = ["pathway", "step_id", "reaction_id", "protein_accession", "organism", "pmid", "alias", "reason", "adjudicated_by"]
+        base = {"pathway": "tp", "step_id": "s1", "reaction_id": "R1", "protein_accession": "Q3HR17",
+                "organism": "Phaffia rhodozyma", "pmid": "16416328", "reason": "test", "adjudicated_by": "test"}
+        pd.DataFrame([{**base, **a} for a in aliases], columns=cols).to_csv(af, sep="\t", index=False)
+    return vk.verify_pathway(y, k, fetch=fake, cache_dir=c, alias_file=af or tmp_path / "none.tsv")
 
 
 def row(df, check, subject_part=""):
@@ -381,6 +388,72 @@ def test_genbank_version_mismatch_fails(tmp_path):
     df = run(tmp_path, fake=fake, ref={"accession": "WEV88679.2", "species": "Phaffia rhodozyma",
                                        "gene_name": "DDGS", "pmid": "36983003"}, link={"tier": "T3", "quote": ""})
     assert row(df, "ref_exists").status == "fail"
+
+
+NOGENE = "A gene has been cloned from Xanthophyllomyces dendrorhous."
+
+
+def test_alias_passes_when_name_match_fails(tmp_path):
+    df = run(tmp_path, link={"quote": NOGENE}, aliases=[{"alias": "Xanthophyllomyces dendrorhous"}])
+    r = row(df, "link_quote_names_protein")
+    assert r.status == "pass" and r.found == "alias (reviewed): Xanthophyllomyces dendrorhous"
+    assert (df.check == "alias_unused").sum() == 0
+
+
+def test_alias_not_in_quote_fails(tmp_path):
+    df = run(tmp_path, link={"quote": NOGENE}, aliases=[{"alias": "nothere"}])
+    r = row(df, "link_quote_names_protein")
+    assert r.status == "fail" and "alias" in r.found and "nothere" in r.found
+
+
+def test_alias_must_be_whole_token(tmp_path):
+    df = run(tmp_path, link={"quote": NOGENE}, aliases=[{"alias": "Xanthophyllomyce"}])
+    assert row(df, "link_quote_names_protein").status == "fail"
+
+
+def test_unused_alias_is_error_row(tmp_path):
+    df = run(tmp_path, link={"quote": NOGENE}, aliases=[{"alias": "dendrorhous", "pmid": "1"}])
+    assert row(df, "alias_unused").status == "fail"
+    assert row(df, "link_quote_names_protein").status == "fail"
+
+
+def test_alias_of_other_pathway_ignored(tmp_path):
+    df = run(tmp_path, aliases=[{"alias": "x", "pathway": "other"}])
+    assert (df.check == "alias_unused").sum() == 0
+
+
+def test_alias_not_consulted_when_name_matches(tmp_path):
+    df = run(tmp_path, aliases=[{"alias": "zzz"}])
+    assert row(df, "link_quote_names_protein").found.startswith("names ")
+
+
+def test_denylisted_protein_name_does_not_pass(tmp_path, monkeypatch):
+    ab = "Here astaxanthin synthetase was studied."
+    fake = Fake({"16416328": pubmed_xml(abstract=ab)})
+    df = run(tmp_path, fake=fake, link={"quote": ab})
+    assert row(df, "link_quote_names_protein").status == "pass"
+    monkeypatch.setattr(vk, "PROTEIN_NAME_DENYLIST", {"Q3HR17": {"astaxanthin synthetase"}})
+    df = run(tmp_path / "d", fake=fake, link={"quote": ab}) if (tmp_path / "d").mkdir() is None else None
+    assert row(df, "link_quote_names_protein").status == "fail"
+
+
+def test_q12634_denylist_constant():
+    assert "tetrahydroxynaphthalene reductase" in vk.PROTEIN_NAME_DENYLIST["Q12634"]
+
+
+def test_alias_file_entries_occur_in_quotes():
+    """Fixture check on the reviewed file: each entry matches a link of the real table and its alias
+    is a whole token of that link's quote."""
+    import re as _re
+    from pathway_census.kb import load_kb
+    al = pd.read_csv(KB / "quote_name_aliases.tsv", sep="\t", dtype=str, keep_default_na=False)
+    assert len(al) == 11 and (al.adjudicated_by != "").all() and (al.reason != "").all()
+    for _, a in al.iterrows():
+        sr = load_kb(ROOT / "kb" / a.pathway)["step_reaction"]
+        m = sr[(sr.step_id == a.step_id) & (sr.reaction_id == a.reaction_id) & (sr.protein_accession == a.protein_accession)
+               & (sr.organism == a.organism) & (sr.pmid == a.pmid)]
+        assert len(m) == 1, a.to_dict()
+        assert _re.search(r"(?<![A-Za-z0-9])" + _re.escape(a.alias) + r"(?![A-Za-z0-9])", m.iloc[0].quote)
 
 
 def test_report_counts_exact():

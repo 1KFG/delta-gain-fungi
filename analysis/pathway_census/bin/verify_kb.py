@@ -39,6 +39,12 @@ from pathway_census.kb import load_kb, species_key  # noqa: E402
 from pathway_census.kbsources import KbFetchError  # noqa: E402
 
 PKG = Path(__file__).resolve().parent.parent
+ALIAS_FILE = PKG / "tests" / "data" / "kb" / "quote_name_aliases.tsv"
+ALIAS_KEYS = ["step_id", "reaction_id", "protein_accession", "organism", "pmid"]
+# UniProt protein names that must not count as the name of this accession in a quote. Q12634
+# (3HNR) carries the UniProt name of the other enzyme: in PMID 10956664 "tetrahydroxynaphthalene
+# reductase" is Q9HFV6.
+PROTEIN_NAME_DENYLIST = {"Q12634": {"tetrahydroxynaphthalene reductase"}}
 PATHWAYS = ("carotenoid", "melanin_dhn", "melanin_ldopa", "mycosporine")
 COLS = ["check", "subject", "expected", "found", "status"]
 UNIPROT_RE = re.compile(r"^([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})$")
@@ -109,8 +115,10 @@ def not_found(exc: KbFetchError) -> bool:
 
 
 class Verifier:
-    def __init__(self, fetch=None, cache_dir=None):
+    def __init__(self, fetch=None, cache_dir=None, aliases=None):
         self.fetch, self.cache_dir = fetch, cache_dir
+        self.aliases = aliases or []        # reviewed alias rows (dicts) of this pathway
+        self.alias_used: set[int] = set()
         self.rows: list[dict] = []
         self._rec: dict = {}
         self._pm: dict = {}
@@ -292,13 +300,17 @@ class Verifier:
         self.add("ref_record_cites_pmid", subject, f"GenBank record cites PMID {pmid}",
                  "no GenBank REFERENCE title equals the PubMed title '%s'" % a["title"], "fail")
 
-    def names_quote(self, rec, gene, quote):
+    def alias_entries(self, r):
+        """Indices of alias rows whose key columns equal the link's."""
+        return [i for i, a in enumerate(self.aliases) if all(a[k] == str(r[k]) for k in ALIAS_KEYS)]
+
+    def names_quote(self, rec, gene, quote, denied=()):
         """First candidate name found in the quote as a whole token. Names of 3 or more characters
         match case-insensitively (a hyphen may be a space or absent); 1-2 characters match
         case-sensitively."""
         cands = {gene} if gene else set()
         if rec:
-            cands |= {n for _, n in rec["names"]} | set(rec["protein_names"])
+            cands |= {n for _, n in rec["names"]} | {n for n in rec["protein_names"] if n.casefold() not in denied}
         for c in sorted(cands, key=len, reverse=True):
             if not c:
                 continue
@@ -352,12 +364,25 @@ class Verifier:
         self.add("link_quote_one_sentence", subj, "one sentence", "one sentence" if one else "more than one sentence: " + quote[:120],
                  "pass" if one else "fail")
         if tier in ("T1a", "T1b", "T1c"):
-            hit = self.names_quote(rec, r["gene_name"], quote)
-            if hit:
+            hit = self.names_quote(rec, r["gene_name"], quote, PROTEIN_NAME_DENYLIST.get(acc, ()))
+            ents = self.alias_entries(r)
+            self.alias_used.update(ents)
+            alias_hit = None
+            if not hit:
+                for i in ents:
+                    al = self.aliases[i]["alias"]
+                    if re.search(r"(?<![A-Za-z0-9])" + re.escape(al) + r"(?![A-Za-z0-9])", quote):
+                        alias_hit = al
+                        break
+            if alias_hit:
+                self.add("link_quote_names_protein", subj, "quote names the gene or protein",
+                         f"alias (reviewed): {alias_hit}", "pass")
+            elif hit:
                 self.add("link_quote_names_protein", subj, "quote names the gene or protein", f"names '{hit}'", "pass")
             else:
                 self.add("link_quote_names_protein", subj, f"gene '{r['gene_name']}' or a protein name of {acc or 'the record'}",
-                         "quote does not name protein" + (" (flag for review, tier %s)" % tier if tier != "T1a" else ""),
+                         ("quote does not name protein; reviewed alias(es) not in the quote: "
+                          + ", ".join(self.aliases[i]["alias"] for i in ents) if ents else "quote does not name protein") + (" (flag for review, tier %s)" % tier if tier != "T1a" else ""),
                          "fail" if tier == "T1a" else "unchecked")
 
     def check_compound(self, r):
@@ -389,13 +414,18 @@ class Verifier:
 
 
 def verify_pathway(yaml_path: Path, kb_dir: Path, *, fetch=None, refs_dir: Path | None = None,
-                   cache_dir: Path | None = None) -> pd.DataFrame:
+                   cache_dir: Path | None = None, alias_file: Path | None = None) -> pd.DataFrame:
     """Run all checks. ``fetch`` (url -> bytes/str) replaces the network; None uses the real
     cached rate-limited fetchers of ``kbsources``."""
     p = load_pathway(Path(yaml_path), refs_dir)
     refs = Path(p.refs_dir)
     kb = load_kb(Path(kb_dir))
-    v = Verifier(fetch, cache_dir)
+    af = Path(alias_file) if alias_file is not None else ALIAS_FILE
+    aliases = []
+    if af.is_file():
+        at = pd.read_csv(af, sep="\t", dtype=str, keep_default_na=False)
+        aliases = [dict(x) for _, x in at.iterrows() if x["pathway"] == p.id]
+    v = Verifier(fetch, cache_dir, aliases)
     prov: dict[tuple[str, str], tuple[int, int]] = {}
     pf = refs / "provenance.tsv"
     if pf.is_file():
@@ -445,6 +475,11 @@ def verify_pathway(yaml_path: Path, kb_dir: Path, *, fetch=None, refs_dir: Path 
                 v.check_pmid_exists("decoy_pmid_exists", subj, d.pmid)
     for _, r in kb["step_reaction"].iterrows():
         v.check_link(r)
+    for i, a in enumerate(aliases):
+        if i not in v.alias_used:
+            v.add("alias_unused", f"{a['step_id']}|{a['reaction_id']}|{a['protein_accession']}|{a['pmid']}",
+                  "alias entry matches a link on step, reaction, accession, organism and PMID",
+                  f"no link matches (alias '{a['alias']}')", "fail")
     for _, r in kb["compound"].iterrows():
         v.check_compound(r)
     return pd.DataFrame(v.rows, columns=COLS)
@@ -462,6 +497,7 @@ def render_report(results: dict[str, pd.DataFrame]) -> str:
            "- `quote does not name protein` is a fail for tier T1a and an unchecked review flag for T1b and T1c.",
            "- Gene names also match ORF names and ordered locus names. The kind that matched is in the `found` column.",
            "- The protein-name match uses UniProt protein names. A generic name (for example `Polyketide synthase`) matches any quote that contains it, so a T1 quote about a different enzyme of the same kind can pass. Known limit.",
+           "- Quote-name passes marked `alias (reviewed)` use `tests/data/kb/quote_name_aliases.tsv` (one reviewed entry per link). The alias is a whole token of the quote. Some are descriptive names, not gene names (for example `the second reductase` for Q9HFV6). The UniProt name of Q12634 is denied because in PMID 10956664 it names Q9HFV6.",
            "- `pubchem_block1` and `pubchem_formula` compare compound.tsv with the PubChem compound found by the same InChIKey. They show that PubChem has that compound and agrees on the first block and the formula.",
            "- Tiers, quotes and step sets were not changed by this check.", ":::", "",
            "## Counts per pathway", "", "| pathway | checks | pass | fail | unchecked |", "|---|---|---|---|---|"]
