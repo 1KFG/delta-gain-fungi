@@ -270,7 +270,7 @@ def test_curated_vocab(tables):
     ("reaction", 0, "reaction[R1]: duplicate key"),
     ("reaction_participant", 0, "reaction_participant[R1,CHEBI:A,substrate]: duplicate key"),
     ("step", 0, "step[s1]: duplicate key"),
-    ("step_reaction", 0, "step_reaction[s1,R1,Synthetica one,geneA]: duplicate key"),
+    ("step_reaction", 0, "step_reaction[s1,R1,Synthetica one,geneA,ACC1,1]: duplicate key"),
 ])
 def test_duplicate_keys(tables, name, row_idx, msg):
     df = tables[name]
@@ -332,3 +332,32 @@ def test_path_all_substrates_met_takes_weakest(tables):
 def test_path_unknown_step_raises(tables):
     with pytest.raises(ValueError, match="unknown step_id 'sX'"):
         kb.path_possible(tables, ["s1", "sX"])
+
+
+def _dup_row(tables, **kw):
+    row = tables["step_reaction"].iloc[0].to_dict()
+    row.update(kw)
+    tables["step_reaction"] = pd.concat([tables["step_reaction"], pd.DataFrame([row])], ignore_index=True)
+
+
+def test_same_enzyme_different_pmid_is_valid(tables):
+    _dup_row(tables, pmid="99", quote="another synthetic quote")
+    assert kb.validate_kb(tables) == []
+
+
+def test_two_accessions_one_gene_name_is_valid(tables):
+    _dup_row(tables, protein_accession="ACC1B")
+    assert kb.validate_kb(tables) == []
+
+
+def test_exact_six_field_duplicate_fails(tables):
+    _dup_row(tables, assay="different assay")  # assay is not part of the key
+    assert kb.validate_kb(tables) == ["step_reaction[s1,R1,Synthetica one,geneA,ACC1,1]: duplicate key"]
+
+
+def test_path_skips_reaction_with_no_noncofactor_substrate_after_first_step(tables):
+    p = tables["reaction_participant"]
+    p = p[~((p.reaction_id == "R2") & (p.role == "substrate"))]
+    tables["reaction_participant"] = p.reset_index(drop=True)
+    _add_part(tables, "R2", "CHEBI:A", "cofactor")
+    assert kb.path_possible(tables, ["s1", "s2"]).empty

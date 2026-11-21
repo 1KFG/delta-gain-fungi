@@ -220,7 +220,8 @@ def validate_kb(tables: dict[str, pd.DataFrame]) -> list[str]:
 
     keys = {"compound": ["chebi_id"], "reaction": ["reaction_id"],
             "reaction_participant": ["reaction_id", "compound", "role"], "step": ["step_id"],
-            "step_reaction": ["step_id", "reaction_id", "organism", "gene_name"]}
+            "step_reaction": ["step_id", "reaction_id", "organism", "gene_name",
+                              "protein_accession", "pmid"]}
     for name, cols in keys.items():
         dup = tables[name][tables[name].duplicated(cols, keep="first")]
         for _, r in dup.iterrows():
@@ -234,7 +235,8 @@ def path_possible(tables: dict[str, pd.DataFrame], step_ids: list[str]) -> pd.Da
     Returns DataFrame ``compound, min_tier, steps`` for the products of the LAST step.
     A link (step, reaction) of step k+1 is usable when ALL non-cofactor substrates of its reaction
     are products of the previous step's usable links (``reaction_participant``). Cofactor rows are
-    ignored on both sides. ``min_tier`` is the weakest tier along the path (order
+    ignored on both sides. A reaction with zero non-cofactor substrates after the first step is
+    skipped (it can never be reached). ``min_tier`` is the weakest tier along the path (order
     T1a < T1b < T1c < T2 < T3 < T4, weakest = highest index; across the substrates of one link
     the weakest also counts). Links with tier T4 are dropped, so a path through a T4 link is
     excluded. When several links give the same product, the strongest weakest-tier is kept.
