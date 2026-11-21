@@ -1,0 +1,4 @@
+reaction_id	ec	kegg_rn	direction	curated	note	rhea_id
+R1	1.1.1.1		forward	true	synthetic	
+R2	1.1.1.2		forward	true	synthetic	
+R3	1.1.1.3		forward	false	synthetic	RHEA:1

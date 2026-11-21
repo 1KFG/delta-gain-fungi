@@ -1,0 +1,4 @@
+step_id	reaction_id	organism	gene_name	protein_accession	tier	assay	pmid	quote
+s1	R1	Synthetica one	geneA	ACC1	T1a	in vitro	1	synthetic quote
+s2	R2	Synthetica one	geneB	ACC2	T1c	in vivo	2	synthetic quote
+s3	R3	Synthetica two	geneC	ACC3	T3	inferred		

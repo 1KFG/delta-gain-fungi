@@ -52,3 +52,6 @@ __pycache__/
 # Exception: the Y1000+ deposition join's small per-family tables (~60 KB), which are the
 # evidence for analysis/delta_gain_funnel/REPORT.md and belong with it.
 !analysis/delta_gain_funnel/out/
+
+# pathway_census fetcher cache (public-database responses)
+analysis/pathway_census/.cache/

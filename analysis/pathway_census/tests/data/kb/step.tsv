@@ -1,0 +1,4 @@
+step_id	route	ko	hmm_id	family	optional
+s1	r		h1	famA	false
+s2	r		h2	famB	false
+s3	r		h3	famC	false

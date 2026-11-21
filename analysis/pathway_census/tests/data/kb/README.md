@@ -1,0 +1,17 @@
+# Test fixtures for kb and kbsources
+
+## Captured from public APIs (real data)
+
+Captured once on 2026-11-21 from the HPCC login node with curl, User-Agent `pathway-census/0.1 (BFD-HPCC-master agent)`. Each file is the raw response (all under 30 KB). Tests never use the network.
+
+| File | Source URL |
+|---|---|
+| `chebi_40968.json` | https://www.ebi.ac.uk/chebi/backend/api/public/compound/40968/ (astaxanthin) |
+| `pubchem_MQZIGYBFDRPAKN.json` | https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/inchikey/MQZIGYBFDRPAKN-UWFIBFSHSA-N/property/InChIKey,MolecularFormula,ExactMass/JSON |
+| `uniprot_Q3HR17.json` | https://rest.uniprot.org/uniprotkb/Q3HR17.json (length 557, unreviewed) |
+| `uniprot_P21334.json` | https://rest.uniprot.org/uniprotkb/P21334.json (Neurospora al-1) |
+| `pubmed_16416328.xml` | https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=16416328&retmode=xml |
+
+## Synthetic (invented for validator tests, not chemistry)
+
+`compound.tsv`, `reaction.tsv`, `reaction_participant.tsv`, `step.tsv`, `step_reaction.tsv` form a small valid knowledge base. Compound ids, InChIKeys, SMILES, organisms, genes, accessions and quotes are placeholders. Formulas and masses are real values for the stated formulas. The tests copy these tables and break one rule at a time.
