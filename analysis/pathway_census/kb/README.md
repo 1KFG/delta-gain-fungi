@@ -1,6 +1,6 @@
 # Flat knowledge tables
 
-One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid`, `melanin_dhn` and `melanin_ldopa` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
+One directory per pathway: `kb/<pathway>/` with five TSV files (UTF-8, header required). Tables exist for `carotenoid`, `melanin_dhn`, `melanin_ldopa` and `mycosporine` (stage 1, 2026-11-21); fixtures are in `tests/data/kb/`.
 
 | File | Columns |
 |---|---|
@@ -71,6 +71,9 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 | Pholiota microspora | 1538424 | Pholiota microspora | `pholiota microspora` |
 | Pholiota nameko | 1538424 | Pholiota microspora | `pholiota microspora` (alias) |
 | Trametes sanguinea | 158606 | Trametes sanguinea | `trametes sanguinea` |
+| Nostoc punctiforme | 272131 | Nostoc punctiforme | `nostoc punctiforme` |
+| Trichormus variabilis | 264691 | Trichormus variabilis | `trichormus variabilis` |
+| Anabaena variabilis | 264691 | Trichormus variabilis | `trichormus variabilis` (alias) |
 
 - Key choice: for taxid 29924 the key is the NCBI scientific name, because the old names point to two other species. For taxids 264483 and 5270 the key is the name used in the cited papers, not the current NCBI scientific name.
 - Limit: a name without an alias is keyed by its first two words. A forma or variety that NCBI holds as its own taxon is kept apart only if it is in the alias table. Check the taxid before adding organisms from a new pathway.
@@ -100,3 +103,20 @@ Code: `pathway_census/kb.py` (`load_kb`, `validate_kb`, `formula_mass`, `path_po
 - Every link is in `tests/data/kb/melanin_ldopa_quotes.tsv` (change detector; columns step_id, reaction_id, protein_accession, pmid, quote, tier, assay).
 - Organism keys: serotype D references have the key `cryptococcus deneoformans` (NCBI taxid 40410; alias `cryptococcus neoformans var. neoformans`), serotype A references `cryptococcus neoformans` (taxid 5207). The papers call both Cryptococcus neoformans; the keys are not merged. `Pycnoporus sanguineus` (the name in PMID 16151802) has no NCBI taxid hit, so it is not an alias of `trametes sanguinea`.
 - Every route result of this pathway holds for one organism (`single_organism` True).
+
+## Conventions used by the mycosporine tables (`kb/mycosporine/`)
+
+- **Source of the step set.** The steps come from the fungal literature: DDGS, OMT and ATPG of one cluster in Phaffia rhodozyma UCD 67-385 (PMID 36983003). The set is not the cyanobacterial gene list. It has no second-amine step (MysD or an NRPS-like enzyme), and its ATP-grasp step makes mycosporine-glutaminol.
+- **Fungal references are GenBank proteins.** UniProtKB has no entry for the three Phaffia proteins, so the accessions are GenBank protein ids (WEV88679.1, WEV88680.1, WEV88681.1; CDS of the nucleotide record OQ547787). `organism` and `species` are the GenBank organism with the strain: `Phaffia rhodozyma (strain UCD 67-385)`. `provenance.tsv` names GenBank in `source_database`. These references are `verified: false`, because the rule for `verified: true` needs a UniProt entry.
+- **Bacterial references and the T2 tier.** Cyanobacterial proteins (Nostoc punctiforme, Trichormus variabilis) are references for tree placement. Their links are T2 or T3 and are never fungal evidence. A T2 link needs a quoted abstract sentence that names the gene of the protein (PMID 21890703 names NpR5600, NpR5599 and NpR5598). A sentence that names only the enzyme class is held at T3 (Q3M6C3). A T1 link needs a fungal protein and the fungal paper; a test checks both.
+- **The bacterial ATP-grasp link is on another reaction.** MysC ligates glycine. Its link points to `CUR:mycosporine:mycosporine_glycine_formation`, not to the fungal reaction `CUR:mycosporine:mycosporine_glutaminol_formation`.
+- **Gene names of bacterial entries.** UniProt gives these entries an ordered locus name only (for example Npun_R5600). `kbsources.uniprot_entry` does not read ordered locus names; the curation scripts read them from the full UniProt record. The papers write the short form (NpR5600).
+- **4-deoxygadusol has no ChEBI entry.** It is the product of `omt` and the substrate of `atp_grasp_ligase`. It is not in `compound.tsv`, so `ddg_o_methylation` has no product and `mycosporine_glutaminol_formation` has no substrate. Result: **no declared route gives a product** in `path_possible`. The prefix `ddgs` gives demethyl-4-deoxygadusol; the step `atp_grasp_ligase` alone (as the first step of a call) gives mycosporine-glutaminol. Other compounds with no ChEBI entry: mycosporine-glycine, mycosporine-glutaminol-glucoside, mycosporine-glutamicol-glucoside, asterina-330. `refs/mycosporine/UNVERIFIED.md`, section D.
+- **Route flag.** Each route `note` starts with `fungal_evidence: true` or `fungal_evidence: partial` (text, not a schema field). `partial` means that the last step is T4.
+- **T4 steps are in the YAML.** `mg_glucosyltransferase` and `glutamicol_formation` have `refs: []`, no decoy and one T4 link each (organism text `not assigned (no enzyme identified)`). They are in the YAML, unlike the T4 steps of the carotenoid and melanin tables, because the route variants need the step ids. `path_possible` never uses a T4 link.
+- **Reactions with no step link:** `shinorine_formation` and `porphyra334_formation` (bacterial context, no fungal enzyme). **Compounds that no reaction makes:** gadusol, mycosporine-serinol (CHEBI:7039, ChEBI name "Mycosporine") and palythine.
+- **KEGG ids of compounds.** Where neither ChEBI nor KEGG links the other record, the KEGG id is matched by KEGG name and formula (C21281, C22846).
+- **Domains.** `hmm_id` of `atp_grasp_ligase` is empty: the Phaffia protein has no Pfam family at the gathering cutoff. `omt` lists two Pfam ids (any-of): PF13578 for the fungal reference and PF01596 for the bacterial one.
+- Every link is in `tests/data/kb/mycosporine_quotes.tsv` (change detector; columns step_id, reaction_id, protein_accession, pmid, quote, tier, assay).
+- Reported producers are in `refs/mycosporine/fungal_lineages.tsv` (organism, group, compound, pmid, evidence, note). It is a list of reports with the PMID of each; it is not a table of the knowledge base and `load_kb` does not read it.
+- Organism keys: `xanthophyllomyces dendrorhous` (Phaffia rhodozyma, taxid 264483, alias from the carotenoid tables), `nostoc punctiforme`, `trichormus variabilis` (alias `anabaena variabilis`, the name in the papers; one NCBI taxid, 264691).

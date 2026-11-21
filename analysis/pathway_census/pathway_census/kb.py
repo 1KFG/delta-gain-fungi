@@ -283,6 +283,11 @@ SPECIES_ALIASES: dict[str, tuple[str, int, str]] = {
         "pholiota microspora", 1538424,
         "NCBI Taxonomy taxid 1538424: scientific name Pholiota microspora, synonym Pholiota "
         "nameko (the name used in the papers)"),
+    # Mycosporine tables (Task 6). The key is the UniProt organism name of the reference Q3M6C3.
+    "anabaena variabilis": (
+        "trichormus variabilis", 264691,
+        "NCBI Taxonomy taxid 264691: scientific name Trichormus variabilis, synonym Anabaena "
+        "variabilis (the name used in the papers)"),
 }
 
 _BRACKETED = re.compile(r"\([^)]*\)|\[[^\]]*\]")
