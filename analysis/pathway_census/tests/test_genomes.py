@@ -114,3 +114,16 @@ def test_columns_and_values(df):
     assert df.loc["AAAAAAA1", "n50"] == 100000
     assert df.loc["AAAAAAA1", "class_"] == "Dothideomycetes"
     assert df.loc["AAAAAAA1", "phylum"] == "Ascomycota"
+
+
+def test_asmid_and_folder_are_carried(df):
+    # asmid from species.parquet; folder from the prior-annotation TSV (it can differ from ASMID)
+    assert df.loc["AAAAAAA1", "asmid"] == "GCA_000000001.1_A"
+    assert df.loc["AAAAAAA1", "folder"] == "GCA_000000001.1_A"
+    assert df.loc["AAAAAAA7", "asmid"] == "GCA_000000007.1_G"
+    assert df.loc["AAAAAAA7", "folder"] == "GCA_000000007.1_G_alt"
+    assert df.loc["AAAAAAA8", "folder"] != df.loc["AAAAAAA8", "folder"] or df.loc["AAAAAAA8", "folder"] is None  # no TSV row
+    assert list(df.reset_index().columns) == [
+        "locustag", "asmid", "folder", "species", "phylum", "class_", "genus", "genus_source", "prior_status",
+        "prior_folder_state", "annotation_provider", "busco_complete", "n50", "downloaded", "has_proteins",
+        "has_deposited_proteins"]

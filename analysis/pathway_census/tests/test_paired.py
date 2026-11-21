@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from pathway_census.paired import (accession_from_asmid, count_pairs, paired_table, summarize_paired,
-                                   summarize_paired_by_busco)
+from pathway_census.paired import (accession_from_asmid, count_pairs, deposited_protein_path, paired_table,
+                                   summarize_paired, summarize_paired_by_busco)
 
 STEPS = ["s1", "s2"]
 
@@ -16,7 +16,7 @@ STEPS = ["s1", "s2"]
 def _genomes(rows):
     """rows: (locustag, provider, busco, prior_status, has_bfd, has_dep)"""
     return pd.DataFrame([dict(
-        locustag=l, asmid=f"GCA_{i:09d}.1_x", annotation_provider=p, busco_complete=b, prior_status=ps,
+        locustag=l, asmid=f"GCA_{i:09d}.1_x", folder=f"GCA_{i:09d}.1_x", annotation_provider=p, busco_complete=b, prior_status=ps,
         has_proteins=hb, has_deposited_proteins=hd, species="sp", phylum="Asco", class_="c",
         genus="g", genus_source="genus_field", prior_folder_state="present", n50=1, downloaded=True)
         for i, (l, p, b, ps, hb, hd) in enumerate(rows)])
@@ -231,9 +231,13 @@ def test_count_pairs_on_fixtures(tmp_path):
         ("D0000004", "P", 99.0, "baseline_ok", False, True),
         ("E0000005", "P", 99.0, "baseline_ok", True, False),
         ("F0000006", "P", 99.0, "no_prior_annotation_present", True, True)])
-    acc0 = accession_from_asmid(g.asmid[0])
-    (root / acc0).mkdir(parents=True)
-    (root / acc0 / "protein.faa").write_text(">x\nM\n")
+    f0 = g.folder[0]
+    (root / f0).mkdir(parents=True)
+    (root / f0 / f"{f0}_protein.faa.gz").write_bytes(b"x")
+    # B: the old spec layout <accession>/protein.faa is NOT the deposited layout and is not found
+    accb = accession_from_asmid(g.asmid[1])
+    (root / accb).mkdir(parents=True)
+    (root / accb / "protein.faa").write_text(">x\nM\n")
     r = count_pairs(g, root)
     assert r["n_pairs"] == 1 and r["n_genomes"] == 6
     assert r["n_unpaired"] == {"not_baseline": 2, "no_bfd_proteins": 1, "no_deposited_proteins": 1,
@@ -241,10 +245,32 @@ def test_count_pairs_on_fixtures(tmp_path):
     assert r["pair_locustags"] == ["A0000001"]
 
 
-def test_count_pairs_needs_asmid(tmp_path):
-    g = _genomes([("A0000001", "P", 99.0, "baseline_ok", True, True)]).drop(columns="asmid")
-    with pytest.raises(ValueError, match="asmid"):
+def test_count_pairs_needs_folder(tmp_path):
+    g = _genomes([("A0000001", "P", 99.0, "baseline_ok", True, True)]).drop(columns="folder")
+    with pytest.raises(ValueError, match="folder"):
         count_pairs(g, tmp_path)
+
+
+def test_count_pairs_null_folder_is_file_missing(tmp_path):
+    g = _genomes([("A0000001", "P", 99.0, "baseline_ok", True, True)])
+    g["folder"] = None
+    r = count_pairs(g, tmp_path)
+    assert r["n_pairs"] == 0 and r["n_unpaired"]["deposited_file_missing"] == 1
+
+
+def test_deposited_protein_path_order(tmp_path):
+    fo = "GCF_000001985.1_JCVI-PMFA1-2.0"
+    d = tmp_path / fo
+    gz, plain = d / f"{fo}_protein.faa.gz", d / f"{fo}_protein.faa"
+    # neither exists: the primary (.faa.gz) path is returned
+    assert deposited_protein_path(tmp_path, fo) == gz
+    d.mkdir()
+    plain.write_text(">x\nM\n")
+    assert deposited_protein_path(tmp_path, fo) == plain  # fallback only because it exists
+    gz.write_bytes(b"x")
+    assert deposited_protein_path(tmp_path, fo) == gz     # .faa.gz wins when both exist
+    with pytest.raises(ValueError, match="folder"):
+        deposited_protein_path(tmp_path, None)
 
 
 # ---- CLI ----

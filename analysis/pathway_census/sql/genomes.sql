@@ -6,6 +6,7 @@ SELECT
   s.PHYLUM    AS phylum,
   s."CLASS"   AS class_,
   NULLIF(trim(s.GENUS), '') AS genus_field,
+  p.folder    AS folder,
   p.status    AS prior_status,
   NULLIF(p.annotation_provider, '') AS annotation_provider,
   b.complete_pct AS busco_complete,

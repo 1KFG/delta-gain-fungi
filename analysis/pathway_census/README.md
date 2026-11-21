@@ -14,6 +14,7 @@ If they go missing, create `analysis/pathway_census/.venv` (git-ignored) and ins
 `pathway_census.genomes.load_genome_table(tables_dir, prior_status_tsv)` returns one row per `species.parquet` row (left joins).
 Query: `sql/genomes.sql`. Schemas and join key are recorded at the top of `pathway_census/genomes.py`.
 Join key: BFD tables join on `ASMID`; the prior-annotation TSV joins on the accession prefix of `ASMID` (`GCA_/GCF_` + number + version) = TSV `accession`.
+Columns: `locustag, asmid, folder, species, phylum, class_, genus, genus_source, prior_status, prior_folder_state, annotation_provider, busco_complete, n50, downloaded, has_proteins, has_deposited_proteins`. `asmid` comes from `species.parquet`. `folder` comes from the prior-annotation TSV (`<NA>` without a TSV row); it names the deposited NCBI_ASM folder.
 
 Regenerate (writes `results/genomes.tsv.zst`, git-ignored):
 
@@ -153,9 +154,10 @@ What the paired test shows: for assemblies that have both a deposited annotation
 
 What it does NOT show: it says nothing about the genomes with no prior annotation (BFD-scoped MEASURED, Task 2: 18,055 `no_prior_annotation_present` and 673 `no_prior_annotation_not_downloaded`; spec 5.6 gives the TSV-wide 18,145). It does not show which annotation is correct. It does not show absence of a gene. A real-data difference counts as a finding only if it has the same sign across annotation providers and survives the BUSCO control. Otherwise report it as not established.
 
-- Pair rule: `prior_status == baseline_ok`, BFD proteins exist, deposited proteins flag true, deposited `protein.faa` exists and was searched. Other genomes are counted in `n_unpaired` under the first failing reason: `not_baseline`, `no_bfd_proteins`, `no_deposited_proteins`, `deposited_file_missing`.
+- Pair rule: `prior_status == baseline_ok`, BFD proteins exist, deposited proteins flag true, the deposited protein file exists and was searched. Other genomes are counted in `n_unpaired` under the first failing reason: `not_baseline`, `no_bfd_proteins`, `no_deposited_proteins`, `deposited_file_missing`.
 - Keys: both matrices use the caller-supplied `locustag`. Deposited protein IDs are not parsed. Counts are kept per source and never merged by protein ID.
-- Run the same HMMs and the same assignment on both sources. Build the deposited matrix with a genome table copy where `has_proteins` = the deposited-file flag. The deposited file path is `<root>/<accession>/protein.faa`; `count_pairs(genomes, deposited_root)` needs an `asmid` column (load_genome_table drops it; merge it from `species.parquet`).
+- Run the same HMMs and the same assignment on both sources. Build the deposited matrix with a genome table copy where `has_proteins` = the deposited-file flag. The deposited file path is `paired.deposited_protein_path(root, folder)`: first `<root>/<folder>/<folder>_protein.faa.gz`; `<root>/<folder>/<folder>_protein.faa` only if the `.gz` file does not exist and the plain file does. `folder` is the prior-annotation TSV `folder` column, carried by `load_genome_table`. `count_pairs(genomes, deposited_root)` needs the `folder` column; a null folder counts as `deposited_file_missing`.
+- Spec vs measured layout: spec 5.6 said `<accession>/protein.faa`. The MEASURED layout differs (final review, reviewer): 0 of 24,807 folders in NCBI_ASM are named by bare accession, and in the first 200 GCF folders 0 have `protein.faa` and all have `<folder>/<folder>_protein.faa.gz`. Only the first 200 GCF folders were checked for the file name.
 - `paired_table`: `delta = copy_bfd - copy_deposited` (copy_raw). `delta_filtered` is set only when both unknown counts are 0, else NA. Unknown counts are kept in `unknown_deposited` / `unknown_bfd`.
 - `summarize_paired`: bootstrap over genomes (resample genomes with replacement), 95% interval from the 2.5 and 97.5 percentiles. Rows per (step, provider) plus one `ALL` row per step. Providers below `min_pairs` are returned in `dropped_providers`, not removed silently. PROPOSED defaults, no measured basis: `min_pairs=20`, `n_boot=2000`, `seed=20261120`.
 - `summarize_paired_by_busco`: mean delta per step per BUSCO bin, default edges 0, 80, 95, 100 (PROPOSED), plus an explicit `unknown` bin for null BUSCO. A step with zero copies in both sources appears with mean 0.
@@ -165,14 +167,14 @@ What it does NOT show: it says nothing about the genomes with no prior annotatio
 ### DEFERRED follow-up (G6): the deposited arm of the real-data pass
 
 Not implemented. `paired.py` compares two finished matrices only. Building the deposited matrix is open work.
-- Input: `<deposited_root>/<accession>/protein.faa` for each pair genome (deposited root `/bigdata/stajichlab/shared/projects/1KFG/2026/NCBI_fungi/source/NCBI_ASM`; accession = the `GCA_/GCF_` prefix of ASMID, see `paired.accession_from_asmid`). A table `protein_id -> locustag` (the caller supplies it; deposited protein IDs do NOT use the 8-hex BFD prefix).
+- Input: `paired.deposited_protein_path(deposited_root, folder)` for each pair genome (deposited root `/bigdata/stajichlab/shared/projects/1KFG/2026/NCBI_fungi/source/NCBI_ASM`; `folder` from the genome table). A table `protein_id -> locustag` (the caller supplies it; deposited protein IDs do NOT use the 8-hex BFD prefix).
 - Output: a matrix in `build_matrix` format (same pathway steps, same HMMs and assignment rules as the BFD arm), keyed by the BFD `locustag`, with `has_proteins` set from the deposited-file flag (`has_deposited_proteins` and the file exists).
 - Design choice, to decide in the real-data pass (two options): (a) rewrite deposited protein IDs to `<locustag>_<deposited id>` before assign / quality / matrix; or (b) add a `genome_of` mapping parameter (protein_id -> locustag) to `matrix.build_matrix` and `quality.quality_flags`. Option (a) needs no code change but alters protein IDs in every output; option (b) keeps IDs and changes two functions. Neither is chosen.
 - Change surface (places that assume the 8-hex `LOCUSTAG_` prefix; found by grep on 2026-11-20):
   - `pathway_census/matrix.py:77` `a["locustag"] = a.protein_id.str.split("_").str[0]`, and the error text at line 28.
   - `pathway_census/quality.py:104` `{p.split("_")[0] for p in assigned.protein_id}`; also the gene-id rule in the quality.py docstring (line 14: `F77FFF1D_000001-T1` -> `F77FFF1D_000001`, `gene_info` keyed by gene id), which a deposited ID format may not follow.
   - `pathway_census/assign.py`: no prefix parsing found. `absence.py` and the CLIs `bin/*.py`: no prefix parsing found (grep for `split("_")`, `8-hex`, `[:8]`). UNVERIFIED beyond that grep; the real pass must re-check.
-- `load_genome_table` drops ASMID (the SQL selects it as `asmid`, but the returned columns omit it). The real-data pass must carry or merge an `asmid`/accession column (for example from `species.parquet`) into the genome table, for `count_pairs` and for the deposited path.
+- `load_genome_table` now carries `asmid` and `folder` (final-review fix I7). `results/genomes.tsv.zst` must be regenerated before the real pass to get these columns.
 
 ### Reserved values, flags and outputs
 - Providers named `ALL` and `(missing)` are reserved. `summarize_paired` raises ValueError if a real provider has either name.

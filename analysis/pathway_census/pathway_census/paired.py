@@ -74,8 +74,21 @@ def accession_from_asmid(asmid: str) -> str:
     return m.group(1)
 
 
-def deposited_protein_path(deposited_root, asmid: str) -> Path:
-    return Path(deposited_root) / accession_from_asmid(asmid) / "protein.faa"
+def deposited_protein_path(deposited_root, folder: str) -> Path:
+    """Deposited protein file of one genome, from the prior-annotation TSV `folder` column.
+
+    Order: (1) <deposited_root>/<folder>/<folder>_protein.faa.gz (the MEASURED NCBI_ASM layout);
+    (2) <deposited_root>/<folder>/<folder>_protein.faa, used only if (1) does not exist and (2) does.
+    If neither exists, path (1) is returned (the caller's existence check then fails).
+    A null or empty folder raises ValueError.
+    """
+    if folder is None or pd.isna(folder) or str(folder) == "":
+        raise ValueError("deposited_protein_path needs a non-empty folder (prior-annotation TSV `folder`)")
+    d = Path(deposited_root) / str(folder)
+    gz, plain = d / f"{folder}_protein.faa.gz", d / f"{folder}_protein.faa"
+    if not gz.exists() and plain.exists():
+        return plain
+    return gz
 
 
 def _scalar_true(v) -> bool:
@@ -90,17 +103,25 @@ def _is_true(series: pd.Series) -> pd.Series:
 def count_pairs(genomes: pd.DataFrame, deposited_root) -> dict:
     """Count pairs from the genome table and file existence. Read-only.
 
-    `genomes` needs the load_genome_table columns plus `asmid` (not kept by load_genome_table; merge it
-    from species.parquet). Returns n_genomes, n_pairs, n_unpaired (reason -> count) and pair_locustags.
+    `genomes` needs the load_genome_table columns, including `folder` (prior-annotation TSV). The
+    deposited file is found with `deposited_protein_path(deposited_root, folder)`. A null folder
+    counts as deposited_file_missing. Returns n_genomes, n_pairs, n_unpaired (reason -> count) and
+    pair_locustags.
     """
-    if "asmid" not in genomes.columns:
-        raise ValueError("genome table needs an 'asmid' column to locate NCBI_ASM/<accession>/protein.faa")
+    if "folder" not in genomes.columns:
+        raise ValueError("genome table needs a 'folder' column to locate "
+                         "<deposited_root>/<folder>/<folder>_protein.faa.gz")
     base = genomes.prior_status.eq("baseline_ok")
     bfd = _is_true(genomes.has_proteins)
     dep = _is_true(genomes.has_deposited_proteins)
-    exists = pd.Series(
-        [bool(b and bf and d and os.path.exists(deposited_protein_path(deposited_root, a)))
-         for b, bf, d, a in zip(base, bfd, dep, genomes.asmid)], index=genomes.index)
+
+    def _found(fo) -> bool:
+        if fo is None or pd.isna(fo) or str(fo) == "":
+            return False
+        return os.path.exists(deposited_protein_path(deposited_root, fo))
+
+    exists = pd.Series([bool(b and bf and d and _found(fo))
+                        for b, bf, d, fo in zip(base, bfd, dep, genomes.folder)], index=genomes.index)
     reason = np.select([~base, ~bfd, ~dep, ~exists], list(UNPAIRED_REASONS[:4]), default="")
     n_unpaired = {r: int((reason == r).sum()) for r in UNPAIRED_REASONS}
     na_bfd = genomes.has_proteins.isna() & (reason == "no_bfd_proteins")

@@ -14,7 +14,8 @@ Real schemas (DESCRIBE, 2026-11-20):
 Join key: ASMID in the BFD tables (e.g. "GCF_010015735.1_Aaoar1") joins on ASMID between
 BFD tables. To the prior-annotation TSV it joins on the accession prefix of ASMID,
 regexp '^(GC[AF]_[0-9]+\\.[0-9]+)' = TSV `accession`. (The TSV `folder` column equals ASMID
-for only some genomes, so `folder` is not used.)
+for only some genomes, so `folder` is not a join key. It is carried as a column because it names the
+deposited NCBI_ASM folder: <deposited_root>/<folder>/<folder>_protein.faa.gz, see paired.py.)
 The TSV has more rows (27,401) than species.parquet; unmatched TSV rows are dropped.
 
 Column semantics (decided here):
@@ -91,7 +92,12 @@ def load_genome_table(tables_dir, prior_status_tsv, seqdb_genomes_tsv=None):
       has_proteins = LOCUSTAG is in seqdb/genomes.tsv and its BFD proteins.fa.gz exists on disk.
       downloaded   = the BFD genome FASTA (<out>.scaffolds.fa.gz, same predict_results
                      folder as the proteins file) exists on disk.
-    has_deposited_proteins and prior_folder_state come from the prior-annotation TSV.
+    has_deposited_proteins, prior_folder_state and folder come from the prior-annotation TSV.
+    asmid comes from species.parquet. folder is <NA> when the genome has no TSV row.
+
+    Columns: locustag, asmid, folder, species, phylum, class_, genus, genus_source, prior_status,
+    prior_folder_state, annotation_provider, busco_complete, n50, downloaded, has_proteins,
+    has_deposited_proteins.
     """
     tables_dir = Path(tables_dir)
     if seqdb_genomes_tsv is None:
@@ -130,7 +136,7 @@ def load_genome_table(tables_dir, prior_status_tsv, seqdb_genomes_tsv=None):
     scaf = [scaffolds_path(q) for q in prot]
     df["has_proteins"] = _exists_many(list(prot))
     df["downloaded"] = _exists_many(scaf)
-    cols = ["locustag", "species", "phylum", "class_", "genus", "genus_source", "prior_status",
+    cols = ["locustag", "asmid", "folder", "species", "phylum", "class_", "genus", "genus_source", "prior_status",
             "prior_folder_state", "annotation_provider", "busco_complete", "n50", "downloaded",
             "has_proteins", "has_deposited_proteins"]
     return df[cols]
