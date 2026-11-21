@@ -20,3 +20,12 @@ Captured once on 2026-11-21 from the HPCC login node with curl, User-Agent `path
 
 - `chebi_26078.json` (phosphoric acid), `chebi_26836.json` (sulfuric acid), `chebi_32588.json` (potassium chloride), `chebi_30672.json` (ferrocene): raw ChEBI public API responses, used as an independent check of `formula_mass`.
 - `chebi_smiles_charge.json`: SMILES of L-dopa zwitterion (CHEBI:57504) and nitrobenzene (CHEBI:27798) copied from the ChEBI `es_search` API.
+
+## Added in task 7 (captured 2026-11-21 from the cached real responses)
+
+| File | Source |
+|---|---|
+| `uniprot_B2J6X9.json` | https://rest.uniprot.org/uniprotkb/B2J6X9.json (Nostoc punctiforme; ordered locus name Npun_R5600 only) |
+| `ncbi_protein_WEV88679.gp` | https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=WEV88679&rettype=gp&retmode=text (GenBank protein, Phaffia rhodozyma DDGS) |
+
+`tests/test_verify_kb.py` builds its small pathways in a temporary directory and writes PubMed XML inline.
