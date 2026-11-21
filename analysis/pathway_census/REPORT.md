@@ -42,8 +42,8 @@ A genome count says a genome exists. It says nothing about pathway genes. BFD ha
 
 | Pathway | Task | State | Headline |
 |---|---|---|---|
-| Carotenoid | 3 | closed after 3 fix rounds | 29 verified references, 61 decoy rows, 36 links at the first report; tiers changed during review (section 5) |
-| DHN-melanin | 4 | closed after 1 fix round | Review found the two DHN reductases swapped in the pathway review |
+| Carotenoid | 3 | closed after 3 fix rounds | 29 verified references, 61 decoy rows, 36 links at the first report; tiers changed during review (section 5). After the strict quote rule (section 5.1) every carotenoid route with a product is T3: 15 T1a, 9 T1b, 3 T1c, 21 T3, 1 T4 links |
+| DHN-melanin | 4 | closed after 1 fix round | Review found the two DHN reductases swapped in the pathway review. After the strict quote rule the two complete routes through the PKS step are T3: 11 T1a, 5 T1b, 6 T1c, 10 T3 links |
 | L-DOPA and other melanins | 5 | closed after 1 fix round | 15 references (14 verified), 10 decoy proteins, 29 links: 2 T1a, 3 T1b, 2 T1c, 20 T3, 2 T4 |
 | Mycosporines and MAAs | 6 | running | Starts from literature leads; no fungal gene list is assumed |
 | Verifier and review packet | 7, 8 | not started | Then a stop for the owner's review |
@@ -129,6 +129,7 @@ M3 is valid only if a matched negative-control set goes through SIRIUS in the id
 | Q9Y8G7 (a *Fusarium* P450 fused to a P450 reductase domain) was listed as a decoy of the `crtr` reductase step, but it carries the reductase domains and so can do that reaction | Task 3 review | Removed from the `crtr` decoys; kept as a decoy of astaxanthin synthase only. A decoy must not carry the reference reaction |
 | The pathway review read abstracts only (apart from one paper); nine YAML PMIDs and one synonym were not checked | Spec risk section, then full re-fetch | Every PMID and quote is fetched and matched to the abstract text |
 | Phytoene desaturase tiers in the review list differed from what the abstracts show by organism (four-step T1a for three organisms; five-step T1a for *Neurospora* AL-1 only, T1b for *Fusarium* carB) | Task 3 | Tier changes written into the spec (commit `d29d73c`); awaiting the owner's decision |
+| The strict quote rule (a T1a quote must itself name the link's protein and state an assay or product) was applied to Task 5 first, then to Tasks 3 and 4 after the verifier flagged 22 older T1a links. 6 links were demoted to T3 and 5 got a better sentence (commits `e1e82da`, `fe21264`) | Task 5 review; `verify_kb.py`; Fable adjudication | The owner chooses between this strict reading and a context reading (the abstract may identify the protein). Two links decide the route tiers: carG (Q9P885) and SDH1 (P56221). Under the context reading both stay T1a and the carotenoid and DHN route tiers rise again |
 
 ### 5.2 Operational failures
 
@@ -191,8 +192,8 @@ Competing explanations for the carotenoid and melanin nulls, none resolved: the 
 
 The full lists are in the `UNVERIFIED.md` file of each pathway. In outline:
 
-- Carotenoid: the acaA verified flag; the phytoene desaturase tier changes; the 3-hydroxylation and grid-branch tiers of astaxanthin synthase.
-- DHN-melanin: the Q9HFV6 gene-name rule; vermelone dehydration T1a on P56221; the two routes with no product compound; the *Colletotrichum* and *Glomerella* organism key; abr1 at T3.
+- Carotenoid: strict versus context reading of the quote rule (carG, Q9P885, decides every route tier); the acaA verified flag; the phytoene desaturase tier changes; the 3-hydroxylation and grid-branch tiers of astaxanthin synthase.
+- DHN-melanin: the Q9HFV6 gene-name rule; strict versus context reading of the quote rule (vermelone dehydration on P56221 is now T3 under the strict reading); the two routes with no product compound; the *Colletotrichum* and *Glomerella* organism key; abr1 at T3.
 - L-DOPA melanin: Q2TL94 (no gene name); the melB reference A0A1S9DK56 (ORF name only, tied by structure); the P00440 tie; the LAC1 T1c sentence without a substrate; TyrP at T3; no product for the Asp-melanin route; the rule for entries with an ORF name only.
 - Project: whether to release tables outside the group; the negative-control taxa; whether to run the fungal natural-product methods check.
 
