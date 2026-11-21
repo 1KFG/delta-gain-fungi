@@ -31,15 +31,22 @@ Bin order of decision (first match wins):
 3. Otherwise count the four promotion terms. Each term is a boolean output column.
    - divergent          ref_identity < divergent_max_identity. NA does not promote.
    - lineage_expansion  copy_filtered >= expansion_min.
-   - in_cluster         another assigned copy of a DIFFERENT step, same genome and same chrom,
+   - in_cluster         another assigned gene (a different protein_id AND a different step_id),
+                        same genome and same chrom (a gene never neighbours itself, so a fused
+                        protein assigned to two steps is not its own neighbour; an empty or NA
+                        chrom never neighbours),
                         whose interval lies within window_bp of this copy (gap between the two
-                        intervals <= window_bp; overlap counts as gap 0). Copies of the same
-                        step never count. The neighbour may itself be excluded or unknown: it
+                        intervals <= window_bp, inclusive; overlap counts as gap 0). Copies of
+                        the same step never count. The neighbour may itself be excluded or unknown: it
                         is still a pathway gene on the scaffold.
    - expressible        min_length <= length <= max_length; and, only for steps in
                         `soluble_steps`, no signal peptide and tm_helices <= tm_max. NA tm_helices
                         for a soluble step does not promote. `soluble_steps` is a parameter
                         (default empty): the pathway YAML has no soluble flag yet.
+   The term columns are plain booleans for counting: NA (not evaluated) counts as not true.
+   A term is "unevaluated" when its input is NA: divergent (ref_identity), lineage_expansion
+   (copy_filtered), in_cluster (chrom empty/NA, or start/end NA), expressible (length NA, or for a
+   soluble step tm_helices or signal_peptide NA).
    tier1: at least tier1_min terms true. tier2: at least tier2_min true, fewer than tier1_min.
    tier3: fewer than tier2_min true (including zero).
 4. Demotion: a tier1 copy with hap_dup_suspect True becomes tier2, reason
@@ -50,9 +57,15 @@ Output columns: protein_id, step_id, bin, reasons, divergent, lineage_expansion,
 expressible. `bin` is one of tier1, tier2, tier3, excluded, unknown. `reasons` is ";"-joined in
 this fixed order: exclusion reasons (truncated, contam_suspect, domain_not_ok, motif_not_ok),
 unevaluated flags ("unevaluated:<flag>", in `require` order), fired terms (divergent,
-lineage_expansion, in_cluster, expressible), then hap_dup_suspect_demoted / hap_dup_unevaluated.
+lineage_expansion, in_cluster, expressible), unevaluated terms ("unevaluated:<term>", same term
+order), then hap_dup_suspect_demoted / hap_dup_unevaluated.
 Term columns are filled for every row, but `reasons` lists terms only for tiered rows.
-Output order = input order of the assigned rows (stable). Same input gives the same output.
+`n_terms_unevaluated` (int) counts unevaluated terms for tiered rows and is 0 for excluded and
+unknown rows.
+Output is sorted by (protein_id, step_id), so row order does not depend on input order. Duplicate
+(protein_id, step_id) among assigned rows raise ValueError. Required flag columns must be pandas
+boolean, or object holding only True/False/pd.NA/None; anything else (np.nan in an object column,
+strings, numbers) raises ValueError.
 
 PROPOSED defaults (no data basis):
   window_bp=20000. The cluster span of carotenoid genes in the reference species (Fusarium,
