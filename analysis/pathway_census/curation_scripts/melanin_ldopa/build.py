@@ -83,7 +83,7 @@ Q = {
  "15643074:lac2": quote("15643074", "Accordingly, a lac2 mutation results", "melanin formation."),
  "19028908:hppD": quote("19028908", "In contrast, homogentisic acid and pyomelanin were not observed", "hppD deletion mutant."),
  "19028908:hmgA": quote("19028908", "In the hmgA deletion strain, HmgA activity was abolished", "increased pigment formation."),
- "7673153": quote("7673153", "This polypeptide has been expressed in Escherichia coli", "homogentisate dioxygenase activity."),
+ "7673153": quote("7673153", "The HmgA protein catalyzes an essential step", "containing phenylalanine."),
  "27133313": quote("27133313", "We demonstrate that MelA produces aspulvinone E", "polymerization by TyrP."),
  "28791090": quote("28791090", "In our study, heterologous expression of all the A. terreus NRPS-like genes", "aspulvinone E."),
 }
@@ -93,7 +93,7 @@ Q = {
 # the step_reaction links.
 NO_GENE = {"Q2TL94": "tyrosinase"}  # UniProt entry without any gene name: protein name of the entry
 REF = {
- "tyrosinase": [("P00440", "T", "2529259", True), ("Q2UP46", "AO090001000117", "23749993", True), ("Q00234", "melO", "7893753", True),
+ "tyrosinase": [("P00440", "T", "2529259", True), ("A0A1S9DK56", "OAory_01107480", "32356371", True), ("Q00234", "melO", "7893753", True),
                 ("C7FF05", "PPO4", "20676921", True), ("C7FF04", "PPO3", "21598903", True), ("A7BHQ9", "tyr1", "17617709", True),
                 ("Q2TL94", "tyrosinase", "16151802", False)],
  "laccase_diphenol": [("Q55P57", "LAC1", "8300520", True), ("J9VY90", "LAC1", "12581355", True), ("J9VQZ4", "LAC2", "24743168", True)],
@@ -110,15 +110,15 @@ REF_NOTE = {
  ("tyrosinase", "P00440"): [
    "pmid 2529259 is the gene paper cited by the entry (no assay in the abstract). The T1c link rests on",
    "PMID 2147580 (same first and last author), which the entry does not cite."],
- ("tyrosinase", "Q2UP46"): [
+ ("tyrosinase", "A0A1S9DK56"): [
    "melB of Aspergillus oryzae (PMID 16233650, 22213164, 23053534). The UniProt entry has the ORF name",
-   "AO090001000117 only; the name melB is not in the entry. The tie: the entry cites PMID 23749993 (crystal",
-   "structure of Aspergillus oryzae pro-tyrosinase), and that abstract cites the two melB activation papers",
-   "by journal, volume and pages. The entry has 638 residues; PMID 16233650 gives 616 for melB (A0A1S9DK56,",
-   "616 residues, another strain, is 91% identical). See UNVERIFIED.md, A2."],
+   "OAory_01107480 only; the name melB is not in the entry. The tie is the sequence: PDB 3W6W (title: melB",
+   "holo-protyrosinase) has this sequence at 615 of 616 residues, and the entry has the 616 residues that",
+   "PMID 16233650 gives for melB. Q2UP46 (RIB40 gene model of the locus, 638 residues, 91% identical) is not",
+   "the assayed sequence and is not a reference. Links held at T3. See UNVERIFIED.md, A2."],
  ("tyrosinase", "Q00234"): ["melO of PMID 7893753 (539 residues in the abstract and in the entry). Links held at T3."],
  ("tyrosinase", "C7FF05"): [
-   "PPO4 ('Tyrosinase 4' in UniProt) = tyrosinase 4 / AbPPO4 of PMID 28500345, which the entry does not cite.",
+   "PPO4 ('Tyrosinase 4' in UniProt) = tyrosinase 4 / AbPPO4 of PMID 28500345, which the entry does not cite. Links held at T3.",
    "pmid 20676921 is the cDNA paper cited by the entry (the Escherichia coli product there had no activity)."],
  ("tyrosinase", "C7FF04"): ["PPO3: the H subunit of the crystallised tyrosinase complex (PMID 21598903). Links held at T3."],
  ("tyrosinase", "A7BHQ9"): ["UniProt organism: Pholiota microspora. The paper says Pholiota nameko (one NCBI taxid, 1538424). Links held at T3."],
@@ -132,11 +132,11 @@ REF_NOTE = {
    "deneoformans (serotype D); the papers say Cryptococcus neoformans."],
  ("laccase_diphenol", "J9VY90"): [
    "LAC1 of strain H99 (serotype A). UniProt gives its function 'by similarity'. pmid 12581355 is cited by",
-   "the entry for catalytic activity. The T1c link rests on PMID 15643074, which the entry does not cite."],
+   "the entry for catalytic activity. Link held at T3: the strain of PMID 15643074 is not confirmed."],
  ("laccase_diphenol", "J9VQZ4"): [
    "LAC2 of strain H99 (CNAG_03464, next to LAC1 CNAG_03465). UniProt gives its function 'by similarity'.",
-   "pmid 24743168 is the genome paper cited by the entry. The T1c link rests on PMID 15643074 (not cited)."],
- ("hmga", "Q00667"): ["Aspergillus nidulans hmgA: enzyme expressed in Escherichia coli and assayed (PMID 7673153)."],
+   "pmid 24743168 is the genome paper cited by the entry. Link held at T3 (strain of PMID 15643074 not confirmed)."],
+ ("hmga", "Q00667"): ["Aspergillus nidulans hmgA: disruption gives accumulation of homogentisate (PMID 7673153)."],
  ("aspulvinone_e_synthase", "Q0CRX1"): ["apvA (Q0CWD0) of the same fungus does the same reaction and is not a reference of this step."],
  ("asp_melanin_tyrosinase", "Q0CRX0"): ["UniProt gene names: tyrP, melB (synonym). Links held at T3 (UNVERIFIED.md, B)."],
 }
@@ -153,16 +153,17 @@ D_PHOM = ("A0A8J9R8H5", "phomQ1", None, T3CU + "UniProt reviewed entry: tyrosina
 D_AOCO4 = ("Q2UNF9", "AO090001000383", "24043469", T3CU + "UniProt unreviewed entry with no EC and no Rhea reaction: catechol oxidase AoCO4 of Aspergillus oryzae. The entry cites "
            "PMID 24043469 (crystal structure; the abstract names AoCO4). The abstract of PMID 19798497 (AoCO4, 408 residues; the entry has 408 residues) reports "
            "no activity on L-tyrosine and on L-dopa", [], [])
-D_GRIF = ("B1VTI5", "griF", "16282322", T3CU + "UniProt reviewed entry: o-aminophenol oxidase GriF of grixazone biosynthesis in Streptomyces griseus (EC 1.10.3.15, EC 1.10.3.4; RHEA:41420). "
-          "The abstract of PMID 16282322 reports no monophenolase activity and a preference for o-aminophenols over catechol-type substrates",
-          ["1.10.3.15", "1.10.3.4"], ["RHEA:41420"])
+D_GRIF = ("B1VTI5", "griF", "16282322", T3CU + "UniProt reviewed entry: o-aminophenol oxidase GriF of grixazone biosynthesis in Streptomyces griseus (EC 1.10.3.15, EC 1.10.3.4; RHEA:41420, RHEA:41424, RHEA:40963). "
+          "The abstract of PMID 16282322 reports no monophenolase activity, so GriF is excluded from the monophenolase reaction only. It oxidises o-aminophenols in preference to catechol-type substrates: "
+          "it is not shown to lack diphenol oxidation, and the abstract does not name L-DOPA",
+          ["1.10.3.15", "1.10.3.4"], ["RHEA:41420", "RHEA:41424", "RHEA:40963"])
 MCO = "multicopper oxidase (Pfam PF07732, PF00394, PF07731) member; UniProt reviewed entry: "
 D_MCO = [
  ("P38993", "FET3", None, MCO + "iron transport ferroxidase (EC 1.16.3.1, RHEA:11148; EC 1.16.3.4, RHEA:30083)", ["1.16.3.1", "1.16.3.4"], ["RHEA:11148", "RHEA:30083"]),
  ("Q0CCX6", "gedJ", "7665560", MCO + "dihydrogeodin oxidase of geodin biosynthesis in Aspergillus terreus (EC 1.10.3.-, RHEA:64316; phenol oxidative coupling of dihydrogeodin)", ["1.10.3.-"], ["RHEA:64316"]),
  ("P0DYC3", "phlC", None, MCO + "multicopper oxidase of phlegmacin biosynthesis (EC 1.10.3.18, RHEA:86387; dimerisation of torosachrysone)", ["1.10.3.18"], ["RHEA:86387"]),
  ("Q8LPL3", "AAO", None, MCO + "L-ascorbate oxidase of Arabidopsis thaliana (EC 1.10.3.3, RHEA:30243)", ["1.10.3.3"], ["RHEA:30243"]),
- ("Q4WZB4", "abr1", None, MCO + "multicopper oxidase of the DHN-melanin cluster of Aspergillus fumigatus (EC 1.-.-.-, no Rhea reaction on the entry); a reference of step mco_abr1 of pathway melanin_dhn", ["1.-.-.-"], []),
+ ("Q4WZB4", "abr1", None, MCO + "multicopper oxidase of the DHN-melanin cluster of Aspergillus fumigatus (EC 1.-.-.-, no Rhea reaction on the entry); a reference of step mco_abr1 of pathway melanin_dhn. The entry cites PMID 14970241, which reports a laccase-type activity on L-DOPA in conidial extracts and names no protein: abr1 is not shown to lack diphenol oxidation", ["1.-.-.-"], []),
 ]
 DECOY = {
  "tyrosinase": [D_IVOB, D_ORSC, D_PHOM, D_AOCO4, D_GRIF],
@@ -225,16 +226,26 @@ s = summary(["2147580", "2529259"])
 a1, a2 = ([x["name"] for x in s[p]["authors"]] for p in ("2147580", "2529259"))
 assert a1[0] == a2[0] == "Kupper U" and a1[-1] == a2[-1] == "Lerch K"
 assert "2147580" not in uniprot_entry("P00440")["pmids"] and "Neurospora crassa" in ab("2147580") and "protyrosinase" in ab("2147580")
-# Q2UP46 = melB: the entry cites PMID 23749993; that abstract cites the two melB activation papers
-assert "Aspergillus oryzae full-length pro-tyrosinase" in ab("23749993")
-assert "ChemBioChem. 13, 193-201" in ab("23749993") and "J. Biol. Inorg. Chem. 18, 19-26" in ab("23749993")
-s = summary(["22213164", "23053534"])
-assert (s["22213164"]["source"], s["22213164"]["volume"], s["22213164"]["pages"]) == ("Chembiochem", "13", "193-201")
-assert (s["23053534"]["source"], s["23053534"]["volume"], s["23053534"]["pages"]) == ("J Biol Inorg Chem", "18", "19-26")
-for p in ("22213164", "23053534", "16233650"):
-    assert "melB" in ab(p) and "Aspergillus oryzae" in ab(p), p
-assert "616 amino acid residues" in ab("16233650") and uniprot_entry("Q2UP46")["length"] == 638 and uniprot_entry("A0A1S9DK56")["length"] == 616
-assert uniprot_entry("Q2UP46")["gene_names"] == ["AO090001000117"]
+# A0A1S9DK56 = melB: PDB 3W6W (melB holo-protyrosinase) has its sequence; Q2UP46 is another gene model of the locus
+pdb = raw("rcsb_entry", "3W6W", "https://data.rcsb.org/rest/v1/core/entry/3W6W")
+assert "melB holo-protyrosinase" in pdb["struct"]["title"]
+pseq = raw("rcsb_polymer", "3W6W_1", "https://data.rcsb.org/rest/v1/core/polymer_entity/3W6W/1")["entity_poly"]["pdbx_seq_one_letter_code_can"].replace("\n", "")
+mel, rib = uniprot_entry("A0A1S9DK56"), uniprot_entry("Q2UP46")
+assert len(pseq) == 620 and mel["length"] == 616 and rib["length"] == 638
+assert sum(x == y for x, y in zip(pseq[-616:], mel["sequence"])) == 615 and pseq[-615:] == mel["sequence"][1:]
+assert sum(x == y for x, y in zip(pseq[-616:], rib["sequence"])) < 600
+# residues named in the abstracts of PMID 23749993 (Cys92, His94, Phe513, Cys522, Cys525) and 22213164 (Glu458, Ala616)
+for pos, aa in ((92, "C"), (94, "H"), (458, "E"), (513, "F"), (522, "C"), (525, "C"), (616, "A")):
+    assert mel["sequence"][pos - 1] == aa, pos
+assert [rib["sequence"][q - 1] for q in (458, 513, 522, 525, 616)] == list("DLAEE")
+for frag in ("Phe(513)", "Cys(522)", "Cys(525)"):
+    assert frag in ab("23749993"), frag
+assert "Glu458-Ala616" in ab("22213164")
+assert "3W6W" in [x["id"] for x in full("Q2UP46")["uniProtKBCrossReferences"] if x["database"] == "PDB"]
+assert mel["gene_names"] == ["OAory_01107480"] and "32356371" in mel["pmids"] and "with substrate l-tyrosine" in ab("32356371")
+for q in ("22213164", "23053534", "16233650"):
+    assert "melB" in ab(q) and "Aspergillus oryzae" in ab(q), q
+assert "616 amino acid residues" in ab("16233650")
 # Q00234 = melO; C7FF05 = tyrosinase 4; C7FF04 = ppo3
 assert "539 amino acid residues" in ab("7893753") and uniprot_entry("Q00234")["length"] == 539
 assert "tyrosinase 4 from Agaricus bisporus" in ab("28500345") and "AbPPO4" in pubmed_abstract("28500345")["title"]
@@ -277,7 +288,7 @@ for step, ds in DECOY.items():
         assert not (rheas(acc) & FORBIDDEN[step]), (step, acc, rheas(acc))
         assert FORBIDDEN_EC[step] is None or FORBIDDEN_EC[step] not in e["ec"], (step, acc, e["ec"])
         assert sorted(ecs) == sorted(e["ec"]), (acc, ecs, e["ec"])
-        assert set(rhs) <= rheas(acc), (acc, rhs, rheas(acc))
+        assert set(rhs) == rheas(acc), (acc, rhs, rheas(acc))
         assert set(re.findall(r"RHEA:\d+", func)) == set(rhs) and set(re.findall(r"EC (\d+\.[\d-]+\.[\d-]+\.[\d-]+)", func)) == set(ecs), acc
         if "no Rhea reaction" in func:
             assert not rheas(acc), acc
@@ -291,7 +302,8 @@ tsv(DEC / "provenance.tsv", ["step_id", "accession", "species", "gene_name", "pm
 assert "but not tyrosine, 3,4-dihydroxyphenylalanine" in ab("2126551") and "ivoB" in ab("2126551")
 assert "AoCO4" in ab("24043469") and "408 aa, AoCO4" in ab("19798497") and uniprot_entry("Q2UNF9")["length"] == 408
 assert "no activity was detected on L-tyrosine and on L-dopa" in ab("19798497")
-assert "GriF showed no monophenolase activity" in ab("16282322")
+assert "GriF showed no monophenolase activity" in ab("16282322") and "as preferable substrates rather than catechol-type substrates" in ab("16282322")
+assert "14970241" in uniprot_entry("Q4WZB4")["pmids"] and "laccase-type activity in conidial extracts" in ab("14970241")
 assert "dihydrogeodin to (+)- geodin" in ab("7665560")
 for acc, (gene, ec) in NOT_DECOY.items():  # carry the EC of a step: not decoys
     e = check_entry(acc, gene)
@@ -377,45 +389,46 @@ tsv(KB / "reaction_participant.tsv", COLUMNS["reaction_participant"],
     [[rid, f"CHEBI:{c}", role, str(n)] for rid, ec, note, s, p in RX for role, lst in (("substrate", s), ("product", p)) for c, n in lst])
 
 # ---------- step_reaction links ----------
-# Tier rule (lessons of Tasks 3 and 4): T1a only when the abstract states the assay or the product for the named
-# protein and organism; T1b deletion with intermediate analysis; T1c colour phenotype only; else T3.
-# Tyrosinase: T1a needs an assay on the substrate class of the reaction; 'tyrosinase activity' alone is T3.
+# Tier rule (binding rule 1, applied as written in fix round 1): a link is T1a only when the quoted sentence names the
+# protein of the link and states the assay or the product for the reaction; T1b deletion with intermediate analysis;
+# T1c colour phenotype in a sentence that names the protein; else T3 (the sentence stays as context).
 L = []  # step, reaction, accession, tier, assay, pmid, quote key (True = Q[pmid], str = Q[key], False = none)
 def link(step, rid, acc, tier, assay, pmid, q=True):
     L.append((step, rid, acc, tier, assay, pmid, q))
 T, D = "RHEA:18117", "RHEA:34287"
 link("tyrosinase", T, "P00440", "T1c", "protyrosinase gene expressed from a metallothionein promoter in Neurospora crassa; a transformant with high constitutive tyrosinase levels forms melanin on medium with L-tyrosine. Colour phenotype of an overexpression strain (not a deletion); no product analysis. The abstract also reports activity assays without a substrate. UniProt P00440 does not cite the paper; the tie is the organism and the protyrosinase gene of PMID 2529259 (same first and last author)", "2147580")
 link("tyrosinase", D, "P00440", "T3", "Inferred. No abstract that was read states an assay of the Neurospora crassa enzyme with L-DOPA or a diphenol. UniProt P00440 carries RHEA:34287 without a cited assay paper.", "", False)
-link("tyrosinase", T, "Q2UP46", "T1a", "recombinant melB pro-tyrosinase activated by acid treatment; steady-state kinetic analysis of the phenolase activity (phenol hydroxylation) by O2 consumption. The substrate class is named, L-tyrosine is not. The sentence says 'the acid-treated tyrosinase'; the abstract is about melB of Aspergillus oryzae only. Q2UP46 is tied to melB through PMID 23749993 (UNVERIFIED.md, A2)", "23053534")
-link("tyrosinase", D, "Q2UP46", "T3", "Held at T3. The abstract reports tyrosinase activity of the trypsin-activated recombinant melB enzyme and names no diphenol substrate.", "22213164")
+link("tyrosinase", T, "A0A1S9DK56", "T3", "Held at T3. Recombinant melB pro-tyrosinase activated by acid treatment; steady-state kinetic analysis of the phenolase activity (phenol hydroxylation) by O2 consumption. The quoted sentence does not name melB and names no substrate. A0A1S9DK56 is tied to melB through PDB 3W6W (UNVERIFIED.md, A2).", "23053534")
+link("tyrosinase", D, "A0A1S9DK56", "T3", "Held at T3. The abstract reports tyrosinase activity of the trypsin-activated recombinant melB enzyme; the quoted sentence names no substrate.", "22213164")
 MELO = "Held at T3. melO cDNA expressed in yeast; the product is identified by Western blotting and activity determination. The abstract names no substrate and no substrate class."
 link("tyrosinase", T, "Q00234", "T3", MELO, "7893753")
 link("tyrosinase", D, "Q00234", "T3", MELO, "7893753")
-PPO4 = ("tyrosinase 4 (AbPPO4) produced in Escherichia coli and activated by proteinase K; the activated enzyme accepts mono- and diphenols. The substrate class is named, {} is not. "
-        "The sentence says 'the proteolytically activated mushroom tyrosinase'; in this abstract that is the recombinant tyrosinase 4. UniProt C7FF05 (PPO4, 'Tyrosinase 4') does not cite the paper")
-link("tyrosinase", T, "C7FF05", "T1a", PPO4.format("L-tyrosine"), "28500345")
-link("tyrosinase", D, "C7FF05", "T1a", PPO4.format("L-DOPA"), "28500345")
+PPO4 = ("Held at T3. Tyrosinase 4 (AbPPO4) produced in Escherichia coli and activated by proteinase K; the activated enzyme accepts mono- and diphenols. The quoted sentence does not name tyrosinase 4 "
+        "(it says 'the proteolytically activated mushroom tyrosinase') and names neither L-tyrosine nor L-DOPA. UniProt C7FF05 (PPO4, 'Tyrosinase 4') does not cite the paper.")
+link("tyrosinase", T, "C7FF05", "T3", PPO4, "28500345")
+link("tyrosinase", D, "C7FF05", "T3", PPO4, "28500345")
 PPO3 = "Held at T3. Crystal structure of the Agaricus bisporus tyrosinase complex; the H subunit is the ppo3 product. The abstract reports no assay of PPO3. Kinetic papers on commercial mushroom tyrosinase (for example PMID 10552675, with L-tyrosine and L-DOPA) do not name the isoform."
 link("tyrosinase", T, "C7FF04", "T3", PPO3, "21598903")
 link("tyrosinase", D, "C7FF04", "T3", PPO3, "21598903")
 PHO = "Held at T3. Enzyme purified to homogeneity from fruit bodies of Pholiota nameko and named by its systematic name; the abstract reports no assay result and no product. UniProt A7BHQ9 cites the paper for catalytic activity."
 link("tyrosinase", T, "A7BHQ9", "T3", PHO, "17617709")
 link("tyrosinase", D, "A7BHQ9", "T3", PHO, "17617709")
-TRA = ("cDNA over-expressed in Aspergillus niger; the recombinant enzyme has monophenolase and diphenolase activities (534 and 1,668 U per litre). The substrate class is named, {} is not. "
-       "The paper says Pycnoporus sanguineus; UniProt Q2TL94 (Trametes sanguinea, no gene name) cites the paper")
-link("tyrosinase", T, "Q2TL94", "T1a", TRA.format("L-tyrosine"), "16151802")
-link("tyrosinase", D, "Q2TL94", "T1a", TRA.format("L-DOPA"), "16151802")
+TRA = ("Held at T3. cDNA over-expressed in Aspergillus niger; the recombinant enzyme has monophenolase and diphenolase activities (534 and 1,668 U per litre). The quoted sentence names the activity classes "
+       "and neither L-tyrosine nor L-DOPA, and the UniProt entry has no gene name. The paper says Pycnoporus sanguineus; UniProt Q2TL94 (Trametes sanguinea) cites the paper.")
+link("tyrosinase", T, "Q2TL94", "T3", TRA, "16151802")
+link("tyrosinase", D, "Q2TL94", "T3", TRA, "16151802")
 LD, DO, HG = C + "ldopa_oxidation_laccase", C + "dopamine_oxidation_laccase", C + "hga_oxidation_laccase"
 HGA = "Held at T3. Pigment formation from homogentisic acid is laccase dependent in Cryptococcus neoformans strains of all four serotypes; the abstract does not name the laccase gene or the strain."
 link("laccase_diphenol", LD, "Q55P57", "T1c", "disruption of the 5' end of CNLAC1 gives a Mel- mutant, and complementation of another Mel- mutant with CNLAC1 restores the Mel+ phenotype. Colour phenotype only. The abstract states as background that the laccase oxidises L-dopa to quinones; it reports no product analysis", "8760791")
-link("laccase_diphenol", DO, "Q55P57", "T1a", "purified enzyme (diphenol oxidase, identified as a laccase; gene CNLAC1 cloned); the oxidation product of dopamine was identified by mass spectrometry. The quoted sentence does not name the enzyme; the abstract is about one purified enzyme and its gene. UniProt Q55P57 cites the paper for the sequence, the function and the catalytic activity", "8300520")
+link("laccase_diphenol", DO, "Q55P57", "T3", "Held at T3. Purified enzyme (diphenol oxidase, identified as a laccase; gene CNLAC1 cloned); the oxidation product of dopamine was identified by mass spectrometry. The quoted sentence does not name the enzyme. UniProt Q55P57 cites the paper for the sequence, the function and the catalytic activity.", "8300520")
 link("laccase_diphenol", HG, "Q55P57", "T3", HGA, "17098915")
-link("laccase_diphenol", LD, "J9VY90", "T1c", "lac1 mutants have melanin defects, which LAC2 overexpression suppresses. Colour phenotype only; the abstract names no substrate of the melanin test and no strain. UniProt J9VY90 (LAC1 of strain H99) does not cite the paper; the tie is the gene name and the organism", "15643074", "15643074:lac1")
+STRAIN = " The abstract names no strain and no serotype, and UniProt {} does not cite the paper, so the protein of the paper is not confirmed. A fetch of the full text (Europe PMC, PMC544166) failed on 2026-11-21."
+link("laccase_diphenol", LD, "J9VY90", "T3", "Held at T3. lac1 mutants have melanin defects, which LAC2 overexpression suppresses (colour phenotype)." + STRAIN.format("J9VY90 (LAC1 of strain H99)"), "15643074", "15643074:lac1")
 link("laccase_diphenol", HG, "J9VY90", "T3", HGA, "17098915")
-link("laccase_diphenol", LD, "J9VQZ4", "T1c", "a lac2 mutation gives a modest delay in melanin formation. Colour phenotype only; the abstract names no substrate of the melanin test and no strain. UniProt J9VQZ4 (LAC2 of strain H99, CNAG_03464, next to LAC1 CNAG_03465) does not cite the paper; the abstract places LAC2 adjacent to LAC1", "15643074", "15643074:lac2")
+link("laccase_diphenol", LD, "J9VQZ4", "T3", "Held at T3. A lac2 mutation gives a modest delay in melanin formation (colour phenotype). The abstract places LAC2 adjacent to LAC1 (ORF names CNAG_03464 and CNAG_03465 in H99)." + STRAIN.format("J9VQZ4 (LAC2 of strain H99)"), "15643074", "15643074:lac2")
 link("hppd", "RHEA:16189", "Q4WHU1", "T1b", "gene deletion in the fungus; no homogentisic acid and no pyomelanin in the hppD deletion mutant (intermediate analysis)", "19028908", "19028908:hppD")
 link("hmga", "RHEA:15449", "Q4WHT9", "T1b", "gene deletion in the fungus; HmgA activity abolished and homogentisic acid accumulates (intermediate analysis)", "19028908", "19028908:hmgA")
-link("hmga", "RHEA:15449", "Q00667", "T1a", "polypeptide expressed in Escherichia coli as a glutathione S-transferase fusion; the purified protein has homogentisate dioxygenase activity. The same abstract reports that gene disruption gives accumulation of homogentisate", "7673153")
+link("hmga", "RHEA:15449", "Q00667", "T1b", "gene disruption in the fungus; homogentisate accumulates in broths with phenylalanine (intermediate analysis). The same abstract reports homogentisate dioxygenase activity of the purified fusion protein made in Escherichia coli, in a sentence that does not name HmgA", "7673153")
 link("aspulvinone_e_synthase", "RHEA:63824", "Q0CRX1", "T1a", "the abstract states the product of MelA (aspulvinone E); it does not state the method. UniProt Q0CRX1 cites the paper for catalytic activity", "27133313")
 link("aspulvinone_e_synthase", "RHEA:63824", "Q0CRX1", "T1a", "heterologous expression of the Aspergillus terreus NRPS-like genes; atmelA and apvA both release aspulvinone E. UniProt Q0CRX1 (melA) does not cite the paper; the entries of tyrP (Q0CRX0) and apvA (Q0CWD0) do", "28791090")
 TYRP = "Held at T3. The abstract states that TyrP activates aspulvinone E for polymerisation; it states no assay and no product of TyrP. UniProt Q0CRX0 cites the paper for catalytic activity and biophysicochemical properties (RHEA:74195, RHEA:74199). Raise to T1a if the user accepts the UniProt record as the evidence."
@@ -456,8 +469,8 @@ STEPS = [  # id, name, ec, domains, copy, role, optional, route, ko, lineage_not
   SEP + "A PF00264 hit is not a tyrosinase call. MEASURED on 2026-11-21 (global alignment): the references are 20 to 55% identical to each other; the decoys (the short tyrosinase-like proteins ivoB, orsC and phomQ1, "
   "the catechol oxidase AoCO4, the bacterial GriF) and TyrP of Asp-melanin are 12 to 18% identical to the references and 20 to 45% to each other. UniProt gives EC 1.14.18.1 also to tyrosinases of other pathways, "
   "for example ustQ of ustiloxin biosynthesis (B8NM74); such entries are neither decoys nor references. Rhea writes L-tyrosine to L-dopaquinone as one reaction, so free L-DOPA is not a product of the table. "
-  "From L-dopaquinone onward (L-dopachrome and later) the table is non-enzymatic; any fungal enzyme there is T4. A T1a tier here is an enzyme assay; it is not evidence of a pigment. "
-  "Gene names: T (Neurospora crassa), melO and melB (Aspergillus oryzae; UniProt Q2UP46 has the ORF name AO090001000117 only), PPO3 and PPO4 (Agaricus bisporus), tyr1 (Pholiota microspora). "
+  "From L-dopaquinone onward (L-dopachrome and later) the table is non-enzymatic; any fungal enzyme there is T4. No tyrosinase link is above T1c: no abstract that was read names the protein and L-tyrosine or L-DOPA in one sentence (assays of substrate classes are held at T3). "
+  "Gene names: T (Neurospora crassa), melO and melB (Aspergillus oryzae; UniProt A0A1S9DK56 has the ORF name OAory_01107480 only), PPO3 and PPO4 (Agaricus bisporus), tyr1 (Pholiota microspora). "
   "melB is also a UniProt synonym of tyrP of Aspergillus terreus (Q0CRX0, Asp-melanin). " + ORG,
   "type-3 copper protein family (tyrosinase)"),
  ("laccase_diphenol", "laccase, diphenol oxidation only (LAC1 and LAC2 of Cryptococcus)", "1.10.3.2", ["PF07732", "PF00394", "PF07731"], "multi", "catalytic", True, "laccase_exogenous", "K00421;K05909",

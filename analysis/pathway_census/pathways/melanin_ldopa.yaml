@@ -77,14 +77,14 @@ steps:
         pmid: "2529259"
         verified: true
       # melB of Aspergillus oryzae (PMID 16233650, 22213164, 23053534). The UniProt entry has the ORF name
-      # AO090001000117 only; the name melB is not in the entry. The tie: the entry cites PMID 23749993 (crystal
-      # structure of Aspergillus oryzae pro-tyrosinase), and that abstract cites the two melB activation papers
-      # by journal, volume and pages. The entry has 638 residues; PMID 16233650 gives 616 for melB (A0A1S9DK56,
-      # 616 residues, another strain, is 91% identical). See UNVERIFIED.md, A2.
-      - accession: Q2UP46
-        species: "Aspergillus oryzae (strain ATCC 42149 / RIB 40)"
-        gene_name: "AO090001000117"
-        pmid: "23749993"
+      # OAory_01107480 only; the name melB is not in the entry. The tie is the sequence: PDB 3W6W (title: melB
+      # holo-protyrosinase) has this sequence at 615 of 616 residues, and the entry has the 616 residues that
+      # PMID 16233650 gives for melB. Q2UP46 (RIB40 gene model of the locus, 638 residues, 91% identical) is not
+      # the assayed sequence and is not a reference. Links held at T3. See UNVERIFIED.md, A2.
+      - accession: A0A1S9DK56
+        species: "Aspergillus oryzae"
+        gene_name: "OAory_01107480"
+        pmid: "32356371"
         verified: true
       # melO of PMID 7893753 (539 residues in the abstract and in the entry). Links held at T3.
       - accession: Q00234
@@ -92,7 +92,7 @@ steps:
         gene_name: "melO"
         pmid: "7893753"
         verified: true
-      # PPO4 ('Tyrosinase 4' in UniProt) = tyrosinase 4 / AbPPO4 of PMID 28500345, which the entry does not cite.
+      # PPO4 ('Tyrosinase 4' in UniProt) = tyrosinase 4 / AbPPO4 of PMID 28500345, which the entry does not cite. Links held at T3.
       # pmid 20676921 is the cDNA paper cited by the entry (the Escherichia coli product there had no activity).
       - accession: C7FF05
         species: "Agaricus bisporus"
@@ -154,7 +154,7 @@ steps:
     reactions:
       - "RHEA:18117"
       - "RHEA:34287"
-    lineage_note: "Tyrosinase and laccase both oxidise L-DOPA to the quinone, and they are not related in sequence. The annotation that separates them: a tyrosinase is EC 1.14.18.1 with RHEA:18117 (L-tyrosine to L-dopaquinone) and RHEA:34287 (L-DOPA to L-dopaquinone), in the type-3 copper family (Pfam PF00264); a laccase is EC 1.10.3.2 with the generic reaction RHEA:11276 only, in the multicopper oxidase family (Pfam PF07732, PF00394, PF07731). A laccase does not hydroxylate tyrosine: UniProt states for LAC1 of Cryptococcus (Q55P57, from PMID 8300520) that it does not oxidise monophenols such as tyrosine. A PF00264 hit is not a tyrosinase call. MEASURED on 2026-11-21 (global alignment): the references are 20 to 55% identical to each other; the decoys (the short tyrosinase-like proteins ivoB, orsC and phomQ1, the catechol oxidase AoCO4, the bacterial GriF) and TyrP of Asp-melanin are 12 to 18% identical to the references and 20 to 45% to each other. UniProt gives EC 1.14.18.1 also to tyrosinases of other pathways, for example ustQ of ustiloxin biosynthesis (B8NM74); such entries are neither decoys nor references. Rhea writes L-tyrosine to L-dopaquinone as one reaction, so free L-DOPA is not a product of the table. From L-dopaquinone onward (L-dopachrome and later) the table is non-enzymatic; any fungal enzyme there is T4. A T1a tier here is an enzyme assay; it is not evidence of a pigment. Gene names: T (Neurospora crassa), melO and melB (Aspergillus oryzae; UniProt Q2UP46 has the ORF name AO090001000117 only), PPO3 and PPO4 (Agaricus bisporus), tyr1 (Pholiota microspora). melB is also a UniProt synonym of tyrP of Aspergillus terreus (Q0CRX0, Asp-melanin). A gene name is valid only with its organism."
+    lineage_note: "Tyrosinase and laccase both oxidise L-DOPA to the quinone, and they are not related in sequence. The annotation that separates them: a tyrosinase is EC 1.14.18.1 with RHEA:18117 (L-tyrosine to L-dopaquinone) and RHEA:34287 (L-DOPA to L-dopaquinone), in the type-3 copper family (Pfam PF00264); a laccase is EC 1.10.3.2 with the generic reaction RHEA:11276 only, in the multicopper oxidase family (Pfam PF07732, PF00394, PF07731). A laccase does not hydroxylate tyrosine: UniProt states for LAC1 of Cryptococcus (Q55P57, from PMID 8300520) that it does not oxidise monophenols such as tyrosine. A PF00264 hit is not a tyrosinase call. MEASURED on 2026-11-21 (global alignment): the references are 20 to 55% identical to each other; the decoys (the short tyrosinase-like proteins ivoB, orsC and phomQ1, the catechol oxidase AoCO4, the bacterial GriF) and TyrP of Asp-melanin are 12 to 18% identical to the references and 20 to 45% to each other. UniProt gives EC 1.14.18.1 also to tyrosinases of other pathways, for example ustQ of ustiloxin biosynthesis (B8NM74); such entries are neither decoys nor references. Rhea writes L-tyrosine to L-dopaquinone as one reaction, so free L-DOPA is not a product of the table. From L-dopaquinone onward (L-dopachrome and later) the table is non-enzymatic; any fungal enzyme there is T4. No tyrosinase link is above T1c: no abstract that was read names the protein and L-tyrosine or L-DOPA in one sentence (assays of substrate classes are held at T3). Gene names: T (Neurospora crassa), melO and melB (Aspergillus oryzae; UniProt A0A1S9DK56 has the ORF name OAory_01107480 only), PPO3 and PPO4 (Agaricus bisporus), tyr1 (Pholiota microspora). melB is also a UniProt synonym of tyrP of Aspergillus terreus (Q0CRX0, Asp-melanin). A gene name is valid only with its organism."
 
   - id: laccase_diphenol
     name: "laccase, diphenol oxidation only (LAC1 and LAC2 of Cryptococcus)"
@@ -169,14 +169,14 @@ steps:
         pmid: "8300520"
         verified: true
       # LAC1 of strain H99 (serotype A). UniProt gives its function 'by similarity'. pmid 12581355 is cited by
-      # the entry for catalytic activity. The T1c link rests on PMID 15643074, which the entry does not cite.
+      # the entry for catalytic activity. Link held at T3: the strain of PMID 15643074 is not confirmed.
       - accession: J9VY90
         species: "Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)"
         gene_name: "LAC1"
         pmid: "12581355"
         verified: true
       # LAC2 of strain H99 (CNAG_03464, next to LAC1 CNAG_03465). UniProt gives its function 'by similarity'.
-      # pmid 24743168 is the genome paper cited by the entry. The T1c link rests on PMID 15643074 (not cited).
+      # pmid 24743168 is the genome paper cited by the entry. Link held at T3 (strain of PMID 15643074 not confirmed).
       - accession: J9VQZ4
         species: "Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)"
         gene_name: "LAC2"
@@ -247,7 +247,7 @@ steps:
         gene_name: "hmgA"
         pmid: "19028908"
         verified: true
-      # Aspergillus nidulans hmgA: enzyme expressed in Escherichia coli and assayed (PMID 7673153).
+      # Aspergillus nidulans hmgA: disruption gives accumulation of homogentisate (PMID 7673153).
       - accession: Q00667
         species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
         gene_name: "hmgA"

@@ -77,7 +77,7 @@ def test_one_quoted_sentence_per_link(kb):
     # PMID 15643074 gives two sentences: one names lac2, the other the lac1 mutants
     by = sr[sr["pmid"] == "15643074"]
     quotes = dict(zip(by["protein_accession"], by["quote"]))
-    assert quotes["J9VQZ4"] != quotes["J9VY90"]
+    assert quotes["J9VQZ4"] != quotes["J9VY90"] and set(by["tier"]) == {"T3"}
     assert "lac2 mutation" in quotes["J9VQZ4"] and "lac1 mutants" in quotes["J9VY90"]
 
 
@@ -221,53 +221,82 @@ def test_tyrosinase_tiers_are_bound_to_protein_and_organism(kb):
     assert _links(kb, "tyrosinase") == {
         ("RHEA:18117", "P00440", "2147580"): "T1c",
         ("RHEA:34287", "P00440", ""): "T3",
-        ("RHEA:18117", "Q2UP46", "23053534"): "T1a",
-        ("RHEA:34287", "Q2UP46", "22213164"): "T3",
+        ("RHEA:18117", "A0A1S9DK56", "23053534"): "T3",
+        ("RHEA:34287", "A0A1S9DK56", "22213164"): "T3",
         ("RHEA:18117", "Q00234", "7893753"): "T3",
         ("RHEA:34287", "Q00234", "7893753"): "T3",
-        ("RHEA:18117", "C7FF05", "28500345"): "T1a",
-        ("RHEA:34287", "C7FF05", "28500345"): "T1a",
+        ("RHEA:18117", "C7FF05", "28500345"): "T3",
+        ("RHEA:34287", "C7FF05", "28500345"): "T3",
         ("RHEA:18117", "C7FF04", "21598903"): "T3",
         ("RHEA:34287", "C7FF04", "21598903"): "T3",
         ("RHEA:18117", "A7BHQ9", "17617709"): "T3",
         ("RHEA:34287", "A7BHQ9", "17617709"): "T3",
-        ("RHEA:18117", "Q2TL94", "16151802"): "T1a",
-        ("RHEA:34287", "Q2TL94", "16151802"): "T1a",
+        ("RHEA:18117", "Q2TL94", "16151802"): "T3",
+        ("RHEA:34287", "Q2TL94", "16151802"): "T3",
     }
 
 
-def test_tyrosinase_t1a_quotes_name_the_substrate_class(kb):
-    """Rule of this table: a tyrosinase link is T1a only when the quoted sentence states an
-    assay on the substrate class of the reaction. 'Tyrosinase activity' alone is T3."""
+# Binding rule 1, applied as written (fix round 1): a T1 link needs a quoted sentence that names
+# the protein of the link. The names below are the words of the sentence that name it.
+NAMED = {
+    ("P00440", "2147580"): "tyrosinase",        # T1c: transformant with high tyrosinase levels
+    ("Q55P57", "8760791"): "CNLAC1",            # T1c
+    ("Q4WHU1", "19028908"): "hppD",             # T1b
+    ("Q4WHT9", "19028908"): "hmgA",             # T1b
+    ("Q00667", "7673153"): "HmgA",              # T1b
+    ("Q0CRX1", "27133313"): "MelA",             # T1a
+    ("Q0CRX1", "28791090"): "atmelA",           # T1a
+}
+
+
+def test_every_t1_quote_names_the_protein_of_its_link(kb):
     sr = kb["step_reaction"]
-    t = sr[(sr["step_id"] == "tyrosinase") & (sr["tier"] == "T1a")]
-    for _, r in t.iterrows():
-        q = r["quote"].lower()
-        if r["reaction_id"] == "RHEA:18117":
-            assert ("monophenol" in q or "mono- and diphenols" in q or "phenolase" in q
-                    or "tyrosine" in q), r["pmid"]
-        else:
-            assert "diphenol" in q or "dopa" in q, r["pmid"]
-    held = sr[(sr["step_id"] == "tyrosinase") & (sr["tier"] == "T3") & (sr["quote"] != "")]
-    assert len(held) >= 5
+    ev = sr[sr["tier"].isin(EVIDENCE_TIERS)]
+    assert {(a, p) for a, p in zip(ev["protein_accession"], ev["pmid"])} == set(NAMED)
+    for _, r in ev.iterrows():
+        assert NAMED[(r["protein_accession"], r["pmid"])] in r["quote"], r["protein_accession"]
+    assert dict(ev["tier"].value_counts()) == {"T1a": 2, "T1b": 3, "T1c": 2}
+    # T1a: the sentence states the product for the named protein
+    for q in ev[ev["tier"] == "T1a"]["quote"]:
+        assert "aspulvinone E" in q
+    # T1b: the sentence states the intermediate
+    for q in ev[ev["tier"] == "T1b"]["quote"]:
+        assert "homogentisic acid" in q or "homogentisate" in q
+
+
+def test_no_tyrosinase_link_is_above_t1c_and_held_links_say_why(kb):
+    """No quoted tyrosinase sentence names the protein together with L-tyrosine or L-DOPA.
+    The substrate-class rule of the first version is withdrawn."""
+    sr = kb["step_reaction"]
+    tyr = sr[sr["step_id"] == "tyrosinase"]
+    assert dict(tyr["tier"].value_counts()) == {"T3": 13, "T1c": 1}
+    held = tyr[(tyr["tier"] == "T3") & (tyr["quote"] != "")]
+    assert len(held) == 12
     for _, r in held.iterrows():
         assert r["assay"].startswith("Held at T3."), r["protein_accession"]
+    readme = (ROOT / "kb" / "README.md").read_text(encoding="utf-8")
+    assert "substrate class" not in readme
 
 
 def test_laccase_tiers(kb):
     assert _links(kb, "laccase_diphenol") == {
         (C + "ldopa_oxidation_laccase", "Q55P57", "8760791"): "T1c",
-        (C + "dopamine_oxidation_laccase", "Q55P57", "8300520"): "T1a",
+        (C + "dopamine_oxidation_laccase", "Q55P57", "8300520"): "T3",
         (C + "hga_oxidation_laccase", "Q55P57", "17098915"): "T3",
-        (C + "ldopa_oxidation_laccase", "J9VY90", "15643074"): "T1c",
+        (C + "ldopa_oxidation_laccase", "J9VY90", "15643074"): "T3",
         (C + "hga_oxidation_laccase", "J9VY90", "17098915"): "T3",
-        (C + "ldopa_oxidation_laccase", "J9VQZ4", "15643074"): "T1c",
+        (C + "ldopa_oxidation_laccase", "J9VQZ4", "15643074"): "T3",
     }
     sr = kb["step_reaction"]
     dop = sr[sr["reaction_id"] == C + "dopamine_oxidation_laccase"].iloc[0]
     assert dop["quote"] == ("Dopamine was shown by mass spectroscopy to be oxidized to decarboxy "
                             "dopachrome, an intermediate of melanin synthesis.")
-    assert "does not name the enzyme" in dop["assay"]
+    assert dop["assay"].startswith("Held at T3.") and "does not name the enzyme" in dop["assay"]
+    # the strain of PMID 15643074 is not confirmed: the H99 links are held at T3 (I3)
+    h99 = sr[sr["pmid"] == "15643074"]
+    assert len(h99) == 2
+    for a in h99["assay"]:
+        assert a.startswith("Held at T3.") and "names no strain" in a
     hga = sr[sr["reaction_id"] == C + "hga_oxidation_laccase"]
     assert set(hga["quote"]) == {
         "HGA melanization was laccase dependent and repressed by high concentrations of glucose."}
@@ -278,7 +307,11 @@ def test_laccase_tiers(kb):
 def test_pyomelanin_and_asp_melanin_tiers(kb):
     assert _links(kb, "hppd") == {("RHEA:16189", "Q4WHU1", "19028908"): "T1b"}
     assert _links(kb, "hmga") == {("RHEA:15449", "Q4WHT9", "19028908"): "T1b",
-                                  ("RHEA:15449", "Q00667", "7673153"): "T1a"}
+                                  ("RHEA:15449", "Q00667", "7673153"): "T1b"}
+    q00667 = kb["step_reaction"][kb["step_reaction"]["protein_accession"] == "Q00667"].iloc[0]
+    assert q00667["quote"] == (
+        "The HmgA protein catalyzes an essential step in phenylalanine catabolism, and disruption "
+        "of the gene results in accumulation of homogentisate in broths containing phenylalanine.")
     assert _links(kb, "aspulvinone_e_synthase") == {
         ("RHEA:63824", "Q0CRX1", "27133313"): "T1a",
         ("RHEA:63824", "Q0CRX1", "28791090"): "T1a"}
@@ -334,12 +367,12 @@ AB, AO, TS = "agaricus bisporus", "aspergillus oryzae", "trametes sanguinea"
 CD, CN = "cryptococcus deneoformans", "cryptococcus neoformans"
 AF, AN, AT = "aspergillus fumigatus", "aspergillus nidulans", "aspergillus terreus"
 ROUTE_PRODUCTS = {
-    # T1a for three organisms, each alone: Agaricus bisporus (shown), Aspergillus oryzae,
-    # Trametes sanguinea.
-    "tyrosinase_dopa": {DQ: ("T1a", [AB], 3)},
-    # L-dopaquinone at T1c (colour phenotype) for Cryptococcus deneoformans (shown) or
-    # Cryptococcus neoformans; dopaminechrome at T1a for Cryptococcus deneoformans only.
-    "laccase_exogenous": {DQ: ("T1c", [CD], 2), DACHR: ("T1a", [CD], 1)},
+    # Fix round 1 (binding rule 1 as written). T1c for Neurospora crassa only (colour phenotype
+    # of an overexpression strain); every other tyrosinase link is T3.
+    "tyrosinase_dopa": {DQ: ("T1c", ["neurospora crassa"], 1)},
+    # L-dopaquinone at T1c (colour phenotype) for Cryptococcus deneoformans only; the H99 links
+    # are T3. Dopaminechrome at T3 (the sentence does not name the enzyme).
+    "laccase_exogenous": {DQ: ("T1c", [CD], 1), DACHR: ("T3", [CD], 1)},
     "pyomelanin": {HGA: ("T1b", [AF], 1)},
     "tyrosine_degradation": {MAA: ("T1b", [AF], 1)},
     # the TyrP products have no neutral ChEBI entry
@@ -374,9 +407,9 @@ def test_routes_one_organism_at_a_time(kb):
     """What each organism reaches with its own links (the filter is applied before the search)."""
     routes = _routes()
     want = {
-        "tyrosinase_dopa": {AB: ("T1a", DQ), AO: ("T1a", DQ), TS: ("T1a", DQ),
+        "tyrosinase_dopa": {AB: ("T3", DQ), AO: ("T3", DQ), TS: ("T3", DQ),
                             "neurospora crassa": ("T1c", DQ), "pholiota microspora": ("T3", DQ)},
-        "laccase_exogenous": {CD: ("T1c", DQ), CN: ("T1c", DQ)},
+        "laccase_exogenous": {CD: ("T1c", DQ), CN: ("T3", DQ)},
         "pyomelanin": {AF: ("T1b", HGA)},
         "tyrosine_degradation": {AF: ("T1b", MAA)},
         "asp_melanin": {},
@@ -440,7 +473,7 @@ def test_quotes_equal_the_committed_fixture(kb):
                       quoting=3)
     assert list(fix.columns) == cols
     cur = kb["step_reaction"][cols].reset_index(drop=True)
-    assert len(cur) == 29 and (fix["quote"] != "").sum() >= 24
+    assert len(cur) == 29 and (fix["quote"] != "").sum() == 26
     assert cur.to_dict("records") == fix.to_dict("records")
 
 

@@ -1,6 +1,6 @@
 step_id	accession	species	gene_name	region	pmid	source_database	retrieved_on	verified
 tyrosinase	P00440	Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)	T		2529259	UniProtKB/Swiss-Prot (entry v145, sequence v5); PubMed (cited by the entry)	2026-11-21	true
-tyrosinase	Q2UP46	Aspergillus oryzae (strain ATCC 42149 / RIB 40)	AO090001000117		23749993	UniProtKB/TrEMBL (entry v108, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+tyrosinase	A0A1S9DK56	Aspergillus oryzae	OAory_01107480		32356371	UniProtKB/TrEMBL (entry v36, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 tyrosinase	Q00234	Aspergillus oryzae (strain ATCC 42149 / RIB 40)	melO		7893753	UniProtKB/Swiss-Prot (entry v124, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 tyrosinase	C7FF05	Agaricus bisporus	PPO4		20676921	UniProtKB/Swiss-Prot (entry v44, sequence v1); PubMed (cited by the entry)	2026-11-21	true
 tyrosinase	C7FF04	Agaricus bisporus	PPO3		21598903	UniProtKB/Swiss-Prot (entry v43, sequence v1); PubMed (cited by the entry)	2026-11-21	true

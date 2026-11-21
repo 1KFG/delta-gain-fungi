@@ -97,8 +97,14 @@ def test_tyrosinase_references_are_the_named_enzymes():
     refs = {r.accession: r for r in _steps()["tyrosinase"].refs}
     # Neurospora crassa T, Aspergillus oryzae melB (ORF name only in UniProt), Agaricus bisporus
     assert refs["P00440"].gene_name == "T" and refs["P00440"].species.startswith("Neurospora crassa")
-    assert refs["Q2UP46"].gene_name == "AO090001000117"
-    assert refs["Q2UP46"].species.startswith("Aspergillus oryzae")
+    # melB: A0A1S9DK56 has the sequence of the assayed protein (PDB 3W6W). Q2UP46, the RIB40
+    # gene model of the locus, is not a reference (fix round 1, I1).
+    assert refs["A0A1S9DK56"].gene_name == "OAory_01107480"
+    assert refs["A0A1S9DK56"].species == "Aspergillus oryzae" and refs["A0A1S9DK56"].verified
+    assert "Q2UP46" not in refs
+    text = UNVERIFIED.read_text(encoding="utf-8")
+    for word in ("3W6W", "615 of 616", "Q2UP46", "not the assayed sequence"):
+        assert word in text, word
     assert {"C7FF04", "C7FF05"} <= set(refs)
     assert refs["C7FF05"].gene_name == "PPO4" and refs["C7FF05"].species == "Agaricus bisporus"
     assert _steps()["tyrosinase"].reactions == ["RHEA:18117", "RHEA:34287"]
@@ -254,6 +260,16 @@ def test_decoy_reasons_state_the_separating_annotation():
         elif r["step_id"] == "asp_melanin_tyrosinase":
             assert "RHEA:74195" in r["reason"] and "RHEA:74199" in r["reason"], r["accession"]
     tyr = {r["accession"]: r for r in rows if r["step_id"] == "tyrosinase"}
+    # GriF is excluded from the monophenolase reaction only; abr1 is not shown to lack
+    # diphenol oxidation (fix round 1, I4)
+    assert "monophenolase reaction only" in tyr["B1VTI5"]["reason"]
+    assert "not shown to lack diphenol oxidation" in tyr["B1VTI5"]["reason"]
+    for rid in ("RHEA:41420", "RHEA:41424", "RHEA:40963"):
+        assert rid in tyr["B1VTI5"]["reason"], rid
+    abr1 = [r for r in rows if r["accession"] == "Q4WZB4"][0]
+    assert "14970241" in abr1["reason"] and "not shown to lack diphenol oxidation" in abr1["reason"]
+    text = UNVERIFIED.read_text(encoding="utf-8")
+    assert "B1VTI5" in text and "Q4WZB4" in text and "14970241" in text
     # two decoys have an assay that excludes the reference substrates (abstracts read)
     assert tyr["Q5BGU9"]["pmid"] == "2126551" and "not tyrosine" in tyr["Q5BGU9"]["reason"]
     assert "19798497" in tyr["Q2UNF9"]["reason"] and "no activity" in tyr["Q2UNF9"]["reason"]
@@ -340,8 +356,8 @@ def test_q2tl94_is_not_verified_because_uniprot_gives_no_gene_name():
 
 
 def test_references_with_a_gap_are_listed_in_unverified_md():
-    """Q2UP46 (melB) has an ORF name only; the name melB is not in the entry. P00440, C7FF05,
-    J9VY90 and J9VQZ4 do not cite the paper of their T1 link."""
+    """A0A1S9DK56 (melB) has an ORF name only; the name melB is not in the entry. P00440,
+    C7FF05, J9VY90 and J9VQZ4 do not cite the paper of their link."""
     text = UNVERIFIED.read_text(encoding="utf-8")
     for acc in ("Q2UP46", "A0A1S9DK56", "P00440", "C7FF05", "J9VY90", "J9VQZ4", "Q2TL94"):
         assert acc in text, acc
@@ -354,8 +370,8 @@ def test_user_decisions_are_written_down():
     assert "CHEBI:193114" in text and "CHEBI:193115" in text and "asp_melanin" in text
     # the exogenous-substrate flag is text, not a schema field
     assert "exogenous_substrate" in text and "schema" in text
-    # tier rule for tyrosinase abstracts that name a substrate class only
-    assert "substrate class" in text
+    # binding rule 1 is applied as written; the substrate-class rule is withdrawn
+    assert "applied as written" in text and "withdrawn" in text
     # the dopamine sentence does not name the enzyme
     assert "8300520" in text and "does not name" in text
 
