@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "pathway_census"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = ["pyyaml"]
+dependencies = ["pyyaml", "pandas", "numpy", "duckdb"]
 
 [project.optional-dependencies]
 test = ["pytest"]

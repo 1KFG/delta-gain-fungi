@@ -27,7 +27,8 @@ has_proteins    from the genome table. False means no proteome was searched: cou
                 booleans or the exact strings "True"/"False"; anything else raises ValueError.
 genome_flags    ";"-joined tokens: no_proteins; unknown_flags (copy_unknown > 0).
 
-Errors (ValueError): assigned protein whose 8-hex LOCUSTAG prefix is not in the genome table;
+Errors (ValueError): assigned protein whose LOCUSTAG prefix (text before the first underscore; 8 hex
+characters in all but 3 BFD genomes) is not in the genome table;
 step_id not in the pathway; duplicate (protein_id, step_id) among assigned rows; assigned rows in a
 genome with has_proteins False.
 """

@@ -1,7 +1,9 @@
 # Pathway census pilot lessons (carotenoid), 2026-11-20
 
-Source: the controller ledger (`.superpowers/sdd/2026-11-20-pathway-census-carotenoid-pilot/progress.md`),
-`analysis/pathway_census/README.md` and the module docstrings. This note is the starting point for
+Source: the controller ledger (`.superpowers/sdd/2026-11-20-pathway-census-carotenoid-pilot/progress.md`,
+git-ignored, not in the repository), the final-review findings of 2026-11-20,
+`analysis/pathway_census/README.md` and the module docstrings. Facts that committed files cite are
+copied into this note (see "Reference curation record"). This note is the starting point for
 the DHN-melanin plan (spec section 5.8).
 
 Labels: MEASURED = read from data or a tool on 2026-11-20. PROPOSED = a builder's choice with no data
@@ -22,7 +24,19 @@ synthetic fixtures only. Nothing in this note is a biological finding.
   (Tasks 4, 7, 8, 9, 10; `assign_steps.py` got the gate in the final-review fix I1).
   `list_unverified_refs.py` only lists unverified references and has no gate.
 - Reference curation: 23 refs, 22 verified against UniProt and PubMed (MEASURED, Task 3). A reviewer
-  re-checked 6 of them (Task 3 review) (accession, PMID, sequence): all matched.
+  re-checked 6 of them (Task 3 review) (accession, PMID, sequence): all matched. Details below.
+
+### Reference curation record (Task 3, copied from the Task 3 report)
+
+Cited by `pathways/carotenoid.yaml` and Chapter A. MEASURED by the Task 3 implementer on 2026-11-20.
+- Refs in the YAML: 23 (22 with accession, 1 PMID-only). Verified: 22. Unverified: 1 (PMID 16416328,
+  Ojima 2006, astaxanthin synthase, no protein accession). Steps: 8. Steps with no verified ref: 0.
+- Method for every ref with an accession: (1) fetch the UniProt entry (JSON and FASTA) on 2026-11-20 and
+  check gene name, organism, length, and that the entry cites the PMID; (2) fetch the PubMed record and
+  check that title and abstract name the gene and its function for the step; (3) `verified: true` only
+  when 1 and 2 both pass. `verified: true` on a ref does not mean a person reviewed it.
+- The Task 3 reviewer re-checked 6 refs (accession, PMID, sequence): all matched.
+- The pathway flag stays `verified: false` until the user review (spec section 5.8).
 - Nullable-boolean flags with explicit NA semantics (Tasks 6, 7) stopped unknown values from being
   counted as clean.
 - Per-task review plus fix rounds caught Important issues in Tasks 2, 5, 6, 7, 8, 9, 10 before merge.
@@ -81,7 +95,7 @@ synthetic fixtures only. Nothing in this note is a biological finding.
    or absence (spec section 5.6). The Fable review says "The 5,625 baseline genomes allow this test
    directly" (`2026-11-20-pathway-census-REVIEW_FABLE.md` line 49). 5,625 is the BFD genome-table
    `baseline_ok` count (MEASURED, Task 2), not a pair count: a pair also needs BFD proteins, deposited
-   proteins and an existing `protein.faa` (Task 9 pair rule). The real pair count is not run.
+   proteins and an existing deposited protein file (Task 9 pair rule). The real pair count is not run.
 7. **No per-gene taxonomy in BFD.** Spec section 2 (line 61) says "The pipeline checks contamination before counting a copy". Task 6 found (MEASURED) that BFD has no per-gene taxonomy table, so the check needs a new best-hit table and a reference set labelled fungal / non-fungal. UNVERIFIED whether
    `swissprot_best.parquet` plus a taxid-to-lineage map is usable (memory notes call it "old format").
 8. **Tree placement tool.** `upo_place` does not run unchanged on carotenoid steps. Only its `assign`
@@ -94,13 +108,40 @@ synthetic fixtures only. Nothing in this note is a biological finding.
 
 Each item names what it needs from earlier items.
 
+Items marked [REQUIRED BEFORE REAL-DATA PASS] come from the final whole-branch review (2026-11-20). Step 1a was
+inserted so that the numbers 1-13 and their "Needs" references stay unchanged.
+
 1. [ ] User reviews `analysis/pathway_census/pathways/carotenoid.yaml` and `refs/carotenoid/UNVERIFIED.md`
        (spec section 5.8). Decide on `ylo1`, `cao2`, B5LEC8 and PMID 16416328. Set `verified: true` only
        after that. Needs: nothing. Gates all later items (no `--provisional` real run before this).
-2. [ ] Build real step HMMs (`build_step_hmms.py`). Needs: 1.
+       The user also decides:
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Decoy / outgroup sequences per step, with provenance (I6). With only pathway
+             references in the reference tree, placement cannot reject anything, and the absence check
+             calls decoy homologues `present_unannotated` (MEASURED on the test decoy: 72.8 bits at
+             `min_bitscore` 50).
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Any-of versus all-of domain rule (I10). `quality.py` `domain_ok` is all-of, but
+             `carotenoid.yaml` lists alternatives `[TIGR03462, PF18916]` for lycopene cyclase.
+             TIGR03462 is not Pfam, so BFD `pfam` cannot supply it.
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Whether GGPP synthase counts toward completeness (M5). It is non-optional, with no
+             carotenoid-specific clade defined.
+1a. [ ] [REQUIRED BEFORE REAL-DATA PASS] Split the fused reference FASTA per domain (I5). `refs/carotenoid/phytoene_synthase.faa`
+        and `lycopene_cyclase.faa` are byte-identical (`cmp`). Both steps would get the same HMM,
+        `fusion_candidate` never fires, and the absence cover for a stand-alone phytoene synthase (about
+        57% of the fused length, UNVERIFIED.md item 6) is `fragmented`. Needs: 1.
+2. [ ] Build real step HMMs (`build_step_hmms.py`). Needs: 1 and 1a.
 3. [ ] BFD search (`search_step.py`, `slurm/search_step.sbatch`) and dereplication. Set `min_score` per step
        (PROPOSED rule: lowest reference score; leave-one-out check open). Apply the dereplication rule
        (PROPOSED: >50,000 proteins at 90% identity) after counting the real family size. Needs: 2.
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] A batched driver that loops many genomes per job over all step HMMs, with the
+             genome or chunk id in the output names. BFD has one protein file per genome, and
+             per-genome runs of `search_step.py` overwrite each other (names carry the step only).
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] A searched-genome manifest that `build_matrix` requires. Today `has_proteins` means
+             "the file exists", not "the genome was searched".
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] One timed job before sizing. 23,379 genomes x 8 steps would be 187,032 jobs at one
+             job per genome-step.
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Compress `candidates.tsv`; label the sbatch time and memory UNVERIFIED; do not
+             swallow zstd errors.
+       Done in the final-review wave: `search_step.py` writes a `step_id` column (I4 part).
 4. [ ] Wire a placement tool and run placement for the candidates. `epa-ng` and `pplacer` are not installed
        as modules; iqtree, fasttree and raxml exist (MEASURED, Task 5). Build per-step reference trees and
        `clade_members.tsv`; output the placements TSV (`protein_id, step_id, clade, support`). Needs: 3.
@@ -110,25 +151,67 @@ Each item names what it needs from earlier items.
        scaffold neighbours. The fungal / non-fungal reference set does not exist yet. Needs: 5.
 7. [ ] Run `quality_flags`; this produces the flags table that `build_matrix` consumes. Needs: 5 and 6
        (also `gene_info` joined with protein length, and `expected_domains`).
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] The `pfam.parquet` column mapping. Its columns are `pfam_id`, `pfam_acc`,
+             `domain_i_evalue`, not `hmm_name` / `evalue`. Whether `pfam_acc` carries a version suffix
+             is UNVERIFIED.
 8. [ ] `build_matrix.py` and the phylum summary on BFD proteins; writes
        `results/carotenoid_phylum_summary.tsv`. Needs: 5 and 7.
-9. [ ] Deposited arm. First carry `asmid` into the genome table (`load_genome_table` drops it) and run the
-       real pair count (`paired.count_pairs`). Decide the ID mapping: option (a) rewrite deposited IDs to
-       `<locustag>_<id>`, or option (b) a `genome_of` parameter in `matrix.build_matrix` and
-       `quality.quality_flags` (change surface: `matrix.py:77`, `matrix.py:28`, `quality.py:104`,
-       `quality.py:14` docstring). Then run items 3-8 on the deposited proteins of the pair genomes. Needs:
-       the designs of 1-8 (same HMMs, placement and assignment rules), plus `asmid`.
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] (applies to steps 6-8) An explicit `require` decision for the matrix and the
+             triage if the contamination table is not ready. `matrix.DEFAULT_REQUIRE` includes
+             `contam_suspect`, so `copy_filtered` is 0 everywhere without it. `bins.DEFAULT_REQUIRE`
+             includes `motif_ok`, which is always NA because the YAML has no motif, so every real copy
+             is `unknown` in triage.
+9. [ ] Deposited arm. Regenerate `results/genomes.tsv.zst` (the genome table now carries `asmid` and
+       `folder`) and run the real pair count (`paired.count_pairs`). Decide the ID mapping: option (a)
+       rewrite deposited IDs to `<locustag>_<id>`, or option (b) a `genome_of` parameter in
+       `matrix.build_matrix` and `quality.quality_flags` (change surface: the `split("_")[0]` lines in
+       `matrix.py` and `quality.py`, and their docstrings). Then run items 3-8 on the deposited proteins
+       of the pair genomes. Needs: the designs of 1-8 (same HMMs, placement and assignment rules).
+       - [x] [REQUIRED BEFORE REAL-DATA PASS] Deposited path from the TSV `folder` column:
+             `<root>/<folder>/<folder>_protein.faa.gz` (done in the final-review wave, I7).
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Collapse deposited isoforms to one protein per gene from the GFF (I8). BFD proteins
+             are all `-T1` across 244,484,661 proteins. GCF_000001985.1 deposited has 10,638 proteins
+             for 10,023 protein-coding genes, and 505 genes have more than one mRNA (one genome only,
+             MEASURED by the reviewer). State that a copy is a gene.
+       - [ ] [REQUIRED BEFORE REAL-DATA PASS] Deposited genomes have no `gene_info` equivalent. Deposited flags are then NA and
+             `delta_filtered` is NA for every pair unless coordinates are parsed from the deposited
+             GFF. Only raw `delta` is usable without that.
 10. [ ] `paired_compare.py`. Needs: 8 (BFD matrix) and 9 (deposited matrix).
 11. [ ] Absence check on SLURM (job size UNVERIFIED; target 1-1.5 h per job, from the user's HPCC guidance),
-        merge chunk files into `results/carotenoid_absence_summary.tsv` (PROPOSED name; no script makes it).
-        Needs: 8.
+        merge chunk files into `results/carotenoid_absence_summary.tsv` (PROPOSED name) with
+        `bin/merge_absence.py` (added in the final-review wave, I2). Needs: 8.
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Per-domain references (item 1a) and a decoy-calibrated `min_bitscore` set per
+              step, not only for step 8.
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Use `bin/merge_absence.py`, not a shell recipe.
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Consider renaming the outcome `present_unannotated` to a neutral `tblastn_hit`
+              until a confirmation step exists.
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Efficiency and correctness (M4): one decompression plus one tblastn per
+              genome-step; the per-(query, subject) cover union can add distant partial hits;
+              `-num_threads` is ignored with `-subject` (BLAST+ documentation, not measured); the
+              sbatch has no array-task-to-locustags mapping.
 12. [ ] Triage glue and `triage.py`. The glue joins signalp, tmhmm, wolfpsort, `gene_info` coordinates,
         `ref_identity`, `length` and `copy_filtered`. Check the real tmhmm / signalp / wolfpsort column
         names first (UNVERIFIED). Needs: 5, 7 and 8.
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] The `require` decision (see item 8).
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Rename `lineage_expansion` (M3) before a testing partner sees the output. It is
+              `copy_filtered >= 2` in one genome; it is not lineage-aware.
 13. [ ] Re-render Chapter A with real numbers:
         `module load quarto/1.7.31; quarto render analysis/pathway_census/chapters/A_carotenoid.qmd`.
-        Needs: 8, 10, 11, 12. Also check that no real data field contains `#` (the chapter reader skips
-        `#` as a comment character), and update spec section 3 with BFD-scoped counts.
+        Needs: 8, 10, 11, 12. Update spec section 3 with BFD-scoped counts.
+        - [x] [REQUIRED BEFORE REAL-DATA PASS] The `#`-in-field check is DONE for SPECIES, STRAIN and `annotation_provider`
+              (MEASURED by the reviewer: 0 of 24,363, 0, and 0 of 27,401 contain `#`).
+        - [ ] [REQUIRED BEFORE REAL-DATA PASS] Unify the TSV readers (M1). Five readers behave differently: `build_matrix`,
+              `paired_compare`, `triage` and `assign_steps` use `comment="#"`; `absence_check` strips
+              only leading `#` lines; `build_matrix` does not read `.gz` despite its docstring. Use one
+              shared reader before the real-data pass.
+
+### Also recorded (final review, not checklist steps)
+
+- M5: there is no completeness output. `Step.optional`, `copy_expect` and `role` are unused. The YAML
+  has 4 non-optional steps, although the ledger says "7 required + ylo1".
+- M10: the branch history holds 16 cache and result files (630,737 bytes) from commit 4b291a1. A squash
+  merge removes them.
+- M11: `paired_compare` does not check that the two matrices share the pathway file and `require`.
 
 ## 5. Deferred Minor findings by task (copied from the ledger)
 
@@ -157,16 +240,17 @@ Each item names what it needs from earlier items.
   separate RED for the fix round.
 - **Task 7:** test imports mid-file and unused `sys`; `len(m) == 2*8` hard-codes the carotenoid step
   count; CLI `has_proteins` lacks `dtype=str` (lowercase `true` auto-parsed) and has no CLI test for a bad
-  value; task-7 report self-review text is stale; `phylum_summary` does not summarise `copy_flagged`.
+  value; task-7 report self-review text is stale; `phylum_summary` did not summarise `copy_flagged`
+  (fixed in the final-review wave: `copy_*_total` columns).
 - **Task 8:** `build_matrix.py` and `absence_check.py` each have their own `read_tsv` (consider a shared io
   helper); `gzip.open` handle not closed; `zstd -dc` error omits stderr; no zstandard-module branch;
   same-name `--locustags` files in different dirs collide (document); `select_absences` and the paralog
   union work per (query, subject), not per locus; sbatch has no `PC_EVALUATE` passthrough; the README
-  merge awk is untested; each (genome, step) re-reads the genome.
+  merge awk was untested (replaced by `bin/merge_absence.py` in the final-review wave); each (genome, step) re-reads the genome.
 - **Task 9:** README lacked the `comment="#"` hint for reading outputs (the chapter now does it); the
   `.PROVISIONAL` note is not in the `paired_table` file; `n_unpaired.values()` over-counts
   (`unknown_flag` is a subset); NA `has_proteins` is reachable only via the library; resampling is per
-  step, not joint; carrying ASMID in `load_genome_table` is cleaner than the caller merge.
+  step, not joint; carrying ASMID in `load_genome_table` is cleaner than the caller merge (done in the final-review wave).
 - **Task 10:** the README may still say "input order" (grep found none); a soluble-step NA `tm` over-reports
   unevaluated by at most one; `_in_cluster` is O(n^2) per scaffold; `signal_peptide` is not dtype-validated
   in the library; the caller must build `signal_peptide`, `tm_helices`, `ref_identity`, `length`,
@@ -176,9 +260,11 @@ Each item names what it needs from earlier items.
 
 - No bug found in module code during this task.
 - The absence step writes per-chunk files only. The chapter expects a merged `carotenoid_absence_summary.tsv`.
-  That merge has no script (README gives an awk recipe). The expected name is a PROPOSED choice by this task.
+  At Task 11 that merge had only an awk recipe, which could write a provisional merge under the canonical
+  name. The final-review wave replaced it with `bin/merge_absence.py`. The name is a PROPOSED choice.
 - Module outputs use `.PROVISIONAL` in the file name. The chapter loads only canonical names and refuses
-  to show a `.PROVISIONAL` file as a result (it prints a notice instead).
+  to show a `.PROVISIONAL` file as a result (it prints a notice instead). Since the final-review wave it
+  also refuses a canonical name whose leading `#` lines contain `PROVISIONAL`.
 - The chapter uses knitr + R because jupyter is not installed for `/usr/bin/python3.12`. If the lab
   later installs jupyter, the same logic ports to a Python cell. This is a convenience choice, not a design need.
 
@@ -187,14 +273,15 @@ Each item names what it needs from earlier items.
 Reuse:
 - Package layout, the YAML definition loader with `verified` gate, provenance TSV with per-ref checks, and the
   PROVISIONAL tagging convention.
-- Genome table (Task 2) as is; add the `asmid` column from the start.
+- Genome table (Task 2) as is; it now carries `asmid` and `folder`.
 - Nullable-boolean flags, `clean_mask`, `unknown_counts`, and the copy-bucket invariant.
 - Placement-required assignment rule and the `placements` TSV interface.
 - Rules-first docs commits for any binning or threshold step. Absence check design, paired design with its stated limits.
 - The chapter scaffold with `NOT YET RUN` placeholders and the render test.
 
 Change:
-- Decide the deposited-arm design (ID rewrite or `genome_of`) at the start. Do not hard-code the 8-hex prefix.
+- Decide the deposited-arm design (ID rewrite or `genome_of`) at the start. Do not hard-code the LOCUSTAG
+  prefix format (it is 8 hex characters in all but 3 BFD genomes).
 - Decide the contamination reference set and the haplotype pair-identity method before the matrix step.
 - Pick a placement tool and test it before writing the assignment step.
 - Hold the user review of the pathway YAML before Tasks 4-10, not in parallel with them. Fix the SLURM

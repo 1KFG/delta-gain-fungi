@@ -5,11 +5,12 @@ compared. The same pipeline (same HMMs, same placement) runs once per protein so
 copy matrices (`matrix.build_matrix`). This module compares the two.
 
 What the test shows: the effect of the annotation source on identical assemblies.
-What it does NOT show: anything about the 18,145 genomes with no prior annotation (spec 5.6).
-Those genomes are outside the pairing.
+What it does NOT show: anything about the genomes with no prior annotation (BFD-scoped, MEASURED,
+Task 2 genome table: 18,055 no_prior_annotation_present and 673 no_prior_annotation_not_downloaded;
+spec 5.6 gives the TSV-wide 18,145). Those genomes are outside the pairing.
 
 Keys. A genome is identified by the caller-supplied `locustag` in BOTH matrices. Deposited protein IDs
-have another format than the 8-hex LOCUSTAG prefix. The caller builds the deposited matrix with
+do not start with the LOCUSTAG prefix before the first underscore (8 hex characters in all but 3 BFD genomes). The caller builds the deposited matrix with
 the genome's locustag, never from a protein-ID prefix. This module takes counts only. It never joins
 or deduplicates by protein ID, so a protein ID that occurs in both sources stays counted once per
 source.

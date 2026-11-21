@@ -20,7 +20,8 @@ in the output. Columns:
                   passed as False ("no signal peptide predicted"). ASSUMPTION: the table lists
                   every protein that was run, and absence means a negative call. Not verified.
   tm_helices      integer count of predicted helices from tmhmm. NA = not computed.
-The genome is the 8-hex LOCUSTAG prefix of protein_id (text before the first "_").
+The genome is the LOCUSTAG prefix of protein_id: the text before the first "_" (8 hex characters
+in all but 3 BFD genomes).
 
 Bin order of decision (first match wins):
 1. excluded. Any REQUIRED flag is known bad: truncated True, contam_suspect True, domain_ok False,

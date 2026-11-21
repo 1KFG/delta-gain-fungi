@@ -164,7 +164,8 @@ if (file.exists(ppath)) {
 }
 ```
 
-MEASURED (Task 3, `progress.md` and `refs/carotenoid/UNVERIFIED.md`): 23 curated references,
+MEASURED (Task 3; `refs/carotenoid/UNVERIFIED.md` and the reference curation record in
+`docs/superpowers/plans/2026-11-20-pilot-lessons.md`): 23 curated references,
 22 verified against UniProt and PubMed on 2026-11-20, 1 unverified (PMID 16416328, Ojima 2006, no
 protein accession). The pathway stays `verified: false`.
 
@@ -307,7 +308,7 @@ if (!is.null(d)) {
    `copy_unknown` and `copy_filtered` is 0 everywhere. Use `copy_raw` with `copy_unknown` until the
    contamination table exists. NA is not treated as clean.
 4. **The deposited-arm pipeline is not built.** The paired test needs a copy matrix from the
-   deposited proteins. Deposited protein IDs lack the 8-hex BFD prefix, so a prefix rewrite or a
+   deposited proteins. Deposited protein IDs do not start with the BFD LOCUSTAG prefix, so a prefix rewrite or a
    `genome_of` mapping is needed first.
 5. **What the paired test does and does not show.** It compares annotations on the same assemblies.
    It does not cover the genomes without a prior annotation (18,055 plus 673 in BFD, MEASURED, Task 2

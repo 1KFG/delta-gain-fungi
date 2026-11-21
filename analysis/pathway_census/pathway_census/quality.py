@@ -11,7 +11,8 @@ data exists yet to calibrate them.
 Rules (defined before coding)
 -----------------------------
 Gene id of a protein: protein_id without the transcript suffix `-T<n>` (for example
-`F77FFF1D_000001-T1` -> `F77FFF1D_000001`). gene_info is keyed by that gene id. Its columns are
+`F77FFF1D_000001-T1` -> `F77FFF1D_000001`). The genome of a protein is
+the LOCUSTAG prefix before the first underscore (8 hex characters in all but 3 BFD genomes). gene_info is keyed by that gene id. Its columns are
 gene_id, LOCUSTAG, chrom, start, end, plus `length` (protein length in aa, from BFD
 `gene_proteins.parquet`, joined by the caller).
 

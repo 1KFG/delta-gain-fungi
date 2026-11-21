@@ -1,13 +1,29 @@
-# pathway_census
+# pathway_census: pathway gene census for BFD genomes
 
-Shared pathway census package (carotenoid pilot). Task 1: definition loader (`pathway_census.defs`).
+Shared package that counts the genes of one biosynthetic pathway in every BFD genome. Carotenoid is
+the pilot pathway. No real-data run exists yet; all tests use synthetic fixtures. The real-data
+checklist is in `docs/superpowers/plans/2026-11-20-pilot-lessons.md`.
+
+Pipeline (one CLI per stage). Every CLI that reads the pathway YAML, except
+`list_unverified_refs.py`, refuses a `verified: false` pathway unless `--provisional`, and then tags
+its outputs `.PROVISIONAL`. `merge_absence.py` reads no pathway; it carries the tag of its inputs.
+
+1. `pathways/<id>.yaml` + `refs/<id>/`: definition and references (`pathway_census.defs`, `bin/list_unverified_refs.py`).
+2. `bin/build_step_hmms.py`, `bin/search_step.py`: step HMMs and candidate search (`hits`).
+3. `bin/assign_steps.py`: step labels from candidates plus a placements TSV (`assign`).
+4. `pathway_census.quality.quality_flags`: quality, contamination and haplotype flags (library only).
+5. `bin/build_matrix.py`: genome x step copy matrix and phylum summary (`matrix`).
+6. `bin/absence_check.py` + `bin/merge_absence.py`: tblastn check of absences (`absence`).
+7. `bin/paired_compare.py`: deposited versus BFD annotation on the same assemblies (`paired`).
+8. `bin/triage.py`: triage bins (`bins`). `chapters/A_carotenoid.qmd`: report scaffold.
+The genome table (`pathway_census.genomes`) feeds stages 5-7.
 
 Run tests with the system Python 3.12 (default `python3` is 3.9):
 
     /usr/bin/python3.12 -m pytest analysis/pathway_census/tests -v
 
 `pytest` and `pyyaml` were already present under `/usr/bin/python3.12`, so no venv was needed.
-If they go missing, create `analysis/pathway_census/.venv` (git-ignored) and install `pyyaml pytest` there.
+If they go missing, create `analysis/pathway_census/.venv` (git-ignored) and install the `pyproject.toml` dependencies (`pyyaml pandas numpy duckdb`, plus `pytest` from the `test` extra) there.
 
 ## Genome table (Task 2)
 
@@ -171,10 +187,10 @@ What it does NOT show: it says nothing about the genomes with no prior annotatio
 ### DEFERRED follow-up (G6): the deposited arm of the real-data pass
 
 Not implemented. `paired.py` compares two finished matrices only. Building the deposited matrix is open work.
-- Input: `paired.deposited_protein_path(deposited_root, folder)` for each pair genome (deposited root `/bigdata/stajichlab/shared/projects/1KFG/2026/NCBI_fungi/source/NCBI_ASM`; `folder` from the genome table). A table `protein_id -> locustag` (the caller supplies it; deposited protein IDs do NOT use the 8-hex BFD prefix).
+- Input: `paired.deposited_protein_path(deposited_root, folder)` for each pair genome (deposited root `/bigdata/stajichlab/shared/projects/1KFG/2026/NCBI_fungi/source/NCBI_ASM`; `folder` from the genome table). A table `protein_id -> locustag` (the caller supplies it; deposited protein IDs do NOT start with the LOCUSTAG prefix before the first underscore (8 hex characters in all but 3 BFD genomes)).
 - Output: a matrix in `build_matrix` format (same pathway steps, same HMMs and assignment rules as the BFD arm), keyed by the BFD `locustag`, with `has_proteins` set from the deposited-file flag (`has_deposited_proteins` and the file exists).
 - Design choice, to decide in the real-data pass (two options): (a) rewrite deposited protein IDs to `<locustag>_<deposited id>` before assign / quality / matrix; or (b) add a `genome_of` mapping parameter (protein_id -> locustag) to `matrix.build_matrix` and `quality.quality_flags`. Option (a) needs no code change but alters protein IDs in every output; option (b) keeps IDs and changes two functions. Neither is chosen.
-- Change surface (places that assume the 8-hex `LOCUSTAG_` prefix; found by grep on 2026-11-20):
+- Change surface (places that take the genome from the `LOCUSTAG_` prefix of a protein ID, i.e. the text before the first underscore; it is 8 hex characters in all but 3 BFD genomes (MEASURED: 3 of 24,363 LOCUSTAGs have 9 characters: FF38F669A, F3DC5624A, FCB937CBA); found by grep on 2026-11-20):
   - `pathway_census/matrix.py:77` `a["locustag"] = a.protein_id.str.split("_").str[0]`, and the error text at line 28.
   - `pathway_census/quality.py:104` `{p.split("_")[0] for p in assigned.protein_id}`; also the gene-id rule in the quality.py docstring (line 14: `F77FFF1D_000001-T1` -> `F77FFF1D_000001`, `gene_info` keyed by gene id), which a deposited ID format may not follow.
   - `pathway_census/assign.py`: no prefix parsing found. `absence.py` and the CLIs `bin/*.py`: no prefix parsing found (grep for `split("_")`, `8-hex`, `[:8]`). UNVERIFIED beyond that grep; the real pass must re-check.
