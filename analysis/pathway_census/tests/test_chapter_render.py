@@ -68,9 +68,10 @@ def test_renders_with_synthetic_results_and_drops_placeholders(tmp_path):
     res = tmp_path / "res"
     res.mkdir()
     (res / "carotenoid_phylum_summary.tsv").write_text(
-        "# params: FIXTUREPARAMS\nphylum\tstep_id\tn_genomes\tn_with_step\tmedian_copy\tmax_copy\tfrac_with_step\tn_unknown\n"
-        "PhylA\tggpp_synthase\t4\t2\t1\t2\t0.5\t0\nPhylA\tcarx\t4\t1\t0\t1\t0.25\t0\n"
-        "PhylB\tggpp_synthase\t3\t3\t1\t1\t1.0\t0\nPhylB\tcarx\t3\t0\t0\t0\t0.0\t0\n")
+        "# params: FIXTUREPARAMS\nphylum\tstep_id\tn_genomes\tn_with_step\tmedian_copy\tmax_copy\tfrac_with_step\tn_unknown"
+        "\tcopy_raw_total\tcopy_filtered_total\tcopy_unknown_total\tcopy_flagged_total\n"
+        "PhylA\tggpp_synthase\t4\t2\t1\t2\t0.5\t0\t3\t3\t0\t0\nPhylA\tcarx\t4\t1\t0\t1\t0.25\t0\t1\t1\t0\t0\n"
+        "PhylB\tggpp_synthase\t3\t3\t1\t1\t1.0\t0\t3\t3\t0\t0\nPhylB\tcarx\t3\t0\t0\t0\t0.0\t0\t0\t0\t0\t0\n")
     (res / "carotenoid_triage.tsv").write_text(
         "# params: test\n# PROVISIONAL x\nprotein_id\tstep_id\tbin\treasons\nP1\tcarx\ttier2\tdivergent\n")
     r, html = _render(tmp_path, res)
@@ -80,6 +81,11 @@ def test_renders_with_synthetic_results_and_drops_placeholders(tmp_path):
     assert "PhylA" in text and "P1" in text
     assert "FIXTUREPARAMS" not in text  # comment lines were skipped on reading
     assert re.search(r'id="phylum-figure"', text)
+    # final-review I9(c): raw and filtered copy totals side by side, with the filtered = 0 note
+    sec = _sec(text, "phylum")
+    assert 'id="phylum-raw"' in sec and 'id="phylum-filtered"' in sec
+    assert sec.index('id="phylum-raw"') < sec.index('id="phylum-filtered"')
+    assert "filtered = 0 until the contamination table exists" in sec
 
 
 def _sec(text, name):

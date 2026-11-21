@@ -165,14 +165,29 @@ rule applies to the tree tips and is handled in the tree plan.
 ## Phylum by step copy number {#sec-phylum}
 
 Source: `results/carotenoid_phylum_summary.tsv` (from `bin/build_matrix.py`). The summary uses
-`copy_filtered` by default. Contamination and haplotype flags are NA (unknown) until their input
-tables exist, so filtered counts are not yet filtered. Read `n_unknown` with every count.
+`copy_filtered` by default. The contamination flag is NA (unknown) for every copy until the
+contamination table exists. `contam_suspect` is a default required flag, so every copy then lands in
+`copy_unknown`, and `copy_filtered` is 0 everywhere (final review, reviewer MEASURED on a synthetic
+case: `copy_raw` 1, `copy_filtered` 0, `frac_with_step` 0.0). Read `n_unknown` and
+`copy_unknown_total` with every count. The raw and filtered copy totals are shown side by side below.
+Raw per-phylum fractions are not corrected for uneven sampling across lineages (spec section 2
+anti-goal "Phylogeny read as biology").
 
 ```{r phylum, results='asis'}
 f <- "carotenoid_phylum_summary.tsv"
 d <- read_result(f)
 if (!is.null(d)) {
   show_table(d, "Copy number per phylum and step")
+  if (all(c("phylum", "step_id", "copy_raw_total", "copy_filtered_total") %in% names(d))) {
+    cat("Note: filtered = 0 until the contamination table exists (every copy is then `copy_unknown`).\n\n")
+    for (col in c("copy_raw_total", "copy_filtered_total")) {
+      w <- tapply(d[[col]], list(d$phylum, d$step_id), function(x) x[1])
+      w <- data.frame(phylum = rownames(w), as.data.frame.matrix(w), check.names = FALSE)
+      cat(sprintf('\n<div id="%s">\n', if (col == "copy_raw_total") "phylum-raw" else "phylum-filtered"))
+      show_table(w, sprintf("%s per phylum (rows) and step (columns)", col))
+      cat("</div>\n\n")
+    }
+  }
   if (all(c("phylum", "step_id", "frac_with_step") %in% names(d))) {
     m <- tapply(d$frac_with_step, list(d$phylum, d$step_id), function(x) x[1])
     cat('\n<div id="phylum-figure">\n')
@@ -271,7 +286,9 @@ if (!is.null(d)) {
 3. **Contamination and haplotype flags are NA.** BFD has no per-gene taxonomy table. The
    contamination flag needs a best-hit table (fungal versus non-fungal reference set) that is not
    built. The haplotype flag needs a pair-identity table that is not built. Until then these flags
-   are NA (unknown). Filtered counts are therefore not yet filtered. NA is not treated as clean.
+   are NA (unknown). With the default `require` (truncated, contam_suspect), every copy is then
+   `copy_unknown` and `copy_filtered` is 0 everywhere. Use `copy_raw` with `copy_unknown` until the
+   contamination table exists. NA is not treated as clean.
 4. **The deposited-arm pipeline is not built.** The paired test needs a copy matrix from the
    deposited proteins. Deposited protein IDs lack the 8-hex BFD prefix, so a prefix rewrite or a
    `genome_of` mapping is needed first.

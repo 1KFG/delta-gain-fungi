@@ -131,6 +131,8 @@ Code: `pathway_census/matrix.py`, `bin/build_matrix.py`. Columns and rules are i
 - Full genome x step cross product, zeros included. `has_proteins=False` genomes get zero rows and are excluded from `n_genomes`.
 - `copy_raw` = assigned rows. Mutually exclusive buckets, priority flagged > unknown > filtered: `copy_flagged` = any required flag known True; `copy_unknown` = no flag True and some required flag NA; `copy_filtered` = all required flags known False (default require: truncated, contam_suspect). `copy_filtered + copy_unknown + copy_flagged = copy_raw` per row. `hap_dup_suspect` is counted in `n_hap_suspect` / `n_hap_unknown` only.
 - `phylum_summary` uses `copy_filtered` by default (`count_col="copy_raw"` for the unfiltered table). `n_unknown` = genomes with unevaluated copies.
+- `phylum_summary` columns: `phylum, step_id, n_genomes, n_with_step, median_copy, max_copy, frac_with_step, n_unknown, copy_raw_total, copy_filtered_total, copy_unknown_total, copy_flagged_total`. The four `*_total` columns are bucket sums over the genomes with `has_proteins` True; they do not depend on `count_col`.
+- Without a contamination table, `contam_suspect` is NA for every copy. It is in the default `require`, so every copy is `copy_unknown` and `copy_filtered` is 0 everywhere (reviewer MEASURED on a synthetic case: `copy_raw` 1, `copy_filtered` 0, `frac_with_step` 0.0). Chapter A shows raw and filtered totals side by side.
 - The real-data run (brief step 5) is deferred. Do not read PROVISIONAL outputs as results.
 
 ## Absence check (Task 8)

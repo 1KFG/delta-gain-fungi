@@ -42,7 +42,8 @@ DEFAULT_REQUIRE = ("truncated", "contam_suspect")
 MATRIX_COLUMNS = ["locustag", "step_id", "copy_raw", "copy_filtered", "copy_unknown", "copy_flagged",
                   "n_hap_suspect", "n_hap_unknown", "n_proteins_distinct", "has_proteins", "genome_flags"]
 SUMMARY_COLUMNS = ["phylum", "step_id", "n_genomes", "n_with_step", "median_copy", "max_copy",
-                   "frac_with_step", "n_unknown"]
+                   "frac_with_step", "n_unknown", "copy_raw_total", "copy_filtered_total",
+                   "copy_unknown_total", "copy_flagged_total"]
 
 
 def parse_bool_col(series: pd.Series, name: str, allow_na: bool) -> pd.Series:
@@ -132,7 +133,12 @@ def phylum_summary(matrix: pd.DataFrame, genomes: pd.DataFrame, count_col: str =
 
     n_genomes counts genomes with has_proteins True only. n_with_step = genomes with count > 0.
     n_unknown = genomes with copy_unknown > 0 for the step (copies with unevaluated flags).
-    A phylum with no included genome gets n_genomes 0 and NaN median/frac.
+    copy_raw_total, copy_filtered_total, copy_unknown_total, copy_flagged_total = sums of the matrix
+    buckets over the included genomes (has_proteins True). They do not depend on `count_col`, and
+    filtered + unknown + flagged == raw holds for the totals too.
+    With no contamination table, contam_suspect is NA for every copy, so every copy is copy_unknown and
+    copy_filtered (and frac_with_step with the default count_col) is 0 everywhere.
+    A phylum with no included genome gets n_genomes 0, NaN median/frac and totals 0.
     """
     ph = genomes[["locustag", "phylum"]].copy()
     ph["phylum"] = ph.phylum.fillna("(missing)")
@@ -149,5 +155,9 @@ def phylum_summary(matrix: pd.DataFrame, genomes: pd.DataFrame, count_col: str =
                              median_copy=float(x[count_col].median()) if n else float("nan"),
                              max_copy=int(x[count_col].max()) if n else 0,
                              frac_with_step=w / n if n else float("nan"),
-                             n_unknown=int((x.copy_unknown > 0).sum())))
+                             n_unknown=int((x.copy_unknown > 0).sum()),
+                             copy_raw_total=int(x.copy_raw.sum()),
+                             copy_filtered_total=int(x.copy_filtered.sum()),
+                             copy_unknown_total=int(x.copy_unknown.sum()),
+                             copy_flagged_total=int(x.copy_flagged.sum())))
     return pd.DataFrame(rows, columns=SUMMARY_COLUMNS)

@@ -141,7 +141,8 @@ def test_phylum_summary_values():
     m = _m(asg, fl)
     s = phylum_summary(m, _genomes())
     assert list(s.columns) == ["phylum", "step_id", "n_genomes", "n_with_step", "median_copy",
-                               "max_copy", "frac_with_step", "n_unknown"]
+                               "max_copy", "frac_with_step", "n_unknown", "copy_raw_total",
+                               "copy_filtered_total", "copy_unknown_total", "copy_flagged_total"]
     assert len(s) == 2 * 3
     r = s[(s.phylum == "Asco") & (s.step_id == "s1")].iloc[0]
     # filtered: A=2, B=0 (unknown) -> median 1.0, max 2, with_step 1 of 2
@@ -292,3 +293,38 @@ def test_phylum_summary_parses_string_has_proteins_strictly():
     ms["has_proteins"] = "1"
     with pytest.raises(ValueError, match="has_proteins"):
         phylum_summary(ms, _genomes())
+
+
+def test_phylum_summary_copy_totals():
+    # final-review I9(b): bucket totals per (phylum, step) over genomes with has_proteins True.
+    asg = _asg([(f"{A}_000001-T1", "s1", "assigned"), (f"{A}_000002-T1", "s1", "assigned"),
+                (f"{A}_000003-T1", "s1", "assigned"), (f"{B}_000001-T1", "s1", "assigned"),
+                (f"{C}_000001-T1", "s2", "assigned")])
+    fl = _flags([(f"{A}_000001-T1", "s1", False, False, False),
+                 (f"{A}_000002-T1", "s1", False, False, False),
+                 (f"{A}_000003-T1", "s1", True, False, False),
+                 (f"{B}_000001-T1", "s1", pd.NA, pd.NA, False),
+                 (f"{C}_000001-T1", "s2", False, pd.NA, False)])
+    m = _m(asg, fl)
+    for col in ("copy_filtered", "copy_raw"):  # totals do not depend on count_col
+        s = phylum_summary(m, _genomes(), count_col=col).set_index(["phylum", "step_id"])
+        tot = ["copy_raw_total", "copy_filtered_total", "copy_unknown_total", "copy_flagged_total"]
+        assert s.loc[("Asco", "s1"), tot].tolist() == [4, 2, 1, 1]
+        assert s.loc[("Basidio", "s2"), tot].tolist() == [1, 0, 1, 0]
+        assert s.loc[("Basidio", "s1"), tot].tolist() == [0, 0, 0, 0]
+        # invariant carried to the totals
+        assert (s.copy_filtered_total + s.copy_unknown_total + s.copy_flagged_total == s.copy_raw_total).all()
+
+
+def test_no_contamination_table_gives_filtered_zero():
+    # final-review I9(a): with contam_suspect NA for every copy (no contamination table), every copy
+    # is copy_unknown and copy_filtered is 0. Reviewer MEASURED copy_raw 1, copy_filtered 0,
+    # frac_with_step 0.0 for this case.
+    asg = _asg([(f"{A}_000001-T1", "s1", "assigned")])
+    fl = _flags([(f"{A}_000001-T1", "s1", False, pd.NA, pd.NA)])
+    m = _m(asg, fl)
+    assert (_get(m, A, "s1", "copy_raw"), _get(m, A, "s1", "copy_filtered"),
+            _get(m, A, "s1", "copy_unknown")) == (1, 0, 1)
+    s = phylum_summary(m, _genomes()).set_index(["phylum", "step_id"])
+    r = s.loc[("Asco", "s1")]
+    assert (r.copy_raw_total, r.copy_filtered_total, r.frac_with_step) == (1, 0, 0.0)
