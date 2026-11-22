@@ -8,11 +8,12 @@ ClusterBlast hits per region.
 Drops: genome sequence, all CDS outside regions, all PFAM_domain/gene/mRNA features, the
 ClusterBlast protein alignments, HTML, per-region GenBank copies, the zip.
 
-Usage: extract_antismash_subset.py INPUT.json[.gz] OUTDIR [GENOME_ID]
+Usage: extract_antismash_subset.py INPUT.json[.gz] OUTDIR [GENOME_ID] [--minimal]
+--minimal writes only regions, cds (genes in regions) and known (MIBiG top hits): the BFD representation.
 Writes OUTDIR/<GENOME_ID>.{regions,cds,domains,modules,blast_top}.tsv.gz and
 OUTDIR/<GENOME_ID>.biosyn_proteins.faa.gz. Reads plain or gzip JSON.
 """
-import gzip, json, re, sys, pathlib
+import gzip, json, os, re, sys, pathlib
 
 TOPN = 3
 
@@ -39,20 +40,22 @@ def q1(f, key, default=""):
     return default if v is None else v
 
 
-def main(path, outdir, genome=None):
+def main(path, outdir, genome=None, minimal=False):
     path = pathlib.Path(path); outdir = pathlib.Path(outdir); outdir.mkdir(parents=True, exist_ok=True)
     genome = genome or path.name.split(".")[0]
     with opener(path) as fh:
         data = json.load(fh)
-    out = {k: gzip.open(outdir / f"{genome}.{k}.tsv.gz", "wt") for k in
-           ("regions", "cds", "domains", "modules", "blast_top", "adomain", "known")}
-    faa = gzip.open(outdir / f"{genome}.biosyn_proteins.faa.gz", "wt")
+    keys = ("regions", "cds", "known") if minimal else ("regions", "cds", "domains", "modules", "blast_top", "adomain", "known")
+    out = {k: gzip.open(outdir / f"{genome}.{k}.tsv.gz", "wt") for k in keys}
+    faa = gzip.open(outdir / f"{genome}.biosyn_proteins.faa.gz", "wt") if not minimal else open(os.devnull, "w")
+    NULL = open(os.devnull, "w")
+    Z = lambda k: out.get(k, NULL)
     out["regions"].write("genome\trecord\tregion\tstart\tend\tlength\tproducts\tcategories\tcontig_edge\tcore_start\tcore_end\tcandidate_kinds\tn_cds\tn_biosynthetic\tn_additional\n")
     out["cds"].write("genome\trecord\tregion\tlocus_tag\tprotein_id\tstart\tend\tstrand\tgene_kind\tprotein_len\tfunctions\tproduct\n")
-    out["domains"].write("genome\trecord\tlocus_tag\tdomain\tsubtypes\tprotein_start\tprotein_end\tevalue\tscore\n")
-    out["modules"].write("genome\trecord\tmodule_type\tlocus_tags\tdomains\tcomplete\titerative\n")
-    out["blast_top"].write("genome\trecord\tregion\trank\thit_accession\thit_label\thit_cluster_type\thit_description\tsimilarity\tcore_gene_hits\tgene_hits\tblast_score\ttotal_hits\n")
-    out["adomain"].write("genome\trecord\tdomain_id\ttool\taa10\tstachelhaus_top_substrates\taa10_score\taa34_score\tphysicochemical_class\tlarge_cluster\tsmall_cluster\n")
+    Z("domains").write("genome\trecord\tlocus_tag\tdomain\tsubtypes\tprotein_start\tprotein_end\tevalue\tscore\n")
+    Z("modules").write("genome\trecord\tmodule_type\tlocus_tags\tdomains\tcomplete\titerative\n")
+    Z("blast_top").write("genome\trecord\tregion\trank\thit_accession\thit_label\thit_cluster_type\thit_description\tsimilarity\tcore_gene_hits\tgene_hits\tblast_score\ttotal_hits\n")
+    Z("adomain").write("genome\trecord\tdomain_id\ttool\taa10\tstachelhaus_top_substrates\taa10_score\taa34_score\tphysicochemical_class\tlarge_cluster\tsmall_cluster\n")
     out["known"].write("genome\trecord\tregion\trank\tmibig_accession\thit_description\thit_cluster_type\tsimilarity\tcore_gene_hits\tgene_hits\tblast_score\ttotal_hits\n")
     n = {"known": 0, "adomain": 0, "regions": 0, "cds": 0, "domains": 0, "modules": 0, "blast_top": 0, "faa": 0}
     for rec in data["records"]:
@@ -98,17 +101,17 @@ def main(path, outdir, genome=None):
                     faa.write(f">{genome}|{q1(f, 'locus_tag')}|{rid}|region{num}\n{tr}\n"); n["faa"] += 1
         for f in rec["features"]:
             if f["type"] == "aSDomain" and q1(f, "locus_tag") in in_region_tags:
-                out["domains"].write("\t".join(map(str, [genome, rid, q1(f, "locus_tag"), q1(f, "aSDomain"), ";".join(f["qualifiers"].get("domain_subtypes", [])),
+                Z("domains").write("\t".join(map(str, [genome, rid, q1(f, "locus_tag"), q1(f, "aSDomain"), ";".join(f["qualifiers"].get("domain_subtypes", [])),
                                                           q1(f, "protein_start"), q1(f, "protein_end"), q1(f, "evalue"), q1(f, "score")])) + "\n"); n["domains"] += 1
             elif f["type"] == "aSModule":
                 q = f["qualifiers"]
-                out["modules"].write("\t".join(map(str, [genome, rid, ";".join(q.get("type", [])), ";".join(q.get("locus_tags", [])),
+                Z("modules").write("\t".join(map(str, [genome, rid, ";".join(q.get("type", [])), ";".join(q.get("locus_tags", [])),
                                                           ";".join(x.split("_")[-1] if False else x for x in q.get("domains", [])), q.get("complete"), q.get("iterative")])) + "\n"); n["modules"] += 1
         cb = rec.get("modules", {}).get("antismash.modules.clusterblast", {}).get("general", {}).get("results", [])
         for res in cb:
             for rank, item in enumerate(res.get("ranking", [])[:TOPN], 1):
                 cl, sc = item[0], item[1]
-                out["blast_top"].write("\t".join(map(str, [genome, rid, res.get("region_number"), rank, cl.get("accession"), cl.get("cluster_label"),
+                Z("blast_top").write("\t".join(map(str, [genome, rid, res.get("region_number"), rank, cl.get("accession"), cl.get("cluster_label"),
                                                             cl.get("cluster_type"), str(cl.get("description", "")).replace("\t", " "), sc.get("similarity"),
                                                             sc.get("core_gene_hits"), sc.get("hits"), sc.get("blast_score"), res.get("total_hits")])) + "\n"); n["blast_top"] += 1
         kcl = rec.get("modules", {}).get("antismash.modules.clusterblast", {}).get("knowncluster", {}).get("results", [])
@@ -124,7 +127,7 @@ def main(path, outdir, genome=None):
                     continue
                 st = (v.get("stachelhaus_matches") or [{}])[0]
                 subs = ",".join(x.get("short", "") for x in st.get("substrates", []))
-                out["adomain"].write("\t".join(map(str, [genome, rid, did, tool, v.get("aa10", ""), subs, st.get("aa10_score", ""), st.get("aa34_score", ""),
+                Z("adomain").write("\t".join(map(str, [genome, rid, did, tool, v.get("aa10", ""), subs, st.get("aa10_score", ""), st.get("aa34_score", ""),
                                                           (v.get("physiochemical_class") or {}).get("name", ""), (v.get("large_cluster") or {}).get("name", ""),
                                                           (v.get("small_cluster") or {}).get("name", "")])) + "\n"); n["adomain"] += 1
     for h in out.values():
@@ -134,6 +137,7 @@ def main(path, outdir, genome=None):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    args = [a for a in sys.argv[1:] if a != "--minimal"]
+    if len(args) < 2:
         sys.exit(__doc__)
-    main(*sys.argv[1:4])
+    main(*args[:3], minimal="--minimal" in sys.argv)
