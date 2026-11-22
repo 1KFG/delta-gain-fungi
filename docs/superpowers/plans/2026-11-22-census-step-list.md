@@ -78,3 +78,7 @@ Each step lists what it does, what it needs and what you check. "Gate" marks a s
 - 200 genomes, 2,099,659 proteins, 1,827 candidates (protein by step rows) at the accepted `min_score` values. All 200 genomes searched, 0 bad id prefixes.
 - Genomes with protein files: 23,376 listed in the chunk manifest; 987 excluded (984 with no seqdb path, 3 with a seqdb path and a missing file). The README of 2026-11-20 gave 984 excluded.
 - Tools: `bin/make_min_scores.py`, `bin/make_chunks.py`, `bin/search_chunk.py`, `slurm/search_chunk.sbatch`. No unit tests yet for these three scripts.
+
+## Step 4 result (carotenoid, 2026-11-22, MEASURED)
+Full search done: 6 jobs, 23,376 genomes, 244,451,335 proteins, 238,898 candidate rows. Details, side evaluation and file paths:
+`docs/superpowers/notes/2026-11-22-step4-results-and-decisions.md`. Genus-level species tree located for step 5 (same note).

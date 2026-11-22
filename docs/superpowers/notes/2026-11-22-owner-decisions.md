@@ -50,3 +50,7 @@ After the pathway census, build phylogenies of candidate genes, match them to na
 - Q9HNE5 (Halobacterium crtY): tree outgroup only, not a decoy (`refs/carotenoid/outgroups/`). BLAST bit score against the best fungal reference 87.0 over 192 aligned residues, 33% identity (MEASURED).
 - Q9KK78 and Q9KK79: owner rule is to move them to outgroups only if they could cross-react in detection. MEASURED: HMM scores 29.3 and 2.4 (cutoff floor is 174.1, the lowest held-out score). BLAST bit scores against the fungal references 34.3 and 21.9 over 39 and 27 residues (E 5e-6 and 0.075). They do not reach the cutoff, so they stay decoys.
 - CruA, CruP and Q38932 (epsilon cyclase) are not added: no good evidence found.
+
+## Step 3 and 4 decisions (2026-11-22)
+- Chunk size 4,000 genomes, 6 jobs (owner). Evidence: `2026-11-22-step4-results-and-decisions.md`.
+- Lowered cutoffs for `astaxanthin_synthase` (999.4) and `ylo1` (480.5) kept for step 5 (owner), after the side evaluation. Evidence and files: same note.
