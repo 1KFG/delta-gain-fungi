@@ -102,3 +102,9 @@ These counts say a genome exists. They say nothing about pathway genes. Whether 
 - BFD module changed and committed (Fungi_BFD 75dc089): lite default, three reduced tables, locustag hash buckets. Not run through the workflow yet.
 - Raw JSON deleted by the owner's instruction. Next: build the EBC region table (`build_ebc_table.py`), write message 010, rerun the module test with a locustag.
 - Details: `analysis/bgc_subset/README.md`.
+
+## 15. Corrected table and 32 genomes (2026-11-22)
+- EBC accepted 010 (ebc-028). Found my table used rank-1 hits only; antiSMASH rank is not similarity order. v2 uses best-of-top-3 (36 regions weak to known on the first 23 genomes). Sent as message 011.
+- Added `known_pairs`, `n_entry_proteins`, `synteny_score`, `run.json`; reran all 32 genomes (lite, short queue, 500 to 4,408 s). A scancel by comma-separated name did not cancel the first batch; they ran with the old extractor and were overwritten.
+- 32 genomes, 13 species, 2,066 regions: known 430, weak 364, none 1,272 (cutoff 75). 188 of 430 known rest on 1-protein MIBiG entries; all 430 best hits are MIBiG quality "questionable".
+- A. terreus lovastatin called in 3 of 3 genomes; no beauvericin hit in F. graminearum PH-1; A. nidulans sterigmatocystin region scores 53/58 (BGC0000011 / BGC0000152), 10 of 17 genes.
