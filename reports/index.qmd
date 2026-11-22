@@ -53,12 +53,9 @@ Source: [`analysis/enzymes_UPO/`](https://github.com/1KFG/delta-gain-fungi/tree/
 
 ### [Candidate effectors of two *Mucor* strains isolated from *Marchantia*](mucor_secretome.html)
 
-Secretome prediction, structure prediction for the candidate effectors, and an
-AlphaFold3 interaction screen against a host receptor panel with the call threshold
-derived from the panel's own controls. Also records eight silent pipeline failures found
-while running it, and the upstream reference-data problems the analysis ran into.
-
-Source: [`analysis/mucor_secretome/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/mucor_secretome)
+This analysis has moved to the MorenoLab repository. This page now carries a short public
+summary and a link to the new location. The full analysis is lab-only until the paper is
+published.
 
 ## Not published here
 
