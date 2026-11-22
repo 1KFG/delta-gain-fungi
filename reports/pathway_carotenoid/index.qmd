@@ -1,0 +1,10 @@
+---
+title: "Carotenoid biosynthesis genes in 23,376 BFD fungal genomes"
+subtitle: "Search results for the 14-step pathway so far: HMMs, cutoffs and the genome-wide search (tree placement pending)"
+date: 2026-11-22
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+{{< include ../../analysis/pathway_census/reports/carotenoid/REPORT.md >}}
