@@ -17,7 +17,7 @@ Labels: **MEASURED** = I ran or counted it, the method is named. **EXTRAPOLATION
 |---|---|---|
 | Cluster detection (antiSMASH rules) | on | on |
 | `--cb-knownclusters` (MIBiG) | off | on |
-| `--cb-general` | on | on in the tested version; see section 5 |
+| `--cb-general` | on | on in most runs here; off in the tests of section 5 and proposed off for BFD |
 | `--fullhmmer`, `--clusterhmmer` (Pfam annotation) | on | off |
 | `--pfam2go` (GO terms) | on | off |
 | Raw antiSMASH directory (JSON, GenBank, HTML, zip) | kept as JSON | not kept |
@@ -58,21 +58,21 @@ Module time sums to 3,859 s. The other 449 s is start-up and output writing.
 
 The JSON does not separate the general ClusterBlast (a large database of antiSMASH-predicted clusters) from the known-cluster ClusterBlast (MIBiG). I **suspected** that the general one dominates and tested it (section 5).
 
-## 5. Dropping `--cb-general` (MEASURED on A1163; two more genomes running)
+## 5. Dropping `--cb-general` (MEASURED on 3 genomes)
 
-A1163, `--cb-knownclusters` only:
+Same flags otherwise (`--cb-knownclusters` only, no `--cb-general`), compared with the earlier lite run of the same genome:
 
-| Quantity | With `--cb-general` | Without |
-|---|---|---|
-| Wall time | 881 s (and 951 s on a repeat) | 233 s |
-| Regions | 43 | 43, same coordinates, classes and contig-edge flags |
-| `known`, top 3 rows | 51 | 51, identical accession, similarity and gene hits |
-| `known_pairs`, top 3 | identical | identical |
-| Module time in ClusterBlast | not measured on this genome | 25 s of 163 s |
+| Genome | Wall time with `--cb-general` | Without | Speed-up | Regions | `known` top-3 rows | `known_pairs` top 3 |
+|---|---|---|---|---|---|---|
+| *A. fumigatus* A1163 | 881 s (951 s on a repeat) | 233 s | 3.8x to 4.1x | 43 = 43, identical | 51 = 51, identical | identical |
+| *A. niger* CICC 2151 | 3,896 s (3,450 s on a repeat) | 562 s | 6.9x (6.1x vs the repeat) | 97 = 97, identical | 51 = 51, identical | identical |
+| *N. sphaerica* CBS 166.26 | 4,308 s (4,408 s on a repeat) | 807 s | 5.3x | 72 = 72, identical | 37 = 37, identical | identical |
 
-So on this one genome the general ClusterBlast takes about three quarters of the wall time and changes none of the stored tables. The `blast_top` table (general ClusterBlast hits) is the only output that needs it, and the BFD minimal set does not store it.
+"Identical" means the same coordinates, classes, contig-edge flags and gene counts for regions, and the same accession, similarity and gene hits for `known`. Module time in ClusterBlast without `--cb-general`: A1163 25 s of 163 s; CICC 2151 128 s of 420 s; CBS 166.26 156 s of 345 s.
 
-UNVERIFIED: the same result on a large or fragmented genome (*N. sphaerica* CBS 166.26 and *A. niger* CICC 2151 are running) and on non-Pezizomycotina genomes.
+So on these three genomes the general ClusterBlast accounts for most of the wall time and changes none of the stored tables. The `blast_top` table (general ClusterBlast hits) is the only output that needs it, and the BFD minimal set does not store it.
+
+Limits: three genomes, all Pezizomycotina. Not tested: yeasts, basidiomycetes, Mucoromycota. The speed-up grows with the time of the control run, so the fragmented genomes gain most. The mean time without `--cb-general` across genomes is not measured.
 
 ## 6. Dropping short contigs does not help (MEASURED)
 
@@ -131,7 +131,7 @@ Queries on the real tables took 1 to 3 ms. A synthetic copy repeated 750 times (
 
 ## 10. Recommendation (PROPOSED, for the owner)
 
-1. Run lite without `--cb-general` for BFD, pending the two larger-genome checks. This would cut the mean time from about 1,343 s to a fraction of it (A1163: 881 s to 233 s). I have not measured the mean without it across genomes.
+1. Run lite without `--cb-general` for BFD. On three genomes the time fell 3.8x to 6.9x with identical regions and MIBiG tables. I have not measured the mean without it across genomes, so no 24,000-genome figure is given. Test one yeast, one basidiomycete and one Mucoromycete first.
 2. Do not add a contig-length filter.
 3. Add `--no-zip-output --no-summary-gbk --no-region-gbks` for the scratch saving (about half of the raw size), knowing that it does not save time.
 4. Keep `known` and `known_pairs` at top 3, or top 5 if the owner wants the extra 1.3% of regions.
