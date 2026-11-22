@@ -8,7 +8,7 @@ ClusterBlast hits per region.
 Drops: genome sequence, all CDS outside regions, all PFAM_domain/gene/mRNA features, the
 ClusterBlast protein alignments, HTML, per-region GenBank copies, the zip.
 
-Usage: extract_antismash_subset.py INPUT.json[.gz] OUTDIR [GENOME_ID] [--minimal] [--mode lite|full]
+Usage: extract_antismash_subset.py INPUT.json[.gz] OUTDIR [GENOME_ID] [--minimal] [--mode lite|full] [--topn N]
 --minimal writes only regions, cds (genes in regions), known (MIBiG top-3 hits per region), known_pairs
 (which of our genes hit which MIBiG gene) and run.json (provenance): the BFD representation.
 Writes OUTDIR/<GENOME_ID>.{regions,cds,domains,modules,blast_top}.tsv.gz and
@@ -159,6 +159,8 @@ def main(path, outdir, genome=None, minimal=False, mode=""):
 if __name__ == "__main__":
     argv = sys.argv[1:]
     mode = ""
+    if "--topn" in argv:
+        i = argv.index("--topn"); TOPN = int(argv[i + 1]); del argv[i:i + 2]
     if "--mode" in argv:
         i = argv.index("--mode"); mode = argv[i + 1]; del argv[i:i + 2]
     args = [a for a in argv if a != "--minimal"]
