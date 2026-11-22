@@ -31,7 +31,7 @@ apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
 t1=$(date +%s)
 J=$(ls $OUTD/*.json | head -1)
 du -sk $OUTD | awk '{print $1" KB raw antismash dir"}'
-/usr/bin/python3.12 $HERE/extract_antismash_subset.py $J $OUT $ID
+/usr/bin/python3.12 $HERE/extract_antismash_subset.py $J $OUT $ID --mode lite
 [ "${KEEP_RAW:-0}" = 1 ] && gzip -9 -c $J > $OUT/$ID.antismash.json.gz
 echo -e "$ID\t$NAME\t$((t1-t0))\t${SLURM_CPUS_ON_NODE:-8}" >> $OUT/timings.tsv
 rm -rf $W

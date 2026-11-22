@@ -6,10 +6,11 @@ known-cluster hit (accession, compound names, similarity), a status flag, MIBiG 
 identifiers (PubChem CID, formula, mass) and, for hits at or above --inchikey-min, the InChIKey
 looked up from PubChem by CID. Biosynthetic gene locus tags are listed per region.
 
-Status (similarity of the rank-1 MIBiG hit, the antiSMASH 0-100 score):
+Status (similarity of the best of the top-3 MIBiG hits, the antiSMASH 0-100 score):
   known >= 75, weak 1-74, none (no hit). The cutoff is a PROPOSAL; the similarity is kept in
   the table so the reader can choose another.
 
+Adds entry size (n_entry_proteins), fraction of the entry's genes hit, synteny score, and MIBiG quality/status.
 Usage: build_ebc_table.py RESULTS_DIR MIBIG_JSON_DIR OUT.tsv [--inchikey-min 75] [--no-pubchem]
 Reads RESULTS_DIR/<id>.{regions,cds,known}.tsv.gz.
 """
@@ -36,6 +37,14 @@ def mibig_compounds(jdir, acc):
         out.append({"name": c.get("name", ""), "cid": cid, "formula": c.get("formula", ""),
                     "mass": c.get("mass", "")})
     return out
+
+
+def mibig_meta(jdir, acc):
+    p = os.path.join(jdir, acc.split(".")[0] + ".json")
+    if not os.path.exists(p):
+        return "", "", ""
+    d = json.load(open(p))
+    return d.get("quality", ""), d.get("status", ""), d.get("completeness", "")
 
 
 def inchikeys(cids):
@@ -70,7 +79,18 @@ def main():
         for c in cds:
             if c["gene_kind"] == "biosynthetic":
                 genes.setdefault((c["record"], c["region"]), []).append(c["locus_tag"])
-        top = {(k["record"], k["region"]): k for k in known if k["rank"] == "1"}
+        # antiSMASH ranks hits by core-gene hits and score, not by the similarity number, so the
+        # rank-1 hit can have a lower similarity than rank 2 or 3. Use the highest similarity of
+        # the (up to) 3 kept hits as the region's best hit; keep all three in top3_hits.
+        hits = {}
+        for k in known:
+            hits.setdefault((k["record"], k["region"]), []).append(k)
+        def simval(k):
+            try:
+                return int(float(k["similarity"]))
+            except (ValueError, TypeError):
+                return -1
+        top = {key: max(v, key=lambda k: (simval(k), -int(k["rank"]))) for key, v in hits.items()}
         for r in reg:
             key = (r["record"], r["region"])
             k = top.get(key)
@@ -83,7 +103,15 @@ def main():
                 "status": status, "mibig_accession": k["mibig_accession"] if k else "",
                 "mibig_compounds": ";".join(c["name"] for c in comps) or (k["hit_description"] if k else ""),
                 "mibig_class": k["hit_cluster_type"] if k else "",
+                "best_hit_rank": k["rank"] if k else "",
+                "top3_hits": ";".join("%s|%s|%s" % (h["mibig_accession"], h["hit_description"][:40], h["similarity"]) for h in sorted(hits.get(key, []), key=lambda h: int(h["rank"]))),
                 "similarity": "" if sim is None else sim, "core_gene_hits": k["core_gene_hits"] if k else "",
+                "gene_hits": k["gene_hits"] if k else "",
+                "n_entry_proteins": k.get("n_entry_proteins", "") if k else "",
+                "entry_fraction_hit": (round(int(k["gene_hits"]) / int(k["n_entry_proteins"]), 2) if k and k.get("n_entry_proteins") not in (None, "", "0") and k["gene_hits"] not in ("", "None") else ""),
+                "synteny_score": k.get("synteny_score", "") if k else "",
+                "mibig_quality": mibig_meta(a.mibig, k["mibig_accession"])[0] if k else "",
+                "mibig_status": mibig_meta(a.mibig, k["mibig_accession"])[1] if k else "",
                 "pubchem_cids": ";".join(c["cid"] for c in comps if c["cid"]),
                 "formulas": ";".join(c["formula"] for c in comps if c["formula"]),
                 "inchikeys": "",
