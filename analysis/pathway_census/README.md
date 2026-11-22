@@ -270,3 +270,34 @@ All scripts run under `/usr/bin/python3.12`. A SLURM job reads its paths from en
 ### Is Nextflow needed yet?
 
 Not yet (PROPOSED, no data against it). The run is 6 independent jobs per pathway. A chunk is complete when its manifest file exists, so a loop over missing manifests is a safe re-run. The later steps (trees, placement, matrices) have dependencies that Nextflow would handle well. Revisit when the pipeline has more than about 20 job types, or when it runs for several pathways at once and a failed job needs automatic retry. The scripts keep paths in arguments and write complete-marker files, so a later Nextflow wrapper does not need changes to them.
+
+## Step 5 pilot (phytoene_synthase; step-generic)
+
+Scripts: `bin/step5_place.py` (subcommands `extract`, `select-reps`, `clades`, `placements`, `summarize`; the step id is an argument). SLURM: `slurm/step5_prepare.sbatch`, `slurm/step5_place.sbatch`. Tests: `tests/test_step5_place.py`. The tools hold no step name. `lycopene_cyclase` runs with `PC_STEP=lycopene_cyclase` and `PC_OUTGROUP_FA=<outgroup FASTA>` (an outgroup file exists only for that step). Reused without edits (imported from `analysis/enzymes_UPO`): `upo_place.py` (`assign`, `match-cols`, `edge_bipartitions`, `to_newick`) and `refset/bin/tree_outline.py` (`parse_newick`, `reroot`).
+
+### Run order
+1. `PC_STEP=<step> sbatch slurm/step5_prepare.sbatch` (run from the worktree root). It cuts domains, clusters (mmseqs2 `easy-cluster`, `--min-seq-id 0.5 -c 0.8 --cov-mode 0`), draws representatives, aligns (mafft `--auto`), trims (clipkit `smart-gap`), builds the tree (raxml-ng, `LG+G4`, 5 parsimony + 5 random starts, seed 1) and writes `clade_members.tsv`.
+2. Read `clade_report.json`. If `refs_form_clade_free_of_decoys` is false, stop: that is a result (`step5_place.py clades` exits with code 3).
+3. `PC_STEP=<step> PC_MIN_SUPPORT=<x> sbatch slurm/step5_place.sbatch`. It builds the reference HMM (`hmmbuild --symfrac 0`), aligns all domains (`hmmalign`, insert columns dropped), places with epa-ng (pixi, pinned 0.3.8), applies the `upo_place assign` rule, writes `placements.tsv`, runs `bin/assign_steps.py --provisional` and writes `SUMMARY.tsv`.
+Environment variables: `PC_STEP` (required), `PC_PATHWAY` (carotenoid), `PC_ROOT`, `PC_SEQDB`, `PC_MAX_REPS`, `PC_OUTGROUP_FA`, `PC_MIN_LWR`, `PC_MAX_PENDANT`, `PC_MIN_SUPPORT` (required for part 2, no default). Output folder: `results/step5/<pathway>/<step>/` (git-ignored). `RUN.md` in that folder lists the exact commands and tool versions.
+
+### Inputs
+- Candidates: `results/search/carotenoid_full/candidates.chunk0000{0..5}.PROVISIONAL.tsv.zst`, rows with `step_id == <step>`.
+- References, decoys, outgroup: `refs/carotenoid/<step>.faa`, `refs/carotenoid/decoys/<step>.faa`, and (lycopene_cyclase only) `refs/carotenoid/outgroups/<step>.faa`.
+- Proteins: `seqdb/proteins/<sha1(LOCUSTAG)[:2]>/<LOCUSTAG>.proteins.fa.gz` (bgzip with `.fai`). MEASURED: the layout holds for the 10,047 genomes needed; 0 of 10,863 proteins failed to extract.
+- Phylum per genome: `results/genomes.tsv.zst`.
+
+### Rules and parameters
+- Domain cut: best row per protein (highest score), `ali_from..ali_to` padded by 20 residues each side, clamped to the protein ends. The pad of 20 is PROPOSED. Coordinates are in `domain_coords.tsv`.
+- Representatives: one per mmseqs cluster. Cluster threshold 0.5 identity and 0.8 coverage are the values from the brief (PROPOSED). Cap 300 (PROPOSED): if there are more clusters, draw 300 with `random.Random(1)`, proportional by phylum, at least 1 per phylum (largest-remainder allocation, never more than the stratum size). The cap did not apply in the phytoene_synthase run (191 clusters).
+- Rooting: the outgroup file if given, else the decoys (the smallest bipartition side that holds them all). epa-ng takes an unrooted tree; the clade rule uses bipartitions and does not depend on the root.
+- Clades (`clade_members.tsv`): `target` = the smallest bipartition side that holds all references and no decoy or outgroup, with the representatives inside it. `decoy` = every leaf that is not in `target` and not an outgroup (decoys plus the representatives outside `target`). `outgroup` = the outgroup leaves. A placement counts for a clade only when its edge lies inside it (the `upo_place assign` rule). Representatives are members because a query placed next to a representative must count for that clade.
+- `--min-lwr 0.5` (PROPOSED, taken from upo_place, not validated for this step), `--max-pendant 1.0` (flag only; PROPOSED, from upo_place). `PC_MIN_SUPPORT=0.5` for `assign_steps` (PROPOSED; with `--min-lwr 0.5` it removes nothing more).
+- `placements.tsv` writes `clade = target` only when the call is `target`. A `decoy`, `outgroup` or `unassigned` call gives an empty clade, because `assign_steps` treats any non-empty clade as in-step. `placements_detail.tsv` keeps the real call, the support, the stem LWR, the pendant length and `long_pendant`.
+- `assign_steps` cannot be limited to one step by an option. It was run on a candidates table that holds only this step (`candidates_step.tsv`) and the placements of this step.
+
+### Re-run rule
+Part 1 is complete when `clade_report.json` exists. Part 2 is complete when `SUMMARY.tsv` exists. To re-run a part, delete its outputs (or set `PC_OUT` to a new folder) and submit again. Part 2 needs part 1 from the same folder. Changing `PC_MAX_REPS` or the seed changes the tree: re-run both parts. Both jobs ran on the short queue (MEASURED for phytoene_synthase: part 1 31 min 43 s, 16 CPUs, of which raxml-ng used 30 min with 4 threads; part 2 5 min 0 s).
+
+### Reading the phytoene_synthase result (MEASURED, 2026-11-22)
+See `results/step5/carotenoid/phytoene_synthase/SUMMARY.tsv`. The clade `target` holds 186 of the 200 leaves. It is the smallest clade with all 5 references, and it contains 181 of 191 representatives from 5 phyla. So the placement separates the candidates from the 4 squalene synthase decoys only. It does not separate real phytoene synthase from other family members inside `target`. No candidate domain has 50% identity or more to any squalene synthase decoy, and the step 2 maximum decoy score was 49.3, below the 98.8 cutoff. So squalene synthase is not among the 10,863 candidates (MEASURED); the 155 candidates called `decoy` sit on a branch of 10 representatives whose best hit is a phytoene synthase reference, not an ERG9 decoy. What the 10,863 candidates are is UNVERIFIED.
