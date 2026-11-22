@@ -21,6 +21,10 @@ W=${SCRATCH:?SCRATCH not set}/as_$ID; mkdir -p $W; cd $W
 export TMPDIR=$W/tmp; mkdir -p $TMPDIR
 zcat $RUNS/$NAME/predict_results/$NAME.gff3.gz > $ID.gff3
 zcat $RUNS/$NAME/predict_results/$NAME.scaffolds.fa.gz > $ID.fa
+if [ -n "${MINLEN:-}" ]; then   # drop contigs shorter than MINLEN bp from FASTA and GFF3 before antiSMASH
+  /usr/bin/python3.12 $HERE/filter_contigs.py $MINLEN $ID.fa $ID.gff3 $ID.f.fa $ID.f.gff3 $RUNS/$NAME/predict_results/$NAME.scaffolds.fa.gz.fai
+  mv $ID.f.fa $ID.fa; mv $ID.f.gff3 $ID.gff3
+fi
 OUTD=$W/out
 t0=$(date +%s)
 apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
