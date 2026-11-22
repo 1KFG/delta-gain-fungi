@@ -103,7 +103,7 @@ Decision numbers: `DC` carotenoid, `DD` melanin_dhn, `DL` melanin_ldopa, `DM` my
 
 | pathway | steps | routes | links | decoys | compounds | unverified refs | decision items |
 |---|---|---|---|---|---|---|---|
-| carotenoid | 14 | 7 | 49 | 60 | 21 | 2 | 1 |
+| carotenoid | 14 | 7 | 49 | 69 | 21 | 2 | 1 |
 | melanin_dhn | 9 | 4 | 32 | 31 | 10 | 1 | 5 |
 | melanin_ldopa | 6 | 5 | 29 | 14 | 11 | 1 | 6 |
 | mycosporine | 5 | 3 | 10 | 16 | 9 | 6 | 7 |
@@ -181,7 +181,12 @@ Copied character for character from `refs/carotenoid/UNVERIFIED.md`, block 'Item
 ### F. Decoys
 
 1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
-2. `lycopene_cyclase`: no decoy. A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). All are carotenoid cyclases (fungal fused proteins, *Halobacterium* CrtY, *Dietzia* C50 cyclase subunits). No characterised member with another function was found.
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
 3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
 4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
 5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
@@ -204,7 +209,7 @@ Copied character for character from `refs/carotenoid/UNVERIFIED.md`, block 'Item
 
 Each item is copied character for character from `refs/carotenoid/UNVERIFIED.md`. The number is `DC` plus the position in the file.
 
-**DC1** (`refs/carotenoid/UNVERIFIED.md`, lines 104 to 134, section)
+**DC1** (`refs/carotenoid/UNVERIFIED.md`, lines 109 to 139, section)
 
 ::: {.verbatim}
 ### H. USER DECISION: strict or context reading of rule 1 (harmonisation round, 2026-11-21)
@@ -333,6 +338,15 @@ A decoy is a protein that shares the family of the step and has another function
 | `phytoene_synthase` | P36596 | schizosaccharomyces pombe | erg9 | PF00494 member; UniProt reviewed entry: squalene synthase (EC 2.5.1.21) |
 | `phytoene_synthase` | Q92459 | ustilago maydis | ERG9 | PF00494 member; UniProt reviewed entry: squalene synthase (EC 2.5.1.21) |
 | `phytoene_synthase` | Q4WAG4 | aspergillus fumigatus | erg9 | PF00494 member; UniProt reviewed entry: squalene synthase (EC 2.5.1.21) |
+| `lycopene_cyclase` | Q9KK78 | brevibacterium linens | crtYc | Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYc (125 residues) of the heterodimeric lycopene cyclase of an actinobacterium; unreviewed entry, the function comes from the abstract of PMID 10821176; it does the reaction of the step together with CrtYd, so the tree must place it outside the fungal fused proteins |
+| `lycopene_cyclase` | Q9KK79 | brevibacterium linens | crtYd | Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYd (107 residues) of the heterodimeric lycopene cyclase of an actinobacterium; unreviewed entry, the function comes from the abstract of PMID 10821176; it does the reaction of the step together with CrtYc, so the tree must place it outside the fungal fused proteins |
+| `lycopene_cyclase` | A1XI29 | dietzia sp. | lbtA | Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: UniProt reviewed entry: putative C(50) carotenoid beta-cyclase subunit A (EC 5.5.1.-), no EC 5.5.1.19; the substrate is a C(50) carotenoid, not lycopene |
+| `lycopene_cyclase` | A1XI30 | dietzia sp. | lbtBC | Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: UniProt reviewed entry: C(50) beta-cyclic carotenoids biosynthesis protein, a C(50) cyclase subunit fused to a lycopene elongase/hydratase domain (PF01040, UbiA prenyltransferase family); no EC 5.5.1.19 |
+| `lycopene_cyclase` | Q93QX4 | corynebacterium glutamicum | crtYe | Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYe of the C(50) carotenoid epsilon-cyclase of an actinobacterium; unreviewed entry, the function (flavuxanthin to decaprenoxanthin, epsilon rings, with CrtYf) comes from the abstract of PMID 11432736; not the reaction of the step |
+| `lycopene_cyclase` | P21687 | pantoea ananas | crtY | Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: bacterial CrtY-type lycopene beta-cyclase (EC 5.5.1.19); it does the reaction of the step with a protein of another family |
+| `lycopene_cyclase` | Q55276 | synechococcus elongatus | crtL | Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: cyanobacterial CrtL-type lycopene beta cyclase (EC 5.5.1.19); it does the reaction of the step with a protein of another family |
+| `lycopene_cyclase` | Q38933 | arabidopsis thaliana | LCY1 | Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: plant lycopene beta cyclase, chloroplastic (EC 5.5.1.19); it does the reaction of the step with a protein of another family |
+| `lycopene_cyclase` | Q42435 | capsicum annuum | CCS | Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: capsanthin/capsorubin synthase (EC 5.3.99.8), no EC 5.5.1.19; another reaction and another family |
 | `phytoene_desaturase` | P50264 | saccharomyces cerevisiae | FMS1 | PF01593 member; UniProt reviewed entry: polyamine oxidase (EC 1.5.3.17) |
 | `phytoene_desaturase` | P46882 | aspergillus niger | maoN | PF01593 member; UniProt reviewed entry: monoamine oxidase N (EC 1.4.3.4) |
 | `phytoene_desaturase` | Q10062 | schizosaccharomyces pombe | hem14 | PF01593 member; UniProt reviewed entry: protoporphyrinogen oxidase (EC 1.3.3.4) |
@@ -463,12 +477,19 @@ The section of `UNVERIFIED.md` on these items, copied verbatim:
 
 `verified: true` means database checks passed on the review date. It never means a person reviewed the reference.
 
-References and decoys with `verified: false`: 2.
+References and decoys with `verified: false`: 9.
 
 | step | kind | accession | species | gene | PMID |
 |---|---|---|---|---|---|
 | `carx` | reference | - | ustilago maydis | cco1 | PMID 19584000 |
 | `acaa` | reference | A0ABR3AZC2 | phycomyces blakesleeanus | acaA | PMID 21854466 |
+| `lycopene_cyclase` | decoy | Q9KK78 | brevibacterium linens | crtYc | PMID 10821176 |
+| `lycopene_cyclase` | decoy | Q9KK79 | brevibacterium linens | crtYd | PMID 10821176 |
+| `lycopene_cyclase` | decoy | Q93QX4 | corynebacterium glutamicum | crtYe | PMID 11432736 |
+| `lycopene_cyclase` | decoy | P21687 | pantoea ananas | crtY | - |
+| `lycopene_cyclase` | decoy | Q55276 | synechococcus elongatus | crtL | - |
+| `lycopene_cyclase` | decoy | Q38933 | arabidopsis thaliana | LCY1 | - |
+| `lycopene_cyclase` | decoy | Q42435 | capsicum annuum | CCS | - |
 
 Reason, as written by the curator in `UNVERIFIED.md` (verbatim):
 
@@ -488,6 +509,118 @@ No note for this accession in `UNVERIFIED.md`.
 5. **`phytoene_desaturase` Q8X0Z0 (*Fusarium fujikuroi* carB).** The abstract of PMID 12172798 gives 541 residues; UniProt Q8X0Z0 has 570 residues at sequence version 2 (MEASURED). The difference was not investigated.
 6. **UniProt EC of P54982.** UniProt gives EC 1.3.99.30 (five-step) for *Phycomyces* carB. The abstract of PMID 9079885 reports four dehydrogenations to lycopene (MEASURED). The step keeps `ec: null`.
 7. **Organism names.** `species` is the UniProt organism name. UniProt uses "Phaffia rhodozyma" for *Xanthophyllomyces dendrorhous*, "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)" for *Fusarium fujikuroi* IMI 58289 and "Mycosarcoma maydis" for *Ustilago maydis*. The Cco1 reference has no accession and keeps the name used in the paper.
+:::
+
+**`lycopene_cyclase`, Q9KK78**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, Q9KK79**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, Q93QX4**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, P21687**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, Q55276**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, Q38933**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
+:::
+
+**`lycopene_cyclase`, Q42435**
+
+::: {.verbatim}
+1. All decoy lists are PROPOSED. Each decoy accession was fetched and its organism, gene name and Pfam family were checked (MEASURED). The function comes from the reviewed UniProt record. Only one decoy paper was read (CAO-1, PMID 23893079).
+2. `lycopene_cyclase`: 9 decoys and 1 tree outgroup, all PROPOSED, added 2026-11-22 (details and measurements: `refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md`). A UniProt search for reviewed entries with NCBIfam TIGR03462 returned 23 entries (MEASURED). 19 are fungal fused proteins; 4 are not fungal (*Halobacterium* CrtY, two strains; *Dietzia* LbtA and LbtBC).
+   - Decoys of the same family (TIGR03462), 5: A1XI29 and A1XI30 (*Dietzia* C50 cyclase subunits, reviewed, `verified: true`), Q9KK78 and Q9KK79 (*Brevibacterium linens* CrtYc and CrtYd, unreviewed, `verified: false`), Q93QX4 (*Corynebacterium glutamicum* CrtYe, C50 epsilon-cyclase subunit, unreviewed, `verified: false`). The function of the three unreviewed entries comes from the PubMed abstract only.
+   - Decoys of another family (Pfam PF05834), 4, all `verified: false`: P21687 (*Pantoea ananas* CrtY), Q55276 (*Synechococcus elongatus* CrtL), Q38933 (*Arabidopsis thaliana* LCY1), Q42435 (*Capsicum annuum* CCS). No paper was read for these four. The verified rule of the yaml header was written for decoys of the same family, so it does not hold for them. The owner can widen the rule or accept `false`.
+   - Tree outgroup, not a decoy: Q9HNE5 (*Halobacterium salinarum* CrtY). It is a true homolog that does the reaction of the step. The owner decided on 2026-11-22 that it is an outgroup only. It is in `refs/carotenoid/outgroups/`, which the absence check and the decoy-calibrated `min_score` do not read.
+   - Step 2 (job 32375043, PROVISIONAL HMM from 5 references, MEASURED): 0 of 9 decoys score at or above the proposed minimum 347.5. The highest decoy score is 29.3 (Q9KK78). The lowest held-out reference score is 174.1. A cutoff between 29.3 and 174.1 is not tested on any genome. Four of the five same-family decoys score below 13 (A1XI29 10.1, Q93QX4 12.9, Q9KK79 2.4, A1XI30 1.6) and the four PF05834 decoys give no hit at -E 1000. This means the decoy set barely tests the cutoff of this HMM. The earlier value 115.6 came from Q9HNE5 and is no longer in the decoy set.
+   - No tree was built. Homology of Q9KK79 and A1XI30 to the fungal domain is UNVERIFIED by the measurements.
+3. `tsp2` has one decoy (*Myxococcus xanthus* CsgA, named in the abstract of PMID 18931040 as the closest relative). The short-chain dehydrogenase family is very large and no other decoy was chosen. `tdh` has three and `crtr` has three.
+4. The six decoys of the carotenoid cleavage oxygenase family are shared by `carx`, `cart`, `cars`, `acaa` and `tsp3`. The references of these five steps must also be used as outgroups of each other.
+5. `crtr` is a general cytochrome P450 reductase. Other fungal P450 reductases (for example *S. cerevisiae* NCP1, P16603) do the same reaction and are not decoys. For the same reason Q9Y8G7 (*Fusarium oxysporum* CYP505, a P450 fused to a P450 reductase domain) is not a `crtr` decoy; it is a decoy of `astaxanthin_synthase` only. A census hit to this step does not indicate astaxanthin synthesis.
+6. G2QIL8 has an ordered locus name only (MYCTH_2309496); it is used as the gene name.
 :::
 
 ### Links per tier

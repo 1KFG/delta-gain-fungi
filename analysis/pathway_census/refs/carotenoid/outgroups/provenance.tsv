@@ -1,0 +1,2 @@
+step_id	accession	species	gene_name	pmid	reason	source_database	retrieved_on	verified	role
+lycopene_cyclase	Q9HNE5	Halobacterium salinarum (strain ATCC 700922 / JCM 11081 / NRC-1)	crtY	12003928	Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: archaeal lycopene beta-cyclase (EC 5.5.1.19), one protein of 237 residues with no phytoene synthase domain; it does the reaction of the step, so it is a tree outgroup only and not a decoy	UniProtKB/Swiss-Prot (entry v89, sequence v2); PubMed	2026-11-22	false	tree_outgroup

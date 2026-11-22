@@ -150,10 +150,50 @@ DECOY = {
  "tdh": [("P38715", "GRE3", None, "PF00248 member; UniProt reviewed entry: NADPH-dependent aldose reductase (EC 1.1.1.21)"),
          ("Q12458", "YPR1", None, "PF00248 member; UniProt reviewed entry: aldehyde reductase (EC 1.1.1.2)"),
          ("P14065", "GCY1", None, "PF00248 member; UniProt reviewed entry: glycerol 2-dehydrogenase (NADP(+)) (EC 1.1.1.156)")],
+# lycopene_cyclase decoys (added 2026-11-22). Q9HNE5 is NOT here: it is a true homolog that does the reaction of the step.
+# It is a tree outgroup only (OUTGROUP below) and must not feed the absence-check calibration.
+ "lycopene_cyclase": [
+   ('Q9KK78', 'crtYc', '10821176', 'Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYc (125 residues) of the heterodimeric lycopene cyclase of an actinobacterium; unreviewed entry, the function comes from the abstract of PMID 10821176; it does the reaction of the step together with CrtYd, so the tree must place it outside the fungal fused proteins'),
+   ('Q9KK79', 'crtYd', '10821176', 'Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYd (107 residues) of the heterodimeric lycopene cyclase of an actinobacterium; unreviewed entry, the function comes from the abstract of PMID 10821176; it does the reaction of the step together with CrtYc, so the tree must place it outside the fungal fused proteins'),
+   ('A1XI29', 'lbtA', '17008032', 'Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: UniProt reviewed entry: putative C(50) carotenoid beta-cyclase subunit A (EC 5.5.1.-), no EC 5.5.1.19; the substrate is a C(50) carotenoid, not lycopene'),
+   ('A1XI30', 'lbtBC', '17008032', 'Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: UniProt reviewed entry: C(50) beta-cyclic carotenoids biosynthesis protein, a C(50) cyclase subunit fused to a lycopene elongase/hydratase domain (PF01040, UbiA prenyltransferase family); no EC 5.5.1.19'),
+   ('Q93QX4', 'crtYe', '11432736', 'Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: subunit CrtYe of the C(50) carotenoid epsilon-cyclase of an actinobacterium; unreviewed entry, the function (flavuxanthin to decaprenoxanthin, epsilon rings, with CrtYf) comes from the abstract of PMID 11432736; not the reaction of the step'),
+   ('P21687', 'crtY', None, 'Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: bacterial CrtY-type lycopene beta-cyclase (EC 5.5.1.19); it does the reaction of the step with a protein of another family'),
+   ('Q55276', 'crtL', None, 'Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: cyanobacterial CrtL-type lycopene beta cyclase (EC 5.5.1.19); it does the reaction of the step with a protein of another family'),
+   ('Q38933', 'LCY1', None, 'Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: plant lycopene beta cyclase, chloroplastic (EC 5.5.1.19); it does the reaction of the step with a protein of another family'),
+   ('Q42435', 'CCS', None, 'Other family (Pfam PF05834, NCBIfam TIGR01790; no TIGR03462 or PF18916 in the UniProt record): UniProt reviewed entry: capsanthin/capsorubin synthase (EC 5.3.99.8), no EC 5.5.1.19; another reaction and another family')],
 }
 DECOY_PFAM = {"ggpp_synthase": ["PF00348"], "phytoene_synthase": ["PF00494"], "phytoene_desaturase": ["PF01593"],
               "carx": ["PF03055"], "cart": ["PF03055"], "cars": ["PF03055"], "acaa": ["PF03055"], "tsp3": ["PF03055"],
               "ylo1": ["PF00171"], "astaxanthin_synthase": ["PF00067"], "crtr": ["PF00667"], "tsp2": ["PF00106"], "tdh": ["PF00248"]}
+
+# Per-decoy overrides for the lycopene_cyclase decoys (added 2026-11-22). All other decoys use
+# the defaults: retrieved on TODAY, verified true, Pfam family of the step required.
+# DECOY_XREF: the step-level family check for lycopene_cyclase. The UniProt record must carry
+# NCBIfam TIGR03462, the family of the fungal cyclase domain. (DECOY_PFAM is not used for this
+# step: A1XI29 and A1XI30 lack Pfam PF18916 in UniProt, so a Pfam-only check does not fit.)
+DECOY_XREF = {"lycopene_cyclase": ["TIGR03462"]}
+# DECOY_OTHER_FAMILY: explicit per-decoy allowance for decoys of ANOTHER family. Each entry
+# replaces the step-level check for that accession only: the record must carry the listed ids
+# and must not carry any id of DECOY_XREF. Reason: these four are lycopene/capsanthin cyclases
+# of the CrtY/CrtL/LCY (Pfam PF05834) family. They have no detectable homology to the fungal
+# domain (hmmsearch no hit at -E 1000) and test the absence check, not the tree.
+DECOY_OTHER_FAMILY = {acc: ["PF05834"] for acc in ("P21687", "Q55276", "Q38933", "Q42435")}
+# DECOY_META: retrieved_on and verified values that differ from the defaults. verified is false
+# for entries that do not meet the verified rule in the header of the yaml (unreviewed, or not
+# in the family of the step, or it does the reaction of the step); see LYCOPENE_CYCLASE_DECOYS.md.
+_D = "2026-11-22"
+DECOY_META = {("lycopene_cyclase", a): {"retrieved_on": _D, "verified": v} for a, v in
+              [("Q9KK78", False), ("Q9KK79", False), ("A1XI29", True), ("A1XI30", True), ("Q93QX4", False),
+               ("P21687", False), ("Q55276", False), ("Q38933", False), ("Q42435", False)]}
+def decoy_meta(step, acc):
+    m = DECOY_META.get((step, acc), {})
+    return m.get("retrieved_on", TODAY), m.get("verified", True)
+
+# Tree outgroups (not decoys). Written to refs/carotenoid/outgroups/. The absence check and the
+# decoy-calibrated min_score never read this directory.
+OUTGROUP = {"lycopene_cyclase": [("Q9HNE5", "crtY", "12003928", "false", _D,
+    "Same family as the fungal cyclase domain (NCBIfam TIGR03462 in the UniProt record), other lineage: archaeal lycopene beta-cyclase (EC 5.5.1.19), one protein of 237 residues with no phytoene synthase domain; it does the reaction of the step, so it is a tree outgroup only and not a decoy")]}
 
 def species(acc):
     return uniprot_entry(acc)["organism"]
@@ -245,13 +285,36 @@ for step, ds in DECOY.items():
         e = check_entry(acc, gene)
         d = full(acc)
         pf = {x["id"] for x in d.get("uniProtKBCrossReferences", []) if x["database"] == "Pfam"}
-        assert set(DECOY_PFAM[step]) <= pf, (step, acc, pf)
+        allx = {x["id"] for x in d.get("uniProtKBCrossReferences", [])}
+        if acc in DECOY_OTHER_FAMILY:   # explicit per-decoy allowance, see DECOY_OTHER_FAMILY
+            assert step in DECOY_XREF and set(DECOY_OTHER_FAMILY[acc]) <= allx, (step, acc, allx)
+            assert not (set(DECOY_XREF[step]) & allx), (step, acc, "carries the family of the step")
+        elif step in DECOY_XREF:
+            assert set(DECOY_XREF[step]) <= allx, (step, acc)
+        else:
+            assert set(DECOY_PFAM[step]) <= pf, (step, acc, pf)
         if pmid:
             assert pmid in e["pmids"] and pubmed_abstract(pmid)["title"]
         recs.append(f">{header(acc)}\n{wrap(e['sequence'])}\n")
-        dprov.append([step, acc, e["organism"], gene, pmid or "", reason, srcdb(acc) + ("; PubMed" if pmid else ""), TODAY, "true"])
+        rdate, ver = decoy_meta(step, acc)
+        dprov.append([step, acc, e["organism"], gene, pmid or "", reason, srcdb(acc) + ("; PubMed" if pmid else ""), rdate, str(ver).lower()])
     (DEC / f"{step}.faa").write_text("".join(recs), encoding="utf-8")
 tsv(DEC / "provenance.tsv", ["step_id", "accession", "species", "gene_name", "pmid", "reason", "source_database", "retrieved_on", "verified"], dprov)
+
+# ---------- tree outgroups (not decoys) ----------
+OUT = REFS / "outgroups"; OUT.mkdir(exist_ok=True)
+oprov = []
+for step, os_ in OUTGROUP.items():
+    recs = []
+    for acc, gene, pmid, ver, rdate, reason in os_:
+        assert acc not in {r[0] for r in REF[step]} and acc not in {d[0] for d in DECOY.get(step, [])}
+        e = check_entry(acc, gene)
+        assert set(DECOY_XREF[step]) <= {x["id"] for x in full(acc).get("uniProtKBCrossReferences", [])}
+        assert pmid in e["pmids"] and pubmed_abstract(pmid)["title"]
+        recs.append(f">{header(acc)}\n{wrap(e['sequence'])}\n")
+        oprov.append([step, acc, e["organism"], gene, pmid, reason, srcdb(acc) + "; PubMed", rdate, ver, "tree_outgroup"])
+    (OUT / f"{step}.faa").write_text("".join(recs), encoding="utf-8")
+tsv(OUT / "provenance.tsv", ["step_id", "accession", "species", "gene_name", "pmid", "reason", "source_database", "retrieved_on", "verified", "role"], oprov)
 
 # ---------- compounds ----------
 KEGG = {"16584": "C00129", "17407": "C00448", "48861": "C00353", "27787": "C05421", "15948": "C05432", "62474": "C15867",
@@ -507,7 +570,7 @@ for sid, name, ec, doms, copy, role, fused, opt, route, note, family in STEPS:
         o.append("    decoys:")
         for acc, gene, pmid, reason in DECOY[sid]:
             o += [f"      - accession: {acc}", f"        species: {y(species(acc))}", f"        gene_name: {y(gene)}",
-                  f"        pmid: {y(pmid) if pmid else 'null'}", "        verified: true"]
+                  f"        pmid: {y(pmid) if pmid else 'null'}", f"        verified: {str(decoy_meta(sid, acc)[1]).lower()}"]
     o += [f"    domains_any: [{', '.join(doms)}]", f"    copy_expect: {copy}", f"    role: {role}",
           f"    fused_with: [{', '.join(fused)}]", f"    optional: {str(opt).lower()}",
           "    reactions:"] + [f"      - {y(r)}" for r in step_rx[sid]] + [f"    lineage_note: {y(note)}", ""]

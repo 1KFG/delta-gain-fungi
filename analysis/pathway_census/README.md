@@ -55,6 +55,7 @@ MEASURED 2026-11-20 on the real tables:
 - `region` in the YAML is in coordinates of the FASTA record (`defs.validate` checks it against `<step>.faa`). For the cut records it covers the whole record; the coordinates on the full protein are in the `region` column of `provenance.tsv`.
 - `refs/carotenoid/provenance.tsv`: one row per (step, ref) with gene name, region on the full protein, source and verified flag.
 - `refs/carotenoid/decoys/<step>.faa` and `decoys/provenance.tsv`: proteins of the same family with another function, with the reason for each. They are outgroups for tree placement, not references.
+- `refs/carotenoid/outgroups/<step>.faa` and `outgroups/provenance.tsv`: true homologs that do the reaction of the step, kept only as outgroups for tree placement (column `role` = `tree_outgroup`). They are not decoys. The absence check and the decoy-calibrated `min_score` do not read this directory, and the YAML has no key for it. Today it holds one entry: `lycopene_cyclase` Q9HNE5.
 - `kb/carotenoid/*.tsv`: compounds, reactions, participants, steps and the (protein, reaction) links with evidence tier, PMID and one quoted sentence (see `kb/README.md`).
 - `curation_scripts/carotenoid/`: one-off build helpers that fetched the records and wrote these files. Not run by the tests (see its README).
 - `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of gaps, held tiers, excluded (T4) steps and open decisions.
@@ -219,3 +220,53 @@ The rules are written in the docstring of `pathway_census/bins.py`, and they wer
 - CLI `bin/triage.py --pathway P.yaml --copies copies.tsv[.gz|.zst] --out triage.tsv`. Refuses `verified: false` without `--provisional` (output then gets `.PROVISIONAL`). Booleans are strict (`True`/`False`/empty). Output has `# params:` as its first line (then a PROVISIONAL line if tagged): read it with `pd.read_csv(..., sep="\t", comment="#")`. A `.zst` out name is compressed.
 - Input is an already-joined frame (columns in the `bins.py` docstring). `signalp` is positives only: the caller passes `signal_peptide=False` for proteins absent from the table (ASSUMPTION, unverified). `soluble_steps` is a parameter because the pathway YAML has no soluble flag.
 - DEFERRED by controller ruling: the real-data run (brief step 6). No real bin counts exist.
+
+## Batched BFD search (census steps 2 to 4)
+
+Scripts: `bin/score_refs_decoys.py`, `bin/make_min_scores.py`, `bin/make_chunks.py`, `bin/search_chunk.py`.
+SLURM: `slurm/score_refs_decoys.sbatch`, `slurm/search_chunk.sbatch`.
+Tests: `tests/test_make_min_scores.py`, `tests/test_make_chunks.py`, `tests/test_search_chunk.py`.
+The census plan is `docs/superpowers/plans/2026-11-22-census-step-list.md`.
+All scripts run under `/usr/bin/python3.12`. A SLURM job reads its paths from environment variables. No script uses `BASH_SOURCE`.
+
+### Run order for one pathway
+
+1. `bin/build_step_hmms.py` builds the step HMMs (`--provisional` while `verified: false`).
+2. `bin/score_refs_decoys.py` (or `sbatch slurm/score_refs_decoys.sbatch`) scores every reference and decoy against each step HMM, with a leave-one-out score per reference. Output in `results/step2/<pathway>/`: `step_scores*.tsv`, `leave_one_out*.tsv`, `targets_at_or_above_min*.tsv`.
+3. `bin/make_min_scores.py` turns `step_scores` into `min_scores*.tsv`.
+4. `python -m pathway_census.genomes` writes `results/genomes.tsv.zst`.
+5. `bin/make_chunks.py` writes the chunk manifest.
+6. One `sbatch slurm/search_chunk.sbatch` per chunk runs `bin/search_chunk.py`.
+
+### `make_min_scores.py`: the `min_score` rule (owner, 2026-11-22)
+
+- A step with two or more references uses its lowest leave-one-out score.
+- A step with one reference uses its highest decoy score as a floor.
+- A step without a value for its basis stops the script with an error. There is no default.
+- `--scale STEP=FACTOR` (repeatable, 0 < FACTOR <= 1) lowers one step for an exploratory run. The column `rule_min_score` keeps the unscaled value. A search keeps every hit at or above `min_score`, so a lowered value gives a superset. Filter on `score` to get the rule result back.
+- Output columns: `step, min_score, basis, n_refs, rule_min_score`.
+
+### `make_chunks.py`: the chunk manifest
+
+- Input: `results/genomes.tsv.zst` and `seqdb/genomes.tsv` (locustag to proteins path).
+- A genome is listed only if `has_proteins` is true (case-insensitive) and the seqdb has a path. Any other value is excluded. Nothing is guessed.
+- Excluded genomes go to `--excluded` with a reason. They are never absences.
+- The order is shuffled with `--seed` (default 1), so every chunk has a mixed set of genomes. The same seed gives the same chunks, whatever the input order.
+- Output: `chunk_id, locustag, proteins_path` (zstd). A size of 4000 gives 6 chunks for the 23,376 genomes listed on 2026-11-22.
+
+### `search_chunk.py`: one chunk, all step HMMs
+
+- It checks first, and fails before any staging work, for: `SCRATCH` unset, a step in `min_scores` without an HMM, and an unverified pathway without `--provisional`.
+- It joins the protein files of the chunk into one FASTA in `$SCRATCH/chunkNNNNN/`, then runs one `hmmsearch` per step.
+- It counts proteins per genome and counts ids that do not start with `<locustag>_` (`n_bad_id_prefix`). BFD ids carry the locustag, so ids are unique across genomes. A non-zero count needs a look before the candidate table is used.
+- A missing, empty or truncated protein file gives `status` `missing` for that genome. The chunk goes on. A `missing` genome is never an absence.
+- Outputs in `--out-dir`, names carry the chunk id:
+  - `candidates.chunkNNNNN[.PROVISIONAL].tsv.zst`: one row per (protein, step) at or above `min_score`, columns of `hits.COLUMNS` plus `step_id`. The first line is `# PROVISIONAL` for a provisional run.
+  - `timing.chunkNNNNN.tsv`: seconds per stage, genome, protein and candidate counts.
+  - `searched.chunkNNNNN.tsv`: the searched-genome manifest. It is written last. A chunk without this file is not complete and must be re-run.
+- Re-run rule: a chunk is complete if and only if its `searched.chunkNNNNN.tsv` exists. To re-run a chunk, delete its three output files and submit it again. Chunks are independent.
+- Resource numbers are MEASURED on one chunk of 200 genomes (16 CPUs, 1 min 31 s, 1.48 GB). They are UNVERIFIED for a 4,000-genome chunk until the first full chunk reports.
+
+### Is Nextflow needed yet?
+
+Not yet (PROPOSED, no data against it). The run is 6 independent jobs per pathway. A chunk is complete when its manifest file exists, so a loop over missing manifests is a safe re-run. The later steps (trees, placement, matrices) have dependencies that Nextflow would handle well. Revisit when the pipeline has more than about 20 job types, or when it runs for several pathways at once and a failed job needs automatic retry. The scripts keep paths in arguments and write complete-marker files, so a later Nextflow wrapper does not need changes to them.

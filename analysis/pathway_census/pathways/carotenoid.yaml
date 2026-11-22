@@ -217,6 +217,52 @@ steps:
         verified: true
         # FASTA record = residues 1-251 of the full UniProt sequence (UniProt feature Region)
         region: [1, 251]
+    decoys:
+      - accession: Q9KK78
+        species: "Brevibacterium linens"
+        gene_name: "crtYc"
+        pmid: "10821176"
+        verified: false
+      - accession: Q9KK79
+        species: "Brevibacterium linens"
+        gene_name: "crtYd"
+        pmid: "10821176"
+        verified: false
+      - accession: A1XI29
+        species: "Dietzia sp. (strain CQ4)"
+        gene_name: "lbtA"
+        pmid: "17008032"
+        verified: true
+      - accession: A1XI30
+        species: "Dietzia sp. (strain CQ4)"
+        gene_name: "lbtBC"
+        pmid: "17008032"
+        verified: true
+      - accession: Q93QX4
+        species: "Corynebacterium glutamicum"
+        gene_name: "crtYe"
+        pmid: "11432736"
+        verified: false
+      - accession: P21687
+        species: "Pantoea ananas"
+        gene_name: "crtY"
+        pmid: null
+        verified: false
+      - accession: Q55276
+        species: "Synechococcus elongatus (strain ATCC 33912 / PCC 7942 / FACHB-805)"
+        gene_name: "crtL"
+        pmid: null
+        verified: false
+      - accession: Q38933
+        species: "Arabidopsis thaliana"
+        gene_name: "LCY1"
+        pmid: null
+        verified: false
+      - accession: Q42435
+        species: "Capsicum annuum"
+        gene_name: "CCS"
+        pmid: null
+        verified: false
     domains_any: [TIGR03462, PF18916]
     copy_expect: single
     role: catalytic
