@@ -32,6 +32,8 @@ website:
         text: "Fungal pigments"
       - href: pathway_corpus.qmd
         text: "Pathways and corpus"
+      - href: pathway_carotenoid/index.qmd
+        text: "Carotenoid genes"
 
 # Each report page's title would otherwise render twice: once from the .qmd
 # front matter and again as the included REPORT.md's opening H1. See the
