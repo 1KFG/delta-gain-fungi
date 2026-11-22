@@ -26,7 +26,7 @@ t0=$(date +%s)
 apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
   antismash --taxon fungi --databases $DB --output-dir $OUTD \
     --genefinding-gff3 $ID.gff3 \
-    --cb-general --cb-knownclusters \
+    --cb-general --cb-knownclusters ${ANTISMASH_EXTRA:-} \
     -c ${SLURM_CPUS_ON_NODE:-8} $ID.fa
 t1=$(date +%s)
 J=$(ls $OUTD/*.json | head -1)
