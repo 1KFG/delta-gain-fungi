@@ -52,12 +52,9 @@ MEASURED on Af293: 42 regions, 819 CDS, 250 domains, 60 modules, 44 A-domain pre
 
 Extrapolation (PROPOSED, UNVERIFIED because one genome was measured and region count varies by genome): 100 genomes about 10 MB for the subset against about 23 GB raw; 425 genomes about 44 MB against about 97 GB.
 
-## How to run (PROPOSED; flags UNVERIFIED because the command was not on the path on the login node after `module load antismash/8.0.4`)
+## How to run (MEASURED: this is what ran)
 
-1. Run in `$SCRATCH`, one genome per task. Input: the BFD GenBank file `genome_annotation/<name>/predict_results/<name>.gbk.gz` (decompress into `$SCRATCH`). Use fungal mode, no gene finding (BFD already has gene models), and the known-cluster comparison on. Check the exact flags with `antismash --help` first.
-2. Skip what the subset does not use: the zip file and the HTML if antiSMASH offers a switch, and the general ClusterBlast.
-3. Extract the subset into `/bigdata`. Delete the raw directory from `$SCRATCH` in the same job.
-4. Time one run before any array. The Af293 JSON reports per-record times that sum to 7,905 s (UNVERIFIED how many CPUs). Size the array so each task takes about 1 to 1.5 hours.
+`sbatch -J <name> run_antismash_one.sbatch <genome_folder_name> <short_id>` (short partition, 8 CPUs, 24 GB, 2 h). The script works in `$SCRATCH`, runs `antismash --taxon fungi --cb-general --cb-knownclusters` with `--genefinding-gff3` on the BFD gff3 and genome fasta, reduces the JSON with `extract_antismash_subset.py`, and deletes the scratch directory. `KEEP_RAW=1` also keeps the gzipped JSON.
 
 ## Which genomes (PROPOSED options, MEASURED counts from the BFD species table and the EBC corrected species table `ebc-021`)
 
@@ -75,5 +72,6 @@ My pick (PROPOSED): start with option D or E (56 or 29 genomes, a few MB of subs
 
 ## Open
 
-- The antiSMASH command and flags. The timing run. The known-cluster parser.
-- Whether to keep raw JSON for a small reference set (for example 3 genomes, 200 MB) so that a field missing from the subset can be added later without a rerun.
+- The database representation of a cluster, and the BFD merge step on the new tables.
+- A run of the BFD module inside the workflow (the module test used an older version).
+- Whether to keep raw JSON for a small reference set. The Af293 raw files were deleted on 2026-11-21.
