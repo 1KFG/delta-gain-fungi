@@ -60,6 +60,16 @@ while running it, and the upstream reference-data problems the analysis ran into
 
 Source: [`analysis/mucor_secretome/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/mucor_secretome)
 
+### [Fungal pigments: carotenoid, melanin and mycosporine pathways](pigments.html)
+
+A chapter on the four curated pigment knowledge bases: steps, evidence tiers per pathway,
+review errors that were caught, and the owner decisions that block a census. **No gene
+census has been run**; the chapter reports no gene counts. Under the strict evidence rule no
+carotenoid route and no complete DHN route is above tier T3. The fungal mycosporine
+references come from one species, *Phaffia rhodozyma*.
+
+Source: [`analysis/pathway_census/PIGMENTS.md`](https://github.com/1KFG/delta-gain-fungi/blob/main/analysis/pathway_census/PIGMENTS.md)
+
 ### [Pathway knowledge base and the metabolite corpus](pathway_corpus.html)
 
 A record of what was tried when carotenoid, melanin and mycosporine pathways were curated

@@ -111,6 +111,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Mucor effectors</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./pigments.html"> 
+<span class="menu-text">Fungal pigments</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./pathway_corpus.html" aria-current="page"> 
 <span class="menu-text">Pathways and corpus</span></a>
   </li>  
@@ -285,13 +289,13 @@ What this is, what it is not, and where it stops being reliable
 <td>Carotenoid</td>
 <td>3</td>
 <td>closed after 3 fix rounds</td>
-<td>29 verified references, 61 decoy rows, 36 links at the first report; tiers changed during review (section 5)</td>
+<td>29 verified references, 61 decoy rows, 36 links at the first report; tiers changed during review (section 5). After the strict quote rule (section 5.1) every carotenoid route with a product is T3: 15 T1a, 9 T1b, 3 T1c, 21 T3, 1 T4 links</td>
 </tr>
 <tr class="even">
 <td>DHN-melanin</td>
 <td>4</td>
 <td>closed after 1 fix round</td>
-<td>Review found the two DHN reductases swapped in the pathway review</td>
+<td>Review found the two DHN reductases swapped in the pathway review. After the strict quote rule the two complete routes through the PKS step are T3: 11 T1a, 5 T1b, 6 T1c, 10 T3 links</td>
 </tr>
 <tr class="odd">
 <td>L-DOPA and other melanins</td>
@@ -552,6 +556,11 @@ Two traps in these numbers
 <td>Task 3</td>
 <td>Tier changes written into the spec (commit <code>d29d73c</code>); awaiting the owner’s decision</td>
 </tr>
+<tr class="even">
+<td>The strict quote rule (a T1a quote must itself name the link’s protein and state an assay or product) was applied to Task 5 first, then to Tasks 3 and 4 after the verifier flagged 22 older T1a links. 6 links were demoted to T3 and 5 got a better sentence (commits <code>e1e82da</code>, <code>fe21264</code>)</td>
+<td>Task 5 review; <code>verify_kb.py</code>; Fable adjudication</td>
+<td>The owner chooses between this strict reading and a context reading (the abstract may identify the protein). Two links decide the route tiers: carG (Q9P885) and SDH1 (P56221). Under the context reading both stay T1a and the carotenoid and DHN route tiers rise again</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -715,8 +724,8 @@ Two traps in these numbers
 <h2 class="anchored" data-anchor-id="decisions-waiting-for-the-owner">10. Decisions waiting for the owner</h2>
 <p>The full lists are in the <code>UNVERIFIED.md</code> file of each pathway. In outline:</p>
 <ul>
-<li>Carotenoid: the acaA verified flag; the phytoene desaturase tier changes; the 3-hydroxylation and grid-branch tiers of astaxanthin synthase.</li>
-<li>DHN-melanin: the Q9HFV6 gene-name rule; vermelone dehydration T1a on P56221; the two routes with no product compound; the <em>Colletotrichum</em> and <em>Glomerella</em> organism key; abr1 at T3.</li>
+<li>Carotenoid: strict versus context reading of the quote rule (carG, Q9P885, decides every route tier); the acaA verified flag; the phytoene desaturase tier changes; the 3-hydroxylation and grid-branch tiers of astaxanthin synthase.</li>
+<li>DHN-melanin: the Q9HFV6 gene-name rule; strict versus context reading of the quote rule (vermelone dehydration on P56221 is now T3 under the strict reading); the two routes with no product compound; the <em>Colletotrichum</em> and <em>Glomerella</em> organism key; abr1 at T3.</li>
 <li>L-DOPA melanin: Q2TL94 (no gene name); the melB reference A0A1S9DK56 (ORF name only, tied by structure); the P00440 tie; the LAC1 T1c sentence without a substrate; TyrP at T3; no product for the Asp-melanin route; the rule for entries with an ORF name only.</li>
 <li>Project: whether to release tables outside the group; the negative-control taxa; whether to run the fungal natural-product methods check.</li>
 </ul>

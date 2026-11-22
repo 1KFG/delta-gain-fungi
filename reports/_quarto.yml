@@ -28,6 +28,8 @@ website:
         text: "UPO clades"
       - href: mucor_secretome.qmd
         text: "Mucor effectors"
+      - href: pigments.qmd
+        text: "Fungal pigments"
       - href: pathway_corpus.qmd
         text: "Pathways and corpus"
 

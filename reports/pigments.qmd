@@ -1,0 +1,10 @@
+---
+title: "Fungal pigments: carotenoid, melanin and mycosporine pathways"
+subtitle: "What the curated knowledge bases hold, how strong the evidence is, and why no census has been run yet"
+date: 2026-11-21
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+{{< include ../analysis/pathway_census/PIGMENTS.md >}}
