@@ -94,3 +94,11 @@ These counts say a genome exists. They say nothing about pathway genes. Whether 
 - REPORTED (`ebc-021`): run-to-group mapping corrected; 35 attributable species (was 29), 11 with 2 or more accessions (was 8), 494 species in usable groups; *A. fumigatus* has 3 attributable accessions; library-name evidence for its clustered metabolites rests on one accession (MSV000090017, 3 distinct runs). Earlier "0 of N fungal-reference accessions" statements were not recomputed by the EBC side and could miss mislabelled groups.
 - MEASURED by me (009): MIBiG 4.0 has *A. fumigatus* Af293 entries for fumagillin (BGC0001067), pseurotin (BGC0001037), endocrocin (BGC0001118), fumigaclavine C (BGC0000811), gliotoxin (BGC0000361, retired); no entry for fumitremorgin C or verruculogen. Af293 antiSMASH 8.0.4 output exists in the 1KFG tree (42 regions); fumagillin and pseurotin loci fall in one region (`NC_007201.1` 0 to 164,074). GA-L7 (taxon 1456794) has no BFD genome. 188 of 494 EBC species match a BFD genome by exact name; 28 of 35 attributable species; 10 of 11 with 2+ accessions.
 - Not done (proposed in 009, awaiting the owner): antiSMASH timing run on 5 genomes; counts across the 416 genomes. antiSMASH module `antismash/8.0.4` exists but the command was not on PATH after `module load` on the login node (not investigated).
+
+## 14. antiSMASH lite runs for the EBC pilot (2026-11-21)
+
+- Af293 full flags: 6,535 s, 8 CPUs, job 32362933 (1 h 49 min of the 2 h limit). Lite (no `--fullhmmer`, `--clusterhmmer`, `--pfam2go`): 786 s, same 44 regions (MEASURED).
+- Five more genomes (A1163, JCM 10253, A. niger ATCC 1015, A. wentii CBS141173, P. roqueforti FM164): 769 to 1,104 s. 17 more genomes for the other attributable species were submitted (A. nidulans, A. pseudoglaucus, N. sphaerica, O. sinensis, P. brasilianum, P. solitum); picked by BUSCO then contig count, except A. nidulans FGSC A4 (reference).
+- BFD module changed and committed (Fungi_BFD 75dc089): lite default, three reduced tables, locustag hash buckets. Not run through the workflow yet.
+- Raw JSON deleted by the owner's instruction. Next: build the EBC region table (`build_ebc_table.py`), write message 010, rerun the module test with a locustag.
+- Details: `analysis/bgc_subset/README.md`.

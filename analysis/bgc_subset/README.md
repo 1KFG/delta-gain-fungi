@@ -1,6 +1,18 @@
 # antiSMASH output: the subset an MS-feature analysis needs
 
-Status: working note, 2026-11-21. Nothing here is a biological finding. Labels: MEASURED = I measured it on the Af293 result described below; PROPOSED = my choice; UNVERIFIED = not checked.
+Status: working note, updated 2026-11-21. Nothing here is a biological finding. Labels: MEASURED = I measured it; PROPOSED = my choice; UNVERIFIED = not checked.
+
+## Note for other agents (read this first)
+
+- **What was done (MEASURED):** antiSMASH 8.0.4 was run in the BFD apptainer image on 24 BFD genomes (Af293 twice, so 24 runs on 23 distinct genomes at the time of writing; the last jobs were still running). Results are in `analysis/bgc_subset/results/<id>.{regions,cds,known,...}.tsv.gz`. The job script is `run_antismash_one.sbatch`.
+- **Lite mode is enough to enumerate clusters (MEASURED on one genome):** on Af293 the lite run (`--cb-general --cb-knownclusters`) found the same 44 regions, with the same coordinates and classes, as the full run (`--fullhmmer --clusterhmmer --cb-general --cb-knownclusters --pfam2go`). I did not test other genomes or other flag sets.
+- **Time (MEASURED, 8 CPUs):** full 6,535 s on Af293. Lite 769 to 1,104 s on six genomes (Af293 786 s).
+- **Size (MEASURED):** raw antiSMASH output 242 MB for Af293. The subset tables are about 2 MB per genome. The three-table minimal set used by BFD is smaller (UNVERIFIED size).
+- **What the flags do (background, not tested here):** cluster detection does not depend on `--fullhmmer` or `--clusterhmmer`; they add Pfam annotation. The match to known clusters is `--cb-knownclusters` (MIBiG). `--pfam2go` adds GO terms. No analysis here uses GO.
+- **BFD module (committed, not run through the workflow):** `Fungi_BFD/nextflow/modules/BFD/ANTISMASH/main.nf`, commit 75dc089 on branch `unify-funannotate-sif`. Default `antismash_mode = lite`; `full` restores the old flags and keeps the raw JSON. Switched on with `--run_antismash true` (default false). Outputs: `results/function/antismash/<bucket>/<LOCUSTAG>.antismash.{regions,cds,known}.tsv.gz`, hash-bucketed by locustag like cazy and pfam. Mode, bucket width and merge wiring are untested end to end.
+- **Bug found in existing code:** `bin/merge_antismash.py` read `records[].regions`, a key antiSMASH 8 JSON does not have, so it would have produced an empty table. It now reads the lite tables.
+- **Not decided:** the database representation of a cluster (location, annotation, genes). The three minimal tables are a proposal. Whether to run all of BFD (about 23,680 genomes, about 800 s each, about 5,300 hours at 8 CPUs, UNVERIFIED for genomes larger than the ones tested).
+- **Limits of the results:** a known-cluster hit means similarity to a MIBiG entry. It does not show that the compound is made.
 
 ## Why a subset
 
