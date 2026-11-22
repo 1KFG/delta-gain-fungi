@@ -4,6 +4,9 @@
 # One genome through antiSMASH 8.0.4 in the BFD apptainer image, then reduce to the subset.
 # Mirrors Fungi_BFD/nextflow/modules/BFD/ANTISMASH/main.nf (gff3 + genome fasta, --genefinding-gff3),
 # plus --cb-knownclusters (MIBiG) which that module does not turn on.
+# --pfam2go, --fullhmmer, --clusterhmmer dropped (not used by the subset). --cb-general kept as the explicit flag set
+# was asked for; the subset's blast_top table needs it. All work in $SCRATCH; only the subset is copied to /bigdata.
+# Set KEEP_RAW=1 to also keep the gzipped raw JSON (about 20 MB) for a timing/comparison run.
 # Usage: sbatch -J <name> run_antismash_one.sbatch <genome_folder_name> <short_id>
 set -euo pipefail
 NAME=${1:?genome folder name}; ID=${2:?short id}
@@ -23,11 +26,12 @@ t0=$(date +%s)
 apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
   antismash --taxon fungi --databases $DB --output-dir $OUTD \
     --genefinding-gff3 $ID.gff3 \
-    --fullhmmer --clusterhmmer --cb-general --cb-knownclusters --pfam2go \
+    --cb-general --cb-knownclusters \
     -c ${SLURM_CPUS_ON_NODE:-8} $ID.fa
 t1=$(date +%s)
 J=$(ls $OUTD/*.json | head -1)
 du -sk $OUTD | awk '{print $1" KB raw antismash dir"}'
 /usr/bin/python3.12 $HERE/extract_antismash_subset.py $J $OUT $ID
-gzip -c $J > $OUT/$ID.antismash.json.gz   # raw JSON kept only for this timing run
+[ "${KEEP_RAW:-0}" = 1 ] && gzip -9 -c $J > $OUT/$ID.antismash.json.gz
 echo -e "$ID\t$NAME\t$((t1-t0))\t${SLURM_CPUS_ON_NODE:-8}" >> $OUT/timings.tsv
+rm -rf $W
