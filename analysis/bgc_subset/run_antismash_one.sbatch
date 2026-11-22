@@ -26,11 +26,12 @@ if [ -n "${MINLEN:-}" ]; then   # drop contigs shorter than MINLEN bp from FASTA
   mv $ID.f.fa $ID.fa; mv $ID.f.gff3 $ID.gff3
 fi
 OUTD=$W/out
+CBG_FLAG="--cb-general"; [ "${NO_CBG:-0}" = 1 ] && CBG_FLAG=""   # NO_CBG=1: skip general ClusterBlast (test)
 t0=$(date +%s)
 apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
   antismash --taxon fungi --databases $DB --output-dir $OUTD \
     --genefinding-gff3 $ID.gff3 \
-    --cb-general --cb-knownclusters ${ANTISMASH_EXTRA:-} \
+    $CBG_FLAG --cb-knownclusters ${ANTISMASH_EXTRA:-} \
     -c ${SLURM_CPUS_ON_NODE:-8} $ID.fa
 t1=$(date +%s)
 J=$(ls $OUTD/*.json | head -1)
