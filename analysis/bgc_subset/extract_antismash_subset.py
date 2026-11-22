@@ -32,6 +32,8 @@ def strand(loc):
 
 def q1(f, key, default=""):
     v = f["qualifiers"].get(key)
+    if v is None and key == "locus_tag":  # GFF3 input: CDS carry "gene" instead of locus_tag
+        v = f["qualifiers"].get("gene")
     if isinstance(v, list):
         return v[0] if v else default
     return default if v is None else v
@@ -43,7 +45,7 @@ def main(path, outdir, genome=None):
     with opener(path) as fh:
         data = json.load(fh)
     out = {k: gzip.open(outdir / f"{genome}.{k}.tsv.gz", "wt") for k in
-           ("regions", "cds", "domains", "modules", "blast_top", "adomain")}
+           ("regions", "cds", "domains", "modules", "blast_top", "adomain", "known")}
     faa = gzip.open(outdir / f"{genome}.biosyn_proteins.faa.gz", "wt")
     out["regions"].write("genome\trecord\tregion\tstart\tend\tlength\tproducts\tcategories\tcontig_edge\tcore_start\tcore_end\tcandidate_kinds\tn_cds\tn_biosynthetic\tn_additional\n")
     out["cds"].write("genome\trecord\tregion\tlocus_tag\tprotein_id\tstart\tend\tstrand\tgene_kind\tprotein_len\tfunctions\tproduct\n")
@@ -51,7 +53,8 @@ def main(path, outdir, genome=None):
     out["modules"].write("genome\trecord\tmodule_type\tlocus_tags\tdomains\tcomplete\titerative\n")
     out["blast_top"].write("genome\trecord\tregion\trank\thit_accession\thit_label\thit_cluster_type\thit_description\tsimilarity\tcore_gene_hits\tgene_hits\tblast_score\ttotal_hits\n")
     out["adomain"].write("genome\trecord\tdomain_id\ttool\taa10\tstachelhaus_top_substrates\taa10_score\taa34_score\tphysicochemical_class\tlarge_cluster\tsmall_cluster\n")
-    n = {"adomain": 0, "regions": 0, "cds": 0, "domains": 0, "modules": 0, "blast_top": 0, "faa": 0}
+    out["known"].write("genome\trecord\tregion\trank\tmibig_accession\thit_description\thit_cluster_type\tsimilarity\tcore_gene_hits\tgene_hits\tblast_score\ttotal_hits\n")
+    n = {"known": 0, "adomain": 0, "regions": 0, "cds": 0, "domains": 0, "modules": 0, "blast_top": 0, "faa": 0}
     for rec in data["records"]:
         rid = rec["id"]
         regions = []
@@ -108,6 +111,12 @@ def main(path, outdir, genome=None):
                 out["blast_top"].write("\t".join(map(str, [genome, rid, res.get("region_number"), rank, cl.get("accession"), cl.get("cluster_label"),
                                                             cl.get("cluster_type"), str(cl.get("description", "")).replace("\t", " "), sc.get("similarity"),
                                                             sc.get("core_gene_hits"), sc.get("hits"), sc.get("blast_score"), res.get("total_hits")])) + "\n"); n["blast_top"] += 1
+        kcl = rec.get("modules", {}).get("antismash.modules.clusterblast", {}).get("knowncluster", {}).get("results", [])
+        for res in kcl:
+            for rank, item in enumerate(res.get("ranking", [])[:TOPN], 1):
+                cl, sc = item[0], item[1]
+                out["known"].write("\t".join(map(str, [genome, rid, res.get("region_number"), rank, cl.get("accession"), str(cl.get("description", "")).replace("\t", " "),
+                                                         cl.get("cluster_type"), sc.get("similarity"), sc.get("core_gene_hits"), sc.get("hits"), sc.get("blast_score"), res.get("total_hits")])) + "\n"); n["known"] += 1
         preds = rec.get("modules", {}).get("antismash.modules.nrps_pks", {}).get("domain_predictions", {})
         for did, tools in preds.items():
             for tool, v in tools.items():
