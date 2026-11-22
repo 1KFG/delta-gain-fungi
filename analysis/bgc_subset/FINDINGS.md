@@ -138,6 +138,23 @@ Queries on the real tables took 1 to 3 ms. A synthetic copy repeated 750 times (
 5. Keep the key as `LOCUSTAG` and the three-table parquet design.
 6. Test one non-Pezizomycotina genome (a yeast, a basidiomycete, a Mucoromycete) before a full run.
 
+## 12. Non-Pezizomycotina genomes and the genetic code (MEASURED, 4 genomes, top 5 hits kept)
+
+One genome each from three groups outside the Pezizomycotina, picked as the genome nearest the group median size among those with BUSCO 95 or higher and N50 of 500 kb or higher (the *D. hansenii* BUSCO is about 84 for every genome of that species against `fungi_odb12`). Each ran without and with `--cb-general`.
+
+| Genome (LOCUSTAG) | BUSCO | Mb | Contigs | Wall time without / with | Peak memory without / with | Regions | `known` rows (top 5) | `known_pairs` rows |
+|---|---|---|---|---|---|---|---|---|
+| *Blastobotrys adeninivorans* TMCC 70007 (F634A7E4), yeast, code 1 | 95.0 | 12.1 | 16 | 82 s / 144 s | 1.6 / 7.5 GB | 4 | 0 | 0 |
+| *Debaryomyces hansenii* CBS767 (F8C91A38), yeast, code 12 | 83.8 | 12.2 | 8 | 86 s / 247 s | 2.3 / 10.6 GB | 5 | 0 | 0 |
+| *Flammulina filiformis* HNY6 (F67CDA18), Basidiomycota | 98.5 | 36.3 | 24 | 291 s / 787 s | 4.6 / 10.8 GB | 38 | 4 | 7 |
+| *Mucor hiemalis* (F00CDB58), Mucoromycota | 98.0 | 35.8 | 26 | 147 s / 437 s | 3.7 / 9.3 GB | 11 | 1 | 1 |
+
+- For all four genomes the regions, `known` and `known_pairs` tables are identical with and without `--cb-general`. The speed-up is 1.8x, 2.9x, 2.7x and 3.0x. Peak memory without `--cb-general` is 1.6 to 4.6 GB, against 7.5 to 10.8 GB with it.
+- Yeasts give few regions (4 and 5) and no MIBiG hit at all. That is a result, not a failure: `--taxon fungi` works and the regions are found. MIBiG is mostly filamentous-fungus clusters, so yeast clusters have little to match.
+- **Genetic code.** BFD records `TRANSL_TABLE` 12 (CUG codes Ser) for 1,164 genomes and table 26 for 1. antiSMASH 8.0.4 has no option for it. With the BFD GFF3, antiSMASH sets `transl_table` to 1 and translates CUG as Leu. For *D. hansenii* CBS767, 3,923 of 5,951 CDS (65.9%) differ from the BFD protein, all with the same length, and all 11,859 differing residues are Ser in BFD and Leu in antiSMASH. For the other three genomes the translations match, except 0 of 6,090 (*B. adeninivorans*), 8 of 14,976 (*F. filiformis*) and 7 of 10,434 (*M. hiemalis*); the cause of those 15 (CDS translated much shorter than the BFD protein) was not investigated.
+- **Fix, MEASURED on one genome:** adding `;transl_table=12` to the attributes of every CDS line of the GFF3 before antiSMASH gives 5,951 of 5,951 identical translations and the same 5 regions, in 92 s against 86 s. The recipe is in `run_antismash_one.sbatch` (`TRANSL_TABLE`). Effect of the wrong code on regions and MIBiG hits was not measured separately: for *D. hansenii* the regions are the same with either code, and there are no MIBiG rows in either case.
+- PROPOSED: the module should read `TRANSL_TABLE` from the sample sheet and add the attribute when it is not 1.
+
 ## 11. Mistakes made on the way (so they are not repeated)
 
 - The first EBC table used the rank-1 hit only. antiSMASH rank is not similarity order. Corrected in message 011.

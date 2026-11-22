@@ -25,6 +25,9 @@ if [ -n "${MINLEN:-}" ]; then   # drop contigs shorter than MINLEN bp from FASTA
   /usr/bin/python3.12 $HERE/filter_contigs.py $MINLEN $ID.fa $ID.gff3 $ID.f.fa $ID.f.gff3 $RUNS/$NAME/predict_results/$NAME.scaffolds.fa.gz.fai
   mv $ID.f.fa $ID.fa; mv $ID.f.gff3 $ID.gff3
 fi
+if [ -n "${TRANSL_TABLE:-}" ] && [ "$TRANSL_TABLE" != 1 ]; then   # genetic code other than 1: tell antiSMASH through the CDS attributes (test)
+  awk -F'\t' -v OFS='\t' -v t=$TRANSL_TABLE '$0 !~ /^#/ && $3=="CDS" {$9=$9";transl_table="t} {print}' $ID.gff3 > $ID.t.gff3 && mv $ID.t.gff3 $ID.gff3
+fi
 OUTD=$W/out
 CBG_FLAG="--cb-general"; [ "${NO_CBG:-0}" = 1 ] && CBG_FLAG=""   # NO_CBG=1: skip general ClusterBlast (test)
 t0=$(date +%s)
