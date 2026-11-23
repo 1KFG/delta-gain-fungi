@@ -1,0 +1,30 @@
+organism	group	compound	pmid	evidence	note
+Phaffia rhodozyma	basidiomycetous yeast (Cystofilobasidiales)	mycosporine-glutaminol-glucoside	20955516	abstract	48 wild and collection strains were positive; the paper says Xanthophyllomyces dendrorhous
+Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol	36983003	full text	wild-type strain UCD 67-385 (peak 1 of Figure 3B in the full text); the abstract shows MG only in Saccharomyces cerevisiae with DDGS, OMT and ATPG and in strain CBS 6938 with the cluster
+Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol-glucoside	36983003	abstract	strain CBS 6938 with the integrated cluster makes MG and MGG
+Phaffia rhodozyma (strain CBS 6938)	basidiomycetous yeast	none detected	36983003	abstract	negative report: the wild-type strain makes no mycosporine and lacks the cluster (full text)
+Phaffia rhodozyma	basidiomycetous yeast	mycosporine-glutaminol-glucoside	38329645	abstract	
+Naganishia friedmannii	yeast	mycosporine-glutaminol-glucoside	40036870	abstract	isolate FBU002, after PAR-UVR exposure; a gene cluster is reported, no gene is named in the abstract; the full text was not available
+Rhodotorula minuta	basidiomycetous yeast	mycosporine-glutaminol-glucoside	15484286	abstract	
+Rhodotorula slooffiae	basidiomycetous yeast	mycosporine-glutaminol-glucoside	15484286	abstract	
+Rhodotorula minuta	red yeast	mycosporine-glutaminol-glucoside	14993945	abstract	after PAR or PAR + UVR exposure
+Rhodotorula pinicola	red yeast	mycosporine-glutaminol-glucoside	14993945	abstract	after PAR or PAR + UVR exposure
+Cryptococcus laurentii	colourless yeast	mycosporine-glutaminol-glucoside	14993945	abstract	after PAR or PAR + UVR exposure
+Cryptococcus steppossus	basidiomycetous yeast	mycosporine-glutaminol-glucoside	21175346	abstract	nine isolates
+Pucciniomycotina (94 species tested)	dimorphic basidiomycetes	mycosporine-glutaminol-glucoside	21744380	abstract	almost half of the species were positive; five of seven classes; species are not named in the abstract
+Cystobasidium keelungensis	basidiomycetous yeast	mycosporine-glutaminol-glucoside	30182254	abstract	
+Cystobasidium keelungensis	basidiomycetous yeast	mycosporine-glutamicol-glucoside	30182254	abstract	
+rock-inhabiting microcolonial fungi (species not named in the abstract)	microcolonial ascomycetes	mycosporine-glutamicol-glucoside	12717761	abstract	
+rock-inhabiting microcolonial fungi (species not named in the abstract)	microcolonial ascomycetes	mycosporine-glutaminol-glucoside	12717761	abstract	
+Hortaea werneckii	melanized ascomycetous fungus	mycosporine-glutaminol-glucoside	18048939	abstract	stationary-phase cells
+Colletotrichum graminicola	filamentous fungus	mycosporine-glutamine	31550526	abstract	germination self-inhibitor of falcate conidia; absent from oval conidia cultures
+Ascochyta fabae	filamentous fungus	mycosporine-glutaminol-glucoside	36983003	full text	stated in the introduction of PMID 36983003 with two citations; one is REPORTED by the review to be PMID 24258137 (next row), the other was not read
+Ascochyta fabae	Fungi imperfecti (spores)	mycosporin-2 (acceptor of a spore glucosyltransferase)	24258137	abstract	enzyme activity, not a compound report: UDP-glucose:mycosporin-2 glucosyltransferase, amide form the best acceptor; UNVERIFIED whether mycosporin-2 (amide form) is mycosporine-glutaminol
+Dermatocarpon luridum var. luridum	chlorolichen (Verrucariaceae, Ascomycota)	mycosporine-glutamicol	30893758	abstract	lichen thallus: the producing partner is not stated in the abstract
+Dermatocarpon luridum var. luridum	chlorolichen (Verrucariaceae, Ascomycota)	mycosporine-glutaminol	30893758	abstract	lichen thallus: the producing partner is not stated in the abstract
+Cladonia arbuscula subsp. squarrosa	lichen	mycosporine-glutamicol	35888756	abstract	lichen thallus: the abstract says that the partner that makes the compound is not identified
+Lichina pygmaea	cyanolichen	mycosporine-serinol	25800181	abstract	lichen thallus: the producing partner is not stated in the abstract
+Degelia plumbea	cyanolichen	mycosporine-glutamicol	21550091	abstract	lichen thallus: the producing partner is not stated in the abstract
+Nephroma laevigatum	cyanolichen	mycosporine-hydroxyglutamicol	21550091	abstract	lichen thallus: the producing partner is not stated in the abstract
+Collema cristatum	lichenized ascomycete	a mycosporine (not named in the abstract)	14764094	abstract	lichen thallus: the producing partner is not stated in the abstract
+Metarhizium anisopliae var. anisopliae	entomopathogenic fungus	none detected	20943158	abstract	negative report: conidia of strain ESALQ-1037, LC-MS

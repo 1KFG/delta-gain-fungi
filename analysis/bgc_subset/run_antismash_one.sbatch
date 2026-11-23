@@ -1,0 +1,45 @@
+#!/usr/bin/bash -l
+#SBATCH -p short -N 1 -n 1 -c 8 --mem 24gb --time 2:00:00
+#SBATCH --out /bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/bgc_subset/logs/antismash_%x.%A.log
+# One genome through antiSMASH 8.0.4 in the BFD apptainer image, then reduce to the subset.
+# Mirrors Fungi_BFD/nextflow/modules/BFD/ANTISMASH/main.nf (gff3 + genome fasta, --genefinding-gff3),
+# plus --cb-knownclusters (MIBiG) which that module does not turn on.
+# --pfam2go, --fullhmmer, --clusterhmmer dropped (not used by the subset). --cb-general kept as the explicit flag set
+# was asked for; the subset's blast_top table needs it. All work in $SCRATCH; only the subset is copied to /bigdata.
+# Set KEEP_RAW=1 to also keep the gzipped raw JSON (about 20 MB) for a timing/comparison run.
+# Usage: sbatch -J <name> run_antismash_one.sbatch <genome_folder_name> <short_id>
+set -euo pipefail
+NAME=${1:?genome folder name}; ID=${2:?short id}
+RUNS=/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation
+SIF=/bigdata/stajichlab/shared/singularity/antismash-standalone-8.0.4.sif
+DB=/bigdata/stajichlab/shared/lib/antismash_db
+HERE=/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/bgc_subset
+OUT=${BGC_OUT:-/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/bgc_subset/results}
+mkdir -p $OUT
+module load apptainer
+W=${SCRATCH:?SCRATCH not set}/as_$ID; mkdir -p $W; cd $W
+export TMPDIR=$W/tmp; mkdir -p $TMPDIR
+zcat $RUNS/$NAME/predict_results/$NAME.gff3.gz > $ID.gff3
+zcat $RUNS/$NAME/predict_results/$NAME.scaffolds.fa.gz > $ID.fa
+if [ -n "${MINLEN:-}" ]; then   # drop contigs shorter than MINLEN bp from FASTA and GFF3 before antiSMASH
+  /usr/bin/python3.12 $HERE/filter_contigs.py $MINLEN $ID.fa $ID.gff3 $ID.f.fa $ID.f.gff3 $RUNS/$NAME/predict_results/$NAME.scaffolds.fa.gz.fai
+  mv $ID.f.fa $ID.fa; mv $ID.f.gff3 $ID.gff3
+fi
+if [ -n "${TRANSL_TABLE:-}" ] && [ "$TRANSL_TABLE" != 1 ]; then   # genetic code other than 1: tell antiSMASH through the CDS attributes (test)
+  awk -F'\t' -v OFS='\t' -v t=$TRANSL_TABLE '$0 !~ /^#/ && $3=="CDS" {$9=$9";transl_table="t} {print}' $ID.gff3 > $ID.t.gff3 && mv $ID.t.gff3 $ID.gff3
+fi
+OUTD=$W/out
+CBG_FLAG="--cb-general"; [ "${NO_CBG:-0}" = 1 ] && CBG_FLAG=""   # NO_CBG=1: skip general ClusterBlast (test)
+t0=$(date +%s)
+apptainer exec --bind $DB:$DB,$W:$W,$TMPDIR:$TMPDIR $SIF \
+  antismash --taxon fungi --databases $DB --output-dir $OUTD \
+    --genefinding-gff3 $ID.gff3 \
+    $CBG_FLAG --cb-knownclusters ${ANTISMASH_EXTRA:-} \
+    -c ${SLURM_CPUS_ON_NODE:-8} $ID.fa
+t1=$(date +%s)
+J=$(ls $OUTD/*.json | head -1)
+du -sk $OUTD | awk '{print $1" KB raw antismash dir"}'
+/usr/bin/python3.12 $HERE/extract_antismash_subset.py $J $OUT $ID --mode lite ${TOPN:+--topn $TOPN}
+[ "${KEEP_RAW:-0}" = 1 ] && gzip -9 -c $J > $OUT/$ID.antismash.json.gz
+echo -e "$ID\t$NAME\t$((t1-t0))\t${SLURM_CPUS_ON_NODE:-8}" >> $OUT/timings.tsv
+rm -rf $W

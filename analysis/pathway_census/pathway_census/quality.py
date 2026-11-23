@@ -17,11 +17,15 @@ gene_id, LOCUSTAG, chrom, start, end, plus `length` (protein length in aa, from 
 `gene_proteins.parquet`, joined by the caller).
 
 domain_ok
-    True if every expected domain of the step (`expected_domains[step_id]`, hmm names such as Pfam
-    ids) occurs in the `domains` frame for that protein with evalue <= domain_evalue
-    (PROPOSED 1e-5). Counting is at domain level, one hit table row per domain. A fused gene is
-    judged per step: it needs the domains of that step only, not the domains of its fusion partner.
-    <NA> if `expected_domains` has no entry for the step.
+    Any-of rule. True if at least one expected domain of the step (`expected_domains[step_id]`,
+    hmm names such as Pfam ids, from `domains_any` in the pathway YAML) occurs in the `domains`
+    frame for that protein with evalue <= domain_evalue (PROPOSED 1e-5). False if none occurs.
+    Counting is at domain level, one hit table row per domain. A fused gene is judged per step: it
+    needs a domain of that step only, not a domain of its fusion partner.
+    Names are compared after normalising: uppercase, and a version suffix after a dot is dropped
+    (`PF00494.22` equals `PF00494`). An entry that is not a list (for example a bare string)
+    raises ValueError.
+    <NA> if `expected_domains` has no entry for the step or the entry is an empty list.
 
 motif_ok
     The reference definition gives no catalytic motif yet. The value comes from `motif_hits`
@@ -68,6 +72,11 @@ OUT_COLUMNS = ["protein_id", "step_id", "domain_ok", "motif_ok", "truncated", "c
 _TSUFFIX = re.compile(r"-T\d+$")
 
 
+def _norm_domain(name: str) -> str:
+    """Uppercase and drop a version suffix after a dot: 'PF00494.22' -> 'PF00494'."""
+    return str(name).strip().upper().split(".", 1)[0]
+
+
 def _gid(protein_id: str) -> str:
     return _TSUFFIX.sub("", protein_id)
 
@@ -111,7 +120,12 @@ def quality_flags(assigned: pd.DataFrame, domains: pd.DataFrame, gene_info: pd.D
 
     # domain level evidence: (protein, hmm_name) with evalue <= threshold
     good = domains[domains.evalue <= domain_evalue] if len(domains) else domains
-    dom_have = set(zip(good.protein_id, good.hmm_name)) if len(good) else set()
+    dom_have = (set(zip(good.protein_id, good.hmm_name.map(_norm_domain)))
+                if len(good) else set())
+    for step_id, exp in (expected_domains or {}).items():
+        if isinstance(exp, str) or not isinstance(exp, (list, tuple, set, frozenset)):
+            raise ValueError(f"expected_domains['{step_id}'] must be a list of domain names, "
+                             f"got {type(exp).__name__} {exp!r}")
     motif = {}
     if motif_hits is not None:
         motif = {(r.protein_id, r.step_id): bool(r.motif_present) for r in motif_hits.itertuples()}
@@ -146,7 +160,7 @@ def quality_flags(assigned: pd.DataFrame, domains: pd.DataFrame, gene_info: pd.D
     for r in assigned.itertuples():
         pid, step, gid = r.protein_id, r.step_id, _gid(r.protein_id)
         exp = (expected_domains or {}).get(step)
-        dom_ok.append(pd.NA if exp is None else all((pid, d) in dom_have for d in exp))
+        dom_ok.append(pd.NA if not exp else any((pid, _norm_domain(d)) in dom_have for d in exp))
         mot_ok.append(motif.get((pid, step), pd.NA))
 
         length = info.at[gid, "length"] if gid in info.index and "length" in info.columns else pd.NA

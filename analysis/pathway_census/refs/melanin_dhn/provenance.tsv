@@ -1,0 +1,23 @@
+step_id	accession	species	gene_name	region	pmid	source_database	retrieved_on	verified
+thn_synthase	P79068	Glomerella lagenarium	PKS1		7500937	UniProtKB/TrEMBL (entry v127, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+hexaketide_pks	Q9Y7A7	Exophiala dermatitidis	PKS1		11179356	UniProtKB/TrEMBL (entry v127, sequence v3); PubMed (cited by the entry)	2026-11-21	true
+heptaketide_pks	Q4WZA8	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	alb1		11040426	UniProtKB/Swiss-Prot (entry v132, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+heptaketide_pks	A2QUI2	Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)	albA		21277986	UniProtKB/Swiss-Prot (entry v109, sequence v1); PubMed (abstract gives the locus tag An09g05730 for FwnA; the entry does not cite the paper)	2026-11-21	true
+ayg1	Q4WZB3	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	ayg1		15310761	UniProtKB/Swiss-Prot (entry v95, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+ayg1	Q6BCB5	Exophiala dermatitidis	yg1		18676950	UniProtKB/TrEMBL (entry v56, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+ayg1	A2R3S8	Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)	An14g05350		21277986	UniProtKB/TrEMBL (entry v74, sequence v1); PubMed (abstract gives the locus tag An14g05350 for OlvA; the entry does not cite the paper)	2026-11-21	true
+t4hn_reductase	Q9HFV6	Pyricularia grisea	4HNR		10956664	UniProtKB/TrEMBL (entry v151, sequence v2); PubMed (cited by the entry)	2026-11-21	false
+t4hn_reductase	E9QUT3	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	arp2		10515939	UniProtKB/Swiss-Prot (entry v83, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+t4hn_reductase	W3XAA0	Pestalotiopsis fici (strain W106-1 / CGMCC3.15140)	PfmaG		28517364	UniProtKB/Swiss-Prot (entry v46, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+t4hn_reductase	F8WTI4	Colletotrichum orbiculare	T4HR1		12967213	UniProtKB/TrEMBL (entry v40, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+t4hn_reductase	A7DWM4	Sordaria macrospora	teh		17681008	UniProtKB/TrEMBL (entry v74, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+t3hn_reductase	Q12634	Pyricularia oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958)	MGG_02252		8112349	UniProtKB/Swiss-Prot (entry v159, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+t3hn_reductase	P87025	Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422)	THR1		8672814	UniProtKB/Swiss-Prot (entry v102, sequence v4); PubMed (cited by the entry)	2026-11-21	true
+t3hn_reductase	A7DWM6	Sordaria macrospora	tih		17681008	UniProtKB/TrEMBL (entry v73, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+scytalone_dehydratase	Q00455	Colletotrichum orbiculare (strain 104-T / ATCC 96160 / CBS 514.97 / LARS 414 / MAFF 240422)	SCD1		8953707	UniProtKB/Swiss-Prot (entry v87, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+scytalone_dehydratase	O14434	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	arp1		9383199	UniProtKB/Swiss-Prot (entry v126, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+scytalone_dehydratase	P56221	Pyricularia oryzae (strain 70-15 / ATCC MYA-4617 / FGSC 8958)	SDH1		9571787	UniProtKB/Swiss-Prot (entry v138, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+scytalone_dehydratase	A7DWM5	Sordaria macrospora	sdh		17681008	UniProtKB/TrEMBL (entry v41, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+laccase_abr2	E9RBR0	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	abr2		16988817	UniProtKB/Swiss-Prot (entry v74, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+mco_abr1	Q4WZB4	Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)	abr1		10515939	UniProtKB/Swiss-Prot (entry v111, sequence v2); PubMed (cited by the entry)	2026-11-21	true
+mco_abr1	A2R3T0	Aspergillus niger (strain ATCC MYA-4892 / CBS 513.88 / FGSC A1513)	An14g05370		21277986	UniProtKB/TrEMBL (entry v100, sequence v1); PubMed (abstract gives the locus tag An14g05370 for BrnA; the entry does not cite the paper)	2026-11-21	true

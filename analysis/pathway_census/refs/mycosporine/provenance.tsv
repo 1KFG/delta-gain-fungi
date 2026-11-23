@@ -1,0 +1,9 @@
+step_id	accession	species	gene_name	region	pmid	source_database	retrieved_on	verified
+ddgs	WEV88679.1	Phaffia rhodozyma (strain UCD 67-385)	DDGS		36983003	GenBank protein WEV88679.1 (CDS of nucleotide record OQ547787.1; no UniProtKB entry); PubMed (paper cited by the GenBank record)	2026-11-21	false
+ddgs	B2J6X9	Nostoc punctiforme (strain ATCC 29133 / PCC 73102)	Npun_R5600		20813918	UniProtKB/Swiss-Prot (entry v89, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+ddgs	Q3M6C3	Trichormus variabilis (strain ATCC 29413 / PCC 7937)	Ava_3858		22741921	UniProtKB/Swiss-Prot (entry v109, sequence v1); PubMed (cited by the entry)	2026-11-21	true
+omt	WEV88680.1	Phaffia rhodozyma (strain UCD 67-385)	OMT		36983003	GenBank protein WEV88680.1 (CDS of nucleotide record OQ547787.1; no UniProtKB entry); PubMed (paper cited by the GenBank record)	2026-11-21	false
+omt	B2J6X8	Nostoc punctiforme (strain ATCC 29133 / PCC 73102)	Npun_R5599		21890703	UniProtKB/TrEMBL (entry v66, sequence v1); PubMed (not cited by the entry); the only citation of the entry, PMID 23463784, is a sugar-transporter paper used for the genome sequence	2026-11-21	false
+atp_grasp_ligase	WEV88681.1	Phaffia rhodozyma (strain UCD 67-385)	ATPG		36983003	GenBank protein WEV88681.1 (CDS of nucleotide record OQ547787.1; no UniProtKB entry); PubMed (paper cited by the GenBank record)	2026-11-21	false
+atp_grasp_ligase	A0A9Y1GGR7	Phaffia rhodozyma	ATPG		36983003	UniProtKB/TrEMBL (entry v6, sequence v1); PubMed (not cited by the entry)	2026-11-21	false
+atp_grasp_ligase	B2J6X7	Nostoc punctiforme (strain ATCC 29133 / PCC 73102)	Npun_R5598		21890703	UniProtKB/TrEMBL (entry v69, sequence v1); PubMed (not cited by the entry); the only citation of the entry, PMID 23463784, is a sugar-transporter paper used for the genome sequence	2026-11-21	false

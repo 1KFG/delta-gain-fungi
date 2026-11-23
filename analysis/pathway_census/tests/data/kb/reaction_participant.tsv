@@ -1,0 +1,7 @@
+reaction_id	compound	role	stoich
+R1	CHEBI:A	substrate	1
+R1	CHEBI:B	product	1
+R2	CHEBI:B	substrate	1
+R2	CHEBI:C	product	1
+R3	CHEBI:C	substrate	1
+R3	CHEBI:D	product	1

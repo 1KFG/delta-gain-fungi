@@ -1,0 +1,267 @@
+# Mycosporines and mycosporine-like amino acids, step set v1 (stage 1, task S6, 2026-11-21).
+#
+# Status: DRAFT for user review. Pathway-level verified: false.
+# Do not run a census against this file until the user has reviewed the step list.
+#
+# The step set starts from the fungal literature: one paper shows three genes of one cluster in the
+# yeast Phaffia rhodozyma UCD 67-385 (PMID 36983003; abstract and full text read). It is not a copy
+# of the cyanobacterial gene list. Cyanobacterial proteins are references for tree placement only:
+# they are T2 at most and never fungal evidence. No other fungal gene of the pathway was found in
+# the papers that were read; the glucosylation and the glutamicol steps are T4 (refs: []).
+#
+# Reference checks: refs/mycosporine/provenance.tsv, refs/mycosporine/decoys/provenance.tsv and
+# refs/mycosporine/UNVERIFIED.md. Evidence tiers, quotes and reactions: kb/mycosporine/*.tsv.
+# Reported producers: refs/mycosporine/fungal_lineages.tsv.
+#
+# A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
+# organism and gene name matched, (2) the UniProt entry carries the EC and Rhea reaction of the
+# step, and (3) the PMID exists in PubMed and is cited by the entry. It never means a person
+# reviewed it. The three Phaffia proteins are GenBank records with no UniProtKB entry, so they
+# are verified: false although the GenBank record cites the paper (USER DECISION).
+# A decoy has verified: true when the UniProt entry was fetched on 2026-11-21, its organism and
+# gene name matched, it carries the family ids of the step, and it carries neither the EC nor a
+# Rhea reaction of the step. A decoy pmid is given only when the abstract was read.
+#
+# Field notes:
+# - Routes: each route note starts with "fungal_evidence: true" or "fungal_evidence: partial"
+#   (text, not a schema field). In the tables no declared route gives a product, because
+#   4-deoxygadusol has no ChEBI entry.
+# - species: the organism name of the UniProt entry, copied exactly. For the GenBank proteins:
+#   the GenBank organism with the strain, "Phaffia rhodozyma (strain UCD 67-385)".
+# - gene_name: a gene name of the record. For the cyanobacterial entries it is the ordered locus
+#   name (Npun_R5600), the only gene identifier that UniProt gives. It is valid only with species.
+# - pmid of a ref: for a UniProt entry a paper cited by the entry; for a GenBank protein the paper
+#   cited by the GenBank record. The papers that show each reaction are in step_reaction.tsv.
+#   Exception: B2J6X8 and B2J6X7 carry PMID 21890703, which names their genes and which the
+#   entries do not cite (their only citation, PMID 23463784, is a sugar-transporter paper).
+# - domains_any: Pfam ids. For the Phaffia proteins they come from hmmscan (Pfam 38.2, gathering
+#   cutoff), because the proteins have no UniProt cross-references. atp_grasp_ligase has none.
+# - reactions: ids of kb/mycosporine/reaction.tsv. The tier of each (protein, reaction) link is
+#   in kb/mycosporine/step_reaction.tsv, not here.
+# - copy_expect, optional and role are PROPOSED values. No census data exists yet. Every step is
+#   optional: one Phaffia rhodozyma strain lacks the whole cluster, so absence is not a defect.
+# - KEGG: K21342 is a cross-reference in kb/mycosporine/step.tsv only.
+id: mycosporine
+verified: false
+routes:
+  - id: mycosporine_glutaminol
+    name: "direct route to mycosporine-glutaminol (Phaffia rhodozyma DDGS, OMT, ATPG)"
+    step_ids: [ddgs, omt, atp_grasp_ligase]
+    note: "fungal_evidence: true. Three genes of one cluster in Phaffia rhodozyma UCD 67-385 (PMID 36983003): deletion of each gene stops mycosporine production, and the three cDNAs in Saccharomyces cerevisiae give mycosporine-glutaminol. Sedoheptulose 7-phosphate to demethyl-4-deoxygadusol to 4-deoxygadusol to mycosporine-glutaminol. In the tables the route gives no product: 4-deoxygadusol has no ChEBI entry, so the chain stops after the O-methyltransferase step (USER DECISION 6, UNVERIFIED.md, D1)."
+  - id: mycosporine_glutaminol_glucoside
+    name: "glucoside route to mycosporine-glutaminol-glucoside (Phaffia rhodozyma; glucosylation gene not identified)"
+    step_ids: [ddgs, omt, atp_grasp_ligase, mg_glucosyltransferase]
+    note: "fungal_evidence: partial. The first three steps are shown in Phaffia rhodozyma (PMID 36983003). The last step is T4: the glucosylation gene is not identified, so the route is never reported as possible. In the tables the route gives no product: 4-deoxygadusol has no ChEBI entry, so the chain stops after the O-methyltransferase step (USER DECISION 6, UNVERIFIED.md, D1). Mycosporine-glutaminol-glucoside has no ChEBI entry either."
+  - id: mycosporine_glutamicol
+    name: "glutamicol route to mycosporine-glutamicol and its glucoside (enzymes not identified)"
+    step_ids: [ddgs, omt, glutamicol_formation]
+    note: "fungal_evidence: partial. The compounds are reported in fungi and lichens (PMID 12717761, 30182254, 30893758); no gene is known for the glutamicol side chain or for the glucoside. The last step is T4. That the route shares DDGS and OMT with the glutaminol route is an assumption from the shared 4-deoxygadusol core; it is not shown in a glutamicol-producing fungus. In the tables the route gives no product: 4-deoxygadusol has no ChEBI entry, so the chain stops after the O-methyltransferase step (USER DECISION 6, UNVERIFIED.md, D1)."
+steps:
+  - id: ddgs
+    name: "demethyl-4-deoxygadusol synthase (DDGS of Phaffia rhodozyma; sedoheptulose 7-phosphate cyclase)"
+    ec: "4.2.3.154"
+    refs:
+      # GenBank protein of the Phaffia rhodozyma UCD 67-385 cluster OQ547787 (the record cites PMID 36983003 by title,
+      # journal and DOI). UniProtKB has no entry for this sequence, so the UniProt rule cannot be met: verified: false.
+      # species is the GenBank organism and strain. USER DECISION 1 in UNVERIFIED.md.
+      - accession: WEV88679.1
+        species: "Phaffia rhodozyma (strain UCD 67-385)"
+        gene_name: "DDGS"
+        pmid: "36983003"
+        verified: false
+      # Cyanobacterium; never fungal evidence (T2 at most). gene_name is the ordered locus name of the UniProt entry;
+      # the papers write NpR5600 and Npun_5600 (mysA). pmid 20813918 is cited by the entry for the catalytic activity.
+      - accession: B2J6X9
+        species: "Nostoc punctiforme (strain ATCC 29133 / PCC 73102)"
+        gene_name: "Npun_R5600"
+        pmid: "20813918"
+        verified: true
+      # Cyanobacterium; never fungal evidence. UniProt organism: Trichormus variabilis; the papers say Anabaena variabilis
+      # ATCC 29413 (one NCBI taxid, 264691). gene_name is the ordered locus name. Link held at T3.
+      - accession: Q3M6C3
+        species: "Trichormus variabilis (strain ATCC 29413 / PCC 7937)"
+        gene_name: "Ava_3858"
+        pmid: "22741921"
+        verified: true
+    decoys:
+      - accession: H2K887
+        species: "Streptomyces hygroscopicus subsp. jinggangensis (strain 5008)"
+        gene_name: "valA"
+        pmid: null
+        verified: true
+      - accession: Q9ZAE9
+        species: "Actinoplanes sp. (strain ATCC 31044 / CBS 674.73 / SE50/110)"
+        gene_name: "acbC"
+        pmid: null
+        verified: true
+      - accession: C6WFL3
+        species: "Actinosynnema mirum (strain ATCC 29888 / DSM 43827 / JCM 3225 / NBRC 14064 / NCIMB 13271 / NRRL B-12336 / IMRU 3971 / 101)"
+        gene_name: "Amir_2000"
+        pmid: "22741921"
+        verified: true
+      - accession: P07639
+        species: "Escherichia coli (strain K12)"
+        gene_name: "aroB"
+        pmid: null
+        verified: true
+      - accession: P07547
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "aromA"
+        pmid: null
+        verified: true
+      - accession: Q9S5E2
+        species: "Niallia circulans"
+        gene_name: "btrC"
+        pmid: null
+        verified: true
+    domains_any: [PF01761, PF24621]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:49560"
+    lineage_note: "First step of the fungal route: D-sedoheptulose 7-phosphate to demethyl-4-deoxygadusol (RHEA:49560). Fungal evidence: DDGS of Phaffia rhodozyma UCD 67-385 (GenBank WEV88679.1, PMID 36983003), T1c: the deletion strains make no mycosporine; the abstract names no product of this enzyme alone. The cyanobacterial enzymes (Npun_R5600 of Nostoc punctiforme, Ava_3858 of Anabaena variabilis) are T2 at most for a fungal ortholog and are never fungal evidence; they are 43 to 44% identical to the Phaffia protein, and 73% to each other (MEASURED 2026-11-21, global alignment). The enzyme is a sugar phosphate cyclase of the 3-dehydroquinate synthase fold (Pfam PF01761, PF24621; hmmscan of the Phaffia protein, Pfam 38.2). The family is broader than the step: the 3-dehydroquinate synthase domain of the fungal AROM protein, 2-epi-5-epi-valiolone synthase and 2-epi-valiolone synthase have the same Pfam ids and other products (decoys; the five single-domain decoys are 20 to 30% identical to the Phaffia protein, MEASURED; the five-domain AROM protein was not aligned). In Phaffia rhodozyma the AROM deletion does not change mycosporine production (full text of PMID 36983003). A step call needs tree placement with the decoys. The cluster is not in every strain: Phaffia rhodozyma CBS 6938 lacks it and makes no mycosporine, so absence is not a defect. Gene names: DDGS (Phaffia rhodozyma); mysA, NpR5600, Npun_R5600 (Nostoc punctiforme); Ava_3858 (Anabaena variabilis). A gene name is valid only with its organism."
+
+  - id: omt
+    name: "O-methyltransferase (OMT of Phaffia rhodozyma; demethyl-4-deoxygadusol to 4-deoxygadusol)"
+    ec: null
+    refs:
+      # GenBank protein of cluster OQ547787; no UniProtKB entry: verified: false (USER DECISION 1 in UNVERIFIED.md).
+      - accession: WEV88680.1
+        species: "Phaffia rhodozyma (strain UCD 67-385)"
+        gene_name: "OMT"
+        pmid: "36983003"
+        verified: false
+      # Cyanobacterium; never fungal evidence. NpR5599 (mysB) of PMID 21890703 (pmid below; the entry does not cite it).
+      # Unreviewed entry: its only citation is PMID 23463784, a sugar-transporter paper that UniProt uses for the genome
+      # sequence; it is not a paper about this step. EC 2.1.1.104 is automatic annotation: verified: false. 17% identical
+      # to the Phaffia OMT (MEASURED): the same enzyme family is not shown. Link held at T3 (UNVERIFIED.md, B3).
+      - accession: B2J6X8
+        species: "Nostoc punctiforme (strain ATCC 29133 / PCC 73102)"
+        gene_name: "Npun_R5599"
+        pmid: "21890703"
+        verified: false
+    decoys:
+      - accession: O42898
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "SPBC119.03"
+        pmid: null
+        verified: true
+      - accession: B8NI24
+        species: "Aspergillus flavus (strain ATCC 200026 / FGSC A1120 / IAM 13836 / NRRL 3357 / JCM 12722 / SRRC 167)"
+        gene_name: "imqG"
+        pmid: null
+        verified: true
+      - accession: A0A397HK53
+        species: "Aspergillus thermomutatus"
+        gene_name: "ankF"
+        pmid: null
+        verified: true
+      - accession: P21964
+        species: "Homo sapiens"
+        gene_name: "COMT"
+        pmid: null
+        verified: true
+    domains_any: [PF13578, PF01596]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:mycosporine:ddg_o_methylation"
+    lineage_note: "Second step: O-methylation of demethyl-4-deoxygadusol to 4-deoxygadusol. Rhea has no reaction and no EC is assigned; 4-deoxygadusol has no ChEBI entry. Fungal evidence: OMT of Phaffia rhodozyma UCD 67-385 (GenBank WEV88680.1, PMID 36983003), T1a: co-expression with DDGS in Saccharomyces cerevisiae gives 4-deoxygadusol. The fungal enzyme is not shown to be an ortholog of the cyanobacterial one: the Phaffia OMT is 17% identical to Npun_R5599 (mysB) of Nostoc punctiforme and 19% to Ava_3857, and 29 to 30% identical to catechol O-methyltransferases of fission yeast and human, which are decoys (MEASURED 2026-11-21, global alignment). The Phaffia protein has Pfam PF13578 at the gathering cutoff and PF01596 below it (hmmscan, Pfam 38.2); the cyanobacterial proteins have PF01596. So the cyanobacterial link is held at T3, not T2 (no record supports the methylation by Npun_R5599 alone, and the same family is not shown), it is never fungal evidence, and the decoys are closer to the fungal reference than the bacterial reference is. The decoy O42898 (probable catechol O-methyltransferase of fission yeast, no evidence code on its activity) is not excluded as a true member. A step call needs the Phaffia protein as the query and tree placement with the decoys. Gene names: OMT (Phaffia rhodozyma); mysB, NpR5599, Npun_R5599 (Nostoc punctiforme). A gene name is valid only with its organism."
+
+  - id: atp_grasp_ligase
+    name: "ATP-grasp ligase (ATPG of Phaffia rhodozyma; 4-deoxygadusol and glutaminol to mycosporine-glutaminol)"
+    ec: null
+    refs:
+      # GenBank protein of cluster OQ547787; no UniProtKB entry: verified: false (USER DECISION 1 in UNVERIFIED.md).
+      - accession: WEV88681.1
+        species: "Phaffia rhodozyma (strain UCD 67-385)"
+        gene_name: "ATPG"
+        pmid: "36983003"
+        verified: false
+      # ATPG of another strain (VOH, mRNA OP021064): 490 of 500 residues equal to WEV88681.1. The entry cites no paper
+      # and the strain is not the assayed one: verified: false, link T3. pmid is the paper of the UCD 67-385 gene.
+      - accession: A0A9Y1GGR7
+        species: "Phaffia rhodozyma"
+        gene_name: "ATPG"
+        pmid: "36983003"
+        verified: false
+      # Cyanobacterium; never fungal evidence. NpR5598 (mysC) of PMID 21890703: it ligates glycine, not glutaminol.
+      # pmid is that paper; the entry does not cite it. Unreviewed entry with no EC and no reaction; its only citation is
+      # PMID 23463784 (a sugar-transporter paper used for the genome sequence, not a paper about this step): verified: false.
+      - accession: B2J6X7
+        species: "Nostoc punctiforme (strain ATCC 29133 / PCC 73102)"
+        gene_name: "Npun_R5598"
+        pmid: "21890703"
+        verified: false
+    decoys:
+      - accession: Q4WD45
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "fsqD"
+        pmid: null
+        verified: true
+      - accession: C4JF81
+        species: "Uncinocarpus reesii (strain UAMH 1704)"
+        gene_name: "uncJ"
+        pmid: null
+        verified: true
+      - accession: A0A5N6TQK6
+        species: "Aspergillus avenaceus"
+        gene_name: "aveB"
+        pmid: null
+        verified: true
+      - accession: P07862
+        species: "Escherichia coli (strain K12)"
+        gene_name: "ddlB"
+        pmid: null
+        verified: true
+      - accession: P04425
+        species: "Escherichia coli (strain K12)"
+        gene_name: "gshB"
+        pmid: null
+        verified: true
+      - accession: B2J6X6
+        species: "Nostoc punctiforme (strain ATCC 29133 / PCC 73102)"
+        gene_name: "Npun_F5597"
+        pmid: "21890703"
+        verified: false
+    domains_any: []
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:mycosporine:mycosporine_glutaminol_formation"
+      - "CUR:mycosporine:mycosporine_glycine_formation"
+    lineage_note: "Third step: ligation of an amine to 4-deoxygadusol. In the fungus the amine is glutaminol and the product is mycosporine-glutaminol: ATPG of Phaffia rhodozyma UCD 67-385 (GenBank WEV88681.1, PMID 36983003), T1a; the atpg deletion accumulates 4-deoxygadusol. In cyanobacteria the homologous ATP-grasp enzyme MysC (Npun_R5598 of Nostoc punctiforme, 28% identical to the Phaffia protein, MEASURED) ligates glycine and makes mycosporine-glycine; that link is T2 for the enzyme family, on another reaction, and is never fungal evidence. The cyanobacterial route goes on to a second amino acid with MysD (a D-Ala-D-Ala ligase-like protein, NpF5597) or with an NRPS-like enzyme (Ava_3855); that is not a step here: no paper that was read shows a second-amine step or an iminomycosporine in a fungus. MysD is a decoy of this step; the NRPS-like enzyme has another fold and is neither reference nor decoy. The Phaffia protein has no Pfam family at the gathering cutoff (hmmscan, Pfam 38.2; best hits PF02786 and PF02655 with E-values 0.05 and 0.13), so domains_any is empty; the UniProt entry of the ATPG of strain VOH (A0A9Y1GGR7, 98% identical) carries the PROSITE ATP-grasp profile PS50975. The decoys are ATP-grasp proteins with PS50975 and another reaction (15 to 17% identical, MEASURED). A step call needs the Phaffia protein as the query and tree placement. Gene names: ATPG (Phaffia rhodozyma); mysC, NpR5598, Npun_R5598 (Nostoc punctiforme). A gene name is valid only with its organism."
+
+  - id: mg_glucosyltransferase
+    name: "glucosylation of mycosporine-glutaminol (gene not identified)"
+    ec: null
+    route: mycosporine_glutaminol_glucoside
+    refs: []
+    domains_any: []
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:mycosporine:mg_glucosylation"
+    lineage_note: "T4: the gene is not identified. Mycosporine-glutaminol-glucoside is the main mycosporine of the yeasts in the lineage table. The enzyme activity is shown in one fungus and no sequence is known: a soluble UDP-glucose:mycosporin-2 glucosyltransferase from spores of Ascochyta fabae, with the amide form as the best acceptor, a pH optimum of about 8.5 and a need for divalent cations (PMID 24258137, abstract read). UNVERIFIED: whether 'mycosporin-2, amide form' is mycosporine-glutaminol, the aglycone of mycosporine-glutaminol-glucoside. UDP-glucose as the donor is a lead for the enzyme family (a UDP-glycosyltransferase), not a reference. The full text of PMID 36983003 states that the glucosylation is done by a gene that is not part of the cluster and whose function is absent from Saccharomyces cerevisiae; strain CBS 6938 with the integrated cluster makes the glucoside. No reference protein, no decoy, no domain. The cyanobacterial glycosyltransferase MysG1 (PMID 39247679) acts on a palythine and is not evidence for this step."
+
+  - id: glutamicol_formation
+    name: "formation of mycosporine-glutamicol (enzyme and precursor not identified)"
+    ec: null
+    route: mycosporine_glutamicol
+    refs: []
+    domains_any: []
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:mycosporine:mycosporine_glutamicol_formation"
+    lineage_note: "T4: the enzyme is not identified. Mycosporine-glutamicol and its glucoside are reported in rock-inhabiting microcolonial fungi (PMID 12717761), in Cystobasidium keelungensis (PMID 30182254) and in lichen thalli (PMID 30893758, 35888756, 21550091). No paper that was read gives a gene, an enzyme or the precursor of the glutamicol side chain. No reference protein, no decoy, no domain."

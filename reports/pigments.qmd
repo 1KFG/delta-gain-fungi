@@ -1,0 +1,21 @@
+---
+title: "Fungal pigments: carotenoid, melanin and mycosporine pathways"
+subtitle: "What the curated knowledge bases hold, how strong the evidence is, and why no census has been run yet"
+date: 2026-11-21
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+::: {.callout-important}
+## Update of 2026-11-22: what has changed since this chapter was written
+
+The body below is unchanged. It describes the state of 2026-11-21. Four things have changed:
+
+- **Two owner decisions were made at the review gate.** The strict reading of the evidence rule is accepted (the tables already used it, so no tier changed). A written rule for references whose UniProt entry has no gene name is accepted. All other decisions in this chapter (compound identifiers, the TyrP tier, the mycosporine items, the carotenoid items after DC1) are still open, and the current tables stand.
+- **A carotenoid search has been run.** 14 step HMMs were searched against 23,376 of the 24,363 BFD genomes (244,451,335 proteins), which returned 238,898 candidate rows. This is a search, not a census: a row is a protein scored against a step HMM, not a called gene. Tree placement was run for one step, `phytoene_synthase`, as a pilot, and it did not separate the candidates into subgroups. The results are on the page [Carotenoid biosynthesis genes in 23,376 BFD fungal genomes](pathway_carotenoid/index.html).
+- **Where this chapter says "no census has been run" and "no gene counts", that is still true.** No step call, copy matrix or phylum summary exists for any pathway.
+- **Melanin (DHN and L-DOPA) and mycosporine pathways: nothing has been run on BFD.** Their curated tables are as described below.
+:::
+
+{{< include ../analysis/pathway_census/PIGMENTS.md >}}

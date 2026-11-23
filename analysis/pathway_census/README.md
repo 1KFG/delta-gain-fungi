@@ -49,10 +49,16 @@ MEASURED 2026-11-20 on the real tables:
 
 ## Carotenoid definition (Task 3, DRAFT for user review)
 
-- `pathways/carotenoid.yaml`: 8 steps, pathway `verified: false`. User review of the step list is required before any census run (spec 5.8).
-- `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-20), one file per step. Fused PSY/cyclase proteins appear in both step files.
-- `refs/carotenoid/provenance.tsv`: one row per (step, ref) with source and verified flag.
-- `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of open decisions.
+- Schema v2 (`pathway_census.defs`): `domains` is renamed `domains_any` (any-of; the loader rejects `domains` with "use domains_any"). New optional step keys: `route`, `reactions`, `decoys` (same fields as a ref), `lineage_note`. New optional ref keys: `gene_name`, `region` (`[start, end]`, 1-based inclusive; checked by `validate` against `refs/<id>/<step>.faa`; skipped only when the refs directory does not exist; with a refs directory, a region without an accession, a missing FASTA or an accession absent from it is an error; `load_pathway` assumes the YAML is in `<root>/pathways/` and takes `refs_dir` otherwise). New top-level `routes` list (`id`, `name`, `step_ids`, `note`). `validate` reports unknown route steps, a step whose `route` does not list it in `step_ids` (`Route.step_ids` is the membership; a step may be in several routes and may have no `route`), duplicate decoy accessions, undeclared step routes, duplicate reaction ids in a step, and a decoy accession that is also a ref of the same step.
+- `pathways/carotenoid.yaml` (step set v2, 2026-11-21): 14 steps in 7 routes (`core`, `neurosporaxanthin`, `retinal`, `astaxanthin`, `trisporoid`, `trisporoid_tsp3`, `trisporoid_late`); each route is a step order that `kb.path_possible` can follow, except `trisporoid_late` (its compounds are not in ChEBI), pathway `verified: false`. User review of the step list is required before any census run (spec 5.8).
+- `refs/carotenoid/<step>.faa`: reference proteins from UniProt (retrieved 2026-11-21), one file per step. The five fused phytoene synthase / lycopene cyclase proteins are cut per domain at the UniProt "Region" features: `phytoene_synthase.faa` holds the synthase regions and `lycopene_cyclase.faa` the cyclase regions. Full sequences: `refs/carotenoid/full_length/fused.faa`.
+- `region` in the YAML is in coordinates of the FASTA record (`defs.validate` checks it against `<step>.faa`). For the cut records it covers the whole record; the coordinates on the full protein are in the `region` column of `provenance.tsv`.
+- `refs/carotenoid/provenance.tsv`: one row per (step, ref) with gene name, region on the full protein, source and verified flag.
+- `refs/carotenoid/decoys/<step>.faa` and `decoys/provenance.tsv`: proteins of the same family with another function, with the reason for each. They are outgroups for tree placement, not references.
+- `refs/carotenoid/outgroups/<step>.faa` and `outgroups/provenance.tsv`: true homologs that do the reaction of the step, kept only as outgroups for tree placement (column `role` = `tree_outgroup`). They are not decoys. The absence check and the decoy-calibrated `min_score` do not read this directory, and the YAML has no key for it. Today it holds one entry: `lycopene_cyclase` Q9HNE5.
+- `kb/carotenoid/*.tsv`: compounds, reactions, participants, steps and the (protein, reaction) links with evidence tier, PMID and one quoted sentence (see `kb/README.md`).
+- `curation_scripts/carotenoid/`: one-off build helpers that fetched the records and wrote these files. Not run by the tests (see its README).
+- `refs/carotenoid/UNVERIFIED.md`: output of `bin/list_unverified_refs.py pathways/carotenoid.yaml` plus a hand-written list of gaps, held tiers, excluded (T4) steps and open decisions.
 
 ## Candidate retrieval (Task 4)
 
@@ -137,7 +143,7 @@ What is NOT implemented, and what a later run needs:
 - The haplotype flag needs a caller-supplied `pair_identity` table (`protein_a, protein_b, pident, qcov`, fractions) from an all-vs-all search inside each genome, covering neighbour genes. It is not produced here. It judges gene neighbourhood duplication only. It does not align scaffolds.
 - `motif_ok` is `<NA>` unless `motif_hits` is supplied. The carotenoid definition has no catalytic motifs yet.
 - `gene_info` must be joined with protein `length` from `gene_proteins.parquet`. Without it `truncated` is `<NA>`.
-- `domain_ok` needs `expected_domains` (step_id -> hmm names). It matches `hmm_name` in the `domains` frame, so the domain search must be run with the matching HMM library (for example Pfam ids from `pathways/carotenoid.yaml`).
+- `domain_ok` needs `expected_domains` (step_id -> hmm names, from `domains_any` in the YAML). The check is any-of: True if at least one listed domain is present, False if none, NA if the list is empty or the step has no entry. Names are normalised before the match (uppercase, Pfam version suffix after a dot dropped, so `PF00494.22` equals `PF00494`); a non-list entry raises ValueError. It matches `hmm_name` in the `domains` frame, so the domain search must be run with the matching HMM library (for example Pfam ids from `pathways/carotenoid.yaml`).
 
 Task 7 must filter with `quality.clean_mask(flags)` and never `fillna(False)`: `<NA>` means unknown, not clean. Task 7 must also report `quality.unknown_counts(flags)` in its output. Contamination is `<NA>` when fewer than `min_neighbours_with_hits` neighbours have a best hit.
 
@@ -214,3 +220,84 @@ The rules are written in the docstring of `pathway_census/bins.py`, and they wer
 - CLI `bin/triage.py --pathway P.yaml --copies copies.tsv[.gz|.zst] --out triage.tsv`. Refuses `verified: false` without `--provisional` (output then gets `.PROVISIONAL`). Booleans are strict (`True`/`False`/empty). Output has `# params:` as its first line (then a PROVISIONAL line if tagged): read it with `pd.read_csv(..., sep="\t", comment="#")`. A `.zst` out name is compressed.
 - Input is an already-joined frame (columns in the `bins.py` docstring). `signalp` is positives only: the caller passes `signal_peptide=False` for proteins absent from the table (ASSUMPTION, unverified). `soluble_steps` is a parameter because the pathway YAML has no soluble flag.
 - DEFERRED by controller ruling: the real-data run (brief step 6). No real bin counts exist.
+
+## Batched BFD search (census steps 2 to 4)
+
+Scripts: `bin/score_refs_decoys.py`, `bin/make_min_scores.py`, `bin/make_chunks.py`, `bin/search_chunk.py`.
+SLURM: `slurm/score_refs_decoys.sbatch`, `slurm/search_chunk.sbatch`.
+Tests: `tests/test_make_min_scores.py`, `tests/test_make_chunks.py`, `tests/test_search_chunk.py`.
+The census plan is `docs/superpowers/plans/2026-11-22-census-step-list.md`.
+All scripts run under `/usr/bin/python3.12`. A SLURM job reads its paths from environment variables. No script uses `BASH_SOURCE`.
+
+### Run order for one pathway
+
+1. `bin/build_step_hmms.py` builds the step HMMs (`--provisional` while `verified: false`).
+2. `bin/score_refs_decoys.py` (or `sbatch slurm/score_refs_decoys.sbatch`) scores every reference and decoy against each step HMM, with a leave-one-out score per reference. Output in `results/step2/<pathway>/`: `step_scores*.tsv`, `leave_one_out*.tsv`, `targets_at_or_above_min*.tsv`.
+3. `bin/make_min_scores.py` turns `step_scores` into `min_scores*.tsv`.
+4. `python -m pathway_census.genomes` writes `results/genomes.tsv.zst`.
+5. `bin/make_chunks.py` writes the chunk manifest.
+6. One `sbatch slurm/search_chunk.sbatch` per chunk runs `bin/search_chunk.py`.
+
+### `make_min_scores.py`: the `min_score` rule (owner, 2026-11-22)
+
+- A step with two or more references uses its lowest leave-one-out score.
+- A step with one reference uses its highest decoy score as a floor.
+- A step without a value for its basis stops the script with an error. There is no default.
+- `--scale STEP=FACTOR` (repeatable, 0 < FACTOR <= 1) lowers one step for an exploratory run. The column `rule_min_score` keeps the unscaled value. A search keeps every hit at or above `min_score`, so a lowered value gives a superset. Filter on `score` to get the rule result back.
+- Output columns: `step, min_score, basis, n_refs, rule_min_score`.
+
+### `make_chunks.py`: the chunk manifest
+
+- Input: `results/genomes.tsv.zst` and `seqdb/genomes.tsv` (locustag to proteins path).
+- A genome is listed only if `has_proteins` is true (case-insensitive) and the seqdb has a path. Any other value is excluded. Nothing is guessed.
+- Excluded genomes go to `--excluded` with a reason. They are never absences.
+- The order is shuffled with `--seed` (default 1), so every chunk has a mixed set of genomes. The same seed gives the same chunks, whatever the input order.
+- Output: `chunk_id, locustag, proteins_path` (zstd). A size of 4000 gives 6 chunks for the 23,376 genomes listed on 2026-11-22.
+
+### `search_chunk.py`: one chunk, all step HMMs
+
+- It checks first, and fails before any staging work, for: `SCRATCH` unset, a step in `min_scores` without an HMM, and an unverified pathway without `--provisional`.
+- It joins the protein files of the chunk into one FASTA in `$SCRATCH/chunkNNNNN/`, then runs one `hmmsearch` per step.
+- It counts proteins per genome and counts ids that do not start with `<locustag>_` (`n_bad_id_prefix`). BFD ids carry the locustag, so ids are unique across genomes. A non-zero count needs a look before the candidate table is used.
+- A missing, empty or truncated protein file gives `status` `missing` for that genome. The chunk goes on. A `missing` genome is never an absence.
+- Outputs in `--out-dir`, names carry the chunk id:
+  - `candidates.chunkNNNNN[.PROVISIONAL].tsv.zst`: one row per (protein, step) at or above `min_score`, columns of `hits.COLUMNS` plus `step_id`. The first line is `# PROVISIONAL` for a provisional run.
+  - `timing.chunkNNNNN.tsv`: seconds per stage, genome, protein and candidate counts.
+  - `searched.chunkNNNNN.tsv`: the searched-genome manifest. It is written last. A chunk without this file is not complete and must be re-run.
+- Re-run rule: a chunk is complete if and only if its `searched.chunkNNNNN.tsv` exists. To re-run a chunk, delete its three output files and submit it again. Chunks are independent.
+- Resource numbers are MEASURED on one chunk of 200 genomes (16 CPUs, 1 min 31 s, 1.48 GB). They are UNVERIFIED for a 4,000-genome chunk until the first full chunk reports.
+
+### Is Nextflow needed yet?
+
+Not yet (PROPOSED, no data against it). The run is 6 independent jobs per pathway. A chunk is complete when its manifest file exists, so a loop over missing manifests is a safe re-run. The later steps (trees, placement, matrices) have dependencies that Nextflow would handle well. Revisit when the pipeline has more than about 20 job types, or when it runs for several pathways at once and a failed job needs automatic retry. The scripts keep paths in arguments and write complete-marker files, so a later Nextflow wrapper does not need changes to them.
+
+## Step 5 pilot (phytoene_synthase; step-generic)
+
+Scripts: `bin/step5_place.py` (subcommands `extract`, `select-reps`, `clades`, `placements`, `summarize`; the step id is an argument). SLURM: `slurm/step5_prepare.sbatch`, `slurm/step5_place.sbatch`. Tests: `tests/test_step5_place.py`. The tools hold no step name. `lycopene_cyclase` runs with `PC_STEP=lycopene_cyclase` and `PC_OUTGROUP_FA=<outgroup FASTA>` (an outgroup file exists only for that step). Reused without edits (imported from `analysis/enzymes_UPO`): `upo_place.py` (`assign`, `match-cols`, `edge_bipartitions`, `to_newick`) and `refset/bin/tree_outline.py` (`parse_newick`, `reroot`).
+
+### Run order
+1. `PC_STEP=<step> sbatch slurm/step5_prepare.sbatch` (run from the worktree root). It cuts domains, clusters (mmseqs2 `easy-cluster`, `--min-seq-id 0.5 -c 0.8 --cov-mode 0`), draws representatives, aligns (mafft `--auto`), trims (clipkit `smart-gap`), builds the tree (raxml-ng, `LG+G4`, 5 parsimony + 5 random starts, seed 1) and writes `clade_members.tsv`.
+2. Read `clade_report.json`. If `refs_form_clade_free_of_decoys` is false, stop: that is a result (`step5_place.py clades` exits with code 3).
+3. `PC_STEP=<step> PC_MIN_SUPPORT=<x> sbatch slurm/step5_place.sbatch`. It builds the reference HMM (`hmmbuild --symfrac 0`), aligns all domains (`hmmalign`, insert columns dropped), places with epa-ng (pixi, pinned 0.3.8), applies the `upo_place assign` rule, writes `placements.tsv`, runs `bin/assign_steps.py --provisional` and writes `SUMMARY.tsv`.
+Environment variables: `PC_STEP` (required), `PC_PATHWAY` (carotenoid), `PC_ROOT`, `PC_SEQDB`, `PC_MAX_REPS`, `PC_OUTGROUP_FA`, `PC_MIN_LWR`, `PC_MAX_PENDANT`, `PC_MIN_SUPPORT` (required for part 2, no default). Output folder: `results/step5/<pathway>/<step>/` (git-ignored). `RUN.md` in that folder lists the exact commands and tool versions.
+
+### Inputs
+- Candidates: `results/search/carotenoid_full/candidates.chunk0000{0..5}.PROVISIONAL.tsv.zst`, rows with `step_id == <step>`.
+- References, decoys, outgroup: `refs/carotenoid/<step>.faa`, `refs/carotenoid/decoys/<step>.faa`, and (lycopene_cyclase only) `refs/carotenoid/outgroups/<step>.faa`.
+- Proteins: `seqdb/proteins/<sha1(LOCUSTAG)[:2]>/<LOCUSTAG>.proteins.fa.gz` (bgzip with `.fai`). MEASURED: the layout holds for the 10,047 genomes needed; 0 of 10,863 proteins failed to extract.
+- Phylum per genome: `results/genomes.tsv.zst`.
+
+### Rules and parameters
+- Domain cut: best row per protein (highest score), `ali_from..ali_to` padded by 20 residues each side, clamped to the protein ends. The pad of 20 is PROPOSED. Coordinates are in `domain_coords.tsv`.
+- Representatives: one per mmseqs cluster. Cluster threshold 0.5 identity and 0.8 coverage are the values from the brief (PROPOSED). Cap 300 (PROPOSED): if there are more clusters, draw 300 with `random.Random(1)`, proportional by phylum, at least 1 per phylum (largest-remainder allocation, never more than the stratum size). The cap did not apply in the phytoene_synthase run (191 clusters).
+- Rooting: the outgroup file if given, else the decoys (the smallest bipartition side that holds them all). epa-ng takes an unrooted tree; the clade rule uses bipartitions and does not depend on the root.
+- Clades (`clade_members.tsv`): `target` = the smallest bipartition side that holds all references and no decoy or outgroup, with the representatives inside it. `decoy` = every leaf that is not in `target` and not an outgroup (decoys plus the representatives outside `target`). `outgroup` = the outgroup leaves. A placement counts for a clade only when its edge lies inside it (the `upo_place assign` rule). Representatives are members because a query placed next to a representative must count for that clade.
+- `--min-lwr 0.5` (PROPOSED, taken from upo_place, not validated for this step), `--max-pendant 1.0` (flag only; PROPOSED, from upo_place). `PC_MIN_SUPPORT=0.5` for `assign_steps` (PROPOSED; with `--min-lwr 0.5` it removes nothing more).
+- `placements.tsv` writes `clade = target` only when the call is `target`. A `decoy`, `outgroup` or `unassigned` call gives an empty clade, because `assign_steps` treats any non-empty clade as in-step. `placements_detail.tsv` keeps the real call, the support, the stem LWR, the pendant length and `long_pendant`.
+- `assign_steps` cannot be limited to one step by an option. It was run on a candidates table that holds only this step (`candidates_step.tsv`) and the placements of this step.
+
+### Re-run rule
+Part 1 is complete when `clade_report.json` exists. Part 2 is complete when `SUMMARY.tsv` exists. To re-run a part, delete its outputs (or set `PC_OUT` to a new folder) and submit again. Part 2 needs part 1 from the same folder. Changing `PC_MAX_REPS` or the seed changes the tree: re-run both parts. Both jobs ran on the short queue (MEASURED for phytoene_synthase: part 1 31 min 43 s, 16 CPUs, of which raxml-ng used 30 min with 4 threads; part 2 5 min 0 s).
+
+### Reading the phytoene_synthase result (MEASURED, 2026-11-22)
+See `results/step5/carotenoid/phytoene_synthase/SUMMARY.tsv`. The clade `target` holds 186 of the 200 leaves. It is the smallest clade with all 5 references, and it contains 181 of 191 representatives from 5 phyla. So the placement separates the candidates from the 4 squalene synthase decoys only. It does not separate real phytoene synthase from other family members inside `target`. No candidate domain has 50% identity or more to any squalene synthase decoy, and the step 2 maximum decoy score was 49.3, below the 98.8 cutoff. So squalene synthase is not among the 10,863 candidates (MEASURED); the 155 candidates called `decoy` sit on a branch of 10 representatives whose best hit is a phytoene synthase reference, not an ERG9 decoy. What the 10,863 candidates are is UNVERIFIED.

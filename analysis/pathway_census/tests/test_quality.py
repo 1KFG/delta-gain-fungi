@@ -200,3 +200,43 @@ def test_hap_na_when_gene_missing_from_gene_info():
     f = _flags(a, d, gi, pair_identity=p)
     assert bool(f.loc[(f"{LT}_000001-T1", "psy"), "hap_dup_suspect"]) is False
     assert pd.isna(f.loc[(f"{LT}_000009-T1", "psy"), "hap_dup_suspect"])
+
+
+def test_domain_ok_is_any_of():
+    gi = _gi([(1, "s1", 1000, 400), (2, "s1", 5000, 400), (3, "s1", 9000, 400)])
+    a = _assigned([(1, "psy"), (2, "psy"), (3, "psy")])
+    d = _dom([(1, "PF00494", 1e-30),   # one of two expected
+              (2, "PF99999", 1e-30),   # neither
+              (3, "PF04240", 1e-30)])  # the other one
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(),
+                        expected_domains={"psy": ["PF00494", "PF04240"]}).set_index("protein_id")
+    assert bool(out.loc[f"{LT}_000001-T1", "domain_ok"]) is True
+    assert bool(out.loc[f"{LT}_000002-T1", "domain_ok"]) is False
+    assert bool(out.loc[f"{LT}_000003-T1", "domain_ok"]) is True
+
+
+def test_domain_ok_na_when_expected_list_empty():
+    gi = _gi([(1, "s1", 1000, 400)])
+    a = _assigned([(1, "psy")])
+    d = _dom([(1, "PF00494", 1e-30)])
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(), expected_domains={"psy": []})
+    assert out.domain_ok.isna().all()
+
+
+def test_domain_match_normalises_case_and_pfam_version():
+    gi = _gi([(1, "s1", 1000, 400), (2, "s1", 5000, 400)])
+    a = _assigned([(1, "psy"), (2, "psy")])
+    d = _dom([(1, "PF00494.22", 1e-30), (2, "pf00494", 1e-30)])
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(),
+                        expected_domains={"psy": ["PF00494"]})
+    assert out.domain_ok.tolist() == [True, True]
+    out = quality_flags(a, d, gi, REFS_LEN, _genomes(),
+                        expected_domains={"psy": ["pf00494.3"]})
+    assert out.domain_ok.tolist() == [True, True]
+
+
+def test_expected_domains_string_entry_raises():
+    gi = _gi([(1, "s1", 1000, 400)])
+    with pytest.raises(ValueError, match="must be a list"):
+        quality_flags(_assigned([(1, "psy")]), _dom([(1, "PF00494", 1e-30)]), gi, REFS_LEN,
+                      _genomes(), expected_domains={"psy": "PF00494"})

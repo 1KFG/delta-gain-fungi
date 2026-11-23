@@ -1,0 +1,6 @@
+step_id	route	ko	hmm_id	family	optional
+ddgs		K21342	PF01761;PF24621	sugar phosphate cyclase, 3-dehydroquinate synthase fold	true
+omt			PF13578;PF01596	class I S-adenosylmethionine-dependent O-methyltransferase	true
+atp_grasp_ligase				ATP-grasp ligase	true
+mg_glucosyltransferase	mycosporine_glutaminol_glucoside			unknown (no fungal enzyme identified)	true
+glutamicol_formation	mycosporine_glutamicol			unknown (no fungal enzyme identified)	true

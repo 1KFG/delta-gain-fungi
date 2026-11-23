@@ -6,6 +6,6 @@ steps:
     refs:
       - species: Neurospora crassa
         verified: false
-    domains: []
+    domains_any: []
     copy_expect: single
     role: catalytic

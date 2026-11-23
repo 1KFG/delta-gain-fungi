@@ -98,10 +98,14 @@ def search_step(hmm: Path, proteins: Path, out_domtbl: Path, cpus: int) -> None:
             "--domtblout", str(out_domtbl), "-E", "10", str(hmm)]
     if proteins.suffix == ".gz":
         line = f"zcat {shlex.quote(str(proteins))} | " + shlex.join(base + ["-"])
+        # A login shell (-l) can reset PATH and lose a tool that is already on PATH (exit 127). Use it only when
+        # the modules must be loaded; otherwise run a plain shell that inherits PATH.
+        shell = "-c"
         if shutil.which("hmmsearch") is None:
             mods = os.environ.get("PATHWAY_CENSUS_MODULES", DEFAULT_MODULES)
             line = f"module load {mods} >/dev/null 2>&1 && " + line
-        subprocess.run(["bash", "-lc", "set -o pipefail; " + line], check=True, capture_output=True, text=True)
+            shell = "-lc"
+        subprocess.run(["bash", shell, "set -o pipefail; " + line], check=True, capture_output=True, text=True)
     else:
         run_tool(base + [str(proteins)])
 

@@ -10,7 +10,7 @@ D = Path(__file__).parent / "data"
 
 
 def _step(i, fused=()):
-    return Step(id=i, name=i, ec=None, refs=[], domains=[], copy_expect="single",
+    return Step(id=i, name=i, ec=None, refs=[], domains_any=[], copy_expect="single",
                 role="catalytic", fused_with=list(fused))
 
 

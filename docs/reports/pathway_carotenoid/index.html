@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stajich Lab">
+<meta name="dcterms.date" content="2026-11-22">
+
+<title>Carotenoid biosynthesis genes in 23,376 BFD fungal genomes – DeltaGain Reports</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c6aa55ccafe579b599e1c08b0f990df4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DeltaGain Reports</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../delta_gain/index.html"> 
+<span class="menu-text">Delta-gain funnel</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../y1000_deposition/index.html"> 
+<span class="menu-text">Y1000+ deposition</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../upo_clades/index.html"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../mucor_secretome.html"> 
+<span class="menu-text">Mucor effectors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pigments.html"> 
+<span class="menu-text">Fungal pigments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_corpus.html"> 
+<span class="menu-text">Pathways and corpus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pathway_carotenoid/index.html" aria-current="page"> 
+<span class="menu-text">Carotenoid genes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-so-far" id="toc-findings-so-far" class="nav-link active" data-scroll-target="#findings-so-far">1. Findings so far</a></li>
+  <li><a href="#the-pathway-its-references-and-the-hits-per-step" id="toc-the-pathway-its-references-and-the-hits-per-step" class="nav-link" data-scroll-target="#the-pathway-its-references-and-the-hits-per-step">2. The pathway, its references and the hits per step</a></li>
+  <li><a href="#step-2-do-references-separate-from-decoys-on-the-step-hmms" id="toc-step-2-do-references-separate-from-decoys-on-the-step-hmms" class="nav-link" data-scroll-target="#step-2-do-references-separate-from-decoys-on-the-step-hmms">3. Step 2: do references separate from decoys on the step HMMs?</a></li>
+  <li><a href="#step-4-the-genome-wide-search" id="toc-step-4-the-genome-wide-search" class="nav-link" data-scroll-target="#step-4-the-genome-wide-search">4. Step 4: the genome-wide search</a></li>
+  <li><a href="#what-a-high-cutoff-misses" id="toc-what-a-high-cutoff-misses" class="nav-link" data-scroll-target="#what-a-high-cutoff-misses">5. What a high cutoff misses</a></li>
+  <li><a href="#step-5-pilot-tree-placement-for-phytoene_synthase" id="toc-step-5-pilot-tree-placement-for-phytoene_synthase" class="nav-link" data-scroll-target="#step-5-pilot-tree-placement-for-phytoene_synthase">6. Step 5 pilot: tree placement for <code>phytoene_synthase</code></a></li>
+  <li><a href="#negative-and-unresolved-results" id="toc-negative-and-unresolved-results" class="nav-link" data-scroll-target="#negative-and-unresolved-results">7. Negative and unresolved results</a></li>
+  <li><a href="#what-would-change-this-and-what-was-not-done" id="toc-what-would-change-this-and-what-was-not-done" class="nav-link" data-scroll-target="#what-would-change-this-and-what-was-not-done">8. What would change this, and what was not done</a></li>
+  <li><a href="#methods-tools-and-files" id="toc-methods-tools-and-files" class="nav-link" data-scroll-target="#methods-tools-and-files">9. Methods, tools and files</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Carotenoid biosynthesis genes in 23,376 BFD fungal genomes</h1>
+<p class="subtitle lead">Search results for the 14-step pathway so far: HMMs, cutoffs and the genome-wide search (tree placement pending)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stajich Lab </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 22, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 22, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What this is, and where it stops being reliable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>This is a <strong>working analysis of search hits, not a gene census</strong>. Steps 1 to 4 of the census plan are done (HMMs, score check, genome-wide search). Step 5 (tree placement, which decides what a hit is) was run for one step only, <code>phytoene_synthase</code>, as a pilot, and it did not separate the candidates into subgroups (section 6). <strong>No hit in this report is a called pathway gene.</strong></li>
+<li>Every output is stamped <code>PROVISIONAL</code>. The pathway definition has <code>verified: false</code> (<code>refs/carotenoid/UNVERIFIED.md</code>).</li>
+<li>Nothing was tested at the bench. No BFD gene is shown to make a carotenoid.</li>
+<li>A “candidate row” is one protein scored against one step HMM. One protein can give rows for more than one step. The number of distinct proteins was not counted.</li>
+<li>Seven of the 14 step HMMs rest on one reference sequence. Their cutoffs are floors set by decoys, not by held-out references.</li>
+</ul>
+</div>
+</div>
+<section id="findings-so-far" class="level2">
+<h2 class="anchored" data-anchor-id="findings-so-far">1. Findings so far</h2>
+<ul>
+<li><strong>The search covered every listed genome.</strong> 23,376 of 23,376 genomes were searched (244,451,335 proteins), with 0 genomes lost and 0 id-prefix errors. 987 of the 24,363 genomes in the table have no protein file and are excluded, not counted as absences (<code>results/chunk_excluded.tsv</code>).</li>
+<li><strong>No decoy and no reference of another step scores at or above a step’s own-reference minimum</strong> on any of the 14 step HMMs (0 rows in <code>targets_at_or_above_min.PROVISIONAL.tsv</code>). The test set is small: 69 decoys in total.</li>
+<li><strong>The search returned 238,898 candidate rows</strong> at the cutoffs used. The counts range from 12 rows (<code>astaxanthin_synthase</code>) to 46,698 rows (<code>crtr</code>). The large counts come from single-reference steps with low floors, so most of those rows are expected to be family members. This is a reading of the counts, not a measurement.</li>
+<li><strong>A higher cutoff for two steps hides a large number of low-scoring proteins.</strong> With a floor of 20 bits, <code>astaxanthin_synthase</code> returns 47,640 proteins and <code>ylo1</code> 20,276 proteins in 1,000 genomes. At the rule cutoff, the same run holds 2 and 458 proteins.</li>
+<li><strong>Step 5 pilot, <code>phytoene_synthase</code>: the tree places 10,708 of 10,863 candidates (98.6%) in the target clade and 155 on a branch next to the decoys, but the target clade is too broad to tell candidates apart.</strong> The 5 references lie inside a 186-leaf clade that holds 181 of the 191 representatives (section 6). The result is “consistent with the HMM”, not “confirmed phytoene synthase”.</li>
+<li><strong>The candidates of <code>phytoene_synthase</code> are not squalene synthase.</strong> All 191 representatives score higher against the 5 synthase references than against a panel of 15 reviewed fungal squalene synthases (smallest margin 37.8 bits, median 128.1 bits).</li>
+<li><strong>The other 13 steps have no placement yet.</strong> The copy-number and phylum summaries (steps 6 to 8) wait for them.</li>
+</ul>
+</section>
+<section id="the-pathway-its-references-and-the-hits-per-step" class="level2">
+<h2 class="anchored" data-anchor-id="the-pathway-its-references-and-the-hits-per-step">2. The pathway, its references and the hits per step</h2>
+<p>The definition has 14 steps in 7 routes (<code>pathways/carotenoid.yaml</code>, <code>routes:</code>). It lists 30 references, of which 28 are verified and 2 are not (<code>refs/carotenoid/UNVERIFIED.md</code>). Under the strict reading of the evidence rule, which the owner chose on 2026-11-22, every complete route ends at evidence tier T3 (<code>docs/superpowers/plans/2026-11-21-stage1-review-packet.md</code>, item DC1).</p>
+<!-- step-table:begin -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th style="text-align: right;">References</th>
+<th style="text-align: right;">Decoys</th>
+<th style="text-align: right;">Cutoff of the rule</th>
+<th style="text-align: right;">Cutoff used</th>
+<th style="text-align: right;">Candidate rows</th>
+<th style="text-align: right;">Genomes with a row</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>acaa</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">26,611</td>
+<td style="text-align: right;">13,736</td>
+</tr>
+<tr class="even">
+<td><code>astaxanthin_synthase</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1332.5</td>
+<td style="text-align: right;">999.4 (lowered)</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td><code>cars</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">28,663</td>
+<td style="text-align: right;">14,020</td>
+</tr>
+<tr class="even">
+<td><code>cart</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">615.8</td>
+<td style="text-align: right;">615.8</td>
+<td style="text-align: right;">5,533</td>
+<td style="text-align: right;">4,818</td>
+</tr>
+<tr class="odd">
+<td><code>carx</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">35.3</td>
+<td style="text-align: right;">35.3</td>
+<td style="text-align: right;">11,528</td>
+<td style="text-align: right;">10,156</td>
+</tr>
+<tr class="even">
+<td><code>crtr</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">68.1</td>
+<td style="text-align: right;">68.1</td>
+<td style="text-align: right;">46,698</td>
+<td style="text-align: right;">23,021</td>
+</tr>
+<tr class="odd">
+<td><code>ggpp_synthase</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">369.3</td>
+<td style="text-align: right;">369.3</td>
+<td style="text-align: right;">22,924</td>
+<td style="text-align: right;">15,919</td>
+</tr>
+<tr class="even">
+<td><code>lycopene_cyclase</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">174.1</td>
+<td style="text-align: right;">174.1</td>
+<td style="text-align: right;">9,530</td>
+<td style="text-align: right;">9,311</td>
+</tr>
+<tr class="odd">
+<td><code>phytoene_desaturase</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">706.6</td>
+<td style="text-align: right;">706.6</td>
+<td style="text-align: right;">9,784</td>
+<td style="text-align: right;">9,495</td>
+</tr>
+<tr class="even">
+<td><code>phytoene_synthase</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">98.8</td>
+<td style="text-align: right;">98.8</td>
+<td style="text-align: right;">10,863</td>
+<td style="text-align: right;">10,047</td>
+</tr>
+<tr class="odd">
+<td><code>tdh</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">333.6</td>
+<td style="text-align: right;">333.6</td>
+<td style="text-align: right;">16,244</td>
+<td style="text-align: right;">14,954</td>
+</tr>
+<tr class="even">
+<td><code>tsp2</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">109.7</td>
+<td style="text-align: right;">109.7</td>
+<td style="text-align: right;">15,976</td>
+<td style="text-align: right;">8,273</td>
+</tr>
+<tr class="odd">
+<td><code>tsp3</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">21.9</td>
+<td style="text-align: right;">21.9</td>
+<td style="text-align: right;">20,942</td>
+<td style="text-align: right;">12,785</td>
+</tr>
+<tr class="even">
+<td><code>ylo1</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">640.7</td>
+<td style="text-align: right;">480.5 (lowered)</td>
+<td style="text-align: right;">13,590</td>
+<td style="text-align: right;">12,848</td>
+</tr>
+</tbody>
+</table>
+<!-- step-table:end -->
+<p><em>Source: <code>results/step2/carotenoid/step_scores.PROVISIONAL.tsv</code>, <code>min_scores.exploratory25.PROVISIONAL.tsv</code> and <code>results/search/carotenoid_full/candidates.chunk*.PROVISIONAL.tsv.zst</code>. Table made by <code>reports/carotenoid/bin/make_step_table.py</code>. “Genomes with a row” counts distinct genomes with at least one row for that step, out of 23,376 searched.</em></p>
+<p><strong>Two cutoffs differ from the rule.</strong> For <code>astaxanthin_synthase</code> (rule 1332.5, used 999.4) and <code>ylo1</code> (rule 640.7, used 480.5) the owner lowered the cutoff by 25%. The two references of each step are nearly identical, so the held-out score only shows that the second reference is a close copy. The rule value is kept in the column <code>rule_min_score</code> of the cutoff file, and a hit of the rule is recovered by filtering on score. The table shows the rule value and the value used, so the two columns are not a contradiction.</p>
+</section>
+<section id="step-2-do-references-separate-from-decoys-on-the-step-hmms" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-do-references-separate-from-decoys-on-the-step-hmms">3. Step 2: do references separate from decoys on the step HMMs?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig1_step2_separation.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1. Score separation per step.</figcaption>
+</figure>
+</div>
+<p><em>For the seven steps with a held-out value, the lowest held-out reference scores at least 1.8 times the highest decoy. The ratio is smallest for <code>ylo1</code> (640.7 against 358.7, 1.8) and <code>phytoene_synthase</code> (98.8 against 49.3, 2.0), and 5.9 or more for the other five. The seven steps with one reference have no held-out value (no orange diamond), so the figure shows only the decoy floor and the optimistic self-score; <code>tdh</code> is closest (776.0 against 333.6, 2.3). <strong>This figure shows that the 69 decoys we chose do not look like references; it does not show that BFD has no other proteins that do.</strong> The own-reference score (blue) is inflated, because the references train the HMM. <a href="figures/out/fig1_step2_separation.pdf">PDF</a></em></p>
+<p>How the cutoff was set (owner rule of 2026-11-22): a step with two or more references uses its lowest held-out score. A step with one reference uses its highest decoy score as a floor. The scripts are <code>bin/score_refs_decoys.py</code> and <code>bin/make_min_scores.py</code>, and the method is in <code>README.md</code>, section “Batched BFD search”.</p>
+</section>
+<section id="step-4-the-genome-wide-search" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-the-genome-wide-search">4. Step 4: the genome-wide search</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig2_candidates_per_step.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2. Candidate rows per step.</figcaption>
+</figure>
+</div>
+<p><em>A candidate row is a protein at or above the cutoff of its step. <strong>Row counts say how many proteins to place in step 5, not how many genes the pathway has.</strong> Four of the five largest counts belong to steps whose cutoff is a decoy floor (<code>crtr</code> 68.1, <code>cars</code> 8.0, <code>acaa</code> 12.3, <code>tsp3</code> 21.9). The fifth is <code>ggpp_synthase</code>, whose cutoff is its lowest held-out score (369.3). Genome counts are distinct genomes with at least one row, out of 23,376. <a href="figures/out/fig2_candidates_per_step.pdf">PDF</a></em></p>
+<p>Run facts (MEASURED): 6 jobs on the short queue (16 CPUs, 32 GB requested), 23 min 46 s to 28 min 0 s each, peak memory 22.5 to 22.7 GB. The 200-genome timing job predicted 26 minutes. Details are in <code>docs/superpowers/notes/2026-11-22-step4-results-and-decisions.md</code>.</p>
+</section>
+<section id="what-a-high-cutoff-misses" class="level2">
+<h2 class="anchored" data-anchor-id="what-a-high-cutoff-misses">5. What a high cutoff misses</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig3_low_cutoff_side_run.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3. Score distribution of the two lowered steps in a floor-20 run.</figcaption>
+</figure>
+</div>
+<p><em>The first 1,000 genomes of the full run were searched again with a floor of 20 bits for the two steps whose cutoff was lowered. The bars are the proteins found; the lines are the two cutoffs. <strong>The rule value and the lowered value cut a long tail of low scores that holds tens of thousands of proteins, so the figure supports “a lower floor floods placement”, not “the proteins below the cutoff are real”.</strong> For <code>ylo1</code> the distribution has a second group at 300 to 480 bits (970 proteins) that lies below both cutoffs; what it is was not checked. <a href="figures/out/fig3_low_cutoff_side_run.pdf">PDF</a></em></p>
+<ul>
+<li><code>astaxanthin_synthase</code>: the full run, with the lowered cutoff, found 12 hits in 12 genomes. 8 meet the rule value (1332.5). 4 more score 1216 to 1300.</li>
+<li><code>ylo1</code>: the full run found 13,590 hits. 11,194 meet the rule value. 2,396 more score 480.5 to 640.6, in 2,219 genomes. In the 1,000-genome side run the band 480 to 640.7 holds 98 proteins and the band 640.7 or higher holds 458.</li>
+<li>Decision (owner, 2026-11-22): keep the lowered cutoffs for step 5 and go no lower. The reason is in the same notes file.</li>
+</ul>
+</section>
+<section id="step-5-pilot-tree-placement-for-phytoene_synthase" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-pilot-tree-placement-for-phytoene_synthase">6. Step 5 pilot: tree placement for <code>phytoene_synthase</code></h2>
+<p>Method (PROPOSED settings marked): the 10,863 candidate proteins were cut to their aligned domain (padded by 20 residues, PROPOSED) and clustered with mmseqs2 at 0.5 identity and 0.8 coverage. The 191 clusters gave 191 representatives, so the cap of 300 never applied. The reference set holds the 5 references, 4 squalene synthase decoys and the 191 representatives (200 sequences; mafft, clipkit, 916 of 1,186 columns kept). The tree is raxml-ng 2.0.4 under LG+G4, rooted on the 4 decoys (PROPOSED; this step has no outgroup file). All 10,863 candidate domains were aligned to it with hmmalign and placed with epa-ng 0.3.8. A candidate counts as <code>target</code> when at least 0.5 of its likelihood weight (PROPOSED) lies in the smallest clade that holds all 5 references.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig4_reference_tree.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4. The reference tree used for placement.</figcaption>
+</figure>
+</div>
+<p><em>Grey circles are candidate representatives, sized by the number of candidate domains in their cluster. Blue circles are the 5 references and the four orange squares at the top are the decoys. <strong>The figure shows that the target clade (blue bar) is not a narrow group around the references: the 5 references sit apart from each other inside one clade of 186 leaves, so “placed in the target clade” cannot separate one kind of candidate from another.</strong> Phyla of the representatives are not drawn. <a href="figures/out/fig4_reference_tree.pdf">PDF</a></em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result (MEASURED, <code>results/step5/carotenoid/phytoene_synthase/SUMMARY.tsv</code>)</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidate domains extracted and placed</td>
+<td>10,863 of 10,863 (0 extraction failures)</td>
+</tr>
+<tr class="even">
+<td>Called <code>target</code> / <code>decoy</code></td>
+<td>10,708 / 155</td>
+</tr>
+<tr class="odd">
+<td>Support of the <code>target</code> calls (likelihood weight in the clade)</td>
+<td>median 1.0, minimum 0.745; 10,705 of 10,708 at 0.9 or more</td>
+</tr>
+<tr class="even">
+<td>Long pendant branch (above 1.0)</td>
+<td>0 of 10,863 (median 0.167, maximum 0.832)</td>
+</tr>
+<tr class="odd">
+<td><code>assign_steps</code> labels</td>
+<td>10,708 assigned, 155 unassigned, 0 fusion candidates</td>
+</tr>
+<tr class="even">
+<td>Assigned proteins</td>
+<td>10,708 in 9,896 genomes; copies per genome 1 (9,328), 2 (354), 3 (191), 4 (19), 5 (1), 6 (3)</td>
+</tr>
+<tr class="odd">
+<td>Representatives in target / decoy side</td>
+<td>181 of 191 / 10 of 191</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Reading trap: “assigned” here means placed in the target clade.</strong> The 5 references are not close relatives, so the smallest clade that holds all of them spans 181 of the 191 representatives. A support of 1.0 therefore says the candidate is not on the decoy side. It does not say it is a phytoene synthase rather than a relative. Because every best-clade support is 0.745 or more, the 0.5 threshold removes nothing.</li>
+<li><strong>Where the 10,708 fall inside the clade</strong> (reported by the pilot run, not saved as a script, so not repeated by me): about 9,082 candidates in the subclade of P37295 and Q8X0Z1 (78 leaves, 76 of them Ascomycota representatives), about 281 in the subclade of Q9P854 and Q9UUQ6, 1,333 elsewhere in the target, 155 outside it, 12 unassigned.</li>
+<li><strong>The 155 candidates on the decoy side</strong> sit on a branch of 10 representatives next to the decoys. What they are was not checked.</li>
+<li><strong>A support of 1.0 does not mean the placement is certain.</strong> Only 5 references and 4 decoys give the tree its anchors. The other 191 leaves are representatives, which are candidates themselves.</li>
+<li><strong>Reviewed fungal bifunctional lycopene cyclase / phytoene synthase entries beyond the 5 references exist.</strong> A UniProt query (EC 2.5.1.32, Fungi, reviewed, run 2026-11-22) returns 19 entries, 14 of them not among our 5 references. Against this panel 140 of the 191 representatives score higher than against the 5 references (median best score 183 against 160 bits). The panel holds full-length proteins and the references are cut domains, so this comparison favours the panel. The evidence behind those 14 entries was not checked. They are the obvious named members to add to the tree (<code>bin/check_paralog_panel.sh</code>, output <code>paralog_panel_lcps/</code>).</li>
+</ul>
+</section>
+<section id="negative-and-unresolved-results" class="level2">
+<h2 class="anchored" data-anchor-id="negative-and-unresolved-results">7. Negative and unresolved results</h2>
+<ul>
+<li><strong>Single-reference steps cannot be checked for sensitivity.</strong> Seven steps (<code>acaa</code>, <code>cars</code>, <code>carx</code>, <code>crtr</code>, <code>tdh</code>, <code>tsp2</code>, <code>tsp3</code>) have one reference. Removing it leaves nothing to score, so there is no held-out value. More references would help; a structure model would not.</li>
+<li><strong>The held-out check is weak for near-identical references.</strong> For <code>astaxanthin_synthase</code> the lowest held-out score is 1332.5 and the lowest own score is 1343.2, because the two references are almost the same sequence. The cutoff therefore says little about distant homologs. The 25% reduction is a test of this, not a fix.</li>
+<li><strong>The lycopene cyclase decoys test the cutoff weakly.</strong> The highest decoy score is 29.3 and the lowest held-out reference score is 174.1. Any cutoff in between is consistent with the decoys, and none was tested on a genome (<code>refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md</code>).</li>
+<li><strong>A same-function homolog from Archaea (Q9HNE5) scores 115.6 on the cyclase HMM.</strong> It is a tree outgroup only, not a decoy, so it does not set the cutoff (<code>refs/carotenoid/outgroups/</code>).</li>
+<li><strong>The first step 5 design does not discriminate for <code>phytoene_synthase</code>.</strong> The clade of the 5 references is too broad and every support is high, so placement removes only the 155 candidates on the decoy side. The expectation that the candidates would include many squalene synthases was wrong: all 191 representatives score higher against the references than against 15 reviewed fungal squalene synthases (<code>bin/check_paralog_panel.sh</code>, <code>paralog_panel/summary.tsv</code>: smallest margin 37.8 bits). The 4 decoys therefore probe the root of the tree, not the candidate set.</li>
+<li><strong>The metabolomics corpus cannot test carotenoids.</strong> REPORTED by the EBC side: 0 of 84 fungal-reference accessions show beta-carotene, zeaxanthin or canthaxanthin (<code>docs/superpowers/notes/2026-11-21-exploration-log.md</code>, section 1). This is a statement about the corpus, not about BFD genomes.</li>
+</ul>
+</section>
+<section id="what-would-change-this-and-what-was-not-done" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-this-and-what-was-not-done">8. What would change this, and what was not done</h2>
+<p><strong>What would change the findings.</strong> Adding named members that are neither squalene synthase nor the 5 references (for example the 14 reviewed fungal entries above, and bacterial or plant phytoene synthases as outgroups) would show whether the target clade splits into groups the tree can name. A decoy or a non-pathway family member that places inside a target clade would show that a step’s HMM cannot separate it. A reference set with more members for a single-reference step would change its floor.</p>
+<p><strong>Not done here:</strong></p>
+<ul>
+<li>Step 5 for the other 13 steps. The tool is step-generic (<code>bin/step5_place.py</code>); <code>lycopene_cyclase</code> is ready to run with its outgroup file and has not been run.</li>
+<li>Quality, contamination and haplotype flags (step 7). There is no fungal versus non-fungal reference set, so counts will be raw first.</li>
+<li>The copy matrix and phylum summary (step 8), the deposited versus BFD comparison (steps 9, 10), the tblastn absence check (step 11) and triage (step 12).</li>
+<li>A species tree overlay. A genus-level tree exists (<code>BFD_dashboard/atlas_data/phylo/results/protein/tree/fungi_odb10/final_tree.nw</code>, 1,643 tips by a text scan of the file). Its root, outgroup and tip overlap with the FastTree trees were not checked.</li>
+<li>The question of whether fungal lycopene cyclases have diversified in some groups (<code>docs/superpowers/notes/2026-11-22-open-questions.md</code>, Q1). It needs step 5 first.</li>
+</ul>
+</section>
+<section id="methods-tools-and-files" class="level2">
+<h2 class="anchored" data-anchor-id="methods-tools-and-files">9. Methods, tools and files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Step HMMs (14, from <code>refs/carotenoid/*.faa</code>)</td>
+<td><code>results/hmms/carotenoid/*.PROVISIONAL.hmm</code>, <code>bin/build_step_hmms.py</code></td>
+</tr>
+<tr class="even">
+<td>Reference and decoy scoring, held-out check</td>
+<td><code>bin/score_refs_decoys.py</code>, <code>slurm/score_refs_decoys.sbatch</code>, job 32375043</td>
+</tr>
+<tr class="odd">
+<td>Cutoffs</td>
+<td><code>bin/make_min_scores.py</code>; used: <code>results/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv</code></td>
+</tr>
+<tr class="even">
+<td>Chunks and search</td>
+<td><code>bin/make_chunks.py</code>, <code>bin/search_chunk.py</code>, <code>slurm/search_chunk.sbatch</code>; jobs 32375296 to 32375301; side run 32375378</td>
+</tr>
+<tr class="odd">
+<td>Step 5 pilot</td>
+<td><code>bin/step5_place.py</code>, <code>slurm/step5_prepare.sbatch</code>, <code>slurm/step5_place.sbatch</code>, <code>tests/test_step5_place.py</code>; jobs 32376309 and 32376554; output <code>results/step5/carotenoid/phytoene_synthase/</code> (<code>RUN.md</code> lists commands and tool versions)</td>
+</tr>
+<tr class="even">
+<td>Paralog panel check</td>
+<td><code>reports/carotenoid/bin/check_paralog_panel.sh</code> (UniProt REST and blastp)</td>
+</tr>
+<tr class="odd">
+<td>Figures</td>
+<td><code>reports/carotenoid/figures/bin/fig_census_search.py</code> (figures 1 to 3) and <code>fig_ref_tree.py</code> (figure 4), tested in <code>tests/test_fig_census_search.py</code> and <code>tests/test_fig_ref_tree.py</code></td>
+</tr>
+<tr class="even">
+<td>Tool versions</td>
+<td>hmmer 3.4, mafft 7.505, raxml-ng 2.0.4, epa-ng 0.3.8, mmseqs2 17-b804f, clipkit 1.3.0, Python 3.12, zstd 1.5.6</td>
+</tr>
+<tr class="odd">
+<td>Code commits</td>
+<td><code>32f2f90</code> (tools), <code>834288e</code> (notes) on branch <code>pathway-census-realdata</code></td>
+</tr>
+<tr class="even">
+<td>Decisions and evidence</td>
+<td><code>docs/superpowers/notes/2026-11-22-owner-decisions.md</code>, <code>2026-11-22-step4-results-and-decisions.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>All <code>results/</code> files are git-ignored. The figures are regenerated from them by the script in the table.</p>
+<p>Regenerate the figures and the table (run from <code>analysis/pathway_census</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">R</span><span class="op">=</span>results</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_census_search.py <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step2-dir</span> <span class="va">$R</span>/step2/carotenoid <span class="at">--search-dir</span> <span class="va">$R</span>/search/carotenoid_full <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-scores</span> <span class="va">$R</span>/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--side-dir</span> <span class="va">$R</span>/search/side_eval_low_cutoff <span class="at">--out-dir</span> reports/carotenoid/figures/out</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/bin/make_step_table.py <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step2-dir</span> <span class="va">$R</span>/step2/carotenoid <span class="at">--search-dir</span> <span class="va">$R</span>/search/carotenoid_full <span class="dt">\</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-scores</span> <span class="va">$R</span>/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--refs-dir</span> refs/carotenoid <span class="at">--report</span> reports/carotenoid/REPORT.md</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_ref_tree.py <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step5-dir</span> <span class="va">$R</span>/step5/carotenoid/phytoene_synthase <span class="at">--out-dir</span> reports/carotenoid/figures/out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

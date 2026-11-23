@@ -57,6 +57,40 @@ This analysis has moved to the MorenoLab repository. This page now carries a sho
 summary and a link to the new location. The full analysis is lab-only until the paper is
 published.
 
+### [Fungal pigments: carotenoid, melanin and mycosporine pathways](pigments.html)
+
+A chapter on the four curated pigment knowledge bases: steps, evidence tiers per pathway,
+review errors that were caught, and the owner decisions that block a census. **No gene
+census has been run**; the chapter reports no gene counts. Under the strict evidence rule no
+carotenoid route and no complete DHN route is above tier T3. The fungal mycosporine
+references come from one species, *Phaffia rhodozyma*.
+
+Source: [`analysis/pathway_census/PIGMENTS.md`](https://github.com/1KFG/delta-gain-fungi/blob/main/analysis/pathway_census/PIGMENTS.md)
+
+### [Pathway knowledge base and the metabolite corpus](pathway_corpus.html)
+
+A record of what was tried when carotenoid, melanin and mycosporine pathways were curated
+as evidence-tiered tables and compared with the GNPS-processed metabolite corpus. The
+comparison was **not run**: the pre-set detectability gate failed for carotenoids,
+melanin, fucose and fungal MAAs (0 of 84 fungal-reference accessions show the main
+carotenoids). The page lists the failed design (mass shifts), the data errors that review
+caught, hypothesis status, and twelve rules for connecting the corpus to other data.
+Curation is unfinished and no step set has had owner review; corpus counts are reported by
+the EBC agent, not re-measured here.
+
+Source: [`analysis/pathway_census/REPORT.md`](https://github.com/1KFG/delta-gain-fungi/blob/main/analysis/pathway_census/REPORT.md)
+
+### [Carotenoid biosynthesis genes in 23,376 BFD fungal genomes](pathway_carotenoid/index.html)
+
+The first census result for the carotenoid pathway: 14 step HMMs, the score check that
+sets each cutoff, a search of 244,451,335 proteins, and what a lower cutoff would add.
+**It reports search hits, not genes.** Tree placement was run for one step only, and the
+5 reference proteins of that step lie inside a clade that holds 98.6 % of the candidates (10,708 of 10,863), so
+the placement cannot yet tell candidates apart. Every output is stamped `PROVISIONAL`. The
+page lists the negative results and what was not done.
+
+Source: [`analysis/pathway_census/reports/carotenoid/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/pathway_census/reports/carotenoid)
+
 ## Not published here
 
 Work that is in the repository but has no page here:
@@ -69,3 +103,9 @@ Work that is in the repository but has no page here:
   being rebuilt, and its most interesting observation (≈2,265 ascomycete proteins placing
   in a basidiomycete clade) is explicitly unresolved pending a test the report specifies
   but does not run.
+
+- **The antiSMASH subset work** —
+  [`analysis/bgc_subset/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/bgc_subset).
+  Scripts and `FINDINGS.md` for running antiSMASH 8.0.4 on BFD genomes and keeping only the
+  tables a compound-to-cluster analysis needs (32 genomes, 13 species so far). It has no
+  page because the run is a pilot, and the database form of a cluster is not decided.

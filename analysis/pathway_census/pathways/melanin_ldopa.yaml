@@ -1,0 +1,325 @@
+# L-DOPA melanin and other melanin routes, step set v2 (stage 1, task S5, 2026-11-21).
+#
+# Status: DRAFT for user review. Pathway-level verified: false.
+# Do not run a census against this file until the user has reviewed the step list.
+#
+# Reference checks: refs/melanin_ldopa/provenance.tsv, refs/melanin_ldopa/decoys/provenance.tsv and
+# refs/melanin_ldopa/UNVERIFIED.md. Evidence tiers, quotes and reactions: kb/melanin_ldopa/*.tsv.
+#
+# A ref has verified: true only when, on 2026-11-21, (1) the UniProt entry was fetched and its
+# organism and gene name matched, (2) the UniProt entry carries the EC and Rhea reaction of the
+# step, and (3) the PMID exists in PubMed and is cited by the entry. It never means a person
+# reviewed it. Q2TL94 is verified: false because UniProt gives the entry no gene name.
+# A decoy has verified: true when the UniProt entry was fetched on 2026-11-21, its organism and
+# gene name matched, it carries the family ids of the step, and it carries neither the EC nor a
+# Rhea reaction of the step. The decoys are reviewed entries, except Q2UNF9 (AoCO4), whose
+# function is in two abstracts. A decoy pmid is given only when the abstract was read.
+#
+# Field notes:
+# - Routes: five routes. They are alternatives; no route joins two of them. Tyrosinase and
+#   laccase are separate steps in separate routes. A laccase is never linked to tyrosine
+#   hydroxylation.
+# - exogenous_substrate: the schema has no field for it. Each route note starts with
+#   "exogenous_substrate: true" or "exogenous_substrate: false". Only laccase_exogenous is true:
+#   Cryptococcus neoformans makes melanin only from exogenous substrates (PMID 17098915). The
+#   lineage_note of step laccase_diphenol carries the same text. Tests check both.
+# - Dopaquinone to dopachrome and onward is non-enzymatic in the tables. The T4 step
+#   dopachrome_onward is in kb/melanin_ldopa/step.tsv only (it has no reference protein).
+# - species: the organism name of the UniProt entry, copied exactly. UniProt names serotype D
+#   Cryptococcus neoformans "Cryptococcus deneoformans", Pholiota nameko "Pholiota microspora"
+#   and Pycnoporus sanguineus "Trametes sanguinea".
+# - gene_name: a gene name of the UniProt entry (an ORF name where the entry has no other
+#   name). It is valid only together with species.
+# - pmid of a ref: a paper cited by the UniProt entry. The papers that show each reaction are
+#   in step_reaction.tsv; some of them are not cited by the entry (UNVERIFIED.md, section A).
+# - domains_any: Pfam / NCBIfam ids from the UniProt cross-references of the references. The
+#   families are broader than the steps. A step call needs HMM plus tree placement with decoys.
+# - reactions: ids of kb/melanin_ldopa/reaction.tsv. The tier of each (protein, reaction) link
+#   is in kb/melanin_ldopa/step_reaction.tsv, not here.
+# - copy_expect, optional and role are PROPOSED values. No census data exists yet. Every step
+#   is optional: the routes are alternatives, and absence of one is not a defect.
+# - KEGG: K00505, K00421, K05909, K00457 and K00451 are cross-references in
+#   kb/melanin_ldopa/step.tsv only (names read from KEGG list on 2026-11-21).
+id: melanin_ldopa
+verified: false
+routes:
+  - id: tyrosinase_dopa
+    name: "tyrosinase route to L-dopaquinone (Neurospora crassa T, Aspergillus oryzae melB, Agaricus bisporus PPO4)"
+    step_ids: [tyrosinase]
+    note: "exogenous_substrate: false. One step. Tyrosinase makes L-dopaquinone from L-tyrosine (RHEA:18117) or from L-DOPA (RHEA:34287). From L-dopaquinone onward (L-dopachrome, 5,6-dihydroxyindole-2-carboxylic acid, the polymer) the table is non-enzymatic; a fungal enzyme there is T4 (step dopachrome_onward, in kb/melanin_ldopa/step.tsv only). The polymer is not a compound of the table."
+  - id: laccase_exogenous
+    name: "laccase route from exogenous diphenols (Cryptococcus neoformans and Cryptococcus deneoformans LAC1, LAC2)"
+    step_ids: [laccase_diphenol]
+    note: "exogenous_substrate: true. One step, and its substrate comes from outside the fungus: Cryptococcus neoformans produces melanin only from exogenous substrates and needs diphenolic precursors (PMID 17098915). The laccase oxidises the diphenol that is supplied: L-DOPA to L-dopaquinone, dopamine to decarboxy dopachrome (PMID 8300520), homogentisic acid to a pigment (PMID 17098915). There is no tyrosine hydroxylation. A capability call for this route needs the substrate in the environment; gene presence alone shows nothing about the pigment."
+  - id: pyomelanin
+    name: "pyomelanin route through homogentisic acid (Aspergillus fumigatus hppD)"
+    step_ids: [hppd]
+    note: "exogenous_substrate: false. One enzyme step: HppD makes homogentisic acid. The pigment forms by oxidation of homogentisic acid with no enzyme link in the table (curated reaction hga_autooxidation). HmgA is not in this route: it removes homogentisic acid (route tyrosine_degradation). Reference organism: Aspergillus fumigatus (PMID 19028908)."
+  - id: tyrosine_degradation
+    name: "removal of homogentisic acid, competing with pyomelanin (Aspergillus fumigatus hppD, hmgA)"
+    step_ids: [hppd, hmga]
+    note: "exogenous_substrate: false. This is not a pigment route. HppD then HmgA: homogentisic acid is removed as 4-maleylacetoacetic acid. It competes with route pyomelanin; the hmgA deletion of Aspergillus fumigatus raises pigment formation (PMID 19028908). The route is declared so that hmgA counts against pyomelanin and not for it."
+  - id: asp_melanin
+    name: "Asp-melanin route (Aspergillus terreus melA, tyrP)"
+    step_ids: [aspulvinone_e_synthase, asp_melanin_tyrosinase]
+    note: "exogenous_substrate: false. MelA makes aspulvinone E; TyrP activates it for polymerisation (Aspergillus terreus, PMID 27133313). The TyrP products have charged ChEBI entries only (CHEBI:193114, CHEBI:193115), so the tables give no product for this route; the first step alone gives aspulvinone E."
+steps:
+  - id: tyrosinase
+    name: "tyrosinase (L-tyrosine and L-DOPA to L-dopaquinone)"
+    ec: "1.14.18.1"
+    route: tyrosinase_dopa
+    refs:
+      # pmid 2529259 is the gene paper cited by the entry (no assay in the abstract). The T1c link rests on
+      # PMID 2147580 (same first and last author), which the entry does not cite.
+      - accession: P00440
+        species: "Neurospora crassa (strain ATCC 24698 / 74-OR23-1A / CBS 708.71 / DSM 1257 / FGSC 987)"
+        gene_name: "T"
+        pmid: "2529259"
+        verified: true
+      # melB of Aspergillus oryzae (PMID 16233650, 22213164, 23053534). The UniProt entry has the ORF name
+      # OAory_01107480 only; the name melB is not in the entry. The tie is the sequence: PDB 3W6W (title: melB
+      # holo-protyrosinase) has this sequence at 615 of 616 residues, and the entry has the 616 residues that
+      # PMID 16233650 gives for melB. Q2UP46 (RIB40 gene model of the locus, 638 residues, 91% identical) is not
+      # the assayed sequence and is not a reference. Links held at T3. See UNVERIFIED.md, A2.
+      - accession: A0A1S9DK56
+        species: "Aspergillus oryzae"
+        gene_name: "OAory_01107480"
+        pmid: "32356371"
+        verified: true
+      # melO of PMID 7893753 (539 residues in the abstract and in the entry). Links held at T3.
+      - accession: Q00234
+        species: "Aspergillus oryzae (strain ATCC 42149 / RIB 40)"
+        gene_name: "melO"
+        pmid: "7893753"
+        verified: true
+      # PPO4 ('Tyrosinase 4' in UniProt) = tyrosinase 4 / AbPPO4 of PMID 28500345, which the entry does not cite. Links held at T3.
+      # pmid 20676921 is the cDNA paper cited by the entry (the Escherichia coli product there had no activity).
+      - accession: C7FF05
+        species: "Agaricus bisporus"
+        gene_name: "PPO4"
+        pmid: "20676921"
+        verified: true
+      # PPO3: the H subunit of the crystallised tyrosinase complex (PMID 21598903). Links held at T3.
+      - accession: C7FF04
+        species: "Agaricus bisporus"
+        gene_name: "PPO3"
+        pmid: "21598903"
+        verified: true
+      # UniProt organism: Pholiota microspora. The paper says Pholiota nameko (one NCBI taxid, 1538424). Links held at T3.
+      - accession: A7BHQ9
+        species: "Pholiota microspora"
+        gene_name: "tyr1"
+        pmid: "17617709"
+        verified: true
+      # verified: false, for one reason only: the UniProt entry has NO gene name, so the gene-name rule cannot
+      # be met. gene_name below is the protein name of the entry; it is not a UniProt gene name. The entry
+      # cites PMID 16151802. UniProt organism: Trametes sanguinea (taxid 158606); the paper says Pycnoporus
+      # sanguineus, a name with no NCBI taxid hit. The user decides at the review gate (UNVERIFIED.md).
+      - accession: Q2TL94
+        species: "Trametes sanguinea"
+        gene_name: "tyrosinase"
+        pmid: "16151802"
+        verified: false
+    decoys:
+      - accession: Q5BGU9
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "ivoB"
+        pmid: "2126551"
+        verified: true
+      - accession: Q5AUW8
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "orsC"
+        pmid: null
+        verified: true
+      - accession: A0A8J9R8H5
+        species: "Diaporthe leptostromiformis"
+        gene_name: "phomQ1"
+        pmid: null
+        verified: true
+      - accession: Q2UNF9
+        species: "Aspergillus oryzae (strain ATCC 42149 / RIB 40)"
+        gene_name: "AO090001000383"
+        pmid: "24043469"
+        verified: true
+      - accession: B1VTI5
+        species: "Streptomyces griseus subsp. griseus (strain JCM 4626 / CBS 651.72 / NBRC 13350 / KCC S-0626 / ISP 5235)"
+        gene_name: "griF"
+        pmid: "16282322"
+        verified: true
+    domains_any: [PF00264]
+    copy_expect: multi
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:18117"
+      - "RHEA:34287"
+    lineage_note: "Tyrosinase and laccase both oxidise L-DOPA to the quinone, and they are not related in sequence. The annotation that separates them: a tyrosinase is EC 1.14.18.1 with RHEA:18117 (L-tyrosine to L-dopaquinone) and RHEA:34287 (L-DOPA to L-dopaquinone), in the type-3 copper family (Pfam PF00264); a laccase is EC 1.10.3.2 with the generic reaction RHEA:11276 only, in the multicopper oxidase family (Pfam PF07732, PF00394, PF07731). A laccase does not hydroxylate tyrosine: UniProt states for LAC1 of Cryptococcus (Q55P57, from PMID 8300520) that it does not oxidise monophenols such as tyrosine. A PF00264 hit is not a tyrosinase call. MEASURED on 2026-11-21 (global alignment): the references are 20 to 55% identical to each other; the decoys (the short tyrosinase-like proteins ivoB, orsC and phomQ1, the catechol oxidase AoCO4, the bacterial GriF) and TyrP of Asp-melanin are 12 to 18% identical to the references and 20 to 45% to each other. UniProt gives EC 1.14.18.1 also to tyrosinases of other pathways, for example ustQ of ustiloxin biosynthesis (B8NM74); such entries are neither decoys nor references. Rhea writes L-tyrosine to L-dopaquinone as one reaction, so free L-DOPA is not a product of the table. From L-dopaquinone onward (L-dopachrome and later) the table is non-enzymatic; any fungal enzyme there is T4. No tyrosinase link is above T1c: no abstract that was read names the protein and L-tyrosine or L-DOPA in one sentence (assays of substrate classes are held at T3). Gene names: T (Neurospora crassa), melO and melB (Aspergillus oryzae; UniProt A0A1S9DK56 has the ORF name OAory_01107480 only), PPO3 and PPO4 (Agaricus bisporus), tyr1 (Pholiota microspora). melB is also a UniProt synonym of tyrP of Aspergillus terreus (Q0CRX0, Asp-melanin). A gene name is valid only with its organism."
+
+  - id: laccase_diphenol
+    name: "laccase, diphenol oxidation only (LAC1 and LAC2 of Cryptococcus)"
+    ec: "1.10.3.2"
+    route: laccase_exogenous
+    refs:
+      # CNLAC1 of PMID 8300520 (624 residues in the abstract and in the entry). UniProt organism: Cryptococcus
+      # deneoformans (serotype D); the papers say Cryptococcus neoformans.
+      - accession: Q55P57
+        species: "Cryptococcus deneoformans (strain B-3501A)"
+        gene_name: "LAC1"
+        pmid: "8300520"
+        verified: true
+      # LAC1 of strain H99 (serotype A). UniProt gives its function 'by similarity'. pmid 12581355 is cited by
+      # the entry for catalytic activity. Link held at T3: the strain of PMID 15643074 is not confirmed.
+      - accession: J9VY90
+        species: "Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)"
+        gene_name: "LAC1"
+        pmid: "12581355"
+        verified: true
+      # LAC2 of strain H99 (CNAG_03464, next to LAC1 CNAG_03465). UniProt gives its function 'by similarity'.
+      # pmid 24743168 is the genome paper cited by the entry. Link held at T3 (strain of PMID 15643074 not confirmed).
+      - accession: J9VQZ4
+        species: "Cryptococcus neoformans (strain H99 / ATCC 208821 / CBS 10515 / FGSC 9487)"
+        gene_name: "LAC2"
+        pmid: "24743168"
+        verified: true
+    decoys:
+      - accession: P38993
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "FET3"
+        pmid: null
+        verified: true
+      - accession: Q0CCX6
+        species: "Aspergillus terreus (strain NIH 2624 / FGSC A1156)"
+        gene_name: "gedJ"
+        pmid: "7665560"
+        verified: true
+      - accession: P0DYC3
+        species: "Talaromyces sp"
+        gene_name: "phlC"
+        pmid: null
+        verified: true
+      - accession: Q8LPL3
+        species: "Arabidopsis thaliana"
+        gene_name: "AAO"
+        pmid: null
+        verified: true
+      - accession: Q4WZB4
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "abr1"
+        pmid: null
+        verified: true
+    domains_any: [PF07732, PF00394, PF07731]
+    copy_expect: multi
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "CUR:melanin_ldopa:ldopa_oxidation_laccase"
+      - "CUR:melanin_ldopa:dopamine_oxidation_laccase"
+      - "CUR:melanin_ldopa:hga_oxidation_laccase"
+    lineage_note: "Tyrosinase and laccase both oxidise L-DOPA to the quinone, and they are not related in sequence. The annotation that separates them: a tyrosinase is EC 1.14.18.1 with RHEA:18117 (L-tyrosine to L-dopaquinone) and RHEA:34287 (L-DOPA to L-dopaquinone), in the type-3 copper family (Pfam PF00264); a laccase is EC 1.10.3.2 with the generic reaction RHEA:11276 only, in the multicopper oxidase family (Pfam PF07732, PF00394, PF07731). A laccase does not hydroxylate tyrosine: UniProt states for LAC1 of Cryptococcus (Q55P57, from PMID 8300520) that it does not oxidise monophenols such as tyrosine. exogenous_substrate: true. Cryptococcus neoformans produces melanin only from exogenous substrates and needs diphenolic precursors (PMID 17098915), so the substrate of this step comes from outside and the fungus is not shown to make L-DOPA. The compound that enters the table depends on the substrate supplied: L-DOPA, dopamine (oxidised to decarboxy dopachrome, PMID 8300520) or homogentisic acid (PMID 17098915). The step is not specific to melanin: every laccase (EC 1.10.3.2) has the same generic reaction, so laccases with other roles (lignin laccases, yA of Aspergillus nidulans) are not decoys, and a laccase hit does not show melanin formation. The decoys are multicopper oxidases with another annotated reaction (22 to 29% identical to the references, MEASURED 2026-11-21). LAC1 and LAC2 of Cryptococcus neoformans H99 are 72% identical; LAC1 of serotype D (Cryptococcus deneoformans) and LAC1 of serotype A are 90% identical. Gene names: LAC1 names the diphenol laccase in Cryptococcus and a DHN-melanin cluster oxidase in Verticillium dahliae (G2WRK6). A gene name is valid only with its organism."
+
+  - id: hppd
+    name: "4-hydroxyphenylpyruvate dioxygenase (homogentisic acid for pyomelanin; hppD of Aspergillus fumigatus)"
+    ec: "1.13.11.27"
+    refs:
+      - accession: Q4WHU1
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "hppD"
+        pmid: "19028908"
+        verified: true
+    domains_any: [TIGR01263]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:16189"
+    lineage_note: "HppD makes homogentisic acid. Pyomelanin forms when homogentisic acid accumulates and oxidises: in Aspergillus fumigatus the hppD deletion gives no homogentisic acid and no pyomelanin, and the hmgA deletion gives more pigment (PMID 19028908). hppD and hmgA are enzymes of tyrosine catabolism, so their presence shows catabolism, not pigment production; the census cannot tell the two apart. How widely the two genes occur in fungi was not measured here. In Aspergillus fumigatus HmgX is needed for the HppD reaction (PMID 22046314); HmgX is not a step here. The step before (L-tyrosine to 4-hydroxyphenylpyruvate) is not curated. The references also carry Pfam PF00903 (glyoxalase family), which is broader and is not listed."
+
+  - id: hmga
+    name: "homogentisate 1,2-dioxygenase (removes homogentisic acid; hmgA of Aspergillus fumigatus)"
+    ec: "1.13.11.5"
+    route: tyrosine_degradation
+    refs:
+      - accession: Q4WHT9
+        species: "Aspergillus fumigatus (strain ATCC MYA-4609 / CBS 101355 / FGSC A1100 / Af293)"
+        gene_name: "hmgA"
+        pmid: "19028908"
+        verified: true
+      # Aspergillus nidulans hmgA: disruption gives accumulation of homogentisate (PMID 7673153).
+      - accession: Q00667
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "hmgA"
+        pmid: "7673153"
+        verified: true
+    domains_any: [TIGR01015]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:15449"
+    lineage_note: "HmgA removes homogentisic acid (tyrosine catabolism). It is not a pigment-forming step: pyomelanin rises when it is lost (hmgA deletion of Aspergillus fumigatus, PMID 19028908). In a capability table its presence argues against accumulation of the pigment precursor, and its absence is not a defect. hmgA of Aspergillus fumigatus and hmgA of Aspergillus nidulans are 89% identical (MEASURED 2026-11-21). The gene name hmgA names HMG-CoA reductase in Phycomyces blakesleeanus (UniProt Q12649). A gene name is valid only with its organism."
+
+  - id: aspulvinone_e_synthase
+    name: "aspulvinone E synthetase, NRPS-like (melA of Aspergillus terreus)"
+    ec: null
+    route: asp_melanin
+    refs:
+      # apvA (Q0CWD0) of the same fungus does the same reaction and is not a reference of this step.
+      - accession: Q0CRX1
+        species: "Aspergillus terreus (strain NIH 2624 / FGSC A1156)"
+        gene_name: "melA"
+        pmid: "27133313"
+        verified: true
+    domains_any: [PF00975]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:63824"
+    lineage_note: "NRPS-like enzyme (adenylation, thiolation and thioesterase domains) that makes aspulvinone E from 4-hydroxyphenylpyruvate (RHEA:63824). Asp-melanin is described for Aspergillus terreus, which lacks the genes for DHN-melanin (PMID 27133313); the range in other lineages is not checked, so absence is not a defect. apvA of Aspergillus terreus (Q0CWD0, 65% identical to melA, MEASURED 2026-11-21) does the same reaction in hyphae, where aspulvinone E goes to aspulvinones and not to melanin (PMID 28791090). So a hit to this step does not show Asp-melanin without TyrP, and apvA cannot be a decoy. The references carry Pfam PF00501, PF00550 and PF00975; all three are broad families (PF00975 is listed), so the call needs tree placement."
+
+  - id: asp_melanin_tyrosinase
+    name: "tyrosinase of Asp-melanin (tyrP of Aspergillus terreus; acts on aspulvinone E)"
+    ec: null
+    route: asp_melanin
+    refs:
+      # UniProt gene names: tyrP, melB (synonym). Links held at T3 (UNVERIFIED.md, B).
+      - accession: Q0CRX0
+        species: "Aspergillus terreus (strain NIH 2624 / FGSC A1156)"
+        gene_name: "tyrP"
+        pmid: "27133313"
+        verified: true
+    decoys:
+      - accession: Q5BGU9
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "ivoB"
+        pmid: "2126551"
+        verified: true
+      - accession: Q5AUW8
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "orsC"
+        pmid: null
+        verified: true
+      - accession: A0A8J9R8H5
+        species: "Diaporthe leptostromiformis"
+        gene_name: "phomQ1"
+        pmid: null
+        verified: true
+      - accession: Q2UNF9
+        species: "Aspergillus oryzae (strain ATCC 42149 / RIB 40)"
+        gene_name: "AO090001000383"
+        pmid: "24043469"
+        verified: true
+    domains_any: [PF00264]
+    copy_expect: single
+    role: catalytic
+    fused_with: []
+    optional: true
+    reactions:
+      - "RHEA:74195"
+      - "RHEA:74199"
+    lineage_note: "Tyrosinase of the Asp-melanin cluster. UniProt Q0CRX0 gives it EC 1.14.18.- (not EC 1.14.18.1) and two reactions with aspulvinone E (RHEA:74195, RHEA:74199). The abstract of PMID 27133313 states that TyrP activates aspulvinone E for polymerisation and states no assay, so the links are held at T3. The products have charged ChEBI entries only, so the route gives no product in the tables. TyrP is a short tyrosinase-like protein (356 residues): 45% identical to ivoB, 36% to orsC and 35% to the catechol oxidase AoCO4 (decoys), and 13 to 17% to the references of step tyrosinase (MEASURED 2026-11-21). Whether TyrP oxidises L-tyrosine or L-DOPA is not stated in the records that were read. Gene names: UniProt gives tyrP the synonym melB; melB of Aspergillus oryzae is another, long tyrosinase (step tyrosinase). A gene name is valid only with its organism. Described for Aspergillus terreus only; absence elsewhere is not a defect."

@@ -1,0 +1,8 @@
+step_id	route	ko	hmm_id	family	optional
+tyrosinase	tyrosinase_dopa	K00505	PF00264	type-3 copper protein family (tyrosinase)	true
+laccase_diphenol	laccase_exogenous	K00421;K05909	PF07732;PF00394;PF07731	multicopper oxidase family (laccase)	true
+hppd		K00457	TIGR01263	4-hydroxyphenylpyruvate dioxygenase family	true
+hmga	tyrosine_degradation	K00451	TIGR01015	homogentisate 1,2-dioxygenase family	true
+aspulvinone_e_synthase	asp_melanin		PF00975	NRPS-like enzyme (A-T-TE domains)	true
+asp_melanin_tyrosinase	asp_melanin		PF00264	type-3 copper protein family (short tyrosinase-like)	true
+dopachrome_onward				unknown (no fungal enzyme identified)	true
