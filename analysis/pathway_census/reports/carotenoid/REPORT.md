@@ -282,7 +282,7 @@ Three checks on the result in section 6g. The full record is `results/gainloss/R
 *ARD model, 0.8 rule, Opisthosporidia root (`results/gainloss/carotenoid_busco_compare/`). Cutoffs 65 and 70 give counts within 2 branches of each other.*
 
 - **The filter changes counts by 13% or less and removes mostly tips that are absent for every step.** Of the 69 removed tips, 31 have no class label (30 Microsporidia and 1 Rozellomycota by the phylum column; all absent for all four steps; why their BUSCO is low was not tested), 12 are Agaricomycetes (all absent), and 7 are Lecanoromycetes (71% present for each core step). Saccharomycetes loses 1 and Pichiomycetes 0.
-- **Core co-loss falls from 65 to 71 branches to 59 to 65 at cutoff 70** (internal edges stay at 15 to 17 and 14 to 15), and co-gain changes by at most 1.
+- **Core co-loss falls from 65 to 71 branches to 59 to 65 at cutoff 70** (internal-edge co-losses are 14 to 15 at cutoffs 65 and 70, against 15 to 18 unfiltered), and co-gain changes by at most 1.
 
 **A tree-aware simulation null.** Each step is simulated independently on the same tree under its own fitted ARD rates, 2,000 replicates; each replicate is refitted, reconstructed and called with the same 0.8 rule, and co-events are counted on all edges and on internal edges only. Internal-edge events cannot come from an incomplete assembly.
 
