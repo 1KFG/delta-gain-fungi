@@ -181,6 +181,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-5-pilot-tree-placement-for-phytoene_synthase" id="toc-step-5-pilot-tree-placement-for-phytoene_synthase" class="nav-link" data-scroll-target="#step-5-pilot-tree-placement-for-phytoene_synthase">6. Step 5 pilot: tree placement for <code>phytoene_synthase</code></a>
   <ul class="collapse">
   <li><a href="#b.-second-run-named-tree-members-non-fungal-outgroups-and-lineage-subclades" id="toc-b.-second-run-named-tree-members-non-fungal-outgroups-and-lineage-subclades" class="nav-link" data-scroll-target="#b.-second-run-named-tree-members-non-fungal-outgroups-and-lineage-subclades">6b. Second run: named tree members, non-fungal outgroups and lineage subclades</a></li>
+  <li><a href="#c.-placement-for-lycopene_cyclase" id="toc-c.-placement-for-lycopene_cyclase" class="nav-link" data-scroll-target="#c.-placement-for-lycopene_cyclase">6c. Placement for <code>lycopene_cyclase</code></a></li>
+  <li><a href="#d.-which-taxonomic-groups-have-the-steps" id="toc-d.-which-taxonomic-groups-have-the-steps" class="nav-link" data-scroll-target="#d.-which-taxonomic-groups-have-the-steps">6d. Which taxonomic groups have the steps</a></li>
   </ul></li>
   <li><a href="#negative-and-unresolved-results" id="toc-negative-and-unresolved-results" class="nav-link" data-scroll-target="#negative-and-unresolved-results">7. Negative and unresolved results</a></li>
   <li><a href="#what-would-change-this-and-what-was-not-done" id="toc-what-would-change-this-and-what-was-not-done" class="nav-link" data-scroll-target="#what-would-change-this-and-what-was-not-done">8. What would change this, and what was not done</a></li>
@@ -255,7 +257,7 @@ What this is, and where it stops being reliable
 <li><strong>No decoy and no reference of another step scores at or above a step’s own-reference minimum</strong> on any of the 14 step HMMs (0 rows in <code>targets_at_or_above_min.PROVISIONAL.tsv</code>). The test set is small: 69 decoys in total.</li>
 <li><strong>The search returned 238,898 candidate rows</strong> at the cutoffs used. The counts range from 12 rows (<code>astaxanthin_synthase</code>) to 46,698 rows (<code>crtr</code>). The large counts come from single-reference steps with low floors, so most of those rows are expected to be family members. This is a reading of the counts, not a measurement.</li>
 <li><strong>A higher cutoff for two steps hides a large number of low-scoring proteins.</strong> With a floor of 20 bits, <code>astaxanthin_synthase</code> returns 47,640 proteins and <code>ylo1</code> 20,276 proteins in 1,000 genomes. At the rule cutoff, the same run holds 2 and 458 proteins.</li>
-<li><strong>Step 5 pilot, <code>phytoene_synthase</code>: placement removes only a few candidates, and named lineage subclades cover a minority.</strong> In the second run, with 13 named fungal members and 7 non-fungal outgroups in the tree, 10,815 of 10,863 candidates (99.6%) fall in the target clade. Four named subclades exist (Dothideomycetes, Eurotiomycetes, Mucoromycetes, Ustilaginomycetes) and hold 2,482 candidates (22.8%). 8,333 candidates (76.7%) lie in the target clade but in no named subclade (section 6). The result is “consistent with the HMM”, not “confirmed phytoene synthase”.</li>
+<li><strong>Step 5 pilot, <code>phytoene_synthase</code> and <code>lycopene_cyclase</code>: placement removes only a few candidates, and named lineage subclades cover a minority.</strong> In the second run, with 13 named fungal members and 7 non-fungal outgroups in the tree, 10,815 of 10,863 candidates (99.6%) fall in the target clade. Four named subclades exist (Dothideomycetes, Eurotiomycetes, Mucoromycetes, Ustilaginomycetes) and hold 2,482 candidates (22.8%). 8,333 candidates (76.7%) lie in the target clade but in no named subclade (section 6b). The cyclase step gives the same picture: 9,492 of 9,530 candidates in the target clade, 2,177 (22.8%) in a named subclade (section 6c). The result is “consistent with the HMM”, not “confirmed phytoene synthase”.</li>
 <li><strong>The candidates of <code>phytoene_synthase</code> are not squalene synthase.</strong> All 191 representatives score higher against the 5 synthase references than against a panel of 15 reviewed fungal squalene synthases (smallest margin 37.8 bits, median 128.1 bits).</li>
 <li><strong>The other 13 steps have no placement yet.</strong> The copy-number and phylum summaries (steps 6 to 8) wait for them.</li>
 </ul>
@@ -416,6 +418,13 @@ What this is, and where it stops being reliable
 </table>
 <!-- step-table:end -->
 <p><em>Source: <code>results/step2/carotenoid/step_scores.PROVISIONAL.tsv</code>, <code>min_scores.exploratory25.PROVISIONAL.tsv</code> and <code>results/search/carotenoid_full/candidates.chunk*.PROVISIONAL.tsv.zst</code>. Table made by <code>reports/carotenoid/bin/make_step_table.py</code>. “Genomes with a row” counts distinct genomes with at least one row for that step, out of 23,376 searched.</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig6_pathway_diagram.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6. The curated carotenoid pathway.</figcaption>
+</figure>
+</div>
+<p><em>Compounds are nodes; each edge is a curated reaction, labelled with the step (gene family) that does it and the best evidence tier among that reaction’s links. IPP and FPP are drawn as one grey node, and 3-methylbut-2-enal (a cleavage by-product) is not drawn. <strong>The edge tier is the best link of one reaction; the tier of a whole route is the weakest step on it, so an edge can be T1a while its route ends at T3 (section 1).</strong> Four curated reactions have no edge because a substrate or product is not in the tables (listed in the box: <code>tsp2</code>, <code>tdh</code> and two astaxanthin-route steps). The diagram shows what is curated, not what is present in any genome. <a href="figures/out/fig6_pathway_diagram.pdf">PDF</a>, <a href="figures/out/fig6_pathway_diagram.svg">SVG</a></em></p>
 <p><strong>Two cutoffs differ from the rule.</strong> For <code>astaxanthin_synthase</code> (rule 1332.5, used 999.4) and <code>ylo1</code> (rule 640.7, used 480.5) the owner lowered the cutoff by 25%. The two references of each step are nearly identical, so the held-out score only shows that the second reference is a close copy. The rule value is kept in the column <code>rule_min_score</code> of the cutoff file, and a hit of the rule is recovered by filtering on score. The table shows the rule value and the value used, so the two columns are not a contradiction.</p>
 </section>
 <section id="step-2-do-references-separate-from-decoys-on-the-step-hmms" class="level2">
@@ -626,6 +635,80 @@ What this is, and where it stops being reliable
 <li><strong>The root is uncertain.</strong> The squalene synthase decoys sit inside the outgroups’ common ancestor, so the tree is rooted above both. Three raxml-ng starts (log-likelihoods -113644.9, -113638.6, -113648.9) do not show that the best tree is the global optimum (UNVERIFIED). Three earlier submissions failed for resource reasons and are listed in <code>RUN.md</code> of that folder.</li>
 </ul>
 </section>
+<section id="c.-placement-for-lycopene_cyclase" class="level3">
+<h3 class="anchored" data-anchor-id="c.-placement-for-lycopene_cyclase">6c. Placement for <code>lycopene_cyclase</code></h3>
+<p>Same method and the same 13 named members, with their cyclase domains. The tree has 66 leaves (5 references, 13 named members, 1 outgroup, 47 representatives) and no decoys: the filter <code>bin/filter_decoys_for_tree.py</code> kept none of the 9 decoys, because none aligns over at least half of the HMM (the best, Q9KK78, covers 18%). <strong>The cyclase placement therefore has no decoy test.</strong> It is rooted on the one aligned outgroup, Q9HNE5.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result (MEASURED, <code>results/step5/carotenoid/lycopene_cyclase_v2/SUMMARY.tsv</code>)</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Target clade</td>
+<td>52 leaves: 5 references, 13 of 13 named members, 34 representatives</td>
+</tr>
+<tr class="even">
+<td>Candidates called <code>target</code> / decoy side</td>
+<td>9,492 / 38 (of 9,530)</td>
+</tr>
+<tr class="odd">
+<td>Support in the target clade</td>
+<td>median 1.0, minimum 0.94</td>
+</tr>
+<tr class="even">
+<td><code>assign_steps</code></td>
+<td>9,492 assigned in 9,277 genomes (copies per genome: 1 in 9,085, 2 in 176, 3 in 12, 4 in 2, 5 in 1, 6 in 1)</td>
+</tr>
+<tr class="odd">
+<td>Subclades (candidates called into them)</td>
+<td>Dothideomycetes 981, Eurotiomycetes 853, Mucoromycetes 221, Ustilaginomycetes 122; none: 7,315 (76.8%)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>The result repeats the synthase result.</strong> Four classes form named subclades, Sordariomycetes forms none (its clade also holds Eurotiomycetes and Dothideomycetes members), and about three quarters of the candidates lie in no named subclade. The synthase and cyclase domains are on one fused protein in most fungi, so the two steps are not independent evidence.</li>
+<li><strong>Reading trap: 7,993 candidates sit in clusters whose representatives are nearest to Dothideomycetes.</strong> Two representatives carry most of them, so one large cluster dominates that count. It is a statement about cluster size, not about how many genomes carry the gene.</li>
+<li><strong>Three attempts were needed</strong> (<code>RUN.md</code>-level facts, MEASURED): the first stopped on the clade check (unalignable decoys in the tree, section 7); a retry died on a <code>raxml-ng</code> core-oversubscription abort on node r41; the second tree had Q9KK78 as its only decoy and stopped again because Q9KK78 fell inside the fungal clade; the third had no tree decoys and ran.</li>
+</ul>
+</section>
+<section id="d.-which-taxonomic-groups-have-the-steps" class="level3">
+<h3 class="anchored" data-anchor-id="d.-which-taxonomic-groups-have-the-steps">6d. Which taxonomic groups have the steps</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig7_presence_by_class.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 7. Fraction of genomes with a call per step, by class.</figcaption>
+</figure>
+</div>
+<p><em>Each cell is the percent of genomes of the class with at least one call for the step; the number of genomes is in the row label. The blue panel holds the steps whose cutoff comes from held-out references; the grey panel holds the steps whose cutoff is only a decoy floor, which hit nearly every genome and must be read as “family present”. <strong>Only <code>phytoene_synthase</code> and <code>lycopene_cyclase</code> are placed calls (tree placement, section 6); every other column is a search hit at its cutoff.</strong> Blank cells are below 0.5%. The “3 core carotenoid steps” column is the share of genomes with all of <code>phytoene_synthase</code>, <code>phytoene_desaturase</code> and <code>lycopene_cyclase</code>. All 23,376 searched genomes are used, with no BUSCO filter (see the reading traps). <a href="figures/out/fig7_presence_by_class.pdf">PDF</a></em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig8_presence_by_order_pezizomycotina.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 8. The same, by order, within Pezizomycotina.</figcaption>
+</figure>
+</div>
+<p><em>Orders of Pezizomycotina with at least 40 genomes (13,113 genomes in 26 groups). <strong>The figure shows that the core steps are not spread evenly within the subphylum; it does not show gains or losses, because it has no tree.</strong> <a href="figures/out/fig8_presence_by_order_pezizomycotina.pdf">PDF</a></em></p>
+<p>What the figures show (MEASURED counts of genomes with a call; descriptive only):</p>
+<ul>
+<li><strong>Classes.</strong> <code>phytoene_synthase</code> / <code>phytoene_desaturase</code> / <code>lycopene_cyclase</code> have calls in 99 / 95 / 96% of Dothideomycetes (2,724 genomes), 43 / 37 / 32% of Eurotiomycetes (3,201), 67 / 66 / 64% of Sordariomycetes (5,981), 100 / 89 / 95% of Mucoromycetes (273), and 99 / 52 / 98% of Ustilaginomycetes (133). They have calls in 2 / 1 / 1% of Agaricomycetes (1,844) and in fewer than 0.5% of Saccharomycetes (2,560), Pichiomycetes (2,929) and Schizosaccharomycetes (67).</li>
+<li><strong>Orders of Pezizomycotina.</strong> The same three steps are at 38 / 31 / 28% in Eurotiales (2,480 genomes), 75 / 74 / 71% in Hypocreales (3,515), 52 / 52 / 52% in Sordariales (429), 6 / 5 / 4% in Pezizales (171) and 2 / 2 / 2% in Thelebolales (40), against 85 to 99% in Botryosphaeriales, Cladosporiales, Dothideales, Mycosphaerellales, Pleosporales and Venturiales. Magnaporthales (543), Microascales (162) and Ophiostomatales (126) are below 0.5% for all three.</li>
+<li><strong><code>cart</code></strong> has calls in 80% of Sordariomycetes and in at most 2% of any other class shown. Among the orders of Pezizomycotina it ranges from below 0.5% (Magnaporthales, 543 genomes) through 19% (Diaporthales) and 64% (Sordariales) to 100% (Amphisphaeriales, 97 genomes).</li>
+</ul>
+<p>Reading traps and limits:</p>
+<ul>
+<li><strong>Reading trap: a low <code>ggpp_synthase</code> call rate is not absence.</strong> The step has two references. The step HMM scores budding-yeast BTS1 (Q12051) at 284.8 bits and the <em>Eremothecium</em> GGPP synthase (Q758K0) at 282.4, both below the cutoff of 369.3; fission-yeast O59703 scores 22.6. Of 66 reviewed fungal entries of EC 2.5.1.29 (UniProt, 2026-11-22), 37 score below the cutoff. This is why Saccharomycetes read 3% and Pichiomycetes blank. The cutoff is too strict for GGPP synthases outside the references’ lineages, so the column under-calls (<code>results/</code> check: <code>hmmsearch</code> of the step HMM against the 66 entries, E-value limit 1000).</li>
+<li><strong><code>ylo1</code> and <code>ggpp_synthase</code> are at 90% or more in nearly every order of Pezizomycotina.</strong> That pattern fits a widely shared protein family, not a pathway-specific step. These are search hits and are not placed.</li>
+<li><strong>A “call” is at least one protein in the genome.</strong> An incomplete assembly gives a false absence. A BUSCO filter of 90 would remove whole lineages (MEASURED: Saccharomycetes 2,560 genomes to 0, Pichiomycetes 2,929 to 2, Schizosaccharomycetes and Wallemiomycetes to 0), so it is not applied. The 177 genomes with no class label form their own row.</li>
+<li><strong>The synthase and cyclase columns are not independent.</strong> In most fungi both are domains of one fused protein (section 6c).</li>
+<li><strong>Percent of genomes is not percent of species or lineages.</strong> Genome counts follow what has been sequenced; Eurotiales, Hypocreales and Sordariomycetes are large because many strains are sequenced.</li>
+</ul>
+</section>
 </section>
 <section id="negative-and-unresolved-results" class="level2">
 <h2 class="anchored" data-anchor-id="negative-and-unresolved-results">7. Negative and unresolved results</h2>
@@ -635,7 +718,7 @@ What this is, and where it stops being reliable
 <li><strong>The lycopene cyclase decoys test the cutoff weakly.</strong> The highest decoy score is 29.3 and the lowest held-out reference score is 174.1. Any cutoff in between is consistent with the decoys, and none was tested on a genome (<code>refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md</code>).</li>
 <li><strong>A same-function homolog from Archaea (Q9HNE5) scores 115.6 on the cyclase HMM.</strong> It is a tree outgroup only, not a decoy, so it does not set the cutoff (<code>refs/carotenoid/outgroups/</code>).</li>
 <li><strong>The first step 5 design did not discriminate for <code>phytoene_synthase</code>, and adding named members helped only partly.</strong> In the first run the clade of the 5 references was too broad and every support was high, so placement removed only the 155 candidates on the decoy side. With 13 named members and 7 outgroups, four classes form named subclades, but 76.7% of candidates (8,333 of 10,863) stay in the target clade with no named subclade, and Sordariomycetes, the class of two references, forms none. The expectation that the candidates would include many squalene synthases was wrong: all 191 representatives score higher against the references than against 15 reviewed fungal squalene synthases (<code>bin/check_paralog_panel.sh</code>, <code>paralog_panel/summary.tsv</code>: smallest margin 37.8 bits). The 4 decoys probe the root of the tree, not the candidate set.</li>
-<li><strong>The first <code>lycopene_cyclase</code> tree stopped by its own check (2026-11-22).</strong> The tool refuses to go on when the 5 references do not form a clade free of decoys and outgroups, and it stopped: the common ancestor of the references held 5 decoys (the four PF05834 proteins and Q9KK79). <strong>This is a design error of ours, not a biological result.</strong> Those 5 decoys have no detectable homology to the fungal cyclase domain (<code>refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md</code>), so they cannot be aligned and land on arbitrary branches. They still serve the cutoff and the absence check. A second run keeps in the tree only decoys whose step-HMM score is at least 10 bits (PROPOSED; <code>bin/filter_decoys_for_tree.py</code>), which leaves Q9KK78 (29.3 bits) and the outgroup Q9HNE5. The first run’s folder is kept as the record (<code>results/step5/carotenoid/lycopene_cyclase/</code>).</li>
+<li><strong>The first two <code>lycopene_cyclase</code> trees stopped by their own check (2026-11-22).</strong> The tool refuses to go on when the 5 references do not form a clade free of decoys and outgroups. <strong>This was a design error of ours, not a biological result.</strong> In the first tree, 5 decoys (the four PF05834 proteins and Q9KK79) lay inside the clade of the references; they have no detectable homology to the fungal cyclase domain (<code>refs/carotenoid/decoys/LYCOPENE_CYCLASE_DECOYS.md</code>), so they cannot be aligned. A filter that kept decoys scoring at least 10 bits left Q9KK78, which aligns over only 44 of 241 HMM positions (18%) and also fell inside the fungal clade (pendant branch 3.8). The rule now also needs a coverage of at least 50% of the HMM, which keeps no decoy. The decoys still serve the cutoff and the absence check. The first two folders are kept as records (<code>lycopene_cyclase/</code>, <code>lycopene_cyclase_v2/attempt2_decoy_Q9KK78/</code>).</li>
 <li><strong>A measurement in the decoy notes does not reproduce.</strong> The decoy notes list step-HMM scores of 10.1 for A1XI29 and 12.9 for Q93QX4. A new <code>hmmsearch</code> of the cyclase HMM against the 9 decoys (E-value limit 1000 for sequences and domains, HMMER 3.4) reports only Q9KK78 (29.3 bits). The cause was not found. The tree filter uses the value that reproduces.</li>
 <li><strong>The metabolomics corpus cannot test carotenoids.</strong> REPORTED by the EBC side: 0 of 84 fungal-reference accessions show beta-carotene, zeaxanthin or canthaxanthin (<code>docs/superpowers/notes/2026-11-21-exploration-log.md</code>, section 1). This is a statement about the corpus, not about BFD genomes.</li>
 </ul>
@@ -645,9 +728,10 @@ What this is, and where it stops being reliable
 <p><strong>What would change the findings.</strong> More named members from lineages that have none yet (Sordariomycetes outside the 5 labelled leaves, Agaricomycetes, early-diverging groups) would show whether the 8,333 unnamed candidates split into groups. Named members with experimental evidence would let a subclade name stand for function. A rerun with more raxml-ng starts and with the outgroups rooted without the squalene synthase decoys would test the root. A decoy or a non-pathway family member that places inside a target clade would show that a step’s HMM cannot separate it. A reference set with more members for a single-reference step would change its floor.</p>
 <p><strong>Not done here:</strong></p>
 <ul>
-<li>Step 5 for the other 13 steps. The tool is step-generic (<code>bin/step5_place.py</code>). <code>lycopene_cyclase</code> was run twice: the first tree stopped (section 7), and the result of the second run is not in this report yet.</li>
+<li>Step 5 for the other 13 steps. The tool is step-generic (<code>bin/step5_place.py</code>). <code>lycopene_cyclase</code> is done (section 6c); it has no decoy test in its tree.</li>
 <li>Quality, contamination and haplotype flags (step 7). There is no fungal versus non-fungal reference set, so counts will be raw first.</li>
 <li>The copy matrix and phylum summary (step 8), the deposited versus BFD comparison (steps 9, 10), the tblastn absence check (step 11) and triage (step 12).</li>
+<li><strong>Co-gain and co-loss of the steps.</strong> The figures above show presence only. Gains and losses need a tree and placed calls for more than two steps (<code>phytoene_desaturase</code> and <code>cart</code> are not placed yet). The genus-level tree and the planned method are described in the notes.</li>
 <li>A species tree overlay. A genus-level tree exists (<code>BFD_dashboard/atlas_data/phylo/results/protein/tree/fungi_odb10/final_tree.nw</code>, 1,643 tips by a text scan of the file). Its root, outgroup and tip overlap with the FastTree trees were not checked.</li>
 <li>The question of whether fungal lycopene cyclases have diversified in some groups (<code>docs/superpowers/notes/2026-11-22-open-questions.md</code>, Q1). It needs step 5 first.</li>
 </ul>
@@ -692,25 +776,37 @@ What this is, and where it stops being reliable
 </tr>
 <tr class="odd">
 <td>Decoy filter for trees</td>
-<td><code>bin/filter_decoys_for_tree.py</code>, <code>tests/test_filter_decoys_for_tree.py</code>; used with <code>PC_DECOYS_FA</code> in <code>slurm/step5_prepare.sbatch</code></td>
+<td><code>bin/filter_decoys_for_tree.py</code> (score &gt;= 10 bits and HMM coverage &gt;= 0.5, PROPOSED), <code>tests/test_filter_decoys_for_tree.py</code>; used with <code>PC_DECOYS_FA</code> in <code>slurm/step5_prepare.sbatch</code></td>
 </tr>
 <tr class="even">
+<td>Cyclase placement</td>
+<td><code>results/step5/carotenoid/lycopene_cyclase_v2/</code> (jobs 32377644 and 32377645)</td>
+</tr>
+<tr class="odd">
+<td>Presence heatmaps</td>
+<td><code>reports/carotenoid/figures/bin/fig_presence_heatmap.py</code> (figures 7 and 8), <code>tests/test_fig_presence_heatmap.py</code>; inputs <code>results/genomes.tsv.zst</code>, <code>species.parquet</code>, <code>results/search/carotenoid_full/</code>, the two <code>assigned.PROVISIONAL.tsv</code> files</td>
+</tr>
+<tr class="even">
+<td>Pathway diagram</td>
+<td><code>reports/carotenoid/figures/bin/fig_pathway_diagram.py</code> (Graphviz), <code>tests/test_fig_pathway_diagram.py</code>; data from <code>kb/carotenoid/</code> and <code>.cache/chebi/</code></td>
+</tr>
+<tr class="odd">
 <td>Paralog panel check</td>
 <td><code>reports/carotenoid/bin/check_paralog_panel.sh</code> (UniProt REST and blastp)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Figures</td>
 <td><code>reports/carotenoid/figures/bin/fig_census_search.py</code> (figures 1 to 3) and <code>fig_ref_tree.py</code> (figures 4 and 5), tested in <code>tests/test_fig_census_search.py</code> and <code>tests/test_fig_ref_tree.py</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Tool versions</td>
 <td>hmmer 3.4, mafft 7.505, raxml-ng 2.0.4, epa-ng 0.3.8, mmseqs2 17-b804f, clipkit 1.3.0, Python 3.12, zstd 1.5.6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Code commits</td>
 <td><code>32f2f90</code> (tools), <code>834288e</code> (notes) on branch <code>pathway-census-realdata</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Decisions and evidence</td>
 <td><code>docs/superpowers/notes/2026-11-22-owner-decisions.md</code>, <code>2026-11-22-step4-results-and-decisions.md</code></td>
 </tr>
@@ -731,7 +827,18 @@ What this is, and where it stops being reliable
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step5-dir</span> <span class="va">$R</span>/step5/carotenoid/phytoene_synthase <span class="at">--out-dir</span> reports/carotenoid/figures/out</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_ref_tree.py <span class="dt">\</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step5-dir</span> <span class="va">$R</span>/step5/carotenoid/phytoene_synthase_v2 <span class="at">--out-dir</span> reports/carotenoid/figures/out <span class="dt">\</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> fig5_reference_tree_v2 <span class="at">--title</span> <span class="st">"Reference tree with named members and outgroups (v2)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--name</span> fig5_reference_tree_v2 <span class="at">--title</span> <span class="st">"Reference tree with named members and outgroups (v2)"</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_pathway_diagram.py <span class="dt">\</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--kb-dir</span> kb/carotenoid <span class="at">--cache-dir</span> .cache <span class="at">--out-dir</span> reports/carotenoid/figures/out</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="va">S</span><span class="op">=</span>/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/tables/species.parquet</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="va">COMMON</span><span class="op">=</span><span class="st">"--genomes </span><span class="va">$R</span><span class="st">/genomes.tsv.zst --species </span><span class="va">$S</span><span class="st"> --search-dir </span><span class="va">$R</span><span class="st">/search/carotenoid_full </span><span class="dt">\</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">  --min-scores </span><span class="va">$R</span><span class="st">/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed phytoene_synthase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/phytoene_synthase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed lycopene_cyclase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/lycopene_cyclase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">  --out-dir reports/carotenoid/figures/out"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> class <span class="at">--min-n</span> 25 <span class="at">--name</span> fig7_presence_by_class</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> order <span class="dt">\</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">--within</span> SUBPHYLUM=Pezizomycotina <span class="at">--min-n</span> 40 <span class="at">--name</span> fig8_presence_by_order_pezizomycotina</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
