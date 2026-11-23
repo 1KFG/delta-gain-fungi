@@ -240,7 +240,7 @@ One genome per genus (1,643 tips of the phyling genus tree; 1,639 with data, 4 w
 | `lycopene_cyclase` | 683 / 956 | 11 | 104 | 96 | 42 to 59 |
 | `cart` | 217 / 1,422 | 5 | 39 | 17 | 14 to 22 |
 
-*ARD model, 0.8 probability rule, Opisthosporidia root (`results/gainloss/carotenoid/gainloss_counts.tsv`). A threshold of 0.7 or 0.9 changes the ARD loss counts by less than 10% and the ER gain counts by up to a third (`threshold_sensitivity.tsv`).*
+*ARD model, 0.8 probability rule, Opisthosporidia root (`results/gainloss/carotenoid/gainloss_counts.tsv`). The probability threshold matters: for `phytoene_synthase` the ARD losses are 93, 88 and 79 at 0.7, 0.8 and 0.9 and the ER gains are 42, 33 and 24 (`threshold_sensitivity.tsv`). The `lycopene_cyclase` losses are 104 in this table and 105 in the edge and co-event tables; the cause was not found.*
 
 ![Figure 11. Events on the same branch for each pair of steps.](figures/out/fig11_co_events.png)
 
@@ -260,7 +260,7 @@ What the counts say (descriptive): of the 13 `phytoene_synthase` gains, 9 fall o
 Reading traps and limits:
 
 - **Reading trap: synthase and cyclase are one gene in most fungi,** so their shared events count once. The synthase and desaturase pair is the informative one among the three.
-- **Most events are on tip edges.** For `phytoene_synthase`, 11 of 13 gains and 66 of 88 losses sit on tip edges, and 8 of 9 synthase and cyclase co-gains and 53 of 71 co-losses do. One genus representative stands for the genus, so a single missing gene or an incomplete assembly can look like a loss. No completeness filter was applied.
+- **Most events are on tip edges.** For `phytoene_synthase`, 11 of 13 gains and 66 of 88 losses sit on tip edges, 8 of 9 synthase and cyclase co-gains and 53 of 71 co-losses do, and 50 of 65 synthase and desaturase co-losses do. One genus representative stands for the genus, so a single missing gene or an incomplete assembly can look like a loss. No completeness filter was applied.
 - **A shared miss can have a common technical cause.** A divergent copy that falls below the cutoffs of several steps in one lineage gives co-loss without a biological loss. The sensitivity audit (section 6e) covers only some steps.
 - **The permutation null ignores the tree,** so its p values are probably too small. The Pagel tests (likelihood ratio 358 to 543 for the core pairs, p from 4e-76 to 3e-116; 47 to 54 for the `cart` pairs, p about 1e-9 to 5e-11; 498 to 870 s per pair) only show that two clustered traits are associated; any two traits that follow clade structure can give a small p. No error rates were simulated, and no multiple-test correction was applied to the Pagel p values.
 - **The two small-tree steps are weak filters.** Switching `phytoene_desaturase` and `cart` between search hits and placed calls moves 10 and 11 genomes (from present to absent) and changes counts by a few branches (`results/gainloss/carotenoid_hits/`). That does not show that either is correct.
