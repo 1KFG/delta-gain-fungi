@@ -54,3 +54,8 @@ After the pathway census, build phylogenies of candidate genes, match them to na
 ## Step 3 and 4 decisions (2026-11-22)
 - Chunk size 4,000 genomes, 6 jobs (owner). Evidence: `2026-11-22-step4-results-and-decisions.md`.
 - Lowered cutoffs for `astaxanthin_synthase` (999.4) and `ylo1` (480.5) kept for step 5 (owner), after the side evaluation. Evidence and files: same note.
+
+## BUSCO filter for the gain/loss analysis (2026-11-23)
+- Owner decision: no BUSCO completeness filter in the main results. Reason: the BFD BUSCO run used `fungi_odb12` for every genome and the budding yeasts score low as a group (Saccharomycetes median 75.4%, 10th to 90th percentile 72.2 to 77.9, 2,589 genomes), which may be a marker-set effect and not poor assemblies (UNVERIFIED). A filter at 80 removes 27 of 43 Saccharomycetes genus tips.
+- The runs with cutoffs 65 and 70 stay as a sensitivity check: counts change by 13% or less and the core co-loss result is unchanged (report section 6h; `results/gainloss/carotenoid_busco_compare/`).
+- A Saccharomycotina-specific BUSCO set is a note for the next BFD BUSCO run, not run now (`Fungi_BFD_runs/docs/NOTES_TO_FOLLOW.md`, open question Q2).
