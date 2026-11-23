@@ -4,6 +4,7 @@
 #   PC_STEP=phytoene_synthase PC_MIN_SUPPORT=0.5 sbatch analysis/pathway_census/slurm/step5_place.sbatch
 # Required: PC_STEP, PC_MIN_SUPPORT. Optional: PC_PATHWAY, PC_ROOT, PC_MIN_LWR (0.5), PC_MAX_PENDANT (1.0).
 #SBATCH -p short
+#SBATCH --constraint="ryzen|cascade|broadwell"
 #SBATCH -c 16
 #SBATCH --mem=32G
 #SBATCH -t 2:00:00
@@ -42,6 +43,13 @@ $PY $UPO assign $W/epa_result.jplace --clades $OUT/clade_members.tsv --min-lwr $
 gzip -c $W/epa_result.jplace > $OUT/epa_result.jplace.gz
 $PY $TOOL placements --assign $OUT/assign.tsv --step $PC_STEP --out $OUT/placements.tsv \
   --out-detail $OUT/placements_detail.tsv
+# lineage subclades (v2 only): placements with the subclade as the clade call, counts, nearest labelled leaf
+if [ -s $OUT/labelled_leaves.tsv ]; then
+  $PY $TOOL placements --assign $OUT/assign.tsv --step $PC_STEP --system fig1 --out $OUT/placements_subclade.tsv \
+    --out-detail $OUT/placements_subclade_detail.tsv
+  $PY $TOOL subclade-report --tree $OUT/ref.raxml.bestTree --clade-members $OUT/clade_members.tsv \
+    --labels $OUT/labelled_leaves.tsv --detail $OUT/placements_detail.tsv --clusters $OUT/clusters.tsv.zst --out-dir $OUT
+fi
 # candidates for this step only (assign_steps takes a table with a step_id column)
 $PY - "$PC_CAND_DIR" $PC_STEP $OUT/candidates_step.tsv <<'PYEOF'
 import glob, subprocess, sys, io
