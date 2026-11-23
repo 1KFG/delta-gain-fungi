@@ -61,3 +61,51 @@ def test_main_keeps_homologue_and_drops_decoy(tmp_path):
     kept = [n for n, _, _ in fd.read_fasta(out_f)]
     assert "homologue" in kept and "decoy" not in kept
     assert out_t.read_text().splitlines()[0] == "decoy\tbest_domain_score\thmm_coverage\tkept_in_tree"
+
+
+def test_merge_intervals_merges_overlap_and_touching():
+    assert fd.merge_intervals([(10, 20), (1, 5), (15, 30), (31, 40), (50, 60)]) == [(1, 5), (10, 40), (50, 60)]
+    assert fd.merge_intervals([]) == []
+    assert fd.union_coverage([(1, 50), (40, 100)], 200) == 0.5
+
+
+def _df(rows):
+    import pandas as pd
+    return pd.DataFrame(rows, columns=hits.COLUMNS)
+
+
+def test_union_passes_split_domains_that_fail_best():
+    # HMM of 120 positions; domains of 15 and 12 bits cover 1-60 and 61-120; a 3-bit domain is below the limit
+    df = _df([("split", "h", 15.0, 1e-3, 1, 50, 1, 60), ("split", "h", 12.0, 1e-3, 60, 110, 61, 120),
+              ("split", "h", 3.0, 1e-3, 120, 130, 150, 160)])
+    recs = [("split", "split", "M")]
+    best = {"split": (15.0, 1, 60)}
+    kept_b, _ = fd.select(recs, best, 10.0, 0.6, 120)
+    assert kept_b == []                                   # best domain covers 60/120 = 0.5 < 0.6
+    un = fd.union_scores(df, 10.0, 120)
+    assert un["split"] == (15.0, 1, 120)                  # 60 + 60 positions, the 3-bit domain is ignored
+    kept_u, table = fd.select(recs, un, 10.0, 0.6, 120)
+    assert [k[0] for k in kept_u] == ["split"] and table[0][2] == 1.0
+
+
+def test_union_scores_without_domain_above_limit_keeps_best_interval():
+    df = _df([("w", "h", 5.0, 1e-3, 1, 50, 1, 30)])
+    assert fd.union_scores(df, 10.0, 100) == {"w": (5.0, 1, 30)}
+    assert fd.union_scores(_df([]), 10.0, 100) == {}
+
+
+@needs_hmmer
+def test_default_coverage_mode_is_best(tmp_path):
+    hmm = tmp_path / "t.hmm"
+    hits.build_hmm(DATA / "tiny_refs.faa", hmm)
+    dec = tmp_path / "decoys.faa"
+    dec.write_text((DATA / "tiny_proteome.faa").read_text())
+    outs = {}
+    for mode in (None, "best", "union"):
+        f, t = tmp_path / f"{mode}.faa", tmp_path / f"{mode}.tsv"
+        args = ["--decoys", str(dec), "--hmm", str(hmm), "--min-score", "20", "--min-coverage", "0.3", "--out-fasta", str(f), "--out-table", str(t)]
+        if mode:
+            args += ["--coverage-mode", mode]
+        assert fd.main(args) == 0
+        outs[mode] = t.read_text()
+    assert outs[None] == outs["best"]

@@ -43,6 +43,49 @@ def hmm_length(hmm: Path) -> int:
     raise ValueError(f"no LENG line in {hmm}")
 
 
+def merge_intervals(intervals):
+    """Merge overlapping or touching 1-based inclusive (from, to) intervals; return the merged list."""
+    out = []
+    for lo, hi in sorted((min(a, b), max(a, b)) for a, b in intervals):
+        if out and lo <= out[-1][1] + 1:
+            out[-1][1] = max(out[-1][1], hi)
+        else:
+            out.append([lo, hi])
+    return [(a, b) for a, b in out]
+
+
+def union_coverage(intervals, hmm_len):
+    """Fraction of the HMM positions covered by the union of the intervals."""
+    return sum(b - a + 1 for a, b in merge_intervals(intervals)) / hmm_len
+
+
+def domain_hits(hmm: Path, fasta: Path, cpus: int = 2):
+    """Parsed domtbl DataFrame of hmmsearch -E 1000 --domE 1000 (empty when there is no hit)."""
+    with tempfile.TemporaryDirectory() as td:
+        dt = Path(td) / "d.domtbl"
+        hits.run_tool(["hmmsearch", "--cpu", str(cpus), "--noali", "-o", "/dev/null", "--domtblout", str(dt),
+                       "-E", "1000", "--domE", "1000", str(hmm), str(fasta)])
+        return hits.parse_domtbl(dt)
+
+
+def union_scores(df, min_score, hmm_len):
+    """name -> (best domain score, hmm_from, hmm_to) where the interval is replaced by a surrogate of the same
+    length as the union of all domains scoring >= min_score (so select() computes the union coverage).
+    The best domain score is kept for the score test. A protein whose domains are all below min_score keeps its best domain."""
+    if df.empty:
+        return {}
+    out = {}
+    for pid, g in df.groupby("protein_id"):
+        b = g.sort_values("score", ascending=False).iloc[0]
+        ok = g[g["score"] >= min_score]
+        if ok.empty:
+            out[pid] = (float(b.score), int(b.hmm_from), int(b.hmm_to))
+        else:
+            n = sum(hi - lo + 1 for lo, hi in merge_intervals(zip(ok.hmm_from, ok.hmm_to)))
+            out[pid] = (float(b.score), 1, int(n))
+    return out
+
+
 def best_scores(hmm: Path, fasta: Path, cpus: int = 2) -> dict[str, tuple[float, int, int]]:
     """name -> (best domain score, hmm_from, hmm_to) of that best domain."""
     with tempfile.TemporaryDirectory() as td:
@@ -81,13 +124,18 @@ def main(argv=None):
     ap.add_argument("--hmm", required=True, type=Path)
     ap.add_argument("--min-score", required=True, type=float)
     ap.add_argument("--min-coverage", type=float, default=0.5, help="fraction of the HMM the best domain must cover (default 0.5, PROPOSED)")
+    ap.add_argument("--coverage-mode", choices=["best", "union"], default="best",
+                    help="best (default): coverage of the best single domain. union: coverage of the union of all domains scoring >= --min-score")
     ap.add_argument("--out-fasta", required=True, type=Path)
     ap.add_argument("--out-table", required=True, type=Path)
     a = ap.parse_args(argv)
     recs = list(read_fasta(a.decoys))
     tmp = a.out_table.parent
     tmp.mkdir(parents=True, exist_ok=True)
-    scores = best_scores(a.hmm, a.decoys)
+    if a.coverage_mode == "union":
+        scores = union_scores(domain_hits(a.hmm, a.decoys), a.min_score, hmm_length(a.hmm))
+    else:
+        scores = best_scores(a.hmm, a.decoys)
     kept, table = select(recs, scores, a.min_score, a.min_coverage, hmm_length(a.hmm))
     with open(a.out_fasta, "w") as fh:
         for name, hdr, seq in kept:
