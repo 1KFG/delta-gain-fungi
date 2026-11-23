@@ -221,56 +221,98 @@ For every step that has an EC number of its own in the tables, `bin/sensitivity_
 
 ### 6g. Are the steps gained and lost together? A first pass on the genus tree
 
-One genome per genus (1,643 tips of the phyling genus tree; 1,639 with data, 4 with no searched genome are NA). Each of the four placed steps is a present or absent call per genus representative. Ancestral states were reconstructed per step with a Mk model (castor), and a branch counts as a gain or loss only when both ends have probability 0.8 or more. `ggpp_synthase`, `ylo1` and the family-level steps are left out, because their calls are family-level or under-called (section 6e).
+One genome per genus. The 30 Microsporidia tips are dropped (owner decision, 2026-11-23: all 30 are absent for all four steps, and their long branches make the root of the tree unreliable), which leaves 1,613 tips of the phyling genus tree, 1,609 with data (4 have no searched genome and are NA). Each of the four placed steps is a present or absent call per genus representative. Ancestral states were reconstructed per step with a Mk model (castor), and a branch counts as a gain or loss only when both ends have probability 0.8 or more. `ggpp_synthase`, `ylo1` and the family-level steps are left out, because their calls are family-level or under-called (section 6e). No BUSCO filter is applied (section 6h).
 
-**Tree and root (PROPOSED).** The FastTree concatenation tree (branch lengths in substitutions per site) is used, rooted on the Opisthosporidia split (Rozellomycota, Aphelidiomycota, Microsporidia; 32 of 33 such tips). The ASTRAL consensus tree is rooted but has coalescent-unit branch lengths and lower support (70.9% of nodes at 0.8 or more, against 93.9%); the two trees differ by an unrooted Robinson-Foulds distance of 1,008 of 3,280, and the Mk likelihood is higher on FastTree for all four steps. Rooting on Blastocladiomycota or Chytridiomycota instead changes the event counts by at most 3 branches. One Microsporidia tip sits elsewhere in the tree, so a long-branch artefact in the root is possible and was not tested.
+**Tree and root (PROPOSED, with the owner's choice of root).** The FastTree concatenation tree (branch lengths in substitutions per site) is used, rooted on Blastocladiomycota (6 tips: *Sorochytrium*, *Catenaria*, *Allomyces*, *Blastocladiella*, *Coelomomyces*, *Paraphysoderma*; they form one clade with nothing else inside). The Opisthosporidia split used in the earlier run held 30 Microsporidia, 2 Aphelidiomycota and 1 Rozellomycota (*Paramicrosporidium*); there is no *Rozella* or *Sanchytrium* tip, so after dropping Microsporidia it holds 3 tips and no longer supports a root. A second root on Chytridiomycota (36 tips) gives identical gains, losses and co-event counts. The ASTRAL consensus tree is rooted but has coalescent-unit branch lengths and lower support (70.9% of nodes at 0.8 or more, against 93.9%); the two trees differ by an unrooted Robinson-Foulds distance of 1,008 of 3,280, and the Mk likelihood is higher on FastTree for all four steps.
 
 ![Figure 9. Presence of four carotenoid steps on the genus tree.](figures/out/fig9_tree_presence.png)
 
-*Rings from inside: `phytoene_synthase`, `phytoene_desaturase`, `lycopene_cyclase`, `cart`; blue is present, grey absent, orange no data. Clades are labelled by the largest clade of at least 90% purity for each class or phylum. **The figure shows that presence is clustered by clade and that the first three rings agree closely; it does not show where the steps were gained or lost, because branch lengths are not drawn and one genome stands for each genus.** [PDF](figures/out/fig9_tree_presence.pdf)*
+*Rings from inside: `phytoene_synthase`, `phytoene_desaturase`, `lycopene_cyclase`, `cart`; blue is present, grey absent, orange no data. Microsporidia are excluded and the tree is rooted on Blastocladiomycota. Clades are labelled by the largest clade of at least 90% purity for each class or phylum. **The figure shows that presence is clustered by clade and that the first three rings agree closely; it does not show where the steps were gained or lost, because branch lengths are not drawn and one genome stands for each genus.** [PDF](figures/out/fig9_tree_presence.pdf)*
 
 ![Figure 10. Gains, losses and uncertain branches per step.](figures/out/fig10_gain_loss_counts.png)
 
-*Counts of branches under the all-rates-different model (ARD, lower AIC for every step) and the equal-rates model (ER). Diamonds are gains in one parsimony reconstruction under two tie rules. **The figure shows that the gain count depends on the method (for `phytoene_synthase`, 13 under ARD, 33 under ER, 42 to 52 by parsimony), while the loss count is stable at 88 (ARD) against 47 (ER); it does not give one true number of gains.** [PDF](figures/out/fig10_gain_loss_counts.pdf)*
+*Counts of branches under the all-rates-different model (ARD, lower AIC for every step) and the equal-rates model (ER). Diamonds are gains in one parsimony reconstruction under two tie rules. **The figure shows that the gain count depends on the method (for `phytoene_synthase`, 13 under ARD against a parsimony range several times higher), while the loss count is stable under ARD; it does not give one true number of gains.** [PDF](figures/out/fig10_gain_loss_counts.pdf)*
 
-| Step | Present / absent tips | Gains | Losses | Uncertain branches | Parsimony gains (two tie rules) |
-|---|---:|---:|---:|---:|---:|
-| `phytoene_synthase` | 737 / 902 | 13 | 88 | 69 | 42 to 52 |
-| `phytoene_desaturase` | 687 / 952 | 13 | 117 | 66 | 37 to 67 |
-| `lycopene_cyclase` | 683 / 956 | 11 | 104 | 96 | 42 to 59 |
-| `cart` | 217 / 1,422 | 5 | 39 | 17 | 14 to 22 |
+| Step | Present / absent tips | Gains | Losses | Uncertain branches | Gains on tip / internal edges | Losses on tip / internal edges |
+|---|---:|---:|---:|---:|---:|---:|
+| `phytoene_synthase` | 737 / 872 | 13 | 85 | 77 | 11 / 2 | 65 / 20 |
+| `phytoene_desaturase` | 687 / 922 | 13 | 117 | 64 | 9 / 4 | 94 / 23 |
+| `lycopene_cyclase` | 683 / 926 | 15 | 103 | 75 | 13 / 2 | 82 / 21 |
+| `cart` | 217 / 1,392 | 5 | 39 | 17 | 4 / 1 | 34 / 5 |
 
-*ARD model, 0.8 probability rule, Opisthosporidia root (`results/gainloss/carotenoid/gainloss_counts.tsv`). The probability threshold matters: for `phytoene_synthase` the ARD losses are 93, 88 and 79 at 0.7, 0.8 and 0.9 and the ER gains are 42, 33 and 24 (`threshold_sensitivity.tsv`). The `lycopene_cyclase` losses are 104 in this table and 105 in the edge and co-event tables; the cause was not found.*
+*ARD model, 0.8 rule, Blastocladiomycota root, 1,609 tips with data (`results/gainloss/carotenoid_noMicro_blasto/gainloss_counts.tsv`). ARD is better than ER by AIC for every step (by 53 to 154 AIC units).*
 
 ![Figure 11. Events on the same branch for each pair of steps.](figures/out/fig11_co_events.png)
 
-*Observed branches with an event in both steps, the count expected if one step's events were drawn at random among eligible branches, and the BH q value over 24 tests. **The figure shows that gains and losses of the three core steps fall on the same branches far more often than a random draw predicts; it does not show that the null is right, because the draw ignores tree structure and the q values sit at the permutation floor (0.0004).** [PDF](figures/out/fig11_co_events.pdf)*
+*Observed branches with an event in both steps, the count expected if one step's events were drawn at random among eligible branches, and the BH q value over 24 tests. **The figure shows that gains and losses of the three core steps fall on the same branches far more often than a random draw predicts; it does not show that the null is right, because the draw ignores tree structure and the q values sit at the permutation floor (0.0004). Section 6h uses a tree-aware null.** [PDF](figures/out/fig11_co_events.pdf)*
 
-| Pair | Co-gain: observed (expected) | Co-loss: observed (expected) |
+| Pair | Co-gain: observed (on tip edges) | Co-loss: observed (on tip edges) |
 |---|---:|---:|
-| synthase and desaturase | 9 (0.08) | 65 (5.19) |
-| synthase and cyclase | 9 (0.09) | 71 (4.91) |
-| desaturase and cyclase | 7 (0.07) | 71 (7.00) |
-| synthase and `cart` | 0 (0.02) | 3 (2.16) |
-| desaturase and `cart` | 0 (0.02) | 6 (2.24; q 0.053) |
-| cyclase and `cart` | 0 (0.01) | 3 (2.16) |
+| synthase and desaturase | 9 (7) | 62 (49) |
+| synthase and cyclase | 9 (8) | 68 (52) |
+| desaturase and cyclase | 8 (7) | 69 (56) |
+| synthase and `cart` | 0 | 3 |
+| desaturase and `cart` | 0 | 6 (q 0.053) |
+| cyclase and `cart` | 0 | 3 |
 
-What the counts say (descriptive): of the 13 `phytoene_synthase` gains, 9 fall on branches that also gain desaturase and 9 on branches that also gain cyclase; of its 88 losses, 65 fall on branches that also lose desaturase and 71 on branches that also lose cyclase. `cart` shows no co-gain and only weak co-loss with desaturase. Opposite events (a gain of one step with a loss of another) number 0 in 9 of 12 tests.
+What the counts say (descriptive): of the 13 `phytoene_synthase` gains, 9 fall on branches that also gain desaturase and 9 on branches that also gain cyclase; of its 85 losses, 62 fall on branches that also lose desaturase and 68 on branches that also lose cyclase. `cart` shows no co-gain and only weak co-loss with desaturase.
 
 Reading traps and limits:
 
 - **Reading trap: synthase and cyclase are one gene in most fungi,** so their shared events count once. The synthase and desaturase pair is the informative one among the three.
-- **Most events are on tip edges.** For `phytoene_synthase`, 11 of 13 gains and 66 of 88 losses sit on tip edges, 8 of 9 synthase and cyclase co-gains and 53 of 71 co-losses do, and 50 of 65 synthase and desaturase co-losses do. One genus representative stands for the genus, so a single missing gene or an incomplete assembly can look like a loss. No completeness filter was applied.
+- **Most events are on tip edges.** For `phytoene_synthase`, 11 of 13 gains and 65 of 85 losses sit on tip edges, as do 49 of the 62 synthase and desaturase co-losses. One genus representative stands for the genus, so a missed gene or an incomplete assembly can look like a loss. No completeness filter is applied in the main results (section 6h).
 - **A shared miss can have a common technical cause.** A divergent copy that falls below the cutoffs of several steps in one lineage gives co-loss without a biological loss. The sensitivity audit (section 6e) covers only some steps.
-- **The permutation null ignores the tree,** so its p values are probably too small; a tree-aware simulation null is in section 6h. The Pagel tests (likelihood ratio 358 to 543 for the core pairs, p from 4e-76 to 3e-116; 47 to 54 for the `cart` pairs, p about 1e-9 to 5e-11; 498 to 870 s per pair) only show that two clustered traits are associated; any two traits that follow clade structure can give a small p. No error rates were simulated, and no multiple-test correction was applied to the Pagel p values.
-- **The two small-tree steps are weak filters.** Switching `phytoene_desaturase` and `cart` between search hits and placed calls moves 10 and 11 genomes (from present to absent) and changes counts by a few branches (`results/gainloss/carotenoid_hits/`). That does not show that either is correct.
+- **The tree-blind permutation null in Figure 11 is too permissive;** the tree-aware null is in section 6h. The Pagel tests (likelihood ratio 352 to 537 for the three core pairs, p from 8e-75 to 8e-115; 832 to 1,207 s per pair) only show that two clustered traits are associated; any two traits that follow clade structure can give a small p. No error rates were simulated, and no multiple-test correction was applied. Pagel was not re-run for the `cart` pairs on this tree.
+- **The two small-tree steps are weak filters.** Switching `phytoene_desaturase` and `cart` between search hits and placed calls moves 10 and 11 genomes (from present to absent) in the earlier run and changes counts by a few branches. That does not show that either is correct.
 - **Marginal probabilities were computed by our own code.** castor's `reroot=TRUE` marginals returned 0 for every node on a toy tree under the ARD model. The own two-pass code matches castor under ER to 1.7e-05 (unit test).
 
-### 6h. Do the shared losses exceed chance on this tree? BUSCO floor, a simulation null and a second tree
+### 6h. Do the shared losses exceed chance on this tree? Simulation null, root and dropped tips, BUSCO and a second tree
 
-Three checks on the result in section 6g. The full record is `results/gainloss/RUN_followup.md`.
+Checks on the result in section 6g. The full records are `results/gainloss/carotenoid_noMicro_blasto/RUN.md` (new primary) and `results/gainloss/RUN_followup.md` (BUSCO and ASTRAL runs, made on the earlier primary).
 
-**BUSCO filter (owner decision, 2026-11-23: not applied).** The main analysis in sections 6g and 6h uses all tips. The runs below set tips whose genus representative has `busco_complete` below a cutoff to NA, as a sensitivity check only. A filter is not applied because the BFD BUSCO run used `fungi_odb12` for every genome and the budding yeasts score low as a group (Saccharomycetes median 75.4, 10th to 90th percentile 72.2 to 77.9, 2,589 genomes), which fits markers missing from the lineage and not poor assemblies (UNVERIFIED; open question Q2 in `docs/superpowers/notes/2026-11-22-open-questions.md`). A floor of 65 to 70 therefore cannot catch an incomplete yeast assembly, and a higher floor removes the yeasts; given that uncertainty the owner dropped the filter. Cutoff 70 removes 69 of 1,654 representatives; cutoff 65 removes 59.
+**A tree-aware simulation null (new primary: Microsporidia dropped, Blastocladiomycota root).** Each step is simulated independently on the same tree under its own fitted ARD rates, 2,000 replicates; each replicate is refitted, reconstructed and called with the same 0.8 rule, and co-events are counted on all edges and on internal edges only. Internal-edge events cannot come from an incomplete assembly.
+
+- **Reading trap: the null as first specified is wrong for these data.** With a stationary root the simulated steps have a mean of 29 to 171 present tips, against 217 to 737 observed, and gains about twice the observed number while losses are far below it. Such a null can hardly produce a co-loss, so its p values sit at the floor for a reason unrelated to the pair (`fig13_null_co_events`).
+- **A prevalence-matched null is the main reading (PROPOSED).** Same rates, but each replicate is drawn until its present-tip count is within 10% of the observed count. It reproduces the gains and the present-tip counts (215 to 730 against 217 to 737) and overshoots the losses. It matches prevalence, not clade structure.
+
+![Figure 13. Observed co-events against the prevalence-matched simulation null.](figures/out/fig13b_null_co_events_prevalence_matched.png)
+
+*Blue bars are the null (2,000 replicates), the orange line is the observed count, for all edges and for internal edges only. Microsporidia are excluded and the root is Blastocladiomycota. **The figure shows that the shared losses of the three core steps lie far outside the null on all edges and on internal edges, while the `cart` pairs lie inside it; it does not show that the steps are functionally linked, and the `phytoene_synthase` and `lycopene_cyclase` row is not a meaningful test because the two are one fused gene.** The null does not model missing data or a shared technical cause. [PDF](figures/out/fig13b_null_co_events_prevalence_matched.pdf)*
+
+| Pair and event | Observed all edges (internal) | Null mean all edges (internal) | p |
+|---|---:|---:|---:|
+| synthase and desaturase, co-loss | 62 (13) | 8.7 (1.2) | 0.0005 |
+| synthase and cyclase, co-loss (fused gene) | 68 (16) | 8.2 (1.1) | 0.0005 |
+| desaturase and cyclase, co-loss | 69 (13) | 9.6 (1.3) | 0.0005 |
+| synthase and desaturase, co-gain | 9 (2) | 0.19 (0.04) | 0.0005 (internal 0.002, q 0.012) |
+| synthase and cyclase, co-gain (fused gene) | 9 (1) | 0.21 (0.05) | 0.0005 (internal 0.046, q 0.18) |
+| desaturase and cyclase, co-gain | 8 (1) | 0.21 (0.04) | 0.0005 (internal 0.037, q 0.18) |
+| `cart` pairs, co-loss | 3 to 6 (0) | 2.6 to 3.4 (0.35 to 0.45) | 0.24 to 0.48 |
+| `cart` pairs, co-gain | 0 (0) | 0.06 to 0.07 | 1.0 |
+
+*N = 2,000, so the smallest possible p is 0.0005 (`results/gainloss/carotenoid_noMicro_blasto_null/null_summary.tsv`). The upper limit of the null's 95% interval is 16 to 19 for the core co-loss on all edges and 4 on internal edges.*
+
+- **Core co-loss is more than chance on this tree.** 62 to 69 observed branches against a null mean of 8 to 10, and 13 to 16 internal-edge branches against about 1.1 to 1.3.
+- **Core co-gain on all edges also exceeds the null** (8 to 9 branches against about 0.2), but only 1 to 2 of them are on internal edges. The 2 internal branches for synthase and desaturase are beyond chance; the single internal branch for each cyclase pair is within chance after correction (q 0.18). That is weak evidence.
+- **`cart` is within chance.** Its co-loss p is 0.24 to 0.48 and it has no co-gain. It is not called co-lost with the other steps. The first null gave `cart` co-loss p of 0.0025 to 0.0105, which the matched null does not support.
+- **What this does not establish.** It does not show a functional link; a shared technical cause (a divergent copy falling below several cutoffs in one lineage) would also give co-loss; the simulation also leaves out missing data. The Pagel results are in section 6g and have the clade-clustering limit stated there.
+- **The root of the simulation is open.** A stationary root was used; a root drawn from the reconstruction (N = 100, earlier primary, smallest p 0.0099) gave the same pattern.
+
+**Dropped tips and root: three runs.** A is the earlier primary (all 1,643 tips, Opisthosporidia root), B the new primary (Microsporidia dropped, Blastocladiomycota root), C all tips with the Blastocladiomycota root, which separates the effect of the root from the effect of dropping the tips.
+
+| Run | Gains / losses: synthase | desaturase | cyclase | `cart` | Co-loss: synthase and desaturase | synthase and cyclase | desaturase and cyclase |
+|---|---|---|---|---|---:|---:|---:|
+| A | 13 / 88 | 13 / 117 | 11 / 104 | 5 / 39 | 65 | 71 | 71 |
+| B | 13 / 85 | 13 / 117 | 15 / 103 | 5 / 39 | 62 | 68 | 69 |
+| C | 13 / 88 | 13 / 117 | 12 / 105 | 5 / 39 | 65 | 71 | 71 |
+
+*ARD, 0.8 rule (`results/gainloss/carotenoid_noMicro_blasto_compare/`). Co-gain is 9, 9 and 7 or 8 in all three runs, and the `cart` pairs have no co-gain in any.*
+
+- **None of run A's events sits on an edge with a Microsporidia tip,** and all 30 Microsporidia tips are absent for all four steps, so dropping them removes no event directly.
+- **The root alone moves only `lycopene_cyclase`,** by 1 to 5 branches, and leaves the co-event counts identical (A against C). The change from A to B comes from refitting the model on a different set of tips (for `phytoene_synthase` the gain rate moves from 0.079 to 0.095, which shifts some node probabilities across the 0.8 line).
+- **The conclusions of this section are the same in all three runs.**
+
+**BUSCO filter (owner decision, 2026-11-23: not applied).** The main analysis in sections 6g and 6h uses all tips. The runs below (on the earlier primary: all 1,643 tips, Opisthosporidia root) set tips whose genus representative has `busco_complete` below a cutoff to NA, as a sensitivity check only. A filter is not applied because the BFD BUSCO run used `fungi_odb12` for every genome and the budding yeasts score low as a group (Saccharomycetes median 75.4, 10th to 90th percentile 72.2 to 77.9, 2,589 genomes), which fits markers missing from the lineage and not poor assemblies (UNVERIFIED; open question Q2 in `docs/superpowers/notes/2026-11-22-open-questions.md`). A floor of 65 to 70 therefore cannot catch an incomplete yeast assembly, and a higher floor removes the yeasts; given that uncertainty the owner dropped the filter. Cutoff 70 removes 69 of 1,654 representatives; cutoff 65 removes 59.
 
 | Step | Tips with data (unfiltered, 70) | Gains | Losses | Losses on tip / internal edges |
 |---|---|---:|---:|---|
@@ -279,39 +321,13 @@ Three checks on the result in section 6g. The full record is `results/gainloss/R
 | `lycopene_cyclase` | 1,639 / 1,570 | 11 / 15 | 104 / 96 | 82 / 23 and 75 / 21 |
 | `cart` | 1,639 / 1,570 | 5 / 5 | 39 / 38 | 34 / 5 and 33 / 5 |
 
-*ARD model, 0.8 rule, Opisthosporidia root (`results/gainloss/carotenoid_busco_compare/`). Cutoffs 65 and 70 give counts within 2 branches of each other.*
+*Earlier primary (all tips, Opisthosporidia root), ARD model, 0.8 rule (`results/gainloss/carotenoid_busco_compare/`). Cutoffs 65 and 70 give counts within 2 branches of each other.*
 
 - **The filter changes counts by 13% or less, and removes mostly tips that are absent for every step, so dropping it costs little.** Of the 69 removed tips, 31 have no class label (30 Microsporidia and 1 Rozellomycota by the phylum column; all absent for all four steps; why their BUSCO is low was not tested), 12 are Agaricomycetes (all absent), and 7 are Lecanoromycetes (71% present for each core step). Saccharomycetes loses 1 and Pichiomycetes 0.
 - **Core co-loss falls from 65 to 71 branches to 59 to 65 at cutoff 70** (internal-edge co-losses are 14 to 15 at cutoffs 65 and 70, against 15 to 18 unfiltered), and co-gain changes by at most 1.
 
-**A tree-aware simulation null.** Each step is simulated independently on the same tree under its own fitted ARD rates, 2,000 replicates; each replicate is refitted, reconstructed and called with the same 0.8 rule, and co-events are counted on all edges and on internal edges only. Internal-edge events cannot come from an incomplete assembly.
 
-- **Reading trap: the null as first specified is wrong for these data.** With a stationary root the simulated steps have a mean of 150, 121, 122 and 26 present tips (`phytoene_synthase`, `phytoene_desaturase`, `lycopene_cyclase`, `cart`), against 737, 687, 683 and 217 observed, and only 1 to 2% of replicates reach the observed prevalence. Such a null can hardly produce a co-loss, so its p values sit at the floor for a reason unrelated to the pair (`fig13_null_co_events`).
-- **A prevalence-matched null is the main reading (PROPOSED).** Same rates, but each replicate is drawn until its present-tip count is within 10% of the observed count. It reproduces the gains (12 against 13 for `phytoene_synthase`) and overshoots the losses (103 against 88). It matches prevalence, not clade structure.
-
-![Figure 13. Observed co-events against the prevalence-matched simulation null.](figures/out/fig13b_null_co_events_prevalence_matched.png)
-
-*Blue bars are the null (2,000 replicates), the orange line is the observed count, for all edges and for internal edges only. **The figure shows that the shared losses of the three core steps lie far outside the null on all edges and on internal edges, while the `cart` pairs lie inside it; it does not show that the steps are functionally linked, and the `phytoene_synthase` and `lycopene_cyclase` row is not a meaningful test because the two are one fused gene.** The null does not model missing data or a shared technical cause. [PDF](figures/out/fig13b_null_co_events_prevalence_matched.pdf)*
-
-| Pair and event | Observed all edges (internal) | Null mean all edges (internal) | p |
-|---|---:|---:|---:|
-| synthase and desaturase, co-loss | 65 (15) | 9.1 (1.2) | 0.0005 |
-| synthase and cyclase, co-loss (fused gene) | 70 (17) | 8.7 (1.2) | 0.0005 |
-| desaturase and cyclase, co-loss | 71 (15) | 10.5 (1.4) | 0.0005 |
-| synthase and desaturase, co-gain | 9 (2) | 0.17 (0.03) | 0.0005 |
-| synthase and cyclase, co-gain (fused gene) | 9 (1) | 0.18 (0.03) | 0.0005 (internal 0.029) |
-| desaturase and cyclase, co-gain | 7 (1) | 0.18 (0.03) | 0.0005 (internal 0.035) |
-| `cart` pairs, co-loss | 3 to 6 (0) | 2.7 to 3.5 (0.4 to 0.5) | 0.26 to 0.49 |
-| `cart` pairs, co-gain | 0 (0) | 0.05 to 0.07 | 1.0 |
-
-*Unfiltered tips, N = 2,000, so the smallest possible p is 0.0005 (`results/gainloss/carotenoid_null/null_summary.tsv`). At BUSCO 70 the core co-loss is 59 to 65 against a null mean of 7.1 to 8.6, internal 15 against about 1.0 to 1.2, p 0.0005 (`carotenoid_busco70_null/`). The internal-edge co-gain has 2 branches for synthase and desaturase (p 0.001) and 1 branch for the two cyclase pairs (p 0.043 to 0.047, q 0.19), so it is weak evidence.*
-
-- **Core co-loss is more than chance on this tree.** 59 to 71 observed branches against a null mean of 7 to 10 (interval up to 14 to 20), and 15 to 17 internal-edge branches against about 1 (interval up to 4), unfiltered and at BUSCO 70.
-- **`cart` is within chance.** Its co-loss p is 0.26 to 0.54 and it has no co-gain. It is not called co-lost with the other steps. The first null gave `cart` co-loss p of 0.0035 to 0.015, which the matched null does not support.
-- **What this does not establish.** It does not show a functional link; a shared technical cause (a divergent copy falling below several cutoffs in one lineage) would also give co-loss; the simulation also leaves out missing data. Pagel at cutoff 70 for the core pairs gives p from 3.5e-72 to 2.3e-109 and has the clade-clustering limit already stated in section 6g.
-- **The root of the simulation is open.** A stationary root was used; a root drawn from the reconstruction (N = 100, smallest p 0.0099) gave the same pattern.
-
-**A second tree (ASTRAL, unfiltered, counts only).** The ASTRAL consensus tree was used with its own root. Its branch lengths are coalescent units, so rates are not comparable with FastTree and this is a topology check.
+**A second tree (ASTRAL, earlier primary: all tips, counts only).** The ASTRAL consensus tree was used with its own root. Its branch lengths are coalescent units, so rates are not comparable with FastTree and this is a topology check.
 
 | Step | Gains FastTree / ASTRAL as given / ASTRAL all lengths 1 | Losses FastTree / as given / all 1 |
 |---|---|---|
@@ -345,7 +361,7 @@ Three checks on the result in section 6g. The full record is `results/gainloss/R
 - Quality, contamination and haplotype flags (step 7). There is no fungal versus non-fungal reference set, so counts will be raw first.
 - The copy matrix and phylum summary (step 8), the deposited versus BFD comparison (steps 9, 10), the tblastn absence check (step 11) and triage (step 12).
 - **Co-gain and co-loss, beyond sections 6g and 6h.** Not done: a yeast-specific BUSCO set (the 65 to 70 floor cannot catch an incomplete yeast assembly); the simulation null on a second tree or at cutoff 65; replicate genomes per genus; and the same analysis for the other steps. No completeness filter is applied in the main results (owner decision, 2026-11-23); the BUSCO 65 and 70 runs are a sensitivity check.
-- The root of the genus tree is a PROPOSED choice (Opisthosporidia); the sensitivity to Blastocladiomycota and Chytridiomycota roots is small (at most 3 branches), but one Microsporidia tip lies outside the group, and a long-branch artefact was not tested.
+- The root of the genus tree is the owner's choice (Blastocladiomycota, with Microsporidia dropped); a second root on Chytridiomycota gives identical counts. The simulation null was not run for run C (all tips, Blastocladiomycota root), and Pagel was not re-run for the `cart` pairs on the new tree.
 - The question of whether fungal lycopene cyclases have diversified in some groups (`docs/superpowers/notes/2026-11-22-open-questions.md`, Q1). It needs step 5 first.
 
 ## 9. Methods, tools and files
@@ -360,7 +376,7 @@ Three checks on the result in section 6g. The full record is `results/gainloss/R
 | Named tree members (v2) | `refs/carotenoid/tree_members/` (13 members, 7 outgroups, provenance, README), `tests/test_tree_members.py`; v2 run `results/step5/carotenoid/phytoene_synthase_v2/` (`RUN.md`), jobs 32377324 and 32377370 |
 | Decoy filter for trees | `bin/filter_decoys_for_tree.py` (score >= 10 bits and HMM coverage >= 0.5, PROPOSED), `tests/test_filter_decoys_for_tree.py`; used with `PC_DECOYS_FA` in `slurm/step5_prepare.sbatch` |
 | Gain and loss | `bin/make_calls_table.py`, `bin/gainloss_lib.R`, `bin/run_gainloss.R`, `bin/run_pagel.R`, `bin/gainloss_compare_trees.R`, `slurm/gainloss_*.sbatch`, figures `fig9_tree_presence.R`, `fig10_gain_loss_counts.R`, `fig11_co_events.R`; output `results/gainloss/carotenoid/` (`RUN.md` has commands, versions, jobs); tree `BFD_dashboard/atlas_data/phylo/results/protein/buildtree/fungi_odb10/fasttree/*.support.treefile`; R 4.2.0 (ape, castor, phytools, ggtree) |
-| Gain/loss follow-up | `bin/filter_calls_busco.py`, `compare_busco_versions.py`, `gainloss_null_lib.R`, `run_null_sim.R`, `summarise_null.R`, `run_astral_compare.R`, `slurm/gainloss_null.sbatch`, `fig13_null_co_events.R`, tests `test_gainloss_null.py`, `test_filter_calls_busco.py`; results `results/gainloss/carotenoid_busco70/`, `carotenoid_busco65/`, `carotenoid_null/`, `carotenoid_busco70_null/`, `carotenoid_astral/`, record `results/gainloss/RUN_followup.md` |
+| Gain/loss follow-up | `bin/filter_calls_busco.py`, `compare_busco_versions.py`, `gainloss_null_lib.R`, `run_null_sim.R`, `summarise_null.R`, `run_astral_compare.R`, `slurm/gainloss_null.sbatch`, `fig13_null_co_events.R`, tests `test_gainloss_null.py`, `test_filter_calls_busco.py`; results `results/gainloss/carotenoid_noMicro_blasto/` (new primary, with `_null/` and `_compare/`), `carotenoid_busco70/`, `carotenoid_busco65/`, `carotenoid_null/`, `carotenoid_busco70_null/`, `carotenoid_astral/` (earlier primary), records `carotenoid_noMicro_blasto/RUN.md` and `results/gainloss/RUN_followup.md` |
 | Desaturase and cart placement | `results/step5/carotenoid/phytoene_desaturase/` and `cart/` (jobs 32377960 to 32377963); outgroups in `refs/carotenoid/tree_members/` |
 | Cyclase placement | `results/step5/carotenoid/lycopene_cyclase_v2/` (jobs 32377644 and 32377645) |
 | Sensitivity audit | `bin/sensitivity_audit.py`, `tests/test_sensitivity_audit.py`, figure `reports/carotenoid/figures/bin/fig_sensitivity_audit.py` (figure 12); output `results/audit/carotenoid/`; UniProt REST queries of 2026-11-22 |
