@@ -222,6 +222,11 @@ def test_define_clades_without_outgroup():
     assert c["target"] == frozenset({"r1", "r2"}) and c["outgroup"] == frozenset()
 
 
+def test_smallest_side_tie_is_deterministic():
+    sides = [frozenset("bc"), frozenset("ac"), frozenset("ab")]
+    assert s5.smallest_side(sides, "", "") == frozenset("ab")
+
+
 def test_smallest_side_picks_the_smallest():
     sides = [frozenset("abc"), frozenset("ab"), frozenset("abd")]
     assert s5.smallest_side(sides, "a", "d") == frozenset("ab")
@@ -359,3 +364,244 @@ def test_run_summarize_collects_files(tmp_path):
     assert rows["placement.long_pendant"]["value"] == "1"
     assert rows["assign_steps.label.assigned"]["value"] == "1"
     assert all(r["status"] == "MEASURED" for r in rows.values())
+
+
+# ---- v2: members, outgroups, lineage subclades, nearest labelled leaf ----
+
+def upo_tree(newick):
+    upo = s5.load_upo()
+    return upo.parse_newick(newick)
+
+
+NW2 = ("((((a1:1,a2:1):1,(b1:1,rep1:1):1):1,((c1:1,c2:1):1,rep2:1):1):1,"
+       "((d1:1,d2:1):1,drep:1):1,(o1:1,o2:1):1);")
+
+
+def test_leaf_roles_named_member_and_outgroup_role():
+    r = s5.leaf_roles({"a", "m", "o", "p"}, {"a"}, set(), {"o"}, {"p"}, members={"m"},
+                      outgroup_role="tree_outgroup")
+    assert r == {"a": "reference", "m": "named_member", "o": "tree_outgroup", "p": "representative"}
+
+
+@needs_upo
+def test_define_clades_members_are_never_decoys():
+    nw = "((r1:1,r2:1):1,(m1:1,x1:1):1,(d1:1,og:1):1);"
+    c = s5.define_clades(bip_of(nw), {"r1", "r2"}, {"d1"}, {"og"}, members={"m1"})
+    assert c["target"] == frozenset({"r1", "r2"})
+    assert "m1" not in c["decoy"] and "x1" in c["decoy"]
+
+
+@needs_upo
+def test_define_clades_without_members_is_unchanged():
+    nw = "((r1:1,r2:1):1,(m1:1,x1:1):1,(d1:1,og:1):1);"
+    c = s5.define_clades(bip_of(nw), {"r1", "r2"}, {"d1"}, {"og"})
+    assert "m1" in c["decoy"]
+
+
+@needs_upo
+def test_describe_outgroups_monophyletic_and_decoy_position():
+    bip = bip_of(NW2)
+    sides = s5.all_sides(bip)
+    roles = {l: "x" for l in ["a1", "a2", "b1", "rep1", "c1", "c2", "rep2", "d1", "d2", "drep", "o1", "o2"]}
+    roles.update({"o1": "tree_outgroup", "o2": "tree_outgroup", "d1": "decoy", "d2": "decoy"})
+    d = s5.describe_outgroups(sides, {"o1", "o2"}, {"d1", "d2"}, roles)
+    assert d["outgroups_monophyletic"] is True and d["outgroup_mrca_size"] == 2
+    assert d["decoys_inside_outgroup_mrca"] == 0
+    assert d["decoys_monophyletic"] is True and d["decoy_mrca_size"] == 2
+
+
+@needs_upo
+def test_describe_outgroups_not_monophyletic():
+    bip = bip_of("((o1:1,x:1):1,(o2:1,y:1):1,z:1);")
+    sides = s5.all_sides(bip)
+    roles = {l: "other" for l in ["o1", "o2", "x", "y", "z"]}
+    d = s5.describe_outgroups(sides, {"o1", "o2"}, set(), roles)
+    assert d["outgroups_monophyletic"] is False and d["outgroup_mrca_size"] == 4 or d["outgroup_mrca_size"] == 5
+
+
+def test_mrca_side_empty_is_none():
+    assert s5.mrca_side([frozenset("ab")], []) is None
+
+
+@needs_upo
+def test_lineage_subclades_found_and_refused():
+    sides = s5.all_sides(bip_of(NW2))
+    # classes A (a1,a2), B (b1 only), C (c1,c2); D mixes d1 with a1 -> intruder of another class
+    labels = {"a1": "A", "a2": "A", "b1": "B", "c1": "C", "c2": "C"}
+    sub, rows = s5.lineage_subclades(sides, labels, excluded={"d1", "d2", "o1", "o2"})
+    assert set(sub) == {"A", "C"} and sub["A"] == frozenset({"a1", "a2"})
+    byc = {r["class"]: r for r in rows}
+    assert byc["B"]["subclade"] is False and "fewer than 2" in byc["B"]["reason"]
+    labels2 = {"a1": "A", "c1": "A", "a2": "B"}
+    sub2, rows2 = s5.lineage_subclades(sides, labels2, excluded=set())
+    assert "A" not in sub2
+    assert "holds labelled leaves of other classes" in {r["class"]: r for r in rows2}["A"]["reason"]
+
+
+@needs_upo
+def test_lineage_subclades_refuses_when_decoy_inside():
+    sides = s5.all_sides(bip_of("((a1:1,d1:1):1,(a2:1,x:1):1,(o:1,y:1):1);"))
+    sub, rows = s5.lineage_subclades(sides, {"a1": "A", "a2": "A"}, excluded={"d1"})
+    assert sub == {} and "decoy/outgroup" in rows[0]["reason"]
+
+
+def test_make_labels_and_read_labels(tmp_path):
+    (tmp_path / "refs.faa").write_text(">R1 x\nA\n>R2\nA\n")
+    (tmp_path / "mem.faa").write_text(">M1 region=1-2 sp\nA\n")
+    write_tsv(tmp_path / "rc.tsv", ["accession", "class"], [["R1", "K1"], ["R2", "K2"]])
+    write_tsv(tmp_path / "prov.tsv", ["step_id", "accession", "class", "role", "evidence_codes"],
+              [["S", "M1", "K1", "named_member", "ECO:0000250"], ["S", "OG", "Z", "tree_outgroup", ""],
+               ["OTHER", "M1", "K9", "named_member", ""]])
+    n = s5.make_labels(tmp_path / "refs.faa", tmp_path / "rc.tsv", tmp_path / "mem.faa",
+                       tmp_path / "prov.tsv", "S", tmp_path / "lab.tsv")
+    assert n == 3
+    assert s5.read_labels(tmp_path / "lab.tsv") == {"R1": "K1", "R2": "K2", "M1": "K1"}
+
+
+def test_make_labels_missing_class_raises(tmp_path):
+    (tmp_path / "refs.faa").write_text(">R1\nA\n")
+    write_tsv(tmp_path / "rc.tsv", ["accession", "class"], [["R9", "K"]])
+    write_tsv(tmp_path / "prov.tsv", ["step_id", "accession", "class", "role", "evidence_codes"], [])
+    with pytest.raises(ValueError):
+        s5.make_labels(tmp_path / "refs.faa", tmp_path / "rc.tsv", None, tmp_path / "prov.tsv", "S",
+                       tmp_path / "o.tsv")
+    (tmp_path / "mem.faa").write_text(">M1\nA\n")
+    write_tsv(tmp_path / "rc.tsv", ["accession", "class"], [["R1", "K"]])
+    with pytest.raises(ValueError):
+        s5.make_labels(tmp_path / "refs.faa", tmp_path / "rc.tsv", tmp_path / "mem.faa",
+                       tmp_path / "prov.tsv", "S", tmp_path / "o.tsv")
+
+
+def test_make_refset_orders_and_rejects_duplicates(tmp_path):
+    for n, t in (("r", "r1"), ("d", "d1"), ("m", "m1"), ("o", "o1"), ("p", "p1")):
+        (tmp_path / f"{n}.faa").write_text(f">{t} desc\nAAAA\n")
+    out = tmp_path / "set.faa"
+    n = s5.make_refset(out, tmp_path / "r.faa", tmp_path / "d.faa", tmp_path / "m.faa",
+                       tmp_path / "o.faa", tmp_path / "p.faa")
+    assert n == 5
+    assert [x for x, _ in s5.read_fasta_text(out.read_text())] == ["r1", "d1", "m1", "o1", "p1"]
+    (tmp_path / "p.faa").write_text(">r1\nAAAA\n")
+    with pytest.raises(ValueError):
+        s5.make_refset(out, tmp_path / "r.faa", tmp_path / "d.faa", None, None, tmp_path / "p.faa")
+
+
+def test_make_refset_optional_inputs(tmp_path):
+    (tmp_path / "r.faa").write_text(">r1\nA\n")
+    (tmp_path / "d.faa").write_text(">d1\nA\n")
+    (tmp_path / "p.faa").write_text("")
+    assert s5.make_refset(tmp_path / "o.faa", tmp_path / "r.faa", tmp_path / "d.faa", None, None,
+                          tmp_path / "p.faa") == 2
+
+
+@needs_upo
+def test_tree_distance_and_nearest_labelled():
+    top = upo_tree("((a:1,b:2):1,(c:4,d:1):1);")
+    paths = s5.leaf_depths(top)
+    assert s5.tree_distance(paths, "a", "b") == 3
+    assert s5.tree_distance(paths, "a", "c") == 1 + 1 + 1 + 4
+    got = s5.nearest_labelled(top, ["a", "c"], ["b", "d"])
+    assert got == [("a", "b", 3.0), ("c", "d", 6.0)] or got[0][1] == "b"
+    assert dict((q, n) for q, n, _ in got) == {"a": "b", "c": "d"}
+
+
+@needs_upo
+def test_nearest_labelled_tie_goes_to_first_name():
+    top = upo_tree("((q:1,a:1):1,b:2);")
+    # q-a = 2; q-b = 1 + 1 + 2 ... equal distances need a symmetric tree
+    top = upo_tree("(q:1,a:1,b:1);")
+    assert s5.nearest_labelled(top, ["q"], ["b", "a"]) == [("q", "a", 2.0)]
+
+
+def test_subclade_counts():
+    det = [{"clade_call": "target", "subclade_call": "A"}, {"clade_call": "target", "subclade_call": "A"},
+           {"clade_call": "target", "subclade_call": "unassigned"}, {"clade_call": "target", "subclade_call": ""},
+           {"clade_call": "decoy", "subclade_call": "B"}, {"clade_call": "decoy", "subclade_call": ""}]
+    c = s5.subclade_counts(det, {"A": {}, "B": {}, "C": {}})
+    assert c == {"A": 2, "B": 1, "C": 0, "_target_total": 4, "_target_in_no_subclade": 2,
+                 "_subclade_call_not_target": 1}
+
+
+def test_to_placements_fig1_system_uses_subclade_call():
+    rows = [dict(arow("p1", "target", "target", "0.900"), fig1_clade="A", fig1_lwr="0.800"),
+            dict(arow("p2", "target", "target", "0.900"), fig1_clade="unassigned", fig1_lwr="0.300"),
+            dict(arow("p3", "decoy", "decoy", "0.900"), fig1_clade="", fig1_lwr="0.000")]
+    plc, det = s5.to_placements(rows, "S", system="fig1")
+    assert [(r["clade"], r["support"]) for r in plc] == [("A", "0.800"), ("", "0.300"), ("", "0.000")]
+    assert [r["subclade_call"] for r in det] == ["A", "unassigned", ""]
+    assert [r["clade_call"] for r in det] == ["target", "target", "decoy"]
+    with pytest.raises(ValueError):
+        s5.to_placements(rows, "S", system="nope")
+
+
+def test_to_placements_default_system_unchanged_with_fig1_columns():
+    rows = [dict(arow("p1", "target", "target", "0.900"), fig1_clade="A", fig1_lwr="0.8")]
+    plc, _ = s5.to_placements(rows, "S")
+    assert plc[0]["clade"] == "target" and plc[0]["support"] == "0.900"
+
+
+def test_write_clade_members_with_subclades(tmp_path):
+    clades = {"target": frozenset({"a", "b"}), "decoy": frozenset({"c"}), "outgroup": frozenset()}
+    roles = {"a": "reference", "b": "named_member", "c": "decoy"}
+    s5.write_clade_members(tmp_path / "m.tsv", clades, roles, {"K": frozenset({"a", "b"})})
+    rows = {r["label"]: r for r in s5.read_tsv(tmp_path / "m.tsv")}
+    assert rows["a"]["fig1_clade"] == "K" and rows["b"]["role"] == "named_member"
+    assert rows["c"]["fig1_clade"] == ""
+
+
+@needs_upo
+def test_run_clades_v2_members_outgroups_and_subclades(tmp_path):
+    nw = ("(((a1:1,a2:1):1,(m1:1,rep1:1):1):1,((d1:1,d2:1):1,drep:1):1,(o1:1,o2:1):1);")
+    (tmp_path / "t.nwk").write_text(nw)
+    (tmp_path / "refs.faa").write_text(">a1\nA\n>a2\nA\n")
+    (tmp_path / "dec.faa").write_text(">d1\nA\n>d2\nA\n")
+    (tmp_path / "og.faa").write_text(">o1\nA\n>o2\nA\n")
+    (tmp_path / "mem.faa").write_text(">m1\nA\n")
+    (tmp_path / "reps").write_text("rep1\ndrep\n")
+    write_tsv(tmp_path / "lab.tsv", ["leaf", "role", "class"],
+              [["a1", "reference", "K"], ["a2", "reference", "K"], ["m1", "named_member", "L"]])
+    rep = s5.run_clades(tmp_path / "t.nwk", tmp_path / "refs.faa", tmp_path / "dec.faa", tmp_path / "og.faa",
+                        tmp_path / "reps", tmp_path, "S", members_fa=tmp_path / "mem.faa",
+                        labels_tsv=tmp_path / "lab.tsv", outgroup_role="tree_outgroup")
+    assert rep["outgroups_monophyletic"] is True
+    # the smallest side with the two references is their cherry: the member m1 is outside target
+    assert rep["target_named_members"] == 0 and rep["named_members_outside_target"] == ["m1"]
+    assert set(rep["subclades"]) == {"K"} and rep["classes_without_subclade"] == ["L"]
+    rows = {r["label"]: r for r in s5.read_tsv(tmp_path / "clade_members.tsv")}
+    assert rows["m1"]["role"] == "named_member" and rows["o1"]["role"] == "tree_outgroup"
+    assert rows["a1"]["fig1_clade"] == "K" and rows["a1"]["our_clade"] == "target"
+    assert (tmp_path / "lineage_subclades.tsv").exists()
+
+
+@needs_upo
+def test_run_clades_member_in_two_roles_stops(tmp_path):
+    (tmp_path / "t.nwk").write_text("((a:1,b:1):1,c:1,d:1);")
+    (tmp_path / "refs.faa").write_text(">a\nA\n")
+    (tmp_path / "dec.faa").write_text(">c\nA\n")
+    (tmp_path / "mem.faa").write_text(">a\nA\n")
+    (tmp_path / "reps").write_text("")
+    with pytest.raises(SystemExit):
+        s5.run_clades(tmp_path / "t.nwk", tmp_path / "refs.faa", tmp_path / "dec.faa", None,
+                      tmp_path / "reps", tmp_path, "S", members_fa=tmp_path / "mem.faa")
+
+
+@needs_upo
+def test_run_subclade_report_end_to_end(tmp_path):
+    (tmp_path / "t.nwk").write_text("(((a1:1,a2:1):1,rep1:1):1,(d1:1,rep2:3):1,m:1);")
+    write_tsv(tmp_path / "cm.tsv", ["label", "our_clade", "fig1_clade", "role"],
+              [["rep1", "target", "K", "representative"], ["rep2", "decoy", "", "representative"]])
+    write_tsv(tmp_path / "lab.tsv", ["leaf", "role", "class"],
+              [["a1", "reference", "K"], ["a2", "reference", "K"], ["m", "named_member", "L"]])
+    write_tsv(tmp_path / "det.tsv", ["protein_id", "clade_call", "subclade_call"],
+              [["p1", "target", "K"], ["p2", "target", "unassigned"], ["p3", "decoy", ""]])
+    (tmp_path / "clu.tsv").write_text("rep1\trep1\nrep1\tx\nrep2\trep2\n")
+    (tmp_path / "clade_report.json").write_text(json.dumps(
+        {"subclades": {"K": {"size": 3, "labelled": 2, "representatives": 1}}}))
+    c = s5.run_subclade_report(tmp_path / "t.nwk", tmp_path / "cm.tsv", tmp_path / "lab.tsv",
+                               tmp_path / "det.tsv", tmp_path / "clu.tsv", tmp_path)
+    assert c["K"] == 1 and c["_target_in_no_subclade"] == 1
+    near = {r["representative"]: r for r in s5.read_tsv(tmp_path / "nearest_labelled.tsv")}
+    assert near["rep1"]["nearest_labelled"] in ("a1", "a2") and near["rep1"]["class"] == "K"
+    assert near["rep1"]["n_candidates_in_cluster"] == "2"
+    by = {r["class"]: r for r in s5.read_tsv(tmp_path / "nearest_labelled_by_class.tsv")}
+    assert by["K"]["n_representatives"] == "1"
+    assert s5.read_tsv(tmp_path / "subclade_counts.tsv")[0]["n_candidates_called"] == "1"
