@@ -151,6 +151,30 @@ Same method and the same 13 named members, with their cyclase domains. The tree 
 - **Reading trap: 7,993 candidates sit in clusters whose representatives are nearest to Dothideomycetes.** Two representatives carry most of them, so one large cluster dominates that count. It is a statement about cluster size, not about how many genomes carry the gene.
 - **Three attempts were needed** (`RUN.md`-level facts, MEASURED): the first stopped on the clade check (unalignable decoys in the tree, section 7); a retry died on a `raxml-ng` core-oversubscription abort on node r41; the second tree had Q9KK78 as its only decoy and stopped again because Q9KK78 fell inside the fungal clade; the third had no tree decoys and ran.
 
+### 6d. Which taxonomic groups have the steps
+
+![Figure 7. Fraction of genomes with a call per step, by class.](figures/out/fig7_presence_by_class.png)
+
+*Each cell is the percent of genomes of the class with at least one call for the step; the number of genomes is in the row label. The blue panel holds the steps whose cutoff comes from held-out references; the grey panel holds the steps whose cutoff is only a decoy floor, which hit nearly every genome and must be read as "family present". **Only `phytoene_synthase` and `lycopene_cyclase` are placed calls (tree placement, section 6); every other column is a search hit at its cutoff.** Blank cells are below 0.5%. The "3 core carotenoid steps" column is the share of genomes with all of `phytoene_synthase`, `phytoene_desaturase` and `lycopene_cyclase`. All 23,376 searched genomes are used, with no BUSCO filter (see the reading traps). [PDF](figures/out/fig7_presence_by_class.pdf)*
+
+![Figure 8. The same, by order, within Pezizomycotina.](figures/out/fig8_presence_by_order_pezizomycotina.png)
+
+*Orders of Pezizomycotina with at least 40 genomes (13,113 genomes in 26 groups). **The figure shows that the core steps are not spread evenly within the subphylum; it does not show gains or losses, because it has no tree.** [PDF](figures/out/fig8_presence_by_order_pezizomycotina.pdf)*
+
+What the figures show (MEASURED counts of genomes with a call; descriptive only):
+
+- **Classes.** `phytoene_synthase` / `phytoene_desaturase` / `lycopene_cyclase` have calls in 99 / 95 / 96% of Dothideomycetes (2,724 genomes), 43 / 37 / 32% of Eurotiomycetes (3,201), 67 / 66 / 64% of Sordariomycetes (5,981), 100 / 89 / 95% of Mucoromycetes (273), and 99 / 52 / 98% of Ustilaginomycetes (133). They have calls in 2 / 1 / 1% of Agaricomycetes (1,844) and in fewer than 0.5% of Saccharomycetes (2,560), Pichiomycetes (2,929) and Schizosaccharomycetes (67).
+- **Orders of Pezizomycotina.** The same three steps are at 38 / 31 / 28% in Eurotiales (2,480 genomes), 75 / 74 / 71% in Hypocreales (3,515), 52 / 52 / 52% in Sordariales (429), 6 / 5 / 4% in Pezizales (171) and 2 / 2 / 2% in Thelebolales (40), against 85 to 99% in Botryosphaeriales, Cladosporiales, Dothideales, Mycosphaerellales, Pleosporales and Venturiales. Magnaporthales (543), Microascales (162) and Ophiostomatales (126) are below 0.5% for all three.
+- **`cart`** has calls in 80% of Sordariomycetes and in at most 2% of any other class shown. Among the orders of Pezizomycotina it ranges from below 0.5% (Magnaporthales, 543 genomes) through 19% (Diaporthales) and 64% (Sordariales) to 100% (Amphisphaeriales, 97 genomes).
+
+Reading traps and limits:
+
+- **Reading trap: a low `ggpp_synthase` call rate is not absence.** The step has two references. The step HMM scores budding-yeast BTS1 (Q12051) at 284.8 bits and the *Eremothecium* GGPP synthase (Q758K0) at 282.4, both below the cutoff of 369.3; fission-yeast O59703 scores 22.6. Of 66 reviewed fungal entries of EC 2.5.1.29 (UniProt, 2026-11-22), 37 score below the cutoff. This is why Saccharomycetes read 3% and Pichiomycetes blank. The cutoff is too strict for GGPP synthases outside the references' lineages, so the column under-calls (`results/` check: `hmmsearch` of the step HMM against the 66 entries, E-value limit 1000).
+- **`ylo1` and `ggpp_synthase` are at 90% or more in nearly every order of Pezizomycotina.** That pattern fits a widely shared protein family, not a pathway-specific step. These are search hits and are not placed.
+- **A "call" is at least one protein in the genome.** An incomplete assembly gives a false absence. A BUSCO filter of 90 would remove whole lineages (MEASURED: Saccharomycetes 2,560 genomes to 0, Pichiomycetes 2,929 to 2, Schizosaccharomycetes and Wallemiomycetes to 0), so it is not applied. The 177 genomes with no class label form their own row.
+- **The synthase and cyclase columns are not independent.** In most fungi both are domains of one fused protein (section 6c).
+- **Percent of genomes is not percent of species or lineages.** Genome counts follow what has been sequenced; Eurotiales, Hypocreales and Sordariomycetes are large because many strains are sequenced.
+
 ## 7. Negative and unresolved results
 
 - **Single-reference steps cannot be checked for sensitivity.** Seven steps (`acaa`, `cars`, `carx`, `crtr`, `tdh`, `tsp2`, `tsp3`) have one reference. Removing it leaves nothing to score, so there is no held-out value. More references would help; a structure model would not.
@@ -171,6 +195,7 @@ Same method and the same 13 named members, with their cyclase domains. The tree 
 - Step 5 for the other 13 steps. The tool is step-generic (`bin/step5_place.py`). `lycopene_cyclase` is done (section 6c); it has no decoy test in its tree.
 - Quality, contamination and haplotype flags (step 7). There is no fungal versus non-fungal reference set, so counts will be raw first.
 - The copy matrix and phylum summary (step 8), the deposited versus BFD comparison (steps 9, 10), the tblastn absence check (step 11) and triage (step 12).
+- **Co-gain and co-loss of the steps.** The figures above show presence only. Gains and losses need a tree and placed calls for more than two steps (`phytoene_desaturase` and `cart` are not placed yet). The genus-level tree and the planned method are described in the notes.
 - A species tree overlay. A genus-level tree exists (`BFD_dashboard/atlas_data/phylo/results/protein/tree/fungi_odb10/final_tree.nw`, 1,643 tips by a text scan of the file). Its root, outgroup and tip overlap with the FastTree trees were not checked.
 - The question of whether fungal lycopene cyclases have diversified in some groups (`docs/superpowers/notes/2026-11-22-open-questions.md`, Q1). It needs step 5 first.
 
@@ -186,6 +211,7 @@ Same method and the same 13 named members, with their cyclase domains. The tree 
 | Named tree members (v2) | `refs/carotenoid/tree_members/` (13 members, 7 outgroups, provenance, README), `tests/test_tree_members.py`; v2 run `results/step5/carotenoid/phytoene_synthase_v2/` (`RUN.md`), jobs 32377324 and 32377370 |
 | Decoy filter for trees | `bin/filter_decoys_for_tree.py` (score >= 10 bits and HMM coverage >= 0.5, PROPOSED), `tests/test_filter_decoys_for_tree.py`; used with `PC_DECOYS_FA` in `slurm/step5_prepare.sbatch` |
 | Cyclase placement | `results/step5/carotenoid/lycopene_cyclase_v2/` (jobs 32377644 and 32377645) |
+| Presence heatmaps | `reports/carotenoid/figures/bin/fig_presence_heatmap.py` (figures 7 and 8), `tests/test_fig_presence_heatmap.py`; inputs `results/genomes.tsv.zst`, `species.parquet`, `results/search/carotenoid_full/`, the two `assigned.PROVISIONAL.tsv` files |
 | Pathway diagram | `reports/carotenoid/figures/bin/fig_pathway_diagram.py` (Graphviz), `tests/test_fig_pathway_diagram.py`; data from `kb/carotenoid/` and `.cache/chebi/` |
 | Paralog panel check | `reports/carotenoid/bin/check_paralog_panel.sh` (UniProt REST and blastp) |
 | Figures | `reports/carotenoid/figures/bin/fig_census_search.py` (figures 1 to 3) and `fig_ref_tree.py` (figures 4 and 5), tested in `tests/test_fig_census_search.py` and `tests/test_fig_ref_tree.py` |
@@ -214,4 +240,13 @@ R=results
   --name fig5_reference_tree_v2 --title "Reference tree with named members and outgroups (v2)"
 /usr/bin/python3.12 reports/carotenoid/figures/bin/fig_pathway_diagram.py \
   --kb-dir kb/carotenoid --cache-dir .cache --out-dir reports/carotenoid/figures/out
+S=/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/tables/species.parquet
+COMMON="--genomes $R/genomes.tsv.zst --species $S --search-dir $R/search/carotenoid_full \
+  --min-scores $R/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv \
+  --placed phytoene_synthase=$R/step5/carotenoid/phytoene_synthase_v2/assigned.PROVISIONAL.tsv \
+  --placed lycopene_cyclase=$R/step5/carotenoid/lycopene_cyclase_v2/assigned.PROVISIONAL.tsv \
+  --out-dir reports/carotenoid/figures/out"
+/usr/bin/python3.12 reports/carotenoid/figures/bin/fig_presence_heatmap.py $COMMON --rank class --min-n 25 --name fig7_presence_by_class
+/usr/bin/python3.12 reports/carotenoid/figures/bin/fig_presence_heatmap.py $COMMON --rank order \
+  --within SUBPHYLUM=Pezizomycotina --min-n 40 --name fig8_presence_by_order_pezizomycotina
 ```
