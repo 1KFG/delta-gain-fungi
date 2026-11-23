@@ -9,6 +9,7 @@
 #   PC_MEMBERS_PROV    tree_members/provenance.tsv (class of each member)
 #   PC_REF_CLASSES     TSV accession<TAB>class for the references (turns on lineage subclades with the two above)
 #   PC_OUTGROUP_ROLE   role written for outgroup leaves (v1: outgroup; v2: tree_outgroup)
+#   PC_DECOYS_FA       FASTA of the decoys to put in the tree (default: refs/<pathway>/decoys/<step>.faa; see bin/filter_decoys_for_tree.py)
 #   PC_RAXML_THREADS (4), PC_RAXML_WORKERS (unset; raxml-ng 2.0.4 aborts with 'core oversubscription' for 8 threads x 1 worker on this MSA, MEASURED), PC_RAXML_STARTS (pars{5},rand{5}), PC_OUT (output folder)
 #SBATCH -p short
 #SBATCH --constraint="ryzen|cascade|broadwell"
@@ -45,7 +46,7 @@ done
 PX="pixi exec -c conda-forge -c bioconda -s epa-ng==0.3.8 -s raxml-ng==2.0.4 --"
 W="${SCRATCH:?SCRATCH not set}/step5_${PC_STEP}"; mkdir -p "$W" "$OUT"
 REFS=$PC_ROOT/refs/$PC_PATHWAY/$PC_STEP.faa
-DECOYS=$PC_ROOT/refs/$PC_PATHWAY/decoys/$PC_STEP.faa
+DECOYS=${PC_DECOYS_FA:-$PC_ROOT/refs/$PC_PATHWAY/decoys/$PC_STEP.faa}
 OG=${PC_OUTGROUP_FA:-}
 CPUS=${SLURM_CPUS_PER_TASK:-8}
 
@@ -106,4 +107,4 @@ $PY $TOOL clades --tree $OUT/ref.raxml.bestTree --refs $REFS --decoys $DECOYS $O
 rc=$?
 set -e
 echo "step5_prepare done rc=$rc $(date +%T)"
-exit 0
+exit $rc  # a non-zero code (3: references do not form a clade free of decoys) stops afterok jobs

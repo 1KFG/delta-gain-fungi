@@ -56,3 +56,24 @@ def test_main_writes_png_and_pdf(tmp_path):
     assert ft.main(["--step5-dir", str(d), "--out-dir", str(out)]) == 0
     assert (out / "fig4_reference_tree.pdf").read_bytes().startswith(b"%PDF")
     assert (out / "fig4_reference_tree.png").stat().st_size > 1000
+
+
+def test_read_subclades_returns_names_and_blanks(tmp_path):
+    p = tmp_path / "m.tsv"
+    p.write_text("label\tour_clade\tfig1_clade\trole\nA\ttarget\tEurotiomycetes\tnamed_member\nB\ttarget\t\trepresentative\n")
+    assert ft.read_subclades(p) == {"A": "Eurotiomycetes", "B": ""}
+
+
+@pytest.mark.skipif(subprocess.run(["which", "zstd"], capture_output=True).returncode != 0, reason="zstd not on PATH")
+def test_main_draws_named_members_outgroups_and_subclades(tmp_path):
+    d = tmp_path / "s5"
+    d.mkdir()
+    (d / "ref.rooted.nwk").write_text("((A:1,B:2):1,((C:1,D:3):2,E:1):1);")
+    (d / "clade_members.tsv").write_text(
+        "label\tour_clade\tfig1_clade\trole\nA\ttarget\tClassX\tnamed_member\nB\ttarget\tClassX\treference\n"
+        "C\tdecoy\t\ttree_outgroup\nD\tdecoy\t\tdecoy\nE\ttarget\t\trepresentative\n")
+    (d / "clusters.tsv").write_text("E\tE\n")
+    subprocess.run(["zstd", "-q", "-o", str(d / "clusters.tsv.zst"), str(d / "clusters.tsv")], check=True)
+    out = tmp_path / "out"
+    assert ft.main(["--step5-dir", str(d), "--out-dir", str(out), "--name", "figx", "--title", "T"]) == 0
+    assert (out / "figx.pdf").read_bytes().startswith(b"%PDF")
