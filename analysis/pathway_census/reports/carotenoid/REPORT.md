@@ -242,11 +242,40 @@ For every step that has an EC number of its own in the tables, `bin/sensitivity_
 *First 1,000 genomes of the search (`results/audit/ggpp_eval/sweep_current/`). Of the 39 named entries, the current HMM scores 26 at or above 369.3 bits, 28 at or above 300 and 38 at or above 200; the wider HMM, leave-one-out, scores 29 at or above 369.3 and 38 at or above 300. One entry, fission-yeast O59703, is the miss in both (22.6 and 43.3 bits).*
 
 - **A lower cutoff recovers the yeasts.** At 150 bits the current HMM gives a call in 94.5% of Saccharomycetes and 85.5% of Pichiomycetes genomes, against 2.7% and 0.0% at 369.3. The calls per genome rise too (genomes with 3 or more calls: 75 to 277), as expected where a family has several members or terpene synthases carry a prenyltransferase domain; what the extra calls are was not tested.
-- **Specificity looks safe for the current HMM to about 150 bits, but this is not proven.** The 4 decoys (three farnesyl pyrophosphate synthases and a hexaprenyl pyrophosphate synthase) score at most 37.1 bits, and only 71 hits lie between 100 and 150 bits in 1,000 genomes.
+- **Specificity at 150 bits is not safe by score alone (corrected, see the placement test below).** I first wrote that the current HMM looked safe to about 150 bits because the 4 decoys score at most 37.1 and only 71 hits lie between 100 and 150 bits in 1,000 genomes. The placement of all 52,479 candidates at 150 bits shows otherwise: 15,444 (29%) fall in the farnesyl synthase clade, with a median score of 243 bits.
 - **The wider HMM brings the farnesyl pyrophosphate synthases closer.** The three farnesyl pyrophosphate synthases rise from at most 37.1 to between 117.5 and 126.6 bits under the wider HMM (the hexaprenyl one to 50.1), and below about 130 bits it floods: the number of hits between 100 and 120 bits is 725, and the genomes with exactly 2 calls rise from 175 (at 150 bits) to 442 (at 100). Its lowest leave-one-out score (excluding O59703) is 314.8, and it improves Pichiomycetes only slightly (13% at 314.8). It also scores fission-yeast O59703 (a GGPP synthase in UniProt) below that species' own farnesyl pyrophosphate synthase decoy, so O59703 should not be trusted as a positive.
 - **An E-value cutoff gives no advantage.** In the 1,000-genome search the median i-Evalue is 4.7e-50 for hits of 150 to 200 bits, 1.2e-64 at 200 to 250 and 2e-124 at 369 to 450. The E-value depends on the size of the searched set (the full BFD is about 23 times larger), so a bit-score cutoff is the portable one; "i-Evalue at most 1e-49" in this 1,000-genome search is about 150 bits.
 - **Reading trap: "share of genomes with a call" assumes GGPP synthase is near-universal.** That assumption is UNVERIFIED (budding-yeast BTS1 is not essential, for example). It is a sensitivity check, not a count of real genes.
-- **Option (PROPOSED, not applied):** keep the current HMM, lower the cutoff to 150 bits, and separate GGPP synthases from farnesyl and other prenyl diphosphate synthases and terpene synthases by tree placement, with the named GGPP synthases as tree members and the farnesyl pyrophosphate synthases as the non-target group. The wider HMM is not needed.
+- **Placement test (done, nothing applied to the other sections).** All 23,376 genomes were searched at 150 bits (52,479 candidates in 22,102 genomes) and the candidates were placed on a tree of the 2 references, 63 named members (38 named GGPP synthases and 25 bifunctional terpene synthases with a prenyltransferase domain) and 10 farnesyl synthase decoys (`results/step5/carotenoid/ggpp_synthase/`; the hexaprenyl decoy covers only 24% of the wider HMM and is left out; 300 representatives; one tree from 2 `raxml-ng` starts, rooted on the decoys; fission-yeast O59703 is excluded). In the tree, 33 of the 38 named GGPP synthases lie in the target clade (the smallest clade holding both references; 190 leaves), the 10 decoys form their own clade, and 24 of the 25 bifunctional entries and 5 named GGPP synthases (amyG, sdnC, GGS-A, GGS3 and GA5, which are pathway-dedicated enzymes by name) lie outside both.
+
+![Figure 15. Share of genomes with a GGPP synthase call: hits at the rule cutoff, hits at 150 bits, and proteins placed in the GGPP synthase clade.](figures/out/fig15_ggpp_placed_vs_hits.png)
+
+*Classes with at least 150 genomes, all 23,376 searched genomes. **The figure shows that placing the 150-bit candidates in the GGPP synthase clade keeps almost every genome that has a 150-bit hit (21,933 of 22,102), and that both recover the yeasts that the rule cutoff misses; it does not show that every placed protein is a GGPP synthase, because the target clade is defined by only two references and the tree is a single run.** [PDF](figures/out/fig15_ggpp_placed_vs_hits.pdf)*
+
+| Genomes with a call (of 23,376) | Hit at 369.3 bits (rule) | Hit at 150 bits | Placed in the GGPP synthase clade |
+|---|---:|---:|---:|
+| All | 15,919 (68.1%) | 22,102 (94.5%) | 21,933 (93.8%) |
+| Saccharomycetes (2,560) | 3.4% | 96.7% | 93.8% |
+| Pichiomycetes (2,929) | 0.4% | 82.5% | 82.4% |
+| Ustilaginomycetes (133) | 7.5% | 100% | 100% |
+| Agaricomycetes (1,844) | 67.1% | 91.3% | 91.1% |
+
+| Candidate score (bits) | In the target clade | On the farnesyl side | Unassigned |
+|---|---:|---:|---:|
+| 150 to 200 | 1,979 | 2,558 | 907 |
+| 200 to 250 | 1,577 | 7,234 | 1,419 |
+| 250 to 300 | 2,746 | 5,617 | 3,413 |
+| 300 to 369.3 | 2,060 | 17 | 28 |
+| 369.3 to 450 | 7,966 | 5 | 3 |
+| 450 or more | 14,915 | 13 | 22 |
+
+*Source: `results/audit/ggpp_eval/placed_vs_hits/` (`bin/placed_vs_hits_by_class.py`). "Farnesyl side" means placed with the 10 farnesyl synthase decoys.*
+
+- **Score alone separates only at 300 bits and above.** From 300 bits up, 98 to 100% of candidates are in the target clade. Between 150 and 300 bits only 15 to 36% are (6,302 of 28,094 in the band); the rest are on the farnesyl side (15,409) or unassigned (5,739). A lower cutoff without placement would call the farnesyl-side proteins too.
+- **Placement removes few genomes.** 169 genomes have a 150-bit hit and no protein in the clade (74 Saccharomycetes, 40 Sordariomycetes, 11 Lecanoromycetes, 9 Mucoromycetes). Most genomes with a farnesyl-side hit also have a target protein (6,679 of 6,818).
+- **What the farnesyl-side proteins are is not known.** 14,659 of the 15,444 (95%) come from Sordariomycetes, Eurotiomycetes and Dothideomycetes. The tree places them with the farnesyl synthase decoys; they may be farnesyl-type enzymes more diverged than the decoys, or another prenyl diphosphate synthase.
+- **Genomes still without a call at 150 bits:** 1,274, mostly Pichiomycetes (513), Agaricomycetes (161), unlabelled (139), Saccharomycetes (85), Schizosaccharomycetes (67, where the GGPP synthase scores 22.6 bits), Sordariomycetes (57), Wallemiomycetes (50) and Kickxellomycetes (24).
+- **Recommendation (PROPOSED): call `ggpp_synthase` by placement in the GGPP synthase clade for hits of 150 bits or more, in place of the 369.3-bit hit.** This is not applied to sections 6d and 6g, or to the heatmaps, which still use the rule cutoff. The target clade excludes 5 named pathway-dedicated GGPP synthases, so the call is conservative for those.
 
 **`cart`: should the alignability rule count all domains of a hit?** The rule for tree outgroups and decoys uses the best single domain (at least 10 bits and at least 50% of the HMM). With the union of all domains of 10 bits or more (`--coverage-mode union` in `bin/filter_decoys_for_tree.py`, default unchanged), 4 more entries pass: human and mouse BCO2 (0.69, 0.67), *Drosophila* NinaB (0.69) and *Arabidopsis* CCD8 (0.501, borderline). The 6 current `cart` decoys and the other plant and cyanobacterial oxygenases still fail (union 0.08 to 0.41). The placement was re-run with the 5 old and 4 new outgroups (`results/step5/carotenoid/cart_alldomains/`).
 
@@ -429,6 +458,7 @@ Checks on the result in section 6g. The full records are `results/gainloss/carot
 | Gain/loss follow-up | `bin/filter_calls_busco.py`, `compare_busco_versions.py`, `gainloss_null_lib.R`, `run_null_sim.R`, `summarise_null.R`, `run_astral_compare.R`, `slurm/gainloss_null.sbatch`, `fig13_null_co_events.R`, tests `test_gainloss_null.py`, `test_filter_calls_busco.py`; results `results/gainloss/carotenoid_noMicro_blasto/` (new primary, with `_null/` and `_compare/`), `carotenoid_busco70/`, `carotenoid_busco65/`, `carotenoid_null/`, `carotenoid_busco70_null/`, `carotenoid_astral/` (earlier primary), records `carotenoid_noMicro_blasto/RUN.md` and `results/gainloss/RUN_followup.md` |
 | Desaturase and cart placement | `results/step5/carotenoid/phytoene_desaturase/` and `cart/` (jobs 32377960 to 32377963); outgroups in `refs/carotenoid/tree_members/` |
 | Cyclase placement | `results/step5/carotenoid/lycopene_cyclase_v2/` (jobs 32377644 and 32377645) |
+| GGPP placement | `bin/make_ggpp_test_set.py`, `bin/placed_vs_hits_by_class.py`, `fig_placed_vs_hits.py` (figure 15), `tests/test_placed_vs_hits_by_class.py`, `tests/test_fig_placed_vs_hits.py`; results `results/search/ggpp_floor150/`, `results/step5/carotenoid/ggpp_synthase/` (a first assignment used the wrong candidate set and is kept in `wrong_candidate_set/`) |
 | Cutoff tests | `bin/expanded_hmm_cv.py`, `bin/cutoff_sweep.py`, `bin/filter_decoys_for_tree.py --coverage-mode`, figure `fig_cutoff_sweep.py` (figure 14), tests `test_cutoff_sweep.py`, `test_fig_cutoff_sweep.py`, `test_filter_decoys_for_tree.py`; results `results/audit/ggpp_eval/`, `results/search/ggpp_eval/`, `results/search/ggpp_eval_wide/`, `results/hmms/ggpp_expanded/`, `results/step5/carotenoid/cart_alldomains/` |
 | Sensitivity audit | `bin/sensitivity_audit.py`, `tests/test_sensitivity_audit.py`, figure `reports/carotenoid/figures/bin/fig_sensitivity_audit.py` (figure 12); output `results/audit/carotenoid/`; UniProt REST queries of 2026-11-22 |
 | Presence heatmaps | `reports/carotenoid/figures/bin/fig_presence_heatmap.py` (figures 7 and 8), `tests/test_fig_presence_heatmap.py`; inputs `results/genomes.tsv.zst`, `species.parquet`, `results/search/carotenoid_full/`, the two `assigned.PROVISIONAL.tsv` files |
