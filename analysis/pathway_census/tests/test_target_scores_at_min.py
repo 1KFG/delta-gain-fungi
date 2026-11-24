@@ -26,3 +26,21 @@ def test_read_fasta_joins_wrapped_lines(tmp_path):
     f = tmp_path / "x.faa"
     f.write_text(">s1 desc\nAAA\nCC\n>s2\nGG\n")
     assert list(tsam.read_fasta(f)) == [("s1 desc", "AAACC"), ("s2", "GG")]
+
+
+def test_main_skips_a_step_with_empty_min_score(tmp_path, monkeypatch, capsys):
+    """A step with no floor (make_min_scores.py --allow-undefined) is skipped and named, not parsed as a number."""
+    import shutil
+    if not shutil.which("hmmsearch"):
+        import pytest
+        pytest.skip("hmmer not available")
+    refs = tmp_path / "refs"
+    refs.mkdir()
+    ms = tmp_path / "min_scores.tsv"
+    ms.write_text("step\tmin_score\tbasis\tn_refs\trule_min_score\na\t\tno floor defined: x\t1\t\n")
+    (tmp_path / "hmm").mkdir()
+    out = tmp_path / "o.tsv"
+    rc = tsam.main(["--refs-dir", str(refs), "--hmm-dir", str(tmp_path / "hmm"), "--min-scores", str(ms),
+                    "--out", str(out)])
+    assert rc == 0
+    assert "skipped, min_score empty: ['a']" in capsys.readouterr().err

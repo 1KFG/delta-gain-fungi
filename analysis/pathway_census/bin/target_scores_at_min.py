@@ -55,7 +55,11 @@ def main(argv=None) -> int:
     ap.add_argument("--cpus", type=int, default=4)
     a = ap.parse_args(argv)
     suffix = f".{a.tag}" if a.tag else ""
-    mins = {r["step"]: float(r["min_score"]) for r in csv.DictReader(open(a.min_scores), delimiter="\t")}
+    allrows = list(csv.DictReader(open(a.min_scores), delimiter="\t"))
+    undefined = sorted(r["step"] for r in allrows if r["min_score"] == "")
+    if undefined:  # no floor defined (make_min_scores.py --allow-undefined): nothing to flag against
+        print(f"skipped, min_score empty: {undefined}", file=sys.stderr)
+    mins = {r["step"]: float(r["min_score"]) for r in allrows if r["min_score"] != ""}
     steps = sorted(p.stem for p in a.refs_dir.glob("*.faa"))
     meta, targets = {}, []
     for step in steps:

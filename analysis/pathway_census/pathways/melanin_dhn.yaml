@@ -220,6 +220,27 @@ steps:
     domains_any: [PF06500]
     copy_expect: single
     role: catalytic
+    decoys:
+      - accession: P04335
+        species: "Escherichia coli (strain K12)"
+        gene_name: "frsA"
+        pmid: null
+        verified: true
+      - accession: Q93NG6
+        species: "Paenarthrobacter nicotinovorans"
+        gene_name: "Q93NG6_hydrolase_Pnico"
+        pmid: null
+        verified: true
+      - accession: S8ASK9
+        species: "Penicillium oxalicum (strain 114-2 / CGMCC 5302)"
+        gene_name: "poxO"
+        pmid: null
+        verified: true
+      - accession: S0EE80
+        species: "Gibberella fujikuroi (strain CBS 195.34 / IMI 58289 / NRRL A-6831)"
+        gene_name: "FUS2"
+        pmid: null
+        verified: true
     fused_with: []
     optional: true
     reactions:
@@ -376,6 +397,32 @@ steps:
     domains_any: [PF02982]
     copy_expect: single
     role: catalytic
+    decoys:
+      - accession: P07445
+        species: "Pseudomonas putida"
+        gene_name: "ksi"
+        pmid: null
+        verified: true
+      - accession: Q9RN59
+        species: "Streptomyces nogalater"
+        gene_name: "snoaL"
+        pmid: null
+        verified: true
+      - accession: O52646
+        species: "Streptomyces galilaeus"
+        gene_name: "acma"
+        pmid: null
+        verified: true
+      - accession: P61970
+        species: "Homo sapiens"
+        gene_name: "NUTF2"
+        pmid: null
+        verified: true
+      - accession: Q9ZAG3
+        species: "Rhodococcus erythropolis"
+        gene_name: "limA"
+        pmid: null
+        verified: true
     fused_with: []
     optional: false
     reactions:

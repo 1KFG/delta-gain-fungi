@@ -180,3 +180,16 @@ def test_scratch_must_be_set(tmp_path, monkeypatch):
     with pytest.raises(SystemExit, match="SCRATCH"):
         sc.main(["--pathway", str(DATA / "pathway_ok.yaml"), "--hmm-dir", str(tmp_path), "--chunk-manifest", str(m),
                  "--chunk-id", "0", "--min-scores", str(ms), "--out-dir", str(tmp_path / "o"), "--provisional"])
+
+
+@needs_hmmer
+@needs_zstd
+def test_empty_min_score_stops_the_search_and_names_the_step(tmp_path, monkeypatch):
+    (tmp_path / "scr").mkdir(exist_ok=True)
+    monkeypatch.setenv("SCRATCH", str(tmp_path / "scr"))
+    m, hmm_dir, ms = _build_inputs(tmp_path)
+    ms.write_text("step\tmin_score\tbasis\tn_refs\trule_min_score\ncrtYB\t\tno floor defined: x\t1\t\n")
+    with pytest.raises(SystemExit, match="crtYB"):
+        sc.main(["--pathway", str(DATA / "pathway_ok.yaml"), "--hmm-dir", str(hmm_dir), "--chunk-manifest", str(m),
+                 "--chunk-id", "0", "--min-scores", str(ms), "--out-dir", str(tmp_path / "out"), "--provisional"])
+    assert not (tmp_path / "out").exists()
