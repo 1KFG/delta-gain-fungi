@@ -387,3 +387,12 @@ Results (MEASURED): 18 HMMs (9 + 6 + 3). Step 2 jobs 32407157 (dhn), 32407158 (l
 - No search, no tree, no lowered cutoff (`--scale` not used).
 
 Follow-up 2026-11-23 (note section 9): decoys were added for `hppd`, `aspulvinone_e_synthase`, `ayg1`, `scytalone_dehydratase`, `hmga` with `curation_scripts/melanin_myco_decoys/add_decoys.py`. `hppd` and `aspulvinone_e_synthase` now have a floor, so `step_scores.floor_defined` is no longer needed. New `make_min_scores.py` options: `--floor-override STEP=VALUE` with `--override-basis TEXT` (mycosporine `omt` uses `--floor-override omt=100.6 --override-basis "owner override 2026-11-23: highest decoy score; revisit in second round"`), and `--allow-undefined` (empty `min_score` and the basis "no floor defined: ..." for a step with no rule value). Run `score_refs_decoys.sbatch` from a directory you can write to (it writes its log to the current directory).
+
+## Step 3 for melanin and mycosporine
+
+Record: `results/step3/melanin_myco/RUN.md` (commands, jobs, timings, candidates per step, projection). Note: `docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md`, section 11. All outputs are PROVISIONAL. Step 3 is one timing job on 200 genomes. The full search was not run.
+
+- No change to `bin/search_chunk.py`. It takes one `--hmm-dir` and one `--min-scores` table, so the 18 HMMs of the three pathways go in one directory (symlinks) with one combined `min_scores` table (the three step 2 tables joined; step names are unique). `--pathway` only gates on `verified`.
+- Timing job 32415026 (MEASURED): 200 genomes, 2,099,680 proteins, 16 CPUs, 18 HMMs. Job 4 min 21 s, script 209.3 s, MaxRSS 3.1 GB, 1,367 candidate rows (1,299 proteins), 0 bad id prefixes. The first job (32412179, `short`) waited about 3 h on the 384-CPU user limit and was cancelled; the timing job ran on `stajichlab`.
+- Projection (PROPOSED, UNVERIFIED): 6 chunks of 4,000 genomes, about 64 to 75 min per job, about 47 GB (up to 62 GB), so submit with `--mem=96G`; about 159,773 candidate rows in total. The default `--mem=32G` of `slurm/search_chunk.sbatch` is too small for 4,000 genomes.
+- Unusual counts: `tyrosinase` 439 rows, `hppd` 154, `omt` 125 (all within 60 bits of the floor), against 0 for `aspulvinone_e_synthase`.

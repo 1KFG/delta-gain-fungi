@@ -320,3 +320,13 @@ Reading, for the second round:
 - No identity between the new decoys and the references was computed. The statement that a decoy is "close in family" rests on Pfam names in the records only.
 - No domain cuts. No change to references. The pathway YAMLs got only the new `decoys:` blocks.
 - The omt override is a PROPOSED value of the owner, not a result of an analysis of fungal OMTs.
+
+## 11. Step 3 timing run (2026-11-23)
+
+Labels: MEASURED is read from a file or `sacct` named in `analysis/pathway_census/results/step3/melanin_myco/RUN.md`. PROPOSED is an estimate or a choice. UNVERIFIED is not checked.
+
+- One timing job on 200 genomes (chunk 0 of `chunk_manifest.size200`, the chunk of the carotenoid timing job 32375142), 18 HMMs, `omt` at 100.6. Job 32415026 (the first job, 32412179 on `short`, waited about 3 h on the 384-CPU user limit and was cancelled; 32415026 ran on `stajichlab`). Not the full search.
+- MEASURED: job 4 min 21 s, script 209.3 s (staging 66.2 s, hmmsearch 143.1 s), MaxRSS 3.1 GB, 2,099,680 proteins in 200 genomes, 0 bad id prefixes, 1,367 candidate rows on 1,299 proteins. No tool change: a combined `min_scores` table and one HMM directory serve the three pathways.
+- Candidate rows per step (MEASURED, chunk of 200): tyrosinase 439, hppd 154, omt 125, ayg1 87, atp_grasp_ligase 86, ddgs 81, t4hn_reductase 71, scytalone_dehydratase 64, hexaketide_pks 63, laccase_abr2 63, thn_synthase 53, t3hn_reductase 21, heptaketide_pks 15, hmga 15, asp_melanin_tyrosinase 13, mco_abr1 13, laccase_diphenol 4, aspulvinone_e_synthase 0.
+- The `omt` rows all score 100.8 to 160.6 (median 111.4). Section 9.5 found almost no reviewed fungal O-methyltransferase above 100.6. The BFD rows are not reviewed entries. UNVERIFIED what they are. This is evidence for the second round of the `omt` floor.
+- PROPOSED plan for the full search: 6 chunks of 4,000 genomes, 16 CPUs, `--mem=96G`, about 64 to 75 min per job, about 159,773 candidate rows (1,367 x 116.88). The default `--mem=32G` is too small (projected 47 to 62 GB, UNVERIFIED). Details in `RUN.md`.
