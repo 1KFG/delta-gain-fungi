@@ -361,3 +361,27 @@ Tests: `tests/test_single_ref_tools.py`.
 ### Fifth step: ggpp_synthase (placed) on the new primary
 
 Record: `results/gainloss/carotenoid_noMicro_blasto_5steps/RUN.md`. ggpp_synthase is present in 1,540 of 1,609 tips with data (96%); the model finds 0 gains, 60 losses (57 on tip edges), 0 uncertain branches, and ER fits as well as ARD. Its co-loss with the other steps (3 to 4 branches, all tip edges) and its co-gain (none) are within chance in the tree-aware null. Absent calls are mostly single tips; grouped absences are in Pichiomycetes and Agaricomycetes. Code: `bin/gainloss_null_models.R`, `bin/run_null_sim_models.R`, `bin/summarise_null_models.R`, `bin/ggpp_absence_analysis.R`.
+
+## Steps 1 and 2 for melanin and mycosporine
+
+Note with the sign-off table and owner decisions: `docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md`. Branch `pathway-census-melanin-myco`. All outputs are PROVISIONAL and in git-ignored `results/`.
+
+Commands (run from `analysis/pathway_census`; `<p>` is `melanin_dhn`, `melanin_ldopa` or `mycosporine`):
+
+```
+module load hmmer/3.4
+module load mafft/7.505
+/usr/bin/python3.12 bin/build_step_hmms.py --pathway pathways/<p>.yaml --refs-dir refs/<p> --out-dir results/hmms/<p> --provisional
+# mycosporine: add  --steps ddgs omt atp_grasp_ligase  (two steps have no reference)
+PC_ROOT=$PWD PC_PATHWAY_ID=<p> PC_OUT_DIR=$PWD/results/step2/<p> PC_TAG=PROVISIONAL \
+  sbatch --constraint="ryzen|cascade|broadwell" slurm/score_refs_decoys.sbatch
+/usr/bin/python3.12 bin/make_min_scores.py --step-scores results/step2/<p>/step_scores.PROVISIONAL.tsv --out results/step2/<p>/min_scores.PROVISIONAL.tsv
+sbatch -p short --constraint="ryzen|cascade|broadwell" --cpus-per-task=4 --mem=8G --time=00:20:00 --wrap="module load hmmer/3.4; /usr/bin/python3.12 bin/target_scores_at_min.py --refs-dir refs/<p> --hmm-dir results/hmms/<p> --min-scores results/step2/<p>/min_scores.PROVISIONAL.tsv --out results/step2/<p>/target_scores_at_min.PROVISIONAL.tsv --tag PROVISIONAL"
+```
+
+Results (MEASURED): 18 HMMs (9 + 6 + 3). Step 2 jobs 32407157 (dhn), 32407158 (ldopa), 32407159 (mycosporine); add-on jobs 32407363, 32407364, 32407365.
+
+- `bin/target_scores_at_min.py` (new, `tests/test_target_scores_at_min.py`) lists every decoy and other-step reference at or above the rule `min_score`. `score_refs_decoys.py` counts at the lowest full-HMM reference score, so its `targets_at_or_above_min` table is empty for these pathways. Use `target_scores_at_min.PROVISIONAL.tsv`.
+- `melanin_ldopa`: `hppd` and `aspulvinone_e_synthase` are single-reference steps with no decoy, so `make_min_scores.py` stops with an error. `min_scores.PROVISIONAL.tsv` was made from `step_scores.floor_defined.PROVISIONAL.tsv` (the same table without those two rows).
+- `mycosporine`: `mg_glucosyltransferase` and `glutamicol_formation` have no reference, so no HMM.
+- No search, no tree, no lowered cutoff (`--scale` not used).
