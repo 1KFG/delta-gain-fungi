@@ -5,8 +5,9 @@ A genome counts as having a step when the step has at least one call in that gen
   - a protein placed in the target clade (`assigned` rows from bin/assign_steps.py) for a step that has a placement run
     (--placed STEP=assigned.tsv, repeatable), or
   - otherwise a search hit at the cutoff used (candidates.chunk*.tsv.zst of bin/search_chunk.py). This is NOT a placed call.
-Steps whose cutoff is a decoy floor (`basis` says single reference in the min_scores file) hit nearly every genome: they are drawn
-in a separate grey panel and must be read as "family present", not "step present".
+Placed steps are drawn in the first (blue) panel. Search-hit steps with a held-out cutoff are drawn in a second panel. Search-hit steps
+whose cutoff is a decoy floor (`basis` says single reference in the min_scores file) hit nearly every genome: they are drawn
+in a third grey panel and must be read as "family present", not "step present".
 By default every searched genome is used (--min-busco 0). A BUSCO filter of 90 removes whole lineages with real gene loss or
 a poor fit to the BUSCO set (MEASURED 2026-11-22: Saccharomycetes 2,560 genomes to 0, Pichiomycetes 2,929 to 2), so it is an
 option and not the default. Groups with fewer than --min-n genomes are dropped. Rank: phylum, subphylum, class, order or family.
@@ -33,7 +34,7 @@ INK, INK2, SURFACE, GRID = "#0b0b0b", "#52514e", "#fcfcfb", "#e6e5e1"
 # the three carotenoid-specific steps of the core route; GGPP synthase serves all terpenoid metabolism and is left out
 CORE_STEPS = ("phytoene_synthase", "phytoene_desaturase", "lycopene_cyclase")
 STEP_ORDER = ["ggpp_synthase", "phytoene_synthase", "phytoene_desaturase", "lycopene_cyclase", "carx", "cart", "ylo1",
-              "crtr", "astaxanthin_synthase", "cars", "acaa", "tsp3", "tsp2", "tdh"]
+              "crtr", "astaxanthin_synthase", "cars", "tsp3", "acaa", "tsp2", "tdh"]
 RANKS = {"phylum": "PHYLUM", "subphylum": "SUBPHYLUM", "class": "CLASS", "order": "ORDER", "family": "FAMILY"}
 LINEAGE = ["PHYLUM", "SUBPHYLUM", "CLASS", "ORDER", "FAMILY"]
 
@@ -124,20 +125,30 @@ def summarise(rows, rank_col, steps, min_n, core=CORE_STEPS):
     return out
 
 
-def draw(summary, steps_interp, steps_floor, out_dir, name, title, note):
+COL_LABEL = {"core_complete": "3 core carotenoid steps", "cars": "cars (same set as tsp3)", "tsp3": "tsp3 (same set as cars)",
+             "crtr": "crtr (family present)", "carx": "carx (family present)"}
+
+
+def draw(summary, steps_interp, steps_floor, out_dir, name, title, note, steps_search=()):
+    """Up to three panels. Panel 1 (blue): placed steps (steps_interp) plus the core-complete column. Panel 2 (light blue): search hits
+    at a held-out cutoff (steps_search). Panel 3 (grey): search hits at a decoy floor, read as 'family present' (steps_floor)."""
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     n_rows = len(summary)
-    cols_a = steps_interp + ["core_complete"]
+    cols_a = list(steps_interp) + ["core_complete"]
+    panels = [(cols_a, BLUE_RAMP, "placed in a target clade\n(percent of genomes with a call)")]
+    if steps_search:
+        panels.append((list(steps_search), BLUE_RAMP, "search hit\n(held-out cutoff)"))
+    if steps_floor:
+        panels.append((list(steps_floor), GREY_RAMP, "search hit\n(decoy floor)"))
     fig_h = max(3.2, 0.26 * n_rows + 2.4)
-    fig = plt.figure(figsize=(11.5, fig_h))
-    ratios = [len(cols_a), max(len(steps_floor), 1) * 0.9]
-    gs = fig.add_gridspec(1, 2, width_ratios=ratios, wspace=0.04)
-    axa, axb = fig.add_subplot(gs[0]), fig.add_subplot(gs[1])
+    fig = plt.figure(figsize=(0.62 * sum(len(p[0]) for p in panels) + 3.0, fig_h))
+    gs = fig.add_gridspec(1, len(panels), width_ratios=[len(p[0]) for p in panels], wspace=0.04)
+    axes = [fig.add_subplot(gs[i]) for i in range(len(panels))]
     labels = [f'{d["group"]}  (n={d["n"]:,})' for d in summary]
 
-    def panel(ax, cols, cmap, header):
-        mat = np.array([[ (d["core_complete"] if c == "core_complete" else d["frac"][c]) for c in cols] for d in summary], dtype=float)
+    for k, (ax, (cols, cmap, header)) in enumerate(zip(axes, panels)):
+        mat = np.array([[(d["core_complete"] if c == "core_complete" else d["frac"][c]) for c in cols] for d in summary], dtype=float)
         ax.pcolormesh(mat, cmap=cmap, vmin=0, vmax=1, edgecolors=SURFACE, linewidth=0.8)
         for i in range(mat.shape[0]):
             for j in range(mat.shape[1]):
@@ -146,28 +157,24 @@ def draw(summary, steps_interp, steps_floor, out_dir, name, title, note):
                         color="#ffffff" if v > 0.55 else INK)
         ax.set_xlim(0, mat.shape[1]); ax.set_ylim(mat.shape[0], 0)
         ax.set_xticks(np.arange(len(cols)) + 0.5)
-        ax.set_xticklabels([c.replace("_", " ") if c != "core_complete" else "3 core carotenoid steps" for c in cols], rotation=60, ha="left", fontsize=7.5)
+        ax.set_xticklabels([COL_LABEL.get(c, c.replace("_", " ")) for c in cols], rotation=60, ha="left", fontsize=7.5)
         ax.xaxis.tick_top()
         ax.tick_params(length=0)
-        ax.set_title(header, fontsize=8, loc="left", pad=92, color=INK2)
+        ax.set_title(header, fontsize=8, loc="left", pad=100, color=INK2)
         for sp in ax.spines.values():
             sp.set_visible(False)
-    panel(axa, cols_a, BLUE_RAMP, "steps with a held-out cutoff (percent of genomes with a call)")
-    axa.set_yticks(np.arange(n_rows) + 0.5)
-    axa.set_yticklabels(labels, fontsize=7.5)
-    if steps_floor:
-        panel(axb, steps_floor, GREY_RAMP, "family-level steps: cutoff is a decoy floor, read as 'family present'")
-        axb.set_yticks([])
-    else:
-        axb.axis("off")
+        if k == 0:
+            ax.set_yticks(np.arange(n_rows) + 0.5)
+            ax.set_yticklabels(labels, fontsize=7.5)
+        else:
+            ax.set_yticks([])
     # phylum separators
     prev = None
     for i, d in enumerate(summary):
         ph = d["lineage"]["PHYLUM"]
         if prev is not None and ph != prev:
-            for ax in (axa, axb):
-                if ax.axison:
-                    ax.axhline(i, color=INK2, lw=1.1)
+            for ax in axes:
+                ax.axhline(i, color=INK2, lw=1.1)
         prev = ph
     fig.suptitle(title, x=0.01, ha="left", fontsize=11, fontweight="bold", y=1.075)
     fig.text(0.01, 0.005, note, fontsize=7, color=INK2, ha="left", va="bottom", wrap=True)
@@ -210,14 +217,16 @@ def main(argv=None):
         col, _, val = a.within.partition("=")
         rows = [r for r in rows if r.get(col) == val]
     summary = summarise(rows, RANKS[a.rank], steps, a.min_n)
-    interp = [s for s in steps if s not in floors]
-    flo = [s for s in steps if s in floors]
+    interp = [s for s in steps if s in placed_steps]
+    search = [s for s in steps if s not in placed_steps and s not in floors]
+    flo = [s for s in steps if s not in placed_steps and s in floors]
     where = f" within {a.within}" if a.within else ""
     title = f"Fraction of genomes with a call per step, by {a.rank}{where}"
     busco_txt = f"with BUSCO completeness >= {a.min_busco:g} " if a.min_busco > 0 else "(no BUSCO filter) "
     note = (f"{len(rows):,} genomes {busco_txt}of {n_searched:,} searched; groups with fewer than {a.min_n} genomes dropped "
-            f"({len(summary)} groups shown). Placed calls: {', '.join(placed_steps) or 'none'}; every other step is a search hit at its cutoff, not a placed call.")
-    draw(summary, interp, flo, a.out_dir, a.name, title, note)
+            f"({len(summary)} groups shown). Placed calls: {', '.join(placed_steps) or 'none'}; every other step is a search hit at its cutoff, not a placed call. "
+            f"cars and tsp3 are the same protein set (319 of 319 tsp3 targets are in cars).")
+    draw(summary, interp, flo, a.out_dir, a.name, title, note, steps_search=search)
     print(f"{len(summary)} groups, {len(rows)} genomes; wrote {a.name}")
     return 0
 
