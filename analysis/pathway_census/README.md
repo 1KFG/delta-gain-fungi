@@ -343,3 +343,21 @@ Record and tables: `results/gainloss/RUN_followup.md`. Code: `bin/filter_calls_b
 ### New primary run: Microsporidia excluded, Blastocladiomycota root
 
 Record, tables and the side-by-side comparison: `results/gainloss/carotenoid_noMicro_blasto/RUN.md` and `results/gainloss/carotenoid_noMicro_blasto_compare/`. Code: `bin/drop_phylum_calls.py`, `bin/prune_tree_tips.R`, `bin/run_gainloss_roots.R`, `bin/compare_runs.py`, `bin/events_on_taxon_edges.R`; figure scripts `fig9_tree_presence_nomicro.R`, `fig10_gain_loss_counts_nomicro.R`, `fig11_co_events_nomicro.R`, `fig13_null_co_events_nomicro.R`. The 30 Microsporidia tips are dropped and the tree is rooted on the 6 Blastocladiomycota tips (they form a clade of exactly 6 tips). None of the old run's events sat on Microsporidia edges; the counts change by a few branches through the model refit. Core co-loss 62 to 69 and co-gain 8 to 9 still exceed the prevalence-matched simulation null (internal-edge co-loss 13 to 16 against about 1.2); cart pairs are within chance.
+
+## Step 5 for the single-reference steps
+
+Record with commands, floors, jobs and failures: `results/step5/carotenoid/single_ref_steps_RUN.md` (2026-11-23, PROVISIONAL). Run folders: `results/step5/carotenoid/{cars,cars_v2,cars_v2best,acaa,acaa_best,tsp3,tsp3_v2,tsp2,tdh,tdh_id80}/`. Inputs, screens and submit scripts: `results/step5/carotenoid/single_ref_inputs/`. carx and crtr were not placed (see the record).
+
+New tools (existing step 5 tools are unchanged):
+- `bin/filter_candidate_folder.py --in-dir D --out-dir D2 --step S --floor F`: candidate folder of one step at a floor (same file format). Folders `results/search/<step>_floor<N>/`.
+- `bin/screen_outgroups.py` and `bin/select_by_screen.py`: alignability screen (best domain >= 10 bits and covering >= 0.5 of the HMM; `best` and `union` coverage) and selection of the proteins that pass.
+- `bin/step5_single_ref_clades.py` with `slurm/step5_single_ref_clades.sbatch`: `target` rule for ONE reference. The default rule (smallest side with the references) gives the reference leaf alone, so no placement can be `target`. New rule (PROPOSED): the largest side with the reference and no decoy, outgroup or named member. Run it between `step5_prepare.sbatch` and `step5_place.sbatch`. It keeps the default files as `clade_members.smallest.tsv` and `clade_report.smallest.json`.
+- `slurm/step5_prepare_ident.sbatch`: `step5_prepare.sbatch` with `PC_MIN_SEQ_ID` (clustering identity, default 0.5).
+- `bin/single_ref_nearest.py` (nearest labelled leaf, distance to the reference, genus and class, calls by class), `bin/target_overlap.py` (overlap of target sets and of hits), `bin/hits_by_class_floors.py` (share of genomes with a hit per class).
+- Both `step5_prepare.sbatch` and `step5_place.sbatch` read `PC_CAND_DIR`. Export it for both parts. After each run, `candidates_step.tsv` must have as many rows as `placements.tsv`.
+- Reading rule: with this target rule, `target` is bounded by the labelled leaves that were put in the tree. It is not a set of orthologs. A larger target can follow from fewer labelled neighbours.
+Tests: `tests/test_single_ref_tools.py`.
+
+### Fifth step: ggpp_synthase (placed) on the new primary
+
+Record: `results/gainloss/carotenoid_noMicro_blasto_5steps/RUN.md`. ggpp_synthase is present in 1,540 of 1,609 tips with data (96%); the model finds 0 gains, 60 losses (57 on tip edges), 0 uncertain branches, and ER fits as well as ARD. Its co-loss with the other steps (3 to 4 branches, all tip edges) and its co-gain (none) are within chance in the tree-aware null. Absent calls are mostly single tips; grouped absences are in Pichiomycetes and Agaricomycetes. Code: `bin/gainloss_null_models.R`, `bin/run_null_sim_models.R`, `bin/summarise_null_models.R`, `bin/ggpp_absence_analysis.R`.
