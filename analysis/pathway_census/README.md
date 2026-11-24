@@ -407,3 +407,13 @@ Record: `results/search/melanin_myco_full/RUN.md` (commands, jobs, timings, chec
 - Jobs 32427878 to 32427883 (6 chunks of 4,000 genomes, 16 CPUs, `--mem=96G`, partition `intel`, `--time=04:00:00`). The first submission on `stajichlab` waited 21 min with an estimated start of six days and was cancelled. Script time was 5,224 to 6,438 s per chunk.
 - MEASURED: 244,451,875 proteins; 170,712 candidate rows (projection 159,773; ratio 1.07); 161,355 unique proteins; 19,645 genome prefixes with a row. The check "0 bad id prefixes" failed for 5 genomes (39,700 proteins) whose protein files were rewritten with a new locus tag after the genome table was built (see the note, section 2).
 - `curation_scripts/melanin_myco_step4_summary.py` makes the checks and the count tables. It reads `.zst` through `zstd -dc`.
+
+## Genome table prefix aliases (2026-11-24)
+
+Five BFD genomes (`F8B45790`, `FE750E90`, `FE41F6C9`, `FF465DA3`, `F6D07108`) were re-annotated after `genomes.tsv.zst` was built. Their protein files now carry new locus tags (`F7CB232C`, `F317F9F5`, `FB9275E9`, `F629B7B9`, `FAD1592B`). Note: `docs/superpowers/notes/2026-11-24-genome-prefix-mismatch.md`.
+
+- `bin/check_genome_prefixes.py --genomes results/genomes.tsv.zst --since <table build time> --out report.tsv [--aliases-out aliases.tsv] [--threads N]`: reads the first protein id of each protein file and compares its prefix with the genome table. MEASURED 2026-11-24: 5 mismatches in 23,376 genomes; all 5 files are newer than the table (52 files are newer).
+- `prefix_aliases.tsv` (tracked): the mapping, table locustag to file prefix. The original `results/genomes.tsv.zst` is not changed.
+- `bin/apply_prefix_aliases.py --genomes ... --aliases prefix_aliases.tsv --out results/genomes.corrected.tsv.zst`: adds the column `alias_prefix`.
+- `bin/make_calls_table.py --prefix-aliases prefix_aliases.tsv`: maps protein id prefixes to table locustags. Other tools that split the protein id at `_` do not read the alias file yet (see the note, section 5).
+- Run the check again after any BFD re-annotation, before a search is read.
