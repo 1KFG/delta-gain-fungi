@@ -188,7 +188,7 @@ def test_gene_names_are_keyed_by_organism():
 
 DECOYS = {
     "ddgs": {"H2K887", "Q9ZAE9", "C6WFL3", "P07639", "P07547", "Q9S5E2"},
-    "omt": {"O42898", "B8NI24", "A0A397HK53", "P21964"},
+    "omt": {"O42898", "B8NI24", "A0A397HK53", "P21964", "Q8NKC1"},
     "atp_grasp_ligase": {"Q4WD45", "C4JF81", "A0A5N6TQK6", "P07862", "P04425", "B2J6X6"},
 }
 

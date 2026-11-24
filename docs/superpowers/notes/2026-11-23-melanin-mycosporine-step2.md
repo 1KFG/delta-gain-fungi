@@ -330,3 +330,9 @@ Labels: MEASURED is read from a file or `sacct` named in `analysis/pathway_censu
 - Candidate rows per step (MEASURED, chunk of 200): tyrosinase 439, hppd 154, omt 125, ayg1 87, atp_grasp_ligase 86, ddgs 81, t4hn_reductase 71, scytalone_dehydratase 64, hexaketide_pks 63, laccase_abr2 63, thn_synthase 53, t3hn_reductase 21, heptaketide_pks 15, hmga 15, asp_melanin_tyrosinase 13, mco_abr1 13, laccase_diphenol 4, aspulvinone_e_synthase 0.
 - The `omt` rows all score 100.8 to 160.6 (median 111.4). Section 9.5 found almost no reviewed fungal O-methyltransferase above 100.6. The BFD rows are not reviewed entries. UNVERIFIED what they are. This is evidence for the second round of the `omt` floor.
 - PROPOSED plan for the full search: 6 chunks of 4,000 genomes, 16 CPUs, `--mem=96G`, about 64 to 75 min per job, about 159,773 candidate rows (1,367 x 116.88). The default `--mem=32G` is too small (projected 47 to 62 GB, UNVERIFIED). Details in `RUN.md`.
+
+## 12. omt decoy Q8NKC1 and new omt floor (2026-11-23)
+
+Section 9.5 proposed Q8NKC1 as a decoy. It is added. Record fetched from `rest.uniprot.org` (MEASURED): reviewed entry COMT2_SCHPO, "Probable catechol O-methyltransferase 2", *Schizosaccharomyces pombe* (strain 972 / ATCC 24843), ORF SPBPB21E7.04c, 281 residues, EC 2.1.1.6, Pfam PF01596. Step 2 for mycosporine was re-run (job 32415136). Q8NKC1 scores 120.7 on the `omt` HMM, so the highest decoy score is 120.7 (before 100.6, P21964). Reference and leave-one-out scores are unchanged.
+
+The `omt` `min_score` is now 120.7 (basis: owner rule floor = highest decoy score, through `--floor-override`; rule value 8.3). The step 3 timing job used 100.6, and its table is kept in `results/step3/melanin_myco/`. In the timing chunk 84 of 125 `omt` candidate rows lie between 100.6 and 120.7; 41 remain at or above 120.7. Whether the removed rows contain real orthologs is UNVERIFIED. Details in `results/step3/melanin_myco/RUN.md`.
