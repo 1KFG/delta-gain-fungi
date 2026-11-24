@@ -1,0 +1,13 @@
+Submitted batch job 32427757
+Submitted batch job 32427758
+Submitted batch job 32427759
+Submitted batch job 32427760
+Submitted batch job 32427761
+Submitted batch job 32427762
+# stajichlab jobs 32427757-32427762 cancelled while PENDING (Priority) at Tue Nov 24 10:26:40 PST 2026; est. start 2026-11-30
+Submitted batch job 32427878
+Submitted batch job 32427879
+Submitted batch job 32427880
+Submitted batch job 32427881
+Submitted batch job 32427882
+Submitted batch job 32427883

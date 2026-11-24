@@ -398,3 +398,12 @@ Record: `results/step3/melanin_myco/RUN.md` (commands, jobs, timings, candidates
 - Unusual counts: `tyrosinase` 439 rows, `hppd` 154, `omt` 125 (all within 60 bits of the floor), against 0 for `aspulvinone_e_synthase`.
 
 Second commit of step 3 (2026-11-23): UniProt Q8NKC1 (*S. pombe* COMT2, reviewed, 281 residues) is a new `omt` decoy (`curation_scripts/melanin_myco_decoys/add_omt_decoy.py`). Step 2 for mycosporine was re-run (job 32415136). The highest `omt` decoy score is 120.7 (was 100.6). The `omt` floor follows the owner rule "floor = highest decoy score" through `--floor-override omt=120.7`. The timing job stays on the 100.6 table (kept in `results/step3/melanin_myco/`). In the timing chunk 84 of 125 `omt` rows lie between 100.6 and 120.7. Old step 2 tables: `results/step2/mycosporine.pre_Q8NKC1/`.
+
+## Step 4 for melanin and mycosporine
+
+Record: `results/search/melanin_myco_full/RUN.md` (commands, jobs, timings, checks). Note: `docs/superpowers/notes/2026-11-24-melanin-myco-step4-results.md`. All outputs are PROVISIONAL.
+
+- Full search of 23,376 genomes with the 18 HMMs of `melanin_dhn`, `melanin_ldopa` and `mycosporine` and the combined cutoff table `results/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv` (`omt` floor 100.6, owner decision 2026-11-24). `bin/search_chunk.py` was not changed.
+- Jobs 32427878 to 32427883 (6 chunks of 4,000 genomes, 16 CPUs, `--mem=96G`, partition `intel`, `--time=04:00:00`). The first submission on `stajichlab` waited 21 min with an estimated start of six days and was cancelled. Script time was 5,224 to 6,438 s per chunk.
+- MEASURED: 244,451,875 proteins; 170,712 candidate rows (projection 159,773; ratio 1.07); 161,355 unique proteins; 19,645 genome prefixes with a row. The check "0 bad id prefixes" failed for 5 genomes (39,700 proteins) whose protein files were rewritten with a new locus tag after the genome table was built (see the note, section 2).
+- `curation_scripts/melanin_myco_step4_summary.py` makes the checks and the count tables. It reads `.zst` through `zstd -dc`.
