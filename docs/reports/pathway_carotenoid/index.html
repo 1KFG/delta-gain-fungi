@@ -185,6 +185,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#c-2.-placement-for-phytoene_desaturase-and-cart-small-trees" id="toc-c-2.-placement-for-phytoene_desaturase-and-cart-small-trees" class="nav-link" data-scroll-target="#c-2.-placement-for-phytoene_desaturase-and-cart-small-trees">6c-2. Placement for <code>phytoene_desaturase</code> and <code>cart</code> (small trees)</a></li>
   <li><a href="#d.-which-taxonomic-groups-have-the-steps" id="toc-d.-which-taxonomic-groups-have-the-steps" class="nav-link" data-scroll-target="#d.-which-taxonomic-groups-have-the-steps">6d. Which taxonomic groups have the steps</a></li>
   <li><a href="#e.-do-the-cutoffs-find-known-entries-a-sensitivity-audit" id="toc-e.-do-the-cutoffs-find-known-entries-a-sensitivity-audit" class="nav-link" data-scroll-target="#e.-do-the-cutoffs-find-known-entries-a-sensitivity-audit">6e. Do the cutoffs find known entries? A sensitivity audit</a></li>
+  <li><a href="#f.-three-cutoff-tests-ggpp_synthase-the-cart-alignability-rule-and-astaxanthin_synthase" id="toc-f.-three-cutoff-tests-ggpp_synthase-the-cart-alignability-rule-and-astaxanthin_synthase" class="nav-link" data-scroll-target="#f.-three-cutoff-tests-ggpp_synthase-the-cart-alignability-rule-and-astaxanthin_synthase">6f. Three cutoff tests: <code>ggpp_synthase</code>, the <code>cart</code> alignability rule and <code>astaxanthin_synthase</code></a></li>
   <li><a href="#g.-are-the-steps-gained-and-lost-together-a-first-pass-on-the-genus-tree" id="toc-g.-are-the-steps-gained-and-lost-together-a-first-pass-on-the-genus-tree" class="nav-link" data-scroll-target="#g.-are-the-steps-gained-and-lost-together-a-first-pass-on-the-genus-tree">6g. Are the steps gained and lost together? A first pass on the genus tree</a></li>
   <li><a href="#h.-do-the-shared-losses-exceed-chance-on-this-tree-simulation-null-root-and-dropped-tips-busco-and-a-second-tree" id="toc-h.-do-the-shared-losses-exceed-chance-on-this-tree-simulation-null-root-and-dropped-tips-busco-and-a-second-tree" class="nav-link" data-scroll-target="#h.-do-the-shared-losses-exceed-chance-on-this-tree-simulation-null-root-and-dropped-tips-busco-and-a-second-tree">6h. Do the shared losses exceed chance on this tree? Simulation null, root and dropped tips, BUSCO and a second tree</a></li>
   </ul></li>
@@ -224,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">November 22, 2026</p>
+      <p class="date-modified">November 23, 2026</p>
     </div>
   </div>
     
@@ -263,7 +264,7 @@ What this is, and where it stops being reliable
 <li><strong>A higher cutoff for two steps hides a large number of low-scoring proteins.</strong> With a floor of 20 bits, <code>astaxanthin_synthase</code> returns 47,640 proteins and <code>ylo1</code> 20,276 proteins in 1,000 genomes. At the rule cutoff, the same run holds 2 and 458 proteins.</li>
 <li><strong>Step 5 pilot, <code>phytoene_synthase</code> and <code>lycopene_cyclase</code>: placement removes only a few candidates, and named lineage subclades cover a minority.</strong> In the second run, with 13 named fungal members and 7 non-fungal outgroups in the tree, 10,815 of 10,863 candidates (99.6%) fall in the target clade. Four named subclades exist (Dothideomycetes, Eurotiomycetes, Mucoromycetes, Ustilaginomycetes) and hold 2,482 candidates (22.8%). 8,333 candidates (76.7%) lie in the target clade but in no named subclade (section 6b). The cyclase step gives the same picture: 9,492 of 9,530 candidates in the target clade, 2,177 (22.8%) in a named subclade (section 6c). The result is “consistent with the HMM”, not “confirmed phytoene synthase”.</li>
 <li><strong>The candidates of <code>phytoene_synthase</code> are not squalene synthase.</strong> All 191 representatives score higher against the 5 synthase references than against a panel of 15 reviewed fungal squalene synthases (smallest margin 37.8 bits, median 128.1 bits).</li>
-<li><strong>The <code>ggpp_synthase</code> cutoff under-calls known GGPP synthases.</strong> 13 of the 39 reviewed fungal entries named geranylgeranyl pyrophosphate synthase score below it (26 of 39 found, 67%), including budding-yeast BTS1 (section 6e).</li>
+<li><strong>The <code>ggpp_synthase</code> cutoff under-calls known GGPP synthases.</strong> 13 of the 39 reviewed fungal entries named geranylgeranyl pyrophosphate synthase score below it (26 of 39 found, 67%), including budding-yeast BTS1 (section 6e). The heatmaps now use placement of hits of 150 bits or more in the GGPP synthase clade instead (section 6f).</li>
 <li><strong>Ten of the 14 steps have no placement yet.</strong> The copy-number and phylum summaries (steps 6 to 8) wait for them.</li>
 </ul>
 </section>
@@ -746,7 +747,7 @@ What this is, and where it stops being reliable
 <figcaption>Figure 7. Fraction of genomes with a call per step, by class.</figcaption>
 </figure>
 </div>
-<p><em>Each cell is the percent of genomes of the class with at least one call for the step; the number of genomes is in the row label. The blue panel holds the steps whose cutoff comes from held-out references; the grey panel holds the steps whose cutoff is only a decoy floor, which hit nearly every genome and must be read as “family present”. <strong>Four columns are placed calls (tree placement, sections 6 to 6c-2): <code>phytoene_synthase</code>, <code>lycopene_cyclase</code>, <code>phytoene_desaturase</code> and <code>cart</code>. The desaturase and <code>cart</code> placements use small trees (15 and 27 leaves) and are a weaker filter than the other two. Every other column is a search hit at its cutoff.</strong> Blank cells are below 0.5%. The “3 core carotenoid steps” column is the share of genomes with all of <code>phytoene_synthase</code>, <code>phytoene_desaturase</code> and <code>lycopene_cyclase</code>. All 23,376 searched genomes are used, with no BUSCO filter (see the reading traps). <a href="figures/out/fig7_presence_by_class.pdf">PDF</a></em></p>
+<p><em>Each cell is the percent of genomes of the class with at least one call for the step; the number of genomes is in the row label. The blue panel holds the steps whose cutoff comes from held-out references; the grey panel holds the steps whose cutoff is only a decoy floor, which hit nearly every genome and must be read as “family present”. <strong>Five columns are placed calls (tree placement, sections 6 to 6f): <code>ggpp_synthase</code> (hits of 150 bits or more placed in the GGPP synthase clade, section 6f), <code>phytoene_synthase</code>, <code>lycopene_cyclase</code>, <code>phytoene_desaturase</code> and <code>cart</code>. The desaturase and <code>cart</code> placements use small trees (15 and 27 leaves) and are a weaker filter than the other two. Every other column is a search hit at its cutoff.</strong> Blank cells are exactly zero; “&lt;0.5” marks a non-zero share below 0.5%. The “3 core carotenoid steps” column is the share of genomes with all of <code>phytoene_synthase</code>, <code>phytoene_desaturase</code> and <code>lycopene_cyclase</code>. All 23,376 searched genomes are used, with no BUSCO filter (see the reading traps). <a href="figures/out/fig7_presence_by_class.pdf">PDF</a></em></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/out/fig8_presence_by_order_pezizomycotina.png" class="img-fluid figure-img"></p>
@@ -762,8 +763,8 @@ What this is, and where it stops being reliable
 </ul>
 <p>Reading traps and limits:</p>
 <ul>
-<li><strong>Reading trap: a low <code>ggpp_synthase</code> call rate is not absence.</strong> The step has two references. The step HMM scores budding-yeast BTS1 (Q12051) at 284.8 bits and the <em>Eremothecium</em> GGPP synthase (Q758K0) at 282.4, both below the cutoff of 369.3; fission-yeast O59703 scores 22.6. Of the 39 reviewed fungal entries named geranylgeranyl pyrophosphate synthase that are not our references, 13 score below the cutoff (section 6e). This is why Saccharomycetes read 3% and Pichiomycetes blank. The cutoff is too strict for GGPP synthases outside the references’ lineages, so the column under-calls.</li>
-<li><strong><code>ylo1</code> and <code>ggpp_synthase</code> are at 90% or more in nearly every order of Pezizomycotina.</strong> That pattern fits a widely shared protein family, not a pathway-specific step. These are search hits and are not placed.</li>
+<li><strong><code>ggpp_synthase</code> calls changed after section 6e (owner decision, 2026-11-23).</strong> The first version of this figure used the 369.3-bit hit and read 3% for Saccharomycetes and under 0.5% for Pichiomycetes, which was an artefact of a cutoff that misses yeast GGPP synthases. The column now counts a genome when a hit of 150 bits or more is placed in the GGPP synthase clade (section 6f): Saccharomycetes 94%, Pichiomycetes 82%. 1,274 genomes still have no hit at 150 bits.</li>
+<li><strong><code>ylo1</code> is at 90% or more in nearly every order of Pezizomycotina.</strong> That pattern fits a widely shared protein family, not a pathway-specific step. These are search hits and are not placed. <code>ggpp_synthase</code> is also near-universal there, now as placed calls.</li>
 <li><strong>A “call” is at least one protein in the genome.</strong> An incomplete assembly gives a false absence. A BUSCO filter of 90 would remove whole lineages (MEASURED: Saccharomycetes 2,560 genomes to 0, Pichiomycetes 2,929 to 2, Schizosaccharomycetes and Wallemiomycetes to 0), so it is not applied. The 177 genomes with no class label form their own row.</li>
 <li><strong>The synthase and cyclase columns are not independent.</strong> In most fungi both are domains of one fused protein (section 6c).</li>
 <li><strong>Percent of genomes is not percent of species or lineages.</strong> Genome counts follow what has been sequenced; Eurotiales, Hypocreales and Sordariomycetes are large because many strains are sequenced.</li>
@@ -857,6 +858,271 @@ What this is, and where it stops being reliable
 <li><strong>Five steps cannot be judged.</strong> UniProt returned 0, 0, 0, 1 and 1 reviewed entries beyond our references under the EC numbers in the tables. Whether the table numbers are out of date was not checked (UNVERIFIED).</li>
 <li><strong>A lower <code>ggpp_synthase</code> cutoff is an option, not applied (PROPOSED).</strong> At 200 bits, 38 of the 39 named GGPP synthases are found, and the highest decoy scores 37.1. The same cutoff would also call 23 of the 25 terpene synthases, which carry a prenyltransferase domain. What those are in BFD was not checked, and the BFD search was not re-run.</li>
 <li><strong>What would settle it:</strong> a 1,000-genome search at the lower cutoff, added yeast GGPP synthases as references, or family membership (InterPro) of reviewed entries as the audit set.</li>
+</ul>
+</section>
+<section id="f.-three-cutoff-tests-ggpp_synthase-the-cart-alignability-rule-and-astaxanthin_synthase" class="level3">
+<h3 class="anchored" data-anchor-id="f.-three-cutoff-tests-ggpp_synthase-the-cart-alignability-rule-and-astaxanthin_synthase">6f. Three cutoff tests: <code>ggpp_synthase</code>, the <code>cart</code> alignability rule and <code>astaxanthin_synthase</code></h3>
+<p><strong><code>ggpp_synthase</code>: where should the cutoff be?</strong> Section 6e showed that the cutoff of 369.3 bits misses known GGPP synthases. Two tests followed (nothing is applied; the cutoff of 369.3 is still used everywhere else in this report).</p>
+<ol type="1">
+<li><strong>Leave-one-out with a wider HMM.</strong> For each of the 39 reviewed fungal entries named geranylgeranyl pyrophosphate synthase, an HMM was built from the 2 references plus the other 38 and the held-out entry was scored (<code>bin/expanded_hmm_cv.py</code>).</li>
+<li><strong>A low-floor search of 1,000 genomes</strong> (the first 1,000 of the full run) with the current HMM and with the wider HMM built from all 41 sequences, kept down to 100 bits (<code>bin/cutoff_sweep.py</code>).</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig14_ggpp_cutoff_sweep.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 14. Share of genomes with a GGPP synthase call against the score cutoff, by class.</figcaption>
+</figure>
+</div>
+<p><em>Left: the current two-reference HMM. Right: the wider HMM. Solid black line marks the cutoff in use, dotted line the cutoff tried. <strong>The figure shows that the share of genomes with a call rises steeply as the cutoff falls to 200 or 150 bits, most for the budding yeasts; it does not show that the extra calls are GGPP synthases, because the share of genomes with a call is a proxy for sensitivity and says nothing about what the extra proteins are.</strong> <a href="figures/out/fig14_ggpp_cutoff_sweep.pdf">PDF</a></em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Cutoff (bits), current HMM</th>
+<th style="text-align: right;">All genomes</th>
+<th style="text-align: right;">Saccharomycetes (110)</th>
+<th style="text-align: right;">Pichiomycetes (131)</th>
+<th style="text-align: right;">Agaricomycetes (86)</th>
+<th>Genomes with 0 / 1 / 2 / 3 or more calls</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">369.3 (in use)</td>
+<td style="text-align: right;">65.5%</td>
+<td style="text-align: right;">2.7%</td>
+<td style="text-align: right;">0.0%</td>
+<td style="text-align: right;">67.4%</td>
+<td>345 / 437 / 143 / 75</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">70.4%</td>
+<td style="text-align: right;">15.5%</td>
+<td style="text-align: right;">11.5%</td>
+<td style="text-align: right;">76.7%</td>
+<td>296 / 464 / 153 / 87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">81.0%</td>
+<td style="text-align: right;">92.7%</td>
+<td style="text-align: right;">13.7%</td>
+<td style="text-align: right;">83.7%</td>
+<td>190 / 465 / 163 / 182</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">86.4%</td>
+<td style="text-align: right;">93.6%</td>
+<td style="text-align: right;">43.5%</td>
+<td style="text-align: right;">88.4%</td>
+<td>136 / 423 / 177 / 264</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">93.8%</td>
+<td style="text-align: right;">94.5%</td>
+<td style="text-align: right;">85.5%</td>
+<td style="text-align: right;">90.7%</td>
+<td>62 / 484 / 177 / 277</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">95.7%</td>
+<td style="text-align: right;">96.4%</td>
+<td style="text-align: right;">95.4%</td>
+<td style="text-align: right;">90.7%</td>
+<td>43 / 497 / 176 / 284</td>
+</tr>
+</tbody>
+</table>
+<p><em>First 1,000 genomes of the search (<code>results/audit/ggpp_eval/sweep_current/</code>). Of the 39 named entries, the current HMM scores 26 at or above 369.3 bits, 28 at or above 300 and 38 at or above 200; the wider HMM, leave-one-out, scores 29 at or above 369.3 and 38 at or above 300. One entry, fission-yeast O59703, is the miss in both (22.6 and 43.3 bits).</em></p>
+<ul>
+<li><strong>A lower cutoff recovers the yeasts.</strong> At 150 bits the current HMM gives a call in 94.5% of Saccharomycetes and 85.5% of Pichiomycetes genomes, against 2.7% and 0.0% at 369.3. The calls per genome rise too (genomes with 3 or more calls: 75 to 277), as expected where a family has several members or terpene synthases carry a prenyltransferase domain; what the extra calls are was not tested.</li>
+<li><strong>Specificity at 150 bits is not safe by score alone (corrected, see the placement test below).</strong> I first wrote that the current HMM looked safe to about 150 bits because the 4 decoys score at most 37.1 and only 71 hits lie between 100 and 150 bits in 1,000 genomes. The placement of all 52,479 candidates at 150 bits shows otherwise: 15,444 (29%) fall in the farnesyl synthase clade, with a median score of 243 bits.</li>
+<li><strong>The wider HMM brings the farnesyl pyrophosphate synthases closer.</strong> The three farnesyl pyrophosphate synthases rise from at most 37.1 to between 117.5 and 126.6 bits under the wider HMM (the hexaprenyl one to 50.1), and below about 130 bits it floods: the number of hits between 100 and 120 bits is 725, and the genomes with exactly 2 calls rise from 175 (at 150 bits) to 442 (at 100). Its lowest leave-one-out score (excluding O59703) is 314.8, and it improves Pichiomycetes only slightly (13% at 314.8). It also scores fission-yeast O59703 (a GGPP synthase in UniProt) below that species’ own farnesyl pyrophosphate synthase decoy, so O59703 should not be trusted as a positive.</li>
+<li><strong>An E-value cutoff gives no advantage.</strong> In the 1,000-genome search the median i-Evalue is 4.7e-50 for hits of 150 to 200 bits, 1.2e-64 at 200 to 250 and 2e-124 at 369 to 450. The E-value depends on the size of the searched set (the full BFD is about 23 times larger), so a bit-score cutoff is the portable one; “i-Evalue at most 1e-49” in this 1,000-genome search is about 150 bits.</li>
+<li><strong>Reading trap: “share of genomes with a call” assumes GGPP synthase is near-universal.</strong> That assumption is UNVERIFIED (budding-yeast BTS1 is not essential, for example). It is a sensitivity check, not a count of real genes.</li>
+<li><strong>Placement test (done, nothing applied to the other sections).</strong> All 23,376 genomes were searched at 150 bits (52,479 candidates in 22,102 genomes) and the candidates were placed on a tree of the 2 references, 63 named members (38 named GGPP synthases and 25 bifunctional terpene synthases with a prenyltransferase domain) and 10 farnesyl synthase decoys (<code>results/step5/carotenoid/ggpp_synthase/</code>; the hexaprenyl decoy covers only 24% of the wider HMM and is left out; 300 representatives; one tree from 2 <code>raxml-ng</code> starts, rooted on the decoys; fission-yeast O59703 is excluded). In the tree, 33 of the 38 named GGPP synthases lie in the target clade (the smallest clade holding both references; 190 leaves), the 10 decoys form their own clade, and 24 of the 25 bifunctional entries and 5 named GGPP synthases (amyG, sdnC, GGS-A, GGS3 and GA5, which are pathway-dedicated enzymes by name) lie outside both.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig15_ggpp_placed_vs_hits.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 15. Share of genomes with a GGPP synthase call: hits at the rule cutoff, hits at 150 bits, and proteins placed in the GGPP synthase clade.</figcaption>
+</figure>
+</div>
+<p><em>Classes with at least 150 genomes, all 23,376 searched genomes. <strong>The figure shows that placing the 150-bit candidates in the GGPP synthase clade keeps almost every genome that has a 150-bit hit (21,933 of 22,102), and that both recover the yeasts that the rule cutoff misses; it does not show that every placed protein is a GGPP synthase, because the target clade is defined by only two references and the tree is a single run.</strong> <a href="figures/out/fig15_ggpp_placed_vs_hits.pdf">PDF</a></em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Genomes with a call (of 23,376)</th>
+<th style="text-align: right;">Hit at 369.3 bits (rule)</th>
+<th style="text-align: right;">Hit at 150 bits</th>
+<th style="text-align: right;">Placed in the GGPP synthase clade</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>All</td>
+<td style="text-align: right;">15,919 (68.1%)</td>
+<td style="text-align: right;">22,102 (94.5%)</td>
+<td style="text-align: right;">21,933 (93.8%)</td>
+</tr>
+<tr class="even">
+<td>Saccharomycetes (2,560)</td>
+<td style="text-align: right;">3.4%</td>
+<td style="text-align: right;">96.7%</td>
+<td style="text-align: right;">93.8%</td>
+</tr>
+<tr class="odd">
+<td>Pichiomycetes (2,929)</td>
+<td style="text-align: right;">0.4%</td>
+<td style="text-align: right;">82.5%</td>
+<td style="text-align: right;">82.4%</td>
+</tr>
+<tr class="even">
+<td>Ustilaginomycetes (133)</td>
+<td style="text-align: right;">7.5%</td>
+<td style="text-align: right;">100%</td>
+<td style="text-align: right;">100%</td>
+</tr>
+<tr class="odd">
+<td>Agaricomycetes (1,844)</td>
+<td style="text-align: right;">67.1%</td>
+<td style="text-align: right;">91.3%</td>
+<td style="text-align: right;">91.1%</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Candidate score (bits)</th>
+<th style="text-align: right;">In the target clade</th>
+<th style="text-align: right;">On the farnesyl side</th>
+<th style="text-align: right;">Unassigned</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>150 to 200</td>
+<td style="text-align: right;">1,979</td>
+<td style="text-align: right;">2,558</td>
+<td style="text-align: right;">907</td>
+</tr>
+<tr class="even">
+<td>200 to 250</td>
+<td style="text-align: right;">1,577</td>
+<td style="text-align: right;">7,234</td>
+<td style="text-align: right;">1,419</td>
+</tr>
+<tr class="odd">
+<td>250 to 300</td>
+<td style="text-align: right;">2,746</td>
+<td style="text-align: right;">5,617</td>
+<td style="text-align: right;">3,413</td>
+</tr>
+<tr class="even">
+<td>300 to 369.3</td>
+<td style="text-align: right;">2,060</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td>369.3 to 450</td>
+<td style="text-align: right;">7,966</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td>450 or more</td>
+<td style="text-align: right;">14,915</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">22</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>results/audit/ggpp_eval/placed_vs_hits/</code> (<code>bin/placed_vs_hits_by_class.py</code>). “Farnesyl side” means placed with the 10 farnesyl synthase decoys.</em></p>
+<ul>
+<li><strong>Score alone separates only at 300 bits and above.</strong> From 300 bits up, 98 to 100% of candidates are in the target clade. Between 150 and 300 bits only 15 to 36% are (6,302 of 28,094 in the band); the rest are on the farnesyl side (15,409) or unassigned (5,739). A lower cutoff without placement would call the farnesyl-side proteins too.</li>
+<li><strong>Placement removes few genomes.</strong> 169 genomes have a 150-bit hit and no protein in the clade (74 Saccharomycetes, 40 Sordariomycetes, 11 Lecanoromycetes, 9 Mucoromycetes). Most genomes with a farnesyl-side hit also have a target protein (6,679 of 6,818).</li>
+<li><strong>What the farnesyl-side proteins are is not known.</strong> 14,659 of the 15,444 (95%) come from Sordariomycetes, Eurotiomycetes and Dothideomycetes. The tree places them with the farnesyl synthase decoys; they may be farnesyl-type enzymes more diverged than the decoys, or another prenyl diphosphate synthase.</li>
+<li><strong>Genomes still without a call at 150 bits:</strong> 1,274, mostly Pichiomycetes (513), Agaricomycetes (161), unlabelled (139), Saccharomycetes (85), Schizosaccharomycetes (67, where the GGPP synthase scores 22.6 bits), Sordariomycetes (57), Wallemiomycetes (50) and Kickxellomycetes (24).</li>
+<li><strong>Recommendation (PROPOSED): call <code>ggpp_synthase</code> by placement in the GGPP synthase clade for hits of 150 bits or more, in place of the 369.3-bit hit.</strong> This is not applied to sections 6d and 6g, or to the heatmaps, which still use the rule cutoff. The target clade excludes 5 named pathway-dedicated GGPP synthases, so the call is conservative for those.</li>
+</ul>
+<p><strong><code>cart</code>: should the alignability rule count all domains of a hit?</strong> The rule for tree outgroups and decoys uses the best single domain (at least 10 bits and at least 50% of the HMM). With the union of all domains of 10 bits or more (<code>--coverage-mode union</code> in <code>bin/filter_decoys_for_tree.py</code>, default unchanged), 4 more entries pass: human and mouse BCO2 (0.69, 0.67), <em>Drosophila</em> NinaB (0.69) and <em>Arabidopsis</em> CCD8 (0.501, borderline). The 6 current <code>cart</code> decoys and the other plant and cyanobacterial oxygenases still fail (union 0.08 to 0.41). The placement was re-run with the 5 old and 4 new outgroups (<code>results/step5/carotenoid/cart_alldomains/</code>).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">Current (5 outgroups)</th>
+<th style="text-align: right;">All-domains (9 outgroups)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tree leaves</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr class="even">
+<td>Target clade (references and representatives)</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td>Candidates called target / non-target ingroup clade / unassigned</td>
+<td style="text-align: right;">5,303 / 0 / 230</td>
+<td style="text-align: right;">5,308 / 190 / 35</td>
+</tr>
+<tr class="even">
+<td>Genomes with an assigned protein</td>
+<td style="text-align: right;">4,610</td>
+<td style="text-align: right;">4,690</td>
+</tr>
+<tr class="odd">
+<td>Support in the target clade, minimum</td>
+<td style="text-align: right;">0.773</td>
+<td style="text-align: right;">0.98</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>No non-target oxygenase shows up among the candidates.</strong> No representative groups with BCO2, NinaB or CCD8, and for all 20 representatives the best blastp hit is a <code>cart</code> reference (491 to 880 bits), against 93 to 174 bits for the best outgroup.</li>
+<li><strong>The call boundary moves.</strong> 411 of 5,533 proteins change status, and 298 genomes change presence: 109 lose it (98 Sordariomycetes) and 189 gain it (all Sordariomycetes), a net gain of 80. The change comes from the tree shape with distant outgroups (CCD8 has a pendant branch of 1.95), not from any non-target enzyme.</li>
+<li><strong>Recommendation (PROPOSED): keep the best-domain rule.</strong> The union rule adds no specificity here, changes the calls of 7% of the proteins through tree shape, and its CCD8 entry sits at the limit. Whether another random seed gives the same topology was not tested (UNVERIFIED). The presence calls in sections 6d and 6g are unchanged.</li>
+</ul>
+<p><strong><code>astaxanthin_synthase</code>: why the heatmap column is nearly empty.</strong> The step is not missing. It has calls in 12 of 23,376 genomes (0.05%), all <em>Phaffia</em> (10 <em>P. rhodozyma</em>, <em>P. australis</em>, <em>P. tasmanica</em>), with scores of 1216 to 1343 bits over the full HMM, so the column reads 2% for Tremellomycetes and zero elsewhere. The heatmaps now print “&lt;0.5” for any non-zero share below 0.5% (a blank cell is an exact zero).</p>
+<ul>
+<li><strong>Related P450s exist below the cutoff, and a placement shows they are far from the references.</strong> In a search of all 23,376 genomes at a floor of 300 bits, 4,459 candidates in 1,937 genomes (8.3%) were found, mostly basidiomycete P450s. They were placed on a tree of the 2 references, 16 reviewed fungal P450s as outgroups (all alignable: at least 100 bits and 50% of the HMM; mostly <em>Postia placenta</em>, <em>Ampulloclitocybe clavipes</em> and <em>Ganoderma</em> entries) and 90 representatives (<code>results/step5/carotenoid/astaxanthin_synthase/</code>). Existing decoys could not be used: none covers more than 44% of the HMM.</li>
+<li><strong>No candidate other than the <em>Phaffia</em> ones lies near the references.</strong> The nearest leaf to the two references is the cluster of 12 near-identical <em>Phaffia</em> candidates (patristic distance 0.087 substitutions per site). The next nearest are paralogs inside <em>Phaffia</em> genomes (distance 1.0 to 1.06; 10 candidates). The <em>Mrakia</em>, <em>Udeniomyces</em>, <em>Krasilnikovozyma</em> and <em>Cystofilobasidium</em> groups, which score 410 to 550 bits, lie at 1.4 to 1.9; the outgroups lie at 2.0 to 3.2. A group more distant than the paralogs inside <em>Phaffia</em> is not evidence of an ortholog of the astaxanthin P450, and none is called.</li>
+<li><strong>Reading trap: the 12 <em>Phaffia</em> candidates are “unassigned”, not lost.</strong> The target clade is only the two references, so a near-identical candidate is placed on the branch below that clade (stem weight 0.898 against 0.102 inside) and the rule that counts only weight inside the clade does not assign it. The other 4,447 candidates are on the non-target side (4,288) or in the outgroups’ common ancestor (159); that ancestor holds 48 representatives, because the 16 outgroups are not monophyletic (their ancestor has 64 leaves).</li>
+<li><strong>What this supports:</strong> in BFD, the astaxanthin P450 is found only in <em>Phaffia</em> genomes (12 of 23,376), and the rule cutoff is not hiding orthologs in the other Cystofilobasidiales. It does not show that the step is absent elsewhere in fungi, and the tree is one run of 3 <code>raxml-ng</code> starts (UNVERIFIED).</li>
 </ul>
 </section>
 <section id="g.-are-the-steps-gained-and-lost-together-a-first-pass-on-the-genus-tree" class="level3">
@@ -1273,7 +1539,7 @@ What this is, and where it stops being reliable
 <li>Step 5 for the other 13 steps. The tool is step-generic (<code>bin/step5_place.py</code>). <code>lycopene_cyclase</code> is done (section 6c); it has no decoy test in its tree.</li>
 <li>Quality, contamination and haplotype flags (step 7). There is no fungal versus non-fungal reference set, so counts will be raw first.</li>
 <li>The copy matrix and phylum summary (step 8), the deposited versus BFD comparison (steps 9, 10), the tblastn absence check (step 11) and triage (step 12).</li>
-<li><strong>Co-gain and co-loss, beyond sections 6g and 6h.</strong> Not done: a yeast-specific BUSCO set (the 65 to 70 floor cannot catch an incomplete yeast assembly); the simulation null on a second tree or at cutoff 65; replicate genomes per genus; and the same analysis for the other steps. No completeness filter is applied in the main results (owner decision, 2026-11-23); the BUSCO 65 and 70 runs are a sensitivity check.</li>
+<li><strong>Co-gain and co-loss, beyond sections 6g and 6h.</strong> Not done: <code>ggpp_synthase</code>, now with placed calls, was not added to the gain/loss analysis; a yeast-specific BUSCO set (the 65 to 70 floor cannot catch an incomplete yeast assembly); the simulation null on a second tree or at cutoff 65; replicate genomes per genus; and the same analysis for the other steps. No completeness filter is applied in the main results (owner decision, 2026-11-23); the BUSCO 65 and 70 runs are a sensitivity check.</li>
 <li>The root of the genus tree is the owner’s choice (Blastocladiomycota, with Microsporidia dropped); a second root on Chytridiomycota gives identical counts. The simulation null was not run for run C (all tips, Blastocladiomycota root), and Pagel was not re-run for the <code>cart</code> pairs on the new tree.</li>
 <li>The question of whether fungal lycopene cyclases have diversified in some groups (<code>docs/superpowers/notes/2026-11-22-open-questions.md</code>, Q1). It needs step 5 first.</li>
 </ul>
@@ -1337,6 +1603,14 @@ What this is, and where it stops being reliable
 <td><code>results/step5/carotenoid/lycopene_cyclase_v2/</code> (jobs 32377644 and 32377645)</td>
 </tr>
 <tr class="even">
+<td>GGPP placement</td>
+<td><code>bin/make_ggpp_test_set.py</code>, <code>bin/placed_vs_hits_by_class.py</code>, <code>fig_placed_vs_hits.py</code> (figure 15), <code>tests/test_placed_vs_hits_by_class.py</code>, <code>tests/test_fig_placed_vs_hits.py</code>; results <code>results/search/ggpp_floor150/</code>, <code>results/step5/carotenoid/ggpp_synthase/</code> (a first assignment used the wrong candidate set and is kept in <code>wrong_candidate_set/</code>)</td>
+</tr>
+<tr class="odd">
+<td>Cutoff tests</td>
+<td><code>bin/expanded_hmm_cv.py</code>, <code>bin/cutoff_sweep.py</code>, <code>bin/filter_decoys_for_tree.py --coverage-mode</code>, figure <code>fig_cutoff_sweep.py</code> (figure 14), tests <code>test_cutoff_sweep.py</code>, <code>test_fig_cutoff_sweep.py</code>, <code>test_filter_decoys_for_tree.py</code>; results <code>results/audit/ggpp_eval/</code>, <code>results/search/ggpp_eval/</code>, <code>results/search/ggpp_eval_wide/</code>, <code>results/hmms/ggpp_expanded/</code>, <code>results/step5/carotenoid/cart_alldomains/</code></td>
+</tr>
+<tr class="even">
 <td>Sensitivity audit</td>
 <td><code>bin/sensitivity_audit.py</code>, <code>tests/test_sensitivity_audit.py</code>, figure <code>reports/carotenoid/figures/bin/fig_sensitivity_audit.py</code> (figure 12); output <code>results/audit/carotenoid/</code>; UniProt REST queries of 2026-11-22</td>
 </tr>
@@ -1391,12 +1665,13 @@ What this is, and where it stops being reliable
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="va">S</span><span class="op">=</span>/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/tables/species.parquet</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="va">COMMON</span><span class="op">=</span><span class="st">"--genomes </span><span class="va">$R</span><span class="st">/genomes.tsv.zst --species </span><span class="va">$S</span><span class="st"> --search-dir </span><span class="va">$R</span><span class="st">/search/carotenoid_full </span><span class="dt">\</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">  --min-scores </span><span class="va">$R</span><span class="st">/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv </span><span class="dt">\</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed phytoene_synthase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/phytoene_synthase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed lycopene_cyclase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/lycopene_cyclase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">  --out-dir reports/carotenoid/figures/out"</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> class <span class="at">--min-n</span> 25 <span class="at">--name</span> fig7_presence_by_class</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> order <span class="dt">\</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">--within</span> SUBPHYLUM=Pezizomycotina <span class="at">--min-n</span> 40 <span class="at">--name</span> fig8_presence_by_order_pezizomycotina</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed ggpp_synthase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/ggpp_synthase/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed phytoene_synthase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/phytoene_synthase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="st">  --placed lycopene_cyclase=</span><span class="va">$R</span><span class="st">/step5/carotenoid/lycopene_cyclase_v2/assigned.PROVISIONAL.tsv </span><span class="dt">\</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="st">  --out-dir reports/carotenoid/figures/out"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> class <span class="at">--min-n</span> 25 <span class="at">--name</span> fig7_presence_by_class</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/carotenoid/figures/bin/fig_presence_heatmap.py <span class="va">$COMMON</span> <span class="at">--rank</span> order <span class="dt">\</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">--within</span> SUBPHYLUM=Pezizomycotina <span class="at">--min-n</span> 40 <span class="at">--name</span> fig8_presence_by_order_pezizomycotina</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>
