@@ -69,3 +69,8 @@ def test_draw_writes_png_and_pdf(tmp_path):
 
 def test_core_steps_exclude_ggpp_synthase():
     assert "ggpp_synthase" not in fh.CORE_STEPS and len(fh.CORE_STEPS) == 3
+
+
+def test_cell_label_distinguishes_zero_from_a_tiny_fraction():
+    assert fh.cell_label(0.0) == "" and fh.cell_label(0.0004) == "<0.5" and fh.cell_label(0.005) == "1"
+    assert fh.cell_label(0.994) == "99" and fh.cell_label(1.0) == "100" and fh.cell_label(None) == "" and fh.cell_label(float("nan")) == ""

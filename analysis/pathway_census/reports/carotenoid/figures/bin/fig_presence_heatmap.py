@@ -92,6 +92,15 @@ def presence_table(genomes, taxonomy, calls, steps):
     return out
 
 
+def cell_label(v):
+    """Text of a heatmap cell: percent as an integer; '<0.5' for a non-zero value that would round to 0; blank only for an exact 0."""
+    if v is None or v != v:
+        return ""
+    if v >= 0.005:
+        return f"{int(100 * v + 0.5)}"
+    return "<0.5" if v > 0 else ""
+
+
 def summarise(rows, rank_col, steps, min_n, core=CORE_STEPS):
     """Group rows by rank. Return list of dict(group, lineage, n, frac{step}, core_complete) with n >= min_n, in lineage order."""
     groups = {}
@@ -133,7 +142,7 @@ def draw(summary, steps_interp, steps_floor, out_dir, name, title, note):
         for i in range(mat.shape[0]):
             for j in range(mat.shape[1]):
                 v = mat[i, j]
-                ax.text(j + 0.5, i + 0.5, f"{round(100 * v)}" if v >= 0.005 else "", ha="center", va="center", fontsize=6.3,
+                ax.text(j + 0.5, i + 0.5, cell_label(v), ha="center", va="center", fontsize=6.3 if v >= 0.005 else 5.2,
                         color="#ffffff" if v > 0.55 else INK)
         ax.set_xlim(0, mat.shape[1]); ax.set_ylim(mat.shape[0], 0)
         ax.set_xticks(np.arange(len(cols)) + 0.5)

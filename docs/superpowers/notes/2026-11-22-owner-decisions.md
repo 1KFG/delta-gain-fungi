@@ -59,3 +59,16 @@ After the pathway census, build phylogenies of candidate genes, match them to na
 - Owner decision: no BUSCO completeness filter in the main results. Reason: the BFD BUSCO run used `fungi_odb12` for every genome and the budding yeasts score low as a group (Saccharomycetes median 75.4%, 10th to 90th percentile 72.2 to 77.9, 2,589 genomes), which may be a marker-set effect and not poor assemblies (UNVERIFIED). A filter at 80 removes 27 of 43 Saccharomycetes genus tips.
 - The runs with cutoffs 65 and 70 stay as a sensitivity check: counts change by 13% or less and the core co-loss result is unchanged (report section 6h; `results/gainloss/carotenoid_busco_compare/`).
 - A Saccharomycotina-specific BUSCO set is a note for the next BFD BUSCO run, not run now (`Fungi_BFD_runs/docs/NOTES_TO_FOLLOW.md`, open question Q2).
+
+## 2026-11-23: single-reference steps and the fifth gain/loss step
+The owner answered "yes follow your recommendations" to the open questions on the single-reference steps. The agent applied the recommendations below. Each item is PROVISIONAL. Evidence: `results/step5/carotenoid/single_ref_steps_RUN.md`, report section 6f-2 and `analysis/pathway_census/reports/carotenoid/REPORT.md`.
+
+1. **Target rule for one reference (PROVISIONAL).** `target` is the largest tree side that holds the reference and no decoy, outgroup or named leaf (`bin/step5_single_ref_clades.py`). The target is bounded by the labelled leaves. It is not a set of orthologs.
+2. **`crtr` (PROVISIONAL).** Shown as "family present" (generic NADPH-cytochrome P450 reductase; 98.5% of 23,376 genomes have a hit). Dropped from the step list. Not placed.
+3. **`carx` (PROVISIONAL).** Kept as a search-hit step at the floor of 200 bits. Flagged as not placeable (no alignable non-target leaf; best 35.3 bits, coverage at most 0.19).
+4. **`cars` and `tsp3` (PROVISIONAL).** Kept as two steps. They are one protein set (319 proteins shared, 291 genomes). A merged presentation is not done: the new steps are not in the heatmaps in this pass.
+5. **`tdh` (PROVISIONAL).** The run `tdh_id80` (clustering identity 0.8) is used. The default identity gave a 6-leaf tree. UNVERIFIED: whether the `tdh` reference Q01213 is an SDR or an aldo-keto reductase.
+6. **Floors (PROVISIONAL, not validated).** `carx` 200, `cars` 100, `acaa` 150, `tsp3` 100, `tsp2` 150, `tdh` 360 bits.
+7. **Fifth step in gain/loss (agent action, not one of the owner's answers).** `ggpp_synthase` (placed, hits of 150 bits or more) is added to the gain/loss analysis on the new primary (`results/gainloss/carotenoid_noMicro_blasto_5steps/`). The conclusions on the core steps and `cart` are unchanged.
+
+Not applied: the single-reference steps in the heatmaps (figures 7 and 8).
