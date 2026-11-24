@@ -161,3 +161,18 @@ One genome each from three groups outside the Pezizomycotina, picked as the geno
 - A cancel command with comma-separated job names did not cancel; 9 jobs ran to the end with the old extractor and were overwritten. Check `squeue` after `scancel`.
 - The first module test failed because my test script's `projectDir` had no `bin/`. It was a test error, not a module error.
 - I committed module changes into the shared `Fungi_BFD` checkout before another session asked me not to touch it. They are listed in the message to that session.
+
+## 13. Evidence class added to the region table (v4, 2026-11-23)
+
+Reason: gemini-hpcc-003 recomputed that 188 of 430 `known` regions rest on one-protein MIBiG entries and that the *A. nidulans* sterigmatocystin region (58, 10 of 17 genes) is called `weak`. The similarity-only status is kept. The column `evidence_class` is added (PROPOSED rule, not yet agreed by the owner or EBC):
+
+- `known_multigene`: similarity 75 or higher, entry has 3 or more proteins, at least 50% of its genes hit, at least 1 core gene hit.
+- `known_single`: similarity 75 or higher, entry has fewer than 3 proteins.
+- `known_other`: similarity 75 or higher, 3 or more proteins, but under 50% of genes hit or no core hit.
+- `partial_multigene`: similarity under 75 but the multigene rule holds.
+- `weak`, `none`: the rest.
+
+MEASURED on `summary/ebc_regions_v4_43genomes.tsv.gz` (2,841 regions, 43 genomes): known_multigene 276, known_single 289, known_other 1, partial_multigene 133, weak 369, none 1,773. Of 566 `known` regions, 289 (51%) are `known_single`. The sterigmatocystin region of FGSC A4 is `partial_multigene`. The 50% and 3-protein thresholds are my choice. They are not tuned on any data. The 43 genomes are all genomes with results on HPCC at this date; message 014 had 35.
+
+## 14. Stemphone strain census (ebc-037 part A)
+`summary/stemphone_strain_census_bfd.csv`: 114 strain codes from the EBC map. Matched by collection-code pattern against the BFD protein file names only (no BioSample metadata). 54 hit, 53 no hit, 7 not searched (non-collection names). *A. biplanus* NRRL 5071, *A. diversus* NRRL 5074 and *A. conjunctus* NRRL 5080 are in BFD. A no hit can mean the strain is in BFD under a different label.

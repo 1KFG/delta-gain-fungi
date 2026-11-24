@@ -10,6 +10,13 @@ Status (similarity of the best of the top-3 MIBiG hits, the antiSMASH 0-100 scor
   known >= 75, weak 1-74, none (no hit). The cutoff is a PROPOSAL; the similarity is kept in
   the table so the reader can choose another.
 
+Adds evidence_class (PROPOSED, from the gemini-hpcc-003 critique of the similarity-only status):
+  known_multigene  similarity >=75, entry has >=3 proteins, >=50% of its genes hit, >=1 core gene hit
+  known_single     similarity >=75 but the entry has <3 proteins (a homolog hit, not a cluster call)
+  known_other      similarity >=75, 3+ proteins, but <50% of genes hit or no core hit
+  partial_multigene similarity <75 but multigene entry with >=50% genes hit and >=1 core hit
+                   (for example A. nidulans sterigmatocystin, 58, 10 of 17 genes)
+  weak / none      all other cases.  `status` is unchanged for compatibility.
 Adds entry size (n_entry_proteins), fraction of the entry's genes hit, synteny score, and MIBiG quality/status.
 Usage: build_ebc_table.py RESULTS_DIR MIBIG_JSON_DIR OUT.tsv [--inchikey-min 75] [--no-pubchem]
 Reads RESULTS_DIR/<id>.{regions,cds,known}.tsv.gz.
@@ -96,11 +103,25 @@ def main():
             k = top.get(key)
             sim = int(float(k["similarity"])) if k and k["similarity"] not in ("", "None") else None
             status = "none" if sim is None else ("known" if sim >= 75 else "weak")
+            nent = int(k["n_entry_proteins"]) if k and str(k.get("n_entry_proteins", "")).isdigit() else None
+            gh = int(float(k["gene_hits"])) if k and str(k["gene_hits"]).replace(".", "", 1).isdigit() else None
+            try:
+                cgh = int(float(k["core_gene_hits"])) if k else 0
+            except (ValueError, TypeError):
+                cgh = 0
+            frac = (gh / nent) if (nent and gh is not None) else None
+            multi = nent is not None and nent >= 3 and frac is not None and frac >= 0.5 and cgh >= 1
+            if sim is None:
+                eclass = "none"
+            elif sim >= 75:
+                eclass = "known_multigene" if multi else ("known_single" if nent is not None and nent < 3 else "known_other")
+            else:
+                eclass = "partial_multigene" if multi else "weak"
             comps = mibig_compounds(a.mibig, k["mibig_accession"]) if k else []
             table.append({
                 "genome": gid, "record": r["record"], "region": r["region"], "start": r["start"], "end": r["end"],
                 "products": r["products"], "contig_edge": r["contig_edge"], "n_cds": r["n_cds"],
-                "status": status, "mibig_accession": k["mibig_accession"] if k else "",
+                "status": status, "evidence_class": eclass, "mibig_accession": k["mibig_accession"] if k else "",
                 "mibig_compounds": ";".join(c["name"] for c in comps) or (k["hit_description"] if k else ""),
                 "mibig_class": k["hit_cluster_type"] if k else "",
                 "best_hit_rank": k["rank"] if k else "",
@@ -130,6 +151,7 @@ def main():
         w.writeheader(); w.writerows(table)
     n = len(table)
     print(n, "regions;", {s: sum(1 for t in table if t["status"] == s) for s in ("known", "weak", "none")})
+    print({s: sum(1 for t in table if t["evidence_class"] == s) for s in sorted(set(t["evidence_class"] for t in table))})
 
 
 if __name__ == "__main__":
