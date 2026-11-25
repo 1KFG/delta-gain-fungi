@@ -148,3 +148,122 @@ It does not show:
 - A check of the 490 unassigned proteins by hand, and a check of why 2,550 Dothideomycetes genomes with a hit are outside both targets.
 - A decision on which heptaketide target (none, wA, YWA1) to carry forward. This is the owner's.
 - Per-genome tables of the five mapping-affected genomes.
+
+
+# Update 2026-11-25: identity 0.8, bootstrap, and per-step decoys
+
+::: {.callout-important}
+## Status and limits of this update
+
+- All results are PROVISIONAL (`verified: false`). MEASURED = read from a file named here; PROPOSED = a choice; UNVERIFIED = not checked.
+- **Bootstrap is not standard.** One standard raxml-ng replicate takes 4.1 to 4.7 h (2 replicates measured). 100 would take about 70 to 80 h with 12 CPUs. The 100 replicates are NNI-only searches (453 s on average). On the same two resampled alignments the NNI tree differs from the standard tree by relative RF 0.113 and 0.129, and has a lower log-likelihood (by 727 and 522). The effect on each support value is UNVERIFIED (section 3).
+- **Sampling label: "sampling not yet adequate"**, by the criterion written before the comparison (`SAMPLING_CRITERION.txt`): C1 to C3 pass, C4 fails by a small margin (section 1).
+- No outgroup (section 6). The targets are tree regions bounded by labelled leaves, not ortholog sets.
+- Nothing here shows the function or the product of any protein.
+:::
+
+Record, commands, jobs, times, failures: `analysis/pathway_census/results/step5/melanin_dhn/pks_joint_id0.8/RUN.md`. Code: `bin/step5_joint.py` (decoy scope), `bin/step5_bootstrap.py`, `slurm/step5_{tree,bootstrap,support,rarefaction}_joint.sbatch`, `slurm/step5_reapply_decoy_scope.sh`; tests `tests/test_step5_joint.py`, `tests/test_step5_bootstrap.py`.
+
+**Correction (2026-11-25).** The statement in the step-2 and earlier PKS notes, and in section 3 of this note above, that wA (Q03149) is a decoy of `heptaketide_pks` was wrong. The curated decoy files never held wA for `heptaketide_pks` (`refs/melanin_dhn/decoys/heptaketide_pks.faa` has 4 decoys: Q12053, Q12397, Q6DQW3, S0DZM7; `provenance.tsv` says wA is "NOT a decoy of heptaketide_pks"). wA is a decoy of `thn_synthase` and `hexaketide_pks`. The first run used the union of the three decoy files, so wA bounded the heptaketide target. Older notes are not edited.
+
+## 1. Sampling check before the bootstrap
+
+Criterion (PROPOSED, written first, `SAMPLING_CRITERION.txt`): C1 under 2% of protein-step pairs change target/non-target; C2 at most 10% of old target representatives flip, and the new target is not smaller; C3 references still isolated; C4 every domain has a representative within identity 0.8 and coverage 0.8.
+
+| Check | Result (MEASURED) |
+|---|---|
+| (a) clusters | 532 clusters for 9,374 domains (0.7: 237). All 532 are leaves; none was drawn (`capped` false). 531 are Ascomycota, 1 has no phylum label (`reps_by_phylum.tsv`). |
+| (b) cluster sizes | 263 of 532 are singletons (49.4%); median size 2; largest 774; 81 clusters have 10 or more domains and hold 8,448 of 9,374 domains (90.1%); the 10 largest hold 4,372 (46.6%). |
+| (b) representative within the rule | Re-measured by `mmseqs easy-search` of each non-representative domain against its own representative (alignment mode 3). Of 8,842 non-representative domains, 8,642 (97.7%) have identity >= 0.8 and coverage >= 0.8 both ways. 194 have identity under 0.8 (minimum 0.758; 1st percentile 0.798, 5th 0.802; median 0.884). The other 6 fail coverage. The 532 representatives are in their own cluster. The clustering identity of mmseqs and this re-measure are not the same estimate (the reason for the 194 is UNVERIFIED). |
+| (c) old calls under the new tree, thn_synthase | 7,286 proteins with a row: target 3,163 in both runs; 0 target to not-target; 0 not-target to target (0.00%). Other classes: 402 proteins change between "other side" and "unassigned" (37 other to unassigned; 365 unassigned to other). |
+| (c) hexaketide_pks | 8,604 proteins: target 609 in both; 0 and 0. 407 change between other side and unassigned (37 and 370). |
+| (c) heptaketide_pks, per-step rule | 2,200 proteins: target 2,123 in both; 0 and 0; 7 change from unassigned to other side. |
+| (c) C1 over the two default steps | 0 of 15,890 protein-step pairs (7,286 + 8,604) change target status. |
+| (c) the 237 old representatives as queries | 183 (thn) and 175 (hexa) of them have a row of the step: 0 flips (old target 94 and 25). Of the 56 old representatives that are not representatives now (46 and 48 with a row): 0 flips (old target 19 and 10). 181 of 237 old representatives are also representatives now, so their own call is trivially stable. |
+| (c) target size | thn_synthase target 99 leaves (0.7) to 240 (0.8); hexaketide 27 to 56; all old-target representatives that were re-placed stay target. The target grows because the tree holds more representatives, not because the set of proteins in it changes: the assigned proteins are the same numbers (3,163; 609). |
+| (d) rarefaction (PROPOSED, approximate) | 50% (266 representatives) and 75% (399) of the 532, 3 seeds each, all labelled leaves kept; the 0.8 tree and alignment pruned, branch lengths of removed leaves summed, model and other lengths not re-optimised; epa-ng, clades by the same rule (145 s per placement). Result: 0 target/non-target changes against the full tree for every step and every one of 6 subsets (denominators 7,286, 8,604, 2,200). The only class changes are "other side" to "unassigned": 80 to 476 proteins for thn_synthase, 80 to 487 for hexaketide (smaller at 75%). Limit: this tests the density of representatives, not the topology, and target calls are bounded by labelled leaves by construction. |
+
+Decision (stated criterion): C1 passes (0 of 15,890). C2 passes (0 flips in 237 old representatives; new targets hold 239 and 55 representatives against 98 and 26). C3 passes. **C4 fails**: 200 of 8,842 non-representative domains (2.3%) lie outside the identity and coverage rule when re-measured (194 on identity, 6 on coverage). By the written rule the label is "sampling not yet adequate". The call stability evidence (C1, C2, rarefaction) is clean, and the C4 failure is at the threshold edge (1st percentile 0.798). The criterion is not changed after the fact. What would improve it: run at identity 0.9 (1,129 clusters at the 0.9 count of the first run) or add the representatives for the 200 domains; the owner can accept the label with C4 noted.
+
+## 2. Tree and targets at identity 0.8 (MEASURED, `clade_report.json`, per-step decoys)
+
+- 559 leaves; 4,118 columns after clipkit (13.25% removed); gaps 49.86%; LG+G4; best log-likelihood -1,098,828.08 (start 1; start 2: -1,098,842.13); two starts only. raxml-ng took 25,358 s.
+
+| Step | Target leaves (0.8) | Representatives in it | Target leaves (0.7, same rule) |
+|---|---|---|---|
+| thn_synthase | 240 | 239 | 99 |
+| hexaketide_pks | 56 | 55 | 27 |
+| heptaketide_pks, per-step rule | 22 (Alb1, AlbA, wA, 19 representatives) | 19 | 7 (Alb1, AlbA, wA, 4 representatives) |
+| heptaketide_pks, union rule | none | | none |
+
+Per-step targets share no leaf (22 and 56, 22 and 240, 56 and 240: 0 shared). Proteins that are `target` for more than one step: 0.
+
+## 3. Calls per step (MEASURED, `joint_report/calls_per_step.tsv`, `--min-lwr 0.5`, `--min-support 0.5`)
+
+| Step, rule | Proteins with a row | target | other side | unassigned | Assigned | Genomes with an assigned protein (of 23,376) |
+|---|---|---|---|---|---|---|
+| thn_synthase, 0.8 (0.7) | 7,286 | 3,163 (3,163) | 4,005 (3,677) | 118 (446) | 3,163 (3,163) | 3,124 (3,124) |
+| hexaketide_pks, 0.8 (0.7) | 8,604 | 609 (609) | 7,838 (7,505) | 157 (490) | 609 (609) | 600 (600) |
+| heptaketide_pks, per-step, 0.8 (0.7) | 2,200 | 2,123 (2,123) | 7 (0) | 70 (77) | 2,123 (2,123) | 2,091 (2,091) |
+| heptaketide_pks, union rule, 0.8 (0.7) | 2,200 | no target | | | | |
+
+- thn_synthase and hexaketide_pks give identical `assign` files under the per-step and the union rule, in both runs (cmp, MEASURED): their decoy sets equal the union (5 decoys), so the per-step rule does not change them. The 0.7 per-step result for heptaketide (7 leaves, 2,123 of 2,200) equals the earlier "variant wA" (same `assign` file).
+- The three PKS HMM hit patterns against the target are as in the 0.7 run (thn+hexa 6,316 proteins: 2,741 thn target, 523 hexa target, 3,052 neither). With the heptaketide target, 2,126 proteins lie in it: 2,123 with a heptaketide HMM row and 3 without (hexaketide HMM only). Heptaketide genomes by class: Eurotiomycetes 2,083 of 3,201 genomes with an assigned protein; Dothideomycetes 5; Sordariomycetes 3 (`joint_report/genomes_by_class.tsv`).
+- Nearest labelled leaves outside the heptaketide target (`bootstrap_report/boundary.heptaketide_pks.tsv`, patristic distance from the nearest target leaf): P9WET9 (named, YWA1 entry) 0.466, I1RF58 (named) 1.250, S0DZM7 (decoy) 1.560, Q12053 (decoy) 1.811, A0A1W7M1U5 (named) 1.848. At 0.7: P9WET9 0.408, I1RF58 1.206, S0DZM7 1.538. Hexaketide target boundary: F9XMW3 1.484, A7UMW1 1.488, P9WET9 1.657. thn_synthase boundary: F9XMW3 1.546, A7UMW1 1.550, Q9Y7A7 (reference) 1.556.
+
+## 4. Bootstrap support (MEASURED, 100 NNI replicates; `bootstrap_report/`)
+
+FBP is a percent (0 to 100) and TBE a fraction (0 to 1), on the best ML tree. The values are for NNI replicates (see limits).
+
+| Node | Leaves | FBP | TBE |
+|---|---|---|---|
+| thn_synthase target | 240 | 88 | 0.997 |
+| hexaketide_pks target | 56 | 99 | 0.999 |
+| heptaketide_pks target (per-step) = the node that bounds it | 22 | 100 | 1.000 |
+| Alb1 + AlbA + wA group (smallest side with the three) | 13 | 100 | 1.000 |
+| inside it: Alb1 + wA with 8 other leaves | 10 | 50 | 0.836 |
+| the four references of the three steps (smallest side holding all 4) | 486 | 66 | 0.965 |
+
+Clade-rule stability over the 100 bootstrap trees (`stability_per-step.tsv`, `stability_union.tsv`):
+
+| Measure | Trees with it, of 100 |
+|---|---|
+| thn_synthase: a target exists | 100 |
+| hexaketide_pks: a target exists | 100 |
+| heptaketide_pks: a target exists, per-step rule | 100 |
+| heptaketide_pks: a target exists, union rule | 2 |
+| thn / hexa / hepta target leaf set identical to the best tree | 88 / 99 / 81 |
+| Alb1 and AlbA form a clade that excludes wA (smallest side holding both does not hold wA) | 2 |
+
+- The wA question, measured: Alb1 and AlbA are separated from wA in 2 of 100 NNI trees and in 0 of 2 standard trees. In the best tree the node of Alb1 + wA (with 8 other leaves) has FBP 50 and TBE 0.836 and sits inside the 13-leaf node of all three (FBP 100). So the tree does not resolve wA against Alb1 and AlbA. wA stays inside the smallest clade of the heptaketide references. Under the per-step rule this is not a boundary, so the target exists in 100 of 100 trees.
+- This supports "wA is UNRESOLVED as an Alb1/AlbA outgroup"; it does not show that wA makes YWA1 in the tree sense or in any other sense.
+- thn_synthase target support (FBP 88) is the lowest of the three target nodes.
+- Limit: the NNI search. If the standard search resolved wA away from Alb1 and AlbA more often, the numbers above would change (UNVERIFIED; 2 standard trees agree with NNI on this point).
+
+## 5. Negative and unexpected results
+
+- The standard bootstrap did not finish in a useful time (4.1 and 4.7 h per replicate; 4 of 6 started tasks cancelled at 1 h 45 min). A `--fast` preset pilot was cancelled at about 58 min without a finished replicate.
+- The first prepare job was cancelled to set CPUs apart; the tree job ended FAILED because the clades call in its spooled script had no `--step-decoys`; support job 32453906 read the wrong folder; rarefaction job 32455492 failed on a missing folder (all in `RUN.md`; all repaired, no result affected).
+- The C4 check fails for 200 of 8,842 domains.
+- Rarefaction shows no target change at all. This is expected from the rule (labelled leaves bound the targets) and is not independent evidence that the topology is stable.
+- Support for the node joining the four references is low (FBP 66). The position of the three PKS references relative to each other is not well supported (UNVERIFIED reading: the deep nodes of a 559-leaf tree of PKS domains).
+
+## 6. Outgroup: return to this
+
+No outgroup is in the tree. No outside candidate passed the alignability rule (LovB Q0C8M3, EryA1 Q03131, yeast FAS1 P07149 and FAS2 P19097 failed; `inputs/screen_alignability.tsv` of the 0.7 run). The tree is unrooted for the clade rule; the display root is the decoys. A separate investigation will define how to choose an outgroup. **Return to this:** until an outgroup is chosen, no statement about the order of divergence of the three PKS clades is supported.
+
+## 7. Not done here
+
+- Standard (non-NNI) bootstrap; a test of the NNI bias beyond 2 replicates.
+- A tree on a different named-leaf set; a rooted tree.
+- Identity 0.9 or a set of representatives for the 200 domains outside the rule.
+- A decision on whether to define the step by pathway role instead of by reaction (YAML). The step definition by reaction stays; the owner has not answered.
+- Bootstrap of the 0.7 tree (not run).
+- A hand check of the 157 + 118 unassigned proteins.
+
+## 8. Decisions for the owner
+
+1. Accept the label "sampling not yet adequate" (C4 fails for 2.3% of domains), or ask for identity 0.9.
+2. Accept NNI-only bootstrap support, or pay about 70 to 80 h of CPU time for standard replicates (or give more CPUs).
+3. Heptaketide headline is the per-step rule (target 22 leaves, 2,123 of 2,200 proteins). Confirm; the union result (no target) stays as the labelled comparison.
+4. Define the PKS steps by pathway role instead of reaction (open).

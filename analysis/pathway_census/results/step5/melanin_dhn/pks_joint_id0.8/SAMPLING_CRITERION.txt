@@ -1,0 +1,9 @@
+Written 2026-11-24 BEFORE any 0.7-vs-0.8 call comparison was computed. PROPOSED.
+Sampling is called ADEQUATE for the bootstrap if ALL hold (thn_synthase and hexaketide_pks, the two steps with a target):
+ C1. Fewer than 2% of the protein-step pairs (proteins with a row of the step: 7,286 thn_synthase + 8,604 hexaketide_pks = 15,890)
+     change between "target" and "not target" (other side or unassigned) between the 0.7 run and the 0.8 run.
+ C2. For each step, at most 10% of the leaves of the 0.7 target (the 237 old representatives, placed as queries on the 0.8 tree)
+     change from target to not target, and the 0.8 target has at least as many representatives as the old target minus 10%.
+ C3. The references of the step are still isolated (a target exists) on the 0.8 tree.
+ C4. Every candidate domain has a representative within the clustering thresholds (identity >= 0.8, coverage >= 0.8), measured by mmseqs search.
+If any fails, the result is labelled "sampling not yet adequate"; the bootstrap is still run (owner decision).

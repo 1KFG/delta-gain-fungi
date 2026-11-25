@@ -1,0 +1,4 @@
+step	proteins_with_hit	target	other_side	unassigned	assigned_proteins(assign_steps)	genomes_with_assigned	genomes_with_hit
+heptaketide_pks	2200	no clade (references not isolated)					
+hexaketide_pks	8604	609	7838	157	609	600	7819
+thn_synthase	7286	3163	4005	118	3163	3124	6535

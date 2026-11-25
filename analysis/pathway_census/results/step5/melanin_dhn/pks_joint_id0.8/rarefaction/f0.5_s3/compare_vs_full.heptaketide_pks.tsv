@@ -1,0 +1,5 @@
+old_call	new_call	proteins
+decoy	decoy	5
+decoy	unassigned	2
+target	target	2123
+unassigned	unassigned	70

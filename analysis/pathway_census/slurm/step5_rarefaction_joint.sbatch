@@ -24,14 +24,17 @@ J=$PC_ROOT/bin/step5_joint.py
 OUT=$PC_OUT
 R=$OUT/rarefaction; mkdir -p $R
 W="${SCRATCH:?}/rare_joint"; mkdir -p $W
+if [ "${PC_DECOY_SCOPE:-per-step}" = union ]; then SCOPE="--decoy-scope union"; else
+  : "${PC_STEP_DECOYS:?set PC_STEP_DECOYS or PC_DECOY_SCOPE=union}"; SCOPE="--decoy-scope per-step --step-decoys $PC_STEP_DECOYS"; fi
 zstd -dc $OUT/query_match_cols.fa.zst > $W/q.fa
 for F in ${PC_RARE_FRACS:-0.5 0.75}; do
   for S in ${PC_RARE_SEEDS:-1 2 3}; do
     D=$R/f${F}_s${S}; mkdir -p $D
     $PY $B subset --tree $OUT/ref.raxml.bestTree --msa $OUT/ref_set.trim.afa --rep-ids $OUT/rep_ids.txt --fraction $F --seed $S \
       --out-tree $D/sub.nwk --out-msa $D/sub.afa --out-reps $D/rep_ids.txt > $D/subset.json
-    $PY $J clades --tree $D/sub.nwk --refs $PC_REFS_STEPS --decoys $PC_DECOYS_FA ${PC_MEMBERS_FA:+--members-fa $PC_MEMBERS_FA} \
+    $PY $J clades $SCOPE --tree $D/sub.nwk --refs $PC_REFS_STEPS --decoys $PC_DECOYS_FA ${PC_MEMBERS_FA:+--members-fa $PC_MEMBERS_FA} \
       --reps $D/rep_ids.txt --joint-id rare --out-dir $D || echo "clades rc=$? (a step may have no target)"
+    mkdir -p $W/e_${F}_$S
     $PX epa-ng --ref-msa $D/sub.afa --tree $D/sub.nwk --query $W/q.fa --model $OUT/ref.raxml.bestModel -w $W/e_${F}_$S --redo -T ${SLURM_CPUS_PER_TASK:-4} > $D/epa-ng.log 2>&1
     for ST in $PC_STEPS; do
       [ -s $D/clade_members.$ST.tsv ] || { echo "$ST: no target on this subset tree" >> $D/no_target.txt; continue; }

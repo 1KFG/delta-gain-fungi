@@ -1,0 +1,12 @@
+{
+ "proteins_compared": 2,
+ "only_in_old": 0,
+ "only_in_new": 0,
+ "target_to_not_target": 0,
+ "not_target_to_target": 0,
+ "changed_target_status": 0,
+ "fraction_changed_target_status": 0.0,
+ "any_class_change": 0,
+ "old_target": 2,
+ "new_target": 2
+}
