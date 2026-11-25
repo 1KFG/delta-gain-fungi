@@ -12,8 +12,9 @@ Subcommands:
                     on the tree; that is a result: S gets no clade file, and the report says so. Exit code 3 when NO step has
                     a target. Writes clade_members.<S>.tsv per step, clade_members.tsv (union view: target = in any target),
                     ref.rooted.nwk, clade_report.json, target_overlap.tsv. The targets of two steps cannot share a leaf
-                    when a decoy exists (a side holding the references of S and none of T, and a side holding those of T and
-                    none of S, cannot cover the tree while a decoy lies outside both); the report checks it anyway.
+                    when a decoy exists and the scope is UNION (a side holding the references of S and none of T, and a side holding
+                    those of T and none of S, cannot cover the tree while a decoy lies outside both). With --decoy-scope per-step
+                    (the default; the decoys of each step bound only that step) targets may share leaves; the report counts the pairs.
   filter-placements per step S: placements.<S>.tsv, placements_detail.<S>.tsv and candidates_step.<S>.tsv, limited to the proteins
                     that have a row of S in the candidate folder. The files have as many proteins as that folder has for S.
   report            tables for the placed run (calls per step, hit pattern against call, nearest labelled leaves, genomes by class).
@@ -45,14 +46,21 @@ sp = _load("step5_place")
 sr = _load("step5_single_ref_clades")
 
 
-def define_joint_targets(sides, step_refs, decoys, outgroups, members, include=None):
+def define_joint_targets(sides, step_refs, decoys, outgroups, members, include=None, step_decoys=None):
     """{step: target side or None}. step_refs: {step: set of reference ids}.
     include: optional {step: set of labelled leaves (decoys, named members) allowed inside the target of that step}.
-    It is a VARIANT, not the default: it widens the target past leaves that the default rule treats as the boundary."""
+    It is a VARIANT, not the default: it widens the target past leaves that the default rule treats as the boundary.
+    step_decoys: optional {step: set of decoy ids}. Decoy scope PER STEP (owner decision 2026-11-24): only the decoys of the step itself
+    bound its target; a decoy of another step is not a boundary (it may lie inside the target). Without it (scope UNION, the first
+    PKS run) every decoy bounds every step. Other steps' references, named leaves and outgroups bound the target in both scopes."""
     allrefs = set().union(*step_refs.values()) if step_refs else set()
-    labelled = set(decoys) | set(outgroups) | set(members)
     include = include or {}
-    return {s: sr.largest_free_side(sides, refs, (labelled | (allrefs - refs)) - set(include.get(s, ()))) for s, refs in step_refs.items()}
+    out = {}
+    for s, refs in step_refs.items():
+        d = set(decoys) if step_decoys is None else set(step_decoys.get(s, ()))
+        labelled = d | set(outgroups) | set(members)
+        out[s] = sr.largest_free_side(sides, refs, (labelled | (allrefs - refs)) - set(include.get(s, ())))
+    return out
 
 
 def _write_tsv(path, cols, rows):
@@ -63,7 +71,8 @@ def _write_tsv(path, cols, rows):
 
 
 def run_clades(tree, step_refs_fa, decoys_fa, members_fa, outgroup_fa, reps_ids, out_dir, joint_id, outgroup_role="tree_outgroup",
-               include=None):
+               include=None, step_decoys_fa=None):
+    """step_decoys_fa: {step: decoy FASTA}; given = decoy scope per step, None = scope union (every decoy bounds every step)."""
     upo = sp.load_upo()
     out_dir = Path(out_dir)
     step_refs = {s: set(sp.ids_in_fasta(f)) for s, f in step_refs_fa.items()}
@@ -91,7 +100,15 @@ def run_clades(tree, step_refs_fa, decoys_fa, members_fa, outgroup_fa, reps_ids,
     bad = set().union(*include.values()) - (decoys | members) if include else set()
     if bad:
         raise SystemExit(f"ERROR: --include leaves are not decoys or named members: {sorted(bad)}")
-    targets = define_joint_targets(sides, step_refs, decoys, outgroups, members, include)
+    step_decoys = None
+    if step_decoys_fa is not None:
+        step_decoys = {k: set(sp.ids_in_fasta(f)) for k, f in step_decoys_fa.items()}
+        stray = set().union(*step_decoys.values()) - decoys if step_decoys else set()
+        if stray:
+            raise SystemExit(f"ERROR: step decoys not in the --decoys file: {sorted(stray)}")
+        for k in step_refs:
+            step_decoys.setdefault(k, set())
+    targets = define_joint_targets(sides, step_refs, decoys, outgroups, members, include, step_decoys)
     rooting = outgroups if outgroups else decoys if decoys else members
     (out_dir / "ref.rooted.nwk").write_text(sp._reroot(upo, top, rooting) + "\n")
     rep = {"joint_id": joint_id, "n_leaves": len(leaves), "steps": sorted(step_refs),
@@ -101,6 +118,8 @@ def run_clades(tree, step_refs_fa, decoys_fa, members_fa, outgroup_fa, reps_ids,
            "n_references": len(refs), "n_decoys": len(decoys), "n_named_members": len(members), "n_outgroups": len(outgroups),
            "n_representatives_in_tree": len(reps & leaves),
            "references": {s: sorted(v) for s, v in step_refs.items()},
+           "decoy_scope": "per_step" if step_decoys is not None else "union",
+           "step_decoys": {k: sorted(v) for k, v in step_decoys.items()} if step_decoys is not None else None,
            "variant_include": {k: sorted(v) for k, v in include.items()}, "per_step": {}}
     for s, refs_s in sorted(step_refs.items()):
         smallest = sp.smallest_side(sides, refs_s, ())
@@ -277,6 +296,9 @@ def main(argv=None):
     c.add_argument("--outgroup")
     c.add_argument("--outgroup-role", default="tree_outgroup")
     c.add_argument("--include", action="append", default=[], help="VARIANT: STEP=ID,ID decoys or named members allowed inside the target of STEP")
+    c.add_argument("--decoy-scope", choices=["per-step", "union"], default="per-step",
+                   help="per-step (default): only the decoys of a step bound its target, from --step-decoys; union: every decoy bounds every step (first PKS run)")
+    c.add_argument("--step-decoys", nargs="*", default=[], help="STEP=decoy FASTA (refs/<pathway>/decoys/<step>.faa), required for per-step")
     c.add_argument("--reps", required=True)
     c.add_argument("--joint-id", required=True)
     c.add_argument("--out-dir", required=True)
@@ -296,7 +318,12 @@ def main(argv=None):
     if a.cmd == "clades":
         step_refs = dict(x.split("=", 1) for x in a.refs)
         inc = {k: v.split(",") for k, v in (x.split("=", 1) for x in a.include)}
-        return run_clades(a.tree, step_refs, a.decoys, a.members_fa, a.outgroup, a.reps, a.out_dir, a.joint_id, a.outgroup_role, inc)
+        sd = None
+        if a.decoy_scope == "per-step":
+            sd = dict(x.split("=", 1) for x in a.step_decoys)
+            if not sd:
+                raise SystemExit("ERROR: --decoy-scope per-step needs --step-decoys STEP=FASTA ... (or use --decoy-scope union)")
+        return run_clades(a.tree, step_refs, a.decoys, a.members_fa, a.outgroup, a.reps, a.out_dir, a.joint_id, a.outgroup_role, inc, sd)
     if a.cmd == "filter-placements":
         print(json.dumps(run_filter_placements(a.assign, a.step, a.cand_dir, a.out_plc, a.out_detail, a.out_cand)))
         return 0

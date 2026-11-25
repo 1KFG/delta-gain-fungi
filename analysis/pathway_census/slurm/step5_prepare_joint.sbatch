@@ -91,14 +91,22 @@ RAXML_STARTS=${PC_RAXML_STARTS:-}
 [ -n "$RAXML_STARTS" ] || RAXML_STARTS='pars{5},rand{5}'
 # 4. reference tree, LG+G4 (epa-ng rejects some matrices). raxml-ng uses few threads on a small MSA.
 $PX raxml-ng --check --msa $OUT/ref_set.trim.afa --model LG+G4 --prefix $W/chk --redo > $OUT/raxml_check.log 2>&1 || true
-$PX raxml-ng --msa $OUT/ref_set.trim.afa --model LG+G4 --prefix $OUT/ref --threads ${PC_RAXML_THREADS:-4} ${PC_RAXML_WORKERS:+--workers $PC_RAXML_WORKERS} --seed 1 \
-  --tree $RAXML_STARTS --redo > $OUT/raxml.log 2>&1
+RX="$PX raxml-ng --msa $OUT/ref_set.trim.afa --model LG+G4 --prefix $OUT/ref --seed 1 --tree $RAXML_STARTS --redo"
+if ! $RX --threads ${PC_RAXML_THREADS:-4} ${PC_RAXML_WORKERS:+--workers $PC_RAXML_WORKERS} > $OUT/raxml.log 2>&1; then
+  # raxml-ng 2.0.4 may stop with 'core oversubscription' for a thread layout; fall back to 4 threads, 1 worker (MEASURED to work)
+  echo "raxml-ng failed with threads=${PC_RAXML_THREADS:-4} workers=${PC_RAXML_WORKERS:-auto}; retry with 4 threads" >&2
+  cp $OUT/raxml.log $OUT/raxml.first_attempt_failed.log
+  $RX --threads 4 > $OUT/raxml.log 2>&1
+fi
 rm -f $OUT/ref.raxml.startTree $OUT/ref.raxml.rba $OUT/ref.raxml.reduced.phy
 
 # 5. clades: one target per step (bin/step5_joint.py). Exit code 3: no step has a target (a result).
 OGARG=""; [ -n "$OG" ] && OGARG="--outgroup $OG"
+# decoy scope: per step (default; PC_STEP_DECOYS="STEP=decoys.faa ...") or the first run's union (PC_DECOY_SCOPE=union)
+if [ "${PC_DECOY_SCOPE:-per-step}" = union ]; then SCOPE="--decoy-scope union"; else
+  : "${PC_STEP_DECOYS:?set PC_STEP_DECOYS (STEP=FASTA per step) or PC_DECOY_SCOPE=union}"; SCOPE="--decoy-scope per-step --step-decoys $PC_STEP_DECOYS"; fi
 set +e
-$PY $PC_ROOT/bin/step5_joint.py clades --tree $OUT/ref.raxml.bestTree --refs $PC_REFS_STEPS --decoys $DECOYS \
+$PY $PC_ROOT/bin/step5_joint.py clades $SCOPE --tree $OUT/ref.raxml.bestTree --refs $PC_REFS_STEPS --decoys $DECOYS \
   ${PC_MEMBERS_FA:+--members-fa $PC_MEMBERS_FA} $OGARG --reps $OUT/rep_ids.txt --joint-id $PC_STEP --out-dir $OUT
 rc=$?
 set -e

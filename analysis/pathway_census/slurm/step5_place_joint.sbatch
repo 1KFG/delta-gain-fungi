@@ -37,6 +37,7 @@ LEN=$(awk '$1=="LENG"{print $2}' $OUT/ref.hmm)
 hmmalign --outformat afa $OUT/ref.hmm $OUT/domains.faa > $W/aln.afa 2> $OUT/hmmalign.log
 # match-cols from upo_place: drop insert columns (lowercase and '.')
 $PY $UPO match-cols $W/aln.afa --length $NCOL --out $W/q.fa
+zstd -qf -T0 -c $W/q.fa > $OUT/query_match_cols.fa.zst   # kept so that the rarefaction runs need no new hmmalign
 $PX epa-ng --ref-msa $OUT/ref_set.trim.afa --tree $OUT/ref.raxml.bestTree --query $W/q.fa \
   --model $OUT/ref.raxml.bestModel -w $W --redo -T $CPUS > $OUT/epa-ng.log 2>&1
 $PX epa-ng --version > $OUT/epa-ng.version 2>&1 || true

@@ -153,3 +153,67 @@ def test_include_variant_widens_target_past_a_decoy():
     assert plain["S"] == frozenset({"a1", "a2"})
     assert wide["S"] == frozenset({"a1", "a2", "d"})
     assert wide["T"] == plain["T"]
+
+
+# ---- decoy scope (owner decision 2026-11-24): per step vs union ----
+
+# refs: a1,a2 (step A), b1 (step B). dA is a decoy of step A only and sits next to b1, inside B's reference region.
+SCOPE_NW = "(((a1:1,a2:1):1,r1:1):1,(((b1:1,dA:1):1,r2:1):1,(dB:1,r3:1):1):1);"
+
+
+@needs_upo
+def test_union_scope_decoy_of_other_step_blocks_target():
+    sides = sides_of(SCOPE_NW)
+    t = sj.define_joint_targets(sides, {"A": {"a1", "a2"}, "B": {"b1"}}, {"dA", "dB"}, set(), set())
+    assert t["B"] == frozenset({"b1"})            # dA (decoy of A) bounds B under the union scope: B shrinks to its reference
+    assert t["A"] == frozenset({"a1", "a2", "r1"})
+
+
+@needs_upo
+def test_per_step_scope_decoy_of_other_step_does_not_bound_target():
+    sides = sides_of(SCOPE_NW)
+    sd = {"A": {"dA"}, "B": {"dB"}}
+    t = sj.define_joint_targets(sides, {"A": {"a1", "a2"}, "B": {"b1"}}, {"dA", "dB"}, set(), set(), None, sd)
+    assert t["B"] == frozenset({"b1", "dA", "r2"})        # dA is inside B's target; dB (own decoy) bounds it
+    assert t["A"] == frozenset({"a1", "a2", "r1", "r2", "dB", "r3"})   # A is now bounded by dA and b1 only; dB is allowed inside
+    assert t["A"] & t["B"] == {"r2"}          # per-step targets MAY share a leaf; the report counts them (target_pairs_sharing_a_leaf)
+
+
+@needs_upo
+def test_per_step_scope_gives_target_when_union_gives_none():
+    # a2 sits beyond dB (decoy of step B only) on the way from a1: union has no side with a1,a2 free of dB; per-step has one
+    nw = "((a1:1,(dB:1,a2:1):1):1,(b1:1,r1:1):1);"
+    sides = sides_of(nw)
+    refs = {"A": {"a1", "a2"}, "B": {"b1"}}
+    assert sj.define_joint_targets(sides, refs, {"dB"}, set(), set())["A"] is None
+    t = sj.define_joint_targets(sides, refs, {"dB"}, set(), set(), None, {"A": set(), "B": {"dB"}})
+    assert t["A"] == frozenset({"a1", "a2", "dB", "r1"})    # largest side without b1
+
+
+@needs_upo
+def test_run_clades_per_step_writes_scope_and_checks_stray_decoys(tmp_path):
+    (tmp_path / "t.nwk").write_text(SCOPE_NW + "\n")
+    for name, ids in {"A.faa": ["a1", "a2"], "B.faa": ["b1"], "dec.faa": ["dA", "dB"], "dA.faa": ["dA"], "dB.faa": ["dB"], "bad.faa": ["zz"]}.items():
+        (tmp_path / name).write_text("".join(f">{i}\nMKV\n" for i in ids))
+    (tmp_path / "reps.txt").write_text("r1\nr2\nr3\n")
+    refs = {"A": str(tmp_path / "A.faa"), "B": str(tmp_path / "B.faa")}
+    rc = sj.run_clades(str(tmp_path / "t.nwk"), refs, str(tmp_path / "dec.faa"), None, None, str(tmp_path / "reps.txt"), tmp_path, "j",
+                       step_decoys_fa={"A": str(tmp_path / "dA.faa"), "B": str(tmp_path / "dB.faa")})
+    assert rc == 0
+    rep = json.loads((tmp_path / "clade_report.json").read_text())
+    assert rep["decoy_scope"] == "per_step" and rep["per_step"]["B"]["target_size"] == 3 and rep["per_step"]["B"]["target_decoys"] == 1
+    with pytest.raises(SystemExit):
+        sj.run_clades(str(tmp_path / "t.nwk"), refs, str(tmp_path / "dec.faa"), None, None, str(tmp_path / "reps.txt"), tmp_path, "j",
+                      step_decoys_fa={"A": str(tmp_path / "bad.faa")})
+    sj.run_clades(str(tmp_path / "t.nwk"), refs, str(tmp_path / "dec.faa"), None, None, str(tmp_path / "reps.txt"), tmp_path, "j")
+    assert json.loads((tmp_path / "clade_report.json").read_text())["decoy_scope"] == "union"
+
+
+@needs_upo
+def test_cli_per_step_needs_step_decoys(tmp_path):
+    (tmp_path / "t.nwk").write_text(SCOPE_NW + "\n")
+    (tmp_path / "A.faa").write_text(">a1\nMKV\n>a2\nMKV\n")
+    (tmp_path / "reps.txt").write_text("")
+    with pytest.raises(SystemExit):
+        sj.main(["clades", "--tree", str(tmp_path / "t.nwk"), "--refs", f"A={tmp_path / 'A.faa'}", "--reps", str(tmp_path / "reps.txt"),
+                 "--joint-id", "j", "--out-dir", str(tmp_path)])
