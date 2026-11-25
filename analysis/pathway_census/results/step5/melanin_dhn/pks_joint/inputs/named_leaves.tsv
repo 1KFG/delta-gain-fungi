@@ -1,0 +1,19 @@
+accession	gene	organism_id	length	uniprot_protein_name	product_stated_in_UniProt_record
+Q65Z23	pksCT	5098	2593	Citrinin polyketide synthase	citrinin
+A0A098D6U0	ZEA1	229533	2038	Non-reducing polyketide synthase ZEA1	zearalenone
+Q5B0D0	aptA	227321	1792	Non-reducing polyketide synthase aptA (NRPKS)	asperthecin
+Q5BH30	mdpG	227321	1806	Atrochrysone carboxylic acid synthase (ACAS)	monodictyphenone (atrochrysone carboxylic acid)
+Q4W944	encA	330879	1775	Atrochrysone carboxylic acid synthase (ACAS)	endocrocin (atrochrysone carboxylic acid)
+Q5AUX1	orsA	227321	2103	Orsellinic acid synthase (OAS)	orsellinic acid / F9775
+I1RF58	PKS12	229533	2067	Non-reducing polyketide synthase PKS12	aurofusarin (catalytic activity on the entry: naphtopyrone YWA1)
+F9XMW3	PKS1	336722	2175	Non-reducing polyketide synthase PKS1	DHN-melanin (catalytic activity on the entry: naphtopyrone YWA1)
+P9WET9		264951	2149	Non-reducing polyketide synthase PvBS090_009107	pigment of Paecilomyces variotii (catalytic activity on the entry: naphtopyrone YWA1)
+S0DTP6	FSR1	1279085	2286	Non-reducing polyketide synthase fsr1	fusarubin
+A2QK66	ktnS	425011	1663	Kotanin synthase	kotanin
+A0A0S2CHA9	pigA	89489	2690	Non-reducing polyketide synthase pigA (nrPKS pigA)	azaphilone pigments (Monascus)
+M1WG96		1111077	1808	Non-reducing polyketide synthase CPUR_05437	ergochrome (atrochrysone carboxylic acid)
+Q4WA61	nscA	330879	1794	Non-reducing polyketide synthase nscA	neosartoricin
+A7UMW1	PKS1	40997	2192	Non-reducing polyketide synthase 1	elsinochromes
+Q0UI00	elcA	321614	1906	Non-reducing polyketide synthase elcA	elsinochrome C (nor-toralactone)
+A0A1W7M1U5	pgmA	341663	2298	Non-reducing polyketide synthase pgmA (NR-PKS pgmA)	pleosporalin A / ascomycone A (conidial naphthoquinone pigments)
+A2QX22	adaA	425011	1793	Non-reducing polyketide synthase adaA (NRPKS adaA)	2-acetyl-2-decarboxamidoanthrotainin

@@ -1,0 +1,7 @@
+{
+ "rows_in_step": 9374,
+ "duplicate_rows_dropped": 0,
+ "genomes": 8374,
+ "domains_extracted": 9374,
+ "failures": 0
+}

@@ -1,0 +1,14 @@
+hmm_hits	target_of	proteins
+hexaketide_pks+thn_synthase	no_target	3052
+hexaketide_pks+thn_synthase	thn_synthase	2741
+heptaketide_pks+hexaketide_pks	no_target	1648
+hexaketide_pks+thn_synthase	hexaketide_pks	523
+thn_synthase	thn_synthase	422
+heptaketide_pks+hexaketide_pks+thn_synthase	no_target	336
+hexaketide_pks	no_target	210
+heptaketide_pks	no_target	136
+thn_synthase	no_target	125
+hexaketide_pks	hexaketide_pks	86
+heptaketide_pks+thn_synthase	no_target	80
+hexaketide_pks	thn_synthase	8
+thn_synthase	hexaketide_pks	7

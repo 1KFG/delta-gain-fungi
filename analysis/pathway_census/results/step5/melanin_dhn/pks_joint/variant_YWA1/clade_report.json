@@ -1,0 +1,92 @@
+{
+ "joint_id": "pks_joint",
+ "n_leaves": 264,
+ "steps": [
+  "heptaketide_pks",
+  "hexaketide_pks",
+  "thn_synthase"
+ ],
+ "target_rule": "largest side with all references of the step and no decoy, outgroup, named member or reference of another step",
+ "rooting_leaves": [
+  "Q03149",
+  "Q12053",
+  "Q12397",
+  "Q6DQW3",
+  "S0DZM7"
+ ],
+ "rooting_source": "decoys",
+ "n_references": 4,
+ "n_decoys": 5,
+ "n_named_members": 18,
+ "n_outgroups": 0,
+ "n_representatives_in_tree": 237,
+ "references": {
+  "thn_synthase": [
+   "P79068"
+  ],
+  "hexaketide_pks": [
+   "Q9Y7A7"
+  ],
+  "heptaketide_pks": [
+   "A2QUI2",
+   "Q4WZA8"
+  ]
+ },
+ "variant_include": {
+  "heptaketide_pks": [
+   "I1RF58",
+   "P9WET9",
+   "Q03149"
+  ]
+ },
+ "per_step": {
+  "heptaketide_pks": {
+   "n_references": 2,
+   "refs_isolated": true,
+   "smallest_side_with_refs_size": 6,
+   "smallest_side_labelled_leaves": [
+    "A2QUI2",
+    "Q03149",
+    "Q4WZA8"
+   ],
+   "target_size": 38,
+   "target_references": 2,
+   "target_representatives": 33,
+   "target_named_members": 2,
+   "target_decoys": 1,
+   "decoy_side_size": 210,
+   "decoy_side_representatives": 204
+  },
+  "hexaketide_pks": {
+   "n_references": 1,
+   "refs_isolated": true,
+   "smallest_side_with_refs_size": 1,
+   "smallest_side_labelled_leaves": [
+    "Q9Y7A7"
+   ],
+   "target_size": 27,
+   "target_references": 1,
+   "target_representatives": 26,
+   "target_named_members": 0,
+   "target_decoys": 0,
+   "decoy_side_size": 219,
+   "decoy_side_representatives": 211
+  },
+  "thn_synthase": {
+   "n_references": 1,
+   "refs_isolated": true,
+   "smallest_side_with_refs_size": 1,
+   "smallest_side_labelled_leaves": [
+    "P79068"
+   ],
+   "target_size": 99,
+   "target_references": 1,
+   "target_representatives": 98,
+   "target_named_members": 0,
+   "target_decoys": 0,
+   "decoy_side_size": 147,
+   "decoy_side_representatives": 139
+  }
+ },
+ "target_pairs_sharing_a_leaf": 0
+}
