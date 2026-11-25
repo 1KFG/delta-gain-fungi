@@ -424,3 +424,13 @@ Update 2026-11-25 (identity 0.8, bootstrap, per-step decoys; record `results/ste
 - The sbatch files read `PC_STEP_DECOYS` (per-step) or `PC_DECOY_SCOPE=union`. `slurm/step5_tree_joint.sbatch` (tree and clades as a separate job), `slurm/step5_bootstrap_joint.sbatch` (array; `PC_BS_DIR`, `PC_BS_EXTRA`), `slurm/step5_support_joint.sbatch` (FBP and TBE), `slurm/step5_rarefaction_joint.sbatch`, `slurm/step5_reapply_decoy_scope.sh` (another decoy scope from a saved placement, no new epa-ng run). `step5_place_joint.sbatch` now keeps `query_match_cols.fa.zst`.
 - `bin/step5_bootstrap.py`: `support` (FBP and TBE at the target nodes), `stability` (clade rule on every bootstrap tree), `boundary`, `rep-coverage`, `subset` (rarefaction), `compare` (calls of two runs, by direction). Tests `tests/test_step5_bootstrap.py`.
 - The 100 bootstrap replicates are NNI-only searches (`--opt-topology nni`, 453 s each); a standard replicate took 4.1 to 4.7 h. See the note for the limit.
+
+## Genome table prefix aliases (2026-11-24)
+
+Five BFD genomes (`F8B45790`, `FE750E90`, `FE41F6C9`, `FF465DA3`, `F6D07108`) were re-annotated after `genomes.tsv.zst` was built. Their protein files now carry new locus tags (`F7CB232C`, `F317F9F5`, `FB9275E9`, `F629B7B9`, `FAD1592B`). Note: `docs/superpowers/notes/2026-11-24-genome-prefix-mismatch.md`.
+
+- `bin/check_genome_prefixes.py --genomes results/genomes.tsv.zst --since <table build time> --out report.tsv [--aliases-out aliases.tsv] [--threads N]`: reads the first protein id of each protein file and compares its prefix with the genome table. MEASURED 2026-11-24: 5 mismatches in 23,376 genomes; all 5 files are newer than the table (52 files are newer).
+- `prefix_aliases.tsv` (tracked): the mapping, table locustag to file prefix. The original `results/genomes.tsv.zst` is not changed.
+- `bin/apply_prefix_aliases.py --genomes ... --aliases prefix_aliases.tsv --out results/genomes.corrected.tsv.zst`: adds the column `alias_prefix`.
+- `bin/make_calls_table.py --prefix-aliases prefix_aliases.tsv`: maps protein id prefixes to table locustags. Other tools that split the protein id at `_` do not read the alias file yet (see the note, section 5).
+- Run the check again after any BFD re-annotation, before a search is read.
