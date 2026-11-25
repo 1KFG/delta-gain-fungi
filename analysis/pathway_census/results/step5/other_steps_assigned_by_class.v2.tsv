@@ -1,0 +1,96 @@
+run	level	group	n_genomes	n_with_assigned	share
+scytalone_dehydratase_v2	class	Sordariomycetes	5981	2541	0.4248
+scytalone_dehydratase_v2	class	Eurotiomycetes	3201	1624	0.5073
+scytalone_dehydratase_v2	class	Dothideomycetes	2724	2660	0.9765
+scytalone_dehydratase_v2	class	Agaricomycetes	1844	1	0.0005
+scytalone_dehydratase_v2	class	Lecanoromycetes	478	254	0.5314
+scytalone_dehydratase_v2	class	Leotiomycetes	429	297	0.6923
+scytalone_dehydratase_v2	class	(other, small groups)	201	19	0.0945
+scytalone_dehydratase_v2	class	(no label)	177	12	0.0678
+scytalone_dehydratase_v2	phylum	Ascomycota	19203	7406	0.3857
+scytalone_dehydratase_v2	phylum	Basidiomycota	3242	1	0.0003
+scytalone_dehydratase_v2	phylum	(no label)	2	1	0.5000
+omt_v2	class	Sordariomycetes	5981	4593	0.7679
+omt_v2	class	Eurotiomycetes	3201	2365	0.7388
+omt_v2	class	Pichiomycetes	2929	1	0.0003
+omt_v2	class	Dothideomycetes	2724	2443	0.8968
+omt_v2	class	Agaricomycetes	1844	3	0.0016
+omt_v2	class	Tremellomycetes	556	134	0.2410
+omt_v2	class	Lecanoromycetes	478	411	0.8598
+omt_v2	class	Leotiomycetes	429	292	0.6807
+omt_v2	class	(other, small groups)	201	33	0.1642
+omt_v2	class	(no label)	177	18	0.1017
+omt_v2	class	Pezizomycetes	171	136	0.7953
+omt_v2	class	Orbiliomycetes	67	17	0.2537
+omt_v2	phylum	Ascomycota	19203	10304	0.5366
+omt_v2	phylum	Basidiomycota	3242	141	0.0435
+omt_v2	phylum	(no label)	2	1	0.5000
+tyrosinase_v2	class	Sordariomycetes	5981	5952	0.9952
+tyrosinase_v2	class	Eurotiomycetes	3201	2817	0.8800
+tyrosinase_v2	class	Pichiomycetes	2929	2	0.0007
+tyrosinase_v2	class	Dothideomycetes	2724	2713	0.9960
+tyrosinase_v2	class	Agaricomycetes	1844	1452	0.7874
+tyrosinase_v2	class	Tremellomycetes	556	6	0.0108
+tyrosinase_v2	class	Lecanoromycetes	478	458	0.9582
+tyrosinase_v2	class	Leotiomycetes	429	393	0.9161
+tyrosinase_v2	class	Microbotryomycetes	318	1	0.0031
+tyrosinase_v2	class	(other, small groups)	201	64	0.3184
+tyrosinase_v2	class	(no label)	177	30	0.1695
+tyrosinase_v2	class	Pezizomycetes	171	166	0.9708
+tyrosinase_v2	class	Pucciniomycetes	116	1	0.0086
+tyrosinase_v2	class	Mortierellomycetes	100	23	0.2300
+tyrosinase_v2	class	Exobasidiomycetes	91	10	0.1099
+tyrosinase_v2	class	Chytridiomycetes	82	22	0.2683
+tyrosinase_v2	class	Orbiliomycetes	67	67	1.0000
+tyrosinase_v2	class	Glomeromycetes	59	24	0.4068
+tyrosinase_v2	class	Cystobasidiomycetes	29	15	0.5172
+tyrosinase_v2	phylum	Ascomycota	19203	12642	0.6583
+tyrosinase_v2	phylum	Basidiomycota	3242	1489	0.4593
+tyrosinase_v2	phylum	Mucoromycota	292	1	0.0034
+tyrosinase_v2	phylum	Mortierellomycota	100	23	0.2300
+tyrosinase_v2	phylum	Chytridiomycota	83	22	0.2651
+tyrosinase_v2	phylum	Glomeromycota	59	24	0.4068
+tyrosinase_v2	phylum	Basidiobolomycota	18	12	0.6667
+tyrosinase_v2	phylum	Zoopagomycota	11	2	0.1818
+tyrosinase_v2	phylum	(no label)	2	1	0.5000
+hppd_v2	class	Sordariomycetes	5981	5890	0.9848
+hppd_v2	class	Eurotiomycetes	3201	3171	0.9906
+hppd_v2	class	Pichiomycetes	2929	2816	0.9614
+hppd_v2	class	Dothideomycetes	2724	2592	0.9515
+hppd_v2	class	Saccharomycetes	2560	286	0.1117
+hppd_v2	class	Agaricomycetes	1844	1	0.0005
+hppd_v2	class	Tremellomycetes	556	10	0.0180
+hppd_v2	class	Lecanoromycetes	478	271	0.5669
+hppd_v2	class	Leotiomycetes	429	386	0.8998
+hppd_v2	class	Dipodascomycetes	393	365	0.9288
+hppd_v2	class	Microbotryomycetes	318	1	0.0031
+hppd_v2	class	Mucoromycetes	273	261	0.9560
+hppd_v2	class	(other, small groups)	201	119	0.5920
+hppd_v2	class	(no label)	177	25	0.1412
+hppd_v2	class	Pezizomycetes	171	165	0.9649
+hppd_v2	class	Kickxellomycetes	158	119	0.7532
+hppd_v2	class	Ustilaginomycetes	133	8	0.0602
+hppd_v2	class	Pucciniomycetes	116	2	0.0172
+hppd_v2	class	Mortierellomycetes	100	95	0.9500
+hppd_v2	class	Chytridiomycetes	82	76	0.9268
+hppd_v2	class	Orbiliomycetes	67	66	0.9851
+hppd_v2	class	Glomeromycetes	59	49	0.8305
+hppd_v2	class	Lipomycetes	59	56	0.9492
+hppd_v2	phylum	Ascomycota	19203	16119	0.8394
+hppd_v2	phylum	Basidiomycota	3242	24	0.0074
+hppd_v2	phylum	Mucoromycota	292	277	0.9486
+hppd_v2	phylum	Kickxellomycota	177	136	0.7684
+hppd_v2	phylum	Mortierellomycota	100	95	0.9500
+hppd_v2	phylum	Chytridiomycota	83	77	0.9277
+hppd_v2	phylum	Glomeromycota	59	49	0.8305
+hppd_v2	phylum	Basidiobolomycota	18	16	0.8889
+hppd_v2	phylum	Blastocladiomycota	14	13	0.9286
+hppd_v2	phylum	Zoopagomycota	11	9	0.8182
+hppd_v2	phylum	Entomophthoromycota	9	8	0.8889
+hppd_v2	phylum	Monoblepharomycota	3	2	0.6667
+hppd_v2	phylum	(no label)	2	1	0.5000
+hppd_v2	phylum	Aphelidiomycota	2	2	1.0000
+hppd_v2	phylum	Calcarisporiellomycota	1	1	1.0000
+hppd_v2	phylum	Rozellomycota	1	1	1.0000
+laccase_diphenol_v2_epafilter	class	Tremellomycetes	556	215	0.3867
+laccase_diphenol_v2_epafilter	phylum	Basidiomycota	3242	215	0.0663

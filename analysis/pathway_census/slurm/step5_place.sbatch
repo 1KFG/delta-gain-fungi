@@ -2,7 +2,7 @@
 # Census step 5, part 2: align every cut domain to the reference, epa-ng placement, clade call,
 # assign_steps. Run after step5_prepare.sbatch and only if the references form a clade.
 #   PC_STEP=phytoene_synthase PC_MIN_SUPPORT=0.5 sbatch analysis/pathway_census/slurm/step5_place.sbatch
-# Required: PC_STEP, PC_MIN_SUPPORT. Optional: PC_PATHWAY, PC_ROOT, PC_MIN_LWR (0.5), PC_MAX_PENDANT (1.0).
+# Optional PC_EPA_ARGS: extra epa-ng arguments (unset = epa-ng defaults, which keep at most 7 placements per query). Required: PC_STEP, PC_MIN_SUPPORT. Optional: PC_PATHWAY, PC_ROOT, PC_MIN_LWR (0.5), PC_MAX_PENDANT (1.0).
 #SBATCH -p short
 #SBATCH --constraint="ryzen|cascade|broadwell"
 #SBATCH -c 16
@@ -36,7 +36,7 @@ hmmalign --outformat afa $OUT/ref.hmm $OUT/domains.faa > $W/aln.afa 2> $OUT/hmma
 # match-cols from upo_place: drop insert columns (lowercase and '.')
 $PY $UPO match-cols $W/aln.afa --length $NCOL --out $W/q.fa
 $PX epa-ng --ref-msa $OUT/ref_set.trim.afa --tree $OUT/ref.raxml.bestTree --query $W/q.fa \
-  --model $OUT/ref.raxml.bestModel -w $W --redo -T $CPUS > $OUT/epa-ng.log 2>&1
+  --model $OUT/ref.raxml.bestModel -w $W --redo -T $CPUS ${PC_EPA_ARGS:-} > $OUT/epa-ng.log 2>&1
 $PX epa-ng --version > $OUT/epa-ng.version 2>&1 || true
 $PY $UPO assign $W/epa_result.jplace --clades $OUT/clade_members.tsv --min-lwr $PC_MIN_LWR \
   --max-pendant $PC_MAX_PENDANT --out $OUT/assign.tsv

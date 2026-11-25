@@ -434,3 +434,24 @@ Five BFD genomes (`F8B45790`, `FE750E90`, `FE41F6C9`, `FF465DA3`, `F6D07108`) we
 - `bin/apply_prefix_aliases.py --genomes ... --aliases prefix_aliases.tsv --out results/genomes.corrected.tsv.zst`: adds the column `alias_prefix`.
 - `bin/make_calls_table.py --prefix-aliases prefix_aliases.tsv`: maps protein id prefixes to table locustags. Other tools that split the protein id at `_` do not read the alias file yet (see the note, section 5).
 - Run the check again after any BFD re-annotation, before a search is read.
+
+## Step 5 for the other melanin and mycosporine steps
+
+Record with commands, floors, parameters, jobs and failures: `results/step5/other_steps_RUN.md` (2026-11-24, PROVISIONAL). Note: `docs/superpowers/notes/2026-11-24-melanin-myco-step5-other-steps.md`. Branch `pathway-census-step5-other`. Run folders: `results/step5/<pathway>/<step>/` (git-ignored); small summary tables are force-added in `results/step5/`. The PKS steps (`thn_synthase`, `hexaketide_pks`, `heptaketide_pks`) are not covered here.
+
+Steps covered: `melanin_ldopa` (`tyrosinase`, `laccase_diphenol`, `hmga`, `asp_melanin_tyrosinase`, `hppd`, `aspulvinone_e_synthase`), `melanin_dhn` (`ayg1`, `t4hn_reductase` and `t3hn_reductase` on one SDR tree, `scytalone_dehydratase`, `laccase_abr2`, `mco_abr1`) and `mycosporine` (`ddgs`, `omt`, `atp_grasp_ligase`).
+
+New tools (existing step 5 tools are unchanged; tests in `tests/`):
+- `bin/step5_multi_ref_clades.py` with `slurm/step5_multi_ref_clades.sbatch`: the largest-side target rule of `step5_single_ref_clades.py` for ONE OR MORE references (`target` = largest side with ALL references and no decoy, outgroup or named member). Exit 3 when the references do not form a clade free of labelled leaves (a result). The report also gives `smallest_target_size` (the default rule). Tests: `tests/test_multi_ref_clades.py`.
+- `bin/select_family_leaves.py`: chooses labelled non-target leaves (named members and outgroups) from fetched UniProt family entries after the alignability screen (`bin/screen_outgroups.py`). Excludes references, entries scoring at or above the step floor, entries with the same complete EC number as a reference (only where stated), and entries with a gene name of a reference. Tests: `tests/test_select_family_leaves.py`.
+- `bin/cut_leaves_to_domain.py`: cuts leaves to the best HMM domain with the pad of 20 used for candidates. Tests: `tests/test_cut_leaves_to_domain.py`.
+- `bin/step5_run_report.py`: report of one run folder (`<run>/report/`): calls, assigned proteins and genomes, assigned genomes by class and phylum, nearest labelled leaf of each representative. It works for any number of references and needs only `results/genomes.tsv.zst`. Tests: `tests/test_step5_run_report.py`.
+- `slurm/step5_place_parallel.sbatch`: `step5_place.sbatch` with `hmmalign` split over the CPUs (for 50,000 candidates; `hmmalign` is single-threaded).
+- `curation_scripts/melanin_myco_step5/`: one-off helpers (UniProt family fetch, leaf selection and submit scripts, table collation). They are a record, not a general tool.
+
+Rules used (all PROPOSED; none is validated against known orthologs):
+- Floor: the owner `min_score` of step 2 (`omt` 100.6). No placement floor was set; no candidate row was dropped. No floor was lowered.
+- Leaves: references, decoys that pass the alignability rule (best domain 10 bits or more and 50% of the HMM or more, `best` mode; `union` counts are in the record), and named members and outgroups from reviewed UniProt entries of the Pfam families of the references (fetched from rest.uniprot.org; every sequence length equals the table length). A leaf is dropped when it scores at or above the step floor on the step HMM (the search would call it a candidate), shares a gene name with a reference, or (hppd, SDR, scytalone dehydratase, ddgs, hmga) has the EC number of the step reaction. All leaves are cut to the domain.
+- Representatives: mmseqs2 identity is the lowest value in 0.5, 0.7, 0.8, 0.9, 0.95 that gives at least 100 clusters (0.95 if none does); more than 300 clusters are capped at 300 (stratified by phylum, as in step 5). At 0.5, eight steps gave 1 to 32 clusters in a full run (kept as `<step>_id50`); for `omt`, `hppd`, `hmga`, the SDR union and `tyrosinase` the cluster counts at each identity were measured with mmseqs2 on the extracted domains before submission.
+- Both `step5_prepare_ident.sbatch` and `step5_place.sbatch` read `PC_CAND_DIR`; after every run `candidates_step.tsv` rows were compared with `placements.tsv` rows (the difference is the extraction failures of the 5 re-annotated genomes, see the note).
+- SDR: one tree for `t4hn_reductase` and `t3hn_reductase` (union of both candidate sets, 11,667 proteins). Each step has its own target (largest side with the references of that step; the references of the other step are named members).

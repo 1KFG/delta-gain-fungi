@@ -1,0 +1,42 @@
+# target sets (clade_call == target)
+set	n_proteins	n_genomes
+tyrosinase	50426	14212
+asp_melanin_tyrosinase	42	42
+laccase_abr2	3809	3411
+mco_abr1	1918	1897
+laccase_diphenol	402	215
+pair_a	pair_b	shared_proteins	shared_genomes
+tyrosinase	asp_melanin_tyrosinase	0	0
+tyrosinase	laccase_abr2	0	0
+tyrosinase	mco_abr1	0	0
+tyrosinase	laccase_diphenol	0	0
+asp_melanin_tyrosinase	laccase_abr2	0	0
+asp_melanin_tyrosinase	mco_abr1	0	0
+asp_melanin_tyrosinase	laccase_diphenol	0	0
+laccase_abr2	mco_abr1	4	3
+laccase_abr2	laccase_diphenol	0	0
+mco_abr1	laccase_diphenol	0	0
+in_k_sets	n_proteins
+1	56589
+2	4
+# search hits at score >= 0
+set	n_proteins	n_genomes
+tyrosinase	50452	14220
+asp_melanin_tyrosinase	2471	1847
+laccase_abr2	9631	4923
+mco_abr1	1918	1897
+laccase_diphenol	402	215
+pair_a	pair_b	shared_proteins	shared_genomes
+tyrosinase	asp_melanin_tyrosinase	0	0
+tyrosinase	laccase_abr2	0	0
+tyrosinase	mco_abr1	0	0
+tyrosinase	laccase_diphenol	0	0
+asp_melanin_tyrosinase	laccase_abr2	0	0
+asp_melanin_tyrosinase	mco_abr1	0	0
+asp_melanin_tyrosinase	laccase_diphenol	0	0
+laccase_abr2	mco_abr1	4	3
+laccase_abr2	laccase_diphenol	0	0
+mco_abr1	laccase_diphenol	0	0
+in_k_sets	n_proteins
+1	64866
+2	4

@@ -1,0 +1,11 @@
+run	nearest_role	n_representatives	n_candidates_in_their_clusters	median_distance
+scytalone_dehydratase_v2	named_member	44	554	0.7956
+scytalone_dehydratase_v2	reference	163	8050	1.0307
+omt_v2	decoy	81	803	1.4344
+omt_v2	named_member	69	450	1.9767
+omt_v2	reference	136	9564	1.9949
+omt_v2	tree_outgroup	14	951	1.9158
+tyrosinase_v2	reference	885	23606	2.9312
+tyrosinase_v2	tree_outgroup	115	773	3.7675
+hppd_v2	reference	662	20098	1.7986
+laccase_diphenol_v2_epafilter	reference	67	402	0.0144

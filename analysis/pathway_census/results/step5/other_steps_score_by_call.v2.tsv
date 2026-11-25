@@ -1,0 +1,13 @@
+run	clade_call	count	min	median	max
+omt_v2	decoy	2703	100.6	108.6	144.2
+omt_v2	target	11730	100.6	112.5	427.1
+omt_v2	unassigned	6	109.1	109.6	110.4
+scytalone_dehydratase_v2	decoy	533	240.5	245.6	282.8
+scytalone_dehydratase_v2	target	8050	240.6	300.05	336.3
+scytalone_dehydratase_v2	unassigned	21	241.6	242.2	254.2
+tyrosinase_v2	target	50433	63.6	320.1	838.2
+tyrosinase_v2	unassigned	14	120.0	288.05	470.2
+hppd_v2	decoy	1	302.1	302.1	302.1
+hppd_v2	target	20083	165.3	546.7	974.9
+hppd_v2	unassigned	14	271.8	451.2	552.2
+laccase_diphenol_v2_epafilter	target	402	1210.1	1323.1	1437.6
