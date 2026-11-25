@@ -1,0 +1,21 @@
+table	bin	count
+duplicates	sequences	402
+duplicates	distinct	67
+duplicates	largest_group	103
+nearest_neighbour	<50	0
+nearest_neighbour	50-70	0
+nearest_neighbour	70-80	0
+nearest_neighbour	80-90	0
+nearest_neighbour	90-95	0
+nearest_neighbour	95-99	3
+nearest_neighbour	99-<100	26
+nearest_neighbour	100	373
+nearest_neighbour	no other hit	0
+pairs	<50	0
+pairs	50-70	3665
+pairs	70-80	36619
+pairs	80-90	8208
+pairs	90-95	2116
+pairs	95-99	3563
+pairs	99-<100	13521
+pairs	100	12909

@@ -14,7 +14,7 @@ set -euo pipefail
 PC_PATHWAY=${PC_PATHWAY:-carotenoid}
 PC_ROOT=${PC_ROOT:-/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/pathway_census}
 OUT=${PC_OUT:-$PC_ROOT/results/step5/$PC_PATHWAY/$PC_STEP}
-REFS=$PC_ROOT/refs/$PC_PATHWAY/$PC_STEP.faa
+REFS=${PC_REFS_FA:-$PC_ROOT/refs/$PC_PATHWAY/$PC_STEP.faa}   # PC_REFS_FA overrides the reference FASTA (v2 runs)
 DECOYS=${PC_DECOYS_FA:-$PC_ROOT/refs/$PC_PATHWAY/decoys/$PC_STEP.faa}
 /usr/bin/python3.12 $PC_ROOT/bin/step5_multi_ref_clades.py --tree $OUT/ref.raxml.bestTree --refs $REFS --decoys $DECOYS \
   ${PC_OUTGROUP_FA:+--outgroup $PC_OUTGROUP_FA} ${PC_MEMBERS_FA:+--members-fa $PC_MEMBERS_FA} \

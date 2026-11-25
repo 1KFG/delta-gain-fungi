@@ -1,0 +1,6 @@
+scytalone_dehydratase_v2 prepare=32439796 clades=32439797 place=32439798 id=0.8 cap=300 cpus=2 2026-11-24_19:33:31
+omt_v2 prepare=32439799 clades=32439800 place=32439801 id=0.7 cap=300 cpus=2 2026-11-24_19:33:31
+tyrosinase_v2 prepare=32439802 clades=32439803 place=32439804 id=0.5 cap=1000 cpus=8 2026-11-24_19:33:31
+hppd_v2 prepare=32439805 clades=32439806 place=32439807 id=0.7 cap=1000 cpus=4 2026-11-24_19:33:31
+laccase_diphenol_v2 prepare=32441171 clades=32441172 place=32441173 id=1.0 cap=1000 cpus=2 2026-11-24_20:03:14
+laccase_diphenol_v2_epafilter place=32442349 (epa-ng --filter-max 10000 --filter-acc-lwr 0.999; earlier tries failed: 32441967 min-lwr with acc-lwr not allowed; 32442254 acc-lwr 1.0 gave a bad edge number in the jplace)

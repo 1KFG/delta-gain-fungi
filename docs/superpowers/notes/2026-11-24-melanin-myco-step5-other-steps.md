@@ -151,3 +151,123 @@ All are PROPOSED. None has data beyond the numbers above.
 - The PKS steps (other agent). No change to floors, references or decoys. No lowered cutoff. No second round on `omt`.
 - No literature check of any leaf. No fusion check. No tree-based check of the 4 proteins that hit two laccase steps.
 - The target rule was not tested for stability against the number of labelled leaves.
+
+## 10. Follow-up of 2026-11-25: owner decisions of 2026-11-24 (v2 runs)
+
+::: {.callout-important}
+## Status and limits of this section
+
+- All results are PROVISIONAL. Same limits as the top of this note: `target` is not an ortholog call; one tree per step, one seed, 2 starting trees, no bootstrap; floors unchanged.
+- **Selection with hindsight.** The `scytalone_dehydratase` leaf A0A2I2F2K6 (cfoI) was dropped AFTER the tree of the first run was seen. The first run is kept as `results/step5/melanin_dhn/scytalone_dehydratase_with_cfoI_stopped` (a link to the unchanged first folder `scytalone_dehydratase`).
+- **Deviation from the step definition.** `omt` is placed with ONE reference (Phaffia) as target. The step has two references. The owner accepted this for this run. The result is a *single-reference placement of omt (MysB as named leaf)*.
+- The `tyrosinase` tree of 1,000 representatives covers 48.3% of the 50,447 domains by cluster. All candidates are placed on it. The `hppd` tree has every cluster (662 of 662), so it covers 100% of the 20,098 domains by cluster.
+- With the default epa-ng setting each query keeps at most 7 placements. This changes the call when many near-identical leaves are in the tree (section 10.5).
+- Labels: MEASURED = read from a file named here or from `sacct`. PROPOSED = a choice. UNVERIFIED = not checked.
+:::
+
+Files (`analysis/pathway_census/results/step5/`): `other_steps_summary.tsv` (new rows `*_v2`), `other_steps_RUN.md` (section "Follow-up runs v2"), `tyrosinase_calls_v1_vs_v2.tsv`, `hppd_calls_v1_vs_v2.tsv`, `laccase_diphenol_calls_v1_vs_v2.tsv`, `other_steps_score_by_call.v2.tsv`, `tyrosinase_v2_laccase_target_overlap.tsv`, `cluster_counts_by_identity.tsv`, `laccase_diphenol_redundancy.tsv`.
+
+### 10.1 `scytalone_dehydratase` without cfoI (decision 1)
+
+Run `scytalone_dehydratase_v2`: 4 references, 7 named members (the 8 of the first run without A0A2I2F2K6), 0 decoys, 0 outgroups, 207 representatives (identity 0.8, 207 clusters; the cap 300 does not apply); 218 leaves.
+
+| Quantity | First run (with cfoI) | v2 (without cfoI) |
+|---|---:|---:|
+| Leaves | 219 | 218 |
+| References form a clade free of labelled leaves | no (exit 3) | **yes** |
+| Smallest side with all 4 references | 97 leaves, 1 named member inside | 117 leaves |
+| Target (largest side) | none | 167 leaves (4 references, 163 representatives) |
+| Target / other side / unassigned | not placed | 8,050 / 533 / 21 of 8,604 |
+| Assigned proteins; genomes | 0 | 8,050; 7,408 of 23,376 |
+| Lowest target support (LWR) | | 0.869 |
+| Long pendant queries | | 0 |
+
+- Score by call (`other_steps_score_by_call.v2.tsv`): target median 300.1 (240.6 to 336.3), other side median 245.6 (240.5 to 282.8), unassigned median 242.2. Floor 240.5. The other side sits at the floor.
+- The 7 named members are outside the target. The 44 representatives on the other side are nearest to a named member (median distance 0.80); the 163 in the target are nearest to a reference (median 1.03).
+- The references now form a clade, so the list of leaves in the way is not needed. It is UNVERIFIED whether another leaf choice would also separate the references.
+- Reading trap: the target depends on the leaf choice. With 7 named members and no decoy or outgroup, the "other side" is only the named-member side of the tree.
+
+### 10.2 `omt`, single-reference placement (MysB as named leaf) (decision 2)
+
+Run `omt_v2`: reference = Phaffia WEV88680.1 only (`other_inputs/tree_inputs/omt_v2/refs.faa`; `refs/` is not changed). *Nostoc* MysB (B2J6X8) is a named leaf, cut to its domain. 3 decoys, 6 outgroups, 300 representatives (identity 0.7, 420 clusters); 311 leaves. All 14,441 rows at the floor 100.6 are candidates (floor rows kept). 2 rows have `protein_file_missing` (prefix FB9275E9), so 14,439 are placed.
+
+| Quantity | Value (MEASURED) |
+|---|---:|
+| Reference clade free of labelled leaves | yes |
+| Smallest-side rule target | 1 leaf (reference stem) |
+| Largest-side target | 134 leaves (reference and 133 representatives) |
+| Target / other side / unassigned | 11,730 / 2,703 / 6 of 14,439 placed |
+| Lowest target support (LWR) | 0.833 |
+| Assigned proteins; genomes | 11,730; 10,446 of 23,376 |
+| Long pendant queries | 1 |
+| MysB position | outside the target |
+
+- Nearest labelled leaf (300 representatives): reference 136 (9,564 candidates in their clusters, median distance 1.99), decoy 81 (803; 1.43), named member 69 (450; 1.98), outgroup 14 (951; 1.92). 11,768 of 14,439 candidates (81.5%) are in a cluster of a representative.
+- HMM score by call (`other_steps_score_by_call.v2.tsv`): target median 112.5 (100.6 to 427.1); other side median 108.6 (100.6 to 144.2); unassigned median 109.6. The medians differ by 3.9 bits. 10,097 of 14,441 rows are between 100.6 and 120.7 (step 4 record).
+- Reading trap: 81% of the placed candidates are `target`, but they score about the same as the other side. The split is by position in a tree with 3 decoys, 6 outgroups and 1 named leaf. It is not a score split.
+- Not checked: that Phaffia OMT and MysB sit in different clades because they are different enzymes. UNVERIFIED.
+
+### 10.3 `tyrosinase` and `hppd` with a high representative cap (decision 4)
+
+Cap rule unchanged (stratified by phylum, seed 1); identity, labelled leaves and outgroups unchanged. Only the cap changed (300 to 1,000 for both; for `hppd` 1,000 is above the 662 clusters at identity 0.7, so all clusters are used).
+
+| Quantity | tyrosinase v1 | tyrosinase v2 | hppd v1 | hppd v2 |
+|---|---:|---:|---:|---:|
+| Clusters | 2,460 | 2,460 | 662 | 662 |
+| Representatives | 300 | 1,000 | 300 | 662 |
+| Candidates in clusters of representatives | 5,585 (11.1%) | 24,379 (48.3%) | 13,811 (68.7%) | 20,098 (100%) |
+| Leaves | 310 | 1,010 | 305 | 667 |
+| Alignment sites | 2,241 | 3,839 | 800 | 936 |
+| References form a clade free of outgroups and decoys | yes | yes | yes | yes |
+| Target size (largest side); smallest-side rule | 307; 306 | 1,007; 892 | 38; 1 | 662; 1 |
+| Target / other side / unassigned | 50,426 / 0 / 21 | 50,433 / 0 / 14 | 5,850 / 14,216 / 32 | 20,083 / 1 / 14 |
+| Assigned proteins | 50,426 | 50,433 | 5,850 | 20,083 |
+| Genomes with an assigned protein (of 23,376) | 14,212 | 14,216 | 5,685 | 16,830 |
+| Long pendant queries | 1,526 | 140 | 15 | 2 |
+| Lowest target support | 0.794 | 0.625 | 0.531 | 0.674 |
+
+Calls that change between v1 and v2 (same protein; `*_calls_v1_vs_v2.tsv`):
+
+- `tyrosinase`: 13 of 50,447. unassigned to target 10; target to unassigned 3. The other side is empty in both runs.
+- `hppd`: 14,238 of 20,098. other side (`decoy`) to target 14,212; unassigned to target 21; other side to unassigned 4; unassigned to other side 1.
+- `tyrosinase` overlap with the target sets of `laccase_abr2`, `mco_abr1`, `laccase_diphenol` and `asp_melanin_tyrosinase`: 0 proteins shared (`tyrosinase_v2_laccase_target_overlap.tsv`). `laccase_abr2` and `mco_abr1` still share the same 4 proteins.
+- **`hppd` question: do the 14,216 other-side candidates move into the target with more representatives?** Yes. 14,212 of the 14,216 move to `target` (MEASURED); 3 become `unassigned`; 1 stays on the other side. The target is now 662 of 667 leaves. The leaves outside it are 3 bacterial outgroups and the decoy and one representative. So the v1 split was a property of the 300-representative tree. In v2, `target` means "not one of 5 leaves". The call carries almost no information for `hppd`. The cause of the topology change was not tested (UNVERIFIED).
+- `tyrosinase`: `target` is 1,007 of 1,010 leaves for the same reason (3 vertebrate outgroups only). More representatives cut the long-pendant queries from 1,526 to 140 and moved 13 calls. The main result is unchanged: the candidates are near the references, and the tree has no leaf to split them.
+- Representatives of tyrosinase: 885 are nearest to a reference (median distance 2.93) and 115 to an outgroup (3.77). All 662 `hppd` representatives are nearest to the reference (median 1.80).
+
+### 10.4 Candidates, clusters and identity for the placed steps (decision 5)
+
+`cluster_counts_by_identity.tsv` lists candidates, clusters at 0.5, 0.7, 0.8, 0.9 and 0.95, and the identity used (MEASURED; the two cells that were "not run" were run on 2026-11-25: `hppd` 0.95 gives 3,376 clusters, the SDR union 0.95 gives 1,509). Steps with fewer than about 500 candidates: `aspulvinone_e_synthase` (168 candidates, 38 clusters at 0.95) and `laccase_diphenol` (402; 5 clusters at 0.95).
+
+`laccase_diphenol`: the 402 domains are 67 distinct sequences (`laccase_diphenol_redundancy.tsv`). The largest group has 103 identical sequences. 373 of 402 sequences have another sequence that is 100% identical; for 26 the nearest is 99 to below 100%; for 3 it is 95 to 99%; none is below 95%. Of 80,601 pairs, 12,909 are 100% identical and 13,521 are 99 to below 100%; 40,284 pairs are 50 to 80% (between the 5 groups). So the 5 clusters at 0.95 are 5 groups of near-identical copies, and the tree of v1 was limited by redundancy. A cut-off of 0.5 or 0.7 gives 1 cluster.
+
+### 10.5 Does a different clustering rule change `laccase_diphenol`? (decision 5; run, it was cheap)
+
+Run `laccase_diphenol_v2`: no clustering except the merge of identical sequences (mmseqs identity 1.0, coverage 1.0): 67 representatives; 87 leaves; 3 references, 1 decoy, 10 named, 6 outgroups.
+
+| Run | Representatives | Target size | Target / decoy / unassigned | Genomes |
+|---|---:|---:|---|---:|
+| v1 (0.95, 5 clusters) | 5 | 8 | 402 / 0 / 0 | 215 |
+| v2, epa-ng default (max 7 placements per query) | 67 | 70 | 198 / 0 / 204 | 135 |
+| v2, epa-ng all placements (`--filter-acc-lwr 0.999 --filter-max 10000`) | 67 | 70 | **402 / 0 / 0** | 215 |
+
+- The target does not change: all 402 candidates are `target` in v1 and in the all-placements v2. Changed calls relative to v1: 0.
+- The default v2 run gives 204 `unassigned`. Cause (MEASURED for one query, F128895A_003305-T1): epa-ng keeps 7 placements; their weights sum to 0.468, below the 0.5 threshold; all 7 are on edges inside the target. The kept weight is 0.468 for 104 queries and 0.369 for 100 queries. With near-identical leaves the probability spreads over many equal edges. This is a property of the setting, not of the biology. In `tyrosinase` v1, 9 of 21 unassigned queries also have 7 placements.
+- Answer to the owner: the cut-off did not hide a different result for `laccase_diphenol`. The set is redundant (67 distinct sequences in 402). Using all distinct sequences as leaves changes no call. The rule "use all candidates as leaves for steps with fewer than about 500 candidates" is PROPOSED and tested for this one step only. If used, keep all epa-ng placements.
+
+### 10.6 Decisions for the owner
+
+1. `scytalone_dehydratase`: accept the v2 run (cfoI dropped with hindsight) as the placement, or keep the stop. Label it as selection with hindsight in any table.
+2. `omt`: accept "single-reference placement of omt (MysB as named leaf)" or not. The step still has 2 references. Target and other side have almost the same score distribution (medians 112.5 and 108.6).
+3. `hppd` and `tyrosinase`: the target / other-side split is not stable between a 300-representative tree and a 662- or 1,000-representative tree. More representatives add no information without more labelled leaves. For `hppd`, add labelled leaves or keep "family present". PROPOSED.
+4. epa-ng setting: keep the default (7 placements) or keep all placements for all steps. All placements was tested only for `laccase_diphenol`. A change needs new place runs (the trees stay).
+5. Tyrosinase cap: 1,000 representatives took 7 h 46 min of raxml-ng at 8 threads. A cap of 1,500 would take about 17 h (UNVERIFIED estimate). Not run.
+
+### 10.7 Not done here
+
+- No tree with a cap above 1,000 for `tyrosinase`. No second seed or bootstrap for any v2 tree.
+- The all-placements epa-ng setting was run only for `laccase_diphenol`.
+- No test whether the `hppd` or `tyrosinase` target splits with more labelled leaves.
+- No known-ortholog test of the Phaffia reference as the `omt` target.
+- `atp_grasp_ligase` unchanged (search-hit step, decision 3). v1 folders unchanged.
+- The identity distribution uses mmseqs local-alignment identity; it is not a global identity.

@@ -73,3 +73,21 @@ Timings (MEASURED): prepare 19 s to 48 min 48 s (tyrosinase), place 29 s to 1 h 
 
 ## Files
 `other_steps_summary.tsv` (one row per run, 23 rows), `other_steps_assigned_by_class.tsv`, `other_steps_nearest_summary.tsv`, `other_steps_leaves.tsv`, `other_steps_score_by_call.tsv`, `tyrosinase_laccase_target_overlap.tsv`, `sdr_target_overlap.tsv`, `leaf_summary.tsv`, `decoy_alignability.tsv`, `leaves_selected.tsv`, `candidate_score_distribution.tsv` (copies of `other_inputs/` files, force-added). Per-run folders: `results/step5/<pathway>/<step>/` with `SUMMARY.tsv`, `report/`, `clade_report.json`, `placements_detail.tsv`.
+
+## Follow-up runs v2 (2026-11-24 to 2026-11-25): owner decisions 1, 2, 4, 5
+Label rule as above. Folders: `results/step5/<pathway>/<step>_v2/` (v1 untouched). New rows in `other_steps_summary.tsv` (rows 24 to 29, `*_v2`); the same rows alone are in `other_steps_summary.v2.tsv`. Job list: `other_steps_jobs.v2.txt`. Submit script: `curation_scripts/melanin_myco_step5/submit_v2.sh`. Inputs: `other_inputs/tree_inputs/{scytalone_dehydratase_v2,omt_v2}/` (new); tyrosinase, hppd and laccase_diphenol reuse the v1 input folders.
+
+Changes to shared code (default behaviour unchanged when the new variables are unset): `slurm/step5_prepare_ident.sbatch` and `slurm/step5_multi_ref_clades.sbatch` read `PC_REFS_FA` (reference FASTA override; `refs/` is not changed) ; `step5_prepare_ident.sbatch` reads `PC_MIN_COV` (mmseqs `-c`, default 0.8); both place scripts read `PC_EPA_ARGS` (extra epa-ng arguments). New: `bin/step5_compare_calls.py`, `bin/step5_identity_distribution.py`, `tests/test_step5_v2_tools.py` (7 tests).
+
+| run | prepare job (CPUs, elapsed) | clades job | place job (CPUs, elapsed) |
+|---|---|---|---|
+| scytalone_dehydratase_v2 (id 0.8, cap 300) | 32439796 (2, 00:25:20) | 32439797 COMPLETED | 32439798 (2, 00:02:01) |
+| omt_v2 (id 0.7, cap 300, Phaffia alone) | 32439799 (2, 01:06:32) | 32439800 COMPLETED | 32439801 (2, 00:05:17) |
+| tyrosinase_v2 (id 0.5, cap 1000) | 32439802 (8, 07:53:57) | 32439803 COMPLETED | 32439804 (8, 00:32:04; parallel hmmalign) |
+| hppd_v2 (id 0.7, cap 1000 = all 662 clusters) | 32439805 (4, 02:12:10) | 32439806 COMPLETED | 32439807 (4, 00:13:42) |
+| laccase_diphenol_v2 (id 1.0, cov 1.0) | 32441171 (2, 00:03:15) | 32441172 COMPLETED | 32441173 (2, 00:00:36) |
+| laccase_diphenol_v2_epafilter (place only, epa-ng `--filter-max 10000 --filter-acc-lwr 0.999`) | copy of v2 | | 32442349 (2, 00:00:37) |
+
+CPUs: at most 16 of mine at once (2 + 2 + 8 + 4). raxml-ng times (MEASURED, `ref.raxml.log`, `pars{2}`, two searches run one after the other): tyrosinase v1 310 taxa x 2,241 sites 2,716 s at 4 threads; tyrosinase v2 1,010 taxa x 3,839 sites 27,983 s (7 h 46 min) at 8 threads; hppd v1 305 x 800 822 s at 4 threads; hppd v2 667 x 936 7,191 s at 4 threads; omt v2 311 x 626 3,107 s at 2 threads. The estimate made before the run (taxa squared times sites, UNVERIFIED) was 8 to 13 h for tyrosinase at 1,000 representatives; the run took 7.8 h. A cap of 1,500 would be about 2.2 times longer by the same scaling (about 17 h, UNVERIFIED); it was not run.
+Failed attempts (kept in the job file): epa-ng `--filter-min-lwr` with `--filter-acc-lwr` is refused (32441967); `--filter-acc-lwr 1.0` wrote an edge number that `upo_place assign` could not read (32442254, KeyError). `--filter-acc-lwr 0.999` worked (32442349). The coordinator message asked for `1.0`; it does not work here.
+Tests (MEASURED): `/usr/bin/python3.12 -m pytest analysis/pathway_census/tests -q` (modules samtools, zstd, hmmer, mafft loaded): 931 passed, 1 failed, 1 skipped. The failure is the known `test_step5_place.py::test_extract_end_to_end_with_failures`.

@@ -11,6 +11,7 @@
 #   PC_REF_CLASSES     TSV accession<TAB>class for the references (turns on lineage subclades with the two above)
 #   PC_OUTGROUP_ROLE   role written for outgroup leaves (v1: outgroup; v2: tree_outgroup)
 #   PC_DECOYS_FA       FASTA of the decoys to put in the tree (default: refs/<pathway>/decoys/<step>.faa; see bin/filter_decoys_for_tree.py)
+#   PC_REFS_FA (reference FASTA override), PC_MIN_COV (mmseqs -c, 0.8; 1.0 with PC_MIN_SEQ_ID=1.0 keeps every distinct sequence)
 #   PC_RAXML_THREADS (4), PC_RAXML_WORKERS (unset; raxml-ng 2.0.4 aborts with 'core oversubscription' for 8 threads x 1 worker on this MSA, MEASURED), PC_RAXML_STARTS (pars{5},rand{5}), PC_OUT (output folder)
 #SBATCH -p short
 #SBATCH --constraint="ryzen|cascade|broadwell"
@@ -46,7 +47,7 @@ for t in samtools mmseqs mafft clipkit hmmbuild zstd pixi; do
 done
 PX="pixi exec -c conda-forge -c bioconda -s epa-ng==0.3.8 -s raxml-ng==2.0.4 --"
 W="${SCRATCH:?SCRATCH not set}/step5_${PC_STEP}"; mkdir -p "$W" "$OUT"
-REFS=$PC_ROOT/refs/$PC_PATHWAY/$PC_STEP.faa
+REFS=${PC_REFS_FA:-$PC_ROOT/refs/$PC_PATHWAY/$PC_STEP.faa}   # PC_REFS_FA: a reference FASTA that replaces the one in refs/ (v2 runs; refs/ stays unchanged)
 DECOYS=${PC_DECOYS_FA:-$PC_ROOT/refs/$PC_PATHWAY/decoys/$PC_STEP.faa}
 OG=${PC_OUTGROUP_FA:-}
 CPUS=${SLURM_CPUS_PER_TASK:-8}
@@ -57,7 +58,7 @@ $PY $TOOL extract --candidates $PC_CAND_DIR/candidates.chunk*.PROVISIONAL.tsv.zs
   --out-fail $OUT/extract_failures.tsv --out-json $OUT/extract_summary.json --workers $CPUS
 
 # 2. cluster at 50% identity, 80% coverage (both directions)
-mmseqs easy-cluster $OUT/domains.faa $W/clu $W/tmp --min-seq-id ${PC_MIN_SEQ_ID:-0.5} -c 0.8 --cov-mode 0 --threads $CPUS
+mmseqs easy-cluster $OUT/domains.faa $W/clu $W/tmp --min-seq-id ${PC_MIN_SEQ_ID:-0.5} -c ${PC_MIN_COV:-0.8} --cov-mode 0 --threads $CPUS
 cp $W/clu_cluster.tsv $OUT/clusters.tsv
 mmseqs version > $OUT/mmseqs.version
 zstd -qf -T0 $OUT/clusters.tsv

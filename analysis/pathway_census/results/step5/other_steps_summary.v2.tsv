@@ -1,0 +1,7 @@
+run	step	identity	candidates	domains_extracted	extract_failures	clusters	representatives	leaves	n_refs	n_decoys	n_named	n_outgroups	refs_clade_free	smallest_rule_target	target_size	target_reps	call_target	call_decoy	call_unassigned	call_other	support_min	assigned_proteins	genomes_assigned	genomes_searched	copies_1	copies_2plus	candidates_equal_placements
+scytalone_dehydratase_v2	scytalone_dehydratase		8604	8604	0	207	207	218	4	0	7	0	True	117	167	163	8050	533	21	0	0.869	8050	7408	23376	6783	625	True
+omt_v2	omt		14441	14439	2	420	300	311	1	3	1	6	True	1	134	133	11730	2703	6	0	0.833	11730	10446	23376	9237	1209	False
+tyrosinase_v2	tyrosinase		50452	50447	5	2460	1000	1010	7	0	0	3	True	892	1007	1000	50433	0	14	0	0.625	50433	14216	23376	2548	11668	False
+hppd_v2	hppd		20103	20098	5	662	662	667	1	1	0	3	True	1	662	661	20083	1	14	0	0.674	20083	16830	23376	14185	2645	False
+laccase_diphenol_v2	laccase_diphenol		402	402	0	67	67	87	3	1	10	6	True	70	70	67	198	0	204	0	0.781	198	135	23376	72	63	True
+laccase_diphenol_v2_epafilter	laccase_diphenol		402	402	0	67	67	87	3	1	10	6	True	70	70	67	402	0	0	0	0.999	402	215	23376	31	184	True
