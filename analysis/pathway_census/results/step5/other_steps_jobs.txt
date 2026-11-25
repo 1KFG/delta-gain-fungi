@@ -1,0 +1,14 @@
+ayg1 prepare=32435486 clades=32435487 place=32435488 id=0.7 part=intel 2026-11-24_16:00:42
+laccase_abr2 prepare=32435489 clades=32435490 place=32435491 id=0.7 part=intel 2026-11-24_16:00:43
+ddgs prepare=32435492 clades=32435493 place=32435494 id=0.8 part=intel 2026-11-24_16:00:43
+omt prepare=32435495 clades=32435496 place=32435497 id=0.7 part=intel 2026-11-24_16:00:43
+aspulvinone_e_synthase prepare=32435498 clades=32435499 place=32435500 id=0.95 part=intel 2026-11-24_16:00:43
+mco_abr1 prepare=32435501 clades=32435502 place=32435503 id=0.8 part=intel 2026-11-24_16:00:43
+laccase_diphenol prepare=32435504 clades=32435505 place=32435506 id=0.95 part=intel 2026-11-24_16:00:43
+asp_melanin_tyrosinase prepare=32435507 clades=32435508 place=32435509 id=0.8 part=intel 2026-11-24_16:00:43
+scytalone_dehydratase prepare=32435510 clades=32435511 place=32435512 id=0.8 part=intel 2026-11-24_16:00:43
+tyrosinase prepare=32435513 clades=32435514 place=32435515 id=0.5 part=intel 2026-11-24_16:00:44
+hmga prepare=32435516 clades=32435517 place=32435518 id=0.95 part=intel 2026-11-24_16:00:44
+hppd prepare=32435520 clades=32435521 place=32435522 id=0.7 part=intel 2026-11-24_16:01:10
+sdr_joint prepare=32435712  32435713 32435714 32435715 32435716 id=0.8 part=intel 2026-11-24_16:04:31
+32438154

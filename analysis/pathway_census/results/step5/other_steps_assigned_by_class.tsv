@@ -1,0 +1,115 @@
+run	level	group	n_genomes	n_with_assigned	share
+tyrosinase	class	Sordariomycetes	5981	5950	0.9948
+tyrosinase	class	Eurotiomycetes	3201	2817	0.8800
+tyrosinase	class	Pichiomycetes	2929	2	0.0007
+tyrosinase	class	Dothideomycetes	2724	2713	0.9960
+tyrosinase	class	Agaricomycetes	1844	1450	0.7863
+tyrosinase	class	Tremellomycetes	556	6	0.0108
+tyrosinase	class	Lecanoromycetes	478	458	0.9582
+tyrosinase	class	Leotiomycetes	429	393	0.9161
+tyrosinase	class	Microbotryomycetes	318	1	0.0031
+tyrosinase	class	(other, small groups)	201	64	0.3184
+tyrosinase	class	(no label)	177	30	0.1695
+tyrosinase	class	Pezizomycetes	171	166	0.9708
+tyrosinase	class	Pucciniomycetes	116	1	0.0086
+tyrosinase	class	Mortierellomycetes	100	23	0.2300
+tyrosinase	class	Exobasidiomycetes	91	10	0.1099
+tyrosinase	class	Chytridiomycetes	82	22	0.2683
+tyrosinase	class	Orbiliomycetes	67	67	1.0000
+tyrosinase	class	Glomeromycetes	59	24	0.4068
+tyrosinase	class	Cystobasidiomycetes	29	15	0.5172
+tyrosinase	phylum	Ascomycota	19203	12640	0.6582
+tyrosinase	phylum	Basidiomycota	3242	1487	0.4587
+tyrosinase	phylum	Mucoromycota	292	1	0.0034
+tyrosinase	phylum	Mortierellomycota	100	23	0.2300
+tyrosinase	phylum	Chytridiomycota	83	22	0.2651
+tyrosinase	phylum	Glomeromycota	59	24	0.4068
+tyrosinase	phylum	Basidiobolomycota	18	12	0.6667
+tyrosinase	phylum	Zoopagomycota	11	2	0.1818
+tyrosinase	phylum	(no label)	2	1	0.5000
+laccase_diphenol	class	Tremellomycetes	556	215	0.3867
+laccase_diphenol	phylum	Basidiomycota	3242	215	0.0663
+hmga	class	Sordariomycetes	5981	4	0.0007
+hmga	class	Eurotiomycetes	3201	2271	0.7095
+hmga	class	Dothideomycetes	2724	5	0.0018
+hmga	phylum	Ascomycota	19203	2280	0.1187
+asp_melanin_tyrosinase	class	Eurotiomycetes	3201	42	0.0131
+asp_melanin_tyrosinase	phylum	Ascomycota	19203	42	0.0022
+hppd	class	Sordariomycetes	5981	36	0.0060
+hppd	class	Eurotiomycetes	3201	3167	0.9894
+hppd	class	Pichiomycetes	2929	2	0.0007
+hppd	class	Dothideomycetes	2724	2131	0.7823
+hppd	class	Tremellomycetes	556	4	0.0072
+hppd	class	Leotiomycetes	429	51	0.1189
+hppd	class	Dipodascomycetes	393	107	0.2723
+hppd	class	(other, small groups)	201	2	0.0100
+hppd	class	(no label)	177	3	0.0169
+hppd	class	Pezizomycetes	171	160	0.9357
+hppd	class	Pucciniomycetes	116	1	0.0086
+hppd	class	Lipomycetes	59	21	0.3559
+hppd	phylum	Ascomycota	19203	5680	0.2958
+hppd	phylum	Basidiomycota	3242	5	0.0015
+aspulvinone_e_synthase	class	Eurotiomycetes	3201	49	0.0153
+aspulvinone_e_synthase	phylum	Ascomycota	19203	49	0.0026
+ayg1	class	Sordariomycetes	5981	2744	0.4588
+ayg1	class	Eurotiomycetes	3201	2478	0.7741
+ayg1	class	Dothideomycetes	2724	2691	0.9879
+ayg1	class	Lecanoromycetes	478	258	0.5397
+ayg1	class	Leotiomycetes	429	310	0.7226
+ayg1	class	Dipodascomycetes	393	2	0.0051
+ayg1	class	(other, small groups)	201	30	0.1493
+ayg1	class	(no label)	177	11	0.0621
+ayg1	class	Chytridiomycetes	82	1	0.0122
+ayg1	phylum	Ascomycota	19203	8524	0.4439
+ayg1	phylum	Chytridiomycota	83	1	0.0120
+t4hn_reductase	class	Sordariomycetes	5981	2889	0.4830
+t4hn_reductase	class	Eurotiomycetes	3201	1624	0.5073
+t4hn_reductase	class	Dothideomycetes	2724	2638	0.9684
+t4hn_reductase	class	Lecanoromycetes	478	316	0.6611
+t4hn_reductase	class	Leotiomycetes	429	346	0.8065
+t4hn_reductase	class	(other, small groups)	201	27	0.1343
+t4hn_reductase	class	(no label)	177	12	0.0678
+t4hn_reductase	phylum	Ascomycota	19203	7851	0.4088
+t4hn_reductase	phylum	(no label)	2	1	0.5000
+t3hn_reductase	class	Sordariomycetes	5981	2187	0.3657
+t3hn_reductase	class	Dothideomycetes	2724	3	0.0011
+t3hn_reductase	class	(other, small groups)	201	4	0.0199
+t3hn_reductase	class	(no label)	177	5	0.0282
+t3hn_reductase	phylum	Ascomycota	19203	2198	0.1145
+t3hn_reductase	phylum	(no label)	2	1	0.5000
+laccase_abr2	class	Sordariomycetes	5981	1110	0.1856
+laccase_abr2	class	Eurotiomycetes	3201	2153	0.6726
+laccase_abr2	class	Dothideomycetes	2724	30	0.0110
+laccase_abr2	class	Lecanoromycetes	478	76	0.1590
+laccase_abr2	class	Leotiomycetes	429	30	0.0699
+laccase_abr2	class	(other, small groups)	201	7	0.0348
+laccase_abr2	class	(no label)	177	2	0.0113
+laccase_abr2	class	Pezizomycetes	171	3	0.0175
+laccase_abr2	phylum	Ascomycota	19203	3411	0.1776
+mco_abr1	class	Sordariomycetes	5981	10	0.0017
+mco_abr1	class	Eurotiomycetes	3201	1638	0.5117
+mco_abr1	class	Dothideomycetes	2724	35	0.0128
+mco_abr1	class	Lecanoromycetes	478	207	0.4331
+mco_abr1	class	Leotiomycetes	429	4	0.0093
+mco_abr1	class	(other, small groups)	201	2	0.0100
+mco_abr1	class	(no label)	177	1	0.0056
+mco_abr1	phylum	Ascomycota	19203	1897	0.0988
+ddgs	class	Sordariomycetes	5981	4454	0.7447
+ddgs	class	Eurotiomycetes	3201	372	0.1162
+ddgs	class	Dothideomycetes	2724	2539	0.9321
+ddgs	class	Agaricomycetes	1844	70	0.0380
+ddgs	class	Tremellomycetes	556	131	0.2356
+ddgs	class	Lecanoromycetes	478	416	0.8703
+ddgs	class	Leotiomycetes	429	336	0.7832
+ddgs	class	(other, small groups)	201	42	0.2090
+ddgs	class	(no label)	177	14	0.0791
+ddgs	class	Pezizomycetes	171	135	0.7895
+ddgs	class	Ustilaginomycetes	133	118	0.8872
+ddgs	class	Pucciniomycetes	116	9	0.0776
+ddgs	class	Exobasidiomycetes	91	82	0.9011
+ddgs	class	Malasseziomycetes	82	1	0.0122
+ddgs	class	Orbiliomycetes	67	14	0.2090
+ddgs	class	Cystobasidiomycetes	29	27	0.9310
+ddgs	phylum	Ascomycota	19203	8310	0.4327
+ddgs	phylum	Basidiomycota	3242	447	0.1379
+ddgs	phylum	Basidiobolomycota	18	3	0.1667

@@ -1,0 +1,16 @@
+step	pfam	family_entries_screened	pass_best	pass_union	passing_but_excluded	exclusion_reasons	decoys_pass_best	decoys_pass_union	named_selected	outgroups_selected
+ayg1	PF06500	81	79	79	2	a reference=1; at or above floor=1	4	4	7	6
+scytalone_dehydratase	PF02982	21	21	21	13	a reference=3; at or above floor=4; gene name of a reference=6	0	0	8	0
+t4hn_reductase	PF13561	465	438	444	15	a reference=4; at or above floor=9; gene name of a reference=1; same EC as a reference=1	4	4	10	6
+t3hn_reductase	PF13561	465	420	423	14	a reference=4; at or above floor=2; gene name of a reference=7; same EC as a reference=1	4	4	10	6
+laccase_abr2	PF00394	186	22	87	16	a reference=1; at or above floor=13; gene name of a reference=2	1	5	5	0
+mco_abr1	PF00394	186	40	101	3	a reference=3	2	3	10	6
+laccase_diphenol	PF00394	186	25	136	7	a reference=3; gene name of a reference=4	1	5	10	6
+tyrosinase	PF00264	85	13	14	10	a reference=5; at or above floor=5	0	0	0	3
+asp_melanin_tyrosinase	PF00264	85	7	14	3	a reference=1; at or above floor=2	4	4	3	0
+hmga	PF04209	86	86	86	85	a reference=2; gene name of a reference=75; same EC as a reference=8	0	0	0	1
+hppd	PF00903	195	35	35	32	a reference=1; at or above floor=26; same EC as a reference=5	1	1	0	3
+aspulvinone_e_synthase	PF00501	860	28	47	4	a reference=1; at or above floor=3	3	3	10	5
+ddgs	PF01761	561	550	553	2	a reference=2	6	6	10	6
+omt	PF01596	90	52	52	6	at or above floor=6	3	3	1	6
+atp_grasp_ligase	PF02655	11	0	0	0		0	0	0	0
