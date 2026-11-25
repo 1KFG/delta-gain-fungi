@@ -19,7 +19,7 @@ title: "Owner decisions for the melanin and mycosporine census (2026-11-23 and 2
 | 2026-11-24 | Step 3, then Q8NKC1 | "step 3 first then add Q8NKC1 as omt decoy" | timing job on the 100.6 table; Q8NKC1 added after (new floor would be 120.7) |
 | 2026-11-24 | Full search floor for omt | "accept your reccomendation" | full search run at 100.6; rows between 100.6 and 120.7 kept |
 | 2026-11-24 | Step 5 order | "step 5 with PKS tree ... fix tables makes sense if they are needed" | PKS joint tree; genome prefix fix in our copy only (alias file) |
-| 2026-11-24 | heptaketide_pks and wA | "can report wA as unresolved but need more details on how to rescure this information as it is still a valid gene to include" | wA reported unresolved; options note written; the choice is NOT yet made |
+| 2026-11-24 | heptaketide_pks and wA | "can report wA as unresolved but need more details on how to rescure this information as it is still a valid gene to include"; then "wA - yes per-step decoys" | wA first reported unresolved; then option B of `2026-11-24-wA-heptaketide-options.md`: per-step decoys in the joint tree (only a step's own decoys bound its target). The owner did not answer the question of step definition (by reaction or by pathway role); the YAML definition (by reaction) stays |
 | 2026-11-24 | PKS outgroup | "leave it as no outgroup with note to return to this" | no outgroup; separate investigation later |
 | 2026-11-24 | PKS rerun | "yes do this with identity 0.8 and bootstrap of the tree if we believe we have a good sampling" | rerun at identity 0.8 with bootstrap |
 | 2026-11-24 | scytalone_dehydratase | "drop cfoI leaf and rerun. can you regen the tree?" | leaf A0A2I2F2K6 dropped after seeing the tree; tree regenerated |
@@ -30,7 +30,7 @@ title: "Owner decisions for the melanin and mycosporine census (2026-11-23 and 2
 | 2026-11-24 | tyrosinase and hppd | "yes address this with high rep cap" | rerun with a high representative cap |
 
 ## Open (not decided)
-1. wA and heptaketide_pks: per-step decoys in the joint tree, or the union rule; and step defined by reaction or by pathway role. See `2026-11-24-wA-heptaketide-options.md`.
+1. Step definition for heptaketide_pks: by reaction (YAML today) or by pathway role. Not answered. See `2026-11-24-wA-heptaketide-options.md`.
 2. BFD data fix for the five re-annotated genomes (the BFD owner's call). See `2026-11-24-genome-prefix-mismatch.md`.
 3. Identity rule for clustering (lowest identity giving at least 100 clusters) is a choice of the step-5 agent, not an owner decision.
 4. Merge of PR #22 (Jason).
