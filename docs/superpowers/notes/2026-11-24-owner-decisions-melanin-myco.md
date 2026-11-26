@@ -50,3 +50,10 @@ title: "Owner decisions for the melanin and mycosporine census (2026-11-23 and 2
 11. BFD re-annotation message: written as a note by the owner's choice at Fungi_BFD_runs/docs/NOTE_reannotated_genome_prefixes_2026-11-25.md (the owner is the BFD annotator; not committed there).
 12. Report layout: DHN and L-DOPA melanin in ONE report; mycosporine in a SEPARATE report.
 Still open: PKS outgroup definition (separate investigation, later, with Opus).
+
+## Owner decisions of 2026-11-25 (report stage)
+
+13. Species comparison of DHN and L-DOPA (melanin report): headline rule pair ("any DHN PKS placed" and "complete L-DOPA route") accepted, with the strict yaml-route result shown beside it. The rule pair was chosen after seeing that the strict route is nearly empty; the report says so.
+14. Tyrosinase counts as L-DOPA evidence, and the 250-genome column (L-DOPA without the tyrosinase family) is shown prominently.
+15. hmga: reported as "family present", not a placed step (all 2,313 of 2,313 candidates are target; one archaeal outgroup; the call carries no information).
+16. Wrapper pages (index.qmd and figures symlink) for the melanin and mycosporine reports: to be built after the gain/loss job fills the placeholders.
