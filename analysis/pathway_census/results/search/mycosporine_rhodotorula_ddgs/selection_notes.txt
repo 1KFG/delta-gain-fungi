@@ -1,0 +1,4 @@
+hmm=/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/hmms/mycosporine/ddgs.PROVISIONAL.hmm
+hmm_length=412
+n_selected=491
+prefix_alias_overlap=[]
