@@ -1,0 +1,4 @@
+step_a	step_b	size_a	size_b	shared_leaves
+heptaketide_pks	hexaketide_pks	22	56	0
+heptaketide_pks	thn_synthase	22	240	0
+hexaketide_pks	thn_synthase	56	240	0

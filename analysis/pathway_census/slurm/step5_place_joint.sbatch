@@ -3,7 +3,8 @@
 # Places every cut domain once; then, for each step in PC_STEPS (space separated), assigns with that step's clade file
 # (clade_members.<S>.tsv), keeps the proteins that have a row of S in PC_STEP_CAND_DIR, and runs assign_steps for S.
 # Required: PC_STEP (joint id), PC_STEPS, PC_ROOT, PC_PATHWAY, PC_CAND_DIR (the SAME union folder as part 1),
-#   PC_STEP_CAND_DIR (rows per step), PC_MIN_SUPPORT, PC_SCORES (pks_scores.tsv), PC_GENOMES, PC_OUT. Optional: PC_MIN_LWR (0.5), PC_MAX_PENDANT (1.0).
+#   PC_STEP_CAND_DIR (rows per step), PC_MIN_SUPPORT, PC_SCORES (pks_scores.tsv), PC_GENOMES, PC_OUT. Optional: PC_MIN_LWR (0.5), PC_MAX_PENDANT (1.0),
+#   PC_EPA_ARGS (extra epa-ng arguments; unset = epa-ng defaults, at most 7 placements per query).
 #SBATCH -p intel
 #SBATCH -c 16
 #SBATCH --mem=64G
@@ -39,7 +40,7 @@ hmmalign --outformat afa $OUT/ref.hmm $OUT/domains.faa > $W/aln.afa 2> $OUT/hmma
 $PY $UPO match-cols $W/aln.afa --length $NCOL --out $W/q.fa
 zstd -qf -T0 -c $W/q.fa > $OUT/query_match_cols.fa.zst   # kept so that the rarefaction runs need no new hmmalign
 $PX epa-ng --ref-msa $OUT/ref_set.trim.afa --tree $OUT/ref.raxml.bestTree --query $W/q.fa \
-  --model $OUT/ref.raxml.bestModel -w $W --redo -T $CPUS > $OUT/epa-ng.log 2>&1
+  --model $OUT/ref.raxml.bestModel -w $W --redo -T $CPUS ${PC_EPA_ARGS:-} > $OUT/epa-ng.log 2>&1
 $PX epa-ng --version > $OUT/epa-ng.version 2>&1 || true
 N_DOM=$(grep -c '^>' $OUT/domains.faa)
 gzip -c $W/epa_result.jplace > $OUT/epa_result.jplace.gz
