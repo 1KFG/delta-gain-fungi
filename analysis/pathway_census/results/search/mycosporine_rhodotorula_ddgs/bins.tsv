@@ -1,0 +1,10 @@
+group	n_genomes	no_hit_E10	<50	50-150	150-300	300-463.5	>=463.5	n_ge_max_decoy	median_best_score	max_best_score
+Rhodotorula	215	0	0	215	0	0	0	0	102.2	109.8
+Phaffia	12	0	0	5	0	0	7	7	743.2	776.3
+Cystobasidium	16	0	0	0	0	0	16	16	604.2	608.4
+Cystofilobasidium	8	0	0	8	0	0	0	0	104.55	106.2
+Rhodosporidiobolus	14	0	0	14	0	0	0	0	106.94999999999999	109.1
+Sporobolomyces	22	0	0	22	0	0	0	0	103.5	105.7
+Naganishia	28	0	0	1	0	0	27	27	563.2	569.8
+Hortaea	76	1	0	1	8	4	62	66	610.4	614.7
+Pyricularia	100	0	0	3	0	0	97	97	607.3	614.7
