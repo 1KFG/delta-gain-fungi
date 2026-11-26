@@ -1,0 +1,7 @@
+# chunk=0 tag=PROVISIONAL min_scores=/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/pathway_census/results/step2/carotenoid/min_scores.exploratory25.PROVISIONAL.tsv hmm_dir=/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_realdata/analysis/pathway_census/results/hmms/carotenoid
+locustag	proteins_path	status	n_proteins	n_bad_id_prefix
+FAD1592B	/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Sugiyamaella_casensis/predict_results/Sugiyamaella_casensis.proteins.fa.gz	searched	6864	0
+F7CB232C	/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Blastobotrys_sasensis/predict_results/Blastobotrys_sasensis.proteins.fa.gz	searched	5806	0
+FB9275E9	/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Fusarium_oxysporum_Foc035/predict_results/Fusarium_oxysporum_Foc035.proteins.fa.gz	searched	17618	0
+F317F9F5	/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Arxiozyma_pintolopesii_RIGP/predict_results/Arxiozyma_pintolopesii_RIGP.proteins.fa.gz	searched	5021	0
+F629B7B9	/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/genome_annotation/Saccharomyces_cerevisiae_YJM1417/predict_results/Saccharomyces_cerevisiae_YJM1417.proteins.fa.gz	searched	4391	0

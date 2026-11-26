@@ -1,0 +1,6 @@
+old_prefix	new_prefix	step	status	old_protein	new_protein	old_score	new_score
+F6D07108	FAD1592B	acaa	gained		FAD1592B_006343-T1		13.8
+FE41F6C9	FB9275E9	acaa	gained		FB9275E9_016273-T1		12.6
+FE41F6C9	FB9275E9	cars	gained		FB9275E9_016375-T1		10.0
+FF465DA3	F629B7B9	crtr	lost	FF465DA3_004430-T1		451.3	
+FF465DA3	F629B7B9	crtr	gained		F629B7B9_002392-T1		451.1
