@@ -1,0 +1,3 @@
+step	source	n_reps	n_present	n_absent	n_NA	n_call_genomes_not_in_reps	n_rep_calls_but_NA
+ddgs	placed	1654	667	983	4	8093	0
+omt	placed	1654	638	1012	4	9808	0

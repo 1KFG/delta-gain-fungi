@@ -1,0 +1,10 @@
+step	source
+thn_synthase	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/step5/melanin_dhn/pks_joint_id0.8/assigned.thn_synthase.PROVISIONAL.tsv
+hexaketide_pks	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/step5/melanin_dhn/pks_joint_id0.8/assigned.hexaketide_pks.PROVISIONAL.tsv
+heptaketide_pks	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/step5/melanin_dhn/pks_joint_id0.8/assigned.heptaketide_pks.PROVISIONAL.tsv
+ayg1	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/ayg1/assigned.PROVISIONAL.tsv
+t4hn_reductase	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/t4hn_reductase/assigned.PROVISIONAL.tsv
+t3hn_reductase	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/t3hn_reductase/assigned.PROVISIONAL.tsv
+scytalone_dehydratase	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/scytalone_dehydratase_v2_allplace/assigned.PROVISIONAL.tsv
+laccase_abr2	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/laccase_abr2/assigned.PROVISIONAL.tsv
+mco_abr1	/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/mco_abr1/assigned.PROVISIONAL.tsv
