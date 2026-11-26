@@ -1,0 +1,6 @@
+locustag	SPECIES	CLASS	thn_synthase	hexaketide_pks	heptaketide_pks	ayg1	t4hn_reductase	t3hn_reductase	scytalone_dehydratase	laccase_abr2	mco_abr1	tyrosinase	laccase_diphenol	aspulvinone_e_synthase	asp_melanin_tyrosinase	hppd	hmga	D_any	D_pks	D_route	D_route_ox	D_hit_any	L_any	L_dopa	L_tyr	L_nontyr	L_route	L_hit_any	route_pks_thn	route_pks_hexaketide	route_pks_heptaketide
+FE750E90	Arxiozyma pintolopesii	Saccharomycetes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+F8B45790	Blastobotrys sasensis	Dipodascomycetes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+FE41F6C9	Fusarium oxysporum	Sordariomycetes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	1	0	0	0
+FF465DA3	Saccharomyces cerevisiae	Saccharomycetes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+F6D07108	Sugiyamaella casensis	Dipodascomycetes	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0

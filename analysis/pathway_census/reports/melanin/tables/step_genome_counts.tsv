@@ -1,0 +1,16 @@
+step	role	genomes_placed_call	genomes_hit_row	genomes_searched
+thn_synthase	placed	3124	6535	23376
+hexaketide_pks	placed	600	7819	23376
+heptaketide_pks	placed	2091	2168	23376
+ayg1	placed	8525	8526	23376
+t4hn_reductase	placed	7852	8092	23376
+t3hn_reductase	placed	2199	2203	23376
+scytalone_dehydratase	placed	7408	7511	23376
+laccase_abr2	placed	3411	4923	23376
+mco_abr1	placed	1897	1897	23376
+tyrosinase	placed	14219	14220	23376
+laccase_diphenol	placed	215	215	23376
+aspulvinone_e_synthase	placed	49	127	23376
+asp_melanin_tyrosinase	placed	42	1847	23376
+hppd	family_present	16830	16847	23376
+hmga	family_present	2280	2280	23376

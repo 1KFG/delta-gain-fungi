@@ -1,0 +1,20 @@
+PHYLUM	n_genomes	PHYLUM	thn_synthase	hexaketide_pks	heptaketide_pks	ayg1	t4hn_reductase	t3hn_reductase	scytalone_dehydratase	laccase_abr2	mco_abr1	tyrosinase	laccase_diphenol	aspulvinone_e_synthase	asp_melanin_tyrosinase	hppd	hmga	D_any	D_pks	D_route	L_any	L_route
+Ascomycota	19203	Ascomycota	3123	600	2091	8524	7851	2198	7406	3411	1897	12643	0	49	42	16119	2280	10989	5522	1891	12658	12648
+Basidiomycota	3242	Basidiomycota	0	0	0	0	0	0	1	0	0	1491	215	0	0	24	0	1	0	0	1706	1706
+Mucoromycota	292	Mucoromycota	0	0	0	0	0	0	0	0	0	1	0	0	0	277	0	0	0	0	1	1
+Kickxellomycota	177	Kickxellomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	136	0	0	0	0	0	0
+Microsporidia	133	Microsporidia	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Mortierellomycota	100	Mortierellomycota	0	0	0	0	0	0	0	0	0	23	0	0	0	95	0	0	0	0	23	23
+Chytridiomycota	83	Chytridiomycota	0	0	0	1	0	0	0	0	0	22	0	0	0	77	0	1	0	0	22	22
+Glomeromycota	59	Glomeromycota	0	0	0	0	0	0	0	0	0	24	0	0	0	49	0	0	0	0	24	24
+Neocallimastigomycota	25	Neocallimastigomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Basidiobolomycota	18	Basidiobolomycota	0	0	0	0	0	0	0	0	0	12	0	0	0	16	0	0	0	0	12	12
+Blastocladiomycota	14	Blastocladiomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	13	0	0	0	0	0	0
+Zoopagomycota	11	Zoopagomycota	0	0	0	0	0	0	0	0	0	2	0	0	0	9	0	0	0	0	2	2
+Entomophthoromycota	9	Entomophthoromycota	0	0	0	0	0	0	0	0	0	0	0	0	0	8	0	0	0	0	0	0
+Monoblepharomycota	3	Monoblepharomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
+(no label)	2	(no label)	1	0	0	0	1	1	1	0	0	1	0	0	0	1	0	1	1	1	1	1
+Aphelidiomycota	2	Aphelidiomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	2	0	0	0	0	0	0
+Calcarisporiellomycota	1	Calcarisporiellomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
+Olpidiomycota	1	Olpidiomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Rozellomycota	1	Rozellomycota	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0
