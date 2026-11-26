@@ -57,3 +57,13 @@ Still open: PKS outgroup definition (separate investigation, later, with Opus).
 14. Tyrosinase counts as L-DOPA evidence, and the 250-genome column (L-DOPA without the tyrosinase family) is shown prominently.
 15. hmga: reported as "family present", not a placed step (all 2,313 of 2,313 candidates are target; one archaeal outgroup; the call carries no information).
 16. Wrapper pages (index.qmd and figures symlink) for the melanin and mycosporine reports: to be built after the gain/loss job fills the placeholders.
+
+## Owner decisions of 2026-11-26 (gain/loss and mycosporine questions)
+
+17. Gain/loss modelling rule (at least 5 present genus tips): kept. laccase_diphenol, asp_melanin_tyrosinase and aspulvinone_e_synthase stay unmodelled and are stated as such.
+18. Gain/loss inputs confirmed as they stand: aspulvinone base run (step unmodelled, moot), PKS pks_joint_id0.8 (all-placements changed 0 calls), omt_v2 (default run has 6 of 14,439 unassigned, 0 cap-hit).
+19. DHN null at N = 20,000: NOT run for now. A BUSCO check of the co-loss tip genomes is noted as the first follow-up (later).
+20. omt in Cystobasidium (omt hit in 16 of 16, target 0 of 16): reported as unresolved; no second reference added.
+21. ddgs in Rhodotorula (no call at 463.5 in 215 genomes): run a search without cutoff on those genomes to see how close the scores are (note 2026-11-26-rhodotorula-ddgs-check.md). No census result changes.
+22. atp_grasp_ligase: stays a search-hit step (no unreviewed leaf added).
+23. ddgs "separates nothing" (8,864 of 8,865 target): stays stated as reported.
