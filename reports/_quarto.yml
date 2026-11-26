@@ -34,6 +34,10 @@ website:
         text: "Pathways and corpus"
       - href: pathway_carotenoid/index.qmd
         text: "Carotenoid genes"
+      - href: pathway_melanin/index.qmd
+        text: "Melanin genes"
+      - href: pathway_mycosporine/index.qmd
+        text: "Mycosporine genes"
 
 # Each report page's title would otherwise render twice: once from the .qmd
 # front matter and again as the included REPORT.md's opening H1. See the

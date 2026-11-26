@@ -1,0 +1,10 @@
+---
+title: "DHN melanin and L-DOPA melanin genes in 23,376 BFD fungal genomes"
+subtitle: "DHN and L-DOPA melanin census: search, tree placement, species comparison and gain and loss (PROVISIONAL)"
+date: 2026-11-25
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+{{< include ../../analysis/pathway_census/reports/melanin/REPORT.md >}}

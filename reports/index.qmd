@@ -91,6 +91,21 @@ page lists the negative results and what was not done.
 
 Source: [`analysis/pathway_census/reports/carotenoid/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/pathway_census/reports/carotenoid)
 
+### [DHN and L-DOPA melanin genes in 23,376 BFD fungal genomes](pathway_melanin/index.html)
+
+Search, tree placement and gain and loss for the DHN and L-DOPA melanin steps, with a
+per-species comparison of the two pathways. Several calls are close to search hits and
+`tyrosinase` carries most of the L-DOPA signal. Every output is stamped `PROVISIONAL`.
+
+Source: [`analysis/pathway_census/reports/melanin/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/pathway_census/reports/melanin)
+
+### [Mycosporine genes in 23,376 BFD fungal genomes](pathway_mycosporine/index.html)
+
+Search, tree placement and gain and loss for three mycosporine steps (`ddgs`, `omt`,
+`atp_grasp_ligase`). No step has a verified fungal reference. Every output is stamped `PROVISIONAL`.
+
+Source: [`analysis/pathway_census/reports/mycosporine/`](https://github.com/1KFG/delta-gain-fungi/tree/main/analysis/pathway_census/reports/mycosporine)
+
 ## Not published here
 
 Work that is in the repository but has no page here:
