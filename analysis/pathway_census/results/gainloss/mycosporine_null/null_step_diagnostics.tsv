@@ -1,0 +1,5 @@
+variant	step	n_rep	obs_present	null_present_mean	null_present_lo	null_present_hi	frac_null_present_ge_obs	obs_gains	null_gains_mean	null_gains_lo	null_gains_hi	obs_losses	null_losses_mean	null_losses_lo	null_losses_hi	obs_internal_gains	null_internal_gains_mean	obs_internal_losses	null_internal_losses_mean	frac_degenerate	mean_draws_per_accept
+stationary_match0.1	ddgs	2000	664	648.4345	599	723	0.339	8	10.728	4	21	139	140.6075	99	182	1	1.8365	16	30.631	0	188.748
+stationary_match0.1	omt	2000	635	615.669	573	691	0.2725	3	4.973	1	11	153	156.4835	114	197	0	0.905	16	33.4915	0	1471.514
+stationary	ddgs	2000	664	103.2905	28.975	462.149999999999	0.0015	8	23.1015	13	34	139	16.256	0	91	1	4.2315	16	3.2175	0	1
+stationary	omt	2000	635	47.5885	10	253.05	5e-04	3	11.8575	5	19	153	8.366	0	66.0749999999996	0	2.057	16	1.6515	0	1

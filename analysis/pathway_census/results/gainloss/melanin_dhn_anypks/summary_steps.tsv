@@ -1,0 +1,8 @@
+step	n_tips	present	absent	prevalence	AIC_ER	AIC_ARD	model_lower_AIC	delta_AIC_ARD_minus_ER	rate_01	rate_10	gains	losses	uncertain	gains_tip	gains_internal	losses_tip	losses_internal	parsimony_gains_late	parsimony_gains_early	gains_ER	losses_ER	uncertain_ER	gains_ARD	losses_ARD	uncertain_ARD
+ayg1	1609	577	1032	0.3586	798.2	726.6	ARD	-71.6	0.0695	0.8033	14	66	27	11	3	53	13	36	37	28	41	42	14	66	27
+t4hn_reductase	1609	612	997	0.3804	773.3	682.4	ARD	-91.0	0.0173	0.8667	4	76	27	3	1	57	19	23	30	23	49	15	4	76	27
+t3hn_reductase	1609	141	1468	0.0876	275.0	183.4	ARD	-91.6	0.0085	0.9826	0	18	19	0	0	17	1	4	6	4	19	0	0	18	19
+scytalone_dehydratase	1609	568	1041	0.353	720.2	651.5	ARD	-68.8	0.0698	0.6354	16	44	30	10	6	34	10	20	26	17	34	55	16	44	30
+laccase_abr2	1609	98	1511	0.0609	705.5	630.3	ARD	-75.1	0.1951	6.2728	7	39	458	7	0	34	5	66	63	61	2	19	7	39	458
+mco_abr1	1609	84	1525	0.0522	506.8	313.8	ARD	-193.0	0.0199	4.2655	1	44	116	1	0	40	4	38	33	29	10	23	1	44	116
+any_dhn_pks	1609	402	1207	0.2498	543.6	457.6	ARD	-86.0	0.0293	0.7916	7	41	24	5	2	30	11	19	16	14	28	22	7	41	24

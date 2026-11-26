@@ -1,0 +1,17 @@
+variant	step_a	step_b	type	scope	observed	null_mean	null_lo	null_hi	n_rep	n_ge	p	q
+stationary_match0.1	ddgs	omt	gain_gain	all_edges	1	0.0615	0	1	2000	117	0.0589705147426287	0.117941029485257
+stationary_match0.1	ddgs	omt	gain_gain	internal_edges	0	0.0145	0	0	2000	2000	1	1
+stationary_match0.1	ddgs	omt	loss_loss	all_edges	79	16.684	7	29	2000	0	0.000499750124937531	0.00199900049975012
+stationary_match0.1	ddgs	omt	loss_loss	internal_edges	6	2.185	0	6	2000	61	0.0309845077461269	0.123938030984508
+stationary_match0.1	ddgs	omt	gain_loss	all_edges	0	0.786	0	3	2000	2000	1	1
+stationary_match0.1	ddgs	omt	gain_loss	internal_edges	0	0.076	0	1	2000	2000	1	1
+stationary_match0.1	ddgs	omt	loss_gain	all_edges	0	0.31	0	2	2000	2000	1	1
+stationary_match0.1	ddgs	omt	loss_gain	internal_edges	0	0.0255	0	1	2000	2000	1	1
+stationary	ddgs	omt	gain_gain	all_edges	1	0.1925	0	1	2000	345	0.172913543228386	0.345827086456772
+stationary	ddgs	omt	gain_gain	internal_edges	0	0.017	0	0	2000	2000	1	1
+stationary	ddgs	omt	loss_loss	all_edges	79	0.092	0	1	2000	0	0.000499750124937531	0.00199900049975012
+stationary	ddgs	omt	loss_loss	internal_edges	6	0.01	0	0	2000	0	0.000499750124937531	0.00199900049975012
+stationary	ddgs	omt	gain_loss	all_edges	0	0.1165	0	1	2000	2000	1	1
+stationary	ddgs	omt	gain_loss	internal_edges	0	0.01	0	0	2000	2000	1	1
+stationary	ddgs	omt	loss_gain	all_edges	0	0.1195	0	1	2000	2000	1	1
+stationary	ddgs	omt	loss_gain	internal_edges	0	0.0085	0	0	2000	2000	1	1

@@ -1,0 +1,5 @@
+variant	step	n_rep	obs_present	null_present_mean	null_present_lo	null_present_hi	frac_null_present_ge_obs	obs_gains	null_gains_mean	null_gains_lo	null_gains_hi	obs_losses	null_losses_mean	null_losses_lo	null_losses_hi	obs_internal_gains	null_internal_gains_mean	obs_internal_losses	null_internal_losses_mean	frac_degenerate	mean_draws_per_accept
+stationary_match0.1	tyrosinase	2000	1146	1153.3795	1037	1256	0.5435	14	10.53	3	22	47	78.9545	56.975	101	2	2.3	6	19.976	0	9.5315
+stationary_match0.1	hmga	2000	11	10.8665	10	12	0.597	3	4.014	1	8	1	0.942	0	4	2	1.3485	0	0.1455	0	20.8965
+stationary	tyrosinase	2000	1146	512.468	76	1379	0.1555	14	33.5055	2	57.0249999999999	47	32.0015	0	97	2	7.9905	6	7.7075	0	1
+stationary	hmga	2000	11	16.7525	0	101	0.187	3	2.6655	0	6	1	2.236	0	17	2	0.5915	0	0.5065	0.05	1
