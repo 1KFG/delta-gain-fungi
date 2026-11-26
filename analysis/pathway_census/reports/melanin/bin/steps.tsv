@@ -1,0 +1,16 @@
+step	pathway	root	assigned_file	role
+thn_synthase	melanin_dhn	mel	step5/melanin_dhn/pks_joint_id0.8/assigned.thn_synthase.PROVISIONAL.tsv	placed
+hexaketide_pks	melanin_dhn	mel	step5/melanin_dhn/pks_joint_id0.8/assigned.hexaketide_pks.PROVISIONAL.tsv	placed
+heptaketide_pks	melanin_dhn	mel	step5/melanin_dhn/pks_joint_id0.8/assigned.heptaketide_pks.PROVISIONAL.tsv	placed
+ayg1	melanin_dhn	s5b	step5/melanin_dhn/ayg1/assigned.PROVISIONAL.tsv	placed
+t4hn_reductase	melanin_dhn	s5b	step5/melanin_dhn/t4hn_reductase/assigned.PROVISIONAL.tsv	placed
+t3hn_reductase	melanin_dhn	s5b	step5/melanin_dhn/t3hn_reductase/assigned.PROVISIONAL.tsv	placed
+scytalone_dehydratase	melanin_dhn	s5b	step5/melanin_dhn/scytalone_dehydratase_v2_allplace/assigned.PROVISIONAL.tsv	placed
+laccase_abr2	melanin_dhn	s5b	step5/melanin_dhn/laccase_abr2/assigned.PROVISIONAL.tsv	placed
+mco_abr1	melanin_dhn	s5b	step5/melanin_dhn/mco_abr1/assigned.PROVISIONAL.tsv	placed
+tyrosinase	melanin_ldopa	s5b	step5/melanin_ldopa/tyrosinase_v2_allplace/assigned.PROVISIONAL.tsv	placed
+laccase_diphenol	melanin_ldopa	s5b	step5/melanin_ldopa/laccase_diphenol_v2_allplace/assigned.PROVISIONAL.tsv	placed
+aspulvinone_e_synthase	melanin_ldopa	s5b	step5/melanin_ldopa/aspulvinone_e_synthase/assigned.PROVISIONAL.tsv	placed
+asp_melanin_tyrosinase	melanin_ldopa	s5b	step5/melanin_ldopa/asp_melanin_tyrosinase/assigned.PROVISIONAL.tsv	placed
+hppd	melanin_ldopa	s5b	step5/melanin_ldopa/hppd_v2/assigned.PROVISIONAL.tsv	family_present
+hmga	melanin_ldopa	s5b	step5/melanin_ldopa/hmga/assigned.PROVISIONAL.tsv	family_present

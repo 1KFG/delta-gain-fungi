@@ -1,0 +1,6 @@
+locustag	SPECIES	D_hit_any	L_hit_any	hit_thn_synthase	hit_hexaketide_pks	hit_heptaketide_pks	hit_ayg1	hit_t4hn_reductase	hit_t3hn_reductase	hit_scytalone_dehydratase	hit_laccase_abr2	hit_mco_abr1	hit_tyrosinase	hit_laccase_diphenol	hit_aspulvinone_e_synthase	hit_asp_melanin_tyrosinase	hit_hppd	hit_hmga
+FE750E90	Arxiozyma pintolopesii	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+F8B45790	Blastobotrys sasensis	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0
+FE41F6C9	Fusarium oxysporum	1	1	0	0	0	1	0	0	0	0	0	1	0	0	0	1	0
+FF465DA3	Saccharomyces cerevisiae	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+F6D07108	Sugiyamaella casensis	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0

@@ -1,0 +1,20 @@
+PHYLUM	n_genomes	n_species	genome_DHN_only	genome_LDOPA_only	genome_both	genome_neither	species_DHN_only	species_LDOPA_only	species_both	species_neither
+Ascomycota	19203	5155	316	7442	5206	6239	133	1907	1724	1391
+Basidiomycota	3242	1655	0	1706	0	1536	0	960	0	695
+Kickxellomycota	177	157	0	0	0	177	0	0	0	157
+Mucoromycota	292	118	0	1	0	291	0	1	0	117
+Microsporidia	133	93	0	0	0	133	0	0	0	93
+Chytridiomycota	83	59	0	22	0	61	0	16	0	43
+Mortierellomycota	100	55	0	23	0	77	0	17	0	38
+Glomeromycota	59	31	0	24	0	35	0	18	0	13
+Basidiobolomycota	18	17	0	12	0	6	0	12	0	5
+Zoopagomycota	11	11	0	2	0	9	0	2	0	9
+Neocallimastigomycota	25	9	0	0	0	25	0	0	0	9
+Blastocladiomycota	14	9	0	0	0	14	0	0	0	9
+Entomophthoromycota	9	8	0	0	0	9	0	0	0	8
+Monoblepharomycota	3	3	0	0	0	3	0	0	0	3
+(no label)	2	2	0	0	1	1	0	0	1	1
+Aphelidiomycota	2	2	0	0	0	2	0	0	0	2
+Calcarisporiellomycota	1	1	0	0	0	1	0	0	0	1
+Olpidiomycota	1	1	0	0	0	1	0	0	0	1
+Rozellomycota	1	1	0	0	0	1	0	0	0	1

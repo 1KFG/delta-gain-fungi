@@ -1,0 +1,4 @@
+route	steps_without_t3hn	genomes_with_those_steps	of_which_with_t3hn_reductase
+pks_thn	thn_synthase,t4hn_reductase,scytalone_dehydratase	2593	1892
+pks_hexaketide	hexaketide_pks,ayg1,t4hn_reductase,scytalone_dehydratase	491	0
+pks_heptaketide	heptaketide_pks,ayg1,t4hn_reductase,scytalone_dehydratase	1214	0
