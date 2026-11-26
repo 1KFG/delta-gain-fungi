@@ -1,0 +1,3299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stajich Lab">
+<meta name="dcterms.date" content="2026-11-25">
+
+<title>DHN melanin and L-DOPA melanin genes in 23,376 BFD fungal genomes – DeltaGain Reports</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c6aa55ccafe579b599e1c08b0f990df4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DeltaGain Reports</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../delta_gain/index.html"> 
+<span class="menu-text">Delta-gain funnel</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../y1000_deposition/index.html"> 
+<span class="menu-text">Y1000+ deposition</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../upo_clades/index.html"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../mucor_secretome.html"> 
+<span class="menu-text">Mucor effectors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pigments.html"> 
+<span class="menu-text">Fungal pigments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_corpus.html"> 
+<span class="menu-text">Pathways and corpus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_carotenoid/index.html"> 
+<span class="menu-text">Carotenoid genes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pathway_melanin/index.html" aria-current="page"> 
+<span class="menu-text">Melanin genes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_mycosporine/index.html"> 
+<span class="menu-text">Mycosporine genes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-so-far" id="toc-findings-so-far" class="nav-link active" data-scroll-target="#findings-so-far">1. Findings so far</a></li>
+  <li><a href="#the-pathways-references-and-decoys" id="toc-the-pathways-references-and-decoys" class="nav-link" data-scroll-target="#the-pathways-references-and-decoys">2. The pathways, references and decoys</a>
+  <ul class="collapse">
+  <li><a href="#steps-references-and-cutoffs" id="toc-steps-references-and-cutoffs" class="nav-link" data-scroll-target="#steps-references-and-cutoffs">2.1 Steps, references and cutoffs</a></li>
+  </ul></li>
+  <li><a href="#the-genome-wide-search-step-4" id="toc-the-genome-wide-search-step-4" class="nav-link" data-scroll-target="#the-genome-wide-search-step-4">3. The genome-wide search (step 4)</a></li>
+  <li><a href="#placement-per-step-step-5" id="toc-placement-per-step-step-5" class="nav-link" data-scroll-target="#placement-per-step-step-5">4. Placement per step (step 5)</a>
+  <ul class="collapse">
+  <li><a href="#calls-per-step" id="toc-calls-per-step" class="nav-link" data-scroll-target="#calls-per-step">4.1 Calls per step</a></li>
+  <li><a href="#the-three-pks-steps-on-one-joint-tree" id="toc-the-three-pks-steps-on-one-joint-tree" class="nav-link" data-scroll-target="#the-three-pks-steps-on-one-joint-tree">4.2 The three PKS steps on one joint tree</a></li>
+  <li><a href="#overlaps-between-steps" id="toc-overlaps-between-steps" class="nav-link" data-scroll-target="#overlaps-between-steps">4.3 Overlaps between steps</a></li>
+  </ul></li>
+  <li><a href="#step-presence-by-clade" id="toc-step-presence-by-clade" class="nav-link" data-scroll-target="#step-presence-by-clade">5. Step presence by clade</a></li>
+  <li><a href="#dhn-melanin-and-l-dopa-melanin-per-species" id="toc-dhn-melanin-and-l-dopa-melanin-per-species" class="nav-link" data-scroll-target="#dhn-melanin-and-l-dopa-melanin-per-species">6. DHN melanin and L-DOPA melanin per species</a>
+  <ul class="collapse">
+  <li><a href="#the-unit-species-from-the-bfd-taxonomy" id="toc-the-unit-species-from-the-bfd-taxonomy" class="nav-link" data-scroll-target="#the-unit-species-from-the-bfd-taxonomy">6.1 The unit: species from the BFD taxonomy</a></li>
+  <li><a href="#the-presence-rule-per-genome" id="toc-the-presence-rule-per-genome" class="nav-link" data-scroll-target="#the-presence-rule-per-genome">6.2 The presence rule per genome</a></li>
+  <li><a href="#four-classes-species-and-genomes" id="toc-four-classes-species-and-genomes" class="nav-link" data-scroll-target="#four-classes-species-and-genomes">6.3 Four classes: species and genomes</a></li>
+  <li><a href="#the-five-re-annotated-genomes" id="toc-the-five-re-annotated-genomes" class="nav-link" data-scroll-target="#the-five-re-annotated-genomes">6.4 The five re-annotated genomes</a></li>
+  <li><a href="#what-this-comparison-does-not-show" id="toc-what-this-comparison-does-not-show" class="nav-link" data-scroll-target="#what-this-comparison-does-not-show">6.5 What this comparison does not show</a></li>
+  </ul></li>
+  <li><a href="#gain-and-loss" id="toc-gain-and-loss" class="nav-link" data-scroll-target="#gain-and-loss">7. Gain and loss</a>
+  <ul class="collapse">
+  <li><a href="#dhn-melanin" id="toc-dhn-melanin" class="nav-link" data-scroll-target="#dhn-melanin">DHN melanin</a></li>
+  <li><a href="#l-dopa-melanin" id="toc-l-dopa-melanin" class="nav-link" data-scroll-target="#l-dopa-melanin">L-DOPA melanin</a></li>
+  <li><a href="#negative-results-and-not-done" id="toc-negative-results-and-not-done" class="nav-link" data-scroll-target="#negative-results-and-not-done">Negative results and not done</a></li>
+  </ul></li>
+  <li><a href="#owner-decisions" id="toc-owner-decisions" class="nav-link" data-scroll-target="#owner-decisions">8. Owner decisions</a></li>
+  <li><a href="#negative-and-unresolved-results" id="toc-negative-and-unresolved-results" class="nav-link" data-scroll-target="#negative-and-unresolved-results">9. Negative and unresolved results</a></li>
+  <li><a href="#what-would-change-this-and-what-was-not-done" id="toc-what-would-change-this-and-what-was-not-done" class="nav-link" data-scroll-target="#what-would-change-this-and-what-was-not-done">10. What would change this, and what was not done</a></li>
+  <li><a href="#methods-tools-versions-and-files" id="toc-methods-tools-versions-and-files" class="nav-link" data-scroll-target="#methods-tools-versions-and-files">11. Methods, tools, versions and files</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DHN melanin and L-DOPA melanin genes in 23,376 BFD fungal genomes</h1>
+<p class="subtitle lead">DHN and L-DOPA melanin census: search, tree placement, species comparison and gain and loss (PROVISIONAL)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stajich Lab </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 25, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 26, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What this is, and where it stops being reliable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>This is a working census of candidate genes, not a map of melanin production.</strong> Nothing here was tested at the bench. No call shows that a protein has the function of its step, and no absence call shows that a genome lacks the step. Both pathway files have <code>verified: false</code>, so every result is PROVISIONAL.</li>
+<li>A <code>target</code> call means that a protein sits in a tree region bounded by the labelled leaves put in that step’s tree (references, decoys, named members, outgroups). The call depends on which leaves were chosen. It is not an ortholog call. For <code>ayg1</code>, <code>mco_abr1</code>, <code>hmga</code>, <code>laccase_diphenol</code>, <code>tyrosinase</code> and <code>hppd</code> the target holds almost every candidate, so the call carries little or no information beyond “the HMM hit”.</li>
+<li>The tyrosinase and hppd trees have only 3 and 4 labelled leaves outside the target. “Tyrosinase placed” and “hppd placed” read as “family present”.</li>
+<li>The PKS steps share one joint tree at identity 0.8. Its sampling is labelled <strong>not yet adequate</strong> (criterion C4 failed for 200 of 8,842 domains, section 4.2). Bootstrap support is from NNI-only searches, which are less optimised than standard searches. The effect on each support value is unverified. There is no outgroup in the PKS tree.</li>
+<li>The tree for <code>scytalone_dehydratase</code> (v2) drops one leaf after the first tree was seen (selection with hindsight). The <code>omt</code> placement belongs to the mycosporine report and is not covered here.</li>
+<li>The per-species comparison (section 6) uses placed-step calls only. Its presence rules are PROPOSED. A different reasonable rule moves the counts by thousands of species (section 6.3). The comparison reports counts only.</li>
+<li>Gain and loss (section 7) cover the placed steps only. Co-loss of <code>t4hn_reductase</code> with four other DHN steps exceeds the matched null, with q floor 0.036 at N = 2,000. Model choice (ARD against ER) changes gain counts strongly.</li>
+<li>Labels: <strong>MEASURED</strong> is read from a file named in the text. <strong>PROPOSED</strong> is a choice or a rule. <strong>UNVERIFIED</strong> is not checked.</li>
+</ul>
+</div>
+</div>
+<section id="findings-so-far" class="level2">
+<h2 class="anchored" data-anchor-id="findings-so-far">1. Findings so far</h2>
+<p>All numbers are MEASURED unless marked. Denominators: 23,376 searched genomes and 7,387 species with at least one searched genome (section 6.1).</p>
+<ol type="1">
+<li><strong>The search covers every genome with proteins.</strong> 18 HMMs (15 are melanin steps) ran on 244,451,875 proteins in 23,376 genomes with no missing or duplicate genome. Of the 15 melanin steps, 12 are placed on a tree, 3 are PKS steps placed on one joint tree, and none is left as a search-hit step (section 3).</li>
+<li><strong>Step presence differs by clade.</strong> Placed <code>tyrosinase</code> calls are in 14,219 of 23,376 genomes (60.8 %), <code>thn_synthase</code> in 3,124 (13.4 %), <code>heptaketide_pks</code> in 2,091 (8.9 %), <code>hexaketide_pks</code> in 600 (2.6 %). Placed PKS calls are almost all in Ascomycota; placed tyrosinase calls are in Ascomycota (12,643 of 19,203) and Basidiomycota (1,491 of 3,242) (section 5).</li>
+<li><strong>The headline per-species comparison.</strong> Under the PROPOSED headline rules (<code>D_pks</code>, <code>L_route</code>), of 7,387 species: DHN only 133, L-DOPA only 2,933, both 1,725, neither 2,596. At genome level (23,376): 316, 9,232, 5,207, 8,621 (section 6).</li>
+<li><strong>The result depends on the rule.</strong> The strict yaml-route rule gives DHN only 2, L-DOPA only 3,969, both 689, neither 2,727 species. The wide rule (any placed step) gives 162, 1,714, 2,949, 2,562. The strict rule is small because no genome has all placed steps of the hexaketide or heptaketide route: 1,214 genomes have <code>heptaketide_pks</code>, <code>ayg1</code>, <code>t4hn_reductase</code> and <code>scytalone_dehydratase</code> placed and none of them has a placed <code>t3hn_reductase</code> (section 6.3).</li>
+<li><strong>The L-DOPA side is dominated by the tyrosinase family.</strong> <code>L_route</code> is positive in 14,439 genomes, of which 14,219 have placed <code>tyrosinase</code>. Without the tyrosinase family only 250 genomes are positive (<code>laccase_diphenol</code> 215 genomes, and 35 more genomes with both Asp-melanin steps; section 6.3).</li>
+<li><strong>The heptaketide PKS step has no target under the union decoy rule.</strong> Alb1, AlbA and wA cannot be separated in the tree (separated in 2 of 100 NNI bootstrap trees and 0 of 2 standard trees). The headline uses the per-step rule (the Alb1/AlbA/wA clade, target of 22 leaves, 2,123 of 2,200 candidate proteins in 2,091 genomes). The wA placement is unresolved (section 4.2).</li>
+</ol>
+</section>
+<section id="the-pathways-references-and-decoys" class="level2">
+<h2 class="anchored" data-anchor-id="the-pathways-references-and-decoys">2. The pathways, references and decoys</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sources
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>pathways/melanin_dhn.yaml</code> (9 steps, 22 references, 40 decoy records) and <code>pathways/melanin_ldopa.yaml</code> (6 steps, 15 references, 33 decoy records); counts from <code>docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md</code>, section 2 and section 9. Decoys of five steps were fetched from UniProt on 2026-11-23 (28 decoys; owner decision of the same day).</p>
+</div>
+</div>
+<p><strong>DHN melanin.</strong> The yaml has three PKS routes to 1,8-dihydroxynaphthalene and a polymerisation group. Route (a) <code>pks_thn</code>: <code>thn_synthase</code>, <code>t4hn_reductase</code>, <code>scytalone_dehydratase</code>, <code>t3hn_reductase</code>, <code>scytalone_dehydratase</code>. Route (b) <code>pks_hexaketide</code>: <code>hexaketide_pks</code>, <code>ayg1</code>, then the same four enzyme steps. Route (c) <code>pks_heptaketide</code>: <code>heptaketide_pks</code>, <code>ayg1</code>, then the same. The three PKS steps are alternatives, never consecutive. <code>laccase_abr2</code> and <code>mco_abr1</code> form the polymerisation group; the yaml says the order is not settled and the evidence is a colour phenotype only. The polymer is not a compound in the tables.</p>
+<p><strong>L-DOPA melanin.</strong> The yaml has four routes. <code>tyrosinase_dopa</code>: <code>tyrosinase</code>. <code>laccase_exogenous</code>: <code>laccase_diphenol</code>; its substrate comes from outside the fungus, so gene presence alone shows nothing about a pigment. <code>pyomelanin</code>: <code>hppd</code>. <code>tyrosine_degradation</code>: <code>hppd</code>, <code>hmga</code>; the yaml declares it “so that hmgA counts against pyomelanin”. <code>asp_melanin</code>: <code>aspulvinone_e_synthase</code>, <code>asp_melanin_tyrosinase</code>. Owner decision 6: <code>hppd</code> is reported as “family present”, not as a placed step. This report treats <code>hmga</code> the same way, because its placement carries no information (decision of 2026-11-24, “keep as is”).</p>
+<p><strong>Steps defined by reaction.</strong> The PKS steps are defined by reaction (<code>thn_synthase</code>, <code>hexaketide_pks</code>, <code>heptaketide_pks</code>; owner decision 9), plus an “any DHN PKS” column (<code>D_pks</code>, section 6). The owner did not answer whether to define them by pathway role instead; the yaml definition stays (open, section 8).</p>
+<section id="steps-references-and-cutoffs" class="level3">
+<h3 class="anchored" data-anchor-id="steps-references-and-cutoffs">2.1 Steps, references and cutoffs</h3>
+<p><code>min_score</code> is the step cutoff. The rule is the lowest leave-one-out score of the references, or the highest decoy score for a one-reference step (“decoy floor”). Hit rows are rows at or above <code>min_score</code> in the full search (all 23,376 genomes; <code>summary.txt</code> of <code>results/search/melanin_myco_full</code>). The genome column counts genome prefixes of the hit rows and includes the 3 unmapped prefixes of the re-annotated genomes (section 3).</p>
+<!-- BEGIN steps -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Pathway</th>
+<th>Route (yaml)</th>
+<th style="text-align: right;">Refs</th>
+<th style="text-align: right;"><code>min_score</code></th>
+<th>Basis</th>
+<th style="text-align: right;">Hit rows</th>
+<th style="text-align: right;">Genomes with a hit row</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>thn_synthase</code></td>
+<td>DHN</td>
+<td>pks_thn</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1908.6</td>
+<td>decoy floor</td>
+<td style="text-align: right;">7,286</td>
+<td style="text-align: right;">6,535</td>
+</tr>
+<tr class="even">
+<td><code>hexaketide_pks</code></td>
+<td>DHN</td>
+<td>pks_hexaketide</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1839.0</td>
+<td>decoy floor</td>
+<td style="text-align: right;">8,604</td>
+<td style="text-align: right;">7,819</td>
+</tr>
+<tr class="odd">
+<td><code>heptaketide_pks</code></td>
+<td>DHN</td>
+<td>pks_heptaketide</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3656.7</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">2,200</td>
+<td style="text-align: right;">2,168</td>
+</tr>
+<tr class="even">
+<td><code>ayg1</code></td>
+<td>DHN</td>
+<td>(b), (c)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">374.2</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">11,836</td>
+<td style="text-align: right;">8,526</td>
+</tr>
+<tr class="odd">
+<td><code>t4hn_reductase</code></td>
+<td>DHN</td>
+<td>(a), (b), (c)</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">356.0</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">10,010</td>
+<td style="text-align: right;">8,092</td>
+</tr>
+<tr class="even">
+<td><code>t3hn_reductase</code></td>
+<td>DHN</td>
+<td>(a), (b), (c)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">550.4</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">2,240</td>
+<td style="text-align: right;">2,203</td>
+</tr>
+<tr class="odd">
+<td><code>scytalone_dehydratase</code></td>
+<td>DHN</td>
+<td>(a), (b), (c), twice</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">240.5</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">8,604</td>
+<td style="text-align: right;">7,511</td>
+</tr>
+<tr class="even">
+<td><code>laccase_abr2</code></td>
+<td>DHN</td>
+<td>polymerisation</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">464.3</td>
+<td>decoy floor</td>
+<td style="text-align: right;">9,631</td>
+<td style="text-align: right;">4,923</td>
+</tr>
+<tr class="odd">
+<td><code>mco_abr1</code></td>
+<td>DHN</td>
+<td>polymerisation</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">638.2</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">1,918</td>
+<td style="text-align: right;">1,897</td>
+</tr>
+<tr class="even">
+<td><code>tyrosinase</code></td>
+<td>L-DOPA</td>
+<td>tyrosinase_dopa</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">63.6</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">50,452</td>
+<td style="text-align: right;">14,220</td>
+</tr>
+<tr class="odd">
+<td><code>laccase_diphenol</code></td>
+<td>L-DOPA</td>
+<td>laccase_exogenous</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1127.7</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">215</td>
+</tr>
+<tr class="even">
+<td><code>aspulvinone_e_synthase</code></td>
+<td>L-DOPA</td>
+<td>asp_melanin</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1205.5</td>
+<td>decoy floor</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">127</td>
+</tr>
+<tr class="odd">
+<td><code>asp_melanin_tyrosinase</code></td>
+<td>L-DOPA</td>
+<td>asp_melanin</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">320.5</td>
+<td>decoy floor</td>
+<td style="text-align: right;">2,471</td>
+<td style="text-align: right;">1,847</td>
+</tr>
+<tr class="even">
+<td><code>hppd</code></td>
+<td>L-DOPA</td>
+<td>pyomelanin (family present)</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">164.3</td>
+<td>decoy floor</td>
+<td style="text-align: right;">20,103</td>
+<td style="text-align: right;">16,847</td>
+</tr>
+<tr class="odd">
+<td><code>hmga</code></td>
+<td>L-DOPA</td>
+<td>tyrosine_degradation (family present)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">983.2</td>
+<td>leave-one-out</td>
+<td style="text-align: right;">2,313</td>
+<td style="text-align: right;">2,280</td>
+</tr>
+</tbody>
+</table>
+<!-- END steps -->
+<p>Table 1. Steps of the two pathways. MEASURED (<code>min_scores.combined.omt100.6.PROVISIONAL.tsv</code>, the yaml files, <code>summary.txt</code>). The <code>omt</code> override of 100.6 belongs to mycosporine and is not in this table.</p>
+<p>Reading notes on the cutoffs (MEASURED, step 2 note, section 3):</p>
+<ul>
+<li><code>thn_synthase</code> and <code>hexaketide_pks</code> have the decoy wA (Q03149) as floor (1,908.6 and 1,839.0). Two PKS references of other steps score above these floors.</li>
+<li><code>heptaketide_pks</code>: wA scores 3,904.0, above the lowest leave-one-out score of its two references (3,656.7). <strong>No cutoff separates wA from the heptaketide references.</strong> The decoy files never held wA for <code>heptaketide_pks</code> (correction of 2026-11-25 in the PKS note); wA is a decoy of <code>thn_synthase</code> and <code>hexaketide_pks</code>.</li>
+<li><code>t4hn_reductase</code>: the margin to the best decoy is 13.1 bits, and a <code>t3hn_reductase</code> reference (A7DWM6, 357.1) scores above the <code>t4hn_reductase</code> cutoff. The two SDR steps are paralogues; 583 proteins hit both HMMs (section 4.3).</li>
+<li><code>tyrosinase</code>: the cutoff 63.6 is set by one reference (Q00234, melO). The next lowest leave-one-out score is 239.8. 3,475 of 50,452 rows (6.9 %) score below 127.2 (2 x the cutoff).</li>
+<li><code>hppd</code>, <code>aspulvinone_e_synthase</code> and <code>asp_melanin_tyrosinase</code> have floors set by one decoy each (HmaS O52791, atrA Q0CT94, ivoB Q5BGU9). The <code>aspulvinone_e_synthase</code> floor is 54 % of the reference score and does not separate atromentin synthetases from the step.</li>
+<li><code>scytalone_dehydratase</code> and <code>hmga</code>: the decoys score nothing on the HMM, so no check of separation exists at the HMM level.</li>
+</ul>
+</section>
+</section>
+<section id="the-genome-wide-search-step-4" class="level2">
+<h2 class="anchored" data-anchor-id="the-genome-wide-search-step-4">3. The genome-wide search (step 4)</h2>
+<ul>
+<li>18 HMMs (3 pathways), one combined cutoff table, 6 chunks of 4,000 genomes (the last has 3,376). The union of the searched lists is 23,376 genomes, 0 duplicates, 0 missing and 0 extra against <code>has_proteins</code> in <code>genomes.tsv.zst</code>. 244,451,875 proteins were searched (MEASURED, <code>summary.txt</code>).</li>
+<li>Rows: DHN 62,329 rows in 53,024 proteins; L-DOPA 75,909 rows in 75,909 proteins. Genomes with at least one hit row: DHN 11,254, L-DOPA 19,073 (prefix counts; MEASURED).</li>
+<li><strong>The 5 re-annotated genomes.</strong> 39,700 proteins in 5 genomes have an id prefix that is not the locus tag of the genome table (F8B45790, FE750E90, FE41F6C9, FF465DA3, F6D07108; new prefixes F7CB232C, F317F9F5, FB9275E9, F629B7B9, FAD1592B). These genomes were re-annotated from new assembly versions and got new locus tags. The search covered all their proteins. Our copy maps the new prefixes to the old table rows with <code>analysis/pathway_census/prefix_aliases.tsv</code>; 13 of 13 unmapped hit rows map (11 to FE41F6C9, 1 to F8B45790, 1 to F6D07108). BUSCO and N50 in those rows describe the OLD assembly, and for FF465DA3 the new assembly has another accession. The BFD owner decides the real fix; this report does not change BFD files. Details: <code>docs/superpowers/notes/2026-11-24-genome-prefix-mismatch.md</code>.</li>
+<li>Rows lost in placement (MEASURED, step 5 note, section 6): 11 melanin hit rows were not placed because the protein file for the new prefix is missing or the coordinates no longer match (<code>ayg1</code> 1, <code>hppd</code> 5, <code>tyrosinase</code> 5). The 5 genomes have no placed call for any step (Table 8, section 6.4).</li>
+<li>A pathway is not “present” because of a hit. Many step HMMs are broad families: 84 % of genomes have a hit row for some step of the three pathways (19,645 of 23,376; including mycosporine steps).</li>
+</ul>
+</section>
+<section id="placement-per-step-step-5" class="level2">
+<h2 class="anchored" data-anchor-id="placement-per-step-step-5">4. Placement per step (step 5)</h2>
+<section id="calls-per-step" class="level3">
+<h3 class="anchored" data-anchor-id="calls-per-step">4.1 Calls per step</h3>
+<p>Each step has one tree. The 12 non-PKS steps use <code>epa-ng</code>, with all placements kept for the steps rerun on 2026-11-25 (owner decision 7). Run used per step (owner decisions): <code>_allplace</code> where it exists, <code>v2</code> for <code>scytalone_dehydratase</code>, <code>tyrosinase</code> and <code>hppd</code>. <code>hppd_v2</code> has no all-placements run; <code>hppd_allplace</code> belongs to the first (300-representative) tree and is not used. Other-side calls are decoy-side or outgroup-side placements. “Unassigned” is a clade weight below 0.5. Genomes with a placed call are genomes with at least one protein labelled <code>assigned</code>.</p>
+<!-- BEGIN placement -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Run used</th>
+<th style="text-align: right;">Candidate proteins</th>
+<th style="text-align: right;">Target</th>
+<th style="text-align: right;">Other side</th>
+<th style="text-align: right;">Unassigned</th>
+<th style="text-align: right;">Genomes with a placed call</th>
+<th style="text-align: right;">Genomes searched</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>thn_synthase</code></td>
+<td>PKS joint tree, identity 0.8, per-step decoys</td>
+<td style="text-align: right;">7,286</td>
+<td style="text-align: right;">3,163</td>
+<td style="text-align: right;">4,005</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">3,124</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>hexaketide_pks</code></td>
+<td>PKS joint tree, identity 0.8, per-step decoys</td>
+<td style="text-align: right;">8,604</td>
+<td style="text-align: right;">609</td>
+<td style="text-align: right;">7,838</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">600</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>heptaketide_pks</code></td>
+<td>PKS joint tree, identity 0.8, per-step decoys</td>
+<td style="text-align: right;">2,200</td>
+<td style="text-align: right;">2,123</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">2,091</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>ayg1</code></td>
+<td><code>ayg1</code></td>
+<td style="text-align: right;">11,836</td>
+<td style="text-align: right;">11,835</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8,525</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>t4hn_reductase</code></td>
+<td><code>t4hn_reductase</code></td>
+<td style="text-align: right;">10,010</td>
+<td style="text-align: right;">8,457</td>
+<td style="text-align: right;">666</td>
+<td style="text-align: right;">887</td>
+<td style="text-align: right;">7,852</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>t3hn_reductase</code></td>
+<td><code>t3hn_reductase</code></td>
+<td style="text-align: right;">2,240</td>
+<td style="text-align: right;">2,236</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2,199</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>scytalone_dehydratase</code></td>
+<td><code>scytalone_dehydratase_v2_allplace</code></td>
+<td style="text-align: right;">8,604</td>
+<td style="text-align: right;">8,050</td>
+<td style="text-align: right;">533</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">7,408</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>laccase_abr2</code></td>
+<td><code>laccase_abr2</code></td>
+<td style="text-align: right;">9,631</td>
+<td style="text-align: right;">3,809</td>
+<td style="text-align: right;">5,822</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3,411</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>mco_abr1</code></td>
+<td><code>mco_abr1</code></td>
+<td style="text-align: right;">1,918</td>
+<td style="text-align: right;">1,918</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,897</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>tyrosinase</code></td>
+<td><code>tyrosinase_v2_allplace</code></td>
+<td style="text-align: right;">50,452</td>
+<td style="text-align: right;">50,447</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14,219</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>laccase_diphenol</code></td>
+<td><code>laccase_diphenol_v2_allplace</code></td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>aspulvinone_e_synthase</code></td>
+<td><code>aspulvinone_e_synthase</code></td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>asp_melanin_tyrosinase</code></td>
+<td><code>asp_melanin_tyrosinase</code></td>
+<td style="text-align: right;">2,471</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">2,429</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="even">
+<td><code>hppd</code></td>
+<td><code>hppd_v2</code></td>
+<td style="text-align: right;">20,103</td>
+<td style="text-align: right;">20,083</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">16,830</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td><code>hmga</code></td>
+<td><code>hmga</code></td>
+<td style="text-align: right;">2,313</td>
+<td style="text-align: right;">2,313</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,280</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+</tbody>
+</table>
+<!-- END placement -->
+<p>Table 2. Calls per step. MEASURED: PKS rows from <code>pks_joint_id0.8/joint_report/calls_per_step.tsv</code>; other rows from <code>other_steps_summary.tsv</code>, <code>.v2.tsv</code> and <code>.allplace.tsv</code>. The <code>aspulvinone_e_synthase</code> row is the main run (identity 0.95, 38 representatives); the <code>_id50_allplace</code> run is a diagnostic with 2 representatives and is not used. The candidate column is rows at the cutoff; 5 <code>tyrosinase</code> and 5 <code>hppd</code> rows were not placed (section 3).</p>
+<p>Reading traps for Table 2:</p>
+<ul>
+<li><strong>A large target is not a result.</strong> <code>tyrosinase</code>: target 1,007 of 1,010 leaves (3 vertebrate outgroups outside); 50,447 of the 50,452 candidate rows are target (5 rows were not placed). <code>hppd_v2</code>: target 662 of 667 leaves. <code>ayg1</code> 11,835 of 11,835, <code>mco_abr1</code> 1,918 of 1,918, <code>hmga</code> 2,313 of 2,313 (one archaeal outgroup). In these steps the target says “near the references in a tree with few neighbours”.</li>
+<li><strong>The <code>hppd</code> split depends on the tree.</strong> With 300 representatives 5,850 candidates were target and 14,216 were on the decoy side. With all 662 clusters 14,212 of those 14,216 move into the target (MEASURED, step 5 note, 10.3). The v1 split was a property of the 300-representative tree.</li>
+<li><strong><code>tyrosinase</code> v1 and v2 differ by 13 of 50,447 calls.</strong> The 1,000 representatives cover 48.3 % of the 50,447 domains by cluster. The all-placements run puts every one of the 14 earlier-unassigned queries into the target.</li>
+<li><strong><code>t3hn_reductase</code>: the target has 5 leaves</strong> (3 references, 2 representatives), yet holds 2,236 of 2,240 candidates. Of its 250 representatives, 52 are nearest to a reference and 196 to a named member.</li>
+<li><strong><code>laccase_diphenol</code>: the default epa-ng setting gave 204 of 402 <code>unassigned</code>.</strong> All placements give 402 target. The <code>v2</code> row of <code>other_steps_summary.tsv</code> (198 target) is a record of the artefact. The all-placements row is used. The 402 proteins are 67 distinct sequences, and all lie in <em>Cryptococcus</em> (215 genomes).</li>
+<li><strong><code>aspulvinone_e_synthase</code> and <code>asp_melanin_tyrosinase</code>.</strong> 83 of 168 and 42 of 2,471 candidates are target. The <code>asp_melanin_tyrosinase</code> floor is the score of the decoy ivoB, so most candidates (2,429) are on the decoy side; the 42 target proteins score 466.3 to 878.6. All target genomes of both steps are in Eurotiomycetes (49 and 42 genomes; step 5 note, section 3).</li>
+<li><strong><code>laccase_abr2</code></strong> is rooted on one aligned decoy (P17489): 3,809 target, 5,822 decoy side.</li>
+<li><strong><code>scytalone_dehydratase</code> v2</strong>: the first run (4 references, 8 named members) stopped, because the references did not form a clade free of a named member. The owner chose to drop that leaf (A0A2I2F2K6, cfoI) and rerun. The v2 target is bounded by 7 named members, with no decoy and no outgroup. <strong>This is selection with hindsight.</strong> It is UNVERIFIED whether another leaf choice would also separate the references.</li>
+<li><strong><code>hmga</code> and <code>hppd</code></strong> are family present. The only alignable non-target leaf for <code>hmga</code> is one archaeal protein of unknown function; the placement carries no information.</li>
+</ul>
+</section>
+<section id="the-three-pks-steps-on-one-joint-tree" class="level3">
+<h3 class="anchored" data-anchor-id="the-three-pks-steps-on-one-joint-tree">4.2 The three PKS steps on one joint tree</h3>
+<ul>
+<li><strong>Tree and sampling.</strong> 559 leaves (identity 0.8: 532 cluster representatives, none drawn), 4,118 alignment columns, LG+G4, 2 raxml-ng starts, no outgroup (LovB, EryA1, yeast FAS1 and FAS2 failed the alignability rule). 9,374 candidate proteins: 994 hit one of the three PKS HMMs, 8,044 two, 336 all three (MEASURED).</li>
+<li><strong>Sampling label: not yet adequate.</strong> The criterion was written before the comparison (<code>SAMPLING_CRITERION.txt</code>). C1 (under 2 % of protein-step pairs change target status) passed with 0 of 15,890. C2 and C3 passed. <strong>C4 failed</strong>: 200 of 8,842 non-representative domains (2.3 %) lie outside identity 0.8 and coverage 0.8 of their representative (194 on identity, minimum 0.758; 6 on coverage). The criterion was not changed afterwards. Owner decision 10 accepted the label; no identity-0.9 rerun.</li>
+<li><strong>Bootstrap is NNI-only.</strong> One standard replicate takes 4.1 to 4.7 h; 100 would take about 70 to 80 h. The 100 replicates are NNI searches. On the same two resampled alignments the NNI tree differs from the standard tree by relative RF 0.113 and 0.129 and has a lower log-likelihood (by 727 and 522). NNI trees are less optimised than standard trees. The effect on each support value is unverified. Owner decision 2 accepted this for now.</li>
+<li><strong>Support (100 NNI replicates; FBP percent, TBE fraction).</strong> <code>thn_synthase</code> target node (240 leaves) FBP 88, TBE 0.997. <code>hexaketide_pks</code> target (56 leaves) FBP 99, TBE 0.999. The node that bounds the heptaketide target (22 leaves) FBP 100, TBE 1.000. The node that joins the four references of the three steps: FBP 66, TBE 0.965.</li>
+<li><strong>Heptaketide headline (owner decision 3).</strong> The heptaketide target is the <strong>Alb1/AlbA/wA clade</strong> under the per-step decoy rule: 22 leaves (Alb1, AlbA, wA and 19 representatives). It holds 2,123 of 2,200 candidate proteins in 2,091 genomes (Table 2). Beside it, the union rule (decoys of all three PKS steps pooled) gives <strong>no target</strong>. The union rule gives a target in 2 of 100 bootstrap trees, and the per-step rule in 100 of 100.</li>
+<li><strong>The wA placement is unresolved.</strong> Alb1 and AlbA are separated from wA in 2 of 100 NNI trees and in 0 of 2 standard trees. In the best tree the node of Alb1 and wA with 8 other leaves has FBP 50 and TBE 0.836, inside a 13-leaf node of all three (FBP 100). This supports “wA is unresolved as an outgroup of Alb1 and AlbA”. It does not show that wA makes YWA1 in any sense. wA stays in the target because the per-step rule does not use it as a boundary.</li>
+<li><strong>Per-step decoys do not change <code>thn_synthase</code> and <code>hexaketide_pks</code>.</strong> Their decoy sets equal the union (5 decoys), so the <code>assign</code> files are identical under both rules (<code>cmp</code>, MEASURED).</li>
+<li><strong>HMM hit and tree call differ.</strong> Of 6,316 proteins that hit both the <code>thn_synthase</code> and <code>hexaketide_pks</code> HMMs, 2,741 are in the <code>thn_synthase</code> target, 523 in the <code>hexaketide_pks</code> target and 3,052 in neither (0.7 run, <code>hit_pattern_vs_target.tsv</code>; the 0.8 run has the same pattern). No protein is target for two steps (0 of 9,374).</li>
+<li><strong>Dothideomycetes reading trap.</strong> 2,550 Dothideomycetes genomes have a <code>thn_synthase</code> hit row, and 5 have a placed call (0.7 run, PKS note section 6). Their proteins lie next to named leaves (nearest labelled leaf A7UMW1 for 13 of 24 representatives), which are outside every target by rule. So a missing PKS placed call in a class does not show that the class lacks a PKS.</li>
+<li><strong>Not covered by the epa-ng cap.</strong> The 2026-11-25 all-placements rerun changed 0 of 7,286, 8,604 and 2,200 PKS calls: the maximum number of placements per query was 6, so the PKS unassigned fractions (1.6 % to 3.2 % at identity 0.8) are not a cap artefact.</li>
+</ul>
+</section>
+<section id="overlaps-between-steps" class="level3">
+<h3 class="anchored" data-anchor-id="overlaps-between-steps">4.3 Overlaps between steps</h3>
+<p>MEASURED (<code>tyrosinase_v2_laccase_target_overlap.tsv</code>, <code>sdr_target_overlap.tsv</code>, the PKS <code>target_overlap.tsv</code>):</p>
+<ul>
+<li><code>tyrosinase</code> shares 0 proteins with the target sets of <code>laccase_abr2</code>, <code>mco_abr1</code>, <code>laccase_diphenol</code> and <code>asp_melanin_tyrosinase</code>. <code>laccase_diphenol</code> shares 0 proteins with <code>laccase_abr2</code> or <code>mco_abr1</code>. <code>laccase_abr2</code> and <code>mco_abr1</code> share the same 4 proteins in 3 genomes.</li>
+<li>At genome level (from the per-genome table of section 6): 0 genomes have both a placed <code>tyrosinase</code> and a placed <code>laccase_diphenol</code>; 0 genomes have a placed <code>laccase_diphenol</code> and a placed <code>laccase_abr2</code>; 3,205 genomes have a placed <code>tyrosinase</code> and a placed <code>laccase_abr2</code> (different proteins).</li>
+<li><strong>For the comparison in section 6</strong>: <code>laccase_abr2</code> and <code>mco_abr1</code> are DHN steps (polymerisation group) and are not counted as L-DOPA evidence. The L-DOPA rules use only <code>tyrosinase</code>, <code>laccase_diphenol</code>, <code>aspulvinone_e_synthase</code> and <code>asp_melanin_tyrosinase</code>. So no protein is counted as evidence for both pathways through a shared target.</li>
+<li><code>t4hn_reductase</code> and <code>t3hn_reductase</code>: 583 proteins hit both HMMs; their target sets share 0 proteins (8,457 and 2,236); 974 of 11,667 candidate proteins are in neither.</li>
+<li>No protein is a <code>target</code> for more than one PKS step (0 of 9,374).</li>
+</ul>
+</section>
+</section>
+<section id="step-presence-by-clade" class="level2">
+<h2 class="anchored" data-anchor-id="step-presence-by-clade">5. Step presence by clade</h2>
+<p>Presence here is the fraction of searched genomes with at least one placed call in the step (an <code>assigned</code> row, with the 5 re-annotated genomes mapped through the alias file). Denominator: genomes of the group, from <code>species.parquet</code> joined to the searched list. Genomes without proteins are not in any denominator (section 6.1). <code>hppd</code> and <code>hmga</code> are family present.</p>
+<!-- BEGIN phylum_steps -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phylum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;"><code>thn_synthase</code></th>
+<th style="text-align: right;"><code>hexaketide_pks</code></th>
+<th style="text-align: right;"><code>heptaketide_pks</code></th>
+<th style="text-align: right;"><code>ayg1</code></th>
+<th style="text-align: right;"><code>t4hn_reductase</code></th>
+<th style="text-align: right;"><code>t3hn_reductase</code></th>
+<th style="text-align: right;"><code>scytalone_dehydratase</code></th>
+<th style="text-align: right;"><code>laccase_abr2</code></th>
+<th style="text-align: right;"><code>mco_abr1</code></th>
+<th style="text-align: right;"><code>tyrosinase</code></th>
+<th style="text-align: right;"><code>laccase_diphenol</code></th>
+<th style="text-align: right;"><code>aspulvinone_e_synthase</code></th>
+<th style="text-align: right;"><code>asp_melanin_tyrosinase</code></th>
+<th style="text-align: right;"><code>hppd</code></th>
+<th style="text-align: right;"><code>hmga</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ascomycota</td>
+<td style="text-align: right;">19,203</td>
+<td style="text-align: right;">3,123 (16.3)</td>
+<td style="text-align: right;">600 (3.1)</td>
+<td style="text-align: right;">2,091 (10.9)</td>
+<td style="text-align: right;">8,524 (44.4)</td>
+<td style="text-align: right;">7,851 (40.9)</td>
+<td style="text-align: right;">2,198 (11.4)</td>
+<td style="text-align: right;">7,406 (38.6)</td>
+<td style="text-align: right;">3,411 (17.8)</td>
+<td style="text-align: right;">1,897 (9.9)</td>
+<td style="text-align: right;">12,643 (65.8)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">49 (0.3)</td>
+<td style="text-align: right;">42 (0.2)</td>
+<td style="text-align: right;">16,119 (83.9)</td>
+<td style="text-align: right;">2,280 (11.9)</td>
+</tr>
+<tr class="even">
+<td>Basidiomycota</td>
+<td style="text-align: right;">3,242</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1,491 (46.0)</td>
+<td style="text-align: right;">215 (6.6)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">24 (0.7)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="odd">
+<td>Mucoromycota</td>
+<td style="text-align: right;">292</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1 (0.3)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">277 (94.9)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="even">
+<td>Kickxellomycota</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">136 (76.8)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="odd">
+<td>Microsporidia</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="even">
+<td>Mortierellomycota</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">23 (23.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">95 (95.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="odd">
+<td>Chytridiomycota</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">1 (1.2)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">22 (26.5)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">77 (92.8)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="even">
+<td>Glomeromycota</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">24 (40.7)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">0 (0.0)</td>
+<td style="text-align: right;">49 (83.1)</td>
+<td style="text-align: right;">0 (0.0)</td>
+</tr>
+<tr class="odd">
+<td>all searched genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">3,124 (13.4)</td>
+<td style="text-align: right;">600 (2.6)</td>
+<td style="text-align: right;">2,091 (8.9)</td>
+<td style="text-align: right;">8,525 (36.5)</td>
+<td style="text-align: right;">7,852 (33.6)</td>
+<td style="text-align: right;">2,199 (9.4)</td>
+<td style="text-align: right;">7,408 (31.7)</td>
+<td style="text-align: right;">3,411 (14.6)</td>
+<td style="text-align: right;">1,897 (8.1)</td>
+<td style="text-align: right;">14,219 (60.8)</td>
+<td style="text-align: right;">215 (0.9)</td>
+<td style="text-align: right;">49 (0.2)</td>
+<td style="text-align: right;">42 (0.2)</td>
+<td style="text-align: right;">16,830 (72.0)</td>
+<td style="text-align: right;">2,280 (9.8)</td>
+</tr>
+</tbody>
+</table>
+<!-- END phylum_steps -->
+<p>Table 3. Genomes with a placed call, by phylum (phyla with 50 or more genomes). Each cell is the count and the percent of the genomes in the row. MEASURED (<code>tables/step_presence_by_phylum.tsv</code>). The 8 phyla listed have 23,289 of the 23,376 searched genomes; the other 87 genomes are in smaller phyla or have no phylum label.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig1_step_presence_by_class.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1. Step presence by class.</figcaption>
+</figure>
+</div>
+<p><em>Percent of searched genomes with a placed call, by class (classes with 25 or more genomes; class size in brackets). Blue panels are placed steps. The grey panel is family present, not a placed step. This figure is evidence for where each step has placed calls, not for pathway presence: a blank cell is “no placed call”, and the placement targets are bounded by the labelled leaves (section 4). Read the Dothideomycetes row with section 4.2: 2,550 genomes have a PKS hit row and 5 have a placed call. Classes with no label (177 genomes) are drawn as “(no label)”. <a href="figures/out/fig1_step_presence_by_class.pdf">PDF</a></em></p>
+<p>Counts behind the figure, as genome counts per class, are in <code>tables/step_presence_by_class.tsv</code>.</p>
+</section>
+<section id="dhn-melanin-and-l-dopa-melanin-per-species" class="level2">
+<h2 class="anchored" data-anchor-id="dhn-melanin-and-l-dopa-melanin-per-species">6. DHN melanin and L-DOPA melanin per species</h2>
+<p>Owner request of 2026-11-25. This section reports counts of species and genomes in four classes: DHN only, L-DOPA only, both, neither. It makes no claim about pigment production. All counts are MEASURED from <code>tables/</code>, and all rules are PROPOSED.</p>
+<section id="the-unit-species-from-the-bfd-taxonomy" class="level3">
+<h3 class="anchored" data-anchor-id="the-unit-species-from-the-bfd-taxonomy">6.1 The unit: species from the BFD taxonomy</h3>
+<ul>
+<li>Species names come from <code>SPECIES</code> in <code>Fungi_BFD_runs/tables/species.parquet</code>, joined to the searched genomes by locus tag. The names are the BFD names; they were not re-curated.</li>
+<li><strong>Collapse rule (PROPOSED).</strong> A species is positive for a pathway when at least one of its searched genomes is positive (<code>any</code>). Sensitivity: positive only when all its searched genomes are positive (<code>all</code>); and species with one searched genome only (no collapse needed).</li>
+<li>Genomes without proteins (987) were not searched. They are not assessed. They are not “neither”. They are out of every genome and species denominator. 181 species have no searched genome and are out of the species denominator. A species whose searched genomes are all negative counts as “neither” even when it also has unsearched genomes (<code>neither</code> is a statement about searched genomes only).</li>
+</ul>
+<!-- BEGIN collapse -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th style="text-align: right;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Genomes in the BFD species table</td>
+<td style="text-align: right;">24,363</td>
+</tr>
+<tr class="even">
+<td>Genomes searched (have proteins); the denominator of every genome count</td>
+<td style="text-align: right;">23,376</td>
+</tr>
+<tr class="odd">
+<td>Genomes not searched (no proteins); not assessed, left out of all denominators</td>
+<td style="text-align: right;">987</td>
+</tr>
+<tr class="even">
+<td>Species in the table</td>
+<td style="text-align: right;">7,568</td>
+</tr>
+<tr class="odd">
+<td>Species with at least one searched genome; the denominator of every species count</td>
+<td style="text-align: right;">7,387</td>
+</tr>
+<tr class="even">
+<td>Species with no searched genome (not assessed)</td>
+<td style="text-align: right;">181</td>
+</tr>
+<tr class="odd">
+<td>Species with one searched genome</td>
+<td style="text-align: right;">5,545</td>
+</tr>
+<tr class="even">
+<td>Species with 2 to 9 searched genomes</td>
+<td style="text-align: right;">1,609</td>
+</tr>
+<tr class="odd">
+<td>Species with 10 or more searched genomes</td>
+<td style="text-align: right;">233</td>
+</tr>
+<tr class="even">
+<td>Searched genomes inside those 10-or-more species</td>
+<td style="text-align: right;">12,677</td>
+</tr>
+<tr class="odd">
+<td>Median / maximum searched genomes per species</td>
+<td style="text-align: right;">1 / 1,260</td>
+</tr>
+<tr class="even">
+<td>Species whose genomes carry more than one class label / order label</td>
+<td style="text-align: right;">0 / 0</td>
+</tr>
+<tr class="odd">
+<td>Searched genomes with no phylum / class / order label</td>
+<td style="text-align: right;">2 / 177 / 255</td>
+</tr>
+<tr class="even">
+<td>Re-annotated genomes among the searched (mapped through the alias file)</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td>Species with most genomes</td>
+<td style="text-align: right;">Saccharomyces cerevisiae 1,260; Candidozyma auris 951; Fusarium oxysporum 811; Pyricularia oryzae 494; Macrophomina phaseolina 466</td>
+</tr>
+</tbody>
+</table>
+<!-- END collapse -->
+<p>Table 4. Genomes per species and genomes not assessed. MEASURED (<code>tables/species_collapse.tsv</code>, <code>species_most_genomes.tsv</code>).</p>
+<p><strong>Reading trap: genome counts and species counts differ by design.</strong> 233 species have 10 or more searched genomes and hold 12,677 of the 23,376 genomes. <em>Saccharomyces cerevisiae</em> alone has 1,260 genomes. Genome-level counts weigh heavily sequenced species; species-level counts weigh each species once. The two tables below give both. Neither is an estimate of how common a pathway is among fungi.</p>
+</section>
+<section id="the-presence-rule-per-genome" class="level3">
+<h3 class="anchored" data-anchor-id="the-presence-rule-per-genome">6.2 The presence rule per genome</h3>
+<p>Rules are built from placed-step calls only. No step in either pathway is a search-hit-only step (<code>atp_grasp_ligase</code> is mycosporine). <code>hppd</code> and <code>hmga</code> are family present and are not counted. The PKS steps count by reaction, with the “any DHN PKS” column. A search-hit level rule is shown once, as a contrast, and is not a placed call.</p>
+<!-- BEGIN rules -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule</th>
+<th>Definition</th>
+<th style="text-align: right;">Genomes positive</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>D_any</code></td>
+<td>any placed call in any of the 9 DHN steps</td>
+<td style="text-align: right;">10,992 of 23,376 (47.0 %)</td>
+</tr>
+<tr class="even">
+<td><code>D_pks</code></td>
+<td>any placed call in a DHN PKS step (thn_synthase, hexaketide_pks or heptaketide_pks) (headline)</td>
+<td style="text-align: right;">5,523 of 23,376 (23.6 %)</td>
+</tr>
+<tr class="odd">
+<td><code>D_route</code></td>
+<td>all placed steps of at least one yaml PKS route (strict)</td>
+<td style="text-align: right;">1,892 of 23,376 (8.1 %)</td>
+</tr>
+<tr class="even">
+<td><code>D_route_ox</code></td>
+<td>D_route and a placed laccase_abr2 or mco_abr1</td>
+<td style="text-align: right;">82 of 23,376 (0.4 %)</td>
+</tr>
+<tr class="odd">
+<td><code>D_hit_any</code></td>
+<td>search-hit level: at least one hit row in any of the 9 DHN steps (not placed)</td>
+<td style="text-align: right;">11,254 of 23,376 (48.1 %)</td>
+</tr>
+<tr class="even">
+<td><code>L_any</code></td>
+<td>any placed call in tyrosinase, laccase_diphenol, aspulvinone_e_synthase or asp_melanin_tyrosinase</td>
+<td style="text-align: right;">14,449 of 23,376 (61.8 %)</td>
+</tr>
+<tr class="odd">
+<td><code>L_dopa</code></td>
+<td>tyrosinase or laccase_diphenol placed (the two routes that oxidise L-tyrosine or L-DOPA or diphenols)</td>
+<td style="text-align: right;">14,434 of 23,376 (61.7 %)</td>
+</tr>
+<tr class="even">
+<td><code>L_tyr</code></td>
+<td>tyrosinase placed</td>
+<td style="text-align: right;">14,219 of 23,376 (60.8 %)</td>
+</tr>
+<tr class="odd">
+<td><code>L_nontyr</code></td>
+<td>laccase_diphenol placed, or both Asp-melanin steps placed (excludes the tyrosinase family)</td>
+<td style="text-align: right;">250 of 23,376 (1.1 %)</td>
+</tr>
+<tr class="even">
+<td><code>L_route</code></td>
+<td>complete route: tyrosinase, or laccase_diphenol, or both Asp-melanin steps (headline)</td>
+<td style="text-align: right;">14,439 of 23,376 (61.8 %)</td>
+</tr>
+<tr class="odd">
+<td><code>L_hit_any</code></td>
+<td>search-hit level: at least one hit row in the 4 pigment-forming L-DOPA steps (not placed)</td>
+<td style="text-align: right;">14,674 of 23,376 (62.8 %)</td>
+</tr>
+<tr class="even">
+<td><code>route_pks_thn</code></td>
+<td>all placed steps of yaml route pks_thn</td>
+<td style="text-align: right;">1,892 of 23,376 (8.1 %)</td>
+</tr>
+<tr class="odd">
+<td><code>route_pks_hexaketide</code></td>
+<td>all placed steps of yaml route pks_hexaketide</td>
+<td style="text-align: right;">0 of 23,376 (0.0 %)</td>
+</tr>
+<tr class="even">
+<td><code>route_pks_heptaketide</code></td>
+<td>all placed steps of yaml route pks_heptaketide</td>
+<td style="text-align: right;">0 of 23,376 (0.0 %)</td>
+</tr>
+</tbody>
+</table>
+<!-- END rules -->
+<p>Table 5. Presence rules and the number of searched genomes positive for each. PROPOSED rules, MEASURED counts (<code>tables/rule_counts.tsv</code>). Definitions from the yaml routes of section 2: <code>D_route</code> uses the step lists of routes <code>pks_thn</code>, <code>pks_hexaketide</code>, <code>pks_heptaketide</code> (the <code>scytalone_dehydratase</code> step is listed twice in the yaml and counted once). <code>D_pks</code> is the “any DHN PKS” column: the three PKS genome counts sum to 5,815 and the union is 5,523 genomes (<code>tables/pks_union.tsv</code>). The <code>L_route</code> rule is “complete route” for the L-DOPA yaml: one step for <code>tyrosinase_dopa</code> and <code>laccase_exogenous</code>, two for <code>asp_melanin</code>.</p>
+<p><strong>Headline rules (PROPOSED): <code>D_pks</code> and <code>L_route</code>.</strong> Reason: every yaml DHN route starts with a PKS step, so a genome with no placed PKS is not counted as DHN. The strict rule <code>D_route</code> is shown beside it, because it needs all placed enzyme steps of one route. <strong>I chose the headline after seeing that <code>D_route</code> is nearly empty outside route (a)</strong> (Table 5: 1,892 genomes for <code>pks_thn</code>, 0 for the hexaketide and heptaketide routes). That choice is made with hindsight, and the strict result stays in the tables.</p>
+<p>Why <code>D_route</code> is small (MEASURED, <code>tables/route_gap_t3hn.tsv</code>): 1,214 genomes have <code>heptaketide_pks</code>, <code>ayg1</code>, <code>t4hn_reductase</code> and <code>scytalone_dehydratase</code> placed, and 0 of them has a placed <code>t3hn_reductase</code>. For the hexaketide route the numbers are 491 and 0. For route (a), 2,593 genomes have <code>thn_synthase</code>, <code>t4hn_reductase</code> and <code>scytalone_dehydratase</code>, and 1,892 of them also have <code>t3hn_reductase</code>. The <code>t3hn_reductase</code> target holds 2,187 Sordariomycetes genomes of its 2,199 genomes.</p>
+</section>
+<section id="four-classes-species-and-genomes" class="level3">
+<h3 class="anchored" data-anchor-id="four-classes-species-and-genomes">6.3 Four classes: species and genomes</h3>
+<!-- BEGIN sensitivity -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rule pair (DHN / L-DOPA)</th>
+<th>Unit</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">DHN only</th>
+<th style="text-align: right;">L-DOPA only</th>
+<th style="text-align: right;">Both</th>
+<th style="text-align: right;">Neither</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>D_pks</code> / <code>L_route</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">2,933</td>
+<td style="text-align: right;">1,725</td>
+<td style="text-align: right;">2,596</td>
+</tr>
+<tr class="even">
+<td><code>D_pks</code> / <code>L_route</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">2,929</td>
+<td style="text-align: right;">1,657</td>
+<td style="text-align: right;">2,651</td>
+</tr>
+<tr class="odd">
+<td><code>D_pks</code> / <code>L_route</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">2,169</td>
+<td style="text-align: right;">1,293</td>
+<td style="text-align: right;">1,976</td>
+</tr>
+<tr class="even">
+<td><code>D_pks</code> / <code>L_route</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">9,232</td>
+<td style="text-align: right;">5,207</td>
+<td style="text-align: right;">8,621</td>
+</tr>
+<tr class="odd">
+<td><code>D_any</code> / <code>L_any</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">1,714</td>
+<td style="text-align: right;">2,949</td>
+<td style="text-align: right;">2,562</td>
+</tr>
+<tr class="even">
+<td><code>D_any</code> / <code>L_any</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">1,735</td>
+<td style="text-align: right;">2,856</td>
+<td style="text-align: right;">2,603</td>
+</tr>
+<tr class="odd">
+<td><code>D_any</code> / <code>L_any</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">1,340</td>
+<td style="text-align: right;">2,125</td>
+<td style="text-align: right;">1,950</td>
+</tr>
+<tr class="even">
+<td><code>D_any</code> / <code>L_any</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">426</td>
+<td style="text-align: right;">3,883</td>
+<td style="text-align: right;">10,566</td>
+<td style="text-align: right;">8,501</td>
+</tr>
+<tr class="odd">
+<td><code>D_route</code> / <code>L_route</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3,969</td>
+<td style="text-align: right;">689</td>
+<td style="text-align: right;">2,727</td>
+</tr>
+<tr class="even">
+<td><code>D_route</code> / <code>L_route</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3,944</td>
+<td style="text-align: right;">642</td>
+<td style="text-align: right;">2,799</td>
+</tr>
+<tr class="odd">
+<td><code>D_route</code> / <code>L_route</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2,959</td>
+<td style="text-align: right;">503</td>
+<td style="text-align: right;">2,081</td>
+</tr>
+<tr class="even">
+<td><code>D_route</code> / <code>L_route</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12,549</td>
+<td style="text-align: right;">1,890</td>
+<td style="text-align: right;">8,935</td>
+</tr>
+<tr class="odd">
+<td><code>D_pks</code> / <code>L_nontyr</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">1,858</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5,509</td>
+</tr>
+<tr class="even">
+<td><code>D_pks</code> / <code>L_nontyr</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">1,807</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5,563</td>
+</tr>
+<tr class="odd">
+<td><code>D_pks</code> / <code>L_nontyr</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">1,400</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4,133</td>
+</tr>
+<tr class="even">
+<td><code>D_pks</code> / <code>L_nontyr</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">5,523</td>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17,603</td>
+</tr>
+<tr class="odd">
+<td><code>D_route_ox</code> / <code>L_route</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4,631</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">2,728</td>
+</tr>
+<tr class="even">
+<td><code>D_route_ox</code> / <code>L_route</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4,565</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">2,800</td>
+</tr>
+<tr class="odd">
+<td><code>D_route_ox</code> / <code>L_route</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3,443</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">2,082</td>
+</tr>
+<tr class="even">
+<td><code>D_route_ox</code> / <code>L_route</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14,358</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">8,936</td>
+</tr>
+<tr class="odd">
+<td><code>D_hit_any</code> / <code>L_hit_any</code></td>
+<td>species, any genome positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">1,610</td>
+<td style="text-align: right;">3,124</td>
+<td style="text-align: right;">2,548</td>
+</tr>
+<tr class="even">
+<td><code>D_hit_any</code> / <code>L_hit_any</code></td>
+<td>species, all genomes positive</td>
+<td style="text-align: right;">7,387</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">1,634</td>
+<td style="text-align: right;">3,048</td>
+<td style="text-align: right;">2,589</td>
+</tr>
+<tr class="odd">
+<td><code>D_hit_any</code> / <code>L_hit_any</code></td>
+<td>species with one genome</td>
+<td style="text-align: right;">5,545</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1,263</td>
+<td style="text-align: right;">2,258</td>
+<td style="text-align: right;">1,938</td>
+</tr>
+<tr class="even">
+<td><code>D_hit_any</code> / <code>L_hit_any</code></td>
+<td>genomes</td>
+<td style="text-align: right;">23,376</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">3,638</td>
+<td style="text-align: right;">11,036</td>
+<td style="text-align: right;">8,484</td>
+</tr>
+</tbody>
+</table>
+<!-- END sensitivity -->
+<p>Table 6. DHN only, L-DOPA only, both and neither, for six rule pairs and four units. MEASURED (<code>tables/sensitivity_four_class.tsv</code>). Each row sums to its <code>n</code>. The first block is the headline.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig3_rule_sensitivity.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3. The four classes under each rule pair.</figcaption>
+</figure>
+</div>
+<p><em>Species level (any genome positive) and genome level for each rule pair. This figure is evidence that the split between the four classes depends on the rule, not that any rule is right. Read the wide rule (any placed step) and the headline against the strict route: the strict rule moves 1,036 species from “both” to “L-DOPA only” because it needs <code>t3hn_reductase</code>. The <code>D_pks / L_nontyr</code> pair shows how much of the L-DOPA column is the tyrosinase family: without it, “L-DOPA only” is 20 species and “both” is 0. <a href="figures/out/fig3_rule_sensitivity.pdf">PDF</a></em></p>
+<p>What the sensitivity shows (counts only):</p>
+<ul>
+<li><strong>Collapse rule.</strong> Under the headline, <code>any</code> and <code>all</code> differ by 17 species in DHN only (133 and 150), by 68 in both (1,725 and 1,657) and by 55 in neither (2,596 and 2,651). 5,545 of the 7,387 species have one searched genome, so the collapse matters for 1,842 species.</li>
+<li><strong>Pathway rule.</strong> “Both” ranges from 0 (<code>D_pks / L_nontyr</code>) through 689 (strict route) and 1,725 (headline) to 2,949 species (wide rule). “DHN only” ranges from 2 to 1,858 species.</li>
+<li><strong>Search-hit level versus placed level.</strong> The wide placed rule and the search-hit rule differ by 175 species in “both” (2,949 and 3,124) and by 56 in “L-DOPA only” (1,714 and 1,610). Placement changes the species classes by a small amount under the wide rule. This is a count comparison; it does not show that the placed calls are right.</li>
+<li><strong>The 5 re-annotated genomes.</strong> Dropping them changes the headline genome counts from 316 / 9,232 / 5,207 / 8,621 to 316 / 9,232 / 5,207 / 8,616 (n 23,371) and the species counts from 2,596 to 2,594 neither (n 7,385; two species, <em>Blastobotrys sasensis</em> and <em>Sugiyamaella casensis</em>, have only a re-annotated genome). They have no placed call (Table 8), so they fall into “neither” under every placed rule.</li>
+</ul>
+<section id="by-clade" class="level4">
+<h4 class="anchored" data-anchor-id="by-clade">By clade</h4>
+<p>Species counts use the headline rules and the <code>any</code> collapse. Genome counts use the same rules per genome. Groups with fewer than 20 species (class) or 100 species (order) are in <code>tables/four_class_by_*.tsv</code> and not here.</p>
+<!-- BEGIN four_phylum -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phylum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;">Species</th>
+<th style="text-align: right;">Sp. DHN only</th>
+<th style="text-align: right;">Sp. L-DOPA only</th>
+<th style="text-align: right;">Sp. both</th>
+<th style="text-align: right;">Sp. neither</th>
+<th style="text-align: right;">Gen.&nbsp;DHN only</th>
+<th style="text-align: right;">Gen.&nbsp;L-DOPA only</th>
+<th style="text-align: right;">Gen.&nbsp;both</th>
+<th style="text-align: right;">Gen.&nbsp;neither</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ascomycota</td>
+<td style="text-align: right;">19,203</td>
+<td style="text-align: right;">5,155</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">1,907</td>
+<td style="text-align: right;">1,724</td>
+<td style="text-align: right;">1,391</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">7,442</td>
+<td style="text-align: right;">5,206</td>
+<td style="text-align: right;">6,239</td>
+</tr>
+<tr class="even">
+<td>Basidiomycota</td>
+<td style="text-align: right;">3,242</td>
+<td style="text-align: right;">1,655</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">960</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">695</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,706</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,536</td>
+</tr>
+<tr class="odd">
+<td>Kickxellomycota</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">177</td>
+</tr>
+<tr class="even">
+<td>Mucoromycota</td>
+<td style="text-align: right;">292</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">291</td>
+</tr>
+<tr class="odd">
+<td>Microsporidia</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">133</td>
+</tr>
+<tr class="even">
+<td>Chytridiomycota</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">61</td>
+</tr>
+<tr class="odd">
+<td>Mortierellomycota</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">77</td>
+</tr>
+<tr class="even">
+<td>Glomeromycota</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="odd">
+<td>Basidiobolomycota</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td>Zoopagomycota</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td>Neocallimastigomycota</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td>Blastocladiomycota</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td>Entomophthoromycota</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td>Monoblepharomycota</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td>(no label)</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>Aphelidiomycota</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>Calcarisporiellomycota</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>Olpidiomycota</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td>Rozellomycota</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<!-- END four_phylum -->
+<p>Table 7a. Four classes by phylum, headline rules. MEASURED (<code>tables/four_class_by_phylum.tsv</code>). “Sp.” = species; “Gen.” = genomes.</p>
+<!-- BEGIN four_class -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Phylum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;">Species</th>
+<th style="text-align: right;">Sp. DHN only</th>
+<th style="text-align: right;">Sp. L-DOPA only</th>
+<th style="text-align: right;">Sp. both</th>
+<th style="text-align: right;">Sp. neither</th>
+<th style="text-align: right;">Gen.&nbsp;DHN only</th>
+<th style="text-align: right;">Gen.&nbsp;L-DOPA only</th>
+<th style="text-align: right;">Gen.&nbsp;both</th>
+<th style="text-align: right;">Gen.&nbsp;neither</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sordariomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">5,981</td>
+<td style="text-align: right;">1,613</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">754</td>
+<td style="text-align: right;">850</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3,477</td>
+<td style="text-align: right;">2,476</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td>Agaricomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">1,844</td>
+<td style="text-align: right;">1,171</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">926</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">245</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1,454</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">390</td>
+</tr>
+<tr class="odd">
+<td>Eurotiomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">3,201</td>
+<td style="text-align: right;">742</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">193</td>
+<td style="text-align: right;">425</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: right;">750</td>
+<td style="text-align: right;">2,072</td>
+<td style="text-align: right;">117</td>
+</tr>
+<tr class="even">
+<td>Pichiomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,929</td>
+<td style="text-align: right;">666</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">664</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,927</td>
+</tr>
+<tr class="odd">
+<td>Dothideomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,724</td>
+<td style="text-align: right;">611</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">593</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2,700</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td>Lecanoromycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">478</td>
+<td style="text-align: right;">406</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">262</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td>Saccharomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,560</td>
+<td style="text-align: right;">366</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">366</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,560</td>
+</tr>
+<tr class="even">
+<td>Leotiomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">317</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td>Tremellomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">556</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">206</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">221</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">335</td>
+</tr>
+<tr class="even">
+<td>Dipodascomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">393</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">393</td>
+</tr>
+<tr class="odd">
+<td>Kickxellomycetes</td>
+<td>Kickxellomycota</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">158</td>
+</tr>
+<tr class="even">
+<td>(no label)</td>
+<td>(mixed)</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">147</td>
+</tr>
+<tr class="odd">
+<td>Pezizomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td>Mucoromycetes</td>
+<td>Mucoromycota</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">273</td>
+</tr>
+<tr class="odd">
+<td>Microbotryomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">318</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">317</td>
+</tr>
+<tr class="even">
+<td>Chytridiomycetes</td>
+<td>Chytridiomycota</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td>Mortierellomycetes</td>
+<td>Mortierellomycota</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">77</td>
+</tr>
+<tr class="even">
+<td>Ustilaginomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">133</td>
+</tr>
+<tr class="odd">
+<td>Exobasidiomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td>Lipomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">59</td>
+</tr>
+<tr class="odd">
+<td>Glomeromycetes</td>
+<td>Glomeromycota</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td>Orbiliomycetes</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Pucciniomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">115</td>
+</tr>
+<tr class="even">
+<td>Cystobasidiomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td>Malasseziomycetes</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">82</td>
+</tr>
+</tbody>
+</table>
+<!-- END four_class -->
+<p>Table 7b. Four classes by class (25 classes with 20 or more species; 7,181 of 7,387 species). The class “(no label)” collects genomes with no class label and mixes phyla. MEASURED (<code>tables/four_class_by_class.tsv</code>). The same table for the wide and strict rules is in <code>tables/four_class_by_class.D_any.L_any.tsv</code> and <code>.D_route.L_route.tsv</code>.</p>
+<!-- BEGIN four_order -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Order</th>
+<th>Phylum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;">Species</th>
+<th style="text-align: right;">Sp. DHN only</th>
+<th style="text-align: right;">Sp. L-DOPA only</th>
+<th style="text-align: right;">Sp. both</th>
+<th style="text-align: right;">Sp. neither</th>
+<th style="text-align: right;">Gen.&nbsp;DHN only</th>
+<th style="text-align: right;">Gen.&nbsp;L-DOPA only</th>
+<th style="text-align: right;">Gen.&nbsp;both</th>
+<th style="text-align: right;">Gen.&nbsp;neither</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hypocreales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">3,515</td>
+<td style="text-align: right;">756</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">738</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3,440</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td>Eurotiales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,480</td>
+<td style="text-align: right;">564</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">328</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">272</td>
+<td style="text-align: right;">1,839</td>
+<td style="text-align: right;">108</td>
+</tr>
+<tr class="odd">
+<td>Serinales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,345</td>
+<td style="text-align: right;">475</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">473</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,343</td>
+</tr>
+<tr class="even">
+<td>Agaricales</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">818</td>
+<td style="text-align: right;">440</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">316</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">590</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">228</td>
+</tr>
+<tr class="odd">
+<td>Boletales</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">505</td>
+<td style="text-align: right;">409</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">336</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">412</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">93</td>
+</tr>
+<tr class="even">
+<td>Pleosporales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">1,011</td>
+<td style="text-align: right;">277</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">271</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1,004</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>Dipodascales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">393</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">393</td>
+</tr>
+<tr class="even">
+<td>(no label)</td>
+<td>(mixed)</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">169</td>
+</tr>
+<tr class="odd">
+<td>Helotiales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">368</td>
+<td style="text-align: right;">188</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">302</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Saccharomycetales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">2,230</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">181</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2,230</td>
+</tr>
+<tr class="odd">
+<td>Lecanorales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">191</td>
+<td style="text-align: right;">176</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">143</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Pichiales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">564</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">564</td>
+</tr>
+<tr class="odd">
+<td>Xylariales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Sordariales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">419</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>Glomerellales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">566</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">553</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>Kickxellales</td>
+<td>Kickxellomycota</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">158</td>
+</tr>
+<tr class="odd">
+<td>Phaffomycetales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="even">
+<td>Pezizales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">171</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td>Polyporales</td>
+<td>Basidiomycota</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td>Mycosphaerellales</td>
+<td>Ascomycota</td>
+<td style="text-align: right;">408</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">403</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Mucorales</td>
+<td>Mucoromycota</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">273</td>
+</tr>
+</tbody>
+</table>
+<!-- END four_order -->
+<p>Table 7c. Four classes by order (orders with 100 or more species). The order “(no label)” mixes classes and phyla. MEASURED (<code>tables/four_class_by_order.tsv</code>; 35 orders with 50 or more species are in figure 2).</p>
+<!-- BEGIN dominant -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Rank</th>
+<th>Groups with 90 % or more of their species in the class (species in the class of species in the group)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DHN only</td>
+<td>class</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>L-DOPA only</td>
+<td>class</td>
+<td>Dothideomycetes (593 of 611); Pezizomycetes (116 of 121); Orbiliomycetes (30 of 30)</td>
+</tr>
+<tr class="odd">
+<td>both</td>
+<td>class</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>neither</td>
+<td>class</td>
+<td>Pichiomycetes (664 of 666); Saccharomycetes (366 of 366); Tremellomycetes (206 of 220); Dipodascomycetes (210 of 210); Kickxellomycetes (141 of 141); Mucoromycetes (106 of 106); Microbotryomycetes (77 of 78); Ustilaginomycetes (54 of 54); Exobasidiomycetes (35 of 37); Lipomycetes (35 of 35); Pucciniomycetes (27 of 28); Malasseziomycetes (22 of 22)</td>
+</tr>
+<tr class="odd">
+<td>DHN only</td>
+<td>order</td>
+<td>none</td>
+</tr>
+<tr class="even">
+<td>L-DOPA only</td>
+<td>order</td>
+<td>Hypocreales (738 of 756); Pleosporales (271 of 277); Pezizales (116 of 121); Mycosphaerellales (102 of 107); Onygenales (73 of 78); Cladosporiales (54 of 55); Botryosphaeriales (48 of 50)</td>
+</tr>
+<tr class="odd">
+<td>both</td>
+<td>order</td>
+<td>Xylariales (161 of 163); Sordariales (155 of 160); Glomerellales (146 of 149); Microascales (81 of 84); Ophiostomatales (78 of 81); Chaetothyriales (78 of 80); Diaporthales (79 of 79); Amphisphaeriales (66 of 67)</td>
+</tr>
+<tr class="even">
+<td>neither</td>
+<td>order</td>
+<td>Serinales (473 of 475); Dipodascales (210 of 210); Saccharomycetales (181 of 181); Pichiales (173 of 173); Kickxellales (141 of 141); Phaffomycetales (128 of 128); Mucorales (106 of 106); Trichosporonales (70 of 70); Ustilaginales (50 of 50)</td>
+</tr>
+</tbody>
+</table>
+<!-- END dominant -->
+<p>Table 7d. Groups in which 90 % or more of the species fall in one class (classes with 20 or more species, orders with 50 or more; groups with no label left out). MEASURED, computed from Tables 7b and 7c. No group reaches 90 % in “DHN only” or, among classes, in “both”. The largest “DHN only” share is Eurotiales, 15.2 % of species (86 of 564), and among classes Eurotiomycetes, 11.6 % (86 of 742).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig2_four_class_by_clade.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2. Four classes per species, by class and by order.</figcaption>
+</figure>
+</div>
+<p><em>Percent of species in each class, headline rules, <code>any</code> collapse; the number in brackets is the species count of the group. This figure is evidence that the four classes are lineage-structured under these rules; it does not show why. Read it with Figure 3: under the strict route rule the blue and green segments change, and under the wide rule they grow. Groups with few species have coarse percentages (an order with 50 species moves 2 points per species). Numbers in the bars are percent; segments under 8 % are not labelled. <a href="figures/out/fig2_four_class_by_clade.pdf">PDF</a></em></p>
+<p>Counts that stand out (MEASURED; counts only, no biological reading):</p>
+<ul>
+<li>Under the headline rules, DHN only is positive in Eurotiomycetes (86 species), Leotiomycetes (26), Lecanoromycetes (16), Sordariomycetes (3) and Dothideomycetes (1) among the classes of Table 7b, and is 0 in every other class listed there.</li>
+<li>“Both” is positive in Sordariomycetes (850 of 1,613 species), Eurotiomycetes (425 of 742), Lecanoromycetes (262 of 406), Leotiomycetes (165 of 236) and Dothideomycetes (14 of 611).</li>
+<li>“Neither” is 100 % or nearly so in Pichiomycetes (664 of 666), Saccharomycetes (366 of 366), Dipodascomycetes (210 of 210), Mucoromycetes (106 of 106) and Kickxellomycetes (141 of 141).</li>
+<li>Basidiomycota: 960 of 1,655 species are L-DOPA only and 0 are DHN-positive (no Basidiomycota genome has a placed PKS call, Table 3).</li>
+</ul>
+</section>
+</section>
+<section id="the-five-re-annotated-genomes" class="level3">
+<h3 class="anchored" data-anchor-id="the-five-re-annotated-genomes">6.4 The five re-annotated genomes</h3>
+<!-- BEGIN reannot -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Locus tag (table)</th>
+<th>Species</th>
+<th>Class</th>
+<th>Steps with a placed call</th>
+<th style="text-align: right;"><code>D_pks</code></th>
+<th style="text-align: right;"><code>L_route</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>FE750E90</td>
+<td>Arxiozyma pintolopesii</td>
+<td>Saccharomycetes</td>
+<td>none</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>F8B45790</td>
+<td>Blastobotrys sasensis</td>
+<td>Dipodascomycetes</td>
+<td>none</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>FE41F6C9</td>
+<td>Fusarium oxysporum</td>
+<td>Sordariomycetes</td>
+<td>none</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>FF465DA3</td>
+<td>Saccharomyces cerevisiae</td>
+<td>Saccharomycetes</td>
+<td>none</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>F6D07108</td>
+<td>Sugiyamaella casensis</td>
+<td>Dipodascomycetes</td>
+<td>none</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<!-- END reannot -->
+<p>Table 8. The five genomes whose protein ids changed prefix. MEASURED (<code>tables/reannotated_5_genomes.tsv</code>). No step has a placed call. Among the melanin steps, FE41F6C9 (<em>Fusarium oxysporum</em>) has hit rows for <code>ayg1</code>, <code>tyrosinase</code> and <code>hppd</code>, and F8B45790 and F6D07108 have a hit row for <code>hppd</code> (<code>tables/reannotated_5_hit_rows.tsv</code>). These proteins were not placed (the protein file for the new prefix is missing), so no placed call exists. FE750E90 and FF465DA3 have no melanin hit row. <em>Fusarium oxysporum</em> has 811 searched genomes, so the species call does not depend on this genome.</p>
+</section>
+<section id="what-this-comparison-does-not-show" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-comparison-does-not-show">6.5 What this comparison does not show</h3>
+<ul>
+<li>It does not show pigment production or that a pathway is intact. A placed call is “a protein in a tree region”. The strict route rule needs 4 or 5 steps placed; the headline needs one PKS placed.</li>
+<li>It does not separate tyrosinase from other members of the tyrosinase family (section 4.1). L-DOPA only = 2,933 species is mostly “tyrosinase family placed”.</li>
+<li>It does not show absence. “Neither” is “no placed call under the PROPOSED rule” in genomes that were searched. The cutoffs are PROVISIONAL, and the targets are bounded by labelled leaves.</li>
+<li>Gain and loss for this comparison is in the separate gain and loss job (section 7).</li>
+</ul>
+</section>
+</section>
+<section id="gain-and-loss" class="level2">
+<h2 class="anchored" data-anchor-id="gain-and-loss">7. Gain and loss</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Limits of this section
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Only placed steps are modelled. <code>hppd</code> is “family present” and is excluded. Three L-DOPA steps are not modelled, because fewer than 5 genus tips have them present (<code>laccase_diphenol</code> 1, <code>asp_melanin_tyrosinase</code> 0, <code>aspulvinone_e_synthase</code> 0). The 5-tip rule is PROPOSED.</li>
+<li>The <code>ayg1</code>, <code>mco_abr1</code>, <code>tyrosinase</code> and <code>hmga</code> calls are close to search hits: placed target equals nearly all candidates. For those steps a “loss” is an absent call.</li>
+<li>PKS calls carry the label “sampling not yet adequate” and an NNI-only bootstrap. <code>heptaketide_pks</code> is the Alb1/AlbA/<code>wA</code> clade.</li>
+<li><code>hmga</code> was modelled before the owner set it to “family present” (decision 15). Its row is in the results folder. It is not interpreted here.</li>
+<li>DHN and L-DOPA are modelled separately. 1,609 genus tips with data. Method as in the carotenoid report (6g, 6h); ARD beat ER for all 13 modelled steps, so gain counts depend heavily on the model (for example <code>hexaketide_pks</code>: 0 gains under ARD, 24 under ER). Commands and jobs: <code>results/gainloss/&lt;set&gt;/RUN.md</code>; note <code>docs/superpowers/notes/2026-11-25-gainloss-melanin-myco.md</code>.</li>
+</ul>
+</div>
+</div>
+<section id="dhn-melanin" class="level3">
+<h3 class="anchored" data-anchor-id="dhn-melanin">DHN melanin</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Step</th>
+<th style="text-align: right;">Gains</th>
+<th style="text-align: right;">Losses</th>
+<th style="text-align: right;">Uncertain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>thn_synthase</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td><code>hexaketide_pks</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">143</td>
+</tr>
+<tr class="odd">
+<td><code>heptaketide_pks</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td><code>ayg1</code></td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td><code>t4hn_reductase</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="even">
+<td><code>t3hn_reductase</code></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td><code>scytalone_dehydratase</code></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td><code>laccase_abr2</code></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">458</td>
+</tr>
+<tr class="odd">
+<td><code>mco_abr1</code></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">116</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Five of 72 co-event tests have q below 0.05 against the prevalence-matched null.</strong> Co-loss of <code>t4hn_reductase</code> with <code>thn_synthase</code> is 17 against a null mean of 3.10, with <code>ayg1</code> 20 against 6.01, with <code>laccase_abr2</code> 9 against 1.26 and with <code>mco_abr1</code> 17 against 2.72. Co-gain of <code>t4hn_reductase</code> with <code>scytalone_dehydratase</code> is 4 against 0.11. The BH q is over 144 tests. With N = 2,000 the q cannot go below 0.036 for two tests at the p floor.</p>
+<p>“Any DHN PKS” is present in 402 of 1,609 tips (7 gains, 41 losses). Its co-loss with <code>t4hn_reductase</code> is 21 against 3.85 (q 0.014), and with <code>ayg1</code> 17 against 3.24 (q 0.025), over 84 tests. <code>heptaketide_pks</code> (9 present tips) shares no event. Pagel: 36 of 36 pairs ran, 29 with p below 0.05, 3 fits did not converge. These are not read as shared events.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/gl_melanin_dhn_counts.png" class="img-fluid figure-img"></p>
+<figcaption>Gain and loss counts per DHN step. This figure is evidence for how model choice and tip-edge losses drive the counts.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/gl_melanin_dhn_coevents_null_matched.png" class="img-fluid figure-img"></p>
+<figcaption>DHN co-events against the prevalence-matched null. This figure is evidence that co-loss involving <code>t4hn_reductase</code> exceeds the null. It is not evidence of a mechanism.</figcaption>
+</figure>
+</div>
+</section>
+<section id="l-dopa-melanin" class="level3">
+<h3 class="anchored" data-anchor-id="l-dopa-melanin">L-DOPA melanin</h3>
+<p><code>tyrosinase</code> is present in 1,146 tips (14 gains, 47 losses, 68 uncertain). Only one step is modelled as a pigment step, so no co-event test is possible for L-DOPA. A species comparison with the tyrosinase-free column is in section 6.</p>
+</section>
+<section id="negative-results-and-not-done" class="level3">
+<h3 class="anchored" data-anchor-id="negative-results-and-not-done">Negative results and not done</h3>
+<ul>
+<li>No heptaketide co-event. Three DHN Pagel fits did not converge (reason UNVERIFIED).</li>
+<li>The as-specified null of the any-PKS run was stopped at 500 of 2,000 replicates; only its matched null is complete.</li>
+<li>Not done: a larger N for the DHN null (the owner has not decided; a rerun at N = 20,000 would remove the q floor), a BUSCO check of the co-loss tips, why <code>t4hn_reductase</code> carries the signal, the effect of PKS sampling on these counts.</li>
+</ul>
+</section>
+</section>
+<section id="owner-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="owner-decisions">8. Owner decisions</h2>
+<p>All apply and keep the PROVISIONAL stamp. Source: <code>docs/superpowers/notes/2026-11-24-owner-decisions-melanin-myco.md</code> (quotes verbatim). Items of the mycosporine pathway are left out.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Item</th>
+<th>Owner’s words</th>
+<th>Applied as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-11-23</td>
+<td>Step 2 decisions 3 to 9</td>
+<td>“accept 3-9 as listed”</td>
+<td>PKS rule values kept, joint PKS tree; t4hn and t3hn rule values kept, one SDR tree; tyrosinase cutoff 63.6 kept; no lowering; decoys added for <code>ayg1</code>, <code>scytalone_dehydratase</code>, <code>hmga</code></td>
+</tr>
+<tr class="even">
+<td>2026-11-23</td>
+<td>Decoys for <code>hppd</code> and <code>aspulvinone_e_synthase</code></td>
+<td>“add decoys if you can identify them”</td>
+<td>28 decoys fetched from UniProt for five steps</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td>Step 5 order</td>
+<td>“step 5 with PKS tree … fix tables makes sense if they are needed”</td>
+<td>PKS joint tree; genome prefix fix in our copy only (alias file)</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td><code>heptaketide_pks</code> and wA</td>
+<td>“can report wA as unresolved but need more details on how to rescure this information as it is still a valid gene to include”; then “wA - yes per-step decoys”</td>
+<td>per-step decoys in the joint tree; wA reported unresolved. The owner did not answer the question of step definition (by reaction or by pathway role); the yaml definition (by reaction) stays</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td>PKS outgroup</td>
+<td>“leave it as no outgroup with note to return to this”</td>
+<td>no outgroup; separate investigation later</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td>PKS rerun</td>
+<td>“yes do this with identity 0.8 and bootstrap of the tree if we believe we have a good sampling”</td>
+<td>rerun at identity 0.8 with bootstrap</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td><code>scytalone_dehydratase</code></td>
+<td>“drop cfoI leaf and rerun. can you regen the tree?”</td>
+<td>leaf A0A2I2F2K6 dropped after seeing the tree; tree regenerated</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td><code>hmga</code></td>
+<td>“keep as is”</td>
+<td>placed; read as “family present”</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td>Target rule, 2 or more references</td>
+<td>“accept largest side-rule or steps with 2 or more references”</td>
+<td>largest-side rule accepted as PROVISIONAL</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td><code>tyrosinase</code> and <code>hppd</code></td>
+<td>“yes address this with high rep cap”</td>
+<td>rerun with a high representative cap</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>PKS tree support</td>
+<td>(decision 2 of the 2026-11-25 list; no quote in the note)</td>
+<td>NNI-only bootstrap accepted for now; stated in the opening callout</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td><code>heptaketide_pks</code> headline</td>
+<td>(decision 3)</td>
+<td>per-step decoy rule; wording “the Alb1/AlbA/wA clade”, with the union-rule result (no target) and the unresolved wA placement beside it</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td><code>scytalone_dehydratase</code> v2</td>
+<td>(decision 4)</td>
+<td>accepted as PROVISIONAL with the hindsight disclosure</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td><code>hppd</code></td>
+<td>(decision 6)</td>
+<td>“family present”, not a placed step</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>epa-ng</td>
+<td>(decision 7)</td>
+<td>keep all placements for steps with few distinct sequences; the <code>_allplace</code> rows are used</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td><code>tyrosinase</code> representative cap</td>
+<td>(decision 8)</td>
+<td>stays at 1,000</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>PKS steps</td>
+<td>(decision 9)</td>
+<td>defined by reaction, plus an “any DHN PKS” column</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td>PKS sampling label</td>
+<td>(decision 10)</td>
+<td>“not yet adequate” accepted and stated; no identity-0.9 rerun</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>BFD re-annotation message</td>
+<td>(decision 11)</td>
+<td>written as a note by the owner (<code>Fungi_BFD_runs/docs/NOTE_reannotated_genome_prefixes_2026-11-25.md</code>, not committed there)</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td>Report layout</td>
+<td>(decision 12)</td>
+<td>DHN and L-DOPA melanin in one report; mycosporine separate</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>Per-species comparison</td>
+<td>owner request to the report agent</td>
+<td>section 6 (rules PROPOSED, not owner-approved)</td>
+</tr>
+</tbody>
+</table>
+<p>Decisions 2 to 4, 6 to 12 of 2026-11-25 are summarised from the notes’ list; the notes give the owner’s decisions without verbatim quotes.</p>
+<p><strong>Open (not decided).</strong> (1) Step definition for <code>heptaketide_pks</code> by reaction or by pathway role. (2) BFD data fix for the five re-annotated genomes (the BFD owner’s call). (3) The identity rule for clustering (lowest identity giving at least 100 clusters) is a choice of the step-5 agent. (4) Merge of PR #22 (the owner). (5) PKS outgroup definition (separate investigation).</p>
+</section>
+<section id="negative-and-unresolved-results" class="level2">
+<h2 class="anchored" data-anchor-id="negative-and-unresolved-results">9. Negative and unresolved results</h2>
+<ul>
+<li><strong>No target for <code>heptaketide_pks</code> under the union decoy rule.</strong> wA scores above the heptaketide cutoff (3,904.0 against 3,656.7) and sits inside the smallest clade of Alb1 and AlbA.</li>
+<li><strong>The strict route rule finds 0 genomes for the hexaketide and heptaketide routes</strong> (section 6.2). The cause is the <code>t3hn_reductase</code> step, not the PKS steps.</li>
+<li><strong><code>scytalone_dehydratase</code> first run stopped</strong> (4 references, 8 named members; the references did not form a clade free of a named member; exit 3). The v2 run is selection with hindsight.</li>
+<li><strong><code>atp_grasp_ligase</code>, <code>omt</code></strong>: mycosporine steps, see the mycosporine report.</li>
+<li><strong><code>hmga</code> placed with no information</strong>: one archaeal outgroup, all 2,313 candidates target.</li>
+<li><strong><code>hppd</code> split was an artefact of the 300-representative tree</strong>: 14,212 of 14,216 other-side calls moved to target with 662 representatives.</li>
+<li><strong>PKS sampling not adequate</strong> (C4: 200 of 8,842, 2.3 %). Rarefaction showed 0 target/non-target changes in 6 subsets, which is expected from the rule and is not independent evidence of topology stability.</li>
+<li><strong>Standard bootstrap did not finish in a useful time</strong> (4.1 and 4.7 h per replicate; 4 of 6 started tasks cancelled at 1 h 45 min).</li>
+<li><strong>The node joining the four PKS references has low support</strong> (FBP 66).</li>
+<li><strong>Step 4 projection</strong>: observed rows were 1.07 times the projection from a 200-genome pilot overall, with <code>asp_melanin_tyrosinase</code> 1.63 and <code>aspulvinone_e_synthase</code> 0 projected against 168 observed (MEASURED).</li>
+<li><strong><code>laccase_diphenol_v2</code> default epa-ng setting</strong>: 204 of 402 unassigned; an artefact of the 7-placement cap, repaired by all placements.</li>
+<li><strong>Disjoint classes under one rule pair</strong>: the species-level “both” class is zero under <code>D_pks / L_nontyr</code>, because no species has both a PKS placed call and a placed <code>laccase_diphenol</code> or Asp-melanin pair (0 of 7,387). This is a count, not a test of independence.</li>
+</ul>
+</section>
+<section id="what-would-change-this-and-what-was-not-done" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-this-and-what-was-not-done">10. What would change this, and what was not done</h2>
+<p><strong>What would change the conclusions.</strong></p>
+<ul>
+<li>A known-ortholog test set for each step. If a step’s known members fall outside its target, the target boundary is wrong. If non-members fall inside, the call is too wide.</li>
+<li>More labelled leaves for <code>tyrosinase</code> and <code>hppd</code>. A target that separates tyrosinase from other family members would change <code>L_route</code> from “family present” to a step call. Decisive test: add reviewed tyrosinase-family members of known other function (for example hemocyanin-like and catechol oxidase) as outgroups; if the target shrinks by thousands of proteins, the L-DOPA columns of Table 6 shrink with it.</li>
+<li>A defined PKS outgroup (a separate investigation). Until then no statement about the order of divergence of the three PKS clades is supported.</li>
+<li>A standard (non-NNI) bootstrap, or identity 0.9. If standard replicates separate Alb1 and AlbA from wA more often than 2 of 100, the heptaketide union-rule result would change.</li>
+<li>A different step definition for the PKS steps (by pathway role). It would change which genomes count under <code>D_route</code>.</li>
+</ul>
+<p><strong>Not done here.</strong></p>
+<ul>
+<li>Gain and loss for the DHN versus L-DOPA species comparison (section 7 models each pathway separately; no cross-pathway event test).</li>
+<li>PKS outgroup; resolution of wA; a hand check of the 157 + 118 unassigned PKS proteins.</li>
+<li>Ortholog naming of any candidate. No literature check of any labelled leaf. No bench test.</li>
+<li>The 45 other genomes whose protein file was rewritten with the same locus tag (the protein count differs between the carotenoid and melanin searches for 50 genomes: the 5 above and 45 more), and the 47 files newer than the genome table with an unchanged prefix, were not re-checked. Whether the 45 equal the 47 was not checked.</li>
+<li>No BUSCO filter. The carotenoid pipeline measured that a BUSCO filter of 90 removes whole lineages (MEASURED 2026-11-22: Saccharomycetes 2,560 genomes to 0, Pichiomycetes 2,929 to 2; <code>fig_presence_heatmap.py</code> docstring). It is not applied here; not re-measured for these pathways.</li>
+<li>No standard bootstrap for the PKS tree; no bootstrap for the 0.7 PKS tree. No second seed or tree for any non-PKS step. No tyrosinase tree above 1,000 representatives (the 1,000-representative tree covers 48.3 % of domains by cluster).</li>
+<li>Mycosporine (separate report).</li>
+<li>A test of the species collapse rule beyond <code>any</code>, <code>all</code> and single-genome species; no taxonomy re-curation of the BFD species names; no phylogenetic weighting.</li>
+</ul>
+</section>
+<section id="methods-tools-versions-and-files" class="level2">
+<h2 class="anchored" data-anchor-id="methods-tools-versions-and-files">11. Methods, tools, versions and files</h2>
+<p>All <code>results/</code> files are git-ignored. This report reads them by path (read only):</p>
+<ul>
+<li><code>DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/</code>: <code>search/melanin_myco_full/</code> (<code>summary.txt</code>, <code>searched.chunk*.tsv</code>, <code>candidates.chunk*.PROVISIONAL.tsv.zst</code>), <code>step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv</code>, <code>step5/melanin_dhn/pks_joint_id0.8/</code> (<code>assigned.*.PROVISIONAL.tsv</code>, <code>joint_report/calls_per_step.tsv</code>), <code>step5/other_steps_summary.tsv</code>, <code>.v2.tsv</code>, <code>.allplace.tsv</code>.</li>
+<li><code>DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/step5/melanin_dhn/</code> and <code>melanin_ldopa/</code> (<code>assigned.PROVISIONAL.tsv</code> of each run listed in <code>reports/melanin/bin/steps.tsv</code>).</li>
+<li><code>Fungi_BFD_runs/tables/species.parquet</code> (taxonomy and species names), <code>analysis/pathway_census/prefix_aliases.tsv</code>.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Per-genome calls and rules</td>
+<td><code>reports/melanin/bin/build_genome_calls.py</code>, <code>reports/melanin/bin/steps.tsv</code></td>
+</tr>
+<tr class="even">
+<td>Summary tables</td>
+<td><code>reports/melanin/bin/summarise_calls.py</code> -&gt; <code>reports/melanin/tables/*.tsv</code></td>
+</tr>
+<tr class="odd">
+<td>Generated tables of this file</td>
+<td><code>reports/melanin/bin/make_report_tables.py</code> (fills the blocks between <code>&lt;!-- BEGIN ... --&gt;</code> markers)</td>
+</tr>
+<tr class="even">
+<td>Figures</td>
+<td><code>reports/melanin/figures/bin/fig_melanin.py</code> -&gt; <code>reports/melanin/figures/out/</code></td>
+</tr>
+<tr class="odd">
+<td>One command</td>
+<td><code>reports/melanin/bin/run_tables.sh</code> (set <code>OUT</code> to a scratch folder)</td>
+</tr>
+<tr class="even">
+<td>Tool versions</td>
+<td>Python 3.12 (<code>/usr/bin/python3.12</code>), pandas, duckdb 1.5.5, matplotlib; hmmer 3.4, mafft 7.505, raxml-ng 2.0.4, epa-ng 0.3.8, mmseqs2 17-b804f, clipkit 1.3.0 (step 5 notes)</td>
+</tr>
+<tr class="odd">
+<td>Notes used</td>
+<td><code>docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md</code>, <code>2026-11-24-melanin-myco-step4-results.md</code>, <code>-step5-other-steps.md</code>, <code>-pks-placement.md</code>, <code>2026-11-24-wA-heptaketide-options.md</code>, <code>2026-11-25-epa-all-placements.md</code>, <code>2026-11-24-genome-prefix-mismatch.md</code>, <code>2026-11-24-owner-decisions-melanin-myco.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>Regenerate (run from <code>analysis/pathway_census</code>): <code>OUT=&lt;scratch dir&gt; reports/melanin/bin/run_tables.sh</code>.</p>
+<p>The <code>mycosporine</code> and <code>carotenoid</code> reports are separate pages.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

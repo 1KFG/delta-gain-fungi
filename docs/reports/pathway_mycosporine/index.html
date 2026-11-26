@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stajich Lab">
+<meta name="dcterms.date" content="2026-11-25">
+
+<title>Mycosporine biosynthesis genes in 23,376 BFD fungal genomes – DeltaGain Reports</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-c6aa55ccafe579b599e1c08b0f990df4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">DeltaGain Reports</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../delta_gain/index.html"> 
+<span class="menu-text">Delta-gain funnel</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../y1000_deposition/index.html"> 
+<span class="menu-text">Y1000+ deposition</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../upo_clades/index.html"> 
+<span class="menu-text">UPO clades</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../mucor_secretome.html"> 
+<span class="menu-text">Mucor effectors</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pigments.html"> 
+<span class="menu-text">Fungal pigments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_corpus.html"> 
+<span class="menu-text">Pathways and corpus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_carotenoid/index.html"> 
+<span class="menu-text">Carotenoid genes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pathway_melanin/index.html"> 
+<span class="menu-text">Melanin genes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pathway_mycosporine/index.html" aria-current="page"> 
+<span class="menu-text">Mycosporine genes</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#findings-so-far" id="toc-findings-so-far" class="nav-link active" data-scroll-target="#findings-so-far">1. Findings so far</a></li>
+  <li><a href="#the-pathway-its-references-decoys-and-cutoffs" id="toc-the-pathway-its-references-decoys-and-cutoffs" class="nav-link" data-scroll-target="#the-pathway-its-references-decoys-and-cutoffs">2. The pathway, its references, decoys and cutoffs</a>
+  <ul class="collapse">
+  <li><a href="#step-table" id="toc-step-table" class="nav-link" data-scroll-target="#step-table">Step table</a></li>
+  <li><a href="#references-and-decoys" id="toc-references-and-decoys" class="nav-link" data-scroll-target="#references-and-decoys">References and decoys</a></li>
+  <li><a href="#cutoff-rules-and-the-overrides" id="toc-cutoff-rules-and-the-overrides" class="nav-link" data-scroll-target="#cutoff-rules-and-the-overrides">Cutoff rules and the overrides</a></li>
+  </ul></li>
+  <li><a href="#search-coverage" id="toc-search-coverage" class="nav-link" data-scroll-target="#search-coverage">3. Search coverage</a></li>
+  <li><a href="#search-results-per-step" id="toc-search-results-per-step" class="nav-link" data-scroll-target="#search-results-per-step">4. Search results per step</a></li>
+  <li><a href="#tree-placement-step-5" id="toc-tree-placement-step-5" class="nav-link" data-scroll-target="#tree-placement-step-5">5. Tree placement (step 5)</a>
+  <ul class="collapse">
+  <li><a href="#a.-method-in-short" id="toc-a.-method-in-short" class="nav-link" data-scroll-target="#a.-method-in-short">5a. Method, in short</a></li>
+  <li><a href="#b.-ddgs" id="toc-b.-ddgs" class="nav-link" data-scroll-target="#b.-ddgs">5b. <code>ddgs</code></a></li>
+  <li><a href="#c.-omt-single-reference-placement" id="toc-c.-omt-single-reference-placement" class="nav-link" data-scroll-target="#c.-omt-single-reference-placement">5c. <code>omt</code>, single-reference placement</a></li>
+  <li><a href="#d.-atp_grasp_ligase-is-not-placed" id="toc-d.-atp_grasp_ligase-is-not-placed" class="nav-link" data-scroll-target="#d.-atp_grasp_ligase-is-not-placed">5d. <code>atp_grasp_ligase</code> is not placed</a></li>
+  </ul></li>
+  <li><a href="#what-each-result-does-and-does-not-show" id="toc-what-each-result-does-and-does-not-show" class="nav-link" data-scroll-target="#what-each-result-does-and-does-not-show">6. What each result does and does not show</a></li>
+  <li><a href="#step-presence-by-phylum-and-class" id="toc-step-presence-by-phylum-and-class" class="nav-link" data-scroll-target="#step-presence-by-phylum-and-class">7. Step presence by phylum and class</a>
+  <ul class="collapse">
+  <li><a href="#by-phylum" id="toc-by-phylum" class="nav-link" data-scroll-target="#by-phylum">By phylum</a></li>
+  <li><a href="#by-class" id="toc-by-class" class="nav-link" data-scroll-target="#by-class">By class</a></li>
+  <li><a href="#genera-named-in-the-literature-descriptive-check" id="toc-genera-named-in-the-literature-descriptive-check" class="nav-link" data-scroll-target="#genera-named-in-the-literature-descriptive-check">Genera named in the literature (descriptive check)</a></li>
+  </ul></li>
+  <li><a href="#gain-and-loss" id="toc-gain-and-loss" class="nav-link" data-scroll-target="#gain-and-loss">8. Gain and loss</a></li>
+  <li><a href="#owner-decisions-that-apply" id="toc-owner-decisions-that-apply" class="nav-link" data-scroll-target="#owner-decisions-that-apply">9. Owner decisions that apply</a></li>
+  <li><a href="#negative-and-unresolved-results" id="toc-negative-and-unresolved-results" class="nav-link" data-scroll-target="#negative-and-unresolved-results">10. Negative and unresolved results</a></li>
+  <li><a href="#what-would-change-this-and-what-was-not-done" id="toc-what-would-change-this-and-what-was-not-done" class="nav-link" data-scroll-target="#what-would-change-this-and-what-was-not-done">11. What would change this, and what was not done</a></li>
+  <li><a href="#methods-tools-and-files" id="toc-methods-tools-and-files" class="nav-link" data-scroll-target="#methods-tools-and-files">12. Methods, tools and files</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Mycosporine biosynthesis genes in 23,376 BFD fungal genomes</h1>
+<p class="subtitle lead">Mycosporine census: search, tree placement and gain and loss for three steps (PROVISIONAL)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stajich Lab </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 25, 2026</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 26, 2026</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What this is, and where it stops being reliable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>This is a <strong>working analysis of search hits and tree placements, not a gene census and not a map of mycosporine producers</strong>. Steps 1 to 5 of the census plan are done for three steps: <code>ddgs</code>, <code>omt</code> and <code>atp_grasp_ligase</code>. The other two steps of the pathway file, <code>mg_glucosyltransferase</code> and <code>glutamicol_formation</code>, have no known gene and no reference. They were not searched (section 2). So no genome in this report can be called a producer of any mycosporine. The main fungal compound, mycosporine-glutaminol-glucoside, needs the glucosylation step, and that step cannot be searched.</li>
+<li>Every output is stamped <code>PROVISIONAL</code>. The pathway file has <code>verified: false</code>. <strong>No step has a verified fungal reference</strong>: 6 of the 8 references are not verified, and the verified two are cyanobacterial (<code>refs/mycosporine/UNVERIFIED.md</code>).</li>
+<li>Nothing was tested at the bench. The only fungal genes with an assay are the three genes of one cluster in <em>Phaffia rhodozyma</em> UCD 67-385 (PMID 36983003, abstract and full text read by the curator).</li>
+<li>Only one step has a tree placement that separates anything: <code>omt</code>, and only as a <strong>single-reference placement</strong>. The step has 2 references. The placement used the <em>Phaffia</em> OMT alone as the target and put the <em>Nostoc</em> MysB in the tree as a named leaf. The target is a region of a tree, bounded by 3 decoys and 6 outgroups. <strong>It is not a set of tested mycosporine O-methyltransferases</strong> (owner decision 5 of 2026-11-25).</li>
+<li><code>ddgs</code> is placed, but 8,864 of 8,865 candidates fall in the target. The placement shows that the candidates lie near the references. It does not separate DDGS from other members of the family.</li>
+<li><code>atp_grasp_ligase</code> is not placed. No alignable non-target sequence exists (section 5d). Its call is a search hit.</li>
+<li>Counts are genomes with at least one protein that passes the cutoff or the placement. A genome with no call may have an incomplete assembly or a diverged gene. Absence is not shown.</li>
+<li>Labels: MEASURED is read from a file named in the text. PROPOSED is a choice or an estimate. UNVERIFIED is not checked.</li>
+<li><strong>Owner decisions are listed in section 9.</strong> All of them keep the <code>PROVISIONAL</code> stamp. Decisions of 2026-11-23, 2026-11-24 and 2026-11-25 apply. Two items are still open (section 9).</li>
+</ul>
+</div>
+</div>
+<section id="findings-so-far" class="level2">
+<h2 class="anchored" data-anchor-id="findings-so-far">1. Findings so far</h2>
+<ul>
+<li><strong>The search covered every listed genome.</strong> 23,376 of 23,376 genomes with a protein file were searched (244,451,875 proteins), with 0 duplicates, 0 missing and 0 extra genomes. 987 of the 24,363 rows of the genome table have no protein file and are excluded, not counted as absences (MEASURED, <code>results/search/melanin_myco_full/summary.txt</code>; the 24,363 is from <code>docs/superpowers/notes/2026-11-24-genome-prefix-mismatch.md</code>, section 4).</li>
+<li><strong>One check failed and was repaired in our copy only.</strong> 39,700 proteins in 5 genomes carry a locus tag that is not the one in the genome table, because BFD re-annotated those genomes. All 39,700 were searched. An alias file maps 13 of 13 affected candidate rows back to their genome row (section 3).</li>
+<li><strong>The search returned 32,474 candidate rows for the three steps</strong>, on 32,422 distinct proteins, in 12,739 of 23,376 genomes (54.5%): <code>omt</code> 14,441 rows, <code>atp_grasp_ligase</code> 9,167 rows and <code>ddgs</code> 8,866 rows. The counts match the 200-genome projection within a ratio of 0.91 to 0.99 (MEASURED, section 4). A row is one protein scored against one step HMM.</li>
+<li><strong>Cutoffs are weak for two of the three steps.</strong> The <code>omt</code> cutoff is an owner override (100.6), not a value derived from references. The rule value is 8.3, and it is below all five decoys. The <code>atp_grasp_ligase</code> cutoff (105.0) is set by a cyanobacterial reference held out of its own HMM, and no decoy scores on that HMM. Only <code>ddgs</code> has a margin that a decoy test supports: lowest held-out reference 463.5 against highest decoy 315.5 (section 2).</li>
+<li><strong><code>ddgs</code> is placed in 8,760 genomes (37.5% of 23,376) and <code>omt</code> in 10,446 (44.7%).</strong> The <code>atp_grasp_ligase</code> hit is in 8,859 (37.9%). All three calls are present in 7,793 genomes (33.3%): 7,657 of 19,203 Ascomycota (39.9%) and 136 of 3,242 Basidiomycota (4.2%). No other phylum has a genome with all three. These are calls of protein families that are widely distributed. They are not mycosporine-pathway calls (section 7).</li>
+<li><strong>The <code>omt</code> placement does not follow the score.</strong> Of 14,439 placed candidates, 11,730 are <code>target</code> and 2,703 are on the decoy side. The median score is 112.5 for the target and 108.6 for the other side. 10,097 of the 14,441 rows lie between 100.6 and 120.7, the band where the floor was moved (section 5c).</li>
+<li><strong>Genera named in the literature give a mixed picture.</strong> In 12 <em>Phaffia</em> genomes, 7 have all three calls and 5 have none. In 16 <em>Cystobasidium</em> genomes, <code>ddgs</code> is placed in 16 and <code>omt</code> is a search hit in 16, but the <code>omt</code> target call is present in 0 (section 7).</li>
+<li><strong>Gain and loss (section 8) covers <code>ddgs</code> and <code>omt</code> only.</strong> Co-loss is 79 branches against a matched null mean of 16.68 (q 0.002), but 73 of the 79 are tip edges and internal-edge co-loss is within the null interval. The null does not model missing data.</li>
+</ul>
+</section>
+<section id="the-pathway-its-references-decoys-and-cutoffs" class="level2">
+<h2 class="anchored" data-anchor-id="the-pathway-its-references-decoys-and-cutoffs">2. The pathway, its references, decoys and cutoffs</h2>
+<p>The pathway file has 5 steps and 3 routes (<code>pathways/mycosporine.yaml</code>, <code>routes:</code>). It lists 8 references. The step set follows the fungal paper (PMID 36983003), not the cyanobacterial gene list. Three steps have references. Two do not.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Reaction (as curated)</th>
+<th>Fungal gene</th>
+<th>References in the file</th>
+<th>Searched</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ddgs</code></td>
+<td>sedoheptulose 7-phosphate to demethyl-4-deoxygadusol (RHEA:49560, EC 4.2.3.154)</td>
+<td>DDGS of <em>Phaffia rhodozyma</em>, WEV88679.1</td>
+<td>3: 1 <em>Phaffia</em>, 2 cyanobacterial</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td><code>omt</code></td>
+<td>O-methylation to 4-deoxygadusol (curated, no Rhea reaction, no EC)</td>
+<td>OMT of <em>Phaffia rhodozyma</em>, WEV88680.1</td>
+<td>2: 1 <em>Phaffia</em>, 1 cyanobacterial (B2J6X8, 17% identical to the <em>Phaffia</em> protein)</td>
+<td>yes</td>
+</tr>
+<tr class="odd">
+<td><code>atp_grasp_ligase</code></td>
+<td>ligation of 4-deoxygadusol with glutaminol to mycosporine-glutaminol (curated)</td>
+<td>ATPG of <em>Phaffia rhodozyma</em>, WEV88681.1</td>
+<td>3: 2 <em>Phaffia</em> (490 of 500 residues equal), 1 cyanobacterial (ligates glycine)</td>
+<td>yes</td>
+</tr>
+<tr class="even">
+<td><code>mg_glucosyltransferase</code></td>
+<td>glucosylation of mycosporine-glutaminol</td>
+<td>not identified (tier T4)</td>
+<td>0</td>
+<td>no (no HMM possible)</td>
+</tr>
+<tr class="odd">
+<td><code>glutamicol_formation</code></td>
+<td>formation of mycosporine-glutamicol</td>
+<td>not identified (tier T4)</td>
+<td>0</td>
+<td>no (no HMM possible)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>pathways/mycosporine.yaml</code>, <code>kb/mycosporine/step_reaction.tsv</code>, <code>refs/mycosporine/UNVERIFIED.md</code>. The 17% and 490-of-500 values were measured by the curator on 2026-11-21 (global alignment) and are not re-measured here.</em></p>
+<p>The three routes are <code>mycosporine_glutaminol</code> (<code>ddgs</code>, <code>omt</code>, <code>atp_grasp_ligase</code>), <code>mycosporine_glutaminol_glucoside</code> (adds the unknown glucosylation) and <code>mycosporine_glutamicol</code> (adds the unknown glutamicol step). <strong>In the knowledge-base tables no route gives a product</strong>, because 4-deoxygadusol has no ChEBI entry (USER DECISION 6, <code>refs/mycosporine/UNVERIFIED.md</code>, D1). The pathway diagram script of the carotenoid report was not adapted: it needs the ChEBI cache, which this branch does not have.</p>
+<section id="step-table" class="level3">
+<h3 class="anchored" data-anchor-id="step-table">Step table</h3>
+<!-- step-table:begin -->
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th style="text-align: right;">References</th>
+<th style="text-align: right;">Decoys</th>
+<th style="text-align: right;">Cutoff of the rule</th>
+<th style="text-align: right;">Cutoff used</th>
+<th style="text-align: right;">Candidate rows</th>
+<th style="text-align: right;">Genomes with a row</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>atp_grasp_ligase</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">9,167</td>
+<td style="text-align: right;">8,859</td>
+</tr>
+<tr class="even">
+<td><code>ddgs</code></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">463.5</td>
+<td style="text-align: right;">463.5</td>
+<td style="text-align: right;">8,866</td>
+<td style="text-align: right;">8,762</td>
+</tr>
+<tr class="odd">
+<td><code>omt</code></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">100.6 (owner override)</td>
+<td style="text-align: right;">14,441</td>
+<td style="text-align: right;">12,097</td>
+</tr>
+</tbody>
+</table>
+<!-- step-table:end -->
+<p><em>Source: <code>results/step2/mycosporine/step_scores.PROVISIONAL.tsv</code>, <code>results/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv</code> and <code>results/search/melanin_myco_full/candidates.chunk*.PROVISIONAL.tsv.zst</code> (worktrees named in section 12). Table made by <code>reports/mycosporine/bin/make_step_table.py</code>. “Genomes with a row” counts distinct locus-tag prefixes, out of 23,376 searched.</em></p>
+</section>
+<section id="references-and-decoys" class="level3">
+<h3 class="anchored" data-anchor-id="references-and-decoys">References and decoys</h3>
+<ul>
+<li><strong>References.</strong> 8 in the file. 2 are verified by the curator’s rule (the cyanobacterial B2J6X9 and Q3M6C3, both <code>ddgs</code>). 6 are not: the 3 <em>Phaffia</em> GenBank proteins (no UniProtKB entry), the <em>Phaffia</em> strain VOH protein A0A9Y1GGR7 (no cited paper, strain not assayed) and the cyanobacterial B2J6X8 and B2J6X7 (unreviewed entries). <strong>The three step HMMs mix fungal and cyanobacterial references.</strong> The owner kept the mixed set on 2026-11-23 (decision 7).</li>
+<li><strong>Decoys.</strong> <code>ddgs</code> 6: bacterial cyclases valA (H2K887), acbC (Q9ZAE9), Amir_2000 (C6WFL3) and btrC (Q9S5E2), <em>E. coli</em> AroB (P07639) and the <em>A. nidulans</em> pentafunctional AROM (P07547). <code>omt</code> 5: human COMT P21964, two <em>S. pombe</em> COMTs (O42898 and Q8NKC1), imqG (B8NI24) and ankF (A0A397HK53). <code>atp_grasp_ligase</code> 6: fsqD, uncJ, aveB, <em>E. coli</em> DdlB and GshB, and the cyanobacterial MysD (B2J6X6). Q8NKC1 was added on 2026-11-24 at the owner’s request. It is annotated as a catechol O-methyltransferase and scores 120.7 on the <code>omt</code> HMM.</li>
+<li><strong>Decoys that score nothing do not test a cutoff.</strong> None of the 6 <code>atp_grasp_ligase</code> decoys has a hit at E-value 10 or lower on the step HMM. The step has a cutoff and no decoy-based check of it.</li>
+</ul>
+</section>
+<section id="cutoff-rules-and-the-overrides" class="level3">
+<h3 class="anchored" data-anchor-id="cutoff-rules-and-the-overrides">Cutoff rules and the overrides</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Ref. range (own HMM)</th>
+<th>Lowest held-out ref.</th>
+<th>Highest decoy</th>
+<th style="text-align: right;">Rule value</th>
+<th style="text-align: right;">Used</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ddgs</code></td>
+<td>779.4 to 827.6</td>
+<td>463.5 (the <em>Phaffia</em> reference held out)</td>
+<td>315.5 (acbC, Q9ZAE9)</td>
+<td style="text-align: right;">463.5</td>
+<td style="text-align: right;">463.5</td>
+<td>lowest leave-one-out score</td>
+</tr>
+<tr class="even">
+<td><code>omt</code></td>
+<td>430.0 to 481.0</td>
+<td>8.3 (B2J6X8 held out); 9.7 (<em>Phaffia</em> held out)</td>
+<td>120.7 (Q8NKC1); 100.6 before Q8NKC1</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">100.6</td>
+<td>owner override of 2026-11-23</td>
+</tr>
+<tr class="odd">
+<td><code>atp_grasp_ligase</code></td>
+<td>688.7 to 1038.1</td>
+<td>105.0 (B2J6X7 held out)</td>
+<td>none scores</td>
+<td style="text-align: right;">105.0</td>
+<td style="text-align: right;">105.0</td>
+<td>lowest leave-one-out score</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>results/step2/mycosporine/step_scores.PROVISIONAL.tsv</code>, <code>leave_one_out.PROVISIONAL.tsv</code>, <code>min_scores.PROVISIONAL.tsv</code>; <code>docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md</code>, sections 3 and 9.</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig1_step2_separation.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1. Reference and decoy scores on the three mycosporine step HMMs.</figcaption>
+</figure>
+</div>
+<p><em>The blue dot is the lowest score of an own reference, the orange diamond the lowest score of a reference held out of its own HMM, the grey square the highest decoy, and the black bar the cutoff used in the search. <strong>The figure is evidence that <code>ddgs</code> has a decoy margin and that <code>omt</code> and <code>atp_grasp_ligase</code> do not.</strong> For <code>omt</code> the bar (100.6) sits between the held-out reference score (8.3) and the highest decoy score (120.7): the cutoff is below one decoy. For <code>atp_grasp_ligase</code> the bar sits on the held-out value because no decoy scores. The two cyanobacterial references of <code>ddgs</code> are 73% identical, so their held-out scores are not independent. <a href="figures/out/fig1_step2_separation.pdf">PDF</a></em></p>
+<p><strong>Two <code>omt</code> numbers look like a contradiction and are not.</strong> The cutoff used in the search is 100.6. The file <code>results/step2/mycosporine/min_scores.PROVISIONAL.tsv</code> now holds 120.7, because it was rerun after Q8NKC1 was added. The search used the combined table made before that rerun (<code>min_scores.combined.omt100.6.PROVISIONAL.tsv</code>, sha256 <code>9b939123...b8fec</code>, <code>results/step3/melanin_myco/RUN.md</code>). The owner chose to keep the rows between 100.6 and 120.7 (“accept your reccomendation”, 2026-11-24). Those rows are 10,097 of the 14,441.</p>
+</section>
+</section>
+<section id="search-coverage" class="level2">
+<h2 class="anchored" data-anchor-id="search-coverage">3. Search coverage</h2>
+<p>The three mycosporine HMMs were searched together with 15 melanin HMMs in one run (18 HMMs, one cutoff table). This report uses only the three mycosporine steps. The run record is <code>results/search/melanin_myco_full/RUN.md</code>.</p>
+<ul>
+<li>6 chunks of 4,000 genomes (the last has 3,376), 16 CPUs and 96 GB per chunk, partition <code>intel</code>, jobs 32427878 to 32427883. Script time per chunk was 5,224 to 6,438 s (MEASURED, step 4 note, section 1). <code>sacct</code> records were not readable after the run (UNVERIFIED: job state, elapsed time and memory).</li>
+<li>23,376 genomes, 244,451,875 proteins, 0 duplicates, 0 missing, 0 extra (MEASURED, <code>summary.txt</code>).</li>
+<li><strong>Five re-annotated genomes.</strong> F8B45790 (<em>Blastobotrys sasensis</em>), FE750E90 (<em>Arxiozyma pintolopesii</em>), FE41F6C9 (<em>Fusarium oxysporum</em> Foc035), FF465DA3 (<em>Saccharomyces cerevisiae</em> YJM1417) and F6D07108 (<em>Sugiyamaella casensis</em>) have new locus tags in their protein files. 39,700 proteins in the five files failed the prefix check. All were searched. <code>prefix_aliases.tsv</code> maps the new prefixes to the old table rows, and <code>bin/make_calls_table.py --prefix-aliases</code> reads it. 13 of 13 candidate rows of the shared search that had an unmapped prefix now map to a genome row (11 to FE41F6C9, 1 to F8B45790, 1 to F6D07108). The mapping is a fix in our copy only. BUSCO and N50 in the table row describe the old assembly, and for FF465DA3 the new assembly has a different accession. <strong>The BFD owner’s data fix is still open</strong> (section 9).</li>
+<li><strong>Fifty genomes have different protein counts than in the carotenoid search.</strong> The 5 above and 45 more (total +540 proteins). In the 45 the prefix is unchanged. Whether the protein ids of earlier candidates name different proteins was not checked (UNVERIFIED, prefix-mismatch note, section 3).</li>
+<li><strong>Rows lost before placement.</strong> In the mycosporine steps: <code>ddgs</code> 1 row (8,865 of 8,866 placed) and <code>omt</code> 2 rows (14,439 of 14,441 placed). All three are from prefix FB9275E9, the re-annotated <em>Fusarium oxysporum</em> Foc035 (MEASURED, <code>other_steps_summary.tsv</code>, <code>omt_v2</code> and <code>ddgs</code> rows).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig2_candidates_per_step.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2. Candidate rows per step in the full search.</figcaption>
+</figure>
+</div>
+<p><em>Bars show rows (protein by step) at the cutoffs used, and the label gives the genomes with a row. <strong>The figure counts search hits. It is not a count of genes of the pathway</strong>: <code>omt</code> has the most rows, but its cutoff is an owner override at the decoy floor, and the <code>omt</code> HMM is a family HMM (section 5c). <a href="figures/out/fig2_candidates_per_step.pdf">PDF</a></em></p>
+</section>
+<section id="search-results-per-step" class="level2">
+<h2 class="anchored" data-anchor-id="search-results-per-step">4. Search results per step</h2>
+<p>All numbers MEASURED from <code>results/search/melanin_myco_full/summary.txt</code>. The projection is the step 3 value (PROPOSED).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th style="text-align: right;">Rows</th>
+<th style="text-align: right;">Distinct proteins</th>
+<th style="text-align: right;">Genomes with a row</th>
+<th style="text-align: right;">Max score</th>
+<th style="text-align: right;">Projected rows</th>
+<th style="text-align: right;">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>omt</code></td>
+<td style="text-align: right;">14,441</td>
+<td style="text-align: right;">14,441</td>
+<td style="text-align: right;">12,097</td>
+<td style="text-align: right;">427.1</td>
+<td style="text-align: right;">14,610</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+<tr class="even">
+<td><code>atp_grasp_ligase</code></td>
+<td style="text-align: right;">9,167</td>
+<td style="text-align: right;">9,167</td>
+<td style="text-align: right;">8,859</td>
+<td style="text-align: right;">1,038.1</td>
+<td style="text-align: right;">10,052</td>
+<td style="text-align: right;">0.91</td>
+</tr>
+<tr class="odd">
+<td><code>ddgs</code></td>
+<td style="text-align: right;">8,866</td>
+<td style="text-align: right;">8,866</td>
+<td style="text-align: right;">8,762</td>
+<td style="text-align: right;">776.3</td>
+<td style="text-align: right;">9,467</td>
+<td style="text-align: right;">0.94</td>
+</tr>
+<tr class="even">
+<td>Pathway total</td>
+<td style="text-align: right;">32,474</td>
+<td style="text-align: right;">32,422</td>
+<td style="text-align: right;">12,739</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>The pathway total has fewer distinct proteins than rows because 52 proteins have a row for more than one of the three steps (32,474 minus 32,422, derived).</p>
+<ul>
+<li><strong><code>ddgs</code>.</strong> The maximum score (776.3) is close to the range of the own references (779.4 to 827.6).</li>
+<li><strong><code>omt</code>.</strong> 10,097 rows lie in 100.6 &lt;= score &lt; 120.7 (8,829 genome prefixes) and 4,344 at 120.7 or above (4,282). The median score of the low band is 109.3. 10 rows score 200 or more. The maximum is 427.1, just below the lowest own-reference score of the <em>Phaffia</em> OMT on its own HMM (430.0). The low band spreads over the genera that have many genomes in BFD; the note did not test whether the band follows genome count. What these proteins are is not known.</li>
+<li><strong><code>atp_grasp_ligase</code>.</strong> The 6 decoys do not score on the HMM, so the 9,167 rows are not checked against a decoy.</li>
+</ul>
+</section>
+<section id="tree-placement-step-5" class="level2">
+<h2 class="anchored" data-anchor-id="tree-placement-step-5">5. Tree placement (step 5)</h2>
+<section id="a.-method-in-short" class="level3">
+<h3 class="anchored" data-anchor-id="a.-method-in-short">5a. Method, in short</h3>
+<p>Placements use the census tool chain: domain extraction, mmseqs2 clustering to representatives, mafft, clipkit, raxml-ng (LG+G4, 2 starting trees, one seed, no bootstrap) and epa-ng. A candidate is <code>target</code> when its best clade is the largest side of the tree that holds the references and no labelled leaf (decoy, outgroup or named member). “Support” is the epa-ng placement weight, not tree support. The owner accepted the largest-side rule for steps with 2 or more references as PROVISIONAL on 2026-11-24. The full method is in <code>docs/superpowers/notes/2026-11-24-melanin-myco-step5-other-steps.md</code>, section 2.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Run</th>
+<th style="text-align: right;">Floor</th>
+<th>Clustering</th>
+<th>Leaves (refs + decoys + named + outgroups + reps)</th>
+<th>Reference clade free of labelled leaves</th>
+<th>Target (largest side)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ddgs_allplace</code></td>
+<td style="text-align: right;">463.5</td>
+<td>identity 0.8, 131 clusters</td>
+<td>156 (3 + 6 + 10 + 6 + 131)</td>
+<td>yes</td>
+<td>133 leaves (smallest-side rule: 49)</td>
+</tr>
+<tr class="even">
+<td><code>omt_v2</code></td>
+<td style="text-align: right;">100.6</td>
+<td>420 clusters, capped to 300 representatives</td>
+<td>311 (1 + 3 + 1 + 6 + 300)</td>
+<td>yes</td>
+<td>134 leaves (smallest-side rule: 1)</td>
+</tr>
+<tr class="odd">
+<td><code>atp_grasp_ligase</code></td>
+<td style="text-align: right;">105.0</td>
+<td>not run</td>
+<td>none</td>
+<td>not run</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>results/step5/other_steps_summary.tsv</code>, <code>other_steps_summary.allplace.tsv</code> (<code>ddgs_allplace</code>) and <code>other_steps_summary.v2.tsv</code> (<code>omt_v2</code>); run folders <code>results/step5/mycosporine/ddgs_allplace/</code> and <code>omt_v2/</code>. The identity of the <code>omt_v2</code> run (0.7) is from the step 5 note, section 10.2.</em></p>
+</section>
+<section id="b.-ddgs" class="level3">
+<h3 class="anchored" data-anchor-id="b.-ddgs">5b. <code>ddgs</code></h3>
+<p>Use the <code>_allplace</code> row. The default epa-ng setting keeps at most 7 placements per query. The rerun keeps all placements (<code>--filter-acc-lwr 0.999 --filter-max 10000</code>, PROPOSED). For <code>ddgs</code> the rerun is the control: 0 of 8,865 calls changed (owner decision 7 of 2026-11-25; <code>docs/superpowers/notes/2026-11-25-epa-all-placements.md</code>, section 3).</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Value (MEASURED)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidates placed</td>
+<td>8,865 of 8,866 rows</td>
+</tr>
+<tr class="even">
+<td>Target / decoy side / unassigned</td>
+<td>8,864 / 1 / 0</td>
+</tr>
+<tr class="odd">
+<td>Lowest target support (placement weight)</td>
+<td>0.999 (0.95 under the default setting)</td>
+</tr>
+<tr class="even">
+<td>Assigned proteins; genomes</td>
+<td>8,864; 8,760 of 23,376 (37.5%)</td>
+</tr>
+<tr class="odd">
+<td>Genomes with 1 copy; with 2 or more</td>
+<td>8,658; 102</td>
+</tr>
+<tr class="even">
+<td>Cap hits (7 or more placements)</td>
+<td>90 queries (1.02% of 8,865) under the default; 161 with all placements, because the list is no longer cut</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>What the placement shows.</strong> 8,864 of 8,865 candidates are in the target. 130 of 131 representatives are nearest to a reference (median distance 2.29). The 6 decoys include the pentafunctional AROM protein of <em>A. nidulans</em>. The 10 named members are fungal AROM entries (108.1 to 122.4 bits). The 6 outgroups are one 2-epi-5-epi-valiolone synthase (317.1 bits), four bacterial 3-dehydroquinate synthases and one fungal AROM entry.</li>
+<li><strong>What it does not show.</strong> That a target protein makes demethyl-4-deoxygadusol. The target is bounded by the labelled leaves, and almost every candidate is inside it. The AROM decoy scores 99.8 on the <code>ddgs</code> HMM, far below the cutoff (463.5). The placement reports that the candidates are not on the AROM side. It does not test other family members that are not in the tree.</li>
+<li>One tree, one seed, 2 starting trees, no bootstrap.</li>
+</ul>
+</section>
+<section id="c.-omt-single-reference-placement" class="level3">
+<h3 class="anchored" data-anchor-id="c.-omt-single-reference-placement">5c. <code>omt</code>, single-reference placement</h3>
+<p>The first <code>omt</code> run stopped. The two references (the <em>Phaffia</em> OMT and the <em>Nostoc</em> MysB, 17% identical) do not form a clade free of decoys and outgroups. The smallest side with both holds 210 leaves, 6 outgroups and 3 decoys (job 32435495, return code 3, 14,441 candidates not placed). The owner then chose a single-reference placement (decision of 2026-11-24, accepted as provisional on 2026-11-25): the <em>Phaffia</em> reference alone is the target, and <em>Nostoc</em> MysB (B2J6X8, cut to its domain) is a named leaf. <code>refs/</code> was not changed. The step still has 2 references in every other table of this report.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>Value (MEASURED)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidates placed</td>
+<td>14,439 of 14,441 rows (2 rows: protein file missing, prefix FB9275E9)</td>
+</tr>
+<tr class="even">
+<td>Target / decoy side / unassigned</td>
+<td>11,730 / 2,703 / 6</td>
+</tr>
+<tr class="odd">
+<td>Lowest target support (placement weight)</td>
+<td>0.833</td>
+</tr>
+<tr class="even">
+<td>Assigned proteins; genomes</td>
+<td>11,730; 10,446 of 23,376 (44.7%)</td>
+</tr>
+<tr class="odd">
+<td>Genomes with 1 copy; with 2 or more</td>
+<td>9,237; 1,209</td>
+</tr>
+<tr class="even">
+<td>MysB position</td>
+<td>outside the target</td>
+</tr>
+<tr class="odd">
+<td>Long pendant queries</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Cap hits under the default setting</td>
+<td>104 queries, 0 of them unassigned; not rerun with all placements</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>results/step5/other_steps_summary.v2.tsv</code> (row <code>omt_v2</code>), <code>results/step5/mycosporine/omt_v2/</code>, and the step 5 note, section 10.2.</em></p>
+<ul>
+<li><strong>Nearest labelled leaf.</strong> 11,768 of 14,439 candidates (81.5%) are in the cluster of a representative. Of the 300 representatives, 136 are nearest to the reference (9,564 candidates in their clusters, median distance 1.99), 81 to a decoy (803; 1.43), 69 to a named member (450; 1.98) and 14 to an outgroup (951; 1.92).</li>
+<li><strong>All 2,703 other-side calls are on the decoy side.</strong> No call is on an outgroup clade (computed from <code>placements_detail.tsv</code> of <code>omt_v2</code>).</li>
+<li><strong>The call and the score are nearly independent.</strong> The medians are 112.5 for the target (range 100.6 to 427.1) and 108.6 for the other side (100.6 to 144.2). In the band 100.6 to under 120.7, 7,623 of 10,096 placed candidates (75.5%) are target calls. At 120.7 and above, 4,107 of 4,343 (94.6%) are (computed from <code>candidates_step.tsv</code> and <code>placements_detail.tsv</code>).</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig_omt_score_by_call.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3. The omt HMM score of each candidate, by tree call.</figcaption>
+</figure>
+</div>
+<p><em>Blue bars are candidates called <code>target</code>, orange bars candidates on the decoy side (4-bit bins, log counts). The black line is the cutoff used (100.6) and the dashed line the highest decoy score (120.7). <strong>The figure is evidence that the tree call is not a score split</strong>: both calls sit mostly between 100.6 and 150, and the target holds more candidates in most bins. It is not evidence that the target is made of true OMTs, and it does not show how many of the 10,097 low-band rows are mycosporine enzymes. <a href="figures/out/fig_omt_score_by_call.pdf">PDF</a></em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig_ref_tree_omt_v2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4. Reference tree of the omt single-reference placement.</figcaption>
+</figure>
+</div>
+<p><em>The blue dot is the </em>Phaffia* OMT (WEV88680.1), the green diamond the <em>Nostoc</em> MysB (B2J6X8), orange squares are decoys, black triangles are outgroups, and grey circles are candidate representatives (area is cluster size). The blue bar marks the target clade (134 leaves). <strong>The tree is evidence for where the target region lies, not for a function</strong>: the <em>Phaffia</em> OMT and MysB sit in different regions, but the note did not check that this is because they are different enzymes (UNVERIFIED). One tree, one seed, no bootstrap. <a href="figures/out/fig_ref_tree_omt_v2.pdf">PDF</a>*</p>
+<p>A tree for <code>ddgs</code> is in <code>figures/out/fig_ref_tree_ddgs_allplace.png</code> (same legend).</p>
+</section>
+<section id="d.-atp_grasp_ligase-is-not-placed" class="level3">
+<h3 class="anchored" data-anchor-id="d.-atp_grasp_ligase-is-not-placed">5d. <code>atp_grasp_ligase</code> is not placed</h3>
+<p>A tree needs a non-target leaf that aligns to the HMM. None exists. The 6 decoys pass 0 times the alignability rule (best domain 10 bits or more and 50% of the HMM or more). The 11 reviewed entries of PF02655 pass 0 (highest score 10.7 bits). 1,100 reviewed entries of five more ATP-grasp families (PF02222, PF02786, PF07478, PF08443, PF13535) pass 0 (highest 21.5 bits, coverage 0.216). Without a leaf, the target would be the whole tree, as for <code>carx</code> in the carotenoid report. The owner accepted that the step stays a search-hit step (“ok to not be rooted if that is what this means”, 2026-11-24). A fungal ATP-grasp family member that is not a reviewed entry would have to be chosen to change this.</p>
+</section>
+</section>
+<section id="what-each-result-does-and-does-not-show" class="level2">
+<h2 class="anchored" data-anchor-id="what-each-result-does-and-does-not-show">6. What each result does and does not show</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Step</th>
+<th>Call used in section 7</th>
+<th>What the call shows</th>
+<th>What it does not show</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ddgs</code></td>
+<td>placed (<code>ddgs_allplace</code>, target)</td>
+<td>the protein scores 463.5 or more on the HMM and lies in a region bounded by AROM decoys and other cyclases</td>
+<td>that it is a demethyl-4-deoxygadusol synthase; that a genome makes any mycosporine</td>
+</tr>
+<tr class="even">
+<td><code>omt</code></td>
+<td>placed (<code>omt_v2</code>, target, single reference)</td>
+<td>the protein lies in the tree region of the <em>Phaffia</em> OMT, away from 3 decoys, MysB and 6 outgroups</td>
+<td>that it is an O-methyltransferase of mycosporine; that proteins on the decoy side are not (the tree has 1 named leaf and 3 decoys)</td>
+</tr>
+<tr class="odd">
+<td><code>atp_grasp_ligase</code></td>
+<td>search hit (105.0 or more)</td>
+<td>the protein scores on the ATP-grasp ligase HMM, trained partly on a cyanobacterial reference</td>
+<td>that it is an ATP-grasp ligase of mycosporine; other family members were not tested</td>
+</tr>
+<tr class="even">
+<td><code>mg_glucosyltransferase</code>, <code>glutamicol_formation</code></td>
+<td>none</td>
+<td>nothing</td>
+<td>nothing; no gene is known</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-presence-by-phylum-and-class" class="level2">
+<h2 class="anchored" data-anchor-id="step-presence-by-phylum-and-class">7. Step presence by phylum and class</h2>
+<p>Counts are genomes with at least one call, out of 23,376 searched genomes. The calls tables come from <code>bin/make_calls_table.py --prefix-aliases prefix_aliases.tsv</code>, run with a list that holds every searched genome (the script was written for genus representatives). Placed calls use <code>assigned</code> rows. Hit calls use candidate rows. The taxonomy is <code>species.parquet</code>. A genome with no label forms its own row. The driver is <code>reports/mycosporine/bin/make_myco_calls.sh</code>. The totals match the step 4 and step 5 summaries: 8,762, 12,097 and 8,859 genomes with a hit; 8,760 and 10,446 with a placed call.</p>
+<section id="by-phylum" class="level3">
+<h3 class="anchored" data-anchor-id="by-phylum">By phylum</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phylum</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;"><code>ddgs</code> placed</th>
+<th style="text-align: right;"><code>omt</code> target</th>
+<th style="text-align: right;"><code>ddgs</code> hit</th>
+<th style="text-align: right;"><code>omt</code> hit</th>
+<th style="text-align: right;"><code>atp_grasp_ligase</code> hit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ascomycota</td>
+<td style="text-align: right;">19,203</td>
+<td style="text-align: right;">8,310 (43.3%)</td>
+<td style="text-align: right;">10,304 (53.7%)</td>
+<td style="text-align: right;">8,312</td>
+<td style="text-align: right;">11,516 (60.0%)</td>
+<td style="text-align: right;">8,377 (43.6%)</td>
+</tr>
+<tr class="even">
+<td>Basidiomycota</td>
+<td style="text-align: right;">3,242</td>
+<td style="text-align: right;">447 (13.8%)</td>
+<td style="text-align: right;">141 (4.3%)</td>
+<td style="text-align: right;">447</td>
+<td style="text-align: right;">466 (14.4%)</td>
+<td style="text-align: right;">469 (14.5%)</td>
+</tr>
+<tr class="odd">
+<td>Mucoromycota</td>
+<td style="text-align: right;">292</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">48 (16.4%)</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Kickxellomycota</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Microsporidia</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Mortierellomycota</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Chytridiomycota</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>Glomeromycota</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Neocallimastigomycota</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Basidiobolomycota</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td>Blastocladiomycota</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>Zoopagomycota</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>Entomophthoromycota</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>6 smaller groups (no label 2, Monoblepharomycota 3, Aphelidiomycota 2, Calcarisporiellomycota 1, Olpidiomycota 1, Rozellomycota 1)</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><strong>All</strong></td>
+<td style="text-align: right;"><strong>23,376</strong></td>
+<td style="text-align: right;"><strong>8,760</strong></td>
+<td style="text-align: right;"><strong>10,446</strong></td>
+<td style="text-align: right;"><strong>8,762</strong></td>
+<td style="text-align: right;"><strong>12,097</strong></td>
+<td style="text-align: right;"><strong>8,859</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>figures/out/presence_by_phylum.tsv</code>, made by <code>figures/bin/fig_presence_myco.py</code>. Percentages are of the genomes of the phylum in the second column. The only call among the 6 smaller groups is an <code>omt</code> call in one genome with no phylum label.</em></p>
+</section>
+<section id="by-class" class="level3">
+<h3 class="anchored" data-anchor-id="by-class">By class</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/fig_presence_by_class.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5. Percent of genomes with a call for each mycosporine step, by class.</figcaption>
+</figure>
+</div>
+<p><em>Each cell is the percent of the searched genomes of the class (the number is in the row label, the phylum in brackets). The first two columns (blue) are placed calls: <code>ddgs</code> in the target of <code>ddgs_allplace</code> and <code>omt</code> in the target of the single-reference <code>omt_v2</code>. The last three columns (grey) are search hits at the cutoffs used. 30 classes with at least 25 genomes are shown (23,148 of 23,376 genomes, 99.0%); the other 228 genomes are in smaller classes (<code>figures/out/presence_by_class.tsv</code>). <strong>The figure is evidence that the three step families are present in many Ascomycota and some Basidiomycota classes and absent from yeast and early-diverging classes. It does not show that the genomes make mycosporines</strong>, and the blue <code>omt</code> column depends on the single-reference target: Pichiomycetes have an <code>omt</code> hit in 29% of genomes and a target call in under 0.5%. Rows with a missing class label are split by phylum. <a href="figures/out/fig_presence_by_class.pdf">PDF</a></em></p>
+<p>What the table and figure show (counts of genomes; descriptive only):</p>
+<ul>
+<li><strong>Ascomycota.</strong> <code>ddgs</code> is placed in 93% of Dothideomycetes (2,539 of 2,724), 87% of Lecanoromycetes (416 of 478), 79% of Pezizomycetes (135 of 171), 78% of Leotiomycetes (336 of 429) and 74% of Sordariomycetes (4,454 of 5,981). It is placed in 12% of Eurotiomycetes (372 of 3,201). It is not placed in Pichiomycetes (2,929), Saccharomycetes (2,560), Dipodascomycetes (393), Schizosaccharomycetes (67) or Lipomycetes (59).</li>
+<li><strong><code>omt</code> in Eurotiomycetes.</strong> The target call is present in 2,365 of 3,201 genomes (74%), while <code>ddgs</code> is placed in 372. In the other filamentous classes the two columns agree within a few points. The cause was not investigated. The <code>omt</code> target is a tree region, so it may hold O-methyltransferases of other pathways (UNVERIFIED).</li>
+<li><strong>Basidiomycota.</strong> <code>ddgs</code> is placed in 89% of Ustilaginomycetes (118 of 133), 90% of Exobasidiomycetes (82 of 91), 93% of Cystobasidiomycetes (27 of 29), 24% of Tremellomycetes (131 of 556) and 4% of Agaricomycetes (70 of 1,844). The <code>omt</code> target call is in 134 of 556 Tremellomycetes and in at most 3 genomes of any other basidiomycete class shown. The <code>omt</code> search hit is present in 94% of Ustilaginomycetes (125 of 133) and 86% of Cystobasidiomycetes (25 of 29); those hits have no target call.</li>
+<li><strong>Mucoromycota and other early-diverging groups.</strong> No <code>ddgs</code> call in 292 Mucoromycota. 48 have an <code>omt</code> hit and none has a target call. The three steps are not found together outside Dikarya, except 3 <code>ddgs</code> calls in Basidiobolomycota (18 genomes).</li>
+<li><strong>Joint presence.</strong> 7,793 genomes (33.3%) have <code>ddgs</code> placed, <code>omt</code> in the target and an <code>atp_grasp_ligase</code> hit: 7,657 Ascomycota (39.9% of 19,203) and 136 Basidiomycota (4.2% of 3,242). 49 genomes have only <code>ddgs</code>, 2,349 only <code>omt</code> and 174 only <code>atp_grasp_ligase</code>. 11,954 genomes (51.1%) have none of the three. 11,422 genomes have at least one of the three (<code>ddgs</code> placed, <code>omt</code> target or <code>atp_grasp_ligase</code> hit), and 12,739 have at least one by search hit alone.</li>
+</ul>
+<p><strong>Reading traps for this section.</strong></p>
+<ul>
+<li><strong>The <code>ddgs</code> and <code>omt</code> columns are not independent measures of a pathway.</strong> The families are broad. Genome count follows sequencing effort: Sordariomycetes (5,981 genomes), Eurotiomycetes (3,201) and Pichiomycetes (2,929) are large because many strains were sequenced. A percent of genomes is not a percent of species.</li>
+<li><strong>The placed and hit columns of <code>ddgs</code> differ by 2 genomes</strong> (8,760 and 8,762). That is the placement removing one protein and one genome losing its only call. It is not a test of the family.</li>
+<li><strong>The <code>omt</code> hit and <code>omt</code> target columns differ a lot in some classes.</strong> A genome with a hit and no target call has no <code>omt</code> row in the target region. It may have an O-methyltransferase of another kind, or an ortholog too far from the <em>Phaffia</em> OMT to land in the target (UNVERIFIED which).</li>
+<li><strong>A class label can be missing.</strong> The 133 Microsporidia and 39 Ascomycota genomes without a class label are separate rows. The carotenoid report counts 177 genomes with no class label, and this report has a different count because it splits by phylum. They were not reconciled.</li>
+<li><strong>The 5 re-annotated genomes are in the calls through the alias.</strong> Without it, 13 rows in 3 prefixes would have no genome.</li>
+</ul>
+</section>
+<section id="genera-named-in-the-literature-descriptive-check" class="level3">
+<h3 class="anchored" data-anchor-id="genera-named-in-the-literature-descriptive-check">Genera named in the literature (descriptive check)</h3>
+<p>The check counts genomes of genera and species named as mycosporine producers in <code>refs/mycosporine/fungal_lineages.tsv</code>. It is not a sensitivity test. The reports are on single strains, BFD genomes of the same genus are other strains, and the name in the paper may differ from the BFD name.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Group in BFD</th>
+<th style="text-align: right;">Genomes</th>
+<th style="text-align: right;"><code>ddgs</code> placed</th>
+<th style="text-align: right;"><code>omt</code> target</th>
+<th style="text-align: right;"><code>omt</code> hit</th>
+<th style="text-align: right;"><code>atp_grasp_ligase</code> hit</th>
+<th style="text-align: right;">All three</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>Phaffia</em> (genus)</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td><em>Phaffia rhodozyma</em> (species)</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td><em>Cystofilobasidium</em></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><em>Cystobasidium</em></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td><em>Rhodotorula</em></td>
+<td style="text-align: right;">215</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td><em>Hortaea werneckii</em></td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td><em>Naganishia friedmannii</em></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td><em>Colletotrichum graminicola</em></td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<p><em>Source: <code>figures/out/genus_check.tsv</code>, made by <code>reports/mycosporine/bin/genus_check.py</code>. Compounds and PMIDs are in <code>refs/mycosporine/fungal_lineages.tsv</code>. The TSV has more rows (Pyricularia, Pyrenophora, Parastagonospora and others).</em></p>
+<ul>
+<li><strong>The positive side.</strong> 7 of 12 <em>Phaffia</em> genomes have all three calls. The strain of the paper, UCD 67-385, was not identified among the 12. The 5 <em>Phaffia</em> genomes with no call are not explained here. The paper reports that strain CBS 6938 lacks the cluster (<code>refs/mycosporine/fungal_lineages.tsv</code>). Whether the 5 are CBS 6938 or related strains was not checked (UNVERIFIED).</li>
+<li><strong>The unresolved side.</strong> In <em>Cystobasidium</em> (16 of 16 genomes) <code>ddgs</code> is placed and <code>atp_grasp_ligase</code> is a hit, but 0 of 16 have an <code>omt</code> target call. <em>Cystobasidium keelungensis</em> is reported to make mycosporine-glutaminol-glucoside (PMID 30182254). Whether the <em>Cystobasidium</em> OMT is a different enzyme or lies outside the target region was not tested. <em>Rhodotorula</em> (215 genomes) has no <code>ddgs</code> call. The names “<em>Rhodotorula minuta</em>” and “<em>R. slooffiae</em>” of PMID 15484286 may correspond to the BFD names <em>Cystobasidium minutum</em> (1 genome, <code>ddgs</code> placed) and <em>C. slooffiae</em> (3 genomes, <code>ddgs</code> placed). That this is the same taxon was not checked in a source (UNVERIFIED).</li>
+<li><strong>Genera with calls in most genomes.</strong> <em>Pyrenophora</em> (89 of 90 with <code>ddgs</code> placed), <em>Parastagonospora</em> (186 of 186) and <em>Pyricularia</em> (501 of 521). The curator’s note reports that the full text of PMID 36983003 names homologues of the <em>Phaffia</em> genes in <em>Pyrenophora tritici-repentis</em>, <em>Parastagonospora nodorum</em>, <em>Aspergillus clavatus</em> and <em>Magnaporthe oryzae</em> (<code>refs/mycosporine/UNVERIFIED.md</code>, item A3; not re-read here). The counts agree with those homologues existing. They do not show that those species make mycosporines.</li>
+</ul>
+</section>
+</section>
+<section id="gain-and-loss" class="level2">
+<h2 class="anchored" data-anchor-id="gain-and-loss">8. Gain and loss</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Limits of this section
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Only <code>ddgs</code> and <code>omt</code> are modelled. <code>ddgs</code> is placed, but 8,864 of 8,865 candidates are in the target, so its call is close to a search hit. The <code>omt</code> target is one tree region from one reference, not a tested enzyme. <code>atp_grasp_ligase</code> is a search-hit step and is not modelled.</li>
+<li>1,609 genus tips with data. No completeness filter. All calls are PROVISIONAL.</li>
+<li>Method as in the carotenoid report, sections 6g and 6h (genus FastTree rooted on Blastocladiomycota, Microsporidia dropped, ER and ARD by AIC, 0.8 rule, prevalence-matched simulation null with N = 2,000, no BUSCO filter). Commands and job ids: <code>results/gainloss/mycosporine/RUN.md</code>. Full note: <code>docs/superpowers/notes/2026-11-25-gainloss-melanin-myco.md</code>.</li>
+</ul>
+</div>
+</div>
+<p><strong><code>ddgs</code> is present in 664 and absent in 945 of 1,609 genus tips. <code>omt</code> is present in 635 and absent in 974.</strong> ARD fits better for both (delta AIC -151.1 and -247.9).</p>
+<ul>
+<li><code>ddgs</code>: 8 gains, 139 losses and 111 uncertain branches under ARD (35 gains under ER). 123 of the 139 losses are on tip edges.</li>
+<li><code>omt</code>: 3 gains, 152 losses and 93 uncertain (21 gains under ER). 137 of the 152 losses are on tip edges.</li>
+</ul>
+<p><strong>Co-loss is 79 branches against a prevalence-matched null mean of 16.68 (95% interval 7 to 29), p 0.0005, q 0.002.</strong> 73 of the 79 are tip edges. On internal edges co-loss is 6 against 2.19 (q 0.124). Co-gain is 1 against 0.06 (q 0.118). The null simulates each step alone. It does not model missing data or a link between the steps. Pagel: likelihood ratio 312.0, p 2.8e-66. This is not read as a link between the steps, because presence is clustered by clade.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/gl_mycosporine_counts.png" class="img-fluid figure-img"></p>
+<figcaption>Gain and loss events of <code>ddgs</code> and <code>omt</code> on the genus tree, under the ARD model. This figure is evidence for where losses sit (mostly tip edges). It is not evidence of a shared mechanism.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/out/gl_mycosporine_coevents_null_matched.png" class="img-fluid figure-img"></p>
+<figcaption>Co-events of <code>ddgs</code> and <code>omt</code> against the prevalence-matched null. This figure is evidence that co-loss exceeds the null on all edges, and that the excess shrinks on internal edges.</figcaption>
+</figure>
+</div>
+<p><strong>Negative results.</strong> No co-gain is shown. Co-loss on internal edges is within the null interval.</p>
+<p><strong>Not done.</strong> The other pathway steps. A BUSCO check of the 73 tip co-losses. A test that the <code>omt</code> region holds mycosporine methyltransferases.</p>
+</section>
+<section id="owner-decisions-that-apply" class="level2">
+<h2 class="anchored" data-anchor-id="owner-decisions-that-apply">9. Owner decisions that apply</h2>
+<p>All decisions are in <code>docs/superpowers/notes/2026-11-24-owner-decisions-melanin-myco.md</code>. Quotes are from that file. Every result stays <code>PROVISIONAL</code>. Items for the DHN and L-DOPA melanin pathways are in the melanin report and are not listed.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Item</th>
+<th>Owner’s words</th>
+<th>Applied as</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2026-11-23</td>
+<td>Step 2 decisions 3 to 9 (includes decision 6, no lowering of cutoffs, and decision 7, mycosporine references)</td>
+<td>“accept 3-9 as listed”</td>
+<td>mixed fungal and cyanobacterial references kept; no cutoff lowered</td>
+</tr>
+<tr class="even">
+<td>2026-11-23</td>
+<td><code>omt</code> floor</td>
+<td>“use 100 but we may need to investigate again in a second round”</td>
+<td>floor override 100.6 (highest decoy score at the time)</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td>Q8NKC1 as <code>omt</code> decoy</td>
+<td>“step 3 first then add Q8NKC1 as omt decoy”</td>
+<td>step 3 timing job on the 100.6 table, then Q8NKC1 added (new floor would be 120.7)</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td>Search floor for <code>omt</code></td>
+<td>“accept your reccomendation”</td>
+<td>full search at 100.6; rows between 100.6 and 120.7 kept</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td>Genome prefix fix</td>
+<td>“step 5 with PKS tree … fix tables makes sense if they are needed”</td>
+<td>alias file in our copy only</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td><code>omt</code> placement</td>
+<td>“try only Phaffia reference alone”</td>
+<td>single-reference placement, <em>Nostoc</em> MysB as a named leaf</td>
+</tr>
+<tr class="odd">
+<td>2026-11-24</td>
+<td><code>atp_grasp_ligase</code></td>
+<td>“ok to not be rooted if that is what this means”</td>
+<td>stays a search-hit step</td>
+</tr>
+<tr class="even">
+<td>2026-11-24</td>
+<td>Target rule, 2 or more references</td>
+<td>“accept largest side-rule or steps with 2 or more references”</td>
+<td>largest-side rule accepted as PROVISIONAL</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td><code>omt</code> (decision 5)</td>
+<td>as recorded in the decisions file (not a quote)</td>
+<td>accepted as provisional; the target is a tree region, not a tested mycosporine enzyme</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td>epa-ng (decision 7)</td>
+<td>as recorded (not a quote)</td>
+<td>keep all placements for steps with few distinct sequences; use <code>_allplace</code> rows (here <code>ddgs_allplace</code>)</td>
+</tr>
+<tr class="odd">
+<td>2026-11-25</td>
+<td>BFD re-annotation message (decision 11)</td>
+<td>as recorded (not a quote)</td>
+<td>written as a note at <code>Fungi_BFD_runs/docs/NOTE_reannotated_genome_prefixes_2026-11-25.md</code> (not committed there)</td>
+</tr>
+<tr class="even">
+<td>2026-11-25</td>
+<td>Report layout (decision 12)</td>
+<td>as recorded (not a quote)</td>
+<td>mycosporine in a separate report from DHN and L-DOPA melanin</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Open, not decided</strong> (from the decisions file): the BFD data fix for the five re-annotated genomes (the BFD owner’s call, prefix-mismatch note) and the merge of PR #22 (Jason). The identity rule for clustering (lowest identity giving at least 100 clusters) is a choice of the step 5 agent, not an owner decision. The <code>omt</code> “second round” that the owner mentioned on 2026-11-23 was not run (section 11).</p>
+</section>
+<section id="negative-and-unresolved-results" class="level2">
+<h2 class="anchored" data-anchor-id="negative-and-unresolved-results">10. Negative and unresolved results</h2>
+<ul>
+<li><strong>The first <code>omt</code> placement stopped.</strong> The references do not form a clade free of decoys and outgroups, because the <em>Phaffia</em> OMT and MysB are 17% identical (job 32435495, return code 3). This was a property of the reference set, not a failed run. The single-reference placement replaces it and changes what the target means (section 5c).</li>
+<li><strong>The <code>omt</code> floor is a decoy floor, not a derived cutoff.</strong> The rule value (8.3) is below all five decoys. 48 of 50 sampled reviewed fungal O-methyltransferases have no hit at E-value 1000 or lower on the <code>omt</code> HMM. Of 801 reviewed fungal entries with EC 2.1.1, 5 hit and 1 (Q8NKC1) scores at or above 100.6. No true mycosporine OMT other than the <em>Phaffia</em> protein is known, so this does not measure how many real orthologs the floor loses (UNVERIFIED; step 2 note, section 9.5).</li>
+<li><strong>The <code>omt</code> tree call is not a score split.</strong> Medians differ by 3.9 bits (112.5 and 108.6), and 75.5% of the low-band candidates are in the target. The tree has 3 decoys, 6 outgroups and 1 named leaf. A larger set of labelled O-methyltransferases could move candidates between sides. This was not tested.</li>
+<li><strong><code>atp_grasp_ligase</code> cannot be placed.</strong> 0 of 6 decoys and 0 of 1,111 reviewed ATP-grasp entries align (section 5d).</li>
+<li><strong><code>ddgs</code> placement separates almost nothing.</strong> 8,864 of 8,865 are target. This happens when the labelled leaves are few. It is not a pass of a specificity test.</li>
+<li><strong>The <code>atp_grasp_ligase</code> and <code>ddgs</code> cutoffs rest on one fungal reference each.</strong> For <code>ddgs</code> the lowest held-out score is the <em>Phaffia</em> reference (463.5). For <code>atp_grasp_ligase</code> it is a cyanobacterial reference (105.0). The two <em>Phaffia</em> ATPG sequences are 98% identical, so they are not independent.</li>
+<li><strong>A search without a cutoff shows no near-miss in <em>Rhodotorula</em> (MEASURED, 2026-11-26).</strong> All 215 <em>Rhodotorula</em> genomes with protein files have a best <code>ddgs</code> domain score of 68.5 to 109.8 bits (median 102.2). The cutoff is 463.5, so the best score is 353.7 bits below it. The best hits cover 0.57 to 0.64 of the HMM, and genomes with a <code>ddgs</code> call cover about 0.98. Lowering the cutoff by 10%, 25% or 50% adds 0 <em>Rhodotorula</em> genomes. 5 of 12 <em>Phaffia</em> genomes show the same pattern (94.3 bits, coverage 0.58), as do <em>Cystofilobasidium</em> (8 of 8), <em>Rhodosporidiobolus</em> (14 of 14) and <em>Sporobolomyces</em> (22 of 22). This does not show that these genomes lack a <code>ddgs</code> gene: only predicted proteins were searched, and the best 100-bit hit was not identified. Details: <code>docs/superpowers/notes/2026-11-26-rhodotorula-ddgs-check.md</code>.</li>
+<li><strong>The literature check of genera gives a mixed result.</strong> <em>Cystobasidium</em> has no <code>omt</code> target call, and <em>Rhodotorula</em> has no <code>ddgs</code> call (section 7). Both could mean a cutoff or target that is too narrow for non-<em>Phaffia</em> lineages, or different enzymes. No test separates the two readings.</li>
+<li><strong>No bench or metabolomics support.</strong> The mycosporine genes of non-<em>Phaffia</em> fungi are not assayed. No metabolomics data were used for mycosporines here.</li>
+<li><strong>The PKS tree support caveat does not apply</strong> (no PKS step in this pathway). Placement trees here are single-seed trees with no bootstrap.</li>
+</ul>
+</section>
+<section id="what-would-change-this-and-what-was-not-done" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-this-and-what-was-not-done">11. What would change this, and what was not done</h2>
+<p><strong>What would change the findings.</strong> A second fungal mycosporine OMT, DDGS or ATPG with an assay would show whether the cutoffs and the <code>omt</code> target region reach it. More labelled O-methyltransferases (fungal, reviewed, of other functions) in the <code>omt</code> tree would test whether the target holds non-mycosporine enzymes. A fungal ATP-grasp family member of known other function would give <code>atp_grasp_ligase</code> a leaf. A protein that scores above the cutoff and sits on the decoy side of a tree with more leaves would show that the HMM cannot separate the step.</p>
+<p><strong>Not done here:</strong></p>
+<ul>
+<li>Gain and loss (section 8). The root, the tree and the null are not chosen for this pathway.</li>
+<li>A placement for <code>atp_grasp_ligase</code>, and any search for <code>mg_glucosyltransferase</code> and <code>glutamicol_formation</code> (no gene, no HMM).</li>
+<li>A second round on the <code>omt</code> floor; a rerun of <code>omt_v2</code> with all epa-ng placements (104 cap-hit queries, 0 unassigned; no change is expected, but it is untested); bootstrap or a second seed for any tree; a test of the target rule against the number of labelled leaves.</li>
+<li>A known-ortholog test of the <em>Phaffia</em> reference as the <code>omt</code> target, and a test of why <em>Cystobasidium</em> has no <code>omt</code> target call.</li>
+<li>Copy-number tables beyond the 1-copy and 2-or-more counts of sections 5b and 5c; a quality filter (BUSCO); contamination flags; a comparison with deposited proteins; a tblastn absence check; triage (steps 7 to 12 of the census plan).</li>
+<li>A check of the 45 genomes whose protein file changed with the same locus tag (section 3), and the BFD fix of the five locus tags.</li>
+<li>A check of taxonomic synonymy between the names in the papers and BFD (section 7).</li>
+<li>The PKS steps and the melanin pathways (separate report).</li>
+</ul>
+</section>
+<section id="methods-tools-and-files" class="level2">
+<h2 class="anchored" data-anchor-id="methods-tools-and-files">12. Methods, tools and files</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>What</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pathway, references, decoys</td>
+<td><code>pathways/mycosporine.yaml</code>, <code>refs/mycosporine/*.faa</code>, <code>refs/mycosporine/decoys/</code>, <code>refs/mycosporine/UNVERIFIED.md</code>, <code>kb/mycosporine/</code></td>
+</tr>
+<tr class="even">
+<td>Step HMMs (3)</td>
+<td><code>results/hmms/mycosporine/*.PROVISIONAL.hmm</code>, <code>bin/build_step_hmms.py</code></td>
+</tr>
+<tr class="odd">
+<td>Step 2 scores</td>
+<td><code>results/step2/mycosporine/</code> (job 32415136 for the run with Q8NKC1); <code>bin/score_refs_decoys.py</code>, <code>bin/make_min_scores.py --floor-override omt=100.6</code></td>
+</tr>
+<tr class="even">
+<td>Cutoff table used in the search</td>
+<td><code>results/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv</code>, <code>RUN.md</code></td>
+</tr>
+<tr class="odd">
+<td>Step 4 search</td>
+<td><code>results/search/melanin_myco_full/</code> (<code>RUN.md</code>, <code>summary.txt</code>, <code>searched.chunk*.tsv</code>, <code>candidates.chunk*.PROVISIONAL.tsv.zst</code>); <code>bin/search_chunk.py</code>; jobs 32427878 to 32427883</td>
+</tr>
+<tr class="even">
+<td>Step 5 placement</td>
+<td><code>results/step5/mycosporine/ddgs_allplace/</code>, <code>omt_v2/</code> (also <code>ddgs/</code>, <code>ddgs_id50/</code>, <code>omt/</code>); <code>results/step5/other_steps_summary*.tsv</code>, <code>other_steps_RUN.md</code>, <code>epa_allplace_transitions.tsv</code>; <code>bin/step5_multi_ref_clades.py</code>, <code>bin/select_family_leaves.py</code>, <code>bin/screen_outgroups.py</code></td>
+</tr>
+<tr class="odd">
+<td>Genome prefixes</td>
+<td><code>prefix_aliases.tsv</code>, <code>bin/apply_prefix_aliases.py</code>, <code>bin/check_genome_prefixes.py</code></td>
+</tr>
+<tr class="even">
+<td>Calls tables</td>
+<td><code>bin/make_calls_table.py --prefix-aliases</code>, <code>reports/mycosporine/bin/make_myco_calls.sh</code></td>
+</tr>
+<tr class="odd">
+<td>Figures</td>
+<td><code>reports/mycosporine/figures/bin/fig_census_search.py</code> (figures 1 and 2; carotenoid script with a <code>--steps</code> filter), <code>fig_omt_scores.py</code> (figure 3), <code>fig_ref_tree.py</code> (figure 4 and the <code>ddgs</code> tree), <code>fig_presence_myco.py</code> (figure 5 and the phylum and class TSV); <code>reports/mycosporine/bin/genus_check.py</code></td>
+</tr>
+<tr class="even">
+<td>Step table</td>
+<td><code>reports/mycosporine/bin/make_step_table.py</code></td>
+</tr>
+<tr class="odd">
+<td>Notes</td>
+<td><code>docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md</code>, <code>2026-11-24-melanin-myco-step4-results.md</code>, <code>2026-11-24-melanin-myco-step5-other-steps.md</code>, <code>2026-11-25-epa-all-placements.md</code>, <code>2026-11-24-genome-prefix-mismatch.md</code>, <code>2026-11-24-owner-decisions-melanin-myco.md</code></td>
+</tr>
+<tr class="even">
+<td>Tool versions</td>
+<td>hmmer 3.4, mafft 7.505, raxml-ng 2.0.4, epa-ng 0.3.8, mmseqs2 17-b804f, clipkit 1.3.0, Python 3.12, zstd 1.5.6 (copied from the carotenoid report; not re-checked for the melanin and mycosporine runs, UNVERIFIED)</td>
+</tr>
+</tbody>
+</table>
+<p>All <code>results/</code> files are git-ignored. The files used here are in two worktrees, read only: <code>DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results/</code> (step 2, step 3, the search, the summary tables) and <code>DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results/</code> (the genome table and the <code>step5/mycosporine/</code> run folders).</p>
+<p>Regenerate the figures and tables (run from <code>analysis/pathway_census</code>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">R1</span><span class="op">=</span>/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_melanin/analysis/pathway_census/results</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">R2</span><span class="op">=</span>/bigdata/stajichlab/shared/projects/BFD/DeltaGain_Fungi_wt_step5b/analysis/pathway_census/results</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">SPECIES</span><span class="op">=</span>/bigdata/stajichlab/shared/projects/BFD/Fungi_BFD_runs/tables/species.parquet</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/mycosporine/figures/bin/fig_census_search.py <span class="dt">\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step2-dir</span> <span class="va">$R1</span>/step2/mycosporine <span class="at">--search-dir</span> <span class="va">$R1</span>/search/melanin_myco_full <span class="dt">\</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-scores</span> <span class="va">$R1</span>/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv <span class="dt">\</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--steps</span> ddgs omt atp_grasp_ligase <span class="at">--out-dir</span> reports/mycosporine/figures/out</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/mycosporine/bin/make_step_table.py <span class="dt">\</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--step2-dir</span> <span class="va">$R1</span>/step2/mycosporine <span class="at">--search-dir</span> <span class="va">$R1</span>/search/melanin_myco_full <span class="dt">\</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-scores</span> <span class="va">$R1</span>/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--refs-dir</span> refs/mycosporine <span class="at">--report</span> reports/mycosporine/REPORT.md <span class="at">--steps</span> ddgs omt atp_grasp_ligase</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/mycosporine/figures/bin/fig_omt_scores.py <span class="dt">\</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--omt-dir</span> <span class="va">$R2</span>/step5/mycosporine/omt_v2 <span class="at">--out-dir</span> reports/mycosporine/figures/out</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> s <span class="kw">in</span> omt_v2 ddgs_allplace<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/usr/bin/python3.12</span> reports/mycosporine/figures/bin/fig_ref_tree.py <span class="at">--step5-dir</span> <span class="va">$R2</span>/step5/mycosporine/<span class="va">$s</span> <span class="dt">\</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--out-dir</span> reports/mycosporine/figures/out <span class="at">--name</span> fig_ref_tree_<span class="va">$s</span> <span class="at">--title</span> <span class="st">"Reference tree: </span><span class="va">$s</span><span class="st">"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="va">R1</span><span class="op">=</span><span class="va">$R1</span> <span class="va">R2</span><span class="op">=</span><span class="va">$R2</span> <span class="va">SPECIES</span><span class="op">=</span><span class="va">$SPECIES</span> <span class="va">TMP</span><span class="op">=</span><span class="va">$SCRATCH</span>/myco_calls <span class="ex">reports/mycosporine/bin/make_myco_calls.sh</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ex">/usr/bin/python3.12</span> reports/mycosporine/bin/genus_check.py <span class="at">--genomes</span> <span class="va">$R2</span>/genomes.tsv.zst <span class="dt">\</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">--calls-hits</span> <span class="va">$SCRATCH</span>/myco_calls/hits/calls.tsv <span class="at">--calls-placed</span> <span class="va">$SCRATCH</span>/myco_calls/placed/calls.tsv <span class="dt">\</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span> reports/mycosporine/figures/out/genus_check.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
