@@ -18,7 +18,7 @@ toc-depth: 3
 - The PKS steps share one joint tree at identity 0.8. Its sampling is labelled **not yet adequate** (criterion C4 failed for 200 of 8,842 domains, section 4.2). Bootstrap support is from NNI-only searches, which are less optimised than standard searches. The effect on each support value is unverified. There is no outgroup in the PKS tree.
 - The tree for `scytalone_dehydratase` (v2) drops one leaf after the first tree was seen (selection with hindsight). The `omt` placement belongs to the mycosporine report and is not covered here.
 - The per-species comparison (section 6) uses placed-step calls only. Its presence rules are PROPOSED. A different reasonable rule moves the counts by thousands of species (section 6.3). The comparison reports counts only.
-- Gain and loss are not computed here (section 7 is a placeholder for a separate job).
+- Gain and loss (section 7) cover the placed steps only. Co-loss of `t4hn_reductase` with four other DHN steps exceeds the matched null, with q floor 0.036 at N = 2,000. Model choice (ARD against ER) changes gain counts strongly.
 - Labels: **MEASURED** is read from a file named in the text. **PROPOSED** is a choice or a rule. **UNVERIFIED** is not checked.
 :::
 
@@ -424,11 +424,47 @@ Table 8. The five genomes whose protein ids changed prefix. MEASURED (`tables/re
 
 ## 7. Gain and loss
 
-::: {.callout-warning}
-## PLACEHOLDER. Not computed in this report.
+::: {.callout-important}
+## Limits of this section
 
-A separate job will add the gain and loss analysis for DHN and L-DOPA melanin (ancestral states, events on the genus tree, co-events, null models), following the method of the carotenoid report. This section is intentionally empty. No number about gain or loss, rate or ancestral state appears anywhere in this report. The per-species comparison of section 6 has no gain/loss reading; it is part of the same separate job.
+- Only placed steps are modelled. `hppd` is "family present" and is excluded. Three L-DOPA steps are not modelled, because fewer than 5 genus tips have them present (`laccase_diphenol` 1, `asp_melanin_tyrosinase` 0, `aspulvinone_e_synthase` 0). The 5-tip rule is PROPOSED.
+- The `ayg1`, `mco_abr1`, `tyrosinase` and `hmga` calls are close to search hits: placed target equals nearly all candidates. For those steps a "loss" is an absent call.
+- PKS calls carry the label "sampling not yet adequate" and an NNI-only bootstrap. `heptaketide_pks` is the Alb1/AlbA/`wA` clade.
+- `hmga` was modelled before the owner set it to "family present" (decision 15). Its row is in the results folder. It is not interpreted here.
+- DHN and L-DOPA are modelled separately. 1,609 genus tips with data. Method as in the carotenoid report (6g, 6h); ARD beat ER for all 13 modelled steps, so gain counts depend heavily on the model (for example `hexaketide_pks`: 0 gains under ARD, 24 under ER). Commands and jobs: `results/gainloss/<set>/RUN.md`; note `docs/superpowers/notes/2026-11-25-gainloss-melanin-myco.md`.
 :::
+
+### DHN melanin
+
+| Step | Gains | Losses | Uncertain |
+|---|---:|---:|---:|
+| `thn_synthase` | 6 | 36 | 25 |
+| `hexaketide_pks` | 0 | 43 | 143 |
+| `heptaketide_pks` | 2 | 0 | 3 |
+| `ayg1` | 14 | 66 | 27 |
+| `t4hn_reductase` | 4 | 76 | 27 |
+| `t3hn_reductase` | 0 | 18 | 19 |
+| `scytalone_dehydratase` | 16 | 44 | 30 |
+| `laccase_abr2` | 7 | 39 | 458 |
+| `mco_abr1` | 1 | 44 | 116 |
+
+**Five of 72 co-event tests have q below 0.05 against the prevalence-matched null.** Co-loss of `t4hn_reductase` with `thn_synthase` is 17 against a null mean of 3.10, with `ayg1` 20 against 6.01, with `laccase_abr2` 9 against 1.26 and with `mco_abr1` 17 against 2.72. Co-gain of `t4hn_reductase` with `scytalone_dehydratase` is 4 against 0.11. The BH q is over 144 tests. With N = 2,000 the q cannot go below 0.036 for two tests at the p floor.
+
+"Any DHN PKS" is present in 402 of 1,609 tips (7 gains, 41 losses). Its co-loss with `t4hn_reductase` is 21 against 3.85 (q 0.014), and with `ayg1` 17 against 3.24 (q 0.025), over 84 tests. `heptaketide_pks` (9 present tips) shares no event. Pagel: 36 of 36 pairs ran, 29 with p below 0.05, 3 fits did not converge. These are not read as shared events.
+
+![Gain and loss counts per DHN step. This figure is evidence for how model choice and tip-edge losses drive the counts.](figures/out/gl_melanin_dhn_counts.png)
+
+![DHN co-events against the prevalence-matched null. This figure is evidence that co-loss involving `t4hn_reductase` exceeds the null. It is not evidence of a mechanism.](figures/out/gl_melanin_dhn_coevents_null_matched.png)
+
+### L-DOPA melanin
+
+`tyrosinase` is present in 1,146 tips (14 gains, 47 losses, 68 uncertain). Only one step is modelled as a pigment step, so no co-event test is possible for L-DOPA. A species comparison with the tyrosinase-free column is in section 6.
+
+### Negative results and not done
+
+- No heptaketide co-event. Three DHN Pagel fits did not converge (reason UNVERIFIED).
+- The as-specified null of the any-PKS run was stopped at 500 of 2,000 replicates; only its matched null is complete.
+- Not done: a larger N for the DHN null (the owner has not decided; a rerun at N = 20,000 would remove the q floor), a BUSCO check of the co-loss tips, why `t4hn_reductase` carries the signal, the effect of PKS sampling on these counts.
 
 ## 8. Owner decisions
 
@@ -489,7 +525,7 @@ Decisions 2 to 4, 6 to 12 of 2026-11-25 are summarised from the notes' list; the
 
 **Not done here.**
 
-- Gain and loss (section 7; separate job). Gain and loss for the DHN versus L-DOPA comparison is in the same separate job.
+- Gain and loss for the DHN versus L-DOPA species comparison (section 7 models each pathway separately; no cross-pathway event test).
 - PKS outgroup; resolution of wA; a hand check of the 157 + 118 unassigned PKS proteins.
 - Ortholog naming of any candidate. No literature check of any labelled leaf. No bench test.
 - The 45 other genomes whose protein file was rewritten with the same locus tag (the protein count differs between the carotenoid and melanin searches for 50 genomes: the 5 above and 45 more), and the 47 files newer than the genome table with an unchanged prefix, were not re-checked. Whether the 45 equal the 47 was not checked.

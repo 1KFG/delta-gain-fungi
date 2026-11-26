@@ -23,7 +23,7 @@
 - **`ddgs` is placed in 8,760 genomes (37.5% of 23,376) and `omt` in 10,446 (44.7%).** The `atp_grasp_ligase` hit is in 8,859 (37.9%). All three calls are present in 7,793 genomes (33.3%): 7,657 of 19,203 Ascomycota (39.9%) and 136 of 3,242 Basidiomycota (4.2%). No other phylum has a genome with all three. These are calls of protein families that are widely distributed. They are not mycosporine-pathway calls (section 7).
 - **The `omt` placement does not follow the score.** Of 14,439 placed candidates, 11,730 are `target` and 2,703 are on the decoy side. The median score is 112.5 for the target and 108.6 for the other side. 10,097 of the 14,441 rows lie between 100.6 and 120.7, the band where the floor was moved (section 5c).
 - **Genera named in the literature give a mixed picture.** In 12 *Phaffia* genomes, 7 have all three calls and 5 have none. In 16 *Cystobasidium* genomes, `ddgs` is placed in 16 and `omt` is a search hit in 16, but the `omt` target call is present in 0 (section 7).
-- **Gain and loss was not computed here.** Section 8 is a placeholder for a separate job.
+- **Gain and loss (section 8) covers `ddgs` and `omt` only.** Co-loss is 79 branches against a matched null mean of 16.68 (q 0.002), but 73 of the 79 are tip edges and internal-edge co-loss is within the null interval. The null does not model missing data.
 
 ## 2. The pathway, its references, decoys and cutoffs
 
@@ -252,13 +252,28 @@ The check counts genomes of genera and species named as mycosporine producers in
 
 ## 8. Gain and loss
 
-::: {.callout-warning}
-## PLACEHOLDER: not computed in this report
+::: {.callout-important}
+## Limits of this section
 
-Gain and loss of the three steps on the genus tree is a **separate job**. Nothing in this section is a result. The method of the carotenoid report is in `analysis/pathway_census/reports/carotenoid/REPORT.md`, sections 6g and 6h. When the job is done, replace this section with the counts (gains, losses, shared events against a null, the root choice) and the denominators.
-
-Inputs that are ready: the calls tables of section 7 (all 23,376 genomes, prefix alias applied). Inputs that are not: the genus-representative list for the mycosporine run, and the choice of which steps are placed calls and which are hits (here `ddgs_allplace` and `omt_v2` are placed, `atp_grasp_ligase` is a hit).
+- Only `ddgs` and `omt` are modelled. `ddgs` is placed, but 8,864 of 8,865 candidates are in the target, so its call is close to a search hit. The `omt` target is one tree region from one reference, not a tested enzyme. `atp_grasp_ligase` is a search-hit step and is not modelled.
+- 1,609 genus tips with data. No completeness filter. All calls are PROVISIONAL.
+- Method as in the carotenoid report, sections 6g and 6h (genus FastTree rooted on Blastocladiomycota, Microsporidia dropped, ER and ARD by AIC, 0.8 rule, prevalence-matched simulation null with N = 2,000, no BUSCO filter). Commands and job ids: `results/gainloss/mycosporine/RUN.md`. Full note: `docs/superpowers/notes/2026-11-25-gainloss-melanin-myco.md`.
 :::
+
+**`ddgs` is present in 664 and absent in 945 of 1,609 genus tips. `omt` is present in 635 and absent in 974.** ARD fits better for both (delta AIC -151.1 and -247.9).
+
+- `ddgs`: 8 gains, 139 losses and 111 uncertain branches under ARD (35 gains under ER). 123 of the 139 losses are on tip edges.
+- `omt`: 3 gains, 152 losses and 93 uncertain (21 gains under ER). 137 of the 152 losses are on tip edges.
+
+**Co-loss is 79 branches against a prevalence-matched null mean of 16.68 (95% interval 7 to 29), p 0.0005, q 0.002.** 73 of the 79 are tip edges. On internal edges co-loss is 6 against 2.19 (q 0.124). Co-gain is 1 against 0.06 (q 0.118). The null simulates each step alone. It does not model missing data or a link between the steps. Pagel: likelihood ratio 312.0, p 2.8e-66. This is not read as a link between the steps, because presence is clustered by clade.
+
+![Gain and loss events of `ddgs` and `omt` on the genus tree, under the ARD model. This figure is evidence for where losses sit (mostly tip edges). It is not evidence of a shared mechanism.](figures/out/gl_mycosporine_counts.png)
+
+![Co-events of `ddgs` and `omt` against the prevalence-matched null. This figure is evidence that co-loss exceeds the null on all edges, and that the excess shrinks on internal edges.](figures/out/gl_mycosporine_coevents_null_matched.png)
+
+**Negative results.** No co-gain is shown. Co-loss on internal edges is within the null interval.
+
+**Not done.** The other pathway steps. A BUSCO check of the 73 tip co-losses. A test that the `omt` region holds mycosporine methyltransferases.
 
 ## 9. Owner decisions that apply
 
