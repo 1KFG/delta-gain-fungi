@@ -1,0 +1,18 @@
+node	n_leaves	labelled_leaves	fbp	tbe
+target.heptaketide_pks		none (no such side)		
+target.hexaketide_pks	56	Q9Y7A7	99.0	0.999273
+target.thn_synthase	240	P79068	88.0	0.997113
+all_references	486	A0A098D6U0,A0A0S2CHA9,A0A1W7M1U5,A2QK66,A2QUI2,A2QX22,A7UMW1,F9XMW3,I1RF58,M1WG96,P79068,P9WET9,Q03149,Q0UI00,Q12053,Q12397,Q4W944,Q4WA61,Q4WZA8,Q5AUX1,Q5B0D0,Q5BH30,Q65Z23,Q6DQW3,Q9Y7A7,S0DTP6,S0DZM7	66.0	0.964861
+hepta_refs_with_wA	13	A2QUI2,Q03149,Q4WZA8	100.0	1.0
+hepta_refs	13	A2QUI2,Q03149,Q4WZA8	100.0	1.0
+hepta_inner.1	2	A2QUI2	100.0	1.0
+hepta_inner.2	2	Q03149	100.0	1.0
+hepta_inner.3	2		48.0	0.48
+hepta_inner.4	2	Q4WZA8	100.0	1.0
+hepta_inner.5	3	A2QUI2	100.0	1.0
+hepta_inner.6	3	Q03149	81.0	0.905
+hepta_inner.7	3	Q4WZA8	100.0	1.0
+hepta_inner.8	3		100.0	1.0
+hepta_inner.9	4	Q4WZA8	88.0	0.96
+hepta_inner.10	6	Q03149	100.0	1.0
+hepta_inner.11	10	Q03149,Q4WZA8	50.0	0.835556

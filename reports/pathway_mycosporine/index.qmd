@@ -1,0 +1,10 @@
+---
+title: "Mycosporine biosynthesis genes in 23,376 BFD fungal genomes"
+subtitle: "Mycosporine census: search, tree placement and gain and loss for three steps (PROVISIONAL)"
+date: 2026-11-25
+date-modified: today
+author: "Stajich Lab"
+toc-depth: 3
+---
+
+{{< include ../../analysis/pathway_census/reports/mycosporine/REPORT.md >}}

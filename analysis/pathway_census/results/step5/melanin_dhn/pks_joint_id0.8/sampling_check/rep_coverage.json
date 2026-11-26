@@ -1,0 +1,29 @@
+{
+ "cluster_sizes": {
+  "clusters": 532,
+  "domains": 9374,
+  "singletons": 263,
+  "largest": 774,
+  "median_size": 2,
+  "clusters_ge_10": 81,
+  "domains_in_clusters_ge_10": 8448,
+  "domains_in_largest_10": 4372
+ },
+ "coverage": {
+  "domains": 9374,
+  "domains_that_are_representatives": 532,
+  "non_representative_domains": 8842,
+  "with_hit_to_any_rep": 8842,
+  "pass_rule_any_rep": 8642,
+  "pass_rule_assigned_rep": 8642,
+  "non_rep_pass_rule_assigned_rep": 8642,
+  "non_rep_identity_to_assigned_rep_min": 0.758,
+  "p1": 0.798,
+  "p5": 0.802,
+  "median": 0.884,
+  "non_rep_below_min_id_assigned": 194,
+  "non_rep_without_hit_to_assigned_rep": 0,
+  "min_id": 0.8,
+  "min_cov": 0.8
+ }
+}

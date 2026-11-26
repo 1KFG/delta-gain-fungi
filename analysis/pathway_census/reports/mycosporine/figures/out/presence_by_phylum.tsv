@@ -1,0 +1,20 @@
+group	n_genomes	ddgs_placed	omt_placed	ddgs_hit	omt_hit	atp_grasp_ligase_hit
+Ascomycota	19203	8310	10304	8312	11516	8377
+Basidiomycota	3242	447	141	447	466	469
+Mucoromycota	292	0	0	0	48	0
+Kickxellomycota	177	0	0	0	8	0
+Microsporidia	133	0	0	0	0	0
+Mortierellomycota	100	0	0	0	0	0
+Chytridiomycota	83	0	0	0	5	4
+Glomeromycota	59	0	0	0	35	0
+Neocallimastigomycota	25	0	0	0	0	0
+Basidiobolomycota	18	3	0	3	16	9
+Blastocladiomycota	14	0	0	0	0	0
+Zoopagomycota	11	0	0	0	2	0
+Entomophthoromycota	9	0	0	0	0	0
+Monoblepharomycota	3	0	0	0	0	0
+Aphelidiomycota	2	0	0	0	0	0
+(no label)	2	0	1	0	1	0
+Calcarisporiellomycota	1	0	0	0	0	0
+Olpidiomycota	1	0	0	0	0	0
+Rozellomycota	1	0	0	0	0	0

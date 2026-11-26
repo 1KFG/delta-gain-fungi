@@ -1,0 +1,10 @@
+step	source	n_reps	n_present	n_absent	n_NA	n_call_genomes_not_in_reps	n_rep_calls_but_NA
+thn_synthase	placed	1654	348	1302	4	2776	0
+hexaketide_pks	placed	1654	86	1564	4	514	0
+heptaketide_pks	placed	1654	10	1640	4	2081	0
+ayg1	placed	1654	581	1069	4	7944	0
+t4hn_reductase	placed	1654	616	1034	4	7236	0
+t3hn_reductase	placed	1654	141	1509	4	2058	0
+scytalone_dehydratase	placed	1654	572	1078	4	6836	0
+laccase_abr2	placed	1654	98	1552	4	3313	0
+mco_abr1	placed	1654	84	1566	4	1813	0

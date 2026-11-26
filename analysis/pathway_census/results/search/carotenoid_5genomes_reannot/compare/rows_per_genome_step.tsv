@@ -1,0 +1,25 @@
+old_prefix	new_prefix	species	step	old_rows	new_rows	unchanged	lost	gained	presence_old	presence_new	presence_changes
+F6D07108	FAD1592B	Sugiyamaella casensis	acaa	1	2	1	0	1	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	cars	1	1	1	0	0	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	crtr	1	1	1	0	0	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	ggpp_synthase	1	1	1	0	0	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	tdh	1	1	1	0	0	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	tsp2	3	3	3	0	0	1	1	0
+F6D07108	FAD1592B	Sugiyamaella casensis	tsp3	1	1	1	0	0	1	1	0
+F8B45790	F7CB232C	Blastobotrys sasensis	crtr	2	2	2	0	0	1	1	0
+F8B45790	F7CB232C	Blastobotrys sasensis	tdh	1	1	1	0	0	1	1	0
+F8B45790	F7CB232C	Blastobotrys sasensis	tsp2	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	acaa	2	3	2	0	1	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	cars	2	3	2	0	1	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	cart	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	carx	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	crtr	4	4	4	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	ggpp_synthase	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	lycopene_cyclase	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	phytoene_desaturase	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	phytoene_synthase	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	tsp3	1	1	1	0	0	1	1	0
+FE41F6C9	FB9275E9	Fusarium oxysporum	ylo1	1	1	1	0	0	1	1	0
+FE750E90	F317F9F5	Arxiozyma pintolopesii	crtr	2	2	2	0	0	1	1	0
+FF465DA3	F629B7B9	Saccharomyces cerevisiae	crtr	2	2	1	1	1	1	1	0
+FF465DA3	F629B7B9	Saccharomyces cerevisiae	tdh	1	1	1	0	0	1	1	0

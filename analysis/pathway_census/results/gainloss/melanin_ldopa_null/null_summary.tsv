@@ -1,0 +1,17 @@
+variant	step_a	step_b	type	scope	observed	null_mean	null_lo	null_hi	n_rep	n_ge	p	q
+stationary_match0.1	tyrosinase	hmga	gain_gain	all_edges	0	0.027	0	1	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	gain_gain	internal_edges	0	0.0055	0	0	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	loss_loss	all_edges	0	0.038	0	1	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	loss_loss	internal_edges	0	0.0035	0	0	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	gain_loss	all_edges	0	0.008	0	0	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	gain_loss	internal_edges	0	0.001	0	0	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	loss_gain	all_edges	0	0.2005	0	1	2000	2000	1	1
+stationary_match0.1	tyrosinase	hmga	loss_gain	internal_edges	0	0.029	0	1	2000	2000	1	1
+stationary	tyrosinase	hmga	gain_gain	all_edges	0	0.0665	0	1	2000	2000	1	1
+stationary	tyrosinase	hmga	gain_gain	internal_edges	0	0.005	0	0	2000	2000	1	1
+stationary	tyrosinase	hmga	loss_loss	all_edges	0	0.0585	0	1	2000	2000	1	1
+stationary	tyrosinase	hmga	loss_loss	internal_edges	0	0.0075	0	0	2000	2000	1	1
+stationary	tyrosinase	hmga	gain_loss	all_edges	0	0.048	0	0	2000	2000	1	1
+stationary	tyrosinase	hmga	gain_loss	internal_edges	0	0.006	0	0	2000	2000	1	1
+stationary	tyrosinase	hmga	loss_gain	all_edges	0	0.054	0	1	2000	2000	1	1
+stationary	tyrosinase	hmga	loss_gain	internal_edges	0	0.008	0	0	2000	2000	1	1

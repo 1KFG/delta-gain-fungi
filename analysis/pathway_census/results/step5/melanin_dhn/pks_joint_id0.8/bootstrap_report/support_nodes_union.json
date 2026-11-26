@@ -1,0 +1,87 @@
+{
+ "target.heptaketide_pks": {
+  "n_leaves": "",
+  "fbp": "",
+  "tbe": ""
+ },
+ "target.hexaketide_pks": {
+  "n_leaves": 56,
+  "fbp": 99.0,
+  "tbe": 0.999273
+ },
+ "target.thn_synthase": {
+  "n_leaves": 240,
+  "fbp": 88.0,
+  "tbe": 0.997113
+ },
+ "all_references": {
+  "n_leaves": 486,
+  "fbp": 66.0,
+  "tbe": 0.964861
+ },
+ "hepta_refs_with_wA": {
+  "n_leaves": 13,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_refs": {
+  "n_leaves": 13,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.1": {
+  "n_leaves": 2,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.2": {
+  "n_leaves": 2,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.3": {
+  "n_leaves": 2,
+  "fbp": 48.0,
+  "tbe": 0.48
+ },
+ "hepta_inner.4": {
+  "n_leaves": 2,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.5": {
+  "n_leaves": 3,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.6": {
+  "n_leaves": 3,
+  "fbp": 81.0,
+  "tbe": 0.905
+ },
+ "hepta_inner.7": {
+  "n_leaves": 3,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.8": {
+  "n_leaves": 3,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.9": {
+  "n_leaves": 4,
+  "fbp": 88.0,
+  "tbe": 0.96
+ },
+ "hepta_inner.10": {
+  "n_leaves": 6,
+  "fbp": 100.0,
+  "tbe": 1.0
+ },
+ "hepta_inner.11": {
+  "n_leaves": 10,
+  "fbp": 50.0,
+  "tbe": 0.835556
+ }
+}

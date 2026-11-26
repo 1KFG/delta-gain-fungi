@@ -1,0 +1,9 @@
+root	step_a	step_b	event_a	event_b	model_a	model_b	n_events_a	n_events_b	n_eligible_b	observed	expected	perm_mean	p	q
+Blastocladiomycota	ddgs	omt	gain	gain	ARD	ARD	8	3	1550	1	0.00967741935483871	0.0115	0.0115988401159884	0.0231976802319768
+Blastocladiomycota	ddgs	omt	loss	loss	ARD	ARD	139	152	1598	79	11.0337922403004	11.0312	9.99900009999e-05	0.0003999600039996
+Blastocladiomycota	ddgs	omt	gain	loss	ARD	ARD	8	152	1598	0	0.285356695869837	0.2795	1	1
+Blastocladiomycota	ddgs	omt	loss	gain	ARD	ARD	139	3	1550	0	0.0387096774193548	0.0408	1	1
+Chytridiomycota	ddgs	omt	gain	gain	ARD	ARD	8	3	1550	1	0.00967741935483871	0.0115	0.0115988401159884	0.0231976802319768
+Chytridiomycota	ddgs	omt	loss	loss	ARD	ARD	139	153	1600	79	11.0925	11.1115	9.99900009999e-05	0.0003999600039996
+Chytridiomycota	ddgs	omt	gain	loss	ARD	ARD	8	153	1600	0	0.286875	0.2954	1	1
+Chytridiomycota	ddgs	omt	loss	gain	ARD	ARD	139	3	1550	0	0.0387096774193548	0.0408	1	1

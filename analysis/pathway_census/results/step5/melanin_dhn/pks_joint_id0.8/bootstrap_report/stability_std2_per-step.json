@@ -1,0 +1,32 @@
+{
+ "n_bootstrap_trees": 2,
+ "decoy_scope": "per_step",
+ "steps": {
+  "heptaketide_pks": {
+   "target_in_best_tree": true,
+   "trees_with_target": 2,
+   "fraction_with_target": 1.0,
+   "median_jaccard_with_best_target": 1.0,
+   "n_exact_same_target": 2
+  },
+  "hexaketide_pks": {
+   "target_in_best_tree": true,
+   "trees_with_target": 2,
+   "fraction_with_target": 1.0,
+   "median_jaccard_with_best_target": 1.0,
+   "n_exact_same_target": 2
+  },
+  "thn_synthase": {
+   "target_in_best_tree": true,
+   "trees_with_target": 2,
+   "fraction_with_target": 1.0,
+   "median_jaccard_with_best_target": 1.0,
+   "n_exact_same_target": 1
+  }
+ },
+ "hepta_refs_clade_without_wA": {
+  "trees": 0,
+  "of": 2,
+  "in_best_tree": false
+ }
+}

@@ -1,0 +1,76 @@
+phylum	group	n_genomes	ddgs_placed	omt_placed	ddgs_hit	omt_hit	atp_grasp_ligase_hit
+Ascomycota	Sordariomycetes	5981	4454	4593	4456	4632	4402
+Ascomycota	Eurotiomycetes	3201	372	2365	372	2500	396
+Ascomycota	Pichiomycetes	2929	0	1	0	850	0
+Ascomycota	Dothideomycetes	2724	2539	2443	2539	2449	2577
+Ascomycota	Saccharomycetes	2560	0	0	0	9	0
+Basidiomycota	Agaricomycetes	1844	70	3	70	49	73
+Basidiomycota	Tremellomycetes	556	131	134	131	134	133
+Ascomycota	Lecanoromycetes	478	416	411	416	411	434
+Ascomycota	Leotiomycetes	429	336	292	336	293	348
+Ascomycota	Dipodascomycetes	393	0	0	0	88	0
+Basidiomycota	Microbotryomycetes	318	0	0	0	42	0
+Mucoromycota	Mucoromycetes	273	0	0	0	45	0
+Ascomycota	Pezizomycetes	171	135	136	135	136	143
+Kickxellomycota	Kickxellomycetes	158	0	0	0	0	0
+Microsporidia	(no label)	133	0	0	0	0	0
+Basidiomycota	Ustilaginomycetes	133	118	0	118	125	128
+Basidiomycota	Pucciniomycetes	116	9	0	9	0	14
+Mortierellomycota	Mortierellomycetes	100	0	0	0	0	0
+Basidiomycota	Exobasidiomycetes	91	82	0	82	77	82
+Chytridiomycota	Chytridiomycetes	82	0	0	0	5	4
+Basidiomycota	Malasseziomycetes	82	1	0	1	1	1
+Ascomycota	Orbiliomycetes	67	14	17	14	19	14
+Ascomycota	Schizosaccharomycetes	67	0	0	0	58	0
+Glomeromycota	Glomeromycetes	59	0	0	0	35	0
+Ascomycota	Lipomycetes	59	0	0	0	0	0
+Basidiomycota	Wallemiomycetes	51	0	0	0	0	0
+Ascomycota	(no label)	39	14	17	14	18	18
+Basidiomycota	Cystobasidiomycetes	29	27	0	27	25	28
+Neocallimastigomycota	Neocallimastigomycetes	25	0	0	0	0	0
+Ascomycota	Taphrinomycetes	22	0	0	0	21	14
+Basidiobolomycota	Basidiobolomycetes	18	3	0	3	16	9
+Ascomycota	Trigonopsidomycetes	16	0	0	0	0	0
+Mucoromycota	Umbelopsidomycetes	14	0	0	0	0	0
+Ascomycota	Arthoniomycetes	13	12	10	12	10	11
+Ascomycota	Geoglossomycetes	12	0	2	0	2	0
+Zoopagomycota	Zoopagomycetes	11	0	0	0	2	0
+Blastocladiomycota	Blastocladiomycetes	11	0	0	0	0	0
+Kickxellomycota	Harpellomycetes	11	0	0	0	5	0
+Ascomycota	Pneumocystomycetes	11	0	0	0	0	0
+Ascomycota	Lichinomycetes	10	10	8	10	8	9
+Entomophthoromycota	Entomophthoromycetes	9	0	0	0	0	0
+Kickxellomycota	Dimargaritomycetes	7	0	0	0	2	0
+Mucoromycota	Endogonomycetes	5	0	0	0	3	0
+Basidiomycota	Agaricostilbomycetes	5	4	0	4	3	4
+Basidiomycota	Dacrymycetes	4	2	2	2	2	2
+Ascomycota	Candelariomycetes	4	4	4	4	4	4
+Basidiomycota	Peribolosporomycetes	4	0	1	0	4	0
+Ascomycota	Sporopachydermiomycetes	4	0	0	0	0	0
+Ascomycota	Alloascoideomycetes	3	0	0	0	0	0
+Blastocladiomycota	Physodermatomycetes	3	0	0	0	0	0
+Aphelidiomycota	Aphelidea	2	0	0	0	0	0
+Ascomycota	Coniocybomycetes	2	2	2	2	2	2
+(no label)	(no label)	2	0	1	0	1	0
+Monoblepharomycota	Monoblepharidomycetes	2	0	0	0	0	0
+Basidiomycota	Mixiomycetes	2	1	0	1	1	1
+Ascomycota	Saitoellomycetes	2	0	0	0	2	2
+Basidiomycota	Tritirachiomycetes	1	0	0	0	1	0
+Ascomycota	Xylonomycetes	1	1	1	1	1	1
+Basidiomycota	Atractiellomycetes	1	0	0	0	0	0
+Basidiomycota	Geminibasidiomycetes	1	0	0	0	0	1
+Calcarisporiellomycota	Calcarisporiellomycetes	1	0	0	0	0	0
+Chytridiomycota	Caulochytriomycetes	1	0	0	0	0	0
+Ascomycota	Xylobotryomycetes	1	0	1	0	1	1
+Basidiomycota	Classiculomycetes	1	1	1	1	1	1
+Ascomycota	Laboulbeniomycetes	1	0	0	0	0	0
+Monoblepharomycota	Hyaloraphidiomycetes	1	0	0	0	0	0
+Basidiomycota	Moniliellomycetes	1	0	0	0	0	0
+Ascomycota	Neolectomycetes	1	0	0	0	0	0
+Ascomycota	Novakomycetes	1	0	0	0	1	0
+Olpidiomycota	Olpidiomycetes	1	0	0	0	0	0
+Rozellomycota	(no label)	1	0	0	0	0	0
+Basidiomycota	Spiculogloeomycetes	1	1	0	1	1	1
+Basidiomycota	(no label)	1	0	0	0	0	0
+Kickxellomycota	(no label)	1	0	0	0	1	0
+Ascomycota	Sareomycetes	1	1	1	1	1	1

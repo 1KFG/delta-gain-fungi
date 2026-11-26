@@ -1,0 +1,15 @@
+rule	definition	genomes_positive	genomes_searched
+D_any	any placed call in any of the 9 DHN steps	10992	23376
+D_pks	any placed call in a DHN PKS step (thn_synthase, hexaketide_pks or heptaketide_pks) (headline)	5523	23376
+D_route	all placed steps of at least one yaml PKS route (strict)	1892	23376
+D_route_ox	D_route and a placed laccase_abr2 or mco_abr1	82	23376
+D_hit_any	search-hit level: at least one hit row in any of the 9 DHN steps (not placed)	11254	23376
+L_any	any placed call in tyrosinase, laccase_diphenol, aspulvinone_e_synthase or asp_melanin_tyrosinase	14449	23376
+L_dopa	tyrosinase or laccase_diphenol placed (the two routes that oxidise L-tyrosine or L-DOPA or diphenols)	14434	23376
+L_tyr	tyrosinase placed	14219	23376
+L_nontyr	laccase_diphenol placed, or both Asp-melanin steps placed (excludes the tyrosinase family)	250	23376
+L_route	complete route: tyrosinase, or laccase_diphenol, or both Asp-melanin steps (headline)	14439	23376
+L_hit_any	search-hit level: at least one hit row in the 4 pigment-forming L-DOPA steps (not placed)	14674	23376
+route_pks_thn	all placed steps of yaml route pks_thn	1892	23376
+route_pks_hexaketide	all placed steps of yaml route pks_hexaketide	0	23376
+route_pks_heptaketide	all placed steps of yaml route pks_heptaketide	0	23376

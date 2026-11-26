@@ -1,0 +1,45 @@
+{
+ "steps": [
+  "thn_synthase",
+  "hexaketide_pks",
+  "heptaketide_pks"
+ ],
+ "joint_id": "pks_joint",
+ "rows_per_step": {
+  "heptaketide_pks": 2200,
+  "hexaketide_pks": 8604,
+  "thn_synthase": 7286
+ },
+ "proteins_union": 9374,
+ "proteins_by_n_steps_hit": {
+  "1": 994,
+  "2": 8044,
+  "3": 336
+ },
+ "per_chunk": {
+  "candidates.chunk00000.PROVISIONAL.tsv.zst": {
+   "rows_steps": 3188,
+   "rows_union": 1659
+  },
+  "candidates.chunk00001.PROVISIONAL.tsv.zst": {
+   "rows_steps": 3096,
+   "rows_union": 1606
+  },
+  "candidates.chunk00002.PROVISIONAL.tsv.zst": {
+   "rows_steps": 3024,
+   "rows_union": 1566
+  },
+  "candidates.chunk00003.PROVISIONAL.tsv.zst": {
+   "rows_steps": 3089,
+   "rows_union": 1600
+  },
+  "candidates.chunk00004.PROVISIONAL.tsv.zst": {
+   "rows_steps": 3140,
+   "rows_union": 1628
+  },
+  "candidates.chunk00005.PROVISIONAL.tsv.zst": {
+   "rows_steps": 2553,
+   "rows_union": 1315
+  }
+ }
+}

@@ -1,0 +1,20 @@
+pathway	step	rows	unique_proteins	genomes_with_candidate	min_score_seen	median_score	max_score	projection_rows	ratio_observed_to_projection
+melanin_dhn	ayg1	11836	11836	8526	375.3	555.95	807.6	10169	1.16
+melanin_dhn	t4hn_reductase	10010	10010	8092	356.0	435.2	523.6	8298	1.21
+melanin_dhn	laccase_abr2	9631	9631	4923	464.3	529.6	1455.7	7363	1.31
+melanin_dhn	hexaketide_pks	8604	8604	7819	1839.0	2055.3	5176.4	7363	1.17
+melanin_dhn	scytalone_dehydratase	8604	8604	7511	240.5	296.5	336.3	7480	1.15
+melanin_dhn	thn_synthase	7286	7286	6535	1908.6	2292.6	5334.6	6195	1.18
+melanin_dhn	t3hn_reductase	2240	2240	2203	550.8	599.2	619.2	2454	0.91
+melanin_dhn	heptaketide_pks	2200	2200	2168	3659.3	4223.5	4853.9	1753	1.25
+melanin_dhn	mco_abr1	1918	1918	1897	638.4	831.9	1394.9	1519	1.26
+melanin_ldopa	tyrosinase	50452	50452	14220	63.6	320.1	838.2	51310	0.98
+melanin_ldopa	hppd	20103	20103	16847	165.3	546.7	974.9	18000	1.12
+melanin_ldopa	asp_melanin_tyrosinase	2471	2471	1847	320.5	347.1	878.6	1519	1.63
+melanin_ldopa	hmga	2313	2313	2280	983.2	1046.8	1078.5	1753	1.32
+melanin_ldopa	laccase_diphenol	402	402	215	1210.1	1323.1	1437.6	468	0.86
+melanin_ldopa	aspulvinone_e_synthase	168	168	127	1205.7	1298.1	2240.8	0	NA
+mycosporine	omt	14441	14441	12097	100.6	111.2	427.1	14610	0.99
+mycosporine	atp_grasp_ligase	9167	9167	8859	105.0	207.7	1038.1	10052	0.91
+mycosporine	ddgs	8866	8866	8762	464.4	596.4	776.3	9467	0.94
+ALL	total	170712	161355	19645				159773	1.07

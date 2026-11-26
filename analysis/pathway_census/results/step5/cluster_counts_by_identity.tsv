@@ -1,0 +1,14 @@
+step	candidate_rows	domains	c0.5	c0.7	c0.8	c0.9	c0.95	identity_used_v1	source
+aspulvinone_e_synthase	168	168	2	14	21	30	38	0.95	other_steps_RUN.md (MEASURED 2026-11-24)
+laccase_diphenol	402	402	1	1	2	5	5	0.95	other_steps_RUN.md
+mco_abr1	1918	1918	2	35	104	214	337	0.8	other_steps_RUN.md
+laccase_abr2	9631	9631	32	260	486	898	1302	0.7	other_steps_RUN.md
+asp_melanin_tyrosinase	2471	2471	7	57	105	190	249	0.8	other_steps_RUN.md
+ayg1	11836	11835	30	264	682	1509	2225	0.7	other_steps_RUN.md
+ddgs	8866	8865	8	43	131	576	1027	0.8	other_steps_RUN.md
+hmga	2313	2313	1	1	1	13	73	0.95	other_steps_RUN.md
+scytalone_dehydratase	8604	8604	4	48	207	740	1242	0.8	other_steps_RUN.md
+omt	14441	14439	66	420	839	1537	2143	0.7	other_steps_RUN.md
+hppd	20103	20098	78	662	1395	2445	3376	0.7	0.95 added 2026-11-25 (cluster_counts_extra.tsv); others other_steps_RUN.md
+tyrosinase	50452	50447	2460	5820	7928	10938	13352	0.5	other_steps_RUN.md
+sdr_union (t4hn 10010 + t3hn 2240 rows)	12250	11667	3	86	250	773	1509	0.8	0.95 added 2026-11-25

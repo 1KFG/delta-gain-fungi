@@ -1,0 +1,25 @@
+DHN_rule	LDOPA_rule	note	level	DHN_only	LDOPA_only	both	neither	n
+D_pks	L_route	HEADLINE (PROPOSED): any DHN PKS placed; complete L-DOPA-pathway route	genome	316	9232	5207	8621	23376
+D_pks	L_route	HEADLINE (PROPOSED): any DHN PKS placed; complete L-DOPA-pathway route	species_any	133	2933	1725	2596	7387
+D_pks	L_route	HEADLINE (PROPOSED): any DHN PKS placed; complete L-DOPA-pathway route	species_all	150	2929	1657	2651	7387
+D_pks	L_route	HEADLINE (PROPOSED): any DHN PKS placed; complete L-DOPA-pathway route	species_1genome_only	107	2169	1293	1976	5545
+D_any	L_any	wide: any placed step of either pathway	genome	426	3883	10566	8501	23376
+D_any	L_any	wide: any placed step of either pathway	species_any	162	1714	2949	2562	7387
+D_any	L_any	wide: any placed step of either pathway	species_all	193	1735	2856	2603	7387
+D_any	L_any	wide: any placed step of either pathway	species_1genome_only	130	1340	2125	1950	5545
+D_route	L_route	strict: all placed steps of a yaml PKS route; complete L-DOPA-pathway route	genome	2	12549	1890	8935	23376
+D_route	L_route	strict: all placed steps of a yaml PKS route; complete L-DOPA-pathway route	species_any	2	3969	689	2727	7387
+D_route	L_route	strict: all placed steps of a yaml PKS route; complete L-DOPA-pathway route	species_all	2	3944	642	2799	7387
+D_route	L_route	strict: all placed steps of a yaml PKS route; complete L-DOPA-pathway route	species_1genome_only	2	2959	503	2081	5545
+D_pks	L_nontyr	headline DHN rule; L-DOPA without the tyrosinase family	genome	5523	250	0	17603	23376
+D_pks	L_nontyr	headline DHN rule; L-DOPA without the tyrosinase family	species_any	1858	20	0	5509	7387
+D_pks	L_nontyr	headline DHN rule; L-DOPA without the tyrosinase family	species_all	1807	17	0	5563	7387
+D_pks	L_nontyr	headline DHN rule; L-DOPA without the tyrosinase family	species_1genome_only	1400	12	0	4133	5545
+D_route_ox	L_route	DHN route plus an oxidase (laccase_abr2 or mco_abr1); complete L-DOPA route	genome	1	14358	81	8936	23376
+D_route_ox	L_route	DHN route plus an oxidase (laccase_abr2 or mco_abr1); complete L-DOPA route	species_any	1	4631	27	2728	7387
+D_route_ox	L_route	DHN route plus an oxidase (laccase_abr2 or mco_abr1); complete L-DOPA route	species_all	1	4565	21	2800	7387
+D_route_ox	L_route	DHN route plus an oxidase (laccase_abr2 or mco_abr1); complete L-DOPA route	species_1genome_only	1	3443	19	2082	5545
+D_hit_any	L_hit_any	search-hit level (not placed): any hit row	genome	218	3638	11036	8484	23376
+D_hit_any	L_hit_any	search-hit level (not placed): any hit row	species_any	105	1610	3124	2548	7387
+D_hit_any	L_hit_any	search-hit level (not placed): any hit row	species_all	116	1634	3048	2589	7387
+D_hit_any	L_hit_any	search-hit level (not placed): any hit row	species_1genome_only	86	1263	2258	1938	5545

@@ -1,0 +1,41 @@
+reference	step	rank	neighbour	neighbour_role	distance	genus	class	n_candidates_in_cluster
+A2QUI2	heptaketide_pks	1	F567B2D0_001384-T1	representative	0.4051	Evansstolkia	Eurotiomycetes	1643
+A2QUI2	heptaketide_pks	2	FB111ADF_006407-T1	representative	0.4269	Aspergillus	Eurotiomycetes	123
+A2QUI2	heptaketide_pks	3	Q03149	decoy	0.4325			
+A2QUI2	heptaketide_pks	4	Q4WZA8	reference	0.4546			
+A2QUI2	heptaketide_pks	5	F6516A3B_001653-T1	representative	0.4633	Aspergillus	Eurotiomycetes	445
+A2QUI2	heptaketide_pks	6	FEA88614_003413-T1	representative	0.4677	Aspergillus	Eurotiomycetes	3
+A2QUI2	heptaketide_pks	7	P9WET9	named_member	0.5327			
+A2QUI2	heptaketide_pks	8	F19DB45F_005751-T1	representative	0.7257	Talaromyces	Eurotiomycetes	106
+A2QUI2	heptaketide_pks	9	F1328CD0_001936-T1	representative	0.7405	Thermomyces	Eurotiomycetes	3
+A2QUI2	heptaketide_pks	10	F484F006_000607-T1	representative	0.9431	Chaenotheca	Coniocybomycetes	1
+P79068	thn_synthase	1	FEDC6EEB_005363-T1	representative	0.0881	Colletotrichum	Sordariomycetes	15
+P79068	thn_synthase	2	FF07C2FC_011865-T1	representative	0.0927	Colletotrichum	Sordariomycetes	1
+P79068	thn_synthase	3	FF07C2FC_003596-T1	representative	0.0990	Colletotrichum	Sordariomycetes	1
+P79068	thn_synthase	4	FA91DCCD_007362-T1	representative	0.3259	Verticillium	Sordariomycetes	130
+P79068	thn_synthase	5	F178DE30_009772-T1	representative	0.3276	Verticillium	Sordariomycetes	2
+P79068	thn_synthase	6	F83CC4D5_008197-T1	representative	0.3365	Verticillium	Sordariomycetes	2
+P79068	thn_synthase	7	FA8BAD3C_007578-T1	representative	0.3429	Verticillium	Sordariomycetes	3
+P79068	thn_synthase	8	F499AA07_006853-T1	representative	0.4089	Scopulariopsis	Sordariomycetes	24
+P79068	thn_synthase	9	F0E91970_008844-T1	representative	0.4393	Sordariomycetes sp.	Sordariomycetes	1
+P79068	thn_synthase	10	FFF799BA_002024-T1	representative	0.4455	Lomentospora	Sordariomycetes	6
+Q4WZA8	heptaketide_pks	1	F6516A3B_001653-T1	representative	0.0086	Aspergillus	Eurotiomycetes	445
+Q4WZA8	heptaketide_pks	2	FEA88614_003413-T1	representative	0.0130	Aspergillus	Eurotiomycetes	3
+Q4WZA8	heptaketide_pks	3	A2QUI2	reference	0.4546			
+Q4WZA8	heptaketide_pks	4	F567B2D0_001384-T1	representative	0.4694	Evansstolkia	Eurotiomycetes	1643
+Q4WZA8	heptaketide_pks	5	FB111ADF_006407-T1	representative	0.5360	Aspergillus	Eurotiomycetes	123
+Q4WZA8	heptaketide_pks	6	Q03149	decoy	0.5416			
+Q4WZA8	heptaketide_pks	7	P9WET9	named_member	0.5970			
+Q4WZA8	heptaketide_pks	8	F19DB45F_005751-T1	representative	0.7900	Talaromyces	Eurotiomycetes	106
+Q4WZA8	heptaketide_pks	9	F1328CD0_001936-T1	representative	0.8049	Thermomyces	Eurotiomycetes	3
+Q4WZA8	heptaketide_pks	10	F484F006_000607-T1	representative	1.0075	Chaenotheca	Coniocybomycetes	1
+Q9Y7A7	hexaketide_pks	1	FB376A6A_000385-T1	representative	0.0144	Exophiala	Eurotiomycetes	3
+Q9Y7A7	hexaketide_pks	2	F8505CD7_004338-T1	representative	0.1372	Exophiala	Eurotiomycetes	219
+Q9Y7A7	hexaketide_pks	3	FF5F397B_013028-T1	representative	0.1465	Hypoxylon	Sordariomycetes	1
+Q9Y7A7	hexaketide_pks	4	FC3DA32D_000978-T1	representative	0.5194	Endocarpon	Eurotiomycetes	6
+Q9Y7A7	hexaketide_pks	5	F7200082_001845-T1	representative	0.5542	Verrucariales sp.	Eurotiomycetes	2
+Q9Y7A7	hexaketide_pks	6	FC717AC5_004923-T1	representative	0.6340	Pyrenula	Eurotiomycetes	5
+Q9Y7A7	hexaketide_pks	7	F192E294_001423-T1	representative	0.7036	Pseudophaeomoniella	Eurotiomycetes	3
+Q9Y7A7	hexaketide_pks	8	FCDEE62D_003091-T1	representative	0.8983	Acarospora	Lecanoromycetes	4
+Q9Y7A7	hexaketide_pks	9	FDA08A41_007079-T1	representative	0.9353	Bachmanniomyces	Lecanoromycetes	2
+Q9Y7A7	hexaketide_pks	10	F024C7AC_002539-T1	representative	0.9676	Cladonia	Lecanoromycetes	10

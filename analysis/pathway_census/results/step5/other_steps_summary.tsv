@@ -1,0 +1,37 @@
+run	step	identity	candidates	domains_extracted	extract_failures	clusters	representatives	leaves	n_refs	n_decoys	n_named	n_outgroups	refs_clade_free	smallest_rule_target	target_size	target_reps	call_target	call_decoy	call_unassigned	call_other	support_min	assigned_proteins	genomes_assigned	genomes_searched	copies_1	copies_2plus	candidates_equal_placements
+tyrosinase	tyrosinase		50452	50447	5	2460	300	310	7	0	0	3	True	306	307	300	50426	0	21	0	0.794	50426	14212	23376	2546	11666	False
+laccase_diphenol	laccase_diphenol		402	402	0	5	5	25	3	1	10	6	True	8	8	5	402	0	0	0	0.998	402	215	23376	31	184	True
+hmga	hmga		2313	2313	0	73	73	76	2	0	0	1	True	65	75	73	2313	0	0	0	0.97	2313	2280	23376	2248	32	True
+asp_melanin_tyrosinase	asp_melanin_tyrosinase		2471	2471	0	105	105	112	1	4	2	0	True	1	5	4	42	2429	0	0	0.991	42	42	23376	42	0	True
+hppd	hppd		20103	20098	5	662	300	305	1	1	0	3	True	1	38	37	5850	14216	32	0	0.531	5850	5685	23376	5524	161	False
+aspulvinone_e_synthase	aspulvinone_e_synthase		168	168	0	38	38	55	1	3	8	5	True	1	18	17	83	85	0	0	0.983	83	49	23376	15	34	True
+ayg1	ayg1		11836	11835	1	264	264	283	3	4	6	6	True	266	267	264	11835	0	0	0	0.974	11835	8525	23376	5782	2743	False
+t4hn_reductase	t4hn_reductase		10010	10010	0	250	250	281	5	4	12	10	True	192	192	187	8457	666	887	0	0.971	8457	7852	23376	7260	592	True
+t3hn_reductase	t3hn_reductase		2240	2240	0	250	250	281	3	4	14	10	True	4	5	2	2236	0	4	0	0.508	2236	2199	23376	2171	28	True
+laccase_abr2	laccase_abr2		9631	9631	0	260	260	267	1	1	5	0	True	1	82	81	3809	5822	0	0	0.991	3809	3411	23376	3067	344	True
+mco_abr1	mco_abr1		1918	1918	0	104	104	124	2	2	10	6	True	26	106	104	1918	0	0	0	0.975	1918	1897	23376	1876	21	True
+ddgs	ddgs		8866	8865	1	131	131	156	3	6	10	6	True	49	133	130	8864	1	0	0	0.95	8864	8760	23376	8658	102	False
+tyrosinase_par	tyrosinase		50452	50447	5	2460	300	310	7	0	0	3	True	306	307	300	50426	0	21	0	0.794	50426	14212	23376	2546	11666	False
+aspulvinone_e_synthase_id50	aspulvinone_e_synthase	50	168	168	0	2	2	19	1	3	8	5	True	1	3	2	44	5	119	0	0.995	44	41	23376	38	3	True
+laccase_diphenol_id50	laccase_diphenol	50	402	402	0	1	1	21	3	1	10	6	True	4	4	1	402	0	0	0	1.0	402	215	23376	31	184	True
+mco_abr1_id50	mco_abr1	50	1918	1918	0	2	2	22	2	2	10	6	True	4	4	2	1648	0	270	0	0.537	1648	1630	23376	1612	18	True
+laccase_abr2_id50	laccase_abr2	50	9631	9631	0	32	32	41	1	1	7	0	True	1	5	4	1045	7778	808	0	0.93	1045	1019	23376	993	26	True
+asp_melanin_tyrosinase_id50	asp_melanin_tyrosinase	50	2471	2471	0	7	7	14	1	4	2	0	True	1	1	0	0	2306	165	0		0	0	23376	0	0	True
+ayg1_id50	ayg1	50	11836	11835	1	30	30	49	3	4	6	6	True	31	33	30	11826	0	9	0	0.982	11826	8525	23376	5786	2739	False
+ddgs_id50	ddgs	50	8866	8865	1	8	8	33	3	6	10	6	True	8	8	5	8861	3	1	0	0.977	8861	8757	23376	8655	102	False
+scytalone_dehydratase	not finished																										
+scytalone_dehydratase_id50	not finished																										
+omt	not finished																										
+scytalone_dehydratase_v2	scytalone_dehydratase		8604	8604	0	207	207	218	4	0	7	0	True	117	167	163	8050	533	21	0	0.869	8050	7408	23376	6783	625	True
+omt_v2	omt		14441	14439	2	420	300	311	1	3	1	6	True	1	134	133	11730	2703	6	0	0.833	11730	10446	23376	9237	1209	False
+tyrosinase_v2	tyrosinase		50452	50447	5	2460	1000	1010	7	0	0	3	True	892	1007	1000	50433	0	14	0	0.625	50433	14216	23376	2548	11668	False
+hppd_v2	hppd		20103	20098	5	662	662	667	1	1	0	3	True	1	662	661	20083	1	14	0	0.674	20083	16830	23376	14185	2645	False
+laccase_diphenol_v2	laccase_diphenol		402	402	0	67	67	87	3	1	10	6	True	70	70	67	198	0	204	0	0.781	198	135	23376	72	63	True
+laccase_diphenol_v2_epafilter	laccase_diphenol		402	402	0	67	67	87	3	1	10	6	True	70	70	67	402	0	0	0	0.999	402	215	23376	31	184	True
+laccase_diphenol_v2_allplace	laccase_diphenol		402	402	0	67	67	87	3	1	10	6	True	70	70	67	402	0	0	0	0.999	402	215	23376	31	184	True
+hppd_allplace	hppd		20103	20098	5	662	300	305	1	1	0	3	True	1	38	37	5850	14234	14	0	0.531	5850	5685	23376	5524	161	False
+tyrosinase_allplace	tyrosinase		50452	50447	5	2460	300	310	7	0	0	3	True	306	307	300	50446	0	1	0	0.952	50446	14219	23376	2544	11675	False
+tyrosinase_v2_allplace	tyrosinase		50452	50447	5	2460	1000	1010	7	0	0	3	True	892	1007	1000	50447	0	0	0	0.808	50447	14219	23376	2544	11675	False
+aspulvinone_e_synthase_id50_allplace	aspulvinone_e_synthase	50	168	168	0	2	2	19	1	3	8	5	True	1	3	2	44	5	119	0	1.0	44	41	23376	38	3	True
+scytalone_dehydratase_v2_allplace	scytalone_dehydratase		8604	8604	0	207	207	218	4	0	7	0	True	117	167	163	8050	533	21	0	0.999	8050	7408	23376	6783	625	True
+ddgs_allplace	ddgs		8866	8865	1	131	131	156	3	6	10	6	True	49	133	130	8864	1	0	0	0.999	8864	8760	23376	8658	102	False

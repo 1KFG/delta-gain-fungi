@@ -231,6 +231,42 @@ steps:
     domains_any: [TIGR01263]
     copy_expect: single
     role: catalytic
+    decoys:
+      - accession: P50107
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "GLO1"
+        pmid: null
+        verified: true
+      - accession: Q56415
+        species: "Serratia marcescens"
+        gene_name: "fosA"
+        pmid: null
+        verified: true
+      - accession: Q99XE5
+        species: "Staphylococcus aureus (strain Mu50 / ATCC 700699)"
+        gene_name: "ble"
+        pmid: null
+        verified: true
+      - accession: O52791
+        species: "Amycolatopsis orientalis"
+        gene_name: "HmaS"
+        pmid: null
+        verified: true
+      - accession: P06622
+        species: "Pseudomonas putida"
+        gene_name: "xylE"
+        pmid: null
+        verified: true
+      - accession: A0A0U2WCB2
+        species: "Mycosarcoma maydis"
+        gene_name: "RDO1"
+        pmid: null
+        verified: true
+      - accession: Q0D1P8
+        species: "Aspergillus terreus (strain NIH 2624 / FGSC A1156)"
+        gene_name: "terI"
+        pmid: null
+        verified: true
     fused_with: []
     optional: true
     reactions:
@@ -256,6 +292,37 @@ steps:
     domains_any: [TIGR01015]
     copy_expect: single
     role: catalytic
+    decoys:
+      - accession: O43123
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "maiA"
+        pmid: null
+        verified: true
+      - accession: O43708
+        species: "Homo sapiens"
+        gene_name: "GSTZ1"
+        pmid: null
+        verified: true
+      - accession: P47096
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "BNA1"
+        pmid: null
+        verified: true
+      - accession: Q0QFQ2
+        species: "Aquipseudomonas alcaligenes"
+        gene_name: "hbzE"
+        pmid: null
+        verified: true
+      - accession: Q16878
+        species: "Homo sapiens"
+        gene_name: "CDO1"
+        pmid: null
+        verified: true
+      - accession: P47125
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "BNA2"
+        pmid: null
+        verified: true
     fused_with: []
     optional: true
     reactions:
@@ -276,6 +343,37 @@ steps:
     domains_any: [PF00975]
     copy_expect: single
     role: catalytic
+    decoys:
+      - accession: B7STY1
+        species: "Tapinella panuoides"
+        gene_name: "atrA"
+        pmid: null
+        verified: true
+      - accession: Q0CT94
+        species: "Aspergillus terreus (strain NIH 2624 / FGSC A1156)"
+        gene_name: "atrA"
+        pmid: null
+        verified: true
+      - accession: A7XRY0
+        species: "Aspergillus nidulans (strain FGSC A4 / ATCC 38163 / CBS 112.46 / NRRL 194 / M139)"
+        gene_name: "tdiA"
+        pmid: null
+        verified: true
+      - accession: P07702
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "LYS2"
+        pmid: null
+        verified: true
+      - accession: P08659
+        species: "Photinus pyralis"
+        gene_name: "Luciferase"
+        pmid: null
+        verified: true
+      - accession: Q01574
+        species: "Saccharomyces cerevisiae (strain ATCC 204508 / S288c)"
+        gene_name: "ACS1"
+        pmid: null
+        verified: true
     fused_with: []
     optional: true
     reactions:

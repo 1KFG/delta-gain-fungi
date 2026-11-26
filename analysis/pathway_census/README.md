@@ -361,3 +361,97 @@ Tests: `tests/test_single_ref_tools.py`.
 ### Fifth step: ggpp_synthase (placed) on the new primary
 
 Record: `results/gainloss/carotenoid_noMicro_blasto_5steps/RUN.md`. ggpp_synthase is present in 1,540 of 1,609 tips with data (96%); the model finds 0 gains, 60 losses (57 on tip edges), 0 uncertain branches, and ER fits as well as ARD. Its co-loss with the other steps (3 to 4 branches, all tip edges) and its co-gain (none) are within chance in the tree-aware null. Absent calls are mostly single tips; grouped absences are in Pichiomycetes and Agaricomycetes. Code: `bin/gainloss_null_models.R`, `bin/run_null_sim_models.R`, `bin/summarise_null_models.R`, `bin/ggpp_absence_analysis.R`.
+
+## Steps 1 and 2 for melanin and mycosporine
+
+Note with the sign-off table and owner decisions: `docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md`. Branch `pathway-census-melanin-myco`. All outputs are PROVISIONAL and in git-ignored `results/`.
+
+Commands (run from `analysis/pathway_census`; `<p>` is `melanin_dhn`, `melanin_ldopa` or `mycosporine`):
+
+```
+module load hmmer/3.4
+module load mafft/7.505
+/usr/bin/python3.12 bin/build_step_hmms.py --pathway pathways/<p>.yaml --refs-dir refs/<p> --out-dir results/hmms/<p> --provisional
+# mycosporine: add  --steps ddgs omt atp_grasp_ligase  (two steps have no reference)
+PC_ROOT=$PWD PC_PATHWAY_ID=<p> PC_OUT_DIR=$PWD/results/step2/<p> PC_TAG=PROVISIONAL \
+  sbatch --constraint="ryzen|cascade|broadwell" slurm/score_refs_decoys.sbatch
+/usr/bin/python3.12 bin/make_min_scores.py --step-scores results/step2/<p>/step_scores.PROVISIONAL.tsv --out results/step2/<p>/min_scores.PROVISIONAL.tsv
+sbatch -p short --constraint="ryzen|cascade|broadwell" --cpus-per-task=4 --mem=8G --time=00:20:00 --wrap="module load hmmer/3.4; /usr/bin/python3.12 bin/target_scores_at_min.py --refs-dir refs/<p> --hmm-dir results/hmms/<p> --min-scores results/step2/<p>/min_scores.PROVISIONAL.tsv --out results/step2/<p>/target_scores_at_min.PROVISIONAL.tsv --tag PROVISIONAL"
+```
+
+Results (MEASURED): 18 HMMs (9 + 6 + 3). Step 2 jobs 32407157 (dhn), 32407158 (ldopa), 32407159 (mycosporine); add-on jobs 32407363, 32407364, 32407365.
+
+- `bin/target_scores_at_min.py` (new, `tests/test_target_scores_at_min.py`) lists every decoy and other-step reference at or above the rule `min_score`. `score_refs_decoys.py` counts at the lowest full-HMM reference score, so its `targets_at_or_above_min` table is empty for these pathways. Use `target_scores_at_min.PROVISIONAL.tsv`.
+- `melanin_ldopa`: `hppd` and `aspulvinone_e_synthase` are single-reference steps with no decoy, so `make_min_scores.py` stops with an error. `min_scores.PROVISIONAL.tsv` was made from `step_scores.floor_defined.PROVISIONAL.tsv` (the same table without those two rows).
+- `mycosporine`: `mg_glucosyltransferase` and `glutamicol_formation` have no reference, so no HMM.
+- No search, no tree, no lowered cutoff (`--scale` not used).
+
+Follow-up 2026-11-23 (note section 9): decoys were added for `hppd`, `aspulvinone_e_synthase`, `ayg1`, `scytalone_dehydratase`, `hmga` with `curation_scripts/melanin_myco_decoys/add_decoys.py`. `hppd` and `aspulvinone_e_synthase` now have a floor, so `step_scores.floor_defined` is no longer needed. New `make_min_scores.py` options: `--floor-override STEP=VALUE` with `--override-basis TEXT` (mycosporine `omt` uses `--floor-override omt=100.6 --override-basis "owner override 2026-11-23: highest decoy score; revisit in second round"`), and `--allow-undefined` (empty `min_score` and the basis "no floor defined: ..." for a step with no rule value). Run `score_refs_decoys.sbatch` from a directory you can write to (it writes its log to the current directory).
+
+## Step 3 for melanin and mycosporine
+
+Record: `results/step3/melanin_myco/RUN.md` (commands, jobs, timings, candidates per step, projection). Note: `docs/superpowers/notes/2026-11-23-melanin-mycosporine-step2.md`, section 11. All outputs are PROVISIONAL. Step 3 is one timing job on 200 genomes. The full search was not run.
+
+- No change to `bin/search_chunk.py`. It takes one `--hmm-dir` and one `--min-scores` table, so the 18 HMMs of the three pathways go in one directory (symlinks) with one combined `min_scores` table (the three step 2 tables joined; step names are unique). `--pathway` only gates on `verified`.
+- Timing job 32415026 (MEASURED): 200 genomes, 2,099,680 proteins, 16 CPUs, 18 HMMs. Job 4 min 21 s, script 209.3 s, MaxRSS 3.1 GB, 1,367 candidate rows (1,299 proteins), 0 bad id prefixes. The first job (32412179, `short`) waited about 3 h on the 384-CPU user limit and was cancelled; the timing job ran on `stajichlab`.
+- Projection (PROPOSED, UNVERIFIED): 6 chunks of 4,000 genomes, about 64 to 75 min per job, about 47 GB (up to 62 GB), so submit with `--mem=96G`; about 159,773 candidate rows in total. The default `--mem=32G` of `slurm/search_chunk.sbatch` is too small for 4,000 genomes.
+- Unusual counts: `tyrosinase` 439 rows, `hppd` 154, `omt` 125 (all within 60 bits of the floor), against 0 for `aspulvinone_e_synthase`.
+
+Second commit of step 3 (2026-11-23): UniProt Q8NKC1 (*S. pombe* COMT2, reviewed, 281 residues) is a new `omt` decoy (`curation_scripts/melanin_myco_decoys/add_omt_decoy.py`). Step 2 for mycosporine was re-run (job 32415136). The highest `omt` decoy score is 120.7 (was 100.6). The `omt` floor follows the owner rule "floor = highest decoy score" through `--floor-override omt=120.7`. The timing job stays on the 100.6 table (kept in `results/step3/melanin_myco/`). In the timing chunk 84 of 125 `omt` rows lie between 100.6 and 120.7. Old step 2 tables: `results/step2/mycosporine.pre_Q8NKC1/`.
+
+## Step 4 for melanin and mycosporine
+
+Record: `results/search/melanin_myco_full/RUN.md` (commands, jobs, timings, checks). Note: `docs/superpowers/notes/2026-11-24-melanin-myco-step4-results.md`. All outputs are PROVISIONAL.
+
+- Full search of 23,376 genomes with the 18 HMMs of `melanin_dhn`, `melanin_ldopa` and `mycosporine` and the combined cutoff table `results/step3/melanin_myco/min_scores.combined.omt100.6.PROVISIONAL.tsv` (`omt` floor 100.6, owner decision 2026-11-24). `bin/search_chunk.py` was not changed.
+- Jobs 32427878 to 32427883 (6 chunks of 4,000 genomes, 16 CPUs, `--mem=96G`, partition `intel`, `--time=04:00:00`). The first submission on `stajichlab` waited 21 min with an estimated start of six days and was cancelled. Script time was 5,224 to 6,438 s per chunk.
+- MEASURED: 244,451,875 proteins; 170,712 candidate rows (projection 159,773; ratio 1.07); 161,355 unique proteins; 19,645 genome prefixes with a row. The check "0 bad id prefixes" failed for 5 genomes (39,700 proteins) whose protein files were rewritten with a new locus tag after the genome table was built (see the note, section 2).
+- `curation_scripts/melanin_myco_step4_summary.py` makes the checks and the count tables. It reads `.zst` through `zstd -dc`.
+
+## Step 5 for the PKS steps
+
+One joint tree for `thn_synthase`, `hexaketide_pks` and `heptaketide_pks` of `melanin_dhn` (2026-11-24, PROVISIONAL). Record with commands, jobs, parameters and checks: `results/step5/melanin_dhn/pks_joint/RUN.md`. Note with numbers: `docs/superpowers/notes/2026-11-24-melanin-myco-pks-placement.md`. Tests: `tests/test_step5_joint.py`. The existing step 5 tools are unchanged.
+
+New tools:
+- `bin/pks_joint_candidates.py`: from one candidate folder, writes (a) a folder with the rows of the listed steps (`results/search/pks_joint/`), (b) a folder with ONE row per protein, the row with the highest raw score over the steps, `step_id` = the joint id (`results/search/pks_joint_union/`), and (c) `pks_scores.tsv`, the best score of each protein on each step HMM. Union: 9,374 proteins (994 on one HMM, 8,044 on two, 336 on three).
+- `bin/step5_joint.py`: `clades` (one target per step on one tree: the largest side that holds all references of the step and no decoy, named leaf, outgroup or reference of another step; a step whose references are not isolated gets no clade file; `--include STEP=ID,..` makes a labelled VARIANT), `filter-placements` (placements, detail and candidate rows of one step, limited to the proteins with a row of that step), `report` (calls per step, hit pattern against target, nearest labelled leaves, genomes by class).
+- `slurm/step5_prepare_joint.sbatch` and `slurm/step5_place_joint.sbatch`: copies of `step5_prepare_ident.sbatch` and `step5_place.sbatch` for a joint tree. They require `PC_ROOT` and `PC_CAND_DIR` (the SAME folder for both parts; `step5_place_joint.sbatch` checks that the rows of that folder equal the domains placed, and that each step's candidate proteins equal its placements). `step5_prepare.sbatch` reads `$PC_ROOT/results/genomes.tsv.zst`; the joint copy reads `PC_GENOMES` (here `results/manifests/genomes.tsv.zst`).
+
+Result (MEASURED; see the note): 264 leaves (4 references, 5 decoys, 18 named leaves, 237 representatives at 0.7 identity; 0.5 gives 21 clusters, too few). thn_synthase target 99 leaves (3,163 of 7,286 proteins with a row; 3,124 genomes), hexaketide_pks target 27 leaves (609 of 8,604; 600 genomes). The two references of heptaketide_pks do not form a clade without the decoy wA, so the default rule gives that step no target. Two widened targets (wA allowed; wA and two UniProt YWA1-entry leaves allowed) are labelled variants. No outside outgroup (LovB, EryA1, yeast FAS) passes the alignability rule, so the tree has none. The target is not an ortholog set.
+
+Update 2026-11-25 (identity 0.8, bootstrap, per-step decoys; record `results/step5/melanin_dhn/pks_joint_id0.8/RUN.md`, note section "Update 2026-11-25"):
+- `bin/step5_joint.py clades` has `--decoy-scope per-step|union`. Default is `per-step`: only the decoys of a step bound its target (`--step-decoys STEP=refs/melanin_dhn/decoys/<step>.faa ...`, required); references of other steps, named leaves and outgroups still bound it. `union` reproduces the first run. Per-step targets may share leaves (the report counts them). wA (Q03149) is a decoy of thn_synthase and hexaketide_pks only; the earlier statement that it is a decoy of heptaketide_pks was wrong. Under the per-step rule the heptaketide target holds Alb1, AlbA and wA (7 leaves at 0.7, 22 at 0.8; 2,123 of 2,200 proteins in both). thn_synthase and hexaketide_pks do not change.
+- The sbatch files read `PC_STEP_DECOYS` (per-step) or `PC_DECOY_SCOPE=union`. `slurm/step5_tree_joint.sbatch` (tree and clades as a separate job), `slurm/step5_bootstrap_joint.sbatch` (array; `PC_BS_DIR`, `PC_BS_EXTRA`), `slurm/step5_support_joint.sbatch` (FBP and TBE), `slurm/step5_rarefaction_joint.sbatch`, `slurm/step5_reapply_decoy_scope.sh` (another decoy scope from a saved placement, no new epa-ng run). `step5_place_joint.sbatch` now keeps `query_match_cols.fa.zst`.
+- `bin/step5_bootstrap.py`: `support` (FBP and TBE at the target nodes), `stability` (clade rule on every bootstrap tree), `boundary`, `rep-coverage`, `subset` (rarefaction), `compare` (calls of two runs, by direction). Tests `tests/test_step5_bootstrap.py`.
+- The 100 bootstrap replicates are NNI-only searches (`--opt-topology nni`, 453 s each); a standard replicate took 4.1 to 4.7 h. See the note for the limit.
+
+## Genome table prefix aliases (2026-11-24)
+
+Five BFD genomes (`F8B45790`, `FE750E90`, `FE41F6C9`, `FF465DA3`, `F6D07108`) were re-annotated after `genomes.tsv.zst` was built. Their protein files now carry new locus tags (`F7CB232C`, `F317F9F5`, `FB9275E9`, `F629B7B9`, `FAD1592B`). Note: `docs/superpowers/notes/2026-11-24-genome-prefix-mismatch.md`.
+
+- `bin/check_genome_prefixes.py --genomes results/genomes.tsv.zst --since <table build time> --out report.tsv [--aliases-out aliases.tsv] [--threads N]`: reads the first protein id of each protein file and compares its prefix with the genome table. MEASURED 2026-11-24: 5 mismatches in 23,376 genomes; all 5 files are newer than the table (52 files are newer).
+- `prefix_aliases.tsv` (tracked): the mapping, table locustag to file prefix. The original `results/genomes.tsv.zst` is not changed.
+- `bin/apply_prefix_aliases.py --genomes ... --aliases prefix_aliases.tsv --out results/genomes.corrected.tsv.zst`: adds the column `alias_prefix`.
+- `bin/make_calls_table.py --prefix-aliases prefix_aliases.tsv`: maps protein id prefixes to table locustags. Other tools that split the protein id at `_` do not read the alias file yet (see the note, section 5).
+- Run the check again after any BFD re-annotation, before a search is read.
+
+## Step 5 for the other melanin and mycosporine steps
+
+Record with commands, floors, parameters, jobs and failures: `results/step5/other_steps_RUN.md` (2026-11-24, PROVISIONAL). Note: `docs/superpowers/notes/2026-11-24-melanin-myco-step5-other-steps.md`. Branch `pathway-census-step5-other`. Run folders: `results/step5/<pathway>/<step>/` (git-ignored); small summary tables are force-added in `results/step5/`. The PKS steps (`thn_synthase`, `hexaketide_pks`, `heptaketide_pks`) are not covered here.
+
+Steps covered: `melanin_ldopa` (`tyrosinase`, `laccase_diphenol`, `hmga`, `asp_melanin_tyrosinase`, `hppd`, `aspulvinone_e_synthase`), `melanin_dhn` (`ayg1`, `t4hn_reductase` and `t3hn_reductase` on one SDR tree, `scytalone_dehydratase`, `laccase_abr2`, `mco_abr1`) and `mycosporine` (`ddgs`, `omt`, `atp_grasp_ligase`).
+
+New tools (existing step 5 tools are unchanged; tests in `tests/`):
+- `bin/step5_multi_ref_clades.py` with `slurm/step5_multi_ref_clades.sbatch`: the largest-side target rule of `step5_single_ref_clades.py` for ONE OR MORE references (`target` = largest side with ALL references and no decoy, outgroup or named member). Exit 3 when the references do not form a clade free of labelled leaves (a result). The report also gives `smallest_target_size` (the default rule). Tests: `tests/test_multi_ref_clades.py`.
+- `bin/select_family_leaves.py`: chooses labelled non-target leaves (named members and outgroups) from fetched UniProt family entries after the alignability screen (`bin/screen_outgroups.py`). Excludes references, entries scoring at or above the step floor, entries with the same complete EC number as a reference (only where stated), and entries with a gene name of a reference. Tests: `tests/test_select_family_leaves.py`.
+- `bin/cut_leaves_to_domain.py`: cuts leaves to the best HMM domain with the pad of 20 used for candidates. Tests: `tests/test_cut_leaves_to_domain.py`.
+- `bin/step5_run_report.py`: report of one run folder (`<run>/report/`): calls, assigned proteins and genomes, assigned genomes by class and phylum, nearest labelled leaf of each representative. It works for any number of references and needs only `results/genomes.tsv.zst`. Tests: `tests/test_step5_run_report.py`.
+- `slurm/step5_place_parallel.sbatch`: `step5_place.sbatch` with `hmmalign` split over the CPUs (for 50,000 candidates; `hmmalign` is single-threaded).
+- `curation_scripts/melanin_myco_step5/`: one-off helpers (UniProt family fetch, leaf selection and submit scripts, table collation). They are a record, not a general tool.
+
+Rules used (all PROPOSED; none is validated against known orthologs):
+- Floor: the owner `min_score` of step 2 (`omt` 100.6). No placement floor was set; no candidate row was dropped. No floor was lowered.
+- Leaves: references, decoys that pass the alignability rule (best domain 10 bits or more and 50% of the HMM or more, `best` mode; `union` counts are in the record), and named members and outgroups from reviewed UniProt entries of the Pfam families of the references (fetched from rest.uniprot.org; every sequence length equals the table length). A leaf is dropped when it scores at or above the step floor on the step HMM (the search would call it a candidate), shares a gene name with a reference, or (hppd, SDR, scytalone dehydratase, ddgs, hmga) has the EC number of the step reaction. All leaves are cut to the domain.
+- Representatives: mmseqs2 identity is the lowest value in 0.5, 0.7, 0.8, 0.9, 0.95 that gives at least 100 clusters (0.95 if none does); more than 300 clusters are capped at 300 (stratified by phylum, as in step 5). At 0.5, eight steps gave 1 to 32 clusters in a full run (kept as `<step>_id50`); for `omt`, `hppd`, `hmga`, the SDR union and `tyrosinase` the cluster counts at each identity were measured with mmseqs2 on the extracted domains before submission.
+- Both `step5_prepare_ident.sbatch` and `step5_place.sbatch` read `PC_CAND_DIR`; after every run `candidates_step.tsv` rows were compared with `placements.tsv` rows (the difference is the extraction failures of the 5 re-annotated genomes, see the note).
+- SDR: one tree for `t4hn_reductase` and `t3hn_reductase` (union of both candidate sets, 11,667 proteins). Each step has its own target (largest side with the references of that step; the references of the other step are named members).

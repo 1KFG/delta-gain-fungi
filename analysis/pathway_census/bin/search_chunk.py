@@ -83,7 +83,11 @@ def main(argv=None) -> int:
     scratch_env = os.environ.get("SCRATCH")
     if not scratch_env:
         raise SystemExit("SCRATCH is not set")
-    ms = {r["step"]: float(r["min_score"]) for r in csv.DictReader(open(a.min_scores), delimiter="\t")}
+    ms_rows = list(csv.DictReader(open(a.min_scores), delimiter="\t"))
+    no_floor = sorted(r["step"] for r in ms_rows if r["min_score"] == "")
+    if no_floor:  # make_min_scores.py --allow-undefined wrote no value; a search must not guess one
+        raise SystemExit(f"min_score is empty (no floor defined) for steps: {no_floor}")
+    ms = {r["step"]: float(r["min_score"]) for r in ms_rows}
     steps = [s for s in ms if (a.hmm_dir / hits.tagged_name(s, "hmm", tag)).exists()]
     missing_hmm = sorted(set(ms) - set(steps))
     if missing_hmm:  # fail before any staging work

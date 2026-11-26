@@ -1,0 +1,11 @@
+step	note
+thn_synthase	placed, PKS tree
+hexaketide_pks	placed, PKS tree
+heptaketide_pks	Alb1/AlbA/wA clade
+ayg1	target = all candidates
+t4hn_reductase	placed
+t3hn_reductase	target = 2,236 of 2,240
+scytalone_dehydratase	placed
+laccase_abr2	placed
+mco_abr1	target = all candidates
+any_dhn_pks	any of the 3 PKS steps

@@ -46,8 +46,22 @@ def read_tsv(path):
     return list(csv.DictReader(io.StringIO("\n".join(lines)), delimiter="\t"))
 
 
-def genome_of(protein_id: str) -> str:
-    return protein_id.split("_")[0]
+def genome_of(protein_id: str, aliases=None) -> str:
+    """Genome table locustag of a protein id. `aliases` maps a protein id prefix to the locustag of the
+    genome table (prefix_aliases.tsv); a prefix not in it is returned unchanged."""
+    pre = protein_id.split("_")[0]
+    return aliases.get(pre, pre) if aliases else pre
+
+
+def load_aliases(path):
+    """prefix_aliases.tsv (columns locustag, alias_prefix) -> {alias_prefix: locustag}. Raises on a conflict."""
+    out = {}
+    for r in read_tsv(path):
+        a, lt = r["alias_prefix"], r["locustag"]
+        if out.get(a, lt) != lt:
+            raise ValueError(f"alias prefix {a} maps to two locustags")
+        out[a] = lt
+    return out
 
 
 def searched_genomes(rows):
@@ -58,14 +72,14 @@ def searched_genomes(rows):
     return {g for g, s in status.items() if s == {"searched"}}
 
 
-def placed_genomes(rows):
+def placed_genomes(rows, aliases=None):
     """Genomes with at least one row labelled `assigned`."""
-    return {genome_of(r["protein_id"]) for r in rows if r.get("label") == "assigned"}
+    return {genome_of(r["protein_id"], aliases) for r in rows if r.get("label") == "assigned"}
 
 
-def hit_genomes(rows_by_file, step):
+def hit_genomes(rows_by_file, step, aliases=None):
     """Genomes with at least one hit row for `step`."""
-    return {genome_of(r["protein_id"]) for rows in rows_by_file for r in rows if r["step_id"] == step}
+    return {genome_of(r["protein_id"], aliases) for rows in rows_by_file for r in rows if r["step_id"] == step}
 
 
 def build_calls(reps, searched, step_sources, step_genomes):
@@ -116,9 +130,12 @@ def main(argv=None):
     ap.add_argument("--search-dir", required=True, help="dir with searched.chunk*.tsv and candidates.chunk*.tsv.zst")
     ap.add_argument("--config", required=True, help="TSV: step, source (`hits` or a path to assigned.tsv)")
     ap.add_argument("--root", default=".", help="base for relative source paths in the config")
+    ap.add_argument("--prefix-aliases", default=None,
+                    help="prefix_aliases.tsv (locustag, alias_prefix): protein id prefixes that differ from the genome table locustag")
     ap.add_argument("--out", required=True, help="calls.tsv path; calls.summary.tsv is written beside it")
     a = ap.parse_args(argv)
 
+    aliases = load_aliases(a.prefix_aliases) if a.prefix_aliases else None
     reps = read_tsv(a.reps)
     tax = load_taxonomy(a.taxonomy)
     for r in reps:
@@ -140,11 +157,11 @@ def main(argv=None):
         if src == "hits":
             if cand is None:
                 cand = [read_tsv(f) for f in sorted(glob.glob(str(sd / "candidates.chunk*.tsv.zst")))]
-            step_genomes[step] = hit_genomes(cand, step)
+            step_genomes[step] = hit_genomes(cand, step, aliases)
             sources[step] = "hits"
         else:
             p = Path(src) if Path(src).is_absolute() else Path(a.root) / src
-            step_genomes[step] = placed_genomes(read_tsv(p))
+            step_genomes[step] = placed_genomes(read_tsv(p), aliases)
             sources[step] = "placed"
     rows, summary = build_calls(reps, searched, sources, step_genomes)
     steps = list(sources)

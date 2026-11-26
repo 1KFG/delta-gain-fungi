@@ -1,0 +1,9 @@
+root	step_a	step_b	event_a	event_b	model_a	model_b	n_events_a	n_events_b	n_eligible_b	observed	expected	perm_mean	p	q
+Blastocladiomycota	tyrosinase	hmga	gain	gain	ARD	ARD	14	3	3198	0	0.0131332082551595	0.0152	1	1
+Blastocladiomycota	tyrosinase	hmga	loss	loss	ARD	ARD	47	1	18	0	0.166666666666667	0.163	1	1
+Blastocladiomycota	tyrosinase	hmga	gain	loss	ARD	ARD	14	1	18	0	0	0	1	1
+Blastocladiomycota	tyrosinase	hmga	loss	gain	ARD	ARD	47	3	3198	0	0.0412757973733583	0.0413	1	1
+Chytridiomycota	tyrosinase	hmga	gain	gain	ARD	ARD	14	3	3198	0	0.0131332082551595	0.0146	1	1
+Chytridiomycota	tyrosinase	hmga	loss	loss	ARD	ARD	47	1	18	0	0.166666666666667	0.163	1	1
+Chytridiomycota	tyrosinase	hmga	gain	loss	ARD	ARD	14	1	18	0	0	0	1	1
+Chytridiomycota	tyrosinase	hmga	loss	gain	ARD	ARD	47	3	3198	0	0.0412757973733583	0.0417	1	1

@@ -1,0 +1,6 @@
+step	source	n_reps	n_present	n_absent	n_NA	n_call_genomes_not_in_reps	n_rep_calls_but_NA
+tyrosinase	placed	1654	1152	498	4	13067	0
+laccase_diphenol	placed	1654	1	1649	4	214	0
+hmga	placed	1654	12	1638	4	2268	0
+asp_melanin_tyrosinase	placed	1654	0	1650	4	42	0
+aspulvinone_e_synthase	placed	1654	0	1650	4	49	0

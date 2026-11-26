@@ -163,6 +163,11 @@ steps:
         gene_name: "COMT"
         pmid: null
         verified: true
+      - accession: Q8NKC1
+        species: "Schizosaccharomyces pombe (strain 972 / ATCC 24843)"
+        gene_name: "SPBPB21E7.04c"
+        pmid: null
+        verified: true
     domains_any: [PF13578, PF01596]
     copy_expect: single
     role: catalytic

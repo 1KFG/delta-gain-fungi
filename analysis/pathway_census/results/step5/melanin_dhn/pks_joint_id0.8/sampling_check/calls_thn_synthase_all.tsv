@@ -1,0 +1,6 @@
+old_call	new_call	proteins
+decoy	decoy	3640
+decoy	unassigned	37
+target	target	3163
+unassigned	decoy	365
+unassigned	unassigned	81

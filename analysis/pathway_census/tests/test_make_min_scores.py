@@ -87,3 +87,59 @@ def test_cli_scale_option(tmp_path):
     got = {g["step"]: g for g in csv.DictReader(open(out), delimiter="\t")}
     assert float(got["a"]["min_score"]) == 750.0 and float(got["a"]["rule_min_score"]) == 1000.0
     assert float(got["b"]["min_score"]) == 200.0
+
+
+# --- floor override and undefined floor (2026-11-23) ---
+
+def test_floor_override_replaces_the_rule_value_and_keeps_it_in_rule_min_score():
+    rows = [row("omt", 2, loo_min=8.3, max_decoy=100.6), row("b", 2, loo_min=500.0)]
+    r = {x["step"]: x for x in mms.min_scores(rows, floor_override={"omt": 100.6}, override_basis="owner override X")}
+    assert r["omt"]["min_score"] == 100.6 and r["omt"]["rule_min_score"] == 8.3
+    assert r["omt"]["basis"] == "owner override X"
+    assert r["b"]["min_score"] == 500.0 and r["b"]["basis"] == "lowest leave-one-out score"
+
+
+def test_floor_override_works_for_a_step_with_no_rule_value():
+    r = mms.min_scores([row("a", 1, max_decoy="")], floor_override={"a": 50.0})[0]
+    assert r["min_score"] == 50.0 and r["rule_min_score"] == ""
+
+
+@pytest.mark.parametrize("bad", [{"ghost": 10.0}, {"a": 0.0}, {"a": -1.0}])
+def test_floor_override_with_unknown_step_or_nonpositive_value_is_an_error(bad):
+    with pytest.raises(ValueError):
+        mms.min_scores([row("a", 2, loo_min=10)], floor_override=bad)
+
+
+def test_floor_override_and_scale_on_one_step_is_an_error():
+    with pytest.raises(ValueError, match="both"):
+        mms.min_scores([row("a", 2, loo_min=10)], scale={"a": 0.5}, floor_override={"a": 5.0})
+
+
+def test_allow_undefined_writes_an_empty_min_score_with_a_reason_not_a_value():
+    rows = [row("a", 1, max_decoy=""), row("b", 3, loo_min=""), row("c", 2, loo_min=7.0)]
+    r = {x["step"]: x for x in mms.min_scores(rows, allow_undefined=True)}
+    assert r["a"]["min_score"] == "" and r["a"]["basis"].startswith("no floor defined")
+    assert "decoys do not score" in r["a"]["basis"]
+    assert r["b"]["min_score"] == "" and "leave-one-out" in r["b"]["basis"]
+    assert r["c"]["min_score"] == 7.0
+
+
+def test_undefined_without_allow_flag_still_stops():
+    with pytest.raises(ValueError, match="step a"):
+        mms.min_scores([row("a", 1, max_decoy="")])
+
+
+def test_cli_override_and_allow_undefined(tmp_path):
+    src = tmp_path / "s.tsv"
+    with open(src, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=["step", "n_refs", "loo_min", "max_decoy_score"], delimiter="\t")
+        w.writeheader()
+        w.writerow(dict(step="omt", n_refs=2, loo_min=8.3, max_decoy_score=100.6))
+        w.writerow(dict(step="hppd", n_refs=1, loo_min="", max_decoy_score=""))
+    out = tmp_path / "m.tsv"
+    assert mms.main(["--step-scores", str(src), "--out", str(out), "--floor-override", "omt=100.6",
+                     "--override-basis", "owner override", "--allow-undefined"]) == 0
+    got = {g["step"]: g for g in csv.DictReader(open(out), delimiter="\t")}
+    assert float(got["omt"]["min_score"]) == 100.6 and got["omt"]["basis"] == "owner override"
+    assert float(got["omt"]["rule_min_score"]) == 8.3
+    assert got["hppd"]["min_score"] == "" and got["hppd"]["basis"].startswith("no floor defined")

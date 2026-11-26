@@ -1,0 +1,19 @@
+step	min_score	basis	n_refs	rule_min_score
+ayg1	374.2	lowest leave-one-out score	3	374.2
+heptaketide_pks	3656.7	lowest leave-one-out score	2	3656.7
+hexaketide_pks	1839.0	highest decoy score (single reference, floor)	1	1839.0
+laccase_abr2	464.3	highest decoy score (single reference, floor)	1	464.3
+mco_abr1	638.2	lowest leave-one-out score	2	638.2
+scytalone_dehydratase	240.5	lowest leave-one-out score	4	240.5
+t3hn_reductase	550.4	lowest leave-one-out score	3	550.4
+t4hn_reductase	356.0	lowest leave-one-out score	5	356.0
+thn_synthase	1908.6	highest decoy score (single reference, floor)	1	1908.6
+asp_melanin_tyrosinase	320.5	highest decoy score (single reference, floor)	1	320.5
+aspulvinone_e_synthase	1205.5	highest decoy score (single reference, floor)	1	1205.5
+hmga	983.2	lowest leave-one-out score	2	983.2
+hppd	164.3	highest decoy score (single reference, floor)	1	164.3
+laccase_diphenol	1127.7	lowest leave-one-out score	3	1127.7
+tyrosinase	63.6	lowest leave-one-out score	7	63.6
+atp_grasp_ligase	105.0	lowest leave-one-out score	3	105.0
+ddgs	463.5	lowest leave-one-out score	3	463.5
+omt	100.6	owner override 2026-11-23: highest decoy score; revisit in second round	2	8.3

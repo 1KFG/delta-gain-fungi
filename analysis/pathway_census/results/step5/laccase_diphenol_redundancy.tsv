@@ -1,0 +1,17 @@
+quantity	value
+candidates (domains)	402
+distinct domain sequences	67
+largest group of identical sequences	103
+sequences whose nearest other sequence is 100% identical	373
+nearest other sequence 99 to <100%	26
+nearest other sequence 95 to <99%	3
+nearest other sequence below 95%	0
+pairs 100% identical (of 80601 pairs)	12909
+pairs 99 to <100%	13521
+pairs 95 to <99%	3563
+pairs 90 to <95%	2116
+pairs 80 to <90%	8208
+pairs 70 to <80%	36619
+pairs 50 to <70%	3665
+clusters at 0.5 / 0.7 / 0.8 / 0.9 / 0.95	1 / 1 / 2 / 5 / 5
+clusters at identity 1.0, coverage 1.0 (v2 leaves)	67

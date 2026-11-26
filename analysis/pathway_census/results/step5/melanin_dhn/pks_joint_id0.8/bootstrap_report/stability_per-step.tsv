@@ -1,0 +1,9 @@
+step	measure	trees	of	fraction
+heptaketide_pks	default rule target exists	100	100	1.0000
+heptaketide_pks	target leaf set equals the best-tree target	81	100	0.8100
+hexaketide_pks	default rule target exists	100	100	1.0000
+hexaketide_pks	target leaf set equals the best-tree target	99	100	0.9900
+thn_synthase	default rule target exists	100	100	1.0000
+thn_synthase	target leaf set equals the best-tree target	88	100	0.8800
+heptaketide_pks	smallest side with both heptaketide references does not hold wA	2	100	0.0200
+heptaketide_pks	variant YWA1 target exists	100	100	1.0000

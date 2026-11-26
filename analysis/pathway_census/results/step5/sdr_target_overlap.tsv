@@ -1,0 +1,8 @@
+# target sets (clade_call == target)
+set	n_proteins	n_genomes
+t4hn	8457	7852
+t3hn	2236	2199
+pair_a	pair_b	shared_proteins	shared_genomes
+t4hn	t3hn	0	0
+in_k_sets	n_proteins
+1	10693

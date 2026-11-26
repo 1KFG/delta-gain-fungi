@@ -1,0 +1,35 @@
+searched files {'searched.chunk00000.tsv': 4000, 'searched.chunk00001.tsv': 4000, 'searched.chunk00002.tsv': 4000, 'searched.chunk00003.tsv': 4000, 'searched.chunk00004.tsv': 4000, 'searched.chunk00005.tsv': 3376}
+unique genomes searched 23376 duplicates 0
+status {'searched': 23376}
+expected (has_proteins) genomes 23376 missing 0 extra 0
+proteins searched 244451875 bad id prefixes 39700
+total rows 170712 unique proteins 161355 genomes with >=1 candidate 19645 ratio 1.068
+melanin_dhn rows 62329 unique proteins 53024 genomes 11254
+melanin_ldopa rows 75909 unique proteins 75909 genomes 19073
+mycosporine rows 32474 unique proteins 32422 genomes 12739
+tyrosinase                 rows   50452 prot   50452 genomes  14220 max 838.2 proj 51310 ratio 0.98
+hppd                       rows   20103 prot   20103 genomes  16847 max 974.9 proj 18000 ratio 1.12
+omt                        rows   14441 prot   14441 genomes  12097 max 427.1 proj 14610 ratio 0.99
+ayg1                       rows   11836 prot   11836 genomes   8526 max 807.6 proj 10169 ratio 1.16
+t4hn_reductase             rows   10010 prot   10010 genomes   8092 max 523.6 proj 8298 ratio 1.21
+laccase_abr2               rows    9631 prot    9631 genomes   4923 max 1455.7 proj 7363 ratio 1.31
+atp_grasp_ligase           rows    9167 prot    9167 genomes   8859 max 1038.1 proj 10052 ratio 0.91
+ddgs                       rows    8866 prot    8866 genomes   8762 max 776.3 proj 9467 ratio 0.94
+hexaketide_pks             rows    8604 prot    8604 genomes   7819 max 5176.4 proj 7363 ratio 1.17
+scytalone_dehydratase      rows    8604 prot    8604 genomes   7511 max 336.3 proj 7480 ratio 1.15
+thn_synthase               rows    7286 prot    7286 genomes   6535 max 5334.6 proj 6195 ratio 1.18
+asp_melanin_tyrosinase     rows    2471 prot    2471 genomes   1847 max 878.6 proj 1519 ratio 1.63
+hmga                       rows    2313 prot    2313 genomes   2280 max 1078.5 proj 1753 ratio 1.32
+t3hn_reductase             rows    2240 prot    2240 genomes   2203 max 619.2 proj 2454 ratio 0.91
+heptaketide_pks            rows    2200 prot    2200 genomes   2168 max 4853.9 proj 1753 ratio 1.25
+mco_abr1                   rows    1918 prot    1918 genomes   1897 max 1394.9 proj 1519 ratio 1.26
+laccase_diphenol           rows     402 prot     402 genomes    215 max 1437.6 proj 468 ratio 0.86
+aspulvinone_e_synthase     rows     168 prot     168 genomes    127 max 2240.8 proj 0 ratio nan
+omt rows 100.6<=s<120.7 10097 genomes 8829 ; >=120.7 4344
+PKS proteins by number of PKS steps hit {3: 336, 2: 8044, 1: 994} total 9374
+PKS combos {('heptaketide_pks', 'hexaketide_pks', 'thn_synthase'): 336, ('heptaketide_pks', 'hexaketide_pks'): 1648, ('heptaketide_pks', 'thn_synthase'): 80, ('hexaketide_pks', 'thn_synthase'): 6316}
+proteins hitting >=2 of SDR ('t3hn_reductase', 't4hn_reductase') 583
+proteins hitting >=2 of laccase/MCO ('laccase_abr2', 'laccase_diphenol', 'mco_abr1') 4
+proteins hitting >=2 of tyrosinase pair ('tyrosinase', 'asp_melanin_tyrosinase') 0
+proteins hitting >=2 of tyr+laccase/MCO ('tyrosinase', 'laccase_diphenol', 'mco_abr1', 'laccase_abr2') 4
+tyrosinase rows per genome (genomes with >=1): [(1, 2544), (2, 2455), (3, 3337), (4, 2049), (5, 1364), (6, 1034), (7, 703), (8, 352), (9, 207), (10, 58), (11, 42), (12, 29), (13, 14), (14, 9), (15, 4), (16, 3), (17, 1), (19, 1), (20, 4), (23, 5), (24, 1), (25, 2), (28, 2)] genomes 14220 max 28

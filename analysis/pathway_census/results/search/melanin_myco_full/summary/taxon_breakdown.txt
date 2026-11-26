@@ -1,0 +1,37 @@
+
+## omt 100.6-120.7: rows 10097, unmapped-prefix rows 1, genomes 8828
+ phylum rows: [('Ascomycota', 9783), ('Basidiomycota', 169), ('Mucoromycota', 72), ('Glomeromycota', 36), ('Basidiobolomycota', 16), ('Kickxellomycota', 11), ('Chytridiomycota', 5), ('Zoopagomycota', 3)]
+ class rows: [('Eurotiomycetes', 3345), ('Dothideomycetes', 2555), ('Sordariomycetes', 2122), ('Pichiomycetes', 859), ('Lecanoromycetes', 381), ('Leotiomycetes', 284), ('Dipodascomycetes', 90), ('Mucoromycetes', 69), ('Agaricomycetes', 48), ('Schizosaccharomycetes', 41)]
+ top genera: [('Aspergillus', 1953), ('Fusarium', 1064), ('Penicillium', 791), ('Macrophomina', 491), ('Alternaria', 275), ('Colletotrichum', 217), ('Cryphonectria', 209), ('Aureobasidium', 188), ('Parastagonospora', 182), ('Candida', 164)]
+
+## omt >=120.7: rows 4344, unmapped-prefix rows 1, genomes 4282
+ phylum rows: [('Ascomycota', 4022), ('Basidiomycota', 321)]
+ class rows: [('Sordariomycetes', 3723), ('Tremellomycetes', 143), ('Pezizomycetes', 110), ('Ustilaginomycetes', 91), ('Exobasidiomycetes', 73), ('Lecanoromycetes', 45), ('Eurotiomycetes', 30), ('Pichiomycetes', 26), ('Leotiomycetes', 21), ('Schizosaccharomycetes', 20)]
+ top genera: [('Fusarium', 1913), ('Pyricularia', 446), ('Beauveria', 369), ('Neurospora', 181), ('Colletotrichum', 180), ('Cordyceps', 70), ('Calonectria', 64), ('Epichloe', 62), ('Tilletia', 57), ('Morchella', 53)]
+
+all genomes with proteins by phylum: [('Ascomycota', 19203), ('Basidiomycota', 3242), ('Mucoromycota', 292), ('Kickxellomycota', 177), ('Microsporidia', 133), ('Mortierellomycota', 100), ('Chytridiomycota', 83), ('Glomeromycota', 59)]
+by class (top10): [('Sordariomycetes', 5981), ('Eurotiomycetes', 3201), ('Pichiomycetes', 2929), ('Dothideomycetes', 2724), ('Saccharomycetes', 2560), ('Agaricomycetes', 1844), ('Tremellomycetes', 556), ('Lecanoromycetes', 478), ('Leotiomycetes', 429), ('Dipodascomycetes', 393)]
+omt low band score median 109.3
+omt >=120.7 score quantiles [122.2, 123.0, 123.4, 124.3, 124.9, 126.5, 131.5, 149.0, 149.9] max 427.1 n>=200 10
+
+## aspulvinone_e_synthase: rows 168, unmapped-prefix rows 0, genomes 127
+ phylum rows: [('Ascomycota', 168)]
+ class rows: [('Eurotiomycetes', 167), ('Sordariomycetes', 1)]
+ top genera: [('Aspergillus', 152), ('Penicillium', 14), ('Bertia', 1), ('Aspergillaceae sp.', 1)]
+ scores min/median/max 1205.7 1298.1 2240.8
+
+## asp_melanin_tyrosinase: rows 2471, unmapped-prefix rows 0, genomes 1847
+ phylum rows: [('Ascomycota', 2452), ('Basidiomycota', 19)]
+ class rows: [('Eurotiomycetes', 2359), ('Sordariomycetes', 60), ('Dothideomycetes', 21), ('Agaricomycetes', 19), ('Leotiomycetes', 10), ('Arthoniomycetes', 1), ('Pichiomycetes', 1)]
+ top genera: [('Aspergillus', 1528), ('Penicillium', 662), ('Ophidiomyces', 86), ('Exophiala', 52), ('Diaporthe', 37), ('Seiridium', 17), ('Elasticomyces', 17), ('Cladophialophora', 10), ('Aphanoascus', 8), ('Lentinus', 4)]
+
+## laccase_diphenol: rows 402, unmapped-prefix rows 0, genomes 215
+ phylum rows: [('Basidiomycota', 402)]
+ class rows: [('Tremellomycetes', 402)]
+ top genera: [('Cryptococcus', 402)]
+
+## tyrosinase: rows 50452, unmapped-prefix rows 5, genomes 14219
+ phylum rows: [('Ascomycota', 44811), ('Basidiomycota', 5434), ('Glomeromycota', 88), ('Chytridiomycota', 66), ('Mortierellomycota', 29), ('Basidiobolomycota', 14), ('Zoopagomycota', 3), ('', 1)]
+ class rows: [('Sordariomycetes', 26199), ('Dothideomycetes', 8534), ('Agaricomycetes', 5390), ('Eurotiomycetes', 5070), ('Leotiomycetes', 1598), ('Lecanoromycetes', 1458), ('Orbiliomycetes', 935), ('Pezizomycetes', 757), ('', 96), ('Glomeromycetes', 88)]
+ top genera: [('Fusarium', 11481), ('Aspergillus', 2951), ('Colletotrichum', 2730), ('Pyricularia', 1557), ('Beauveria', 1508), ('Psilocybe', 1158), ('Macrophomina', 999), ('Alternaria', 888), ('Penicillium', 784), ('Calonectria', 648)]
+ tyrosinase scores: <127.2 3475 median 320.1

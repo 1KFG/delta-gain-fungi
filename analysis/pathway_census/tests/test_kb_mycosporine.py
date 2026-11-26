@@ -337,7 +337,7 @@ def test_fasta_sequences_equal_the_fetched_records():
     fetched from UniProt or GenBank by build.py. Every FASTA record must equal it."""
     fx = pd.read_csv(ROOT / "tests" / "data" / "kb" / "mycosporine_sequences.tsv", sep="\t",
                      dtype=str, keep_default_na=False).set_index("accession")
-    assert len(fx) == 24 and set(fx["source"]) == {"UniProtKB", "GenBank"}
+    assert len(fx) == 25 and set(fx["source"]) == {"UniProtKB", "GenBank"}
     seen = set()
     refs = ROOT / "refs" / "mycosporine"
     for path in sorted(refs.glob("*.faa")) + sorted((refs / "decoys").glob("*.faa")):

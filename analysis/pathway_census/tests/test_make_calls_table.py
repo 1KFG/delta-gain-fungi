@@ -61,3 +61,24 @@ def test_read_tsv_zst_skips_comment(tmp_path):
     p.write_text("# PROVISIONAL\nprotein_id\tstep_id\nA_1\ts1\n")
     subprocess.run(["zstd", "-q", str(p)], check=True)
     assert mc.read_tsv(str(p) + ".zst") == [dict(protein_id="A_1", step_id="s1")]
+
+
+def test_aliases_map_new_prefix_to_table_locustag(tmp_path):
+    al = tmp_path / "prefix_aliases.tsv"
+    al.write_text("locustag\talias_prefix\nOLD00001\tNEW00001\n")
+    a = mc.load_aliases(al)
+    assert a == {"NEW00001": "OLD00001"}
+    assert mc.genome_of("NEW00001_000001-T1", a) == "OLD00001"
+    assert mc.genome_of("OTHER001_000001-T1", a) == "OTHER001"
+    assert mc.genome_of("NEW00001_000001-T1") == "NEW00001"  # no aliases: unchanged
+    rows = [dict(protein_id="NEW00001_1-T1", step_id="s", label="assigned"), dict(protein_id="OLD00001_2-T1", step_id="s", label="assigned")]
+    assert mc.hit_genomes([rows], "s", a) == {"OLD00001"}
+    assert mc.placed_genomes(rows, a) == {"OLD00001"}
+    assert mc.hit_genomes([rows], "s") == {"NEW00001", "OLD00001"}
+
+
+def test_alias_conflict_raises(tmp_path):
+    al = tmp_path / "a.tsv"
+    al.write_text("locustag\talias_prefix\nA\tX\nB\tX\n")
+    with pytest.raises(ValueError):
+        mc.load_aliases(al)

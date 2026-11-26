@@ -1,0 +1,13 @@
+clade_call	step	count	min	median	max
+decoy	hppd	14216	165.3	534.3	651.8
+target	hppd	5850	165.4	721.2	974.9
+unassigned	hppd	32	298.6	447.2	574.8
+decoy	laccase_abr2	5822	464.3	510.5	676.8
+target	laccase_abr2	3809	465.8	635.6	1455.7
+decoy	asp_melanin_tyrosinase	2429	320.5	346.9	422.8
+target	asp_melanin_tyrosinase	42	466.3	833.6	878.6
+decoy	aspulvinone_e_synthase	85	1205.7	1285.1	1304.8
+target	aspulvinone_e_synthase	83	1252.4	1455.8	2240.8
+decoy	t4hn_reductase	666	356.0	363.4	402.7
+target	t4hn_reductase	8457	357.4	436.1	523.6
+unassigned	t4hn_reductase	887	356.0	358.3	371.5
