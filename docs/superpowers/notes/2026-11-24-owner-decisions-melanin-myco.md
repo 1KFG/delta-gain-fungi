@@ -34,3 +34,16 @@ title: "Owner decisions for the melanin and mycosporine census (2026-11-23 and 2
 2. BFD data fix for the five re-annotated genomes (the BFD owner's call). See `2026-11-24-genome-prefix-mismatch.md`.
 3. Identity rule for clustering (lowest identity giving at least 100 clusters) is a choice of the step-5 agent, not an owner decision.
 4. Merge of PR #22 (Jason).
+
+## Owner decisions of 2026-11-25 (given in the session; PROVISIONAL status applies)
+
+1. Carotenoid search re-run on the 5 re-annotated genomes: yes. Result: 0 of 5 genomes change step presence at the search-hit level (note 2026-11-25-carotenoid-reannotated-5genomes.md). Tree placement and gain/loss not redone.
+2. PKS tree support: NNI-only bootstrap accepted for now. The report must state that NNI trees are less optimised than standard ones and that the effect on each support value is unverified.
+3. heptaketide_pks headline: per-step decoy rule; wording "the Alb1/AlbA/wA clade", with the union-rule result (no target) and the unresolved wA placement stated beside it.
+4. scytalone_dehydratase v2 (cfoI dropped after seeing the tree): accepted as PROVISIONAL with that disclosure.
+5. omt single-reference placement: accepted as provisional; the target is a tree region, not a tested mycosporine enzyme.
+6. hppd: reported as "family present", not a placed step.
+7. epa-ng: keep all placements for steps with few distinct sequences; the _allplace rows are the ones to use (note 2026-11-25-epa-all-placements.md).
+8. tyrosinase representative cap stays at 1,000.
+9. PKS steps are defined by reaction (thn_synthase, hexaketide_pks, heptaketide_pks), plus an "any DHN PKS" column for the pathway-level summary.
+Still open: PKS sampling label (identity 0.9 rerun or accept "not yet adequate"); who receives the BFD re-annotation message; PKS outgroup definition (separate investigation).
