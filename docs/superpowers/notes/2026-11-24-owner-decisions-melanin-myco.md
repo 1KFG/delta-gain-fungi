@@ -46,4 +46,7 @@ title: "Owner decisions for the melanin and mycosporine census (2026-11-23 and 2
 7. epa-ng: keep all placements for steps with few distinct sequences; the _allplace rows are the ones to use (note 2026-11-25-epa-all-placements.md).
 8. tyrosinase representative cap stays at 1,000.
 9. PKS steps are defined by reaction (thn_synthase, hexaketide_pks, heptaketide_pks), plus an "any DHN PKS" column for the pathway-level summary.
-Still open: PKS sampling label (identity 0.9 rerun or accept "not yet adequate"); who receives the BFD re-annotation message; PKS outgroup definition (separate investigation).
+10. PKS sampling label "not yet adequate" accepted and stated in the report; no identity-0.9 rerun.
+11. BFD re-annotation message: written as a note by the owner's choice at Fungi_BFD_runs/docs/NOTE_reannotated_genome_prefixes_2026-11-25.md (the owner is the BFD annotator; not committed there).
+12. Report layout: DHN and L-DOPA melanin in ONE report; mycosporine in a SEPARATE report.
+Still open: PKS outgroup definition (separate investigation, later, with Opus).
